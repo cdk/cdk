@@ -27,15 +27,14 @@ import java.io.InputStream;
 
 import javax.vecmath.Point2d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -47,26 +46,12 @@ import org.openscience.cdk.tools.LoggingTool;
 public class HydrogenPlacerTest extends CDKTestCase {
     
     public boolean standAlone = false;
-    private LoggingTool logger = null;
-    
-    public HydrogenPlacerTest(String name) {
-        super(name);
-    }
-
-    public void setUp() throws Exception
-    {
-        super.setUp();
-        logger = new LoggingTool(this);
-    }
-
-    public static Test suite() {
-        return new TestSuite(HydrogenPlacerTest.class);
-    }
+    private LoggingTool logger = new LoggingTool(this);
     
     /**
      * @cdk.bug 933572
      */
-    public void testBug933572() throws Exception{
+    @Test public void testBug933572() throws Exception{
         Molecule ac=new Molecule();
         ac.addAtom(new Atom("H"));
         ac.getAtom(0).setPoint2d(new Point2d(0,0));
@@ -74,11 +59,11 @@ public class HydrogenPlacerTest extends CDKTestCase {
         HydrogenPlacer hPlacer = new HydrogenPlacer();
         hPlacer.placeHydrogens2D(ac, 36);
         for(int i=0;i<ac.getAtomCount();i++){
-            assertNotNull(ac.getAtom(i).getPoint2d());
+            Assert.assertNotNull(ac.getAtom(i).getPoint2d());
         }
      }
 
-    public void testPlaceHydrogens2D() throws Exception {
+    @Test public void testPlaceHydrogens2D() throws Exception {
 	    HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         Molecule dichloromethane = new Molecule();
         Atom carbon = new Atom("C");
@@ -102,8 +87,8 @@ public class HydrogenPlacerTest extends CDKTestCase {
         dichloromethane.addBond(new Bond(carbon, cl1));
         dichloromethane.addBond(new Bond(carbon, cl2));
 
-        assertNull(h1.getPoint2d());
-        assertNull(h2.getPoint2d());
+        Assert.assertNull(h1.getPoint2d());
+        Assert.assertNull(h2.getPoint2d());
         
         // generate new coords
         hydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
@@ -111,13 +96,13 @@ public class HydrogenPlacerTest extends CDKTestCase {
         assertEquals(carbonPos, carbon.getPoint2d(), 0.01);
         assertEquals(cl1Pos, cl1.getPoint2d(), 0.01);
         assertEquals(cl2Pos, cl2.getPoint2d(), 0.01);
-        assertNotNull(h1.getPoint2d());
-        assertNotNull(h2.getPoint2d());
+        Assert.assertNotNull(h1.getPoint2d());
+        Assert.assertNotNull(h2.getPoint2d());
     }
     
     /* This one tests adding hydrogens to all atoms of a molecule and doing the layout for them.
     *  It is intended for visually checking the work of HydrogenPlacer, not to be run
-    *  as a JUnit test. Thus the name withouth "test".
+    *  as a JUnit test. Thus the name without "test".
     */
 	public void visualFullMolecule2DEvaluation() throws Exception
 	{

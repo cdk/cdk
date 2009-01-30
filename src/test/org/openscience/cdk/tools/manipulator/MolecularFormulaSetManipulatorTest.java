@@ -22,7 +22,7 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.formula.MolecularFormulaSet;
@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaSetManipulator;
  *
  * @cdk.module test-formula
  */
-public class MolecularFormulaSetManipulatorTest extends NewCDKTestCase {
+public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	

@@ -27,7 +27,7 @@ package org.openscience.cdk.exception;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the CDKException class.
@@ -36,7 +36,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see org.openscience.cdk.exception.CDKException
  */
-public class CDKExceptionTest extends NewCDKTestCase {
+public class CDKExceptionTest extends CDKTestCase {
 
 
     @Test

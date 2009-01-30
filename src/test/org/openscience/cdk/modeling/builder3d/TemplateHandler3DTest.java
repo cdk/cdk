@@ -30,7 +30,7 @@ import java.util.StringTokenizer;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @author      Christoph Steinbeck
  * @cdk.created 2004-11-04
  */
-public class TemplateHandler3DTest extends NewCDKTestCase {
+public class TemplateHandler3DTest extends CDKTestCase {
 		
 	@Test
 	public void testGetInstance() throws Exception {

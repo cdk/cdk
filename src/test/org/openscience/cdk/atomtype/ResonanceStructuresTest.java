@@ -30,13 +30,13 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 
 /**
  * @cdk.module test-reaction
  */
-public class ResonanceStructuresTest extends NewCDKTestCase {
+public class ResonanceStructuresTest extends CDKTestCase {
 
 	private final static IChemObjectBuilder builder;
 	private final static CDKAtomTypeMatcher matcher;
@@ -53,7 +53,7 @@ public class ResonanceStructuresTest extends NewCDKTestCase {
         super();
     }
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       StructureResonanceGeneratorTest#testGetAllStructures_IAtomContainer()
@@ -76,7 +76,7 @@ public class ResonanceStructuresTest extends NewCDKTestCase {
 		molecule.addAtom(builder.newAtom("H"));
 		molecule.addAtom(builder.newAtom("H"));
 		molecule.addBond(0,1,IBond.Order.DOUBLE);
-		molecule.addBond(1,2,IBond.Order.SINGLE);
+		molecule.addBond(0,2,IBond.Order.SINGLE);
 		molecule.addBond(2,3,IBond.Order.DOUBLE);
 		molecule.addBond(2,4,IBond.Order.SINGLE);
 		molecule.addBond(0,5,IBond.Order.SINGLE);
@@ -143,7 +143,7 @@ public class ResonanceStructuresTest extends NewCDKTestCase {
 //		}
     }
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       StructureResonanceGeneratorTest#test12DimethylBenzene()

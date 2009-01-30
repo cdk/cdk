@@ -23,12 +23,12 @@ package org.openscience.cdk.math;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.math.FortranFormat;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class FortranFormatTest extends NewCDKTestCase {
+public class FortranFormatTest extends CDKTestCase {
     
     public FortranFormatTest() {
         super();

@@ -22,13 +22,13 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
  * @cdk.module test-diff
  */
-public class AtomTypeHybridizationDifferenceTest extends NewCDKTestCase {
+public class AtomTypeHybridizationDifferenceTest extends CDKTestCase {
 
     @Test public void testDiff() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1, IAtomType.Hybridization.SP2);

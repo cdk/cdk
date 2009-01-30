@@ -20,11 +20,11 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CDKConstantsTest;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcherFilesTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTestFileReposTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
@@ -56,46 +56,39 @@ import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class McoreTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK core Tests");
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    CoreCoverageTest.class,
 
-        suite.addTest(new JUnit4TestAdapter(CoreCoverageTest.class));
+    CDKConstantsTest.class,
+    DataFeaturesTest.class,
 
-        // make sure to check it against src/test-core.javafiles
-        // before each release!
-        suite.addTest(new JUnit4TestAdapter(CDKConstantsTest.class));
-        suite.addTest(new JUnit4TestAdapter(DataFeaturesTest.class));
+    // cdk.config
+    IsotopeFactoryTest.class,
+    AtomTypeFactoryTest.class,
+    CDKBasedAtomTypeConfiguratorTest.class,
+    TXTBasedAtomTypeConfiguratorTest.class,
+    OWLBasedAtomTypeConfiguratorTest.class,
+    AtomTypeReaderTest.class,
+    AtomTypeHandlerTest.class,
+    OWLAtomTypeReaderTest.class,
+    OWLAtomTypeHandlerTest.class,
+    IsotopeReaderTest.class,
+    IsotopeHandlerTest.class,        
 
-        // cdk.config
-        suite.addTest(new JUnit4TestAdapter(IsotopeFactoryTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeFactoryTest.class));
-        suite.addTest(new JUnit4TestAdapter(CDKBasedAtomTypeConfiguratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(TXTBasedAtomTypeConfiguratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(OWLBasedAtomTypeConfiguratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeHandlerTest.class));
-        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeHandlerTest.class));
-        suite.addTest(new JUnit4TestAdapter(IsotopeReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(IsotopeHandlerTest.class));        
+    // the CDK atom typer
+    CDKAtomTypeMatcherTest.class,
+    CDKAtomTypeMatcherTestFileReposTest.class,
+    CDKAtomTypeMatcherFilesTest.class,
 
-        // the CDK atom typer
-        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
-        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTestFileReposTest.class));
-
-        // other
-        suite.addTest(new JUnit4TestAdapter(CDKExceptionTest.class));
-        suite.addTest(new JUnit4TestAdapter(NoSuchAtomExceptionTest.class));
-        suite.addTest(new JUnit4TestAdapter(NoSuchAtomTypeExceptionTest.class));
-        suite.addTest(new JUnit4TestAdapter(LoggingToolTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AdjacencyMatrixTest.class));
-        suite.addTest(new JUnit4TestAdapter(PathToolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(SpanningTreeTest.class));
-
-        return suite;
-    }
-    
-}
+    // other
+    CDKExceptionTest.class,
+    NoSuchAtomExceptionTest.class,
+    NoSuchAtomTypeExceptionTest.class,
+    LoggingToolTest.class,
+    BondManipulatorTest.class,
+    AdjacencyMatrixTest.class,
+    PathToolsTest.class,
+    SpanningTreeTest.class
+})
+public class McoreTests {}

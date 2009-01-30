@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.atomtype.StructGenAtomTypeGuesserTest;
 import org.openscience.cdk.atomtype.StructGenMatcherTest;
 import org.openscience.cdk.coverage.StructgenCoverageTest;
@@ -38,25 +37,15 @@ import org.openscience.cdk.structgen.stochastic.operator.CrossoverMachineTest;
  *
  * @cdk.module  test-structgen
  */
-public class MstructgenTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("JUnit tests for the structgen module");
-
-        suite.addTest(StructgenCoverageTest.suite());
-
-        suite.addTest(new JUnit4TestAdapter(StructGenMatcherTest.class));
-        suite.addTest(new JUnit4TestAdapter(StructGenAtomTypeGuesserTest.class));
-
-        suite.addTest(RandomStructureGeneratorTest.suite());
-        suite.addTest(VicinitySamplerTest.suite());
-        
-        // structgen.stoichastic
-        suite.addTest(PartialFilledStructureMergerTest.suite());
-        suite.addTest(ChemGraphTest.suite());
-        suite.addTest(CrossoverMachineTest.suite());
-
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    StructgenCoverageTest.class,
+    StructGenAtomTypeGuesserTest.class,
+    StructGenMatcherTest.class,
+    RandomStructureGeneratorTest.class,
+    VicinitySamplerTest.class,
+    PartialFilledStructureMergerTest.class,
+    ChemGraphTest.class,
+    CrossoverMachineTest.class
+})
+public class MstructgenTests {}

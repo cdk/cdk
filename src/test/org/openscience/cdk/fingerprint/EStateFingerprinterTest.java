@@ -27,7 +27,7 @@ package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
@@ -37,7 +37,7 @@ import java.util.BitSet;
 /**
  * @cdk.module test-fingerprint
  */
-public class EStateFingerprinterTest extends NewCDKTestCase {
+public class EStateFingerprinterTest extends CDKTestCase {
 
 	private static LoggingTool logger = new LoggingTool(EStateFingerprinterTest.class);
 

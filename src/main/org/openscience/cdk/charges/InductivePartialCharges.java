@@ -78,7 +78,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 
 	/**
-	 *  Main method, set charget as atom properties
+	 *  Main method, set charge as atom properties
 	 *
 	 *@param  ac             AtomContainer
 	 *@return                AtomContainer
@@ -214,6 +214,10 @@ public class InductivePartialCharges implements IChargeCalculator {
 	 // of effective electronegativity
     @TestMethod("testGetAtomicSoftness")
     public double getAtomicSoftnessCore(IAtomContainer ac, int atomPosition) throws CDKException {
+        if (factory == null) {
+            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
+                ac.getBuilder());
+        }
 		org.openscience.cdk.interfaces.IAtom target = null;
 		double core = 0;
 		double radiusTarget = 0;
@@ -233,7 +237,9 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 		} catch (Exception ex1) {
 			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+			throw new CDKException("Problems with AtomTypeFactory due to " + 
+				ex1.getMessage(), ex1
+			);
 		}
 
 		java.util.Iterator atoms = ac.atoms().iterator();

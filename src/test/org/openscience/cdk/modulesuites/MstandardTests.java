@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest;
@@ -106,92 +105,83 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MstandardTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK standard Tests");
-
-        suite.addTest(StandardCoverageTest.suite());
-        
-        // make sure to check it against src/test-standard.files
-        // before each release!
-        suite.addTest(new JUnit4TestAdapter(AromaticityCalculatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(DictRefTest.class));
-        suite.addTest(new JUnit4TestAdapter(CrystalGeometryToolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(MinimalPathIteratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ConnectivityCheckerTest.class));
-        suite.addTest(UniversalIsomorphismTesterTest.suite());
-        suite.addTest(new JUnit4TestAdapter(IsomorphismTesterTest.class));
-        suite.addTest(RMapTest.suite());
-        suite.addTest(RGraphTest.suite());
-        suite.addTest(RNodeTest.suite());
-        suite.addTest(new JUnit4TestAdapter(MathToolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(AllRingsFinderTest.class));
-        suite.addTest(new JUnit4TestAdapter(RingPartitionerTest.class));
-        suite.addTest(new JUnit4TestAdapter(SimpleCycleTest.class));
-        suite.addTest(SimpleCycleBasisTest.suite());
-        suite.addTest(new JUnit4TestAdapter(CycleBasisTest.class));
-        suite.addTest(new JUnit4TestAdapter(FormatStringBufferTest.class));
-        suite.addTest(new JUnit4TestAdapter(IDCreatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MoleculeSetManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomContainerManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(RingSetManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(RingManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomContainerSetManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MoleculeSetManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(RebondToolTest.class));
-        suite.addTest(new JUnit4TestAdapter(CanonicalLabelerTest.class));
-        // from cdk.test.fingerprint
-        suite.addTest(new JUnit4TestAdapter(FingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(GraphOnlyFingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(FingerprinterToolTest.class));
-        suite.addTest(new JUnit4TestAdapter(ProblemMarkerTest.class));
-        suite.addTest(new JUnit4TestAdapter(SymbolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondToolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(UnsupportedChemObjectExceptionTest.class));
-        suite.addTest(new JUnit4TestAdapter(InvalidSmilesExceptionTest.class));
-        suite.addTest(new JUnit4TestAdapter(AminoAcidManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemFileManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemModelManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemSequenceManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionSetManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(RingSizeComparatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElementComparatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BFSShortestPathTest.class));
-        suite.addTest(new JUnit4TestAdapter(MoleculeGraphsTest.class));
-        suite.addTest(new JUnit4TestAdapter(ConnectionMatrixTest.class));
-        suite.addTest(new JUnit4TestAdapter(BsptTest.class));
-        suite.addTest(new JUnit4TestAdapter(PointTest.class));
-        suite.addTest(new JUnit4TestAdapter(BiconnectivityInspectorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MorganNumbersToolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(PathTest.class));
-        suite.addTest(new JUnit4TestAdapter(QueueTest.class));
-        suite.addTest(new JUnit4TestAdapter(SSSRFinderTest.class));
-        suite.addTest(new JUnit4TestAdapter(DoubleArrayResultTest.class));
-        suite.addTest(new JUnit4TestAdapter(IntegerArrayResultTest.class));
-        suite.addTest(new JUnit4TestAdapter(IntegerResultTest.class));
-        suite.addTest(new JUnit4TestAdapter(DoubleResultTest.class));
-        suite.addTest(new JUnit4TestAdapter(BooleanResultTest.class));
-        suite.addTest(new JUnit4TestAdapter(DoubleArrayResultTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(IntegerArrayResultTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(IntegerResultTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(DoubleResultTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(BooleanResultTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(DescriptorValueTest.class));
-        suite.addTest(new JUnit4TestAdapter(DescriptorSpecificationTest.class));
-        suite.addTest(new JUnit4TestAdapter(FortranFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PrimesTest.class));
-        suite.addTest(new JUnit4TestAdapter(RandomNumbersToolTest.class));
-        suite.addTest(new JUnit4TestAdapter(InvPairTest.class));
-        suite.addTest(new JUnit4TestAdapter(EStateAtomTypeMatcherTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomContainerComparatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(CDKHueckelAromaticityDetectorTest.class));
-        suite.addTest(new JUnit4TestAdapter(HOSECodeGeneratorTest.class));
-        suite.addTest(LonePairElectronCheckerTest.suite());
-
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    StandardCoverageTest.class,
+    AromaticityCalculatorTest.class,
+    DictRefTest.class,
+    CrystalGeometryToolsTest.class,
+    MinimalPathIteratorTest.class,
+    ConnectivityCheckerTest.class,
+    UniversalIsomorphismTesterTest.class,
+    IsomorphismTesterTest.class,
+    RMapTest.class,
+    RGraphTest.class,
+    RNodeTest.class,
+    MathToolsTest.class,
+    AllRingsFinderTest.class,
+    RingPartitionerTest.class,
+    SimpleCycleTest.class,
+    SimpleCycleBasisTest.class,
+    CycleBasisTest.class,
+    FormatStringBufferTest.class,
+    IDCreatorTest.class,
+    MoleculeSetManipulatorTest.class,
+    ReactionManipulatorTest.class,
+    AtomContainerManipulatorTest.class,
+    RingSetManipulatorTest.class,
+    RingManipulatorTest.class,
+    AtomContainerSetManipulatorTest.class,
+    MoleculeSetManipulatorTest.class,
+    RebondToolTest.class,
+    CanonicalLabelerTest.class,
+    // from cdk.test.fingerprint
+    FingerprinterTest.class,
+    GraphOnlyFingerprinterTest.class,
+    FingerprinterToolTest.class,
+    ProblemMarkerTest.class,
+    SymbolsTest.class,
+    BondToolsTest.class,
+    UnsupportedChemObjectExceptionTest.class,
+    InvalidSmilesExceptionTest.class,
+    AminoAcidManipulatorTest.class,
+    AtomTypeManipulatorTest.class,
+    ChemFileManipulatorTest.class,
+    ChemModelManipulatorTest.class,
+    ChemSequenceManipulatorTest.class,
+    ReactionSetManipulatorTest.class,
+    RingSizeComparatorTest.class,
+    ElementComparatorTest.class,
+    BFSShortestPathTest.class,
+    MoleculeGraphsTest.class,
+    ConnectionMatrixTest.class,
+    BsptTest.class,
+    PointTest.class,
+    BiconnectivityInspectorTest.class,
+    MorganNumbersToolsTest.class,
+    PathTest.class,
+    QueueTest.class,
+    SSSRFinderTest.class,
+    DoubleArrayResultTest.class,
+    IntegerArrayResultTest.class,
+    IntegerResultTest.class,
+    DoubleResultTest.class,
+    BooleanResultTest.class,
+    DoubleArrayResultTypeTest.class,
+    IntegerArrayResultTypeTest.class,
+    IntegerResultTypeTest.class,
+    DoubleResultTypeTest.class,
+    BooleanResultTypeTest.class,
+    DescriptorValueTest.class,
+    DescriptorSpecificationTest.class,
+    FortranFormatTest.class,
+    PrimesTest.class,
+    RandomNumbersToolTest.class,
+    InvPairTest.class,
+    EStateAtomTypeMatcherTest.class,
+    AtomContainerComparatorTest.class,
+    CDKHueckelAromaticityDetectorTest.class,
+    HOSECodeGeneratorTest.class,
+    LonePairElectronCheckerTest.class
+})
+public class MstandardTests {}

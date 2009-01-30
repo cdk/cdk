@@ -24,19 +24,44 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.AtomTypeTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractAtomTypeTest;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugAtomType}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomTypeTest extends AtomTypeTest {
+public class DebugAtomTypeTest extends AbstractAtomTypeTest {
 
     @BeforeClass public static void setUp() {
-    	AtomTypeTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugAtomType("C");
+            }
+        });
     }
 
+    @Test public void testDebugAtomType_String() {
+        IAtomType at = new DebugAtomType("C");
+        Assert.assertEquals("C", at.getSymbol());
+    }
+
+    @Test public void testDebugAtomType_IElement() {
+    	IElement element = new DebugElement("C");
+        IAtomType at = element.getBuilder().newAtomType(element);
+        Assert.assertEquals("C", at.getSymbol());
+    }
+
+    @Test public void testDebugAtomType_String_String() {
+        IAtomType at = new DebugAtomType("C4", "C");
+        Assert.assertEquals("C", at.getSymbol());
+        Assert.assertEquals("C4", at.getAtomTypeName());
+    }
 }

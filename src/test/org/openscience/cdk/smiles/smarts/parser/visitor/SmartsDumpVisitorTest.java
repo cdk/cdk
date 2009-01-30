@@ -2,13 +2,9 @@ package org.openscience.cdk.smiles.smarts.parser.visitor;
 
 import java.io.StringReader;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.smiles.smarts.parser.ASTStart;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
-import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsDumpVisitor;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * Junit testing routine for SmartsDumpVisitor
@@ -19,16 +15,7 @@ import org.openscience.cdk.CDKTestCase;
  * @cdk.keyword SMARTS 
  */
 public class SmartsDumpVisitorTest extends CDKTestCase {
-    public SmartsDumpVisitorTest() {}
 
-    public SmartsDumpVisitorTest(String testName) {
-        super(testName);
-    }
-    
-    public static Test suite() {
-        return new TestSuite(SmartsDumpVisitorTest.class);
-    }
-    
     public void dump(String smarts) throws Exception {
     	SMARTSParser parser = new SMARTSParser(new StringReader(smarts));
     	ASTStart start = parser.Start();

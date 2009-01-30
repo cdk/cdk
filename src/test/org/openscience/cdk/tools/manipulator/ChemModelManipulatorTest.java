@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -41,7 +41,7 @@ import java.util.Set;
 /**
  * @cdk.module test-standard
  */
-public class ChemModelManipulatorTest extends NewCDKTestCase {
+public class ChemModelManipulatorTest extends CDKTestCase {
     
 	private final static LoggingTool logger = new LoggingTool(ChemModelManipulatorTest.class);
 	

@@ -20,12 +20,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
@@ -36,15 +36,14 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  *
  * @cdk.module test-qsarprotein
  */
-public class AminoAcidCountDescriptorTest extends CDKTestCase {
+public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 	
 	private IMolecularDescriptor descriptor;
-	
-	public  AminoAcidCountDescriptorTest() {}
     
 	@Before
-    protected void setUp() throws CDKException {
+    public void setUp() throws Exception {
         descriptor = new AminoAcidCountDescriptor();
+        setDescriptor(AminoAcidCountDescriptor.class);
     }
 
 	@Test public void testAACount() throws CDKException {
@@ -76,5 +75,6 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         Assert.assertEquals(2, iaResult.get(8));
         Assert.assertEquals(2, iaResult.get(16));
 	}
+
 }
 

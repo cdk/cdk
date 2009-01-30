@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -38,7 +38,7 @@ import java.io.InputStream;
 /**
  * @cdk.module test-core
  */
-public class SpanningTreeTest extends NewCDKTestCase {
+public class SpanningTreeTest extends CDKTestCase {
     
 	private static SpanningTree azulene = null;
 	private static SpanningTree ethane = null;

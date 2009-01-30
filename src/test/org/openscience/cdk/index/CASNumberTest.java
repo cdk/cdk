@@ -25,7 +25,7 @@ package org.openscience.cdk.index;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Tests CDK's CAS Number class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.NewCDKTestCase;
  * @cdk.created    2003-07-01
  * @cdk.require java1.4+
  */
-public class CASNumberTest extends NewCDKTestCase {
+public class CASNumberTest extends CDKTestCase {
 
     @Test
     public void testValidNumbers() {

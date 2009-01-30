@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNBond;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @cdk.module test-core
  */
-public class BondManipulatorTest extends NewCDKTestCase {
+public class BondManipulatorTest extends CDKTestCase {
     
     @Test
 	public void testGetAtomArray_IBond() {

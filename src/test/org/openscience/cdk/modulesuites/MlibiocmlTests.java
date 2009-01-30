@@ -20,50 +20,22 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.coverage.LibiocmlCoverageTest;
-import org.openscience.cdk.libio.cml.ConvertorTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+import org.openscience.cdk.io.cml.CML2Test;
+import org.openscience.cdk.io.cml.CML2WriterTest;
+import org.openscience.cdk.io.cml.CMLRoundTripTest;
 
 /**
  * TestSuite that runs all the unit tests for the CDK module libiocml.
  *
  * @cdk.module test-libiocml
  */
-public class MlibiocmlTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("libiocml module Tests");
-        
-        suite.addTest(LibiocmlCoverageTest.suite());
-        
-        suite.addTest(ConvertorTest.suite());
-        
-        // the following classes require Java 1.5 (or better)
-        if (System.getProperty("java.version").startsWith("1.5") ||
-        	System.getProperty("java.version").startsWith("1.6") ||
-        	System.getProperty("java.version").startsWith("1.7")) {
-            System.out.println("Found required Java 1.5 (or better), so running the CML2 tests.");
-            addTestSuite(suite, "org.openscience.cdk.io.cml.CML2Test");
-            addTestSuite(suite, "org.openscience.cdk.io.cml.CML2WriterTest");
-            addTestSuite(suite, "org.openscience.cdk.io.cml.CMLRoundTripTest");
-        } else {
-        	System.out.println("Did not find the required Java 1.5 (or better), so not running the CML2 tests.");
-        }
-        
-        return suite;
-    }
-
-    private static void addTestSuite(TestSuite suite, String className) {
-        try {
-            Class testClass = suite.getClass().getClassLoader().loadClass(className);
-            suite.addTest(new TestSuite(testClass));
-        } catch (Exception exception) {
-            // OK, do without. Probably compiled not Java 1.4
-            System.out.println("Could not load the CML2 test: " + exception.getMessage());
-            exception.printStackTrace();
-        }
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    CML2Test.class,
+    CML2WriterTest.class,
+    CMLRoundTripTest.class
+})
+public class MlibiocmlTests {}

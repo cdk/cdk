@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * Basically, identical to the JPopupMenu class, except that this menu
- * can also contain the source for which it was poped up.
+ * can also contain the source for which it was popped up.
  *
  * <p>IMPORTANT: The very nature of this design can lead to race conditions.
  * It would be better that the Event passed to the popup menu would define

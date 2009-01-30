@@ -134,7 +134,7 @@ public class EntryReact extends Entry{
     /**
      * Add a IParameterReact's of the reaction.
      * 
-     * @param A String List containing the information about this parameter.
+     * @param param A String List containing the information about this parameter.
      */
     public void addParameter(List<String> param) {
     	
@@ -177,9 +177,7 @@ public class EntryReact extends Entry{
 	}
 
 	/**
-	 * add a example for this reaction.
-	 * 
-	 * @param xml A List of reactions in XML scheme
+	 * @returns A List of reactions in XML schema.
 	 */
 	public List<String> getExampleReactions() {
 		return this.reactionExample;

@@ -1,10 +1,10 @@
 /*
  *  $RCSfile$
- *  $Author: rajarshi $
- *  $Date: 2008-07-18 13:16:08 -0400 (Fri, 18 Jul 2008) $
- *  $Revision: 11645 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
- *  Copyright (C) 2008 Rajarshi Guha
+ *  Copyright (C) 2008 Rajarshi Guha  <rajarshi@users.sourceforge.net>
  *
  *  Contact: rajarshi@users.sourceforge.net
  *
@@ -36,6 +36,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * A fragment count descriptor that uses e-state fragments.
@@ -304,7 +305,7 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  *
  * @author Rajarshi Guha
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision: 11645 $
+ * @cdk.svnrev $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierHallSmarts
  */
@@ -340,7 +341,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
                 this.getClass().getName(),
-                "$Id: KierHallSmartsDescriptor.java 11645 2008-07-18 17:16:08Z rajarshi $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 
@@ -385,13 +386,21 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
     /**
      * This method calculates occurrences of the Kier &amp; Hall E-state fragments.
      *
-     * @param atomContainer The molecule for which this descriptor is to be calculated
+     * @param container The molecule for which this descriptor is to be calculated
      * @return Counts of the fragments
      */
     @TestMethod("testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtomContainer atomContainer) {
-        if (atomContainer == null || atomContainer.getAtomCount() == 0) {
+    public DescriptorValue calculate(IAtomContainer container) {
+        if (container == null || container.getAtomCount() == 0) {
             return getDummyDescriptorValue(new CDKException("Container was null or else had no atoms"));
+        }
+
+        IAtomContainer atomContainer;
+        try {
+            atomContainer = (IAtomContainer) container.clone();
+            atomContainer = AtomContainerManipulator.removeHydrogens(atomContainer);
+        } catch (CloneNotSupportedException e) {
+            return getDummyDescriptorValue(new CDKException("Error during clone"));
         }
 
         int[] counts = new int[smarts.length];

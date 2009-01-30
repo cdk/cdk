@@ -23,7 +23,7 @@ package org.openscience.cdk.formula.rules;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *
  * @cdk.module test-formula
  */
-public abstract class FormulaRuleTest extends NewCDKTestCase {
+public abstract class FormulaRuleTest extends CDKTestCase {
 	
 	protected static IRule rule;
 

@@ -27,7 +27,7 @@ package org.openscience.cdk.exception;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the NoSuchAtomException class.
@@ -36,7 +36,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see org.openscience.cdk.exception.NoSuchAtomException
  */
-public class NoSuchAtomExceptionTest extends NewCDKTestCase {
+public class NoSuchAtomExceptionTest extends CDKTestCase {
 
     @Test
     public void testNoSuchAtomException_String() {

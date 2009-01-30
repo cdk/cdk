@@ -67,10 +67,7 @@ public class PeriodicTable {
         } catch (IOException e) {
             elements = null;
             return;
-        } catch (ClassNotFoundException e) {
-            elements = null;
-            return;
-        }
+        } 
 
         elements = new HashMap<String, PeriodicTableElement>();
         elementsByNumber = new HashMap<Integer, PeriodicTableElement>();
@@ -188,7 +185,7 @@ public class PeriodicTable {
     }
 
     @TestMethod("testTable")
-    public static String getGroup(String symbol) {
+    public static Integer getGroup(String symbol) {
         initialize();
         PeriodicTableElement e = elements.get(symbol);
         if (e == null) return null;
@@ -204,7 +201,7 @@ public class PeriodicTable {
     }
 
     @TestMethod("testTable")
-    public static String getPeriod(String symbol) {
+    public static Integer getPeriod(String symbol) {
         initialize();
         PeriodicTableElement e = elements.get(symbol);
         if (e == null) return null;

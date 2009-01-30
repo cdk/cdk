@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.DeAromatizationTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -44,7 +44,7 @@ import java.util.Iterator;
  *
  * @cdk.module test-extra
  */
-public class DeAromatizationToolTest extends NewCDKTestCase {
+public class DeAromatizationToolTest extends CDKTestCase {
 	
 	public DeAromatizationToolTest() {
 		super();

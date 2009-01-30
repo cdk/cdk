@@ -24,12 +24,13 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.charges.Polarizability;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  *  Description of the Class
@@ -39,28 +40,27 @@ import org.openscience.cdk.NewCDKTestCase;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class PolarizabilityTest extends NewCDKTestCase {
+public class PolarizabilityTest extends CDKTestCase {
 	
-	private boolean standAlone = false;
-	
-
-	
-	/**
-	 *  Sets the standAlone attribute
-	 *
-	 *@param  arg  The new standAlone value
+    /**
+	 *  A unit test for JUnit
 	 */
-    public void setStandAlone(boolean arg)
-	{
-		standAlone = arg;
+    @Test
+    public void testGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom() throws Exception {
+		Polarizability pol=new Polarizability();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("NCCN(C)(C)");
+		double result=pol.getPolarizabilitiyFactorForAtom(mol,mol.getAtom(0));
+		Assert.assertNotNull(result);
+		result=pol.getPolarizabilitiyFactorForAtom(mol,mol.getAtom(3));
+		Assert.assertNotNull(result);
 	}
-	
-	
+    
 	/**
 	 *  A unit test for JUnit with n,n-dimethyl ethylendiamine
 	 */
     @Test
-    public void testcalculateGHEffectiveAtomPolarizability() throws Exception {
+    public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean() throws Exception {
 		double [] testResult={4.73,6.92};
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -70,7 +70,24 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100, true);
 		Assert.assertEquals(testResult[1],result,0.01);
 	}
-	
+    /**
+	 *  A unit test for JUnit
+	 */
+    @Ignore @Test
+    public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() throws Exception {
+    	Assert.fail("Not tested yet");
+	}
+    /**
+	 *  A unit test for JUnit with n,n-dimethyl ethylendiamine
+	 */
+    @Test
+    public void testCalculateBondPolarizability_IAtomContainer_IBond() throws Exception {
+		Polarizability pol=new Polarizability();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("NCCN(C)(C)");
+		double result=pol.calculateBondPolarizability((IAtomContainer)mol,mol.getBond(0));
+		Assert.assertNotNull(result);
+	}
 	
 	/**
 	 *  A unit test for JUnit with methane

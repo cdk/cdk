@@ -1,11 +1,5 @@
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,6 +7,12 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A Test case for the gaussian 98 (G98Reader) class.
@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass public static void setup() {
-        setSimpleChemObjectReader(new Gaussian98Reader(), "aSimpelChemObjectReader, testFile )");
+        setSimpleChemObjectReader(new Gaussian98Reader(), "data/gaussian/g98ReaderNMRTest.log");
     }
 
     @Test public void testAccepts() {

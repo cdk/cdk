@@ -22,15 +22,15 @@ package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Tests for IReactionProcess implementations.
  *
  * @cdk.module test-reaction
  */
-public class ReactionMechanismTest extends NewCDKTestCase {
+public abstract class ReactionMechanismTest extends CDKTestCase {
 	
 	protected static IReactionMechanism reactionMechanism;
 	

@@ -23,11 +23,23 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.interfaces.IBond.Order;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -903,7 +915,7 @@ public class AtomContainer extends ChemObject
 	 * @param  atom  The atom
 	 * @return       The number of bond orders for this atom
 	 * 
-	 * @deprecated
+	 * @deprecated   Replaced by <code>AtomContainerManipulator#getBondOrderSum(IAtomContainer, IAtom)</code>
 	 */
 	public double getBondOrderSum(IAtom atom)
 	{

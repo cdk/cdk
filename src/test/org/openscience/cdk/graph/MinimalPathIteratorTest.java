@@ -32,7 +32,7 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ import java.util.List;
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
-public class MinimalPathIteratorTest extends NewCDKTestCase {
+public class MinimalPathIteratorTest extends CDKTestCase {
 	public SimpleGraph g;
 
     @Before

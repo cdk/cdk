@@ -24,16 +24,16 @@
 package org.openscience.cdk.formula.rules;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.formula.IsotopeContainer;
+import org.openscience.cdk.formula.IsotopePattern;
 import org.openscience.cdk.formula.IsotopePatternGenerator;
+import org.openscience.cdk.formula.IsotopePatternManipulator;
+import org.openscience.cdk.formula.IsotopePatternSimilarity;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the Isotope Pattern from a given IMolecularFormula
  *  correspond with other to compare.
@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * </table>
  * 
  * @cdk.module  formula
- * @author      miguelrojasch
+ * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
  */
 public class IsotopePatternRule implements IRule{
@@ -65,10 +65,11 @@ public class IsotopePatternRule implements IRule{
 	/** Accuracy on the mass measuring isotope pattern*/
 	private double toleranceMass = 0.001;
 
-	/** Representation of a spectrum */
-	private List<double[]>  pattern;
+	private IsotopePattern  pattern;
 
 	IsotopePatternGenerator isotopeGe;
+
+	private IsotopePatternSimilarity is;
 	
     /**
      *  Constructor for the IsotopePatternRule object.
@@ -77,8 +78,10 @@ public class IsotopePatternRule implements IRule{
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public IsotopePatternRule() {
-    	isotopeGe = new IsotopePatternGenerator(0.10);
-
+    	isotopeGe = new IsotopePatternGenerator(0.01);
+    	is = new IsotopePatternSimilarity();
+		is.seTolerance(toleranceMass);
+		
     	logger = new LoggingTool(this);
     }
 
@@ -101,8 +104,12 @@ public class IsotopePatternRule implements IRule{
        	 if(!(params[1] instanceof Double ))
        		 throw new CDKException("The parameter two must be of type Double");
        	
-       	 pattern =  (List<double[]>) params[0];
-       	 toleranceMass =  (Double) params[1];
+       	 pattern = new IsotopePattern();
+       	 for(double[] listISO:(List<double[]>) params[0]){
+       		 pattern.addIsotope(new IsotopeContainer(listISO[0],listISO[1]));
+       	 }
+       	 
+         is.seTolerance((Double) params[1]);
     }
 
     /**
@@ -132,81 +139,12 @@ public class IsotopePatternRule implements IRule{
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
     	
-    	IMolecularFormulaSet formulaSet = isotopeGe.getIsotopes(formula);
-    	double score = extractScore(formulaSet);
-    	return score;
+    	
+    	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.1);
+		IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
+		IsotopePattern patternIsoNormalize = IsotopePatternManipulator.normalize(patternIsoPredicted);
+		
+    	return is.compare(pattern, patternIsoNormalize);
     }
-	/**
-	 * Extract a score function looking for similarities between isotopes patterns.
-	 * In this algorithm, only the most intensively simulated isotopic peak per nominal
-	 * mass have been considered and used for intensity correlation.
-	 * 
-	 * @param molecularFormulaSet The IMolecularFormulaSet with to compare the isotope pattern
-	 * @return                    The score function value
-	 */
-	private double extractScore(IMolecularFormulaSet formulaSet) {
-		double score = 0.0;
-		
-		String stringMF = MolecularFormulaManipulator.getString(formulaSet.getMolecularFormula(0));
-		IMolecularFormula molecularFormulaA = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(stringMF, formulaSet.getBuilder());
-		double massA = MolecularFormulaManipulator.getTotalExactMass(molecularFormulaA);
-		double windowsAccuracy = toleranceMass;
-		List<Double> inteExperimUnit = new ArrayList<Double>();
-		List<Double> intePatternUnit = new ArrayList<Double>(); 
-		for(int i = 1 ; i < 5 ; i++){
-			// looking highest intensity per nominal mass
-			double inteH = 0;
-			double massUnit = massA + i;
-			
-			// around predicted
-			for(IMolecularFormula molecularFormula: formulaSet.molecularFormulas()){
-				double massS = MolecularFormulaManipulator.getTotalExactMass(molecularFormula);
-				if((massUnit-windowsAccuracy < massS)&(massS < massUnit + windowsAccuracy )){
-					double occurrence = ((Double)molecularFormula.getProperties().get("occurrence"));
-					double intensity = MolecularFormulaManipulator.getTotalNaturalAbundance(molecularFormula)*occurrence;
-					if(intensity > inteH){
-						inteH = intensity;
-					}
-				}
-			}
-			if(inteH != 0){
-				intePatternUnit.add(inteH);
-				inteH = 0;
-				// around experimental
-				for(int j = 0; j < pattern.size(); j++){
-					double intensity = pattern.get(j)[1];
-					double massS = pattern.get(j)[0];
-					if((massUnit-windowsAccuracy < massS)&(massS < massUnit + windowsAccuracy )){
-						if(intensity > inteH){
-							inteH = intensity;
-						}
-					}
-				}
-				inteExperimUnit.add(inteH);
-				
-			}
-			
-		}
-		
-		double sumN = 0.0;
-		for(int j = 0 ; j < intePatternUnit.size(); j++)
-			sumN += intePatternUnit.get(j)*inteExperimUnit.get(j);
-		
-		double sumD = 0.0;
-		for(Iterator<Double> it = intePatternUnit.iterator(); it.hasNext();)
-			sumD += Math.pow(it.next(), 2);
-		
-		double normalization = sumN/sumD;
-		
-		if(sumN == 0)
-			return 0.0;
-		
-		sumN = 0.0;
-		for(int j = 0 ; j < intePatternUnit.size(); j++)
-			sumN += Math.pow(intePatternUnit.get(j)*inteExperimUnit.get(j)/normalization,2);
-		score = (1-Math.pow(sumN/sumD,0.5));
-		
-		return score;
-	}
     
 }

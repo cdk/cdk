@@ -1,4 +1,4 @@
-/*  $Revision: 10777 $ $Author: egonw $ $Date: 2008-05-03 09:41:12 +0200 (Sat, 03 May 2008) $
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
@@ -35,8 +35,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module    standard
- * @cdk.svnrev    $Revision: 10777 $
- * @cdk.bug       1956606
+ * @cdk.svnrev    $Revision$
  */
 public class AtomMappingTools {
 

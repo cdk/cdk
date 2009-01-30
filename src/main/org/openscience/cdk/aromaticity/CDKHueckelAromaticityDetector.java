@@ -24,24 +24,35 @@
  */
 package org.openscience.cdk.aromaticity;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
-import java.util.Iterator;
-
 /**
  * This aromaticity detector detects the aromaticity based on the H&uuml;ckel
  * 4n+2 pi-electrons rule applied to isolated ring systems. It assumes
- * CDK atom types to be perceived.
+ * CDK atom types to be perceived with the {@link CDKAtomTypeMatcher} or with
+ * any compatible class. For example:
+ * <pre>
+ * Molecule molecule = MoleculeFactory.makePyridineOxide();
+ * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+ * CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+ * </pre>
  *
  * @author         egonw
  * @cdk.module     standard

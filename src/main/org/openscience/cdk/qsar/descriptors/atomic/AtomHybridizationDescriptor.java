@@ -57,7 +57,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.svnrev  $Revision$
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:atomHybridization
- * @cdk.bug        1558660
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptorTest")
 public class AtomHybridizationDescriptor implements IAtomicDescriptor {

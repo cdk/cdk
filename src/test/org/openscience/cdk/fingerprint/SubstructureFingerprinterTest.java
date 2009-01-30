@@ -30,7 +30,7 @@ package org.openscience.cdk.fingerprint;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -39,7 +39,7 @@ import java.util.BitSet;
 /**
  * @cdk.module test-fingerprint
  */
-public class SubstructureFingerprinterTest extends NewCDKTestCase {
+public class SubstructureFingerprinterTest extends CDKTestCase {
 
     @Test
     public void testSize() throws Exception {

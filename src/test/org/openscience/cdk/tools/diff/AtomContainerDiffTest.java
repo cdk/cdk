@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 /**
  * @cdk.module test-diff
  */
-public class AtomContainerDiffTest extends NewCDKTestCase {
+public class AtomContainerDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IAtomContainer container = new AtomContainer();

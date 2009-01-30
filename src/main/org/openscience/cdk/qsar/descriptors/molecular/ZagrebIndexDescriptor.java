@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -115,11 +115,10 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         double zagreb = 0;        
-        IAtom atomi;
-        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            atomi = atomContainer.getAtom(i);
+        for (IAtom atom : atomContainer.atoms()) {
+            if (atom.getSymbol().equals("H")) continue;
             int atomDegree = 0;
-            List<IAtom> neighbours = atomContainer.getConnectedAtomsList(atomi);
+            List<IAtom> neighbours = atomContainer.getConnectedAtomsList(atom);
             for (IAtom neighbour : neighbours) {
                 if (!neighbour.getSymbol().equals("H")) {
                     atomDegree += 1;

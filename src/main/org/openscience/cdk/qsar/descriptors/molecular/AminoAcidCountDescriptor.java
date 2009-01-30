@@ -191,7 +191,7 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
      */
     @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
-        return new IntegerArrayResult();
+        return new IntegerArrayResult(20);
     }
 
     /**

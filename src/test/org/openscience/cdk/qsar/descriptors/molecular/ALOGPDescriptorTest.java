@@ -1,3 +1,23 @@
+/* $Revision$ $Author$ $Date$
+ *
+ * Copyright (C) 2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
@@ -22,7 +42,7 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
     private CDKHydrogenAdder hydrogenAdder;
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         setDescriptor(ALOGPDescriptor.class);
         hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }
@@ -46,12 +66,6 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(new Bond(c3, c4));
         mol.addBond(new Bond(c4, cl));
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-
-        // add explicit hydrogens here
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        hydrogenAdder.addImplicitHydrogens(mol);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         DescriptorValue v = descriptor.calculate(mol);

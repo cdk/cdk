@@ -52,7 +52,7 @@ import java.io.StringWriter;
  * @cdk.created    2004-02-09
  * @cdk.module     test-smiles
  */
-public class SmilesGeneratorTest extends NewCDKTestCase {
+public class SmilesGeneratorTest extends CDKTestCase {
 
 
 	/**
@@ -334,7 +334,6 @@ public class SmilesGeneratorTest extends NewCDKTestCase {
 		mol1.getAtom(4).setPoint2d(new Point2d(0, 3));
 		mol1.getAtom(5).setPoint2d(new Point2d(2, 3));
 		
-		ifac.configureAtoms(mol1);
 		smiles1 = sg.createSMILES(mol1, true, bool);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("F/C(=C\\(F)S)S", smiles1);
@@ -425,7 +424,8 @@ public class SmilesGeneratorTest extends NewCDKTestCase {
 	{
 		String smiles = "";
 		Molecule molecule = new Molecule();
-        SmilesGenerator sg = new SmilesGenerator(true);
+        SmilesGenerator sg = new SmilesGenerator();
+        sg.setUseAromaticityFlag(true);
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
 		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
 		sp2CarbonWithOneHydrogen.setHydrogenCount(1);
@@ -443,9 +443,6 @@ public class SmilesGeneratorTest extends NewCDKTestCase {
 		molecule.addBond(5, 0, IBond.Order.SINGLE);
 		smiles = sg.createSMILES(molecule);
 		Assert.assertEquals("c1ccccc1", smiles);
-		sg.setUseAromaticityFlag(false);
-		smiles = sg.createSMILES(molecule);
-		Assert.assertEquals("C1CCCCC1", smiles);
 	}
 
 

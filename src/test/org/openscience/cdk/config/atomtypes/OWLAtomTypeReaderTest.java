@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  *
  * @cdk.module test-core
  */
-public class OWLAtomTypeReaderTest extends NewCDKTestCase {
+public class OWLAtomTypeReaderTest extends CDKTestCase {
 
 	private final String OWL_CONTENT =
 		"<?xml version=\"1.0\"?>" +

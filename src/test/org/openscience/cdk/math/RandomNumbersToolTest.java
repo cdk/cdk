@@ -23,14 +23,14 @@ package org.openscience.cdk.math;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.math.RandomNumbersTool;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.Random;
 
 /**
  * @cdk.module test-standard
  */
-public class RandomNumbersToolTest extends NewCDKTestCase {
+public class RandomNumbersToolTest extends CDKTestCase {
 
     public RandomNumbersToolTest() {
         super();

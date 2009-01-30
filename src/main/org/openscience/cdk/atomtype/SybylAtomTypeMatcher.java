@@ -1,4 +1,4 @@
-/* $Revision: 11555 $ $Author: egonw $ $Date: 2008-07-12 20:31:17 +0200 (Sat, 12 Jul 2008) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  *
@@ -19,6 +19,10 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -31,9 +35,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 /**
  * Atom Type matcher for Sybyl atom types. It uses the {@link CDKAtomTypeMatcher}
  * for perception and then maps CDK to Sybyl atom types.
@@ -41,12 +42,15 @@ import java.util.Map;
  * @author         egonw
  * @cdk.created    2008-07-13
  * @cdk.module     atomtype
- * @cdk.svnrev     $Revision: 11555 $
+ * @cdk.svnrev     $Revision$
  * @cdk.keyword    atom types, Sybyl
  */
 @TestClass("org.openscience.cdk.atomtype.SybylAtomTypeMatcherTest")
 public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 
+    private final static String SYBYL_ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/sybyl-atom-types.owl";
+    private final static String CDK_TO_SYBYL_MAP = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
+    
 	private AtomTypeFactory factory;
 	private CDKAtomTypeMatcher cdkMatcher;
 	private AtomTypeMapper mapper;
@@ -55,14 +59,11 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         factories = new Hashtable<IChemObjectBuilder,SybylAtomTypeMatcher>(1); 
 
     private SybylAtomTypeMatcher(IChemObjectBuilder builder) {
-    	factory = AtomTypeFactory.getInstance(
-			"org/openscience/cdk/dict/data/sybyl-atom-types.owl",
-			builder
-		);
-    	cdkMatcher = CDKAtomTypeMatcher.getInstance(builder);
-    	mapper = AtomTypeMapper.getInstance(
-            "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"
-        );
+        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(SYBYL_ATOM_TYPE_LIST);
+        factory = AtomTypeFactory.getInstance(stream, "owl", builder);
+        cdkMatcher = CDKAtomTypeMatcher.getInstance(builder);
+        InputStream mapStream = this.getClass().getClassLoader().getResourceAsStream(CDK_TO_SYBYL_MAP);
+        mapper = AtomTypeMapper.getInstance(CDK_TO_SYBYL_MAP, mapStream);
     }
 
     @TestMethod("testGetInstance_IChemObjectBuilder")
@@ -115,6 +116,8 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         String mappedType = mapper.mapAtomType(typeName);
         if ("C.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
             mappedType = "C.ar";
+        } else if ("N.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
+            mappedType = "N.ar";
         } else if ("N.pl3".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
             mappedType = "N.ar";
         }

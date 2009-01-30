@@ -46,7 +46,7 @@ import java.util.BitSet;
  * <table>
  * <thead>
  * <tr>
- * <td>Bit positionh</td><td>Description</td><td>Pattern</td>
+ * <td>Bit position</td><td>Description</td><td>Pattern</td>
  * </tr>
  * </thead>
  * <tbody>

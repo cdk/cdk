@@ -36,7 +36,7 @@ import java.util.List;
  * AtomType resource that reads the atom type configuration from an OWL file.
  *
  * @cdk.module  core
- * @cdk.svnrev  $Revision: 12444 $
+ * @cdk.svnrev  $Revision$
  */
 @TestClass("org.openscience.cdk.config.OWLBasedAtomTypeConfiguratorTest")
 public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {

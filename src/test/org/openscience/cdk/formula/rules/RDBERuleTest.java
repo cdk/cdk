@@ -164,6 +164,21 @@ public class RDBERuleTest extends FormulaRuleTest {
 		
 		Assert.assertEquals(1.0, rule.getRDBEValue(formula).get(0),0.0001);
 	}
+	
+	/**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testValidate_IMolecularFormula_double() throws ClassNotFoundException, CDKException, Exception {
+		
+		RDBERule rule  = new RDBERule();
+
+		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C2H4", builder);
+		
+		Assert.assertTrue(rule.validate(formula,2.0));
+	}
+	
 	/**
 	 * A unit test suite for JUnit.C3H8O3S2
 	 *
@@ -222,5 +237,20 @@ public class RDBERuleTest extends FormulaRuleTest {
 		
 		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
-	
+	/**
+	 * A unit test suite for JUnit for lipid PC.
+     *
+     * @cdk.bug 2322906
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testPCCharged() throws ClassNotFoundException, CDKException, Exception {
+		
+		RDBERule rule  = new RDBERule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C42H85NO8P", builder);
+		formula.setCharge(1.0);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
 }

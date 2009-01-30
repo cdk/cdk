@@ -34,6 +34,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -84,4 +85,11 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(12, molecule.getBondCount());
     }
     
+    @Test(expected=CDKException.class)
+    public void testSetReader_Reader() throws Exception {
+        // CDKException expected as these INChI files are XML, which must
+        // be read via InputStreams
+        super.testSetReader_Reader();
+    }
+
 }

@@ -24,19 +24,96 @@
  */
 package org.openscience.cdk.nonotify;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.AtomTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.AbstractAtomTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNAtom}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAtomTest extends AtomTest {
+public class NNAtomTest extends AbstractAtomTest {
 
     @BeforeClass public static void setUp() {
-    	AtomTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNAtom();
+            }
+        });
     }
 
+    @Test public void testNNAtom() {
+        IAtom a = new NNAtom();
+        Assert.assertNotNull(a);
+    }
+
+    @Test public void testNNAtom_IElement() {
+    	IElement element = newChemObject().getBuilder().newElement();
+        IAtom a = new NNAtom(element);
+        Assert.assertNotNull(a);
+    }
+
+    @Test public void testNNAtom_String() {
+        IAtom a = new NNAtom("C");
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    @Test public void testNNAtom_String_Point3d() {
+        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
+
+        IAtom a = new NNAtom("C", point3d);
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point3d, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    @Test public void testNNAtom_String_Point2d() {
+        Point2d point2d = new Point2d(1.0, 2.0);
+
+        IAtom a = new NNAtom("C", point2d);
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point2d, a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    // Overwrite default methods: no notifications are expected!
+    
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(newChemObject());
+    }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(newChemObject());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(newChemObject());
+    }
 }

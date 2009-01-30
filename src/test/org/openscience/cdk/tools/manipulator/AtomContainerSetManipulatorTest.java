@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 import java.util.List;
@@ -39,7 +39,7 @@ import java.util.List;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-public class AtomContainerSetManipulatorTest extends NewCDKTestCase {
+public class AtomContainerSetManipulatorTest extends CDKTestCase {
 	
 	IAtomContainer mol1 = null;
 	IAtomContainer mol2 = null;

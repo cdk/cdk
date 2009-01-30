@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
 /**
  * This class is the interface that all ChemFormat's should implement.
  *
- * @cdk.module io
+ * @cdk.module ioformats
  * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>

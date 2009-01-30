@@ -27,18 +27,14 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * @cdk.module standard
@@ -52,7 +48,7 @@ public class RingSetManipulator {
      * @param set The collection of rings
      * @return  The total number of atoms
      */
-    @TestMethod("testGetAtomCount")
+    @TestMethod("testGetAtomCount_IRingSet")
     public static int getAtomCount(IRingSet set) {
 		int count = 0;
         for (IAtomContainer atomContainer : set.atomContainers()) {

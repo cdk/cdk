@@ -247,7 +247,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		return super.getFormalCharge();
 	}
 
-	public void setFormalNeighbourCount(int count) {
+	public void setFormalNeighbourCount(Integer count) {
 		logger.debug("Setting forml neighbour count: ", count);
 		super.setFormalNeighbourCount(count);
 	}
@@ -267,7 +267,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		return super.getHybridization();
 	}
 
-	public void setCovalentRadius(double radius) {
+	public void setCovalentRadius(Double radius) {
 		logger.debug("Setting covalent radius: ", radius);
 		super.setCovalentRadius(radius);
 	}
@@ -277,7 +277,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		return super.getCovalentRadius();
 	}
 
-	public void setValency(int valency) {
+	public void setValency(Integer valency) {
 		logger.debug("Setting valency: ", valency);
 		super.setValency(valency);
 	}

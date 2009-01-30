@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.List;
 //import org.openscience.cdk.tools.LoggingTool;
@@ -44,7 +44,7 @@ import java.util.List;
  * @author         kaihartmann
  * @cdk.created    2005-05-24
  */
-public class RingPartitionerTest extends NewCDKTestCase
+public class RingPartitionerTest extends CDKTestCase
 {
 
 	static boolean standAlone = false;

@@ -27,7 +27,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Class for unmarshalling a dictionary shema file.
+ * Class for unmarshalling a dictionary schema file.
  * 
  * @cdk.module     dict
  */

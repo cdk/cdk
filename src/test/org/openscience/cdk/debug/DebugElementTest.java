@@ -20,19 +20,48 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.ElementTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractElementTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of DebugElement.
+ * Checks the functionality of {@link DebugElement}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugElementTest extends ElementTest {
+public class DebugElementTest extends AbstractElementTest {
 
     @BeforeClass public static void setUp() {
-    	ElementTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugElement();
+            }
+        });
     }
 
+    @Test public void testDebugElement() {
+        IElement e = new DebugElement();
+        Assert.assertTrue(e instanceof IChemObject);
+    }
+    
+    @Test public void testDebugElement_IElement() {
+        IElement element = new DebugElement();
+        IElement e = new DebugElement(element);
+        Assert.assertTrue(e instanceof IChemObject);
+    }
+    
+    @Test public void testDebugElement_String() {
+        IElement e = new DebugElement("C");
+        Assert.assertEquals("C", e.getSymbol());
+    }
+    
+    @Test public void testDebugElement_String_int() {
+        IElement e = new DebugElement("H", 1);
+        Assert.assertEquals("H", e.getSymbol());
+        Assert.assertEquals(1, e.getAtomicNumber().intValue());
+    }
 }

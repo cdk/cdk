@@ -24,51 +24,31 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.AminoAcidTest;
+import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugAminoAcid}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAminoAcidTest extends AminoAcidTest {
+public class DebugAminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass public static void setUp() {
-    	AminoAcidTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugAminoAcid();
+            }
+        });
     }
 
-    @Test public void testAminoAcid() {
-        super.testAminoAcid();
+    @Test public void testDebugAminoAcid() {
+        IAminoAcid oAminoAcid = new DebugAminoAcid();
+        Assert.assertNotNull(oAminoAcid);
     }
-    
-    @Test public void testAddCTerminus_IAtom() {
-        super.testAddCTerminus_IAtom();
-    }
-    
-    @Test public void testGetCTerminus() {
-        super.testGetCTerminus();
-    }
-
-    @Test public void testAddNTerminus_IAtom() {
-        super.testAddNTerminus_IAtom();
-    }
-    
-    @Test public void testGetNTerminus() {
-        super.testGetNTerminus();
-    }
-    
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-    	super.testToString();
-    }
-
-    @Test public void testClone() throws Exception {
-        super.testClone();
-    }
-    
 }

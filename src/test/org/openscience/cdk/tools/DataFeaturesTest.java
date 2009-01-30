@@ -26,7 +26,7 @@ package org.openscience.cdk.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-public class DataFeaturesTest extends NewCDKTestCase {       
+public class DataFeaturesTest extends CDKTestCase {       
 
     @Test
     public void testDataFeatures() {

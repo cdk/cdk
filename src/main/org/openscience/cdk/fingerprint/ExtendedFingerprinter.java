@@ -102,14 +102,22 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 * The RingSet used is passed via rs parameter. This must be a smallesSetOfSmallestRings.
 	 * The List must be a list of all ring systems in the molecule.
 	 *
-	 *@param     container         The AtomContainer for which a Fingerprint is generated
+	 *@param     atomContainer         The AtomContainer for which a Fingerprint is generated
 	 *@param     ringSet         An SSSR RingSet of ac (if not available, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
 	 *@param 	 rslist		A list of all ring systems in ac
-	 *@exception Exception  Description of the Exception
+	 *@exception CDKException  Description of the Exception
+     * @return a BitSet representing the fingerprint
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer_IRingSet_List")
-    public BitSet getFingerprint(IAtomContainer container, IRingSet ringSet, List<IRingSet> rslist) throws CDKException {
-		BitSet bitSet = fingerprinter.getFingerprint(container);
+    public BitSet getFingerprint(IAtomContainer atomContainer, IRingSet ringSet, List<IRingSet> rslist) throws CDKException {
+        IAtomContainer container;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Could not clone input");
+        }
+        
+        BitSet bitSet = fingerprinter.getFingerprint(container);
 		int size = this.getSize();
 		double weight = MolecularFormulaManipulator.getTotalNaturalAbundance(MolecularFormulaManipulator.getMolecularFormula(container));
 		for(int i=1;i<11;i++){

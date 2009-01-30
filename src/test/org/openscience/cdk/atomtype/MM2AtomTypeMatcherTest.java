@@ -24,8 +24,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,10 +55,6 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(MM2AtomTypeMatcherTest.class);
-    }
-	
     @BeforeClass public static void setUp() throws Exception {
     	logger = new LoggingTool(MM2AtomTypeMatcherTest.class);
     	
@@ -137,9 +131,9 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
     
     /**
-     * The test seems to be run by JUnit in order in which they found
+     * The test seems to be run by JUnit in the order in which they are found
      * in the source. Ugly, but @AfterClass does not work because that
-     * methods does cannot Assert.assert anything.
+     * method cannot Assert.assert anything.
      */
     @Test public void countTestedAtomTypes() {
     	AtomTypeFactory factory = AtomTypeFactory.getInstance(

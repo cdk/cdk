@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @see org.openscience.cdk.geometry.alignment.KabschAlignment
  */
-public class KabschAlignmentTest extends NewCDKTestCase {
+public class KabschAlignmentTest extends CDKTestCase {
 
     @Test public void testAlign() throws java.lang.Exception{
         IAtomContainer ac;

@@ -22,47 +22,57 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractAtomContainerSetTest;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.AtomContainerSetTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNAtomContainerSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAtomContainerSetTest extends AtomContainerSetTest {
+public class NNAtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
-    	AtomContainerSetTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNAtomContainerSet();
+            }
+        });
+    }
+
+    @Test public void testNNAtomContainerSet() {
+        IAtomContainerSet som = new NNAtomContainerSet();
+        Assert.assertNotNull(som);
+        Assert.assertEquals(0, som.getAtomContainerCount());
     }
 
     // Overwrite default methods: no notifications are expected!
     
-    public void testStateChanged_IChemObjectChangeEvent() {
-        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IAtomContainerSet chemObject = builder.newAtomContainerSet();
-        chemObject.addListener(listener);
-        
-        chemObject.addAtomContainer(builder.newAtomContainer());
-        Assert.assertFalse(listener.changed);
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
-
-    private class ChemObjectListenerImpl implements IChemObjectListener {
-        private boolean changed;
-        
-        private ChemObjectListenerImpl() {
-            changed = false;
-        }
-        
-        public void stateChanged(IChemObjectChangeEvent e) {
-            changed = true;
-        }
-        
-        public void reset() {
-            changed = false;
-        }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(newChemObject());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
 }

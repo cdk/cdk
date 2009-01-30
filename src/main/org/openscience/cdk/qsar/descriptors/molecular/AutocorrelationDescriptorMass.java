@@ -21,7 +21,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -35,6 +34,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
@@ -52,30 +52,15 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
     private final static String[] names = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
     private final static double CARBON_MASS = 12.010735896788;
 	
-	/**
-	 * This method gets the scaled atomic masses of atoms in a molecule.
-	 * @param element
-	 * @return
-	 * @throws java.io.IOException
-     * @throws ClassNotFoundException
-     */
     private static double scaledAtomicMasses(IElement element)
             throws java.io.IOException, ClassNotFoundException {
 
     	IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-        double realmasses = isofac.getNaturalMass(new Element("H"));
+        double realmasses = isofac.getNaturalMass(element);
         return (realmasses / CARBON_MASS);
 
     }
 
-	
-	/**
-	 * This method gets a list o scaled atomic masses.
-	 * @param container
-	 * @return
-	 * @throws java.io.IOException
-	 * @throws ClassNotFoundException
-	 */
 	private static double[] listConvertion(IAtomContainer container)
 			throws java.io.IOException, ClassNotFoundException{
 		int natom = container.getAtomCount();
@@ -92,8 +77,20 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	/**
      * This method calculate the ATS Autocorrelation descriptor.
      */
-    @TestMethod("testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtomContainer container) {
+    @TestMethod("test1")
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+        IAtomContainer container;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+            container = AtomContainerManipulator.removeHydrogens(container);
+        } catch (CloneNotSupportedException e) {
+            DoubleArrayResult result = new DoubleArrayResult(5);
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    result, getDescriptorNames(),
+                    new CDKException("Error during cloner: " + e.getMessage(), e));
+        }
+
         try {
             double[] w = listConvertion(container);
             int natom = container.getAtomCount();

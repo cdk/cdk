@@ -24,10 +24,9 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.coverage.ForcefieldCoverageTest;
 import org.openscience.cdk.modeling.forcefield.ForceFieldTests;
@@ -37,17 +36,10 @@ import org.openscience.cdk.modeling.forcefield.ForceFieldTests;
  *
  * @cdk.module test-forcefield
  */
-public class MforcefieldTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The CDK force field module Tests");
-        
-        suite.addTest(ForcefieldCoverageTest.suite());
-        
-        suite.addTest(new JUnit4TestAdapter(ForceFieldTests.class));
-        suite.addTest(new JUnit4TestAdapter(MMFF94PartialChargesTest.class));
-
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    ForcefieldCoverageTest.class,
+    ForceFieldTests.class,
+    MMFF94PartialChargesTest.class
+})
+public class MforcefieldTests {}

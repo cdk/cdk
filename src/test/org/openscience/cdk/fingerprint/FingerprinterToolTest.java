@@ -27,7 +27,7 @@ package org.openscience.cdk.fingerprint;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 import java.util.BitSet;
@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterToolTest extends NewCDKTestCase
+public class FingerprinterToolTest extends CDKTestCase
 {		
 	
 	public FingerprinterToolTest()

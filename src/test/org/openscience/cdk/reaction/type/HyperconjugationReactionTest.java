@@ -76,7 +76,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
 	/**
 	 * A unit test suite for JUnit. Reaction: [C+]-CC => C=CC + [H+]
-	 * Automatic search of the center active.
+	 * Automatic search for the active center.
 	 *
 	 * @return    The test suite
 	 */
@@ -132,7 +132,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product));
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
@@ -194,7 +194,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	}
 	/**
 	 * A unit test suite for JUnit. Reaction: [C-][C+]-C => [C-]C=C + [H+]
-	 * Automatic search of the center active.
+	 * Automatic search for the active center.
 	 *
 	 * @return    The test suite
 	 */

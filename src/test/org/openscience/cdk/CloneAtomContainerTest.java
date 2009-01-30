@@ -39,7 +39,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @author  Christoph Steinbeck
  * @cdk.created 2001-08-09
  */
-public class CloneAtomContainerTest extends NewCDKTestCase {
+public class CloneAtomContainerTest extends CDKTestCase {
 
 	@Test public void testClone() throws Exception  
 	{

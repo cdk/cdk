@@ -32,7 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,7 +47,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test-standard
  */
-public class RingSetManipulatorTest extends NewCDKTestCase {
+public class RingSetManipulatorTest extends CDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	
@@ -163,7 +163,7 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
     	Assert.assertEquals(2, list.size());
     }
     
-    @Test public void testGetAtomCount()
+    @Test public void testGetAtomCount_IRingSet()
     {
     	IRingSet rs = builder.newRingSet();
     	IAtomContainer ac1 = builder.newRing();
@@ -243,10 +243,7 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
     	List<IRingSet> list=new Vector<IRingSet>();
     	list.add(ringset);
         IAtomContainer mol = MoleculeFactory.makeBiphenyl();
-        // TODO: shk3-cleanuptests: why do you need to do aromaticity detection here?
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        
+
         AllRingsFinder arf = new AllRingsFinder();
         IRingSet ringSet = arf.findAllRings(mol);
         list.add(ringSet);

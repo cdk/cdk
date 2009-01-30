@@ -25,8 +25,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -86,10 +84,6 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     	}
     }
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(MMFF94AtomTypeMatcherTest.class);
-    }
-    
     @Test public void testMMFF94AtomTypeMatcher() throws Exception {
     	MMFF94AtomTypeMatcher matcher = new MMFF94AtomTypeMatcher();
 	    Assert.assertNotNull(matcher);
@@ -385,9 +379,9 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	}
 	
     /**
-     * The test seems to be run by JUnit in order in which they found
+     * The test seems to be run by JUnit in the order in which they are found
      * in the source. Ugly, but @AfterClass does not work because that
-     * methods does cannot Assert.assert anything.
+     * method cannot Assert.assert anything.
      */
     @Test public void countTestedAtomTypes() {
     	AtomTypeFactory factory = AtomTypeFactory.getInstance(

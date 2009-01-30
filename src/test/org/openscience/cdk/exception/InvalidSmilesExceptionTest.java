@@ -23,12 +23,12 @@ package org.openscience.cdk.exception;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class InvalidSmilesExceptionTest extends NewCDKTestCase {
+public class InvalidSmilesExceptionTest extends CDKTestCase {
     
     public InvalidSmilesExceptionTest() {
         super();

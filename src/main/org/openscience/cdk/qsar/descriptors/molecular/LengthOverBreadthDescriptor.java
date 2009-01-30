@@ -63,7 +63,6 @@ import javax.vecmath.Point3d;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:lengthOverBreadth
- * @cdk.bug     1862142
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest")
 public class LengthOverBreadthDescriptor implements IMolecularDescriptor {

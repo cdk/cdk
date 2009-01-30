@@ -51,7 +51,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(MDLV3000ReaderTest.class);
-        setSimpleChemObjectReader(new MDLV3000Reader(), "data/mdl/reaction_v3.rxn");
+        setSimpleChemObjectReader(new MDLV3000Reader(), "data/mdl/molV3000.mol");
     }
 
     @Test public void testAccepts() {

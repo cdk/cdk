@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class BondDiffTest extends NewCDKTestCase {
+public class BondDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IBond bond1 = new Bond();

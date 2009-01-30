@@ -32,7 +32,7 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.RingManipulator;
 
 import java.util.Iterator;
@@ -40,7 +40,7 @@ import java.util.Iterator;
 /**
  * @cdk.module test-standard
  */
-public class RingManipulatorTest extends NewCDKTestCase {
+public class RingManipulatorTest extends CDKTestCase {
 
 	public RingManipulatorTest() {
         super();

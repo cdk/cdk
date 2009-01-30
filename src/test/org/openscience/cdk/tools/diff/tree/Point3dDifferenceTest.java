@@ -24,12 +24,12 @@ import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class Point3dDifferenceTest extends NewCDKTestCase {
+public class Point3dDifferenceTest extends CDKTestCase {
 
     @Test public void testDiff() {
     	Point3d foo = new Point3d(1.0, 2.0, 4.5);

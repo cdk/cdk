@@ -38,8 +38,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.tools.LoggingTool;
 
-
-
 /**
  * <p>The base class for all chemical reactions objects in this cdk. 
  * It provides methods for adding parameters</p>

@@ -50,7 +50,7 @@ import java.util.List;
  * @author     steinbeck
  * @cdk.created    2001-07-24
  */
-public class ConnectivityCheckerTest extends NewCDKTestCase {
+public class ConnectivityCheckerTest extends CDKTestCase {
 
 
 	public ConnectivityCheckerTest() {
@@ -95,7 +95,7 @@ public class ConnectivityCheckerTest extends NewCDKTestCase {
     }
 
     /**
-	 * This test tests the consitency between isConnected() and
+	 * This test tests the consistency between isConnected() and
      * partitionIntoMolecules().
 	 */
 	@Test public void testPartitionIntoMolecules_IsConnected_Consistency() {

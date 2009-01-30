@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 /**
  * @cdk.module test-reaction
  */
-public class ReactionSchemeManipulatorTest extends NewCDKTestCase {
+public class ReactionSchemeManipulatorTest extends CDKTestCase {
     
     private IChemObjectBuilder builder;
     

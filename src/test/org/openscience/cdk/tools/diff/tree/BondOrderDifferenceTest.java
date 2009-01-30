@@ -22,13 +22,13 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @cdk.module test-diff
  */
-public class BondOrderDifferenceTest extends NewCDKTestCase {
+public class BondOrderDifferenceTest extends CDKTestCase {
 
     @Test public void testDiff() {
         IDifference result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.DOUBLE);

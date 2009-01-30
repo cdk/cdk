@@ -28,13 +28,13 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomType;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * @cdk.module test-standard
  */
-public class AtomTypeManipulatorTest extends NewCDKTestCase {
+public class AtomTypeManipulatorTest extends CDKTestCase {
     
     public AtomTypeManipulatorTest() {
         super();

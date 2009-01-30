@@ -31,7 +31,7 @@ import org.junit.Before;
 public class VAdjMaDescriptorTest extends MolecularDescriptorTest {
     
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         setDescriptor(TPSADescriptor.class);
     }
 

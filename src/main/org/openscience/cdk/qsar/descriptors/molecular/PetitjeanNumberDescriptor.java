@@ -34,6 +34,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 
 /**
@@ -131,9 +132,10 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
+        IAtomContainer cloneContainer = AtomContainerManipulator.removeHydrogens(atomContainer);
         double petitjeanNumber; //weinerPath
-        int diameter = PathTools.getMolecularGraphDiameter(atomContainer);
-        int radius = PathTools.getMolecularGraphRadius(atomContainer);
+        int diameter = PathTools.getMolecularGraphDiameter(cloneContainer);
+        int radius = PathTools.getMolecularGraphRadius(cloneContainer);
 
         if (diameter == 0) petitjeanNumber = 0;
         else petitjeanNumber = (diameter - radius)/(double)diameter;

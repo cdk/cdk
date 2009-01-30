@@ -26,13 +26,13 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**
  * @cdk.module test-pdb
  */
-public class ProteinBuilderToolTest extends NewCDKTestCase {
+public class ProteinBuilderToolTest extends CDKTestCase {
 
     @Test
     public void testCreateProtein() throws Exception {

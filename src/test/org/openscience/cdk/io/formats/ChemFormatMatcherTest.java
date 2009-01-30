@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @cdk.module test-io
+ * @cdk.module test-ioformats
  */
 abstract public class ChemFormatMatcherTest extends ChemFormatTest {
     
@@ -44,6 +44,12 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
             "You must use setChemFormatMatcher() to set the IChemFormatMatcher object.",
             matcher
         );
+    }
+
+    @Test public void testMatches() {
+        Assert.assertTrue(true);
+        // positive testing is done by the ReaderFactoryTest, and
+        // negative tests are given below
     }
 
     @Test public void testMatchesEmptyString() {

@@ -21,13 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.AminoAcidTest;
 import org.openscience.cdk.AtomContainerSetTest;
 import org.openscience.cdk.AtomContainerTest;
@@ -76,63 +74,56 @@ import org.openscience.cdk.protein.data.PDBStructureTest;
  *
  * @cdk.module test-data
  */
-public class MdataTests {
-
-    public static Test suite () {
-TestSuite suite= new TestSuite("The CDK data module Tests");
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    DataCoverageTest.class,
         
-        suite.addTest(DataCoverageTest.suite());
+    AminoAcidTest.class,
+    AtomContainerTest.class,
+    AtomParityTest.class,
+    AtomTest.class,
+    AtomTypeTest.class,
+    BioPolymerTest.class,
+    BondTest.class,
+    ChemFileTest.class,
+    ChemModelTest.class,
+    ChemObjectTest.class,
+    ChemSequenceTest.class,
+    ConformerContainerTest.class,
+    CrystalTest.class,
+    DefaultChemObjectBuilderTest.class,
+    ElectronContainerTest.class,
+    ElementTest.class,
+    IsotopeTest.class,
+    LonePairTest.class,
+    MappingTest.class,
+    MoleculeTest.class,
+    MonomerTest.class,
+    PolymerTest.class,
+    PseudoAtomTest.class,
+    ReactionTest.class,
+    RingTest.class,
+    RingSetTest.class,
+    AtomContainerSetTest.class,
+    MoleculeSetTest.class,
+    ReactionSetTest.class,
+    SingleElectronTest.class,
+    StrandTest.class,
+    ChangeEventPropagationTest.class,
+
+    FragmentAtomTest.class,
+
+    AdductFormulaTest.class,
+    MolecularFormulaSetTest.class,
+    MolecularFormulaTest.class,
+
+    // test from test.event
+    ChemObjectChangeEventTest.class,
         
-        suite.addTest(new JUnit4TestAdapter(AminoAcidTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomContainerTest.class));
-        //suite.addTest(AtomEnumerationTest.suite());
-        suite.addTest(new JUnit4TestAdapter(AtomParityTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(BioPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemFileTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemModelTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemObjectTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemSequenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(ConformerContainerTest.class));
-        suite.addTest(new JUnit4TestAdapter(CrystalTest.class));
-        suite.addTest(new JUnit4TestAdapter(DefaultChemObjectBuilderTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElectronContainerTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElementTest.class));
-        suite.addTest(new JUnit4TestAdapter(IsotopeTest.class));
-        suite.addTest(new JUnit4TestAdapter(LonePairTest.class));
-        suite.addTest(new JUnit4TestAdapter(MappingTest.class));
-        suite.addTest(new JUnit4TestAdapter(MoleculeTest.class));
-        suite.addTest(new JUnit4TestAdapter(MonomerTest.class));
-        suite.addTest(new JUnit4TestAdapter(PolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(PseudoAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RingTest.class));
-        suite.addTest(new JUnit4TestAdapter(RingSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomContainerSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(MoleculeSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(SingleElectronTest.class));
-        suite.addTest(new JUnit4TestAdapter(StrandTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChangeEventPropagationTest.class));
-
-        suite.addTest(new JUnit4TestAdapter(FragmentAtomTest.class));
-
-        suite.addTest(new JUnit4TestAdapter(AdductFormulaTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaTest.class));
-
-        // test from test.event
-        suite.addTest(new JUnit4TestAdapter(ChemObjectChangeEventTest.class));
-        
-        // tests from test.protein.data
-        suite.addTest(new JUnit4TestAdapter(PDBAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(PDBMonomerTest.class));
-        suite.addTest(new JUnit4TestAdapter(PDBPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(PDBStructureTest.class));
-        
-        return suite;
-    }
-
-}
+    // tests from test.protein.data
+    PDBAtomTest.class,
+    PDBMonomerTest.class,
+    PDBPolymerTest.class,
+    PDBStructureTest.class
+})
+public class MdataTests {}

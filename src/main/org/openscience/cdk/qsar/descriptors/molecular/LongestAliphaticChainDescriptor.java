@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -42,6 +43,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,15 +164,23 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
      *  The method require one parameter:
      *  if checkRingSyste is true the CDKConstant.ISINRING will be set
      *
-     *@param  container  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  atomContainer  The {@link AtomContainer} for which this descriptor is to be calculated
      *@return                   the number of atoms in the longest aliphatic chain of this AtomContainer
      *@see #setParameters
      */
     @TestMethod("testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtomContainer container) {
-    	
-    	//logger.debug("LongestAliphaticChainDescriptor");
-    	IRingSet rs;
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+
+        IAtomContainer container;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+            container = AtomContainerManipulator.removeHydrogens(container);
+        } catch (CloneNotSupportedException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN),
+                    getDescriptorNames());
+        }
+        IRingSet rs;
     	if (checkRingSystem) {
             try {
                 rs = new SpanningTree(container).getBasicRings();
@@ -183,23 +193,23 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
             	}
             }
         }
-        	
-    	int longestChainAtomsCount=0;
+
+        int longestChainAtomsCount=0;
         int tmpLongestChainAtomCount;
-    	//IAtom[] atoms = container.getAtoms();
     	List<IAtom> startSphere;
     	List<IAtom> path;
-    	//Set all VisitedFlags to False
+
     	for (int i =0;i<container.getAtomCount();i++){
     		container.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
-    	//logger.debug("Set all atoms to Visited False");
+
     	for (int i =0;i<container.getAtomCount();i++){
     		IAtom atomi = container.getAtom(i);
-    		//logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
-    		if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING) & atomi.getSymbol().equals("C")) & !atomi.getFlag(CDKConstants.VISITED)){
-    			//logger.debug("...... -> Accepted");
-    			startSphere = new ArrayList<IAtom>();
+            if (atomi.getSymbol().equals("H")) continue;
+
+            if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING) & atomi.getSymbol().equals("C")) & !atomi.getFlag(CDKConstants.VISITED)){
+                
+                startSphere = new ArrayList<IAtom>();
     			path = new ArrayList<IAtom>();
     			startSphere.add(atomi);
                 try {
@@ -207,15 +217,11 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
                 } catch (CDKException e) {
                     return getDummyDescriptorValue(e);
                 }
-                //create Atomcontainer
-     			//logger.debug("Create new Atom Container");
-     			AtomContainer aliphaticChain =createAtomContainerFromPath(container,path);
-     			if (aliphaticChain.getAtomCount()>1){
+                 IAtomContainer aliphaticChain =createAtomContainerFromPath(container,path);
+                 if (aliphaticChain.getAtomCount()>1){
      				double[][] conMat = ConnectionMatrix.getMatrix(aliphaticChain);
-     				//logger.debug("Computing all-pairs-shortest-pathes ");
      				int[][] apsp = PathTools.computeFloydAPSP(conMat);
      				tmpLongestChainAtomCount=getLongestChainPath(apsp);
-     				//logger.debug(" lengthPath:"+tmpLongestChainAtomCount+" allLength:"+longestChainAtomsCount);
      				if (tmpLongestChainAtomCount>longestChainAtomsCount){
      					longestChainAtomsCount=tmpLongestChainAtomCount;
      				}
@@ -258,9 +264,11 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     
     
     
-    private AtomContainer createAtomContainerFromPath(IAtomContainer container, List<IAtom> path){
-    	AtomContainer aliphaticChain = new org.openscience.cdk.AtomContainer();
-    	for (int i=0;i<path.size()-1;i++){
+    private IAtomContainer createAtomContainerFromPath(IAtomContainer container, List<IAtom> path){
+    	IAtomContainer aliphaticChain = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+for (IAtom a : path) System.out.println("a = " + a);
+        System.out.println("---");
+        for (int i=0;i<path.size()-1;i++){
     		if (!aliphaticChain.contains(path.get(i))){
     			aliphaticChain.addAtom(path.get(i));
     		}
@@ -301,9 +309,9 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 		IAtom nextAtom;
 		List<IAtom> newSphere = new ArrayList<IAtom>();
         for (IAtom atom : sphere) {
-            List bonds = container.getConnectedBondsList(atom);
-            for (Object bond : bonds) {
-                nextAtom = ((IBond) bond).getConnectedAtom(atom);
+            List<IBond> bonds = container.getConnectedBondsList(atom);
+            for (IBond bond : bonds) {
+                nextAtom = bond.getConnectedAtom(atom);
                 if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING) & nextAtom.getSymbol().equals("C")) & !nextAtom.getFlag(CDKConstants.VISITED)) {
                     path.add(nextAtom);
                     nextAtom.setFlag(CDKConstants.VISITED, true);

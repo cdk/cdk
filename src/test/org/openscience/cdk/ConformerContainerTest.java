@@ -18,7 +18,7 @@ import java.util.Random;
 /**
  * @cdk.module test-data
  */
-public class ConformerContainerTest extends NewCDKTestCase {
+public class ConformerContainerTest extends CDKTestCase {
     private IAtomContainer base;
     private IAtomContainer[] confs;
 

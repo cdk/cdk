@@ -27,13 +27,11 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
+import org.openscience.cdk.interfaces.AbstractRingTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the Ring class.
@@ -42,28 +40,32 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @see org.openscience.cdk.Ring
  */
-public class RingTest extends NewCDKTestCase {
+public class RingTest extends AbstractRingTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-       	builder = DefaultChemObjectBuilder.getInstance();
+        setTestObjectBuilder(
+            new ITestObjectBuilder() {
+                public IChemObject newTestObject() {
+                    return new Ring();
+                }
+            }
+        );
     }
 
     @Test public void testRing_int_String() {
-        IRing r = builder.newRing(5, "C");
+        IRing r = new Ring(5, "C");
         Assert.assertEquals(5, r.getAtomCount());
         Assert.assertEquals(5, r.getBondCount());
     }
     
     @Test public void testRing_int() {
-        IRing r = builder.newRing(5); // This does not create a ring!
+        IRing r = new Ring(5); // This does not create a ring!
         Assert.assertEquals(0, r.getAtomCount());
         Assert.assertEquals(0, r.getBondCount());
     }
     
     @Test public void testRing() {
-        IRing ring = builder.newRing();
+        IRing ring = new Ring();
         Assert.assertNotNull(ring);
         Assert.assertEquals(0, ring.getAtomCount());
         Assert.assertEquals(0, ring.getBondCount());
@@ -71,63 +73,13 @@ public class RingTest extends NewCDKTestCase {
 
     @Test public void testRing_IAtomContainer() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer();
-        container.addAtom(builder.newAtom("C"));
-        container.addAtom(builder.newAtom("C"));
+        container.addAtom(container.getBuilder().newAtom("C"));
+        container.addAtom(container.getBuilder().newAtom("C"));
         
-        IRing ring = builder.newRing(container);
+        IRing ring = new Ring(container);
         Assert.assertNotNull(ring);
         Assert.assertEquals(2, ring.getAtomCount());
         Assert.assertEquals(0, ring.getBondCount());
     }
 
-    @Test public void testGetBondOrderSum() {
-        IRing r = builder.newRing(5, "C");
-        Assert.assertEquals(5, r.getBondOrderSum());
-
-        BondManipulator.increaseBondOrder(r.getBond(0));
-        Assert.assertEquals(6, r.getBondOrderSum());
-
-        BondManipulator.increaseBondOrder(r.getBond(0));
-        Assert.assertEquals(7, r.getBondOrderSum());
-
-        BondManipulator.increaseBondOrder(r.getBond(4));
-        Assert.assertEquals(8, r.getBondOrderSum());
-    }
-    
-    @Test public void testGetRingSize() {
-        IRing r = builder.newRing(5, "C");
-        Assert.assertEquals(5, r.getRingSize());
-    }
-    
-    @Test public void testGetNextBond_IBond_IAtom() {
-        IRing ring = builder.newRing();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom c3 = builder.newAtom("C");
-        IBond b1 = builder.newBond(c1, c2, IBond.Order.SINGLE);
-        IBond b2 = builder.newBond(c3, c2, IBond.Order.SINGLE);
-        IBond b3 = builder.newBond(c1, c3, IBond.Order.SINGLE);
-        ring.addAtom(c1);
-        ring.addAtom(c2);
-        ring.addAtom(c3);
-        ring.addBond(b1);
-        ring.addBond(b2);
-        ring.addBond(b3);
-        
-        Assert.assertEquals(b1, ring.getNextBond(b2,c2));
-        Assert.assertEquals(b1, ring.getNextBond(b3,c1));
-        Assert.assertEquals(b2, ring.getNextBond(b1,c2));
-        Assert.assertEquals(b2, ring.getNextBond(b3,c3));
-        Assert.assertEquals(b3, ring.getNextBond(b1,c1));
-        Assert.assertEquals(b3, ring.getNextBond(b2,c3));
-    }
-    
-    @Test public void testToString() {
-        IRing ring = builder.newRing(5, "C");
-        String description = ring.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
 }

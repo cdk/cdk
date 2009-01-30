@@ -22,10 +22,8 @@ package org.openscience.cdk.geometry;
 
 import javax.vecmath.Point3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.geometry.ZMatrixTools;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
 /**
@@ -33,15 +31,7 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class ZMatrixToolsTest extends CDKTestCase {
     
-    public ZMatrixToolsTest(String name) {
-        super(name);
-    }
-    
-	public static Test suite() {
-		return new TestSuite(ZMatrixToolsTest.class);
-	}
-
-	public void testZmatrixToCartesian_arraydouble_arrayint_arraydouble_arrayint_arraydouble_arrayint() {
+	@Test public void testZmatrixToCartesian_arraydouble_arrayint_arraydouble_arrayint_arraydouble_arrayint() {
 		// acetaldehyde example from http://www.shodor.org/chemviz/zmatrices/babelex.html
 		int[]  first_atoms = { 0, 0,    0,    0,    3,    3,     3   };
 		double[] distances = { 0, 1.2,  1.1,  1.5,  1.1,  1.1,   1.1 };
@@ -51,9 +41,9 @@ public class ZMatrixToolsTest extends CDKTestCase {
 		double[] dihedrals = { 0, 0,    0,  180,    0,  120,  -120   };
 		Point3d points[] = ZMatrixTools.zmatrixToCartesian(distances,
 				first_atoms, angles, second_atoms, dihedrals, third_atoms);
-		assertEquals(-0.5500, points[2].x, 0.0001);
-		assertEquals(-1.3664, points[5].y, 0.0001);
-		assertEquals(-0.8952, points[6].z, 0.0001);
+		Assert.assertEquals(-0.5500, points[2].x, 0.0001);
+		Assert.assertEquals(-1.3664, points[5].y, 0.0001);
+		Assert.assertEquals(-0.8952, points[6].z, 0.0001);
 	}
 
 }

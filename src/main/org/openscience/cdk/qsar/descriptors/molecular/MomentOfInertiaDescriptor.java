@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

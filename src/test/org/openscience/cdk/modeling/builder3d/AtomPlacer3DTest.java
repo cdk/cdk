@@ -29,10 +29,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-builder3d
  * @cdk.svnrev  $Revision: 12144 $
  */
-public class AtomPlacer3DTest extends NewCDKTestCase{
+public class AtomPlacer3DTest extends CDKTestCase{
 
 	boolean standAlone = false;
 
@@ -75,7 +74,7 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
 	}
 	
 	@Test
-	public void testFindHeavyAtomsInChain_IAtomContainer_IAtomContainer() throws CDKException{
+	public void testFindHeavyAtomsInChain_IAtomContainer_IAtomContainer() throws Exception{
     	String filename = "data/mdl/allmol232.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	// TODO: shk3-cleanuptests: best to use the STRICT IO mode here
@@ -92,22 +91,20 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
     	chain.addAtom(ac.getAtom(29));
     	chain.addAtom(ac.getAtom(30));
     	int[] result=new AtomPlacer3D().findHeavyAtomsInChain(ac,chain);
-    	// FIXME: shk3-cleanuptests: assertEquals() takes the expected value
-    	//          as first argument
-    	Assert.assertEquals(result[0],16);
-    	Assert.assertEquals(result[1],11);
+    	Assert.assertEquals(16,result[0]);
+    	Assert.assertEquals(11,result[1]);
 	}
 	
 	@Test
 	public void testNumberOfUnplacedHeavyAtoms_IAtomContainer(){
-		Molecule ac = MoleculeFactory.makeAlphaPinene();
+		IMolecule ac = MoleculeFactory.makeAlphaPinene();
 		int count=new AtomPlacer3D().numberOfUnplacedHeavyAtoms(ac);
 		Assert.assertEquals(10,count);
 	}
 	
 	@Test
 	public void testGetPlacedHeavyAtoms_IAtomContainer_IAtom(){
-		Molecule ac = MoleculeFactory.makeAlphaPinene();
+	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
 		IAtomContainer acplaced = new AtomPlacer3D().getPlacedHeavyAtoms(ac, ac.getAtom(0));
 		Assert.assertEquals(0,acplaced.getAtomCount());
 		ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
@@ -117,7 +114,7 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
 
 	@Test
 	public void testGetPlacedHeavyAtom_IAtomContainer_IAtom_IAtom(){
-		Molecule ac = MoleculeFactory.makeAlphaPinene();
+	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
 		IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0), ac.getAtom(1));
 		Assert.assertNull(acplaced);
 		ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
@@ -129,7 +126,7 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
 
 	@Test
 	public void testGetPlacedHeavyAtom_IAtomContainer_IAtom(){
-		Molecule ac = MoleculeFactory.makeAlphaPinene();
+	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
 		IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0));
 		Assert.assertNull(acplaced);
 		ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
@@ -139,7 +136,7 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
 	
 	@Test
 	public void testGeometricCenterAllPlacedAtoms_IAtomContainer() throws CDKException, Exception {
-		Molecule ac = MoleculeFactory.makeAlphaPinene();
+	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
 		for(int i=0;i<ac.getAtomCount();i++){
 			ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 		}

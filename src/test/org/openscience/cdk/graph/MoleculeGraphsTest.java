@@ -27,12 +27,12 @@ import org.junit.Test;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class MoleculeGraphsTest extends NewCDKTestCase {
+public class MoleculeGraphsTest extends CDKTestCase {
     
     public MoleculeGraphsTest() {
         super();

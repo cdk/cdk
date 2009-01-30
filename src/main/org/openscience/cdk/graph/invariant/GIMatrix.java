@@ -317,8 +317,8 @@ public class GIMatrix {
     public boolean isSquare() { return (m == n); } // method isSquare()
    
     /**
-     * Verifies if the matrix is symetric, that is if the matrix is equal to it's transpose.
-     * @return true if the matrix is symetric
+     * Verifies if the matrix is symmetric, that is if the matrix is equal to it's transpose.
+     * @return true if the matrix is symmetric
      * @exception BadMatrixFormatException if the matrix is not square
      */
     public boolean isSymmetric() throws BadMatrixFormatException {
@@ -332,9 +332,9 @@ public class GIMatrix {
 
     // NOT OVER, LOOK MORE CAREFULLY FOR DEFINITION
     /**
-     * Verifies if the matrix is antisymetric, that is if the matrix is equal to the opposite of
+     * Verifies if the matrix is antisymmetric, that is if the matrix is equal to the opposite of
      * it's transpose.
-     * @return true if the matrix is antisymetric
+     * @return true if the matrix is antisymmetric
      * @exception BadMatrixFormatException if the matrix is not square
      */
     public boolean isAntisymmetric() throws BadMatrixFormatException {

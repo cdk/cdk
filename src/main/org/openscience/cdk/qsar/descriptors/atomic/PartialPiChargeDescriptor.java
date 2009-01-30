@@ -63,7 +63,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:partialPiCharge
- * @cdk.bug     1558660
  * @see         GasteigerPEPEPartialCharges
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest")

@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $ 
- * $Date: 2006-07-31 11:23:24 +0200 (Mon, 31 Jul 2006) $
- * $Revision: 6710 $
+ * $Author$ 
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2008  Miguel Rojas <miguelrojasch@users.sf.net>
  * 

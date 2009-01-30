@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @cdk.module test-core
  */
-public class IsotopeReaderTest extends NewCDKTestCase {
+public class IsotopeReaderTest extends CDKTestCase {
     @Test
     public void testIsotopeReader_InputStream_IChemObjectBuilder() {
         IsotopeReader reader = new IsotopeReader(

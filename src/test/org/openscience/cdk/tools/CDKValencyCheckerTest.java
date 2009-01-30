@@ -39,7 +39,7 @@ import java.util.Iterator;
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2007-07-28
  */
-public class CDKValencyCheckerTest extends NewCDKTestCase {
+public class CDKValencyCheckerTest extends CDKTestCase {
 
     @Test public void testInstance() {
       CDKValencyChecker checker = CDKValencyChecker.getInstance(DefaultChemObjectBuilder.getInstance());

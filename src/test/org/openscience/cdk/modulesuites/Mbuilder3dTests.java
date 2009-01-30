@@ -24,12 +24,10 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.Builder3dCoverageTest;
-import org.openscience.cdk.modeling.builder3d.AtomPlacer3DTest;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3DTest;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
@@ -39,19 +37,11 @@ import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descripto
  *
  * @cdk.module test-builder3d
  */
-public class Mbuilder3dTests {
-
-    public static Test suite () {
-        TestSuite suite = new TestSuite("The CDK builder3d module Tests");
-        
-        suite.addTest(Builder3dCoverageTest.suite());
-        
-        suite.addTest(new JUnit4TestAdapter(ModelBuilder3DTest.class));
-        suite.addTest(new JUnit4TestAdapter(TemplateHandler3DTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomPlacer3DTest.class));
-        suite.addTest(new JUnit4TestAdapter(PartialTChargeMMFF94DescriptorTest.class));
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    Builder3dCoverageTest.class,
+    ModelBuilder3DTest.class,
+    PartialTChargeMMFF94DescriptorTest.class,
+    TemplateHandler3DTest.class
+})
+public class Mbuilder3dTests {}

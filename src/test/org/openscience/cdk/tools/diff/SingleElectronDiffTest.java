@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 /**
  * @cdk.module test-diff
  */
-public class SingleElectronDiffTest extends NewCDKTestCase {
+public class SingleElectronDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         ISingleElectron bond1 = new SingleElectron();

@@ -21,38 +21,37 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.FormulaCoverageTest;
+import org.openscience.cdk.formula.IsotopeContainerTest;
 import org.openscience.cdk.formula.IsotopePatternGeneratorTest;
+import org.openscience.cdk.formula.IsotopePatternManipulatorTest;
+import org.openscience.cdk.formula.IsotopePatternSimilarityTest;
+import org.openscience.cdk.formula.IsotopePatternTest;
 import org.openscience.cdk.formula.MassToFormulaToolTest;
 import org.openscience.cdk.formula.MolecularFormulaRangeTest;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulatorTest;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulatorTest;
-import org.openscience.cdk.tools.manipulator.MolecularFormulaSetManipulatorTest;
 
 /**
  * TestSuite that runs all the JUnit tests for the formula module.
  *
  * @cdk.module test-formula
  */
-public class MformulaTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The CDK formula module Tests");
-        
-        suite.addTest(new JUnit4TestAdapter(FormulaCoverageTest.class));	
-        
-        suite.addTest(new JUnit4TestAdapter(IsotopePatternGeneratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MassToFormulaToolTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaRangeManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaRangeTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaSetManipulatorTest.class));
-
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    FormulaCoverageTest.class,
+    IsotopeContainerTest.class,
+    IsotopePatternGeneratorTest.class,
+    IsotopePatternManipulatorTest.class,
+    IsotopePatternSimilarityTest.class,
+    IsotopePatternTest.class,
+    MassToFormulaToolTest.class,
+    MolecularFormulaManipulatorTest.class,
+    MolecularFormulaRangeManipulatorTest.class,
+    MolecularFormulaRangeTest.class,
+    MolecularFormulaRangeManipulatorTest.class
+})
+public class MformulaTests {}

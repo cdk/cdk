@@ -1,6 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
@@ -41,8 +41,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(3.560092, result.get(0), 0.001);
-        Assert.assertEquals(3.560092, result.get(1), 0.001);
+        Assert.assertEquals(3.5029, result.get(0), 0.001);
+        Assert.assertEquals(3.5029, result.get(1), 0.001);
     }
 
     @Test public void testLOBDescriptorCyclohexane() throws Exception {
@@ -84,8 +84,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(2.1251065, result.get(0), 0.000001);
-        Assert.assertEquals(2.1251065, result.get(1), 0.000001);
+        Assert.assertEquals(2.0880171, result.get(0), 0.000001);
+        Assert.assertEquals(2.0880171, result.get(1), 0.000001);
     }
 
     /**

@@ -27,14 +27,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.templates.AminoAcids;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.HashMap;
 
 /**
  * @cdk.module test-pdb
  */
-public class AminoAcidsTest extends NewCDKTestCase {
+public class AminoAcidsTest extends CDKTestCase {
 
     @Test
     public void testCreateBondMatrix() {

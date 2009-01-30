@@ -26,7 +26,6 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -69,7 +68,6 @@ import java.util.StringTokenizer;
  * @cdk.svnrev     $Revision$
  * @cdk.created    2002-04-29
  * @cdk.keyword    SMILES, parser
- * @cdk.bug        1579229
  * @cdk.bug        1579230
  * @cdk.bug        1579235
  * @cdk.bug        1579244
@@ -78,16 +76,16 @@ import java.util.StringTokenizer;
 public class SmilesParser {
 
 	private final static String HAS_HARDCODED_HYDROGEN_COUNT = "SmilesParser.HasHardcodedHydrogenCount";
-
+	
 	private LoggingTool logger;
 	private CDKHydrogenAdder hAdder;
-
+		
 	private int status = 0;
 	protected IChemObjectBuilder builder;
 
 	/**
 	 * Constructor for the SmilesParser object.
-	 *
+	 * 
 	 * @param builder IChemObjectBuilder used to create the IMolecules from
 	 */
     public SmilesParser(IChemObjectBuilder builder)
@@ -180,7 +178,7 @@ public class SmilesParser {
     @TestMethod("testAromaticSmiles,testSFBug1296113")
     public IMolecule parseSmiles(String smiles) throws InvalidSmilesException {
 		IMolecule molecule = this.parseString(smiles);
-
+		
 		// perceive atom types
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		int i = 0;
@@ -421,7 +419,7 @@ public class SmilesParser {
 				}
 			} catch (InvalidSmilesException exc)
 			{
-				logger.error("InvalidSmilesException while parsing char (in parseSmiles()) '" +
+				logger.error("InvalidSmilesException while parsing char (in parseSmiles()) '" + 
 					mychar + "': " + exc.getMessage());
 				logger.debug(exc);
 				throw exc;
@@ -603,7 +601,7 @@ public class SmilesParser {
 
 		String retString = s.substring(pos, pos + 2);
 
-		if (retString.charAt(0) < '0' || retString.charAt(0) > '9' ||
+		if (retString.charAt(0) < '0' || retString.charAt(0) > '9' || 
 			retString.charAt(1) < '0' || retString.charAt(1) > '9')
 			throw new InvalidSmilesException("Percent sign ring closure numbers must be two-digit.");
 
@@ -773,7 +771,7 @@ public class SmilesParser {
 			partner = thisNode;
 			bond = builder.newBond(atom, partner, bondStat);
 			      if (bondIsAromatic) {
-
+            	
                 bond.setFlag(CDKConstants.ISAROMATIC, true);
             }
 			molecule.addBond(bond);
@@ -828,6 +826,6 @@ public class SmilesParser {
 			}
 		}
 	}
-
+	
 }
 

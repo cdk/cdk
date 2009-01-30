@@ -22,12 +22,12 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class ChemObjectDifferenceTest extends NewCDKTestCase {
+public class ChemObjectDifferenceTest extends CDKTestCase {
 
     @Test public void testToString() {
         ChemObjectDifference diff = new ChemObjectDifference("AtomTypeDiff");

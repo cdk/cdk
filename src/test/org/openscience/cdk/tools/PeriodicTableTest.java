@@ -23,12 +23,12 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra
  */
-public class PeriodicTableTest extends NewCDKTestCase {
+public class PeriodicTableTest extends CDKTestCase {
 
 	public PeriodicTableTest() {
 		super();
@@ -44,7 +44,7 @@ public class PeriodicTableTest extends NewCDKTestCase {
         Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getPaulingElectronegativity("He"));
         Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getCovalentRadius("Pu"));
         Assert.assertEquals(0.32, PeriodicTable.getCovalentRadius("He"), 0.001);
-        Assert.assertEquals("14", PeriodicTable.getGroup("C"));
+        Assert.assertEquals(14, PeriodicTable.getGroup("C"),0.01);
     }
 
 }

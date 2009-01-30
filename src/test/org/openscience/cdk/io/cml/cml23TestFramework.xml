@@ -3,7 +3,7 @@
 
   xmlns="http://www.xml-cml.org/schema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://www.xml-cml.org/schema ../../../io/cml/data/cml23.xsd">
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../../../../../main/org/openscience/cdk/io/cml/data/cml23.xsd">
   
   <!-- IMPORTANT
   

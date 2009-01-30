@@ -23,14 +23,14 @@ package org.openscience.cdk.smiles;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module     test-standard
  */
-public class InvPairTest extends NewCDKTestCase {
+public class InvPairTest extends CDKTestCase {
 
     public InvPairTest() {
         super();

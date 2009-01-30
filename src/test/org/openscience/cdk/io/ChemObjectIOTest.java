@@ -26,10 +26,10 @@ package org.openscience.cdk.io;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.debug.DebugChemFile;
 import org.openscience.cdk.debug.DebugChemModel;

@@ -84,7 +84,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.keyword file format, PDB
  * @cdk.bug     1714141
  * @cdk.bug     1794439
- * @cdk.bug     2046633
  */
 @TestClass("org.openscience.cdk.io.PDBReaderTest")
 public class PDBReader extends DefaultChemObjectReader {
@@ -161,6 +160,8 @@ public class PDBReader extends DefaultChemObjectReader {
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 		}
+		Class superClass = classObject.getSuperclass();
+	    if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 

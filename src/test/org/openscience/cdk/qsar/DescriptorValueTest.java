@@ -22,14 +22,14 @@ package org.openscience.cdk.qsar;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  * @cdk.module test-standard
  */
-public class DescriptorValueTest extends NewCDKTestCase {
+public class DescriptorValueTest extends CDKTestCase {
     
     public DescriptorValueTest() {
         super();

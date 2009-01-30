@@ -28,7 +28,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.module test-core
  * @cdk.bug    1890702
  */
-abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
+abstract public class AbstractAtomTypeTest extends CDKTestCase {
 
 	public String getAtomTypeListName() {
 		return "";
@@ -95,7 +95,23 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
         }
 	}
 
-	/**
+    public void assertAtomTypeNames(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws CDKException {
+        Assert.assertEquals(
+            "The number of expected atom types is unequal to the number of atoms",
+            expectedTypes.length, mol.getAtomCount()
+        );
+        IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
+        for (int i=0; i<expectedTypes.length; i++) {
+            IAtom testedAtom = mol.getAtom(i);
+            IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom);
+            assertAtomType(testedAtomTypes,
+                           "Incorrect perception for atom " + i,
+                           expectedTypes[i], foundType
+            );
+        }
+    }
+
+  /**
 	 * Method that tests if the matched <code>IAtomType</code> and the <code>IAtom</code> are
 	 * consistent. For example, it tests if hybridization states and formal charges are equal.
 	 * 
@@ -107,13 +123,15 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 			return;
 		}
 		
-    	if (atom.getHybridization() != CDKConstants.UNSET) {
+    	if (atom.getHybridization() != CDKConstants.UNSET &&
+    	    matched.getHybridization() != CDKConstants.UNSET) {
     		Assert.assertEquals(
     			"Hybridization does not match",
     			atom.getHybridization(), matched.getHybridization()
     		);
     	}
-    	if (atom.getFormalCharge() != CDKConstants.UNSET) {
+    	if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    	    matched.getFormalCharge() != CDKConstants.UNSET) {
     		Assert.assertEquals(
     			"Formal charge does not match",
     			atom.getFormalCharge(), matched.getFormalCharge()

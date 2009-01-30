@@ -22,12 +22,12 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class IntegerDifferenceTest extends NewCDKTestCase {
+public class IntegerDifferenceTest extends CDKTestCase {
 
     @Test public void testDiff() {
         IDifference result = IntegerDifference.construct("Foo", 1, 2);

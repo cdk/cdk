@@ -24,15 +24,25 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -42,25 +52,24 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.InputStream;
-
 /**
  * Checks the functionality of the ConjugatedPiSystemsCalculator.
  *
  * @cdk.module test-reaction
  */
-public class ConjugatedPiSystemsDetectorTest extends NewCDKTestCase
+public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	private static IChemObjectBuilder builder;
+	private static LonePairElectronChecker lpcheck;
 	
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    @Before
-    public void ConjugatedPiSystemsDetectorTest(String name)
-	{
-        logger = new LoggingTool(this);
-	}
+    @BeforeClass
+    public static void setup() {
+        logger = new LoggingTool(ConjugatedPiSystemsDetectorTest.class);
+        builder = NoNotificationChemObjectBuilder.getInstance();
+        lpcheck = new LonePairElectronChecker();
+    }
 
 	@Test
     public void testDetectButadiene() throws Exception
@@ -387,8 +396,28 @@ public class ConjugatedPiSystemsDetectorTest extends NewCDKTestCase
 	 */
     @Test public void test3Aminomethane_cation() throws Exception
 	{
-    	IMolecule mol = (new SmilesParser(builder)).parseSmiles("CN(C)C(N(C)C)N(C)C");
+    	IMolecule mol = builder.newMolecule();
+    	mol.addAtom(builder.newAtom("N"));
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(0, 1, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(0, 2, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(0, 3, Order.SINGLE);
     	mol.getAtom(3).setFormalCharge(+1);
+    	mol.addAtom(builder.newAtom("N"));
+    	mol.addBond(3, 4, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(4, 5, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(4, 6, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("N"));
+    	mol.addBond(3, 7, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(7, 8, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(7, 8, Order.SINGLE);
+    	
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

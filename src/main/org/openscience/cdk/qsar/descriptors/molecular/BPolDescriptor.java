@@ -24,10 +24,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
@@ -38,13 +40,12 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
-import java.util.Iterator;
-
 /**
  * Sum of the absolute value of the difference between atomic polarizabilities 
  *  of all bonded atoms in the molecule (including implicit hydrogens) with polarizabilities taken from
- * http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm .
- * This class need explicit hydrogens.
+ * http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm
+ *
+ * This descriptor assumes 2-centered bonds.
  * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -155,18 +156,29 @@ public class BPolDescriptor implements IMolecularDescriptor {
 
             String symbol0;
             String symbol1;
-            Iterator bonds = container.bonds().iterator();
-            while (bonds.hasNext()) {
-                IBond bond = (IBond) bonds.next();
+            for (IBond bond : container.bonds()) {
+                IAtom atom0 = bond.getAtom(0);
+                IAtom atom1 = bond.getAtom(1);
 
-                symbol0 = bond.getAtom(0).getSymbol();
-                symbol1 = bond.getAtom(1).getSymbol();
+                symbol0 = atom0.getSymbol();
+                symbol1 = atom1.getSymbol();
                 element0 = ifac.getElement(symbol0);
                 element1 = ifac.getElement(symbol1);
                 atomicNumber0 = element0.getAtomicNumber();
                 atomicNumber1 = element1.getAtomicNumber();
                 difference = polarizabilities[atomicNumber0] -polarizabilities[atomicNumber1];
-                bpol += Math.abs(difference);
+                bpol += Math.abs(difference);               
+            }
+
+            // after going through the bonds, we go through the atoms and see if they have
+            // implicit H's and if so, consider the associated "implicit" bonds. Note that
+            // if the count is UNSET, we assume it is 0
+            for (IAtom atom : container.atoms()) {
+                int impH = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+                IElement elem = ifac.getElement(atom.getSymbol());
+                int atnum = elem.getAtomicNumber();
+                difference = Math.abs(polarizabilities[atnum] - polarizabilities[1]) * impH;
+                bpol += difference;
             }
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(bpol), getDescriptorNames());

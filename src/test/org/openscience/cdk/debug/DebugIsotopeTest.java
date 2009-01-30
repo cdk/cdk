@@ -24,20 +24,62 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.IsotopeTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */
-public class DebugIsotopeTest extends IsotopeTest {
+public class DebugIsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass public static void setUp() {
-    	IsotopeTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugIsotope("C");
+            }
+        });
     }
     
+    @Test public void testDebugIsotope_String() {
+        IIsotope i = new DebugIsotope("C");
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testDebugIsotope_IElement() {
+    	IElement element = newChemObject().getBuilder().newElement("C");
+        IIsotope i = new DebugIsotope(element);
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testDebugIsotope_int_String_int_double_double() {
+        IIsotope i = new DebugIsotope(6, "C", 12, 12.001, 80.0);
+        Assert.assertEquals(12, i.getMassNumber().intValue());
+        Assert.assertEquals("C", i.getSymbol());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
+        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+    
+    @Test public void testDebugIsotope_String_int() {
+        IIsotope i = new DebugIsotope("C", 12);
+        Assert.assertEquals(12, i.getMassNumber().intValue());
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testDebugIsotope_int_String_double_double() {
+        IIsotope i = new DebugIsotope(6, "C", 12.001, 80.0);
+        Assert.assertEquals("C", i.getSymbol());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
+        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
 }
 

@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
@@ -50,7 +50,7 @@ import java.io.*;
  *
  * @cdk.module test-core
  */
-public class AtomTypeFactoryTest extends NewCDKTestCase {
+public class AtomTypeFactoryTest extends CDKTestCase {
 
     final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
 
@@ -204,6 +204,15 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
         Assert.assertNotNull(atomType);
         Assert.assertEquals("C", atomType.getSymbol());
         Assert.assertEquals("C.3", atomType.getAtomTypeName());
+        Assert.assertEquals(4, atomType.getFormalNeighbourCount().intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3, atomType.getHybridization());
+        Assert.assertEquals(0, atomType.getFormalCharge().intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT) instanceof Integer);
+        Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
+        Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
 	}
 
     @Test

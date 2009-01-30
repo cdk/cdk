@@ -24,19 +24,41 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.LonePairTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractLonePairTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugLonePair}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugLonePairTest extends LonePairTest {
+public class DebugLonePairTest extends AbstractLonePairTest {
 
     @BeforeClass public static void setUp() {
-    	LonePairTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugLonePair();
+            }
+        });
     }
 
+    @Test public void testDebugLonePair() {
+        ILonePair lp = new DebugLonePair();
+        Assert.assertTrue(lp.getAtom() == null);
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
+    }
+    
+    @Test public void testDebugLonePair_IAtom() {
+        IAtom atom = newChemObject().getBuilder().newAtom("N");
+        ILonePair lp = new DebugLonePair(atom);
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
+        Assert.assertEquals(atom, lp.getAtom());
+        Assert.assertTrue(lp.contains(atom));
+    }
 }

@@ -77,7 +77,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 	/**
 	 * A unit test suite for JUnit for acetaldehyde. 
 	 * Reaction: O=C-C-H => O(H)-C=C. 
-	 * Automatic looking for active center.
+	 * Automatically looks for active centre.
 	 *
 	 * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
 	 * 
@@ -114,7 +114,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 	/**
 	 * A unit test suite for JUnit for acetaldehyde. 
 	 * Reaction: O=C-C-H => O(H)-C=C. 
-	 * Manually putting for active center.
+	 * Manually tests for active centre..
 	 *
 	 * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
 	 * 

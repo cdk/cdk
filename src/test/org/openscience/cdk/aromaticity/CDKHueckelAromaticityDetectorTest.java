@@ -32,8 +32,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -47,7 +45,7 @@ import java.util.Iterator;
  * @cdk.module test-standard
  * @cdk.created 2002-10-06
  */
-public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
+public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
 
     public CDKHueckelAromaticityDetectorTest() {
@@ -728,10 +726,6 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         Assert.assertEquals(1, nNaliph);
     }
 
-    /**
-     * @cdk.bug 2185255
-     * @throws CDKException
-     */
     @Test
     public void testPolyCyclicSystem() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

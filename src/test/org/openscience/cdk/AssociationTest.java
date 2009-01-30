@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @see org.openscience.cdk.Association
  */
-public class AssociationTest extends NewCDKTestCase {
+public class AssociationTest extends CDKTestCase {
 
     @Test public void testAssociation() {
         Association association = new Association();

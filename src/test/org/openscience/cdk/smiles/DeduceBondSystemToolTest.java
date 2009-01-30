@@ -35,7 +35,7 @@ import org.openscience.cdk.nonotify.NNBond;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.smiles.DeduceBondSystemTool;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    2006-09-18
  * @cdk.module     test-smiles
  */
-public class DeduceBondSystemToolTest extends NewCDKTestCase {
+public class DeduceBondSystemToolTest extends CDKTestCase {
 
 	private static DeduceBondSystemTool dbst;
 	

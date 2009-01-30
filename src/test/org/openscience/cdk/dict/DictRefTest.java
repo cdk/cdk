@@ -28,7 +28,7 @@ package org.openscience.cdk.dict;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.dict.DictRef;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the DictRef class.
@@ -37,7 +37,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictRef
  */
-public class DictRefTest extends NewCDKTestCase {
+public class DictRefTest extends CDKTestCase {
 
     public DictRefTest() {
         super();

@@ -30,14 +30,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
  * @cdk.module test-standard
  */
-public class AtomContainerComparatorTest extends NewCDKTestCase {
+public class AtomContainerComparatorTest extends CDKTestCase {
 		
 	public AtomContainerComparatorTest() {
 		super();

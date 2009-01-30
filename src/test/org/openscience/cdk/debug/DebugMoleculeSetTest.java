@@ -24,19 +24,32 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.MoleculeSetTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractMoleculeSetTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugMoleculeSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMoleculeSetTest extends MoleculeSetTest {
+public class DebugMoleculeSetTest extends AbstractMoleculeSetTest {
 
     @BeforeClass public static void setUp() {
-    	MoleculeSetTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugMoleculeSet();
+            }
+        });
+    }
+    
+    @Test public void testDebugMoleculeSet() {
+    	IMoleculeSet set = new DebugMoleculeSet();
+    	Assert.assertNotNull(set);
     }
 
 }

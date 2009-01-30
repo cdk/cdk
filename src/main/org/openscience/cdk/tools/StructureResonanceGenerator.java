@@ -23,6 +23,7 @@ package org.openscience.cdk.tools;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -72,7 +73,6 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  * @cdk.created  2006-5-05
  * @cdk.module   reaction
  * @cdk.svnrev   $Revision$
- * @cdk.bug      1728830
  * 
  * @see org.openscience.cdk.reaction.IReactionProcess
  */
@@ -125,7 +125,7 @@ public class StructureResonanceGenerator {
 	 * 
 	 * @return The reactions to be imposed
 	 * 
-	 * @see #getReactions(IRreactionProcess)
+	 *
 	 * @see #setDefaultReactions()
 	 */
 	@TestMethod("testGetReactions")
@@ -162,12 +162,6 @@ public class StructureResonanceGenerator {
 		
 	}
 
-	/**
-	 * Create the default reactions List. They are:<p>
-	 * 
-	 * @throws CDKException 
-	 * 
-	 */
 	private void callDefaultReactions() {
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -236,7 +230,7 @@ public class StructureResonanceGenerator {
     @TestMethod("testGetStructures_IMolecule")
 	public IMoleculeSet getStructures(IMolecule molecule) {
     	int countStructure = 0;
-		IMoleculeSet setOfMol = molecule.getBuilder().newMoleculeSet();
+    	IMoleculeSet setOfMol = molecule.getBuilder().newMoleculeSet();
 		setOfMol.addMolecule(molecule);
 		
 		for(int i = 0 ; i < setOfMol.getMoleculeCount() ; i++){
@@ -419,17 +413,33 @@ public class StructureResonanceGenerator {
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
-		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
-//			if(atomContainer.getAtom(i).getID() == null)
-				atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
+
+		IAtomContainer acClone = null;
+    	try {
+    		acClone = (IMolecule) atomContainer.clone();
+			if(!lookingSymmetry){ /*remove all aromatic flags*/
+				for (IAtom atom : acClone.atoms()) atom.setFlag(CDKConstants.ISAROMATIC, false);
+				for (IBond bond : acClone.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, false);
+			}
+		} catch (CloneNotSupportedException e1) {
+			e1.printStackTrace();
+		}
+    	
+		for(int i = 0 ; i < acClone.getAtomCount(); i++)
+//			if(acClone.getAtom(i).getID() == null)
+				acClone.getAtom(i).setID(""+acClone.getAtomNumber(acClone.getAtom(i)));
 			
 		if(lookingSymmetry){
 			try {
-				CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+				CDKHueckelAromaticityDetector.detectAromaticity(acClone);
 			} catch (CDKException e) {
 				e.printStackTrace();
 			}
-			
+		}else{
+				if(!lookingSymmetry){ /*remove all aromatic flags*/
+					for (IAtom atom : acClone.atoms()) atom.setFlag(CDKConstants.ISAROMATIC, false);
+					for (IBond bond : acClone.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, false);
+				}
 		}
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ss = set.getAtomContainer(i);
@@ -440,14 +450,14 @@ public class StructureResonanceGenerator {
 			try {
 				
 				if(!lookingSymmetry ){
-					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(atomContainer);
+					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(acClone);
 					if(UniversalIsomorphismTester.isIsomorph(ss,qAC)){
-						QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(atomContainer);
+						QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(acClone);
 						if(UniversalIsomorphismTester.isIsomorph(ss,qAC2))
 							return true;
 					}
 				}else{
-					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(atomContainer);
+					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(acClone);
 					CDKHueckelAromaticityDetector.detectAromaticity(ss);
 					if(UniversalIsomorphismTester.isIsomorph(ss,qAC))
 						return true;

@@ -24,19 +24,25 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.protein.data.PDBStructureTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IPDBStructure;
+import org.openscience.cdk.interfaces.AbstractPDBStructureTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugPDBStructure}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBStructureTest extends PDBStructureTest {
+public class DebugPDBStructureTest extends AbstractPDBStructureTest {
 
     @BeforeClass public static void setUp() {
-    	PDBStructureTest.builder = DebugChemObjectBuilder.getInstance();
+        setChemObject(new DebugPDBStructure());
     }
 
+	@Test public void testDebugPDBStructure() {
+		IPDBStructure structure = new DebugPDBStructure();
+		Assert.assertNotNull(structure);
+	}
 }

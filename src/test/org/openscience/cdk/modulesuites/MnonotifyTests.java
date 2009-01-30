@@ -21,13 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.NonotifyCoverageTest;
 import org.openscience.cdk.nonotify.NNAminoAcidTest;
 import org.openscience.cdk.nonotify.NNAtomContainerSetTest;
@@ -39,7 +37,6 @@ import org.openscience.cdk.nonotify.NNBioPolymerTest;
 import org.openscience.cdk.nonotify.NNBondTest;
 import org.openscience.cdk.nonotify.NNChemFileTest;
 import org.openscience.cdk.nonotify.NNChemModelTest;
-import org.openscience.cdk.nonotify.NNChemObjectBuilderTest;
 import org.openscience.cdk.nonotify.NNChemObjectTest;
 import org.openscience.cdk.nonotify.NNChemSequenceTest;
 import org.openscience.cdk.nonotify.NNCrystalTest;
@@ -48,6 +45,8 @@ import org.openscience.cdk.nonotify.NNElementTest;
 import org.openscience.cdk.nonotify.NNFragmentAtomTest;
 import org.openscience.cdk.nonotify.NNIsotopeTest;
 import org.openscience.cdk.nonotify.NNLonePairTest;
+import org.openscience.cdk.nonotify.NNMolecularFormulaSetTest;
+import org.openscience.cdk.nonotify.NNMolecularFormulaTest;
 import org.openscience.cdk.nonotify.NNMoleculeSetTest;
 import org.openscience.cdk.nonotify.NNMoleculeTest;
 import org.openscience.cdk.nonotify.NNMonomerTest;
@@ -57,66 +56,63 @@ import org.openscience.cdk.nonotify.NNPDBPolymerTest;
 import org.openscience.cdk.nonotify.NNPDBStructureTest;
 import org.openscience.cdk.nonotify.NNPolymerTest;
 import org.openscience.cdk.nonotify.NNPseudoAtomTest;
+import org.openscience.cdk.nonotify.NNReactionSchemeTest;
 import org.openscience.cdk.nonotify.NNReactionSetTest;
 import org.openscience.cdk.nonotify.NNReactionTest;
 import org.openscience.cdk.nonotify.NNRingSetTest;
 import org.openscience.cdk.nonotify.NNRingTest;
 import org.openscience.cdk.nonotify.NNSingleElectronTest;
 import org.openscience.cdk.nonotify.NNStrandTest;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilderTest;
 
 /**
- * TestSuite that runs the nonotify tests.
+ * TestSuite that runs the tests from the nonotify module.
  *
  * @cdk.module  test-nonotify
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MnonotifyTests {
-    
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.debug Tests");
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    NonotifyCoverageTest.class,
+    NoNotificationChemObjectBuilderTest.class,
+    NNAminoAcidTest.class,
+    NNAtomContainerTest.class,
+    NNAtomParityTest.class,
+    NNAtomTest.class,
+    NNAtomTypeTest.class,
+    NNBioPolymerTest.class,
+    NNBondTest.class,
+    NNChemObjectTest.class,
+    NNChemFileTest.class,
+    NNChemModelTest.class,
+    NNChemSequenceTest.class,
+    NNCrystalTest.class,
+    NNElectronContainerTest.class,
+    NNElementTest.class,
+    NNFragmentAtomTest.class,
+    NNIsotopeTest.class,
+    NNLonePairTest.class,
+    NNMoleculeTest.class,
+    NNMonomerTest.class,
+    NNPseudoAtomTest.class,
+    NNPolymerTest.class,
+    NNReactionTest.class,
+    NNRingTest.class,
+    NNRingSetTest.class,
+    NNAtomContainerSetTest.class,
+    NNMoleculeSetTest.class,
+    NNReactionSetTest.class,
+    NNReactionSchemeTest.class,
+    NNSingleElectronTest.class,
+    NNStrandTest.class,
+    NNMolecularFormulaTest.class,
+    NNMolecularFormulaSetTest.class,
         
-        suite.addTest(NonotifyCoverageTest.suite());
-        
-        suite.addTest(new JUnit4TestAdapter(NNChemObjectBuilderTest.class));
-        
-        suite.addTest(new JUnit4TestAdapter(NNAminoAcidTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNAtomContainerTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNAtomParityTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNAtomTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNBioPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNBondTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNChemObjectTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNChemFileTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNChemModelTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNChemSequenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNCrystalTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNElectronContainerTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNElementTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNFragmentAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNIsotopeTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNLonePairTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNMoleculeTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNMonomerTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNPseudoAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNRingTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNRingSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNAtomContainerSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNMoleculeSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNReactionSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNSingleElectronTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNStrandTest.class));
-        
-        // tests from test.protein.data
-        suite.addTest(new JUnit4TestAdapter(NNPDBAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNPDBMonomerTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNPDBPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(NNPDBStructureTest.class));
-
-        return suite;
-    }
-    
-}
+    // tests from test.protein.data
+    NNPDBAtomTest.class,
+    NNPDBMonomerTest.class,
+    NNPDBPolymerTest.class,
+    NNPDBStructureTest.class
+})
+public class MnonotifyTests {}

@@ -22,13 +22,13 @@ package org.openscience.cdk.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.ElementComparator;
 
 /**
  * @cdk.module test-standard
  */
-public class ElementComparatorTest extends NewCDKTestCase {
+public class ElementComparatorTest extends CDKTestCase {
     
     public ElementComparatorTest() {
         super();

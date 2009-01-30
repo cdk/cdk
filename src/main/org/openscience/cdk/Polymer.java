@@ -144,6 +144,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
     public Object clone() throws CloneNotSupportedException {
     	Polymer clone = (Polymer)super.clone();
         clone.removeAllElements();
+        clone.monomers = new Hashtable<String, IMonomer>();
         for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
             Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
             Iterator<IAtom> atoms = monomerClone.atoms().iterator();

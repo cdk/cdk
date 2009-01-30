@@ -59,7 +59,7 @@ import java.util.Iterator;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
- * @cdk.bug     1860497
+ *
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest")

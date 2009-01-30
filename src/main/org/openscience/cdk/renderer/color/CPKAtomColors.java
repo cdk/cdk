@@ -158,7 +158,8 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable
     {
         Color color = defaultColor;
         String symbol = atom.getSymbol().toUpperCase();
-        if (ATOM_COLORS_MASSNUM.containsKey(atom.getAtomicNumber()))
+        if (atom.getAtomicNumber() != null &&
+            ATOM_COLORS_MASSNUM.containsKey(atom.getAtomicNumber()))
         {
             color = ATOM_COLORS_MASSNUM.get(atom.getAtomicNumber());    // lookup by atomic number.
         }

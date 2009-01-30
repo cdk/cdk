@@ -24,10 +24,9 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.IonpotCoverageTest;
 import org.openscience.cdk.tools.IonizationPotentialToolTest;
 
@@ -38,16 +37,9 @@ import org.openscience.cdk.tools.IonizationPotentialToolTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MionpotTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK ionpot Tests");
-
-        suite.addTest(new JUnit4TestAdapter(IonpotCoverageTest.class));	
-        
-        suite.addTest(new JUnit4TestAdapter(IonizationPotentialToolTest.class));
-        
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    IonpotCoverageTest.class,
+    IonizationPotentialToolTest.class
+})
+public class MionpotTests {}

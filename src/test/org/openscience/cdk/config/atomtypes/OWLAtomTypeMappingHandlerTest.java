@@ -23,14 +23,14 @@ package org.openscience.cdk.config.atomtypes;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the {@link OWLAtomTypeMappingHandler}.
  *
  * @cdk.module test-atomtype
  */
-public class OWLAtomTypeMappingHandlerTest extends NewCDKTestCase {
+public class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
      
     @Test
     public void testOWLAtomTypeMappingHandler() {

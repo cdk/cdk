@@ -51,7 +51,7 @@ public class AromaticityCalculator
 
 	/**
 	 *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the 
-     *  H&uuml;ckle rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non 
+     *  H&uuml;ckel rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non 
      *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in 
      *  or anything else in a ring and d electron elements get to complicated) 
      *  sp<sup>2</sup> hybridized heteroatoms contribute 1 electron hybridization is worked out by

@@ -57,8 +57,9 @@ public class ExplicitConnectionAtom extends SMARTSAtom {
 	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
 	 */
     public boolean matches(IAtom atom) {
-        int ih = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
-        int conn = ((Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)).intValue() - ih;
+        int conn = (Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) -
+                (Integer) atom.getProperty(CDKConstants.TOTAL_H_COUNT);
+        
         return numOfConnection == conn;
     }
 

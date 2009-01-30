@@ -101,6 +101,8 @@ public class CDKHydrogenAdder {
 	 * 
 	 * @param  container The molecule to which H's will be added
 	 * @throws CDKException Throws if insufficient information is present
+	 *
+	 * @cdk.keyword hydrogens, adding
 	 */
     @TestMethod("testMethane,testFormaldehyde,testHCN")
     public void addImplicitHydrogens(IAtomContainer container) throws CDKException {

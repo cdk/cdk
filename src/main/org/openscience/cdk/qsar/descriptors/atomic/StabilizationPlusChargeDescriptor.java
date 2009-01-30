@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: miguelrojasch $
- *  $Date: 2008-05-01 12:46:02 +0200 (Thu, 01 May 2008) $
- *  $Revision: 10745 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  *
@@ -89,7 +89,7 @@ public class StabilizationPlusChargeDescriptor implements IAtomicDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge",
             this.getClass().getName(),
-            "$Id: StabilizationPlusChargeDescriptor.java 10745 2008-05-01 10:46:02Z miguelrojasch $",
+            "$Id$",
             "The Chemistry Development Kit");
     }
 

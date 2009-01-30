@@ -27,14 +27,14 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the {@link OWLAtomTypeMappingReader}.
  *
  * @cdk.module test-atomtype
  */
-public class OWLAtomTypeMappingReaderTest extends NewCDKTestCase {
+public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
 
 	private final String OWL_CONTENT =
 		"<?xml version=\"1.0\"?>" +

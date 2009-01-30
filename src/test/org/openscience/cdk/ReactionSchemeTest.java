@@ -25,15 +25,13 @@
  */
 package org.openscience.cdk;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ReactionScheme;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionScheme;
+import org.openscience.cdk.interfaces.AbstractReactionSchemeTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaSet class.
@@ -42,20 +40,16 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  *
  * @see ReactionScheme
  */
-public class ReactionSchemeTest extends NewCDKTestCase {
+public class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-       	builder = DefaultChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new ReactionScheme();
+            }
+        });
     }
-    /**
-	 *  Constructor for the ReactionSchemeTest object.
-	 *
-	 */
-    public ReactionSchemeTest() {
-        super();
-    }
+
     /**
 	 * A unit test suite for JUnit.
 	 *
@@ -63,151 +57,8 @@ public class ReactionSchemeTest extends NewCDKTestCase {
 	 */
     @Test 
     public void testReactionScheme() {
-        IReactionScheme scheme = builder.newReactionScheme();
+        IReactionScheme scheme = new ReactionScheme();
         Assert.assertNotNull(scheme);
     }
     
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testGetReactionSchemeCount() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-    	scheme.add(builder.newReactionScheme());
-        Assert.assertEquals(1, scheme.getReactionSchemeCount());
-    }
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testGetReactionCount() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-    	scheme.addReaction(builder.newReaction());
-    	scheme.addReaction(builder.newReaction());
-        Assert.assertEquals(2, scheme.getReactionCount());
-    }
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testReactionSchemes() {
-        IReactionScheme scheme = builder.newReactionScheme();
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-
-        Assert.assertEquals(3, scheme.getReactionSchemeCount());
-        int count = 0;
-        for(IReactionScheme sch: scheme.reactionSchemes()) {
-        	sch.getClass();
-        	++count;
-        }
-        Assert.assertEquals(3, count);
-    }
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testReactions() {
-        IReactionScheme scheme = builder.newReactionScheme();
-        scheme.addReaction(builder.newReaction());
-        scheme.addReaction(builder.newReaction());
-        scheme.addReaction(builder.newReaction());
-
-        Assert.assertEquals(3, scheme.getReactionCount());
-        int count = 0;
-        for(Iterator<IReaction> it = scheme.reactions().iterator(); it.hasNext();) {
-        	it.next();
-        	++count;
-        }
-        Assert.assertEquals(3, count);
-    }
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testAdd_IReactionScheme() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-
-        IReactionScheme tested = new ReactionScheme();
-        Assert.assertEquals(0, tested.getReactionSchemeCount());
-        tested.add(scheme);
-        Assert.assertEquals(1, tested.getReactionSchemeCount());
-    }
-
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testAdd_IReaction() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-    	scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-
-        IReactionScheme tested = builder.newReactionScheme();
-        Assert.assertEquals(0, tested.getReactionSchemeCount());
-        tested.add(scheme);
-        Assert.assertEquals(1, tested.getReactionSchemeCount());
-        Assert.assertEquals(0, tested.getReactionCount());
-    }
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testClone() throws Exception {
-    	IReactionScheme scheme = builder.newReactionScheme();
-        Object clone = scheme.clone();
-        Assert.assertTrue(clone instanceof IReactionScheme);
-        Assert.assertNotSame(scheme, clone);
-    } 
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testRemoveReactionScheme_IReactionScheme() {
-        IReactionScheme scheme = builder.newReactionScheme();
-        IReactionScheme scheme1 = builder.newReactionScheme();
-        IReactionScheme scheme2 = builder.newReactionScheme();
-        scheme.add(scheme1);
-        scheme.add(scheme2);
-        scheme.removeReactionScheme(scheme1);
-        Assert.assertEquals(1, scheme.getReactionSchemeCount());
-    }
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
-    public void testRemoveAllReactionSchemes() {
-    	 IReactionScheme scheme = builder.newReactionScheme();
-         IReactionScheme scheme1 = builder.newReactionScheme();
-         IReactionScheme scheme2 = builder.newReactionScheme();
-         scheme.add(scheme1);
-         scheme.add(scheme2);
-         
-        Assert.assertEquals(2, scheme.getReactionSchemeCount());
-        scheme.removeAllReactionSchemes();
-        Assert.assertEquals(0, scheme.getReactionSchemeCount());
-    }
 }

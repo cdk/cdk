@@ -24,16 +24,14 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.atomtype.ResonanceStructuresTest;
 import org.openscience.cdk.coverage.ReactionCoverageTest;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetectorTest;
 import org.openscience.cdk.reaction.ReactionChainTest;
 import org.openscience.cdk.reaction.ReactionEngineTest;
-import org.openscience.cdk.reaction.ReactionMechanismTest;
 import org.openscience.cdk.reaction.ReactionSpecificationTest;
 import org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest;
 import org.openscience.cdk.reaction.mechanism.AdductionPBMechanismTest;
@@ -89,76 +87,69 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MreactionTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK standard Tests");
-
-        suite.addTest(new JUnit4TestAdapter(ReactionCoverageTest.class));	
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    ReactionCoverageTest.class, 
         
-        // Individual Tests
-        suite.addTest(new JUnit4TestAdapter(ReactionChainTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionEngineTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionSpecificationTest.class));
+    // Individual Tests
+    ReactionChainTest.class,
+    ReactionEngineTest.class,
+    ReactionSpecificationTest.class,
 
-        // from cdk.test.reaction.mechanism
-        suite.addTest(new JUnit4TestAdapter(AdductionLPMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(AdductionPBMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(HeterolyticCleavageMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(HomolyticCleavageMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteIonizationMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteRearrangementMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(RemovingSEofBMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(RemovingSEofNBMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(SharingElectronMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(TautomerizationMechanismTest.class));
-        suite.addTest(new JUnit4TestAdapter(ConjugatedPiSystemsDetectorTest.class));
+    // from cdk.test.reaction.mechanism
+    AdductionLPMechanismTest.class,
+    AdductionPBMechanismTest.class,
+    HeterolyticCleavageMechanismTest.class,
+    HomolyticCleavageMechanismTest.class,
+    RadicalSiteIonizationMechanismTest.class,
+    RadicalSiteRearrangementMechanismTest.class,
+    RemovingSEofBMechanismTest.class,
+    RemovingSEofNBMechanismTest.class,
+    SharingElectronMechanismTest.class,
+    TautomerizationMechanismTest.class,
+    ConjugatedPiSystemsDetectorTest.class,
               
-        // from cdk.test.reaction.type
-        suite.addTest(new JUnit4TestAdapter(AdductionProtonLPReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(AdductionProtonPBReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(AdductionSodiumLPReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(CarbonylEliminationReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElectronImpactPDBReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElectronImpactNBEReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElectronImpactSDBReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(HeterolyticCleavagePBReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(HeterolyticCleavageSBReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(HomolyticCleavageReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(HyperconjugationReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(PiBondingMovementReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalChargeSiteInitiationHReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalChargeSiteInitiationReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteHrAlphaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteHrBetaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteHrDeltaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteHrGammaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteInitiationHReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteInitiationReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteRrAlphaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteRrBetaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteRrDeltaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RadicalSiteRrGammaReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RearrangementAnionReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RearrangementCationReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RearrangementLonePairReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(RearrangementRadicalReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(SharingAnionReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(SharingChargeDBReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(SharingChargeSBReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(SharingLonePairReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(TautomerizationReactionTest.class));
+    // from cdk.test.reaction.type
+    AdductionProtonLPReactionTest.class,
+    AdductionProtonPBReactionTest.class,
+    AdductionSodiumLPReactionTest.class,
+    CarbonylEliminationReactionTest.class,
+    ElectronImpactPDBReactionTest.class,
+    ElectronImpactNBEReactionTest.class,
+    ElectronImpactSDBReactionTest.class,
+    HeterolyticCleavagePBReactionTest.class,
+    HeterolyticCleavageSBReactionTest.class,
+    HomolyticCleavageReactionTest.class,
+    HyperconjugationReactionTest.class,
+    PiBondingMovementReactionTest.class,
+    RadicalChargeSiteInitiationHReactionTest.class,
+    RadicalChargeSiteInitiationReactionTest.class,
+    RadicalSiteHrAlphaReactionTest.class,
+    RadicalSiteHrBetaReactionTest.class,
+    RadicalSiteHrDeltaReactionTest.class,
+    RadicalSiteHrGammaReactionTest.class,
+    RadicalSiteInitiationHReactionTest.class,
+    RadicalSiteInitiationReactionTest.class,
+    RadicalSiteRrAlphaReactionTest.class,
+    RadicalSiteRrBetaReactionTest.class,
+    RadicalSiteRrDeltaReactionTest.class,
+    RadicalSiteRrGammaReactionTest.class,
+    RearrangementAnionReactionTest.class,
+    RearrangementCationReactionTest.class,
+    RearrangementLonePairReactionTest.class,
+    RearrangementRadicalReactionTest.class,
+    SharingAnionReactionTest.class,
+    SharingChargeDBReactionTest.class,
+    SharingChargeSBReactionTest.class,
+    SharingLonePairReactionTest.class,
+    TautomerizationReactionTest.class,
 
-        // parameters test
-        suite.addTest(new JUnit4TestAdapter(ParameterReactTest.class));
-        suite.addTest(new JUnit4TestAdapter(SetReactionCenterTest.class));
+    // parameters test
+    ParameterReactTest.class,
+    SetReactionCenterTest.class,
         
-        // tools test
-        suite.addTest(new JUnit4TestAdapter(StructureResonanceGeneratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ResonanceStructuresTest.class));
-        
-        return suite;
-    }
-    
-}
+    // tools test
+    StructureResonanceGeneratorTest.class,
+    ResonanceStructuresTest.class
+})
+public class MreactionTests {}

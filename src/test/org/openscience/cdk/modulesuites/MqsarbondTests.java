@@ -18,19 +18,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsarbondCoverageTest;
+import org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -39,22 +37,13 @@ import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptorT
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarbondTests {
-
-    public static Test suite() {
-
-        TestSuite suite = new TestSuite("All QSAR Tests");
-
-        suite.addTest(new JUnit4TestAdapter(QsarbondCoverageTest.class));
-        
-        // from cdk.test.qsar.bond
-        suite.addTest(new JUnit4TestAdapter(BondPartialPiChargeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondPartialSigmaChargeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondPartialTChargeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondSigmaElectronegativityDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MassNumberDifferenceDescriptorTest.class));
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    QsarbondCoverageTest.class,
+    BondPartialPiChargeDescriptorTest.class,
+    BondPartialSigmaChargeDescriptorTest.class,
+    BondPartialTChargeDescriptorTest.class,
+    BondSigmaElectronegativityDescriptorTest.class,
+    AtomicNumberDifferenceDescriptorTest.class
+})
+public class MqsarbondTests {}

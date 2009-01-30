@@ -1,9 +1,8 @@
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.PcoreCoverageTest;
 import org.openscience.cdk.pharmacophore.PharmacophoreMatcherTest;
 import org.openscience.cdk.pharmacophore.PharmacophoreUtilityTest;
@@ -13,14 +12,10 @@ import org.openscience.cdk.pharmacophore.PharmacophoreUtilityTest;
  *
  * @cdk.module test-pcore
  */
-public class MpcoreTests {
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite("The cdk.pcore Tests");
-        suite.addTest(new JUnit4TestAdapter(PharmacophoreMatcherTest.class));
-        suite.addTest(new JUnit4TestAdapter(PharmacophoreUtilityTest.class));
-        suite.addTest(new JUnit4TestAdapter(PcoreCoverageTest.class));
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    PcoreCoverageTest.class,
+    PharmacophoreMatcherTest.class,
+    PharmacophoreUtilityTest.class
+})
+public class MpcoreTests {}

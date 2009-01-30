@@ -140,7 +140,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C45H75NO15", builder);
 		formula.setCharge(0.0);
 		
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -154,7 +154,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C45H71N7O10", builder);
 		formula.setCharge(0.0);
 		
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -168,7 +168,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C49H75NO12", builder);
 		formula.setCharge(0.0);
 		
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -182,7 +182,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C50H95NO10", builder);
 		formula.setCharge(0.0);
 		
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -196,7 +196,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C47H75N5O10", builder);
 		formula.setCharge(0.0);
 		
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -242,5 +242,33 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
+	/**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testNominalMass() throws ClassNotFoundException, CDKException, Exception {
+		
+		IRule rule  = new NitrogenRule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C25H53NO7P", builder);
+		formula.setCharge(1.0);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
 
+	/**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testDoubleCharge() throws ClassNotFoundException, CDKException, Exception {
+		
+		IRule rule  = new NitrogenRule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C22H34N2S2", builder);
+		formula.setCharge(2.0);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
 }

@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -39,7 +39,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 /**
  * @cdk.module test-smiles
  */
-public class NormalizerTest extends NewCDKTestCase {
+public class NormalizerTest extends CDKTestCase {
 
     @Test
 	public void testNormalize()	throws Exception{

@@ -23,6 +23,19 @@
  */
 package org.openscience.cdk.qsar.model.R2;
 
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
+
 import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -30,13 +43,6 @@ import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.RList;
 import org.rosuda.JRI.RMainLoopCallbacks;
 import org.rosuda.JRI.Rengine;
-
-import java.awt.*;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
 
 /**
  * Base class for the R-CDK interface.
@@ -113,6 +119,17 @@ public abstract class RModel implements IModel {
      */
     private static boolean doneInit = false;
     private static LoggingTool logger = new LoggingTool(RModel.class);
+
+    private void checkEnvironmentVariables()  throws QSARModelException {
+        String rhome = System.getenv("R_HOME");
+        String ldlibrarypath = System.getenv("LD_LIBRARY_PATH");
+        if (rhome == null || rhome.length() == 0 ||
+            ldlibrarypath == null || ldlibrarypath.length() == 0) {
+            throw new QSARModelException(
+                "Cannot find R: R_HOME and LD_LIBRARY_PATH are not set."
+            );
+        }
+    }
 
     private void initRengine(String[] args, boolean useDisk) throws QSARModelException {
         if (!doneInit) {
@@ -214,6 +231,7 @@ public abstract class RModel implements IModel {
      * is specified on the command line
      */
     public RModel() throws QSARModelException {
+        checkEnvironmentVariables();
         // check that the JRI jar and .so match
         if (!Rengine.versionCheck()) {
             logger.debug("API version of the JRI library does not match that of the native binary");

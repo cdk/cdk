@@ -54,7 +54,8 @@ public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
                 chemObjectIO.setReader(ins);
                 IChemObject readObject = chemObjectIO.read(object);
                 chemObjectIO.close();
-                Assert.assertNotNull(readObject);
+                Assert.assertNotNull("Failed attempt to read the file as " +
+                    object.getClass().getName(), readObject);
                 read = true;
             }
         }

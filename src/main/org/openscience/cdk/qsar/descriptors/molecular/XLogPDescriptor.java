@@ -42,6 +42,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -209,15 +210,20 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(ac.getBuilder());
+            hAdder.addImplicitHydrogens(ac);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(ac);
         } catch (CloneNotSupportedException e) {
+            return getDummyDescriptorValue(e);
+        } catch (CDKException e) {
             return getDummyDescriptorValue(e);
         }
 
         IRingSet rs = (IRingSet) new SSSRFinder(ac).findSSSR();
         IRingSet atomRingSet=null;
         if (checkAromaticity) {
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+            try {                
                 CDKHueckelAromaticityDetector.detectAromaticity(ac);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);

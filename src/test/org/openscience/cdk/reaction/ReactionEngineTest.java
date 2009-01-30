@@ -22,7 +22,7 @@ package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.reaction.type.AdductionProtonLPReaction;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 
@@ -31,7 +31,7 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  *
  * @cdk.module test-reaction
  */
-public class ReactionEngineTest extends NewCDKTestCase {
+public class ReactionEngineTest extends CDKTestCase {
 	
 	/**
 	 *  Constructor for the ReactionEngineTest object.

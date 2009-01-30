@@ -20,23 +20,12 @@
  */
 package org.openscience.cdk.structgen.stochastic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-structgen
  */
 public class PartialFilledStructureMergerTest extends CDKTestCase {
-    
-    public PartialFilledStructureMergerTest(String name) {
-        super(name);
-    }
-    
-	public static Test suite() {
-		return new TestSuite(PartialFilledStructureMergerTest.class);
-	}
 
 }
 

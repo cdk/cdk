@@ -69,7 +69,7 @@ import java.util.List;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialTChargePEOE
- * @cdk.bug     1701065
+ *
  * @see         GasteigerMarsiliPartialCharges
  * @see         GasteigerPEPEPartialCharges
  */

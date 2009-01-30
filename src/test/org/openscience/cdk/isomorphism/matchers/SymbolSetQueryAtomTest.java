@@ -24,11 +24,10 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtom;
 import org.openscience.cdk.CDKTestCase;
 
 /**
@@ -41,43 +40,33 @@ public class SymbolSetQueryAtomTest extends CDKTestCase
 	
     SymbolSetQueryAtom symbolSet = null;
     
-    public SymbolSetQueryAtomTest(String name)
-	{
-		super(name);
-	}
-	
-	public void setUp() 
-    {
+    @BeforeClass public void setUp() {
         symbolSet = new SymbolSetQueryAtom();
         symbolSet.addSymbol("C");
         symbolSet.addSymbol("Fe");
     }
 	
-	public static Test suite() {
-		return new TestSuite(SymbolSetQueryAtomTest.class);
-	}
-
-	public void testMatches()
+	@Test public void testMatches()
 	{
         Atom c = new Atom("C");
         Atom n = new Atom("N");
-		assertTrue(symbolSet.matches(c));
-        assertFalse(symbolSet.matches(n));
+		Assert.assertTrue(symbolSet.matches(c));
+        Assert.assertFalse(symbolSet.matches(n));
 	}
     
-    public void testRemoveSymbol()
+    @Test public void testRemoveSymbol()
     {
         symbolSet.removeSymbol("Fe");
-        assertEquals(1, symbolSet.getSymbolSet().size());
-        assertFalse(symbolSet.hasSymbol("Fe"));
-        assertTrue(symbolSet.hasSymbol("C"));
+        Assert.assertEquals(1, symbolSet.getSymbolSet().size());
+        Assert.assertFalse(symbolSet.hasSymbol("Fe"));
+        Assert.assertTrue(symbolSet.hasSymbol("C"));
         symbolSet.addSymbol("Fe");
     }
     
-    public void testHasSymbol()
+    @Test public void testHasSymbol()
     {
-        assertTrue(symbolSet.hasSymbol("C"));
-        assertFalse(symbolSet.hasSymbol("N"));
+        Assert.assertTrue(symbolSet.hasSymbol("C"));
+        Assert.assertFalse(symbolSet.hasSymbol("N"));
     }
     
 }

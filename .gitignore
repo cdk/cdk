@@ -3,7 +3,6 @@ build
 dist
 reports
 .settings
-*~
 doc/api
 doc/javadoc
 jar/libJniInchi.so.1.4

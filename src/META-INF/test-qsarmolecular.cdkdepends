@@ -1,3 +1,4 @@
+cdk-annotation.jar
 cdk-interfaces.jar
 cdk-smarts.jar
 cdk-core.jar
@@ -14,6 +15,7 @@ cdk-qsarmolecular.jar
 cdk-qsaratomic.jar
 cdk-qsarbond.jar
 cdk-smiles.jar
+cdk-builder3d.jar
 cdk-test.jar
 cdk-test-qsar.jar
 cdk-test-qsarbond.jar
@@ -24,3 +26,4 @@ cdk-isomorphism.jar
 cdk-ionpot.jar
 cdk-testdata.jar
 cdk-diff.jar
+cdk-builder3d.jar

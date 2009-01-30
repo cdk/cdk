@@ -68,7 +68,8 @@ import java.util.List;
  * </tr>
  * </table>
  * <p/>
- * Returns a single value named <i>nAtomLAC</i>
+ * Returns a single value named <i>nAtomLAC</i>. Note that a chain exists if there
+ * are two or more atoms. Thus single atom molecules will return 0
  *
  * @author chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
@@ -176,12 +177,19 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * <p/>
      * <p>Same for checkRingSystem, if true the CDKConstant.ISINRING will be set
      *
-     * @param container The {@link AtomContainer} for which this descriptor is to be calculated
+     * @param atomContainer The {@link AtomContainer} for which this descriptor is to be calculated
      * @return the number of atoms in the largest chain of this AtomContainer
      * @see #setParameters
      */
     @TestMethod("testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtomContainer container) {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+        IAtomContainer container;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            return getDummyDescriptorValue(e);
+        }
+
         //logger.debug("LargestChainDescriptor");
         boolean[] originalFlag4 = new boolean[container.getAtomCount()];
         for (int i=0; i<originalFlag4.length; i++) {
@@ -210,6 +218,8 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
             }
         }
 
+        // get rid of hydrogens in our local copy
+        container = AtomContainerManipulator.removeHydrogens(container);
 
         int largestChainAtomsCount = 0;
         //IAtom[] atoms = container.getAtoms();
@@ -241,11 +251,6 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
                 }
             }
 
-        }
-
-        // restore original flag values
-        for (int i=0; i<originalFlag4.length; i++) {
-            container.getAtom(i).setFlag(4, originalFlag4[i]);
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

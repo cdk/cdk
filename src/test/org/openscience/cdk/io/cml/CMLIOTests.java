@@ -23,8 +23,9 @@
  */
 package org.openscience.cdk.io.cml;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * TestSuite for testing the CML reading capabilities. The writing functionality
@@ -34,20 +35,14 @@ import junit.framework.TestSuite;
  * 
  * @see org.openscience.cdk.modulesuites.MlibiocmlTests
  */
-public class CMLIOTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.io.cml Tests");
-        suite.addTest(CMLStackTest.suite());
-        
-        suite.addTest(JumboTest.suite());
-        // suite.addTest(JmolTest.suite());
-        suite.addTest(JChemPaintTest.suite());
-        suite.addTest(CMLFragmentsTest.suite());
-        suite.addTest(CML23FragmentsTest.suite()); // schema23 20060209
-        suite.addTest(Jumbo46CMLFragmentsTest.suite());
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    CMLStackTest.class,
+    JumboTest.class,
+    JChemPaintTest.class,
+    CMLFragmentsTest.class,
+    CML23FragmentsTest.class,
+    CML25FragmentsTest.class,
+    Jumbo46CMLFragmentsTest.class
+})
+public class CMLIOTests {}

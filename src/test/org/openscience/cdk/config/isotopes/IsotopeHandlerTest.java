@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.isotopes.IsotopeHandler;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the IsotopeFactory
  *
  * @cdk.module test-core
  */
-public class IsotopeHandlerTest extends NewCDKTestCase {
+public class IsotopeHandlerTest extends CDKTestCase {
 
 
     // serious testing is done in IsotopeFactoryTest; the factory

@@ -34,7 +34,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,7 +58,7 @@ import org.openscience.cdk.nonotify.NNAtomContainer;
  *
  * @see org.openscience.cdk.geometry.GeometryTools
  */
-public class GeometryToolsTest extends NewCDKTestCase {
+public class GeometryToolsTest extends CDKTestCase {
 
     @Test public void testHas2DCoordinates_IAtomContainer() {
     	Atom atom1=new Atom("C");

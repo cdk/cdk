@@ -141,7 +141,7 @@ public class CMLCoreModule implements ICMLModule {
     
     protected double[] unitcellparams;
     protected int crystalScalar;
-    
+
 //    private Vector3d aAxis;
 //    private Vector3d bAxis;
 //    private Vector3d cAxis;
@@ -663,10 +663,10 @@ public class CMLCoreModule implements ICMLModule {
         if ("bond".equals(name)) {
         	if (!stereoGiven)
                 bondStereo.add("");
-            if (bondStereo.size() > bondDictRefs.size())
+            if (bondCounter > bondDictRefs.size())
                 bondDictRefs.add(null);
-            if (bondAromaticity.size() > bondDictRefs.size())
-            	bondAromaticity.add(null);
+            if (bondCounter > bondAromaticity.size())
+                bondAromaticity.add(null);
         } else if ("atom".equals(name)) {
             if (atomCounter > eltitles.size()) {
                 eltitles.add(null);
@@ -1439,13 +1439,6 @@ public class CMLCoreModule implements ICMLModule {
             		currentAtom.setMassNumber((int)Double.parseDouble((String)isotope.get(i)));
             }
             
-            Iterator<String> customs=moleculeCustomProperty.iterator();
-            if(customs.hasNext()){
-            	String nextCustom = (String)customs.next();
-            	if(!nextCustom.equals("")){
-            		currentAtom.setProperty(nextCustom,(String)customs.next());
-            	}
-            }
             if (hasAtomicNumbers) {
               if (atomicNumbers.get(i) != null)
                 currentAtom.setAtomicNumber(Integer.parseInt(atomicNumbers.get(i)));
@@ -1464,6 +1457,7 @@ public class CMLCoreModule implements ICMLModule {
             }
 
 //            cdo.endObject("Atom");
+
             currentMolecule.addAtom(currentAtom);
         }
         if (elid.size() > 0) {

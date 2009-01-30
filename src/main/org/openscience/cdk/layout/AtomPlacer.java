@@ -29,6 +29,7 @@
 package org.openscience.cdk.layout;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -452,7 +453,7 @@ public class AtomPlacer
      *@param  radius          The radius of the polygon to be populated: bond
      *      length or ring radius
      */
-    public void populatePolygonCorners(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
+    public void populatePolygonCorners(List<IAtom> atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
     {
         IAtom connectAtom = null;
         double angle = startAngle;
@@ -496,7 +497,7 @@ public class AtomPlacer
 
         for (int i = 0; i < atomsToDraw.size(); i++)
         {
-            connectAtom = (IAtom) atomsToDraw.elementAt(i);
+            connectAtom = (IAtom) atomsToDraw.get(i);
             connectAtom.setPoint2d((Point2d) points.elementAt(i));
             connectAtom.setFlag(CDKConstants.ISPLACED, true);
         }

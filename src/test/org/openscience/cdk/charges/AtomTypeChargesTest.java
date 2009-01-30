@@ -22,20 +22,21 @@ package org.openscience.cdk.charges;
 
 import org.junit.Assert;
 import org.junit.Ignore;
-import org.openscience.cdk.NewCDKTestCase;
+import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module  test-charges
  * @author      egonw
  * @cdk.created 2008-01-04
  */
-public class AtomTypeChargesTest extends NewCDKTestCase {
+public class AtomTypeChargesTest extends CDKTestCase {
 
 	/**
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOC atom types.
 	 */
-	@Ignore public void testCharges_pOC() throws Exception {
+	@Ignore @Test public void testCharges_pOC() throws Exception {
 		Assert.fail("Not tested yet");
 	}
 	
@@ -43,7 +44,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOP atom types.
 	 */
-	@Ignore public void testCharges_pOP() throws Exception {
+	@Ignore @Test public void testCharges_pOP() throws Exception {
 		Assert.fail("Not tested yet");
 	}
 	
@@ -51,7 +52,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOS atom types.
 	 */
-	@Ignore public void testCharges_pOS() throws Exception {
+	@Ignore @Test public void testCharges_pOS() throws Exception {
 		Assert.fail("Not tested yet");
 	}
 	
@@ -59,7 +60,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for p_p atom types.
 	 */
-	@Ignore public void testCharges_p_p() throws Exception {
+	@Ignore @Test public void testCharges_p_p() throws Exception {
 		Assert.fail("Not tested yet");
 	}
 	
@@ -67,7 +68,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for p_n atom types.
 	 */
-	@Ignore public void testCharges_p_n() throws Exception {
+	@Ignore @Test public void testCharges_p_n() throws Exception {
 		Assert.fail("Not tested yet");
 	}
 	

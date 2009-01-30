@@ -22,7 +22,7 @@ package org.openscience.cdk.atomtype.mapper;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * This class tests the mapper that maps CDK atom types to other atom type
@@ -30,11 +30,21 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @cdk.module test-atomtype
  */
-public class AtomTypeMapperTest extends NewCDKTestCase {
+public class AtomTypeMapperTest extends CDKTestCase {
 
 	@Test public void testGetInstance_String() {
 		AtomTypeMapper mapper = AtomTypeMapper.getInstance(
 			"org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"
+		);
+		Assert.assertNotNull(mapper);
+	}
+
+	@Test public void testGetInstance_String_InputStream() {
+		AtomTypeMapper mapper = AtomTypeMapper.getInstance(
+			"org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl",
+		    this.getClass().getClassLoader().getResourceAsStream(
+		        "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"
+		    )
 		);
 		Assert.assertNotNull(mapper);
 	}

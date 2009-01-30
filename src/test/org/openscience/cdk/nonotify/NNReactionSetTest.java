@@ -24,19 +24,58 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.ReactionSetTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.AbstractReactionSetTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNReactionSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNReactionSetTest extends ReactionSetTest {
+public class NNReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeClass public static void setUp() {
-    	ReactionSetTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNReactionSet();
+            }
+        });
     }
 
+    @Test public void testNNReactionSet() {
+        IReactionSet rs = new NNReactionSet();
+        Assert.assertNotNull(rs);
+    }
+
+    // Overwrite default methods: no notifications are expected!
+    
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(newChemObject());
+    }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(newChemObject());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(newChemObject());
+    }
 }

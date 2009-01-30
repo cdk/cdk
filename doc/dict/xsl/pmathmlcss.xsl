@@ -31,7 +31,7 @@ Implementation. In the case of stretch operators, the element
 specifies the symbol parts via the latin-1 equivalent character based
 on the encoding in the symbol font.  It is a clear "failure to comply
 to the spec" that using latin 1 characters (or numeric character
-references) in the latin 1 range access glyphs in teh symbol font via
+references) in the latin 1 range access glyphs in the symbol font via
 font position, however most of these character parts are not in
 Unicode (until 3.2), so there is no standard way to access these characters.</h:p>
 
@@ -102,13 +102,13 @@ XHTML elements get passed straight through, sans namespace prefix.
 
 
 <h:p>
-Template for the head element copies the original content, aand in
+Template for the head element copies the original content, and in
 addition adds a script element and CSS style element that implement
 the core of the MathML renderer.
 </h:p>
 
 <h:p doc:ref="malign">
-The malign function first finds the left most item in the aligngroup, and
+The malign function first finds the left most item in the align group, and
 then modifies the left margin of each item to make them
 align. (Currently only left alignment is supported.)
 </h:p>
@@ -389,7 +389,7 @@ copied through to the output unchanged.
 <h:p>
 Handling of mathvariant attribute.
 The choice of font families here (currently) avoids math-specific
-fonts but does use several fionts coming with windows 9.x and/or
+fonts but does use several fonts coming with windows 9.x and/or
 office 2000.
 </h:p>
 <xsl:template match="@mathvariant[.='bold']">

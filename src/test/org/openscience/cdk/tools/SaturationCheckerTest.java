@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IMolecule;
  * @author     steinbeck
  * @cdk.created    2003-02-20
  */
-public class SaturationCheckerTest extends NewCDKTestCase
+public class SaturationCheckerTest extends CDKTestCase
 {
 
 	SaturationChecker satcheck = null;

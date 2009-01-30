@@ -21,18 +21,36 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.ChemObjectTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractChemObjectTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the ChemObject.
+ * Checks the functionality of the {@link DebugChemObject}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemObjectTest extends ChemObjectTest {
-	@BeforeClass public static void setUp() {
-    	ChemObjectTest.builder = DebugChemObjectBuilder.getInstance();
+public class DebugChemObjectTest extends AbstractChemObjectTest {
+
+    @BeforeClass public static void setUp() {
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugChemObject();
+            }
+        });
     }
 
+    @Test public void testDebugChemObject() {
+        IChemObject chemObject = new DebugChemObject();
+        Assert.assertNotNull(chemObject);
+    }
+
+    @Test public void testDebugChemObject_IChemObject() {
+    	IChemObject chemObject1 = new DebugChemObject();
+        IChemObject chemObject = new DebugChemObject(chemObject1);
+        Assert.assertNotNull(chemObject);
+    }
 }

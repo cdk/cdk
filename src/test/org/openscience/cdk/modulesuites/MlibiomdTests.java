@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.LibiomdCoverageTest;
 import org.openscience.cdk.libio.md.MDMoleculeTest;
 
@@ -31,16 +31,9 @@ import org.openscience.cdk.libio.md.MDMoleculeTest;
  *
  * @cdk.module test-libiomd
  */
-public class MlibiomdTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("libiomd inchi module Tests");
-        
-        suite.addTest(LibiomdCoverageTest.suite());
-        
-        suite.addTest(MDMoleculeTest.suite());
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    LibiomdCoverageTest.class,
+    MDMoleculeTest.class
+})
+public class MlibiomdTests {}

@@ -25,7 +25,7 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.nonotify.NNChemObject;
 
 /**
@@ -33,7 +33,7 @@ import org.openscience.cdk.nonotify.NNChemObject;
  *
  * @cdk.module test-core
  */
-public class OWLBasedAtomTypeConfiguratorTest extends NewCDKTestCase {
+public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
 	
     @Test
     public void testCDKBasedAtomTypeConfigurator() {

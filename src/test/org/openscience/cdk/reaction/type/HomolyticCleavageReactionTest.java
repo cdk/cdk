@@ -1610,7 +1610,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	 * A unit test suite for JUnit. Reaction: Ethylbenzaldehyde.
 	 * CCc1ccc(C=O)cc1  =>  C+ Cc1ccc(C=O)cc1
 	 * CCc1ccc(C=O)cc1  =>  CC + c1ccc(C=O)cc1 
-	 * Automatic looking for active center.
+	 * Automatically looks for the active center.
 	 * 
 	 * @cdk.inchi InChI=1/C9H10O/c1-2-8-3-5-9(7-10)6-4-8/h3-7H,2H2,1H3
 	 * 

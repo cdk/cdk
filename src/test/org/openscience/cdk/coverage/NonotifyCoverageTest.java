@@ -23,9 +23,8 @@
  */
 package org.openscience.cdk.coverage;
 
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -36,20 +35,11 @@ public class NonotifyCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "nonotify.javafiles";
     
-    public NonotifyCoverageTest(String name){
-        super(name);
+    @BeforeClass public static void setUp() throws Exception {
+        loadClassList(CLASS_LIST, NonotifyCoverageTest.class.getClassLoader());
     }
 
-    public void setUp() throws Exception {
-        super.setUp();
-        super.loadClassList(CLASS_LIST);
-    }
-
-    public static Test suite() {
-        return new TestSuite(NonotifyCoverageTest.class);
-    }
-
-    public void testCoverage() {
+    @Test public void testCoverage() {
         super.runCoverageTest();
     }
 }

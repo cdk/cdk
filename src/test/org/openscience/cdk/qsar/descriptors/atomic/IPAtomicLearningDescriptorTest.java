@@ -537,7 +537,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 ////        IReactionSet reactionSet = descriptor.getReactionSet();
 ////		assertEquals(1, reactionSet.getReactionCount());
 ////        
-//    }
+////    }
 ////    
 	/**
 	 * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...

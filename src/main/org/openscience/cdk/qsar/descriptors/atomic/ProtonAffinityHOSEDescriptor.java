@@ -1,4 +1,4 @@
-/* $Revision: 10995 $ $Author: miguelrojasch $ $Date: 2008-05-14 16:38:21 +0200 (Wed, 14 May 2008) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
@@ -63,10 +63,9 @@ import java.util.StringTokenizer;
  * @author       Miguel Rojas
  * @cdk.created  2006-05-26
  * @cdk.module   qsaratomic
- * @cdk.svnrev   $Revision: 10995 $
+ * @cdk.svnrev   $Revision$
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:protonaffinity
- * @cdk.bug      1860497
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.ProtonAffinityHOSEDescriptorTest")
 public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
@@ -93,7 +92,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
 				this.getClass().getName(),
-				"$Id: ProtonAffinityDescriptor.java 10995 2008-05-14 14:38:21Z miguelrojasch $",
+				"$Id$",
 				"The Chemistry Development Kit");
 	}
     /**

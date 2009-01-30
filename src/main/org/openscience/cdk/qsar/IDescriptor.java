@@ -79,7 +79,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *
  * @cdk.module qsar
  * @cdk.svnrev $Revision$
- * @cdk.bug    1862137
  * 
  * @see        DescriptorValue
  * @see        IDescriptorResult

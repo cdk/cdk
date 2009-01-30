@@ -24,19 +24,66 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.MoleculeTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractMoleculeTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugMolecule}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMoleculeTest extends MoleculeTest {
+public class DebugMoleculeTest extends AbstractMoleculeTest {
 
     @BeforeClass public static void setUp() {
-    	MoleculeTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugMolecule();
+            }
+        });
     }
 
+    @Test public void testDebugMolecule() {
+        IMolecule m = new DebugMolecule();
+        Assert.assertNotNull(m);
+    }
+
+    @Test public void testDebugMolecule_int_int_int_int() {
+        IMolecule m = new DebugMolecule(5,5,1,1);
+        Assert.assertNotNull(m);
+        Assert.assertEquals(0, m.getAtomCount());
+        Assert.assertEquals(0, m.getBondCount());
+        Assert.assertEquals(0, m.getLonePairCount());
+        Assert.assertEquals(0, m.getSingleElectronCount());
+    }
+
+    @Test public void testDebugMolecule_IAtomContainer() {
+        IAtomContainer acetone = newChemObject().getBuilder().newAtomContainer();
+        IAtom c1 = acetone.getBuilder().newAtom("C");
+        IAtom c2 = acetone.getBuilder().newAtom("C");
+        IAtom o = acetone.getBuilder().newAtom("O");
+        IAtom c3 = acetone.getBuilder().newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        IBond b1 = acetone.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+
+        IMolecule m = new DebugMolecule(acetone);
+        Assert.assertNotNull(m);
+        Assert.assertEquals(4, m.getAtomCount());
+        Assert.assertEquals(3, m.getBondCount());
+    }
 }

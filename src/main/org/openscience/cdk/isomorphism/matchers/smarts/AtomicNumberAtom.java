@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -42,7 +43,7 @@ public class AtomicNumberAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 4811205092161793129L;
 	
 	/**
-	 * Creates a new instance
+	 * Creates a new instance.
 	 *
 	 * @param atomicNumber
 	 */
@@ -55,7 +56,7 @@ public class AtomicNumberAtom extends SMARTSAtom {
      */
     public boolean matches(IAtom atom) {
     	// TODO: this is just a hack for a few
-    	if (atom.getAtomicNumber() != 0) {
+      if (atom.getAtomicNumber() != CDKConstants.UNSET) {
             return (atom.getAtomicNumber() == getAtomicNumber());
     	} 
     	if (atom.getSymbol().equals("C")) {

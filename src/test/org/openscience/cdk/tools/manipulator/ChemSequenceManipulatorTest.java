@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.manipulator.ChemSequenceManipulator;
 
@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * @cdk.module test-standard
  */
-public class ChemSequenceManipulatorTest extends NewCDKTestCase {
+public class ChemSequenceManipulatorTest extends CDKTestCase {
     
 	IMolecule molecule1 = null;
 	IMolecule molecule2 = null;

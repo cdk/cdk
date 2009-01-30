@@ -22,12 +22,12 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class BooleanArrayDifferenceTest extends NewCDKTestCase {
+public class BooleanArrayDifferenceTest extends CDKTestCase {
 
     @Test public void testDiff() {
         IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{true, true}, new boolean[]{false, false});

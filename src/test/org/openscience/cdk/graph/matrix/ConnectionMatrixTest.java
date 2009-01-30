@@ -23,7 +23,7 @@ package org.openscience.cdk.graph.matrix;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNMolecule;
@@ -33,7 +33,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-standard
  */
-public class ConnectionMatrixTest extends NewCDKTestCase {
+public class ConnectionMatrixTest extends CDKTestCase {
 
 	private final static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 

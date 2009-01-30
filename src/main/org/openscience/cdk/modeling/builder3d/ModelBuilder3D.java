@@ -33,6 +33,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -566,7 +567,7 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Returns true if all atoms in an AtomContainer have coordinates
+	 * Returns the largest (number of atoms) ring set in a molecule.
 	 *
 	 *@param  ac  AtomContainer
 	 *@return     boolean

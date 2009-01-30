@@ -1,3 +1,4 @@
+cdk-annotation.jar
 cdk-interfaces.jar
 cdk-data.jar
 cdk-core.jar
@@ -7,3 +8,4 @@ cdk-reaction.jar
 cdk-charges.jar
 cdk-qsar.jar
 cdk-pdb.jar
+cdk-diff.jar

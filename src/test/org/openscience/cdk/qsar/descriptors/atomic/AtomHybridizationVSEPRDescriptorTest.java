@@ -77,10 +77,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
+		assertAtomTypesPerceived(molecule);
         Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
-
         Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
-
         Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
@@ -107,10 +106,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
+		assertAtomTypesPerceived(molecule);
         Assert.assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
-
         Assert.assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
-
         Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
@@ -139,15 +137,14 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
+		assertAtomTypesPerceived(molecule);
         Assert.assertEquals(IAtomType.Hybridization.PLANAR3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
-
         Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
-
         Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
     /**
-	 *  A unit test for JUnit
+	 * @cdk.bug 2323124
 	 */
     @Test
     public void testAtomHybridizationVSEPRDescriptorTest_4() throws ClassNotFoundException, CDKException, java.lang.Exception
@@ -171,12 +168,15 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b2);
         molecule.addBond(b3);
 
+        assertAtomTypesPerceived(molecule);
         Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
 
     /**
 	 *  A unit test for JUnit
+	 *
+	 * @cdk.bug 2323133
 	 */
     @Test
     public void testAtomHybridizationVSEPRDescriptorTest_5() throws ClassNotFoundException, CDKException, java.lang.Exception
@@ -204,12 +204,15 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b3);
         molecule.addBond(b4);
 
+        assertAtomTypesPerceived(molecule);
         Assert.assertEquals(IAtomType.Hybridization.SP3D2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
 
     /**
-	 *  A unit test for JUnit with F-[I-]-F
+	 * A unit test for JUnit with F-[I-]-F.
+	 *
+	 * @cdk.bug 2323126
 	 */
     @Test
     public void testAtomHybridizationVSEPRDescriptorTest_6() throws ClassNotFoundException, CDKException, java.lang.Exception
@@ -230,6 +233,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
+        assertAtomTypesPerceived(molecule);
         Assert.assertEquals(IAtomType.Hybridization.SP3D1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
@@ -250,12 +254,14 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("F-C=C");
 
-		addExplicitHydrogens(mol);
+		assertAtomTypesPerceived(mol);
+        addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
 		
-		for(int i = 0 ; i < 3; i++){
+		assertAtomTypesPerceived(mol);
+        for(int i = 0 ; i < 3; i++){
 		    Assert.assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
 		}
     }
@@ -276,14 +282,15 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[F+]=C-[C-]");
 
+		assertAtomTypesPerceived(mol);
 		addImplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
 		
-		for(int i = 0 ; i < 3; i++){
+		assertAtomTypesPerceived(mol);
+        for(int i = 0 ; i < 3; i++){
 		    Assert.assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
-
 		}
     }
 }

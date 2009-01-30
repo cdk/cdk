@@ -445,7 +445,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         int massDiff = Integer.parseInt(massDiffString);
                         if (massDiff != 0) {
                             IIsotope major = IsotopeFactory.getInstance(molecule.getBuilder()).getMajorIsotope(element);
-                            atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
+                            atom.setMassNumber(major.getMassNumber() + massDiff);
                         }
                     } catch (Exception exception) {
                         logger.error("Could not parse mass difference field");
@@ -513,8 +513,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 while (atomsToUpdate.hasNext()) {
                     IAtom atomToUpdate = atomsToUpdate.next();
                     Point3d p3d = atomToUpdate.getPoint3d();
-                    atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
-                    atomToUpdate.setPoint3d(null);
+                    if (p3d != null) {
+                        atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
+                        atomToUpdate.setPoint3d(null);
+                    }
                 }
             }
             

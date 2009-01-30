@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.annotations.TestMethod;
 
 /**
- * @cdk.module io
+ * @cdk.module ioformats
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */

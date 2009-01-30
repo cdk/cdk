@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class ChemObjectDiffTest extends NewCDKTestCase {
+public class ChemObjectDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IChemObject atom1 = new ChemObject();

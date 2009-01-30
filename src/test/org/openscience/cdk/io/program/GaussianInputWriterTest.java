@@ -60,7 +60,8 @@ public class GaussianInputWriterTest extends ChemObjectIOTest {
         StringWriter writer = new StringWriter();
         GaussianInputWriter gaussianWriter = new GaussianInputWriter(writer);
         gaussianWriter.write(molecule);
+        gaussianWriter.close();
         String output = writer.toString();
-        Assert.assertFalse(output.equals(""));
+        Assert.assertNotSame(0, output.length());
     }
 }
