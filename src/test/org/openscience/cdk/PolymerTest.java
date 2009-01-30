@@ -30,10 +30,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IPolymer;
-import org.openscience.cdk.interfaces.AbstractPolymerTest;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.interfaces.*;
 
 /**
  * TestCase for the Polymer class.
@@ -90,5 +87,26 @@ public class PolymerTest extends AbstractPolymerTest {
         clone = (Polymer) oPolymer.clone();
         Assert.assertEquals(1, clone.getMonomerCount());
         Assert.assertEquals(2, clone.getAtomCount());
+    }
+
+    /**
+     * @cdk.bug  2454890
+     */
+    @Test
+    public void testPolymerClone2() throws CloneNotSupportedException {
+        IPolymer oPolymer = new Polymer();
+        Assert.assertNotNull(oPolymer);
+        Assert.assertEquals(0, oPolymer.getMonomerCount());
+
+        Monomer monomer = new Monomer();
+        monomer.setMonomerName("TYR55");
+        IAtom atom = monomer.getBuilder().newAtom("C");
+        oPolymer.addAtom(atom, monomer);
+
+        Polymer clone = (Polymer) oPolymer.clone();
+        IMonomer clonedMonomer = clone.getMonomer("TYR55");
+        Assert.assertNotSame(monomer, clonedMonomer);
+        IAtom clonedAtom = clone.getAtom(0);
+        Assert.assertNotSame(atom, clonedAtom);
     }
 }
