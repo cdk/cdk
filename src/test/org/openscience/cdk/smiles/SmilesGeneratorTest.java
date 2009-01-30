@@ -442,7 +442,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
 		molecule.addBond(5, 0, IBond.Order.SINGLE);
 		smiles = sg.createSMILES(molecule);
-		Assert.assertEquals("c1ccccc1", smiles);
+		assertEquals("c1ccccc1", smiles);
+		sg.setUseAromaticityFlag(false);
+		smiles = sg.createSMILES(molecule);
+		assertEquals("C1CCCCC1", smiles);
 	}
 
 
