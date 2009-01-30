@@ -84,5 +84,11 @@ public class PolymerTest extends AbstractPolymerTest {
         clone = (Polymer) oPolymer.clone();
         Assert.assertEquals(1, clone.getMonomerCount());
         Assert.assertEquals(1, clone.getMonomerNames().size());
+        Assert.assertEquals(1, clone.getAtomCount());
+
+        oPolymer.addAtom(new Atom("N"));
+        clone = (Polymer) oPolymer.clone();
+        Assert.assertEquals(1, clone.getMonomerCount());
+        Assert.assertEquals(2, clone.getAtomCount());
     }
 }

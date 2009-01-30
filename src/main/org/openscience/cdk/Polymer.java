@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IMonomer;
 
 import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -106,7 +105,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 * @return The Monomer object which was asked for
 	 */
 	public IMonomer getMonomer(String cName) {
-		return (Monomer)monomers.get(cName);
+		return monomers.get(cName);
 	}
 	
 	/**
@@ -132,11 +131,6 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 		}
 	}
 
-    private void setMonomers(Map<String, IMonomer> monomers) {
-        this.monomers = monomers;
-    }
-
-
     public String toString() {
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("Polymer(");
@@ -155,7 +149,21 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
             for (IAtom atomInMonomer : monomerClone.atoms()) {
                 clone.addAtom(atomInMonomer, monomerClone);
             }
-        }       
+        }
+
+        // now consider atoms that are not associated with any monomer
+        for (IAtom atom : atoms()) {
+            if (!atomIsInMonomer(atom))
+                clone.addAtom((IAtom) atom.clone());
+        }
         return clone;
+    }
+
+    private boolean atomIsInMonomer(IAtom atom) {
+        for (String monomerName : getMonomerNames()) {
+            IMonomer monomer = getMonomer(monomerName);
+            if (monomer.contains(atom)) return true;
+        }
+        return false;
     }
 }
