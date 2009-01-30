@@ -20,11 +20,14 @@
  */
 package org.openscience.cdk.charges;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,10 +37,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 /**
  * The stabilization of the positive and the negative charge 
  * obtained (e.g in the polar breaking of a bond) is calculated from the sigma- and
