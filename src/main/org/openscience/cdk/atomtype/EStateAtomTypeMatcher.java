@@ -167,7 +167,7 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
     public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1,
 			IAtom atom2, IRingSet rs)
 	{
-		if (rs == null) 
+		if (rs == null)
 			return false;
 		for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++)
 		{
