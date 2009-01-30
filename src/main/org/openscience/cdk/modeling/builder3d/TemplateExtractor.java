@@ -421,7 +421,7 @@ public class TemplateExtractor {
 				// }
 				// query=createAnyAtomAtomContainer(m);
 				// query=(AtomContainer)m.clone();
-				query = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(m);
+				query = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(m);
 
 			}
 			try {
