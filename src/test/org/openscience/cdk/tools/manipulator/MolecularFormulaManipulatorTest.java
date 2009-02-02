@@ -383,6 +383,25 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(46.96885268,totalExactMass,0.000001);
     }
+	/**
+     * A unit test suite for JUnit. Test total Exact Mass.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    @Test 
+    public void testGetTotalExactMassWithCharge_IMolecularFormula() throws IOException, ClassNotFoundException, CDKException{
+
+		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("CH5O", builder);
+        
+    	double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
+        Assert.assertEquals(33.034040,totalExactMass,0.0001);
+        
+        formula.setCharge(1.0);
+    	double totalExactMass2 = MolecularFormulaManipulator.getTotalExactMass(formula);
+        Assert.assertEquals(33.03349,totalExactMass2,0.0001);
+    }
     @Test 
     public void testGetNaturalExactMass_IMolecularFormula() throws Exception {
 		IMolecularFormula formula = new MolecularFormula();
