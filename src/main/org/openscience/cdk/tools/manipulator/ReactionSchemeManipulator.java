@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  *
  * @see ChemModelManipulator
  */
-@TestClass("org.openscience.cdk.tools.manipulator.ReactionSetManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.ReactionSchemeManipulatorTest")
 public class ReactionSchemeManipulator {
 
     /**

@@ -28,7 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -37,7 +36,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
- * @cdk.module test-reaction
+ * @cdk.module test-standard
  */
 public class ReactionSchemeManipulatorTest extends CDKTestCase {
     
@@ -164,15 +163,15 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 	}
 
     @Test public void testCreateReactionScheme_IReactionSet() {
-    	Molecule molA = new Molecule();
+    	IMolecule molA = builder.newMolecule();
     	molA.setID("A");
-    	Molecule molB = new Molecule();
+    	IMolecule molB = builder.newMolecule();
     	molB.setID("B");
-    	Molecule molC = new Molecule();
+    	IMolecule molC = builder.newMolecule();
     	molC.setID("C");
-    	Molecule molD = new Molecule();
+    	IMolecule molD = builder.newMolecule();
     	molD.setID("D");
-    	Molecule molE = new Molecule();
+    	IMolecule molE = builder.newMolecule();
     	molE.setID("E");
     	
     	IReactionSet reactionSet = builder.newReactionSet();
