@@ -55,8 +55,8 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 	    return super.contains(isotope);
     }
 
-	public Double getCharge() {
-		Double charge = super.getCharge();
+	public Integer getCharge() {
+		Integer charge = super.getCharge();
 		logger.debug("Getting charge: ", charge);
 	    return charge;
     }
@@ -100,7 +100,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
       super.removeProperty(description);
     }
 
-	public void setCharge(Double charge) {
+	public void setCharge(Integer charge) {
 		logger.debug("Setting the charge to: ", charge);
 	    super.setCharge(charge);
     }

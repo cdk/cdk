@@ -108,7 +108,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C2H11N4O4", builder);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -123,7 +123,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C4H13N1O5", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -138,7 +138,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C45H75NO15", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -152,7 +152,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C45H71N7O10", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -166,7 +166,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C49H75NO12", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -180,7 +180,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C50H95NO10", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -194,7 +194,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C47H75N5O10", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -208,7 +208,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C36H42N2O23", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -223,7 +223,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("NH3", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -238,7 +238,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("NH4", builder);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -252,7 +252,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C25H53NO7P", builder);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -267,7 +267,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C22H34N2S2", builder);
-		formula.setCharge(2.0);
+		formula.setCharge(2);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -282,7 +282,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C40H46FeN6O8S2", builder);
-		formula.setCharge(2.0);
+		formula.setCharge(2);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -297,7 +297,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		IRule rule  = new NitrogenRule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C43H50CoN4O16", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}

@@ -46,8 +46,8 @@ public class DebugAdductFormula extends AdductFormula implements IAdductFormula 
 	    return super.contains(isotope);
     }
 
-	public Double getCharge() {
-		Double charge = super.getCharge();
+	public Integer getCharge() {
+		Integer charge = super.getCharge();
 		logger.debug("Getting charge: ", charge);
 	    return charge;
     }
@@ -67,7 +67,7 @@ public class DebugAdductFormula extends AdductFormula implements IAdductFormula 
 	    return super.isotopes();
     }
 
-	public void setCharge(Double charge) {
+	public void setCharge(Integer charge) {
 	    logger.debug("Setting the charge to: ", charge);
 	    super.setCharge(charge);
     }

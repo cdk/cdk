@@ -137,8 +137,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @see    #setCharge
      */
     @TestMethod("testGetCharge")
-	public Double getCharge() {
-		Double charge = 0.0;
+	public Integer getCharge() {
+		Integer charge = 0;
 		Iterator<IMolecularFormula> componentIterator = components.iterator();
 		while (componentIterator.hasNext()) {
 			charge += componentIterator.next().getCharge();
@@ -221,7 +221,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @see    #getCharge
      */
      @TestMethod("testSetCharge")
-	public void setCharge(Double charge) {
+	public void setCharge(Integer charge) {
 		throw new java.lang.IllegalAccessError();
 	}
 

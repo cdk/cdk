@@ -71,7 +71,7 @@ public interface IAdductFormula extends IMolecularFormulaSet{
      *
      * @see    #setCharge
      */
-    public Double getCharge();
+    public Integer getCharge();
     
     /**
 	 *  True, if the AdductFormula contains the given IIsotope object.
@@ -88,7 +88,7 @@ public interface IAdductFormula extends IMolecularFormulaSet{
      *
      * @see    #getCharge
      */
-    public void setCharge(Double charge) ;
+    public void setCharge(Integer charge) ;
     
     /**
 	 * Clones this IAdductFormula object and its content.

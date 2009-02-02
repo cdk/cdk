@@ -147,7 +147,7 @@ public class RDBERuleTest extends FormulaRuleTest {
 		IRule rule  = new RDBERule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C1H4", builder);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -219,7 +219,7 @@ public class RDBERuleTest extends FormulaRuleTest {
 		RDBERule rule  = new RDBERule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("NH4", builder);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -249,7 +249,7 @@ public class RDBERuleTest extends FormulaRuleTest {
 		RDBERule rule  = new RDBERule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C42H85NO8P", builder);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
@@ -264,7 +264,7 @@ public class RDBERuleTest extends FormulaRuleTest {
 		RDBERule rule  = new RDBERule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C6H9BNO2", builder);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
