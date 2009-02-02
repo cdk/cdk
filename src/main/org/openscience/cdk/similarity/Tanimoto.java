@@ -61,6 +61,7 @@ import java.util.BitSet;
  *@cdk.created    2005-10-19
  *@cdk.keyword    jaccard
  *@cdk.keyword    similarity, tanimoto
+ * @cdk.module fingerprint
  */
 @TestClass("org.openscience.cdk.similarity.TanimotoTest")
 public class Tanimoto 

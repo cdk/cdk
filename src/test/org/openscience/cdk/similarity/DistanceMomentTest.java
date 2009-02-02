@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * @cdk.module test-extra                      
+ * @cdk.module test-fingerprint                     
  */
 public class DistanceMomentTest extends CDKTestCase {
 

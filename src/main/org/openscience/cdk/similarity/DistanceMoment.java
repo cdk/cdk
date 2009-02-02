@@ -34,6 +34,7 @@ import java.util.Iterator;
  * @cdk.created 2007-03-11
  * @cdk.keyword similarity, 3D, manhattan
  * @cdk.svnrev  $Revision$
+ * @cdk.module fingerprint
  */
 @TestClass("org.openscience.cdk.similarity.DistanceMomentTest")
 public class DistanceMoment {
