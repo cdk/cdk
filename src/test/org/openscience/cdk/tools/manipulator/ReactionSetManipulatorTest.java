@@ -239,6 +239,99 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         Assert.assertNotNull(ids);
         Assert.assertEquals(6, ids.size());
     }
+    
+    @Test public void testGetRelevantReactions_IReactionSet_IMolecule() {
+		IReactionSet set = builder.newReactionSet();
+		IReaction reaction1 = builder.newReaction();
+		set.addReaction(reaction1);
+		IMolecule mol1a = builder.newMolecule();
+		IMolecule mol1b = builder.newMolecule();
+		reaction1.addReactant(mol1a);
+		reaction1.addReactant(mol1b);
+		reaction1.addProduct(builder.newMolecule());
+		reaction1.addProduct(builder.newMolecule());
+		
+		IReaction reaction2 = builder.newReaction();
+		reaction2.addReactant(mol1b);
+		reaction2.addProduct(builder.newMolecule());
+		set.addReaction(reaction2);
+		
+		IReaction reaction3 = builder.newReaction();
+		reaction3.addReactant(builder.newMolecule());
+		reaction3.addProduct(builder.newMolecule());
+		set.addReaction(reaction3);
+		
+		Assert.assertEquals(3,set.getReactionCount());
+		IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactions(set, mol1b);
+		Assert.assertEquals(2,reactionSet2.getReactionCount());
+		Assert.assertEquals(reaction1,reactionSet2.getReaction(0));
+		Assert.assertEquals(reaction2,reactionSet2.getReaction(1));
+		IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactions(set, mol1a);
+		Assert.assertEquals(1,reactionSet1.getReactionCount());
+		Assert.assertEquals(reaction1,reactionSet1.getReaction(0));
+		
+	}
+    @Test public void testGetRelevantReactionsAsReactant_IReactionSet_IMolecule() {
+		IReactionSet set = builder.newReactionSet();
+		IReaction reaction1 = builder.newReaction();
+		set.addReaction(reaction1);
+		IMolecule mol1a = builder.newMolecule();
+		IMolecule mol1b = builder.newMolecule();
+		reaction1.addReactant(mol1a);
+		reaction1.addReactant(mol1b);
+		reaction1.addProduct(builder.newMolecule());
+		reaction1.addProduct(builder.newMolecule());
+		
+		IReaction reaction2 = builder.newReaction();
+		reaction2.addReactant(mol1b);
+		reaction2.addProduct(builder.newMolecule());
+		set.addReaction(reaction2);
+		
+		IReaction reaction3 = builder.newReaction();
+		reaction3.addReactant(builder.newMolecule());
+		reaction3.addProduct(builder.newMolecule());
+		set.addReaction(reaction3);
+		
+		Assert.assertEquals(3,set.getReactionCount());
+		IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1b);
+		Assert.assertEquals(2,reactionSet2.getReactionCount());
+		Assert.assertEquals(reaction1,reactionSet2.getReaction(0));
+		Assert.assertEquals(reaction2,reactionSet2.getReaction(1));
+		IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1a);
+		Assert.assertEquals(1,reactionSet1.getReactionCount());
+		Assert.assertEquals(reaction1,reactionSet1.getReaction(0));
+		
+	}
+
+    @Test public void testGetRelevantReactionsAsProduct_IReactionSet_IMolecule() {
+		IReactionSet set = builder.newReactionSet();
+		IReaction reaction1 = builder.newReaction();
+		set.addReaction(reaction1);
+		IMolecule mol1a = builder.newMolecule();
+		IMolecule mol1b = builder.newMolecule();
+		reaction1.addReactant(mol1a);
+		reaction1.addReactant(mol1b);
+		reaction1.addProduct(builder.newMolecule());
+		reaction1.addProduct(builder.newMolecule());
+		
+		IReaction reaction2 = builder.newReaction();
+		reaction2.addReactant(mol1b);
+		reaction2.addProduct(builder.newMolecule());
+		set.addReaction(reaction2);
+		
+		IReaction reaction3 = builder.newReaction();
+		reaction3.addReactant(builder.newMolecule());
+		reaction3.addProduct(mol1a);
+		set.addReaction(reaction3);
+		
+		Assert.assertEquals(3,set.getReactionCount());
+		IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1b);
+		Assert.assertEquals(0,reactionSet2.getReactionCount());
+		IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1a);
+		Assert.assertEquals(1,reactionSet1.getReactionCount());
+		Assert.assertEquals(reaction3,reactionSet1.getReaction(0));
+		
+	}
 }
 
 
