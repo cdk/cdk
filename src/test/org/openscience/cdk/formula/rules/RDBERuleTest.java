@@ -253,4 +253,19 @@ public class RDBERuleTest extends FormulaRuleTest {
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
+
+	/**
+	 * A unit test suite for JUnit for B.
+     *
+     * @return    The test suite
+	 */
+	@Test public void testB() throws ClassNotFoundException, CDKException, Exception {
+		
+		RDBERule rule  = new RDBERule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C6H9BNO2", builder);
+		formula.setCharge(1.0);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
 }

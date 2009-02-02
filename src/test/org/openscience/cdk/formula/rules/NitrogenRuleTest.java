@@ -271,4 +271,34 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
+	
+	/**
+	 * A unit test suite for JUnit. Compounds like Fe, Co, Hg, Pt, As.C40H46FeN6O8S2
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testWithFe() throws ClassNotFoundException, CDKException, Exception {
+		
+		IRule rule  = new NitrogenRule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C40H46FeN6O8S2", builder);
+		formula.setCharge(2.0);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
+
+	/**
+	 * A unit test suite for JUnit. Compounds like Fe, Co, Hg, Pt, As.C40H46FeN6O8S2
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testWithCo() throws ClassNotFoundException, CDKException, Exception {
+		
+		IRule rule  = new NitrogenRule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C43H50CoN4O16", builder);
+		formula.setCharge(0.0);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
 }
