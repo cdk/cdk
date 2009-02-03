@@ -28,7 +28,7 @@ import java.util.Iterator;
  * <b>Note</b>: The methods of this class do not perform hydrogen removal. If you want to
  * do the calculations excluding hydrogens, you'll need to do it yourself. Also, if the molecule has
  * disconnected components, you should consider one (usually the largest), otherwise all components
- * are conidered in the calculation.
+ * are considered in the calculation.
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-03-11
