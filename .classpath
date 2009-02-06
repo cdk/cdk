@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/test"/>
 	<classpathentry exported="true" kind="lib" path="jar/jgrapht-0.6.0.jar" sourcepath="cdksrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jar/jniinchi-0.5.jar" sourcepath="cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="jar/jniinchi-0.4.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/JRI.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/sjava-0.68.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/vecmath1.2-1.14.jar" sourcepath="cdksrc.zip"/>

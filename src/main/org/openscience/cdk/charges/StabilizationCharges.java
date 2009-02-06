@@ -28,6 +28,7 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
@@ -59,7 +60,7 @@ public class StabilizationCharges {
     /**
      * calculate the stabilization of orbitals when they contain deficiency of charge.
      *
-     * @param atomContainer the molecule to be considered
+     * @param atomContainer  IAtomContainer
      * @param atom       IAtom for which effective atom StabilizationCharges 
      *                   factor should be calculated     
      * 
@@ -75,10 +76,14 @@ public class StabilizationCharges {
 
     	// only must be generated all structures which stabilize the atom in question.
     	StructureResonanceGenerator gRI = new StructureResonanceGenerator();
-    	List<IReactionProcess> reactionList = gRI.getReactions();
-    	reactionList.add(new HyperconjugationReaction());
-    	gRI.setReactions(reactionList);
-		IAtomContainerSet resonanceS = gRI.getStructures((IMolecule) atomContainer);
+    	try {
+    		List<IReactionProcess> reactionList = gRI.getReactions();
+    		reactionList.add(new HyperconjugationReaction());
+    		gRI.setReactions(reactionList);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+    	IAtomContainerSet resonanceS = gRI.getStructures((IMolecule) atomContainer);
     	IAtomContainerSet containerS = gRI.getContainers((IMolecule) atomContainer);
     	if(resonanceS.getAtomContainerCount() < 2)// meaning it was not find any resonance structure
 			return 0.0;

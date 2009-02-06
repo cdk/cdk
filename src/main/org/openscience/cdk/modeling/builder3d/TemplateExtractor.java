@@ -56,8 +56,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Helper class that help setup a template library of CDK's Builder3D.
- * shk3: I found the right combination of paramters for getting fingerprints which 
- * work with the current implementation of TemplateHandler3D is infile outfile true false
  * 
  * @author     Christian Hoppe.
  * @cdk.module builder3dtools
@@ -421,7 +419,7 @@ public class TemplateExtractor {
 				// }
 				// query=createAnyAtomAtomContainer(m);
 				// query=(AtomContainer)m.clone();
-				query = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(m);
+				query = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(m);
 
 			}
 			try {

@@ -32,8 +32,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -728,34 +726,19 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertEquals(1, nNaliph);
     }
 
-    /**
-     * @cdk.bug 2185255
-     * @throws CDKException
-     */
     @Test
-    public void testPolyCyclicSystemFromDifferentSMILES() throws CDKException {
-        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
+    public void testPolyCyclicSystem() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-
         IAtomContainer kekuleForm = sp.parseSmiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(kekuleForm);
-        adder.addImplicitHydrogens(kekuleForm);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(kekuleForm);
-
         IAtomContainer aromaticForm = sp.parseSmiles("c1ccc2cc3cc4ccccc4cc3cc2c1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aromaticForm);
-        adder.addImplicitHydrogens(aromaticForm);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(aromaticForm);
-        
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(kekuleForm);
         boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(kekuleForm);
         Assert.assertTrue(isAromatic);
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aromaticForm);
         isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(aromaticForm);
         Assert.assertTrue(isAromatic);
-
-        String diff = AtomContainerDiff.diff(aromaticForm, kekuleForm);
-        Assert.assertTrue("There should be no difference between these molecules", diff.equals(""));
     }
 
 

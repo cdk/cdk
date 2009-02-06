@@ -351,10 +351,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
-            if (line == null) return null;
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
-            if (line == null) return null;
             if (line.length() > 0) {
                 molecule.setProperty(CDKConstants.REMARK, line);
             }
