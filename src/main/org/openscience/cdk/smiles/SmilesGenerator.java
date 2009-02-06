@@ -127,6 +127,14 @@ public class SmilesGenerator
 	public SmilesGenerator() {}
 
 	/**
+	 *  Create the SMILES generator.
+	 *  @param userAromaticityFlag if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case (same as using setUseAromaticityFlag later)
+	 */
+	public SmilesGenerator(boolean useAromaticityFlag) {
+		this.useAromaticityFlag=useAromaticityFlag;
+	}
+	
+	/**
 	 *  Tells if a certain bond is center of a valid double bond configuration.
 	 *
 	 *@param  container  The atomcontainer.

@@ -106,7 +106,7 @@ Export-Package: javax.vecmath,
  org.openscience.cdk.validate
 Bundle-ClassPath: .,
  jar/jgrapht-0.6.0.jar,
- jar/jniinchi-0.4.jar,
+ jar/jniinchi-0.5.jar,
  jar/JRI.jar,
  jar/sjava-0.68.jar,
  jar/vecmath1.2-1.14.jar,

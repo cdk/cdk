@@ -117,7 +117,7 @@ public class StructureResonanceGenerator {
 	 * @see IReactionProcess
 	 */
 	@TestMethod("testSetReactions_List")
-	public void setReactions(List<IReactionProcess> newReactionsList)  throws CDKException {
+	public void setReactions(List<IReactionProcess> newReactionsList) {
 		reactionsList = newReactionsList;
 	}
 	/**
