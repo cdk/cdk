@@ -30,6 +30,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -63,6 +65,8 @@ public class MDLWriterTest extends ChemObjectIOTest {
     	Assert.assertTrue(reader.accepts(ChemModel.class));
     	Assert.assertTrue(reader.accepts(Molecule.class));
     	Assert.assertTrue(reader.accepts(MoleculeSet.class));
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
+        Assert.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     /**
