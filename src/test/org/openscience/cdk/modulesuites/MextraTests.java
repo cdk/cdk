@@ -31,8 +31,6 @@ import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
 import org.openscience.cdk.io.ShelXWriterTest;
 import org.openscience.cdk.iupac.ParserTest;
-import org.openscience.cdk.similarity.DistanceMomentTest;
-import org.openscience.cdk.similarity.TanimotoTest;
 import org.openscience.cdk.tools.BremserPredictorTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
@@ -54,8 +52,6 @@ import org.openscience.cdk.tools.PeriodicTableTest;
     RDFCalculatorTest.class,
     KabschAlignmentTest.class,
     CASNumberTest.class,
-    TanimotoTest.class,
-    DistanceMomentTest.class,
     HOSECodeAnalyserTest.class,
     DeAromatizationToolTest.class,
     ShelXWriterTest.class,

@@ -27,6 +27,8 @@ import org.openscience.cdk.coverage.FingerprintCoverageTest;
 import org.openscience.cdk.fingerprint.EStateFingerprinterTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
+import org.openscience.cdk.similarity.DistanceMomentTest;
+import org.openscience.cdk.similarity.TanimotoTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -39,6 +41,8 @@ import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
     FingerprintCoverageTest.class,
     ExtendedFingerprinterTest.class,
     MACCSFingerprinterTest.class,
-    EStateFingerprinterTest.class
+    EStateFingerprinterTest.class,
+    DistanceMomentTest.class,
+    TanimotoTest.class
 })
 public class MfingerprintTests {}
