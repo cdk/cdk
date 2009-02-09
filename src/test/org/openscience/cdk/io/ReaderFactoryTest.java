@@ -27,16 +27,21 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.CTXFormat;
@@ -59,6 +64,7 @@ import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the instantiation and functionality of the {@link ReaderFactory}.
@@ -212,4 +218,47 @@ public class ReaderFactoryTest extends CDKTestCase {
         Assert.assertNotSame(0, molecule.getAtomCount());
         Assert.assertNotSame(0, molecule.getBondCount());
     }
+
+    @Test public void testReadGz() throws Exception {
+        String filename = "data/xyz/bf3.xyz.gz";
+        InputStream input = new BufferedInputStream(new GZIPInputStream(
+            this.getClass().getClassLoader().getResourceAsStream(filename)
+        ));
+        // ok, if format ok, try instantiating a reader
+        ISimpleChemObjectReader reader = factory.createReader(input);
+        Assert.assertNotNull(reader);
+        Assert.assertEquals(
+            ((IChemFormat)XYZFormat.getInstance()).getReaderClassName(),
+            reader.getClass().getName()
+        );
+        // now try reading something from it
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        IAtomContainer molecule = new AtomContainer();
+        for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(chemFile)) {
+            molecule.add(container);
+        }
+        Assert.assertNotNull(molecule);
+        Assert.assertEquals(4, molecule.getAtomCount());
+    }
+
+    @Test public void testReadGzWithGzipDetection() throws Exception {
+        String filename = "data/xyz/bf3.xyz.gz";
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
+        // ok, if format ok, try instantiating a reader
+        ISimpleChemObjectReader reader = factory.createReader(input);
+        Assert.assertNotNull(reader);
+        Assert.assertEquals(
+            ((IChemFormat)XYZFormat.getInstance()).getReaderClassName(),
+            reader.getClass().getName()
+        );
+        // now try reading something from it
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        IAtomContainer molecule = new AtomContainer();
+        for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(chemFile)) {
+            molecule.add(container);
+        }
+        Assert.assertNotNull(molecule);
+        Assert.assertEquals(4, molecule.getAtomCount());
+    }
+
 }
