@@ -37,14 +37,9 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.io.formats.ABINITFormat;
-import org.openscience.cdk.io.formats.ADFFormat;
-import org.openscience.cdk.io.formats.Aces2Format;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.CTXFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
-import org.openscience.cdk.io.formats.Gaussian92Format;
-import org.openscience.cdk.io.formats.Gaussian94Format;
 import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.formats.GhemicalSPMFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -52,7 +47,6 @@ import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.JaguarFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.formats.MDLV3000Format;
@@ -60,14 +54,10 @@ import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
 import org.openscience.cdk.io.formats.PubChemCompoundXMLFormat;
-import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
 import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
-import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
-import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the instantiation and functionality of the {@link ReaderFactory}.
@@ -77,7 +67,6 @@ import org.openscience.cdk.tools.LoggingTool;
 public class ReaderFactoryTest extends CDKTestCase {
 
     private ReaderFactory factory = new ReaderFactory();
-    private LoggingTool logger = new LoggingTool(this);
     
     @Test public void testCreateReader_IChemFormat() {
     	IChemFormat format = (IChemFormat)XYZFormat.getInstance();
@@ -85,23 +74,12 @@ public class ReaderFactoryTest extends CDKTestCase {
         Assert.assertNotNull(reader);
         Assert.assertEquals(format.getFormatName(), reader.getFormat().getFormatName());
     }
-    @Test public void testGaussian94() throws Exception {
-        expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", 
-                     Gaussian94Format.getInstance());
-    }
     @Test public void testGaussian98() throws Exception {
         expectReader("data/gaussian/g98.out", Gaussian98Format.getInstance());
-    }
-    @Test public void testGaussian92() throws Exception {
-        expectFormat("data/gaussian/phenylnitrene.g92.out", Gaussian92Format.getInstance());
     }
 
     @Test public void testGhemical() throws Exception {
         expectReader("data/ghemical/ethene.mm1gp", GhemicalSPMFormat.getInstance());
-    }
-
-    @Test public void testJaguar() throws Exception {
-        expectFormat("data/jaguar/ch4-opt.out", JaguarFormat.getInstance());
     }
 
     @Test public void testINChI() throws Exception {
@@ -116,20 +94,8 @@ public class ReaderFactoryTest extends CDKTestCase {
         expectReader("data/vasp/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
     }
 
-    @Test public void testAces2() throws Exception {
-        expectFormat("data/aces2/ch3oh_ace.out", Aces2Format.getInstance());
-    }
-
-    @Test public void testADF() throws Exception {
-        expectFormat("data/adf/ammonia.adf.out", ADFFormat.getInstance());
-    }
-
     @Test public void testGamess() throws Exception {
         expectReader("data/gamess/ch3oh_gam.out", GamessFormat.getInstance());
-    }
-
-    @Test public void testABINIT() throws Exception {
-        expectFormat("data/abinit/t54.in", ABINITFormat.getInstance());
     }
 
     @Test public void testCML() throws Exception {
@@ -176,18 +142,6 @@ public class ReaderFactoryTest extends CDKTestCase {
         expectReader("data/asn/pubchem/cid1.asn", PubChemASNFormat.getInstance());
     }
 
-    @Test public void testPubChemSubstancesASN() throws Exception {
-        expectFormat("data/asn/pubchem/list.asn", PubChemSubstancesASNFormat.getInstance());
-    }
-
-    @Test public void testPubChemCompoundsXML() throws Exception {
-        expectFormat("data/asn/pubchem/aceticAcids38.xml", PubChemCompoundsXMLFormat.getInstance());
-    }
-    
-    @Test public void testPubChemSubstancesXML() throws Exception {
-        expectFormat("data/asn/pubchem/taxols.xml", PubChemSubstancesXMLFormat.getInstance());
-    }
-    
     @Test public void testPubChemSubstanceXML() throws Exception {
         expectReader("data/asn/pubchem/sid577309.xml", PubChemSubstanceXMLFormat.getInstance());
     }
@@ -202,31 +156,19 @@ public class ReaderFactoryTest extends CDKTestCase {
         Assert.assertNull(reader);
     }
 
-    private void expectFormat(String filename, IResourceFormat expectedFormat) throws Exception {
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        Assert.assertNotNull("Cannot find file: " + filename, ins);
-        if (expectedFormat instanceof IChemFormatMatcher) {
-        	factory.registerFormat((IChemFormatMatcher)expectedFormat);
-        }
-        IChemFormat format = factory.guessFormat(ins);
-        Assert.assertNotNull(format);
-        Assert.assertEquals(expectedFormat.getFormatName(), format.getFormatName());
-    }
     private void expectReader(String filename, IResourceFormat expectedFormat) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Assert.assertNotNull("Cannot find file: " + filename, ins);
         if (expectedFormat instanceof IChemFormatMatcher) {
         	factory.registerFormat((IChemFormatMatcher)expectedFormat);
         }
-        IChemFormat format = factory.guessFormat(ins);
-        Assert.assertNotNull(format);
-        Assert.assertEquals("Incorrect format detected: ", expectedFormat.getFormatName(), format.getFormatName());
-        // ok, if format ok, try instantiating a reader
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        ISimpleChemObjectReader reader = factory.createReader(format);
+        ISimpleChemObjectReader reader = factory.createReader(ins);
         reader.setReader(ins);
         Assert.assertNotNull(reader);
-        Assert.assertEquals(format.getReaderClassName(), reader.getClass().getName());
+        Assert.assertEquals(
+            ((IChemFormat)expectedFormat).getReaderClassName(),
+            reader.getClass().getName()
+        );
         // now try reading something from it
         ChemObject[] objects = { 
         		new ChemFile(), new ChemModel(), new Molecule(),
@@ -255,17 +197,17 @@ public class ReaderFactoryTest extends CDKTestCase {
         Assert.assertNotNull("Cannot find file: " + filename, ins);
         IChemFormatMatcher realFormat = (IChemFormatMatcher)PubChemCompoundXMLFormat.getInstance();
         factory.registerFormat(realFormat);
-        IChemFormat format = factory.guessFormat(ins);
-        Assert.assertNotNull(format);
-        Assert.assertEquals("Incorrect format detected: ", realFormat.getFormatName(), format.getFormatName());
         // ok, if format ok, try instantiating a reader
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = factory.createReader(ins);
-        // the above works, but causes the inputstream not to be rewound properly...
+        // the above works, but causes the inputstream not to be reset properly...
         // using "createReader(format); reader.setReader(ins);" instead makes it work, see expectReader()
 
         Assert.assertNotNull(reader);
-        Assert.assertEquals(format.getReaderClassName(), reader.getClass().getName());
+        Assert.assertEquals(
+            ((IChemFormat)PubChemCompoundXMLFormat.getInstance()).getReaderClassName(),
+            reader.getClass().getName()
+        );
         // now try reading something from it
         ChemObject[] objects = {
             new ChemFile(), new ChemModel(), new Molecule(),
