@@ -27,9 +27,11 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -213,6 +215,42 @@ public class FormatFactoryTest extends CDKTestCase {
         BufferedReader reader = new BufferedReader(
             new InputStreamReader(input)
         );
+        String line = reader.readLine();
+        Assert.assertNotNull(line);
+        Assert.assertEquals("4", line);
+        line = reader.readLine();
+        Assert.assertNotNull(line);
+        Assert.assertEquals("Bortrifluorid", line);
+    }
+
+    @Test public void testGuessFormat_Gz() throws Exception {
+        String filename = "data/xyz/bf3.xyz.gz";
+        InputStream input = new BufferedInputStream(new GZIPInputStream(
+            this.getClass().getClassLoader().getResourceAsStream(filename)
+        ));
+        IChemFormat format = factory.guessFormat(input);
+        Assert.assertNotNull(format);
+        // make sure the InputStream is properly reset
+        BufferedReader reader = new BufferedReader(
+            new InputStreamReader(input)
+        );
+        String line = reader.readLine();
+        Assert.assertNotNull(line);
+        Assert.assertEquals("4", line);
+        line = reader.readLine();
+        Assert.assertNotNull(line);
+        Assert.assertEquals("Bortrifluorid", line);
+    }
+
+    @Test public void testGuessFormat_Reader() throws Exception {
+        String filename = "data/xyz/bf3.xyz";
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
+        BufferedReader reader = new BufferedReader(
+            new InputStreamReader(input)
+        );
+        IChemFormat format = factory.guessFormat(reader);
+        Assert.assertNotNull(format);
+        // make sure the Reader is properly reset
         String line = reader.readLine();
         Assert.assertNotNull(line);
         Assert.assertEquals("4", line);
