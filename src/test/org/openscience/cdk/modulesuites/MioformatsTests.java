@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.IoformatsCoverageTest;
+import org.openscience.cdk.io.FormatFactoryTest;
 import org.openscience.cdk.io.formats.ABINITFormatTest;
 import org.openscience.cdk.io.formats.ADFFormatTest;
 import org.openscience.cdk.io.formats.Aces2FormatTest;
@@ -121,6 +122,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     IoformatsCoverageTest.class,
+    FormatFactoryTest.class,
 
     ABINITFormatTest.class,
     Aces2FormatTest.class,
