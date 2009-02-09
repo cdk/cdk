@@ -27,7 +27,9 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -197,6 +199,26 @@ public class FormatFactoryTest extends CDKTestCase {
         IChemFormat format = factory.guessFormat(ins);
         Assert.assertNotNull(format);
         Assert.assertEquals(expectedFormat.getFormatName(), format.getFormatName());
+    }
+
+    /**
+     * @cdk.bug 2153298
+     */
+    @Test public void testGuessFormat() throws Exception {
+        String filename = "data/xyz/bf3.xyz";
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IChemFormat format = factory.guessFormat(input);
+        Assert.assertNotNull(format);
+        // make sure the InputStream is properly reset
+        BufferedReader reader = new BufferedReader(
+            new InputStreamReader(input)
+        );
+        String line = reader.readLine();
+        Assert.assertNotNull(line);
+        Assert.assertEquals("4", line);
+        line = reader.readLine();
+        Assert.assertNotNull(line);
+        Assert.assertEquals("Bortrifluorid", line);
     }
 
 }
