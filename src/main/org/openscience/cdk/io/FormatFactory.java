@@ -21,17 +21,17 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.CharArrayReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -142,7 +142,7 @@ public class FormatFactory {
      *
      * @see #guessFormat(InputStream)
      */
-    public IChemFormat guessFormat(BufferedReader input) throws IOException {
+    public IChemFormat guessFormat(Reader input) throws IOException {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");
         }
@@ -196,22 +196,59 @@ public class FormatFactory {
     
     @TestMethod("testGuessFormat")
     public IChemFormat guessFormat(InputStream input) throws IOException {
-        if (input instanceof GZIPInputStream) {
-            return guessFormat(new BufferedReader(new InputStreamReader(input)));
+        if (input == null) {
+            throw new IllegalArgumentException("input cannot be null");
         }
-        BufferedInputStream bistream = new BufferedInputStream(input, 8192);
-        InputStream istreamToRead = bistream; // if gzip test fails, then take default
-        bistream.mark(5);
-        int countRead = 0;
-        byte[] abMagic = new byte[4];
-        countRead = bistream.read(abMagic, 0, 4);
-        bistream.reset();
-        if (countRead == 4) {
-            if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
-                istreamToRead = new GZIPInputStream(bistream);
+
+        // make a copy of the header
+        byte[] header = new byte[this.headerLength];
+        if (!input.markSupported()) {
+            throw new IllegalArgumentException("input must support mark");
+        }
+        input.mark(this.headerLength);
+        input.read(header, 0, this.headerLength);
+        input.reset();
+
+        BufferedReader buffer = new BufferedReader(
+            new StringReader(new String(header))
+        );
+
+        /* Search file for a line containing an identifying keyword */
+        String line = null;
+        int lineNumber = 1;
+        while ((line = buffer.readLine()) != null) {
+            for (int i=0; i<formats.size(); i++) {
+                IChemFormatMatcher cfMatcher = formats.get(i);
+                if (cfMatcher.matches(lineNumber, line)) {
+                    return cfMatcher;
+                }
             }
+            lineNumber++;
         }
-        return guessFormat(new BufferedReader(new InputStreamReader(istreamToRead)));
+
+        buffer = new BufferedReader(
+            new StringReader(new String(header))
+        );
+
+        line = buffer.readLine();
+        // is it a XYZ file?
+        StringTokenizer tokenizer = new StringTokenizer(line.trim());
+        try {
+            int tokenCount = tokenizer.countTokens();
+            if (tokenCount == 1) {
+                Integer.parseInt(tokenizer.nextToken());
+                // if not failed, then it is a XYZ file
+                return (IChemFormat)XYZFormat.getInstance();
+            } else if (tokenCount == 2) {
+                Integer.parseInt(tokenizer.nextToken());
+                if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
+                    return (IChemFormat)XYZFormat.getInstance();
+                }
+            }
+        } catch (NumberFormatException exception) {
+        }
+
+        return null;
     }
     
 }
