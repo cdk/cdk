@@ -194,8 +194,7 @@ public class Fingerprinter implements IFingerprinter {
             = new HashMap<IAtom, Map<IAtom,IBond>>();
         
         for (IAtom startAtom : container.atoms()) {
-            for (int pathLength = 0; pathLength <= searchDepth; pathLength++) {
-                List<List<IAtom>> p = PathTools.getPathsOfLength(container, startAtom, pathLength);
+                List<List<IAtom>> p = PathTools.getPathsOfLengthUpto(container, startAtom, searchDepth);
                 for (List<IAtom> path : p) {
                     StringBuffer sb = new StringBuffer();
                     IAtom x = path.get(0);
@@ -225,7 +224,6 @@ public class Fingerprinter implements IFingerprinter {
                         allPaths.add(sb);
                     else allPaths.add(revForm);
                 }
-            }
         }
         // now lets clean stuff up
         Set<String> cleanPath = new HashSet<String>();
