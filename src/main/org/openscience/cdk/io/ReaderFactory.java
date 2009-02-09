@@ -53,15 +53,15 @@ import org.openscience.cdk.tools.LoggingTool;
 public class ReaderFactory {
     
     private LoggingTool logger;
-
     private FormatFactory formatFactory = null;
+    private int headerLength = 8192;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
      * first 65536 chars.
      */
     public ReaderFactory() {
-        this(65536);
+        this(8192);
     }
 
     /**
@@ -73,6 +73,7 @@ public class ReaderFactory {
     public ReaderFactory(int headerLength) {
         logger = new LoggingTool(this);
         formatFactory = new FormatFactory(headerLength);
+        this.headerLength = headerLength;
     }
 
     /**
@@ -100,8 +101,18 @@ public class ReaderFactory {
         ISimpleChemObjectReader reader = null;
         if (input instanceof GZIPInputStream) {
             format = formatFactory.guessFormat(input);
+            reader = createReader(format);
+            if (reader != null) {
+                try {
+                    reader.setReader(input);
+                } catch ( CDKException e1 ) {
+                    IOException wrapper = new IOException("Exception while setting the InputStream: " + e1.getMessage());
+                    wrapper.initCause(e1);
+                    throw wrapper;
+                }
+            }
         } else {
-            BufferedInputStream bistream = new BufferedInputStream(input, 8192);
+            BufferedInputStream bistream = new BufferedInputStream(input, headerLength);
             InputStream istreamToRead = bistream; // if gzip test fails, then take default
             bistream.mark(5);
             int countRead = 0;
@@ -110,19 +121,21 @@ public class ReaderFactory {
             bistream.reset();
             if (countRead == 4) {
                 if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
-                    istreamToRead = new GZIPInputStream(bistream);
+                    istreamToRead = new BufferedInputStream(
+                        new GZIPInputStream(bistream)
+                    );
                 }
             }
-            format = formatFactory.guessFormat( istreamToRead );
-        }
-        reader = createReader(format);
-        if (reader != null) {
-            try {
-                reader.setReader(input);
-            } catch ( CDKException e1 ) {
-                IOException wrapper = new IOException("Exception while setting the InputStream: " + e1.getMessage());
-                wrapper.initCause(e1);
-                throw wrapper;
+            format = formatFactory.guessFormat(istreamToRead);
+            reader = createReader(format);
+            if (reader != null) {
+                try {
+                    reader.setReader(istreamToRead);
+                } catch ( CDKException e1 ) {
+                    IOException wrapper = new IOException("Exception while setting the InputStream: " + e1.getMessage());
+                    wrapper.initCause(e1);
+                    throw wrapper;
+                }
             }
         }
         return reader;
