@@ -582,6 +582,44 @@ public class PathTools {
         return (paths);
     }
 
+    /**
+     * Get all the paths starting from an atom of length 0 upto the specified length.
+     * <p/>
+     * This method returns a set of paths. Each path is a <code>List</code> of atoms that
+     * make up the path (ie they are sequentially connected).
+     *
+     * @param atomContainer The molecule to consider
+     * @param start         The starting atom
+     * @param length        The maximum length of paths to look for
+     * @return A  <code>List</code> containing the paths found
+     */
+    public static List<List<IAtom>> getPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length) {
+        List<IAtom> curPath = new ArrayList<IAtom>();
+        List<List<IAtom>> paths = new ArrayList<List<IAtom>>();
+        List<List<IAtom>> allpaths = new ArrayList<List<IAtom>>();
+        curPath.add(start);
+        paths.add(curPath);
+        allpaths.add(curPath);
+        for (int i = 0; i < length; i++) {
+            List<List<IAtom>> tmpList = new ArrayList<List<IAtom>>();
+            for (List<IAtom> path : paths) {
+                curPath = path;
+                IAtom lastVertex = curPath.get(curPath.size() - 1);
+                List<IAtom> neighbors = atomContainer.getConnectedAtomsList(lastVertex);
+                for (IAtom neighbor : neighbors) {
+                    List<IAtom> newPath = new ArrayList<IAtom>(curPath);
+                    if (newPath.contains(neighbor)) continue;
+                    newPath.add(neighbor);
+                    tmpList.add(newPath);
+                }
+            }
+            paths.clear();
+            paths.addAll(tmpList);
+            allpaths.addAll(tmpList);
+        }
+        return (allpaths);
+    }
+
 
 }
 
