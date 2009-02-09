@@ -27,6 +27,7 @@ package org.openscience.cdk.fingerprint;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -34,12 +35,17 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -442,7 +448,19 @@ public class FingerprinterTest extends CDKTestCase
 		return mol;
 	}
 
-	public static void main(String[] args) throws Exception
+    @Test
+    public void testFoo() throws FileNotFoundException, CDKException {
+        IteratingSMILESReader reader = new IteratingSMILESReader(new FileInputStream("/home/rguha/fp2.txt"),
+                DefaultChemObjectBuilder.getInstance());
+        List<IMolecule> mols = new ArrayList<IMolecule>();
+        Fingerprinter fp = new Fingerprinter();
+        for (int i = 0;i < 1; i++) {
+            for (IMolecule mol : mols) {
+                fp.getFingerprint(mol);
+            }
+        }
+    }
+    public static void main(String[] args) throws Exception
 	{
 		BigInteger bi=new BigInteger("0");
 		bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
