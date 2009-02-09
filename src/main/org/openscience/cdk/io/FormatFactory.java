@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -53,6 +55,7 @@ import org.openscience.cdk.io.formats.XYZFormat;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @author  Bradley A. Smith <bradley@baysmith.com>
  */
+@TestClass("org.openscience.cdk.io.FormatFactoryTest")
 public class FormatFactory {
     
     private final static String IO_FORMATS_LIST = "io-formats.set";
@@ -191,6 +194,7 @@ public class FormatFactory {
         return null;
     }
     
+    @TestMethod("testGuessFormat")
     public IChemFormat guessFormat(InputStream input) throws IOException {
         if (input instanceof GZIPInputStream) {
             return guessFormat(new BufferedReader(new InputStreamReader(input)));
