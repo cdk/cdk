@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.CTXFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
@@ -200,30 +201,15 @@ public class ReaderFactoryTest extends CDKTestCase {
         // ok, if format ok, try instantiating a reader
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = factory.createReader(ins);
-        // the above works, but causes the inputstream not to be reset properly...
-        // using "createReader(format); reader.setReader(ins);" instead makes it work, see expectReader()
-
         Assert.assertNotNull(reader);
         Assert.assertEquals(
             ((IChemFormat)PubChemCompoundXMLFormat.getInstance()).getReaderClassName(),
             reader.getClass().getName()
         );
         // now try reading something from it
-        ChemObject[] objects = {
-            new ChemFile(), new ChemModel(), new Molecule(),
-            new Reaction()
-        };
-        boolean read = false;
-        for (int i=0; (i<objects.length && !read); i++) {
-          if (reader.accepts(objects[i].getClass())) {
-            reader.read(objects[i]);
-            read = true;
-          }
-        }
-        if (read) {
-          // ok, reseting worked
-        } else {
-          Assert.fail("Reading an IChemObject from the Reader did not work properly.");
-        }
+        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        Assert.assertNotNull(molecule);
+        Assert.assertNotSame(0, molecule.getAtomCount());
+        Assert.assertNotSame(0, molecule.getBondCount());
     }
 }
