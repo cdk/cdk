@@ -154,12 +154,11 @@ public class Fingerprinter implements IFingerprinter {
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		logger.debug("Finished Aromaticity Detection");
-		Map<String,String> paths = findPathes(container, searchDepth);
 		BitSet bitSet = new BitSet(size);
 
-        for (String path : paths.values()) {
-            position = new java.util.Random(path.hashCode()).nextInt(size);
-            logger.debug("Setting bit " + position + " for " + path);
+        int[] hashes = findPathes(container, searchDepth);
+        for (int hash : hashes) {
+            position = new java.util.Random(hash).nextInt(size);
             bitSet.set(position);
         }
 
@@ -187,8 +186,7 @@ public class Fingerprinter implements IFingerprinter {
      * @param searchDepth The maximum path length desired
      * @return A Map of path strings, keyed on themselves
      */
-    protected Map<String,String> findPathes(IAtomContainer container, int searchDepth) {
-        Map<String,String> paths = new HashMap<String,String>();
+    protected int[] findPathes(IAtomContainer container, int searchDepth) {
 
         List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
 
@@ -237,8 +235,13 @@ public class Fingerprinter implements IFingerprinter {
             if (cleanPath.contains(s2)) continue;
             cleanPath.add(s2);
         }
-        for (String s : cleanPath) paths.put(s, s);
-        return paths;
+
+        // convert paths to hashes
+        int[] hashes = new int[cleanPath.size()];
+        int i= 0;
+        for (String s: cleanPath) hashes[i++] = s.hashCode();
+
+        return hashes;
     }
 
     private String convertSymbol(String symbol) {
