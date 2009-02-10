@@ -1094,4 +1094,27 @@
         </java>
     </target>
 
+
+    <!-- Regenerate template fingerprints in case the fingerprint code has been updated
+	 so that fingerprint bits are different from a previous version -->
+    <target name="makefp3d" id="makefp3d">
+      <gunzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz"
+	      dest="${src}/main/org/openscience/cdk/modeling/builder3d/data/" />
+      <java classname="org.openscience.cdk.modeling.builder3d.TemplateExtractor">
+	<classpath>
+	  <pathelement location="jar/xercesImpl-2.9.0.jar"/>
+	  <pathelement location="jar/jgrapht-0.6.0.jar"/>
+	  <pathelement path="${build}" />
+	</classpath>
+	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf" />
+	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt" />
+	<arg value="anyatom=true" />
+	<arg value="anyBondanyAtom=true" />
+      </java>
+      <gzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt"
+	    destfile="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz" />
+      <delete file="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf"/>
+      <delete file="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt"/>
+    </target>
+
 </project>
