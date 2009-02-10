@@ -580,6 +580,8 @@
                     <includesfile name="${metainf}/isomorphism.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-annotation.jar"/>
+                    <include name="cdk-ioformats.jar"/>
                     <include name="cdk-atomtype.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-builder3dtools.jar"/>
@@ -648,6 +650,7 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-annotation.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-builder3dtools.jar"/>
                     <include name="cdk-charges.jar"/>
@@ -659,6 +662,7 @@
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
+                    <include name="cdk-ioformats.jar"/>
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
@@ -713,6 +717,7 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
+                    <includesfile name="${metainf}/test-ioformats.libdepends"/>
                     <includesfile name="${metainf}/test-core.libdepends"/>
                     <includesfile name="${metainf}/test-data.libdepends"/>
                     <includesfile name="${metainf}/test-datadebug.libdepends"/>
@@ -743,6 +748,8 @@
                     <includesfile name="${metainf}/test-render.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-test-annotation.jar"/>
+                    <include name="cdk-test-ioformats.jar"/>
                     <include name="cdk-test-core.jar"/>
                     <include name="cdk-test-data.jar"/>
                     <include name="cdk-test-datadebug.jar"/>
