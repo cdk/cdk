@@ -38,27 +38,18 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import java.util.List;
 
 /**
- *  The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE)
- * <p>This descriptor uses these parameters:
- * <table border="1">
- *   <tr>
- *     <td>Name</td>
- *     <td>Default</td>
- *     <td>Description</td>
- *   </tr>
- *   <tr>
- *     <td></td>
- *     <td></td>
- *     <td>no parameters</td>
- *   </tr>
- * </table>
+ * The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE).
  *
+ * This descriptor has no parameters. The result of this descriptor is a vector of 5 values, corresponding
+ * to a maximum of four protons for any given atom. If an atom has fewer than four protons, the remaining values
+ * are set to Double.NaN. Also note that the values for the neighbors are not returned in a particular order
+ * (though the order is fixed for multiple runs for the same atom).
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-03
- * @cdk.module  qsaratomic
- * @cdk.svnrev  $Revision$
- * @cdk.set     qsar-descriptors
+ * @cdk.module qsaratomic
+ * @cdk.svnrev $Revision$
+ * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest")
@@ -66,6 +57,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;
     private List<IAtom> neighboors;
+    private final int MAX_PROTON_COUNT = 5;
 
 
     /**
@@ -113,8 +105,8 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
     @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
-       String[] labels = new String[(neighboors == null ? 0 : neighboors.size()) +1];
-        for (int i = 0; i < labels.length; i++) {
+       String[] labels = new String[MAX_PROTON_COUNT];
+        for (int i = 0; i < MAX_PROTON_COUNT; i++) {
             labels[i] = "protonTotalPartialCharge" + (i+1);
         }
         return labels;
@@ -122,7 +114,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        DoubleArrayResult result = new DoubleArrayResult(neighboors.size() + 1);
+        DoubleArrayResult result = new DoubleArrayResult(MAX_PROTON_COUNT);
         for (int i = 0; i < neighboors.size() + 1; i++) result.add(Double.NaN);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 result, getDescriptorNames(), e);
@@ -141,36 +133,41 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
         neighboors = ac.getConnectedAtomsList(atom);
 
         IAtomContainer clone;
-        IAtom localAtom;
         try {
             clone = (IAtomContainer) ac.clone();
-            localAtom = clone.getAtom(ac.getAtomNumber(atom));
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
-        neighboors = clone.getConnectedAtomsList(localAtom);
 
         try {
-
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.setMaxGasteigerIters(6);
             //	HydrogenAdder hAdder = new HydrogenAdder();
             //	hAdder.addExplicitHydrogensToSatisfyValency(mol);
             peoe.assignGasteigerMarsiliSigmaPartialCharges(clone, true);
         } catch (Exception exception) {
-            DoubleArrayResult result = new DoubleArrayResult(neighboors.size() + 1);
-            for (int i = 0; i < neighboors.size() + 1; i++) result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, getDescriptorNames(), exception);
+            return getDummyDescriptorValue(exception);
         }
 
-        DoubleArrayResult protonPartialCharge = new DoubleArrayResult(neighboors.size() + 1);
-        protonPartialCharge.add( localAtom.getCharge() );
+        IAtom localAtom = clone.getAtom(ac.getAtomNumber(atom));
+        neighboors = clone.getConnectedAtomsList(localAtom);
+
+        // we assume that an atom has a mxa number of protons = MAX_PROTON_COUNT
+        // if it has less, we pad with NaN
+        DoubleArrayResult protonPartialCharge = new DoubleArrayResult(MAX_PROTON_COUNT);
+        assert (neighboors.size() < MAX_PROTON_COUNT);
+
+
+        protonPartialCharge.add(localAtom.getCharge());
         for (IAtom neighboor : neighboors) {
+            System.out.println("neighboor.getSymbol() = " + neighboor.getSymbol());
             if (neighboor.getSymbol().equals("H")) {
                 protonPartialCharge.add(neighboor.getCharge());
             }
         }
+        int remainder = MAX_PROTON_COUNT - neighboors.size() + 1;
+        for (int i = 0; i < remainder; i++) protonPartialCharge.add(Double.NaN);
+
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 protonPartialCharge, getDescriptorNames());
     }

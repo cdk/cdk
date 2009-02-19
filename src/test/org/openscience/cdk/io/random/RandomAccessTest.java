@@ -45,7 +45,7 @@ public class RandomAccessTest extends CDKTestCase {
     private LoggingTool logger = new LoggingTool(this);
 
     @Test public void test() throws Exception {
-        String filename = "cdk/src/data/mdl/test2.sdf";
+        String filename = "src/test/data/mdl/test2.sdf";
         logger.info("Testing: " + filename);
         File f = new File(filename);
         //System.out.println(System.getProperty("user.dir"));

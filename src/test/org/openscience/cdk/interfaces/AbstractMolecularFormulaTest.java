@@ -339,7 +339,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     public void testGetCharge() {
 
         IMolecularFormula mf = getBuilder().newMolecularFormula();
-        mf.setCharge(1.0);
+        mf.setCharge(1);
         mf.addIsotope( getBuilder().newAtom("C") );
         mf.addIsotope( getBuilder().newAtom("F") );
         mf.addIsotope( getBuilder().newAtom("H"),3 );
@@ -361,7 +361,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     	Assert.assertEquals(CDKConstants.UNSET, mf.getCharge());
 
     	
-    	mf.setCharge(1.0);
+    	mf.setCharge(1);
         Assert.assertEquals(1.0, mf.getCharge(), 0.001);
 
         mf.add(mf);
@@ -379,11 +379,11 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         IMolecularFormula mf = getBuilder().newMolecularFormula();
     	Assert.assertEquals(CDKConstants.UNSET, mf.getCharge());
  	
-    	mf.setCharge(1.0);
+    	mf.setCharge(1);
         Assert.assertEquals(1.0, mf.getCharge(), 0.001);
 
         IMolecularFormula mf2 = getBuilder().newMolecularFormula();
-        mf2.setCharge(-1.0);
+        mf2.setCharge(-1);
         mf.add(mf2);
         Assert.assertEquals(0.0, mf.getCharge(), 0.001);
     }
@@ -442,7 +442,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     @Test 
 	public void testClone() throws Exception {
         IMolecularFormula mf = getBuilder().newMolecularFormula();
-        mf.setCharge(1.0);
+        mf.setCharge(1);
         Object clone = mf.clone();
         Assert.assertTrue(clone instanceof IMolecularFormula);
         Assert.assertEquals(mf.getIsotopeCount(), ((IMolecularFormula) clone).getIsotopeCount());

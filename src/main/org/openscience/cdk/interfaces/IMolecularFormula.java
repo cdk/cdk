@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -123,7 +122,7 @@ public interface IMolecularFormula{
      *
      * @see    #getCharge
      */
-    public void setCharge(Double charge) ;
+    public void setCharge(Integer charge) ;
 
     /**
      *  Returns the partial charge of this IMolecularFormula. If the charge 
@@ -133,7 +132,7 @@ public interface IMolecularFormula{
      *
      * @see    #setCharge
      */
-    public Double getCharge();
+    public Integer getCharge();
     /**
 	 * Clones this MolecularFormula object and its content.
 	 *

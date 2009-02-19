@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cml xmlns="http://www.xml-cml.org/schema">
+ <list dictRef="cdk:moleculeSet" id="molSet1">
+    <molecule id="A">
+      <formula concise="C 28 H 60 N 1">
+        <atomArray elementType="C H N" count="28.0 60.0 1.0"/>
+      </formula>
+    </molecule>
+    <molecule id="B">
+      <formula concise="C 9 H 20 N 1">
+        <atomArray elementType="C H N" count="9.0 20.0 1.0"/>
+      </formula>
+    </molecule>
+    <molecule id="C"/>
+  </list>
+  <reactionScheme id="rs_0">
+    <reaction id="react_1">
+      <reactantList>
+        <reactant>
+          <molecule ref="A"/>
+        </reactant>
+      </reactantList>
+      <productList>
+        <product>
+          <molecule ref="B"/>
+        </product>
+        <product>
+          <molecule ref="C"/>
+        </product>
+      </productList>
+      <substanceList/>
+    </reaction>
+  </reactionScheme>
+</cml>

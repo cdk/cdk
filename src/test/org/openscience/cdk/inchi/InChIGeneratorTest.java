@@ -139,6 +139,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals(gen.getInchi(), "InChI=1/C2H6/c1-2/h1-2H3");
+        Assert.assertEquals("OTMSDBZUPAUEDD-UHFFFAOYAK", gen.getInchiKey());
     }
     
     /**

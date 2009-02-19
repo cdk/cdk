@@ -258,7 +258,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
     	IAdductFormula add = getBuilder().newAdductFormula();
     	IMolecularFormula mf1 = getBuilder().newMolecularFormula();
-    	mf1.setCharge(1.0);
+    	mf1.setCharge(1);
         add.addMolecularFormula(mf1);
         
         Assert.assertEquals(1.0,add.getCharge(), 0.01);
@@ -270,7 +270,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 	 * @return    The test suite
 	 */
     @Test
-    public void testSetCharge_Double() {
+    public void testSetCharge_Integer() {
     	testGetCharge();
         
     }

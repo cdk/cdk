@@ -43,7 +43,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import java.util.BitSet;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-fingerprint
  */
 public class TanimotoTest extends CDKTestCase
 {

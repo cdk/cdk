@@ -51,6 +51,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -189,11 +190,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IMoleculeSet.class.equals(interfaces[i])) return true;
+			if (IAtomContainerSet.class.equals(interfaces[i])) return true;
 		}
+	    Class superClass = classObject.getSuperclass();
+	    if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 
@@ -238,12 +241,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   som  Array of Molecules that is written to an OutputStream
 	 */
-	private void writeMoleculeSet(IMoleculeSet som)
+	private void writeMoleculeSet(IAtomContainerSet som)
 	{
-		java.util.Iterator molecules = som.molecules().iterator();
-		while (molecules.hasNext())
-		{
-			IMolecule mol = (IMolecule)molecules.next();
+		Iterator<IAtomContainer> molecules = som.atomContainers().iterator();
+		while (molecules.hasNext()) {
+			IAtomContainer mol = molecules.next();
 			try
 			{
 				boolean[] isVisible=new boolean[mol.getAtomCount()];
@@ -271,7 +273,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   container  Molecule that is written to an OutputStream
 	 */
-    public void writeMolecule(IMolecule container) throws Exception {
+    public void writeMolecule(IAtomContainer container) throws Exception {
         String line = "";
         // taking care of the $$$$ signs:
         // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule

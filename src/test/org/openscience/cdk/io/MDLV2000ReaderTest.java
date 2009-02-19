@@ -527,4 +527,44 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue((containersList.get(0)).getBondCount() > 0);
         Assert.assertTrue((containersList.get(0)).getSingleElectronCount() > 0);
     }
+
+    /**
+     * @cdk.bug 2604888
+     */
+    @Test public void testNoCoordinates() throws Exception {
+        String mdl =
+            "cyclopropane.mol\n" +
+            "\n" +
+            "\n" +
+            "  9  9  0  0  0 0 0 0 0 0 0 0 0 1 V2000\n" +
+            "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n" +
+            "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n" +
+            "  1  2  1  6  0  0\n" +
+            "  1  3  1  6  0  0\n" +
+            "  1  4  1  0  0  0\n" +
+            "  1  5  1  1  0  0\n" +
+            "  2  3  1  0  0  0\n" +
+            "  2  6  1  0  0  0\n" +
+            "  2  7  1  6  0  0\n" +
+            "  3  8  1  6  0  0\n" +
+            "  3  9  1  0  0  0\n" +
+            "M  END\n";
+        MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
+        IMolecule molecule = (IMolecule) reader.read(new Molecule());
+        Assert.assertNotNull(molecule);
+        Assert.assertEquals(9, molecule.getAtomCount());
+        Assert.assertEquals(9, molecule.getBondCount());
+        for (IAtom atom : molecule.atoms()) {
+            Assert.assertNull(atom.getPoint2d());
+            Assert.assertNull(atom.getPoint2d());
+        }
+    }
+
 }

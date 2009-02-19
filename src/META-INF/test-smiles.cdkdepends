@@ -1,3 +1,4 @@
+cdk-annotation.jar
 cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
@@ -5,6 +6,7 @@ cdk-data.jar
 cdk-datadebug.jar
 cdk-nonotify.jar
 cdk-io.jar
+cdk-ioformats.jar
 cdk-valencycheck.jar
 cdk-smiles.jar
 cdk-extra.jar

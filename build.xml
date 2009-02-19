@@ -467,10 +467,10 @@
         <antcall target="compile-init"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="interfaces"/>
+            list="interfaces,annotation"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="core"/>
+            list="core,ioformats"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="data,dict,diff,qm,standard"/>
@@ -516,7 +516,7 @@
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
                   test-diff,test-charges,test-inchi,test-formula,
-                  test-render"/>
+                  test-render,test-ioformats"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-data,test-qsaratomic,test-qsarbond,
@@ -580,6 +580,8 @@
                     <includesfile name="${metainf}/isomorphism.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-annotation.jar"/>
+                    <include name="cdk-ioformats.jar"/>
                     <include name="cdk-atomtype.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-builder3dtools.jar"/>
@@ -648,6 +650,7 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-annotation.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-builder3dtools.jar"/>
                     <include name="cdk-charges.jar"/>
@@ -659,6 +662,7 @@
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
+                    <include name="cdk-ioformats.jar"/>
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
@@ -713,6 +717,7 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
+                    <includesfile name="${metainf}/test-ioformats.libdepends"/>
                     <includesfile name="${metainf}/test-core.libdepends"/>
                     <includesfile name="${metainf}/test-data.libdepends"/>
                     <includesfile name="${metainf}/test-datadebug.libdepends"/>
@@ -743,6 +748,8 @@
                     <includesfile name="${metainf}/test-render.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-test-annotation.jar"/>
+                    <include name="cdk-test-ioformats.jar"/>
                     <include name="cdk-test-core.jar"/>
                     <include name="cdk-test-data.jar"/>
                     <include name="cdk-test-datadebug.jar"/>
@@ -1085,6 +1092,29 @@
               <arg value="${src}/main"/>
               <arg value="${build}"/>
         </java>
+    </target>
+
+
+    <!-- Regenerate template fingerprints in case the fingerprint code has been updated
+	 so that fingerprint bits are different from a previous version -->
+    <target name="makefp3d" id="makefp3d">
+      <gunzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz"
+	      dest="${src}/main/org/openscience/cdk/modeling/builder3d/data/" />
+      <java classname="org.openscience.cdk.modeling.builder3d.TemplateExtractor">
+	<classpath>
+	  <pathelement location="jar/xercesImpl-2.9.0.jar"/>
+	  <pathelement location="jar/jgrapht-0.6.0.jar"/>
+	  <pathelement path="${build}" />
+	</classpath>
+	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf" />
+	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt" />
+	<arg value="anyatom=true" />
+	<arg value="anyBondanyAtom=true" />
+      </java>
+      <gzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt"
+	    destfile="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz" />
+      <delete file="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf"/>
+      <delete file="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt"/>
     </target>
 
 </project>

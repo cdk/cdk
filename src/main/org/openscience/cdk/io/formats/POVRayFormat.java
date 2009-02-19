@@ -31,7 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * 
  * @author Miguel Rojas
  * 
- * @cdk.module io
+ * @cdk.module ioformats
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */

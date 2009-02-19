@@ -107,7 +107,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(builder.newIsotope("C"),2);
 		formula.addIsotope(builder.newIsotope("H"),200);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 		
 		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
@@ -125,7 +125,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(builder.newIsotope("C"),2);
 		formula.addIsotope(builder.newIsotope("H"),200);
-		formula.setCharge(1.0);
+		formula.setCharge(1);
 		
         params[0] = -1.0;
 		rule.setParameters(params);
@@ -145,7 +145,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(builder.newIsotope("C"),2);
 		formula.addIsotope(builder.newIsotope("H"),6);
-		formula.setCharge(0.0);
+		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}

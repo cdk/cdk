@@ -1485,5 +1485,42 @@ public class SMARTSSearchTest extends CDKTestCase {
             Assert.assertTrue(true);
         }
     }
+
+    /**
+     * @cdk.bug  2589807
+     * @throws Exception
+     */
+    @Test
+    public void testAromAliArom() throws Exception {
+        int[] results = match("c-c", "COC1CN(CCC1NC(=O)C2=CC(=C(C=C2OC)N)Cl)CCCOC3=CC=C(C=C3)F");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+
+        results = match("c-c", "c1ccccc1-c1ccccc1");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2587204
+     */
+    @Test
+    public void testLactamSimple() throws Exception {
+        int[] results = match("[R0][ND3R][CR]=O", "N1(CC)C(=O)CCCC1");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2587204
+     */
+    @Test
+    public void testLactamRecursive() throws Exception {
+        int[] results = match("[R0]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
 }
 

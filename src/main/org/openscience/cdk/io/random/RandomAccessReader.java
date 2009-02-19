@@ -75,9 +75,10 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
     
     /**
      * Reads the file and builds an index file, if the index file doesn't already exist.
-     * @param file
-     * @param builder
-     * @throws IOException
+     * 
+     * @param file the file object containg the molecules to be indexed
+     * @param builder a chem object builder
+     * @throws IOException if there is an error during reading
      */
     public RandomAccessReader(File file,IChemObjectBuilder builder) throws IOException {
         this(file,builder,null);
@@ -85,10 +86,11 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
     
     /**
     * Reads the file and builds an index file, if the index file doesn't already exist.
-     * @param file
-     * @param builder
+     *
+     * @param file file the file object containg the molecules to be indexed
+     * @param builder builder a chem object builder
      * @param listener
-     * @throws IOException
+     * @throws IOException if there is an error during reading
      */
     public RandomAccessReader(File file,IChemObjectBuilder builder,IReaderListener listener) throws IOException {        
         super();
@@ -105,14 +107,16 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
     @Override
     protected void finalize() throws Throwable {
         try {
-        close();
+            close();
         } catch (Exception x) {
-            
+            logger.debug("Error during finalize");
         }
         super.finalize();
     }
     /**
-     * Returns the object at given record No. Record numbers are zero-based!
+     * Returns the object at given record No.
+     *
+     * Record numbers are zero-based!
      */
     public synchronized IChemObject readRecord(int record) throws Exception {
     	String buffer = readContent(record);
@@ -124,12 +128,14 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
         }
     }
     /**
-     * Reads the record text content into a String
-     * @param record
-     * @return
-     * @throws Exception
+     * Reads the record text content into a String.
+     *
+     * @param record The record number
+     * @return  A String representation of the record
+     * @throws java.io.IOException if error occurs during reading
+     * @throws org.openscience.cdk.exception.CDKException if the record number is invalid
      */
-    protected String readContent(int record) throws Exception {
+    protected String readContent(int record) throws IOException, CDKException {
         logger.debug("Current record ",record);
 
         if ((record < 0) || (record >=records)) {
@@ -317,10 +323,10 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
     /**
      * Opens the file index <filename>_cdk.index</filename> in a temporary folder, as specified by "java.io.tmpdir" property.
      * 
-     * @param filename
-     * @throws Exception
+     * @param filename the name of the file for which the index was generated
+     * @return a file object representing the index file
      */
-	public static File getIndexFile(String filename) throws Exception {
+	public static File getIndexFile(String filename) {
 		String tmpDir = System.getProperty("java.io.tmpdir");
         File f = new File(filename);
         File indexFile = new File(tmpDir,f.getName()+"_cdk.index");

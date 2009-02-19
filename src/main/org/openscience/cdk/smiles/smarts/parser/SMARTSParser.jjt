@@ -389,14 +389,16 @@ void SmartsExpression() #Smarts :
 ASTAtom	 AtomExpression() #Atom : 
 {
 	Token firstToken;
+	Token secondToken;
 	Token rightBracket;
-	Node massNode = null;
+	ASTAtomicMass massNode = null;
 }
 {
 	( 
 	    ( 
-	    	<L_BRACKET> { firstToken = getToken(1); }
-	    	( AtomicMass() { massNode = jjtree.popNode(); }	)?
+	    
+	    	<L_BRACKET> { firstToken = getToken(1); secondToken = getToken(2); }
+	    	( AtomicMass() { massNode = (ASTAtomicMass)jjtree.popNode(); }	)?
 	    	LowAndExpression() 
 	    	{ 
 				if (massNode != null) { // insert AtomicMass node into expression
@@ -407,9 +409,15 @@ ASTAtom	 AtomExpression() #Atom :
 	    	}
 	    	<R_BRACKET> { rightBracket = token; }
 	    	{   
+	    		Token HToken = null;
 	    		// If the LowAndExpression is "[H]", change it to an ExplicitAtom
 	    		if (firstToken.image.equals("H")) {
-		    		if ( (rightBracket.beginColumn - firstToken.endColumn) == 1) {
+	    			HToken = firstToken;
+	    		} else if (massNode != null && massNode.getMass() <= 3 && secondToken != null && secondToken.image.equals("H")) {
+	    			HToken = secondToken;
+	    		}
+	    		if (HToken != null) {
+		    		if ( (rightBracket.beginColumn - HToken.endColumn) == 1) {
 		    			jjtree.popNode();
 		    			ASTExplicitAtom explicitAtom = new ASTExplicitAtom(JJTEXPLICITATOM);
 						explicitAtom.setSymbol("H");

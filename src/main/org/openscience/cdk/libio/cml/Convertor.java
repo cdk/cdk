@@ -244,11 +244,10 @@ public class Convertor {
     
     public CMLCml cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(IReactionScheme cdkScheme){
     	CMLCml cml = new CMLCml();
+    	cml.appendChild(cdkMoleculeSetToCMLList(ReactionSchemeManipulator.getAllMolecules(cdkScheme)));
     	isRef = true;
     	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true));
     	isRef = false;
-    	
-    	cml.appendChild(cdkMoleculeSetToCMLList(ReactionSchemeManipulator.getAllMolecules(cdkScheme)));
     	return cml;
     }
     

@@ -22,21 +22,15 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.CharArrayReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
-import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -58,19 +52,16 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class ReaderFactory {
     
-    private final static String IO_FORMATS_LIST = "io-formats.set";
-
-    private int headerLength;
     private LoggingTool logger;
-
-    private static List<IChemFormatMatcher> formats = null;
+    private FormatFactory formatFactory = null;
+    private int headerLength = 8192;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
      * first 65536 chars.
      */
     public ReaderFactory() {
-        this(65536);
+        this(8192);
     }
 
     /**
@@ -81,150 +72,21 @@ public class ReaderFactory {
      */
     public ReaderFactory(int headerLength) {
         logger = new LoggingTool(this);
+        formatFactory = new FormatFactory(headerLength);
         this.headerLength = headerLength;
-        loadReaders();
     }
 
     /**
      * Registers a format for detection.
      */
     public void registerFormat(IChemFormatMatcher format) {
-        formats.add(format);
+        formatFactory.registerFormat(format);
     }
     
     public List<IChemFormatMatcher> getFormats(){
-    	return formats;
+    	return formatFactory.getFormats();
     }
 
-    private void loadReaders() {
-        if (formats == null) {
-            formats = new ArrayList<IChemFormatMatcher>();
-            try {
-                logger.debug("Starting loading Readers...");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    this.getClass().getClassLoader().getResourceAsStream(IO_FORMATS_LIST)
-                ));
-                int formatCount = 0;
-                while (reader.ready()) {
-                    // load them one by one
-                    String formatName = reader.readLine();
-                    formatCount++;
-                    try {
-                    	Class formatClass = this.getClass().getClassLoader().loadClass(formatName);
-                    	Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
-                    	IChemFormatMatcher format = (IChemFormatMatcher)getinstanceMethod.invoke(null, new Object[0]);
-                        formats.add(format);
-                        logger.info("Loaded IO format: " + format.getClass().getName());
-                    } catch (ClassNotFoundException exception) {
-                        logger.error("Could not find this ChemObjectReader: ", formatName);
-                        logger.debug(exception);
-                    } catch (Exception exception) {
-                        logger.error("Could not load this ChemObjectReader: ", formatName);
-                        logger.debug(exception);
-                    }
-                }
-                logger.info("Number of loaded formats used in detection: ", formatCount);
-            } catch (Exception exception) {
-                logger.error("Could not load this io format list: ", IO_FORMATS_LIST);
-                logger.debug(exception);
-            }
-        }
-    }
-
-    /**
-     * Creates a String of the Class name of the <code>IChemObject</code> reader
-     * for this file format. The input is read line-by-line
-     * until a line containing an identifying string is
-     * found.
-     *
-     * <p>The ReaderFactory detects more formats than the CDK
-     * has Readers for.
-     *
-     * <p>This method is not able to detect the format of gziped files.
-     * Use <code>guessFormat(InputStream)</code> instead for such files.
-     *
-     * @throws IOException  if an I/O error occurs
-     * @throws IllegalArgumentException if the input is null
-     *
-     * @see #guessFormat(InputStream)
-     */
-    public IChemFormat guessFormat(BufferedReader input) throws IOException {
-        if (input == null) {
-            throw new IllegalArgumentException("input cannot be null");
-        }
-
-        // make a copy of the header
-        char[] header = new char[this.headerLength];
-        if (!input.markSupported()) {
-            logger.error("Mark not supported");
-            throw new IllegalArgumentException("input must support mark");
-        }
-        input.mark(this.headerLength);
-        input.read(header, 0, this.headerLength);
-        input.reset();
-        
-        BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
-        
-        /* Search file for a line containing an identifying keyword */
-        String line = null;
-        int lineNumber = 1;
-        while ((line = buffer.readLine()) != null) {
-            logger.debug(lineNumber + ": ", line);
-            for (int i=0; i<formats.size(); i++) {
-                IChemFormatMatcher cfMatcher = (IChemFormatMatcher)formats.get(i);
-                if (cfMatcher.matches(lineNumber, line)) {
-                    logger.info("Detected format: ", cfMatcher.getFormatName());
-                    return cfMatcher;
-                }
-            }
-            lineNumber++;
-        }
-        
-        logger.warn("Now comes the tricky and more difficult ones....");
-        buffer = new BufferedReader(new CharArrayReader(header));
-        
-        line = buffer.readLine();
-        // is it a XYZ file?
-        StringTokenizer tokenizer = new StringTokenizer(line.trim());
-        try {
-            int tokenCount = tokenizer.countTokens();
-            if (tokenCount == 1) {
-                Integer.parseInt(tokenizer.nextToken());
-                // if not failed, then it is a XYZ file
-                return (IChemFormat)XYZFormat.getInstance();
-            } else if (tokenCount == 2) {
-                Integer.parseInt(tokenizer.nextToken());
-                if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
-                    return (IChemFormat)XYZFormat.getInstance();
-                }
-            }
-        } catch (NumberFormatException exception) {
-            logger.info("No, it's not a XYZ file");
-        }
-
-        logger.warn("File format undetermined");
-        return null;
-    }
-    
-    public IChemFormat guessFormat(InputStream input) throws IOException {
-        if (input instanceof GZIPInputStream) {
-            return guessFormat(new BufferedReader(new InputStreamReader(input)));
-        }
-        BufferedInputStream bistream = new BufferedInputStream(input, 8192);
-        InputStream istreamToRead = bistream; // if gzip test fails, then take default
-        bistream.mark(5);
-        int countRead = 0;
-        byte[] abMagic = new byte[4];
-        countRead = bistream.read(abMagic, 0, 4);
-        bistream.reset();
-        if (countRead == 4) {
-            if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
-                istreamToRead = new GZIPInputStream(bistream);
-            }
-        }
-        return guessFormat(new BufferedReader(new InputStreamReader(istreamToRead)));
-    }
-    
     /**
      * Detects the format of the Reader input, and if known, it will return
      * a CDK Reader to read the format, or null when the reader is not
@@ -238,9 +100,19 @@ public class ReaderFactory {
         IChemFormat format = null;
         ISimpleChemObjectReader reader = null;
         if (input instanceof GZIPInputStream) {
-            format = guessFormat(input);
+            format = formatFactory.guessFormat(input);
+            reader = createReader(format);
+            if (reader != null) {
+                try {
+                    reader.setReader(input);
+                } catch ( CDKException e1 ) {
+                    IOException wrapper = new IOException("Exception while setting the InputStream: " + e1.getMessage());
+                    wrapper.initCause(e1);
+                    throw wrapper;
+                }
+            }
         } else {
-            BufferedInputStream bistream = new BufferedInputStream(input, 8192);
+            BufferedInputStream bistream = new BufferedInputStream(input, headerLength);
             InputStream istreamToRead = bistream; // if gzip test fails, then take default
             bistream.mark(5);
             int countRead = 0;
@@ -249,18 +121,22 @@ public class ReaderFactory {
             bistream.reset();
             if (countRead == 4) {
                 if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
-                    istreamToRead = new GZIPInputStream(bistream);
+                    istreamToRead = new BufferedInputStream(
+                        new GZIPInputStream(bistream)
+                    );
                 }
             }
-            format = guessFormat( istreamToRead );
-        }
-        reader = createReader(format);
-        try {
-            reader.setReader(input);
-        } catch ( CDKException e1 ) {
-            IOException wrapper = new IOException("Exception while setting the InputStream: " + e1.getMessage());
-            wrapper.initCause(e1);
-            throw wrapper;
+            format = formatFactory.guessFormat(istreamToRead);
+            reader = createReader(format);
+            if (reader != null) {
+                try {
+                    reader.setReader(istreamToRead);
+                } catch ( CDKException e1 ) {
+                    IOException wrapper = new IOException("Exception while setting the InputStream: " + e1.getMessage());
+                    wrapper.initCause(e1);
+                    throw wrapper;
+                }
+            }
         }
         return reader;
     }
@@ -306,7 +182,7 @@ public class ReaderFactory {
         if (!(input instanceof BufferedReader)) {
             input = new BufferedReader(input);
         }
-        IChemFormat chemFormat = guessFormat((BufferedReader)input);
+        IChemFormat chemFormat = formatFactory.guessFormat((BufferedReader)input);
         ISimpleChemObjectReader coReader = createReader(chemFormat);
         try {        	
         	coReader.setReader(input);

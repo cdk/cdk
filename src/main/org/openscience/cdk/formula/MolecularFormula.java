@@ -68,7 +68,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	/**
      *  The partial charge of the molecularFormula. The default value is Double.NaN.
      */
-	private Double charge = (Double) CDKConstants.UNSET;
+	private Integer charge = (Integer) CDKConstants.UNSET;
 
 	/**
 	 *  A hashtable for the storage of any kind of properties of this IChemObject.
@@ -160,7 +160,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
      * @see    #setCharge
      */
     @TestMethod("testGetCharge")
-	public Double getCharge() {
+	public Integer getCharge() {
 		return charge;
 	}
 
@@ -222,8 +222,8 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
      *
      * @see    #getCharge
      */
-    @TestMethod("testCharge_Double")
-	public void setCharge(Double charge) {
+    @TestMethod("testCharge_Integer")
+	public void setCharge(Integer charge) {
 		this.charge = charge;
 	}
 

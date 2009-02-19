@@ -105,7 +105,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
     
 	/**
-	 *  Contructs a new MDLReader that can read Molecule from a given InputStream.
+	 *  Constructs a new MDLReader that can read Molecule from a given InputStream.
 	 *
 	 *@param  in  The InputStream to read from
 	 */
@@ -326,6 +326,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         double x = 0.0;
         double y = 0.0;
         double z = 0.0;
+        double totalX = 0.0;
+        double totalY = 0.0;
         double totalZ = 0.0;
         //int[][] conMat = new int[0][0];
         //String help;
@@ -395,7 +397,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 x = Double.parseDouble(line.substring(0, 10).trim());
                 y = Double.parseDouble(line.substring(10, 20).trim());
                 z = Double.parseDouble(line.substring(20, 30).trim());
-                totalZ += Math.abs(z); // *all* values should be zero, not just the sum
+                // *all* values should be zero, not just the sum
+                totalX += Math.abs(x);
+                totalY += Math.abs(y);
+                totalZ += Math.abs(z);
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = line.substring(31,34).trim();
 
@@ -507,7 +512,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             
             // convert to 2D, if totalZ == 0
-            if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
+            if (totalX == 0.0 && totalY == 0.0 && totalZ == 0.0) {
+                logger.info("All coordinates are 0.0");
+                for (IAtom atomToUpdate : molecule.atoms()) {
+                    atomToUpdate.setPoint3d(null);
+                }
+            } else if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
                 Iterator<IAtom> atomsToUpdate = molecule.atoms().iterator();
                 while (atomsToUpdate.hasNext()) {

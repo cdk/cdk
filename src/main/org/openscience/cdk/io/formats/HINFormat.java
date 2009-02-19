@@ -27,13 +27,12 @@ import java.util.StringTokenizer;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.math.MathTools;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.hyper.com/">here</a>.
  * 
- * @cdk.module io
+ * @cdk.module ioformats
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
@@ -83,14 +82,15 @@ public class HINFormat implements IChemFormatMatcher {
              line.endsWith(" t") || line.endsWith(" a")
             )) {
             StringTokenizer tokenizer = new StringTokenizer(line, " ");
-            if (MathTools.isOdd(tokenizer.countTokens())) {
+            if ((tokenizer.countTokens() % 2) == 0) {
+                // odd number of values found, typical for HIN
                 return true;
             }
         }
         return false;
     }
 
-	@TestMethod("testIsXMLBased")
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return false;
 	}

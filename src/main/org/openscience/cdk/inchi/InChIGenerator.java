@@ -21,6 +21,7 @@
 package org.openscience.cdk.inchi;
 
 import net.sf.jniinchi.*;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -373,6 +374,26 @@ public class InChIGenerator {
     @TestMethod("testGetInchiEandZ12Dichloroethene2D,testGetInchiFromEthyne,testGetInchiFromEthene")
     public String getInchi() {
         return(output.getInchi());
+    }
+    
+    /**
+     * Gets generated InChIKey string.
+     */
+    @TestMethod("testGetInchiFromEthane")
+    public String getInchiKey() throws CDKException {
+        JniInchiOutputKey key;
+        try {
+            key = JniInchiWrapper.getInChIKey(output.getInchi());
+            if (key.getReturnStatus() == INCHI_KEY.OK) {
+                return key.getKey();
+            } else {
+                throw new CDKException("Error while creating InChIKey: " +
+                                       key.getReturnStatus());
+            }
+        } catch (JniInchiException exception) {
+            throw new CDKException("Error while creating InChIKey: " +
+                                   exception.getMessage(), exception);
+        }
     }
     
     /**

@@ -27,13 +27,20 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.*;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * @cdk.module standard
@@ -148,6 +155,58 @@ public class ReactionSetManipulator {
         return null;
     }
 
+    /**
+     * get all Reactions object containing a Molecule from a set of Reactions. 
+     * 
+     * @param reactSet The set of reaction to inspect
+     * @param molecule The molecule to find
+     * @return         The IReactionSet
+     */
+    @TestMethod("testGetRelevantReactions_IReactionSet_IMolecule")
+    public static IReactionSet getRelevantReactions(IReactionSet reactSet, IMolecule molecule) {
+        IReactionSet newReactSet = reactSet.getBuilder().newReactionSet();
+    	IReactionSet reactSetProd = getRelevantReactionsAsProduct(reactSet, molecule);
+    	for (IReaction reaction : reactSetProd.reactions())
+            	newReactSet.addReaction(reaction);
+    	IReactionSet reactSetReact = getRelevantReactionsAsReactant(reactSet, molecule);
+    	for (IReaction reaction : reactSetReact.reactions())
+        	newReactSet.addReaction(reaction);
+	return newReactSet;
+    }
+    /**
+     * get all Reactions object containing a Molecule as a Reactant from a set of Reactions. 
+     * 
+     * @param reactSet The set of reaction to inspect
+     * @param molecule The molecule to find as a reactant
+     * @return         The IReactionSet
+     */
+    @TestMethod("testGetRelevantReactionsAsReactant_IReactionSet_IMolecule")
+    public static IReactionSet getRelevantReactionsAsReactant(IReactionSet reactSet, IMolecule molecule) {
+        IReactionSet newReactSet = reactSet.getBuilder().newReactionSet();
+    	for (IReaction reaction : reactSet.reactions()) {
+            for(IAtomContainer atomContainer : reaction.getReactants().molecules())
+            	if(atomContainer.equals(molecule))
+            		newReactSet.addReaction(reaction);
+        }
+        return newReactSet;
+    }
+    /**
+     * get all Reactions object containing a Molecule as a Product from a set of Reactions. 
+     * 
+     * @param reactSet The set of reaction to inspect
+     * @param molecule The molecule to find as a product
+     * @return         The IReactionSet
+     */
+    @TestMethod("testGetRelevantReactionsAsProduct_IReactionSet_IMolecule")
+    public static IReactionSet getRelevantReactionsAsProduct(IReactionSet reactSet, IMolecule molecule) {
+        IReactionSet newReactSet = reactSet.getBuilder().newReactionSet();
+    	for (IReaction reaction : reactSet.reactions()) {
+            for(IAtomContainer atomContainer : reaction.getProducts().molecules())
+            	if(atomContainer.equals(molecule))
+            		newReactSet.addReaction(reaction);
+        }
+        return newReactSet;
+    }
     @TestMethod("testGetRelevantAtomContainer_IReactionSet_IAtom")
     public static IAtomContainer getRelevantAtomContainer(IReactionSet set, IAtom atom) {
         for (IReaction reaction : set.reactions()) {

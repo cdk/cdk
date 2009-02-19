@@ -46,7 +46,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
     }
 	
 	@Test
-    public void testProtonTotalPartialChargeDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testProtonTotalPartialChargeDescriptorTest() throws java.lang.Exception {
 		double [] testResult={0.07915,0.05783,0.05783,0.05783};
 		IAtomicDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
 		
@@ -58,5 +58,21 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
 		    Assert.assertEquals(testResult[i], retval.get(i), 0.00001);
 		}
 	}
+
+    /**
+     * @cdk.bug 2039739
+     */
+    @Test
+    public void testNaNs() throws java.lang.Exception {
+        IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C(F)(F)");
+        addExplicitHydrogens(mol);
+        System.out.println("mol.getAtom(0).getSymbol() = " + mol.getAtom(0).getSymbol());
+        DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
+        Assert.assertEquals(5, retval.length(), 0.000001);
+        Assert.assertTrue(Double.isNaN(retval.get(3)));
+        Assert.assertTrue(Double.isNaN(retval.get(4)));        
+    }
 }
 

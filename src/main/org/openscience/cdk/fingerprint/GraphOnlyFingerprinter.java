@@ -78,10 +78,10 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
 
     @TestMethod("testFingerPrint,testFingerprint")
     public BitSet getFingerprint(IAtomContainer container, int size) throws Exception {
-		Map<String, String> paths = findPathes(container, super.getSearchDepth());
+		int[] hashes = findPathes(container, super.getSearchDepth());
 		BitSet bitSet = new BitSet(size);
-        for (String s : paths.values()) {
-            bitSet.set(new Random(s.hashCode()).nextInt(size));
+        for (int hash : hashes) {
+            bitSet.set(new Random(hash).nextInt(size));
         }
 		return bitSet;
 	}

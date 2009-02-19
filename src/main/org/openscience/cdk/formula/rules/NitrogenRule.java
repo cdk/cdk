@@ -104,6 +104,7 @@ public class NitrogenRule implements IRule{
     		return 0.0;
     	
     	int numberN = MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement("N"));
+    	numberN += getOthers(formula);
     	
     	if(formula.getCharge() == null || formula.getCharge() == 0 || !isOdd(Math.abs(formula.getCharge()))){
 	    	if(isOdd(mass) && isOdd(numberN)) {
@@ -122,6 +123,22 @@ public class NitrogenRule implements IRule{
 	    }
     }
     /**
+     * Get the number of other elements which affect to the calculation of the nominal mass.
+     * For example Fe, Co, Hg, Pt, As.
+     * 
+     * @param formula The IMolecularFormula to analyze
+     * @return        Number of elements
+     */
+    private int getOthers(IMolecularFormula formula) {
+		int number = 0;
+		String[] elements = {"Co","Hg","Pt","As"};
+		for(int i = 0 ; i < elements.length; i++)
+			number += MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement(elements[i]));
+    	
+		return number;
+	}
+
+	/**
      * Determine if a integer is odd.
      * 
      * @param value The value to analyze

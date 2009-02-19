@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 
 
 /**
- * @cdk.module test-io
+ * @cdk.module test-ioformats
  */
 public class Chem3D_Cartesian_1FormatTest extends ChemFormatTest {
 

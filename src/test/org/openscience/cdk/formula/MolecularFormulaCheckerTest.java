@@ -137,7 +137,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(ifac.getMajorIsotope("C"),1);
 		formula.addIsotope( ifac.getMajorIsotope("H"),100);
-        formula.setCharge(0.0);
+        formula.setCharge(0);
 		
 		List<IRule> rules = new ArrayList<IRule>();
 		rules.add(new MMElementRule());
@@ -160,7 +160,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(ifac.getMajorIsotope("C"),1);
 		formula.addIsotope( ifac.getMajorIsotope("H"),100);
-        formula.setCharge(0.0);
+        formula.setCharge(0);
 		
 		List<IRule> rules = new ArrayList<IRule>();
 		rules.add(new MMElementRule());
@@ -185,7 +185,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(ifac.getMajorIsotope("C"),1);
 		formula.addIsotope( ifac.getMajorIsotope("H"),4);
-        formula.setCharge(0.0);
+        formula.setCharge(0);
 		
 		List<IRule> rules = new ArrayList<IRule>();
 		rules.add(new MMElementRule());
@@ -208,7 +208,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(ifac.getMajorIsotope("C"),1);
 		formula.addIsotope( ifac.getMajorIsotope("H"),4);
-        formula.setCharge(0.0);
+        formula.setCharge(0);
 		
 		List<IRule> rules = new ArrayList<IRule>();
 		rules.add(new MMElementRule());

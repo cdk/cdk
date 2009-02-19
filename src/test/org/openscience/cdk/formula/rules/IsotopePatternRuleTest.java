@@ -117,7 +117,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(ifac.getMajorIsotope("C"),2);
 		formula.addIsotope( ifac.getMajorIsotope("Br"),2);
-        formula.setCharge(0.0);
+        formula.setCharge(0);
 
         Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
@@ -134,7 +134,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
 		formula.addIsotope( ifac.getMajorIsotope("H"),13);
 		formula.addIsotope( ifac.getMajorIsotope("N"),2);
 		formula.addIsotope( ifac.getMajorIsotope("O"),2);
-        formula.setCharge(0.0);
+        formula.setCharge(0);
         
 		
 		/** experimental results*/

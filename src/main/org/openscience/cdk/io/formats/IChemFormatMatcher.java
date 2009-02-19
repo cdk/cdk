@@ -32,7 +32,7 @@ package org.openscience.cdk.io.formats;
  * This interface is used for classes that are able to match a certain 
  * chemical file format. For example: Chemical Markup Language, PDB etc.
  *
- * @cdk.module io
+ * @cdk.module ioformats
  * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>

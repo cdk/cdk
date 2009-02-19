@@ -31,14 +31,15 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -766,17 +767,17 @@ public class CML2Test extends CDKTestCase {
         // test reaction
         Assert.assertEquals(4,model.getReactionSet().getReactionCount());
         String[] idReaction = {"r1","r2","r3","r4"};
-//        String[] idReactants = {"A","B","A","F"};
-//        String[] idProducts = {"B","C","F","G"};
+        String[] idReactants = {"A","B","A","F"};
+        String[] idProducts = {"B","C","F","G"};
         for(int i = 0 ; i < idReaction.length; i++){
         	IReaction reaction = model.getReactionSet().getReaction(i);
         	Assert.assertEquals(idReaction[i],reaction.getID());
         	// test molecule
         	Assert.assertEquals(1, reaction.getProducts().getMoleculeCount());
-//        	Assert.assertEquals(idProducts[i],reaction.getProducts().getMolecule(0).getID());
-//        	
-//            Assert.assertEquals(1, reaction.getReactants().getMoleculeCount());
-//            Assert.assertEquals(idReactants[i],reaction.getReactants().getMolecule(0).getID());
+        	Assert.assertEquals(idProducts[i],reaction.getProducts().getMolecule(0).getID());
+        	
+            Assert.assertEquals(1, reaction.getReactants().getMoleculeCount());
+            Assert.assertEquals(idReactants[i],reaction.getReactants().getMolecule(0).getID());
         }
     }
 
@@ -891,5 +892,43 @@ public class CML2Test extends CDKTestCase {
         	Assert.assertEquals(idReactants[i],reaction.getReactants().getMolecule(0).getID());
         }
         
+    }
+    /**
+     * This test tests whether the CMLReader is able to read a reactionscheme object with 
+     * references to list of molecules.
+     */
+    @Test public void testCMLSchemeMoleculeSet() throws Exception {
+        String filename = "data/cml/reactionSchemeMoleculeSet.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+        // test the resulting ChemFile content
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1,seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        Assert.assertNotNull(model);
+        
+        // test reaction
+        Assert.assertEquals(1,model.getReactionSet().getReactionCount());
+        String[] idReaction = {"react_1"};
+        String[] idReactants = {"A"};
+        String[] idProducts = {"B","C"};
+        
+        IReaction reaction = model.getReactionSet().getReaction(0);
+        Assert.assertEquals(idReaction[0],reaction.getID());
+        	// test molecule
+        Assert.assertEquals(2, reaction.getProducts().getMoleculeCount());
+        Assert.assertEquals(idProducts[0],reaction.getProducts().getMolecule(0).getID());
+        Assert.assertEquals("C 9 H 20 N 1",((ArrayList<String>)reaction.getProducts().getMolecule(0).getProperty(CDKConstants.FORMULA)).get(0));
+        Assert.assertEquals(idProducts[1],reaction.getProducts().getMolecule(1).getID());
+        	
+        Assert.assertEquals(1, reaction.getReactants().getMoleculeCount());
+        Assert.assertEquals(idReactants[0],reaction.getReactants().getMolecule(0).getID());
+        Assert.assertEquals("C 28 H 60 N 1",((ArrayList<String>)reaction.getReactants().getMolecule(0).getProperty(CDKConstants.FORMULA)).get(0));
     }
 }

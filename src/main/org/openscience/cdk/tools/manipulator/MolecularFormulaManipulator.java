@@ -308,7 +308,7 @@ public class MolecularFormulaManipulator {
             }
         }
 		if(chargeB){
-			Double charge = formula.getCharge();
+			Integer charge = formula.getCharge();
 			if((charge == CDKConstants.UNSET) || (charge == 0)){
 				return htmlString;
 			} else if (charge < 0) {
@@ -460,7 +460,7 @@ public class MolecularFormulaManipulator {
 	 */
 	 @TestMethod("testGetTotalExactMass_IMolecularFormula")
      public static double getTotalExactMass(IMolecularFormula formula) {
-        double mass = 0.0;
+		 Double mass = 0.0;
 
         IChemObjectBuilder builder = formula.getBuilder();
         for (IIsotope isotope : formula.isotopes()) {
@@ -474,10 +474,28 @@ public class MolecularFormulaManipulator {
             } else
                 mass += isotope.getExactMass() * formula.getIsotopeCount(isotope);
         }
+        if(formula.getCharge() != null)
+        	mass = correctMass(mass,formula.getCharge());
 		return mass;
 	 }
-	 
 	 /**
+	  * Correct the mass according the charge of the IMmoleculeFormula.
+	  * Negative charge will add the mass of one electron to the mass.
+	  *  
+	  * @param mass      The mass to correct
+	  * @param charge    The charge
+	  * @return          The mass with the correction
+	  */
+	 private static double correctMass(double mass, Integer charge) {
+		 double massE = 0.00054857990927;
+		  if(charge > 0)
+			mass -= massE*charge;
+		 else if(charge < 0)
+			mass += massE*charge; 
+		 return mass;
+	}
+
+	/**
 	  * Get the summed mass number of all isotopes from an MolecularFormula. It
 	  * assumes isotope masses to be preset, and returns 0.0 if not.
 	  * 
