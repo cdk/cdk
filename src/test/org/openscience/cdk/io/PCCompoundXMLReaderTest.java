@@ -68,5 +68,23 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         // check bond stuff
         Assert.assertEquals(13, molecule.getBondCount());
         Assert.assertNotNull(molecule.getBond(3));
+        
+        // coordinates
+        Assert.assertNotNull(molecule.getAtom(0).getPoint2d());
+        Assert.assertNull(molecule.getAtom(0).getPoint3d());
+    }
+
+    @Test public void testReading3DCoords() throws Exception {
+        String filename = "data/asn/pubchem/cid176.xml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
+        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        Assert.assertNotNull(molecule);
+
+        // check atom stuff
+        Assert.assertEquals(8, molecule.getAtomCount());
+        Assert.assertNull(molecule.getAtom(0).getPoint2d());
+        Assert.assertNotNull(molecule.getAtom(0).getPoint3d());
     }
 }
