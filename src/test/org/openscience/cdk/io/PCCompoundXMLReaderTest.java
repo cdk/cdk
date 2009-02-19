@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -70,8 +73,11 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(molecule.getBond(3));
         
         // coordinates
-        Assert.assertNotNull(molecule.getAtom(0).getPoint2d());
         Assert.assertNull(molecule.getAtom(0).getPoint3d());
+        Point2d point = molecule.getAtom(0).getPoint2d();
+        Assert.assertNotNull(point);
+        Assert.assertEquals(3.7320508956909, point.x, 0.00000001);
+        Assert.assertEquals(0.5, point.y, 0.00000001);
     }
 
     @Test public void testReading3DCoords() throws Exception {
@@ -85,6 +91,10 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         // check atom stuff
         Assert.assertEquals(8, molecule.getAtomCount());
         Assert.assertNull(molecule.getAtom(0).getPoint2d());
-        Assert.assertNotNull(molecule.getAtom(0).getPoint3d());
+        Point3d point = molecule.getAtom(0).getPoint3d();
+        Assert.assertNotNull(point);
+        Assert.assertEquals(-0.9598, point.x, 0.0001);
+        Assert.assertEquals( 1.5616, point.y, 0.0001);
+        Assert.assertEquals( 1.8714, point.z, 0.0001);
     }
 }
