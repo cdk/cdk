@@ -43,8 +43,9 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 /**
- * Reads an object from ASN.1 XML formated input for PubChem Compound entries. The following
- * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2.
+ * Reads an object from ASN.1 XML formated input for PubChem Compound entries.
+ * The following bits are supported: atoms.aid, atoms.element, atoms.2d,
+ * atoms.3d, bonds.aid1, bonds.aid2.
  *
  * @cdk.module  io
  * @cdk.svnrev  $Revision$
