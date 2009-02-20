@@ -52,7 +52,7 @@ public class WriterFactory {
 
     private LoggingTool logger;
 
-    private static List formats = null;
+    private static List<IChemFormat> formats = null;
 
     /**
      * Constructs a ChemObjectIOInstantionTests.
@@ -73,8 +73,8 @@ public class WriterFactory {
     public IChemFormat[] findChemFormats(int features) {
     	if (formats == null) loadFormats();
     	
-    	Iterator iter = formats.iterator();
-    	List matches = new ArrayList();
+        Iterator<IChemFormat> iter = formats.iterator();
+        List<IChemFormat> matches = new ArrayList<IChemFormat>();
     	while (iter.hasNext()) {
     		IChemFormat format = (IChemFormat)iter.next();
     		if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
@@ -91,7 +91,7 @@ public class WriterFactory {
     
     private void loadFormats() {
         if (formats == null) {
-            formats = new ArrayList();
+            formats = new ArrayList<IChemFormat>();
             try {
                 logger.debug("Starting loading Formats...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -107,7 +107,7 @@ public class WriterFactory {
                     	Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
                     	IResourceFormat format = (IResourceFormat)getinstanceMethod.invoke(null, new Object[0]);
                         if (format instanceof IChemFormat) {
-                        	formats.add(format);
+                            formats.add((IChemFormat)format);
                         	logger.info("Loaded IChemFormat: " + format.getClass().getName());
                         }
                     } catch (ClassNotFoundException exception) {
