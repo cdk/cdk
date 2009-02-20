@@ -56,4 +56,16 @@ public class WriterFactoryTest extends CDKTestCase {
         Assert.assertNotNull(writer);
         Assert.assertEquals(format.getFormatName(), writer.getFormat().getFormatName());
     }
+
+    @Test public void testCustomWriter() {
+        WriterFactory factory = new WriterFactory();
+        factory.registerWriter(CustomWriter.class);
+        IChemObjectWriter writer = factory.createWriter(new CustomFormat());
+        Assert.assertNotNull(writer);
+        Assert.assertEquals(
+            new CustomWriter().getClass().getName(),
+            writer.getClass().getName()
+        );
+    }
+
 }
