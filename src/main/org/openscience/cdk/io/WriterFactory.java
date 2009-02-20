@@ -70,7 +70,7 @@ public class WriterFactory {
         if (writer == null) return;
         if (IChemObjectWriter.class.isAssignableFrom(writer)) {
             registeredReaders.put(
-                writer.getClass().getName(),
+                writer.getName(),
                 (Class<IChemObjectWriter>)writer
             );
         }
