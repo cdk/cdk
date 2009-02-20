@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -68,5 +71,30 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         // check bond stuff
         Assert.assertEquals(13, molecule.getBondCount());
         Assert.assertNotNull(molecule.getBond(3));
+        
+        // coordinates
+        Assert.assertNull(molecule.getAtom(0).getPoint3d());
+        Point2d point = molecule.getAtom(0).getPoint2d();
+        Assert.assertNotNull(point);
+        Assert.assertEquals(3.7320508956909, point.x, 0.00000001);
+        Assert.assertEquals(0.5, point.y, 0.00000001);
+    }
+
+    @Test public void testReading3DCoords() throws Exception {
+        String filename = "data/asn/pubchem/cid176.xml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
+        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        Assert.assertNotNull(molecule);
+
+        // check atom stuff
+        Assert.assertEquals(8, molecule.getAtomCount());
+        Assert.assertNull(molecule.getAtom(0).getPoint2d());
+        Point3d point = molecule.getAtom(0).getPoint3d();
+        Assert.assertNotNull(point);
+        Assert.assertEquals(-0.9598, point.x, 0.0001);
+        Assert.assertEquals( 1.5616, point.y, 0.0001);
+        Assert.assertEquals( 1.8714, point.z, 0.0001);
     }
 }

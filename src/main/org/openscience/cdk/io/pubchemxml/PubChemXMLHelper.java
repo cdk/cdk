@@ -28,6 +28,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -80,13 +83,25 @@ public class PubChemXMLHelper {
 	public final static String EL_ATOMINT_VALUE = "PC-AtomInt_value";
 	public final static String EL_ELEMENT = "PC-Element";
 	
-	// bond block elements
+    // coordinate block elements
+    public final static String EL_COORDINATESBLOCK = "PC-Compound_coords";
+    public final static String EL_COORDINATES_AID = "PC-Coordinates_aid";
+    public final static String EL_COORDINATES_AIDE = "PC-Coordinates_aid_E";
+    public final static String EL_ATOM_CONFORMER = "PC-Conformer";
+    public final static String EL_ATOM_CONFORMER_X = "PC-Conformer_x";
+    public final static String EL_ATOM_CONFORMER_XE = "PC-Conformer_x_E";
+    public final static String EL_ATOM_CONFORMER_Y = "PC-Conformer_y";
+    public final static String EL_ATOM_CONFORMER_YE = "PC-Conformer_y_E";
+    public final static String EL_ATOM_CONFORMER_Z = "PC-Conformer_z";
+    public final static String EL_ATOM_CONFORMER_ZE = "PC-Conformer_z_E";
+
+    // bond block elements
 	public final static String EL_BONDBLOCK = "PC-Bonds";
 	public final static String EL_BONDID1 = "PC-Bonds_aid1";
 	public final static String EL_BONDID2 = "PC-Bonds_aid2";
 	public final static String EL_BONDORDER = "PC-Bonds_order";
 	
-  // bond block elements
+  // property block elements
   public final static String EL_PROPSBLOCK = "PC-Compound_props";
   public final static String EL_PROPS_INFODATA = "PC-InfoData";
   public final static String EL_PROPS_URNLABEL = "PC-Urn_label";
@@ -285,6 +300,8 @@ public class PubChemXMLHelper {
     				parserAtomBlock(parser, molecule);
     			} else if (EL_BONDBLOCK.equals(parser.getName())) {
     				parserBondBlock(parser, molecule);
+                } else if (EL_COORDINATESBLOCK.equals(parser.getName())) {
+                    parserCoordBlock(parser, molecule);
           } else if (EL_PROPS_INFODATA.equals(parser.getName())) {
               parserCompoundInfoData(parser, molecule);
           } else if (EL_PCCOMPOUND_ID.equals(parser.getName())) {
@@ -343,7 +360,56 @@ public class PubChemXMLHelper {
 		}
 	}
 
-	private List<String> parseValues(XmlPullParser parser, String endTag, String fieldTag) throws Exception {
+    public void parserCoordBlock(XmlPullParser parser, IMolecule molecule) throws Exception {
+        List<String> ids = new ArrayList<String>();
+        List<String> xs = new ArrayList<String>();
+        List<String> ys = new ArrayList<String>();
+        List<String> zs = new ArrayList<String>();
+        boolean parsedFirstConformer = false;
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.getEventType() == XmlPullParser.END_TAG) {
+                if (EL_COORDINATESBLOCK.equals(parser.getName())) {
+                    break; // done parsing the atom block
+                } else if (EL_ATOM_CONFORMER.equals(parser.getName())) {
+                    parsedFirstConformer = true;
+                }
+            } else if (parser.getEventType() == XmlPullParser.START_TAG &&
+                       !parsedFirstConformer) {
+                if (EL_COORDINATES_AID.equals(parser.getName())) {
+                    ids = parseValues(parser, EL_COORDINATES_AID, EL_COORDINATES_AIDE);
+                } else if (EL_ATOM_CONFORMER_X.equals(parser.getName())) {
+                    xs = parseValues(parser, EL_ATOM_CONFORMER_X, EL_ATOM_CONFORMER_XE);
+                } else if (EL_ATOM_CONFORMER_Y.equals(parser.getName())) {
+                    ys = parseValues(parser, EL_ATOM_CONFORMER_Y, EL_ATOM_CONFORMER_YE);
+                } else if (EL_ATOM_CONFORMER_Z.equals(parser.getName())) {
+                    zs = parseValues(parser, EL_ATOM_CONFORMER_Z, EL_ATOM_CONFORMER_ZE);
+                }
+            }
+        }
+        // aggregate information
+        boolean has2dCoords = ids.size() == xs.size() && ids.size() == ys.size();
+        boolean has3dCoords = has2dCoords && ids.size() == zs.size();
+
+        for (int i=0; i<ids.size(); i++) {
+            IAtom atom = molecule.getAtom(Integer.parseInt(ids.get(i))-1);
+            if (has3dCoords) {
+                Point3d coord = new Point3d(
+                    Double.parseDouble(xs.get(i)),
+                    Double.parseDouble(ys.get(i)),
+                    Double.parseDouble(zs.get(i))
+                );
+                atom.setPoint3d(coord);
+            } else if (has2dCoords) {
+                Point2d coord = new Point2d(
+                    Double.parseDouble(xs.get(i)),
+                    Double.parseDouble(ys.get(i))
+                );
+                atom.setPoint2d(coord);
+            }
+        }
+    }
+
+    private List<String> parseValues(XmlPullParser parser, String endTag, String fieldTag) throws Exception {
 		List<String> values = new ArrayList<String>();
 		while (parser.next() != XmlPullParser.END_DOCUMENT) {
 			if (parser.getEventType() == XmlPullParser.END_TAG) {
