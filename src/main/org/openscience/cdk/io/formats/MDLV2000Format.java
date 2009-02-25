@@ -47,7 +47,7 @@ public class MDLV2000Format implements IChemFormatMatcher {
     
     @TestMethod("testGetFormatName")
     public String getFormatName() {
-        return "MDL Mol/SDF V2000";
+        return "MDL Molfile V2000";
     }
 
     @TestMethod("testGetMIMEType")
@@ -56,11 +56,11 @@ public class MDLV2000Format implements IChemFormatMatcher {
     }
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"mol"};
     }
 
     @TestMethod("testGetReaderClassName")
