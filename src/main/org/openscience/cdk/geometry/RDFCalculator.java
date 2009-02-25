@@ -143,6 +143,7 @@ public class RDFCalculator {
         Iterator<IAtom> atomsInContainer = container.atoms().iterator();
         while (atomsInContainer.hasNext()) {
         	IAtom atomInContainer = (IAtom)atomsInContainer.next();
+            if (atom == atomInContainer) continue; // don't include the central atom
             distance = atomPoint.distance(atomInContainer.getPoint3d());
             index = (int)((distance-startCutoff)/this.resolution);
             double weight = 1.0;
