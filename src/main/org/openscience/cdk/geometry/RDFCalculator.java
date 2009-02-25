@@ -1,9 +1,7 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+ *                    2009  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -27,17 +25,18 @@
  */
 package org.openscience.cdk.geometry;
 
+import java.util.Iterator;
+
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Calculator of radial distribution functions. The RDF has bins defined around
  * a point, i.e. the first bin starts at 0 &Aring; and ends at 0.5*resolution
- * &Aring;, and the second bins ends at 1.5*resulution &Aring;.
+ * &Aring;, and the second bins ends at 1.5*resolution &Aring;.
  *
  * <p>By default, the RDF is unweighted. By implementing and registering a
  * <code>RDFWeightFunction</code>, the RDF can become weighted. For example,
@@ -114,7 +113,7 @@ public class RDFCalculator {
      * Calculates a RDF for <code>Atom</code> atom in the environment
      * of the atoms in the <code>AtomContainer</code>.
      */
-    public double[] calculate(AtomContainer container, Atom atom) {
+    public double[] calculate(IAtomContainer container, IAtom atom) {
         int length = (int)((cutoff-startCutoff)/resolution) + 1;
         logger.debug("Creating RDF of length ", length);
 
@@ -132,7 +131,7 @@ public class RDFCalculator {
         int index = 0;
         
         Point3d atomPoint = atom.getPoint3d();
-        java.util.Iterator atomsInContainer = container.atoms().iterator();
+        Iterator<IAtom> atomsInContainer = container.atoms().iterator();
         while (atomsInContainer.hasNext()) {
         	IAtom atomInContainer = (IAtom)atomsInContainer.next();
             distance = atomPoint.distance(atomInContainer.getPoint3d());
