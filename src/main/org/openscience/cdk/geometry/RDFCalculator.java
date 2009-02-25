@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class RDFCalculator {
 
-    private LoggingTool logger;
+    private static LoggingTool logger = new LoggingTool(RDFCalculator.class);
     
     private double startCutoff;
     private double cutoff;
@@ -100,8 +100,6 @@ public class RDFCalculator {
      */
     public RDFCalculator(double startCutoff, double cutoff, double resolution, 
                          double peakWidth, IRDFWeightFunction weightFunction) {
-        logger = new LoggingTool(this);
-        
          this.startCutoff = startCutoff;
          this.cutoff = cutoff;
          this.resolution = resolution;
