@@ -118,9 +118,20 @@ public class RDFCalculator {
         // the next we need for Gaussian smoothing
         int binsToFillOnEachSide = (int)(peakWidth*3.0/resolution);
         double sigmaSquare = Math.pow(peakWidth, 2.0);
+        // factors is only half a Gaussian, taking advantage of being symmetrical!
         double[] factors = new double[binsToFillOnEachSide];
-        for (int binCounter=0; binCounter<binsToFillOnEachSide; binCounter++) {
-            factors[binCounter] = Math.exp(-1.0*(Math.pow(((double)binCounter)*resolution, 2.0))/sigmaSquare);
+        double totalArea = 0.0;
+        if (factors.length > 0) {
+            factors[0] = 1;
+            for (int binCounter=1; binCounter<factors.length; binCounter++) {
+                double height = Math.exp(-1.0*(Math.pow(((double)binCounter)*resolution, 2.0))/sigmaSquare);
+                factors[binCounter] = height;
+                totalArea += height;
+            }
+            // normalize the Gaussian to unit area
+            for (int binCounter=0; binCounter<factors.length; binCounter++) {
+                factors[binCounter] = factors[binCounter] / totalArea;
+            }
         }
         
         // this we need always
@@ -138,17 +149,20 @@ public class RDFCalculator {
             if (weightFunction != null) {
                 weight = weightFunction.calculate(atom, atomInContainer);
             }
-            rdf[index] += weight; // unweighted
-            if (this.peakWidth > 0.0) {
+            if (factors.length > 0) {
                 // apply Gaussian smoothing
-                for (int binCounter=1; binCounter<=binsToFillOnEachSide; binCounter++) {
+                rdf[index] += weight*factors[0];
+                for (int binCounter=1; binCounter<factors.length; binCounter++) {
+                    double diff = weight*factors[binCounter];
                     if ((index - binCounter) >= 0) {
-                        rdf[index - binCounter] += weight*factors[binCounter];
+                        rdf[index - binCounter] += diff;
                     }
                     if ((index + binCounter) < length) {
-                        rdf[index + binCounter] += weight*factors[binCounter];
+                        rdf[index + binCounter] += diff;
                     }
                 }
+            } else {
+                rdf[index] += weight; // unweighted
             }
         }
         return rdf;
