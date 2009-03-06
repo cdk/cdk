@@ -1,6 +1,7 @@
 /* $Revision:$
  * 
  * Copyright (C) 2005-2008   Nina Jeliazkova <nina@acad.bg>
+ *                    2009   Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -39,7 +40,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderEvent;
-import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -52,9 +52,13 @@ import org.openscience.cdk.tools.LoggingTool;
  * Subsequent access for a record N uses this index to seek the record and return the molecule.
  * Useful for very big files.
  *  
- * @author Nina Jeliazkova nina@acad.bg
+ * @author     Nina Jeliazkova <nina@acad.bg>
+ * @cdk.module io
  */
-public abstract class RandomAccessReader extends DefaultIteratingChemObjectReader implements IRandomAccessChemObjectReader<IChemObject> {
+public abstract class RandomAccessReader
+    extends DefaultRandomAccessChemObjectReader
+    implements IRandomAccessChemObjectReader<IChemObject> {
+
     protected static LoggingTool logger = new LoggingTool(RandomAccessReader.class);
     protected RandomAccessFile raFile;
     protected IOSetting[] headerOptions = null;

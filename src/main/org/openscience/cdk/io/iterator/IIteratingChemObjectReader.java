@@ -27,8 +27,8 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IChemObject;
+import java.util.Iterator;
+
 import org.openscience.cdk.io.IChemObjectReader;
 
 /**
@@ -44,11 +44,8 @@ import org.openscience.cdk.io.IChemObjectReader;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-10-19
  */
-public interface IIteratingChemObjectReader extends IChemObjectReader {
+public interface IIteratingChemObjectReader
+    extends IChemObjectReader, Iterator {
 	
-	public boolean hasNext() throws CDKException;
-	
-	public IChemObject next() throws CDKException;
-
 }
 

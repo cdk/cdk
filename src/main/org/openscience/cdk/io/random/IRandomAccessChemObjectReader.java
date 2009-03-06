@@ -22,16 +22,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
-
 package org.openscience.cdk.io.random;
 
 import java.util.ListIterator;
 
 /**
- * Extension of  {@link java.util.ListIterator}
- * @author Nina Jeliazkova nina@acad.bg
- * <b>Modified</b> May 25, 2008
+ * Extension of {@link java.util.ListIterator}.
+ * 
+ * @author     Nina Jeliazkova <nina@acad.bg>
+ * @cdk.module io 
  */
 public interface IRandomAccessChemObjectReader<T> extends ListIterator<T> {
 	
