@@ -56,7 +56,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
 
     @BeforeClass public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
-        setChemObjectIO(new MDLRXNWriter());
+        setChemObjectIO(new MDLWriter());
     }
 
     @Test public void testAccepts() throws Exception {
