@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$  
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,27 +22,51 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.io.iterator;
+package org.openscience.cdk.io;
 
-import java.util.Iterator;
-
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.formats.IChemFormat;
 
 /**
- * Interface for an iterating molecule reader. It allows to iterate over all molecules
- * in specific file format (e.g. SDF), without reading them into memory first. Suitable
- * for very large files, with thousands of molecules.
+ * Dummy class to test the {@link WriterFactory} registerWriter functionality.
+ * This is why only the getWriterClassName() is implemented.
  *
- * @cdk.module io
- * @cdk.svnrev  $Revision$
- *
- * @see org.openscience.cdk.io.IChemObjectIO
- *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.created 2003-10-19
+ * @cdk.module test-io
  */
-public interface IIteratingChemObjectReader
-    extends IChemObjectReader, Iterator {
-	
-}
+public class CustomFormat implements IChemFormat {
 
+    public String getReaderClassName() {
+        return null;
+    }
+
+    public int getRequiredDataFeatures() {
+        return 0;
+    }
+
+    public int getSupportedDataFeatures() {
+        return 0;
+    }
+
+    public String getWriterClassName() {
+        return "org.openscience.cdk.io.CustomWriter";
+    }
+
+    public String getFormatName() {
+        return null;
+    }
+
+    public String getMIMEType() {
+        return null;
+    }
+
+    public String[] getNameExtensions() {
+        return null;
+    }
+
+    public String getPreferredNameExtension() {
+        return null;
+    }
+
+    public boolean isXMLBased() {
+        return false;
+    }
+}

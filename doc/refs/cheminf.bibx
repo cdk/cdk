@@ -953,6 +953,19 @@ Method </bibtex:title>
             <bibtex:volume>9</bibtex:volume>
             <bibtex:pages>1004-1009</bibtex:pages>
         </bibtex:article>
+    </bibtex:entry>
+
+    <bibtex:entry id="LABUTE2000">
+        <bibtex:article>
+            <bibtex:author>Labute, P.
+            </bibtex:author>
+            <bibtex:title>A Widely Applicable Set of Descriptors
+	    </bibtex:title>
+            <bibtex:journal>Journal of Molecular Graphics and Modeling</bibtex:journal>
+            <bibtex:year>2000</bibtex:year>
+            <bibtex:volume>18</bibtex:volume>
+            <bibtex:pages>464-477</bibtex:pages>
+        </bibtex:article>
     </bibtex:entry>    
 
 </bibtex:file>

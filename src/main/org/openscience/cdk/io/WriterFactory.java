@@ -32,8 +32,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -52,13 +54,26 @@ public class WriterFactory {
 
     private LoggingTool logger;
 
-    private static List formats = null;
+    private static List<IChemFormat> formats = null;
+
+    private static Map<String, Class<IChemObjectWriter>> registeredReaders;
 
     /**
      * Constructs a ChemObjectIOInstantionTests.
      */
     public WriterFactory() {
     	logger = new LoggingTool(this);
+        registeredReaders = new HashMap<String, Class<IChemObjectWriter>>();
+    }
+
+    public void registerWriter(Class<?> writer) {
+        if (writer == null) return;
+        if (IChemObjectWriter.class.isAssignableFrom(writer)) {
+            registeredReaders.put(
+                writer.getName(),
+                (Class<IChemObjectWriter>)writer
+            );
+        }
     }
 
     /**
@@ -73,8 +88,8 @@ public class WriterFactory {
     public IChemFormat[] findChemFormats(int features) {
     	if (formats == null) loadFormats();
     	
-    	Iterator iter = formats.iterator();
-    	List matches = new ArrayList();
+        Iterator<IChemFormat> iter = formats.iterator();
+        List<IChemFormat> matches = new ArrayList<IChemFormat>();
     	while (iter.hasNext()) {
     		IChemFormat format = (IChemFormat)iter.next();
     		if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
@@ -91,7 +106,7 @@ public class WriterFactory {
     
     private void loadFormats() {
         if (formats == null) {
-            formats = new ArrayList();
+            formats = new ArrayList<IChemFormat>();
             try {
                 logger.debug("Starting loading Formats...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -107,7 +122,7 @@ public class WriterFactory {
                     	Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
                     	IResourceFormat format = (IResourceFormat)getinstanceMethod.invoke(null, new Object[0]);
                         if (format instanceof IChemFormat) {
-                        	formats.add(format);
+                            formats.add((IChemFormat)format);
                         	logger.info("Loaded IChemFormat: " + format.getClass().getName());
                         }
                     } catch (ClassNotFoundException exception) {
@@ -134,6 +149,11 @@ public class WriterFactory {
             String writerClassName = format.getWriterClassName();
             if (writerClassName != null) {
                 try {
+                    if (registeredReaders.containsKey(writerClassName)) {
+                        Class<IChemObjectWriter> writer =
+                            registeredReaders.get(writerClassName);
+                        if (writer != null) return writer.newInstance();
+                    }
                     // make a new instance of this class
                 	return (IChemObjectWriter)this.getClass().getClassLoader().
                         loadClass(writerClassName).newInstance();

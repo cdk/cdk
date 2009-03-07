@@ -71,7 +71,7 @@ public class MDLFormat implements IChemFormatMatcher {
     }
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
-      return "org.openscience.cdk.io.MDLWriter";
+      return null;
     }
 
     public boolean matches(int lineNumber, String line) {

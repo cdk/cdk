@@ -52,6 +52,7 @@ import org.openscience.cdk.io.PDBWriterTest;
 import org.openscience.cdk.io.PMPReaderTest;
 import org.openscience.cdk.io.ReaderFactoryTest;
 import org.openscience.cdk.io.SDFReaderTest;
+import org.openscience.cdk.io.SDFWriterTest;
 import org.openscience.cdk.io.ShelXReaderTest;
 import org.openscience.cdk.io.WriterFactoryTest;
 import org.openscience.cdk.io.XYZReaderTest;
@@ -87,6 +88,7 @@ import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
     MDLV3000ReaderTest.class,
     SDFReaderTest.class,
     MDLWriterTest.class,
+    SDFWriterTest.class,
     MDLRXNReaderTest.class,
     MDLRXNV2000ReaderTest.class,
     MDLRXNV3000ReaderTest.class,

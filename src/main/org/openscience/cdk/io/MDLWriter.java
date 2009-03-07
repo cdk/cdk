@@ -1,9 +1,7 @@
-/* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2009  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,7 +22,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
  */
 package org.openscience.cdk.io;
 
@@ -38,10 +35,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
@@ -51,14 +45,12 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
@@ -66,23 +58,8 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- * Writes MDL mol files and SD files.
- * <BR><BR>
- * A MDL mol file contains a single molecule, whereas a MDL SD file contains
- * one or more molecules. This class is capable of writing both mol files and
- * SD files. The correct format is automatically chosen:
- * <ul>
- * <li>if {@link #write(IChemObject)} is called with a {@link org.openscience.cdk.MoleculeSet MoleculeSet}
- * as an argument a SD files is written</li>
- * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(IMolecule) this one} or
- * {@link #writeMolecule(org.openscience.cdk.interfaces.IMolecule)} that one}) is called the first time, a mol file is written</li>
- * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
- * </ul>
- * 
- * <p>Thus, to write several molecules to a single SD file you can either use {@link #write(IChemObject)} and pass
- * a {@link org.openscience.cdk.MoleculeSet MoleculeSet} or you can repeatedly call one of the two
- * writeMolecule methods.
- * <p>For writing a MDL molfile you can this code:
+ * Writes MDL molfiles, which contains a single molecule.
+ * For writing a MDL molfile you can this code:
  * <pre>
  * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
  * writer.write((Molecule)molecule);
@@ -98,36 +75,27 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 @TestClass("org.openscience.cdk.io.MDLWriterTest")
 public class MDLWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter writer;
-    private LoggingTool logger;
-    private int moleculeNumber;
-    public Map sdFields=null;
-    //private boolean writeAromatic=true;
-    
+    private final static LoggingTool logger = new LoggingTool(MDLWriter.class);
 
+    private BufferedWriter writer;
     
     /**
-     * Contructs a new MDLWriter that can write an array of 
-     * Molecules to a Writer.
+     * Constructs a new MDLWriter that can write an {@link IMolecule}
+     * to the MDL molfile format.
      *
      * @param   out  The Writer to write to
      */
     public MDLWriter(Writer out) {
-    	logger = new LoggingTool(this);
-    	try {
-    		if (out instanceof BufferedWriter) {
-                writer = (BufferedWriter)out;
-            } else {
-                writer = new BufferedWriter(out);
-            }
-        } catch (Exception exc) {
-        }
-        this.moleculeNumber = 1;
+    	if (out instanceof BufferedWriter) {
+    	    writer = (BufferedWriter)out;
+    	} else {
+    	    writer = new BufferedWriter(out);
+    	}
     }
 
     /**
-     * Contructs a new MDLWriter that can write an array of
-     * Molecules to a given OutputStream.
+     * Constructs a new MDLWriter that can write an {@link IMolecule}
+     * to a given OutputStream.
      *
      * @param   output  The OutputStream to write to
      */
@@ -157,28 +125,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
     }
     
     /**
-     * 
-     * Method does not do anything until now.
-     *
-     */
-    public void dontWriteAromatic(){
-      //writeAromatic=false;
-    }
-    
-    /**
-     * Here you can set a map which will be used to build sd fields in the file.
-     * The entries will be translated to sd fields like this:<br>
-     * &gt; &lt;key&gt;<br>
-     * &gt; value<br>
-     * empty line<br>
-     *
-     * @param  map The map to be used, map of String-String pairs
-     */
-    public void setSdFields(Map map){
-      sdFields=map;
-    }
-    
-    /**
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
@@ -193,7 +139,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IAtomContainerSet.class.equals(interfaces[i])) return true;
 		}
 	    Class superClass = classObject.getSuperclass();
 	    if (superClass != null) return this.accepts(superClass);
@@ -201,20 +146,17 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	}
 
     /**
-     * Writes a IChemObject to the MDL molfile formated output. 
-     * It can only output ChemObjects of type ChemFile, Molecule and
-     * MoleculeSet.
+     * Writes a {@link IChemObject} to the MDL molfile formated output. 
+     * It can only output ChemObjects of type {@link IChemFile},
+     * {@link IMolecule} and {@link IAtomContainer}.
      *
-     * @param object class must be of type ChemFile, Molecule or MoleculeSet.
+     * @param object {@link IChemObject} to write
      *
-     * @see org.openscience.cdk.ChemFile
+     * @see #accepts(Class)
      */
 	public void write(IChemObject object) throws CDKException {
 		try {
-			if (object instanceof IMoleculeSet) {
-				writeMoleculeSet((IMoleculeSet)object);
-				return;
-			} else if (object instanceof IChemFile) {
+			if (object instanceof IChemFile) {
 				writeChemFile((IChemFile)object);
 				return;
 			} else if (object instanceof IChemModel) {
@@ -224,8 +166,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
 				file.addChemSequence(sequence);
 				writeChemFile((IChemFile)file);
 				return;
-			} else if (object instanceof IMolecule) {
-				writeMolecule((IMolecule)object);
+			} else if (object instanceof IAtomContainer) {
+				writeMolecule((IAtomContainer)object);
 				return;
 			}
 		} catch (Exception ex) {
@@ -236,37 +178,14 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		throw new CDKException("Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
 	}
 	
-	/**
-	 * Writes an array of Molecules to an OutputStream in MDL sdf format.
-	 *
-	 * @param   som  Array of Molecules that is written to an OutputStream
-	 */
-	private void writeMoleculeSet(IAtomContainerSet som)
-	{
-		Iterator<IAtomContainer> molecules = som.atomContainers().iterator();
-		while (molecules.hasNext()) {
-			IAtomContainer mol = molecules.next();
-			try
-			{
-				boolean[] isVisible=new boolean[mol.getAtomCount()];
-				for(int k=0;k<isVisible.length;k++){
-					isVisible[k]=true;
-				}
-				writeMolecule(mol);
-			}
-			catch (Exception exc)
-			{
-			}
-		}
-	}
-	
 	private void writeChemFile(IChemFile file) throws Exception {
-		List moleculesList = ChemFileManipulator.getAllAtomContainers(file);
-		for (int i=0; i<moleculesList.size(); i++) {
-			writeMolecule(file.getBuilder().newMolecule((IAtomContainer)moleculesList.get(i)));
+	    IAtomContainer bigPile = file.getBuilder().newAtomContainer();
+		for (IAtomContainer container :
+		     ChemFileManipulator.getAllAtomContainers(file)) {
+		    bigPile.add(container);
 		}
+		writeMolecule(bigPile);
 	}
-	
 
 	/**
 	 * Writes a Molecule to an OutputStream in MDL sdf format.
@@ -275,12 +194,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 */
     public void writeMolecule(IAtomContainer container) throws Exception {
         String line = "";
-        // taking care of the $$$$ signs:
-        // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule
-        if(moleculeNumber == 2) {
-          writer.write("$$$$");
-          writer.newLine();
-        }
         // write header block
         // lines get shortened to 80 chars, that's in the spec
         String title = (String)container.getProperty(CDKConstants.TITLE);
@@ -354,7 +267,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        Iterator bonds = container.bonds().iterator();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 
@@ -428,31 +341,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // close molecule
         writer.write("M  END");
         writer.newLine();
-        //write sdfields, if any
-        if(sdFields!=null){
-          Set set = sdFields.keySet();
-          Iterator iterator = set.iterator();
-          while (iterator.hasNext()) {
-            Object element = iterator.next();
-            writer.write("> <"+(String)element+">");
-            writer.newLine();
-            writer.write(sdFields.get(element).toString());
-            writer.newLine();
-            writer.newLine();
-          }
-        }
-        // taking care of the $$$$ signs:
-        // we write such a sign at the end of all except the first molecule
-        if(moleculeNumber != 1) {
-          writer.write("$$$$");
-          writer.newLine();
-        }
-        moleculeNumber++;
         writer.flush();
     }
 
 	/**
-	 * Formats an int to fit into the connectiontable and changes it 
+	 * Formats an integer to fit into the connection table and changes it 
      * to a String.
 	 *
 	 * @param   i  The int to be formated

@@ -44,9 +44,11 @@ import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.listener.IReaderListener;
 
 /**
- * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt index and seeks to find the correct record offset.
+ * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt
+ * index and seeks to find the correct record offset.
  * 
- * @author Nina Jeliazkova nina@acad.bg
+ * @author     Nina Jeliazkova <nina@acad.bg>
+ * @cdk.module io
  */
 public class RandomAccessSDFReader extends RandomAccessReader {
 
@@ -119,5 +121,10 @@ public class RandomAccessSDFReader extends RandomAccessReader {
     public boolean accepts(Class classObject) {
 		return chemObjectReader.accepts(classObject);
 	}
+
+    public void remove() {
+        throw new UnsupportedOperationException("Cannot remove entries with " +
+            "the RandomAccessSDFReader");
+    }
 
 }
