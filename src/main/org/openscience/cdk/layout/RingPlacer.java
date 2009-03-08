@@ -110,7 +110,7 @@ public class RingPlacer
         IAtom startAtom = ring.getFirstAtom();
         Point2d p = new Point2d(ringCenter.x + radius, ringCenter.y);
         startAtom.setPoint2d(p);
-        double startAngle = 0.0;
+        double startAngle = Math.PI*0.5;
         List<IBond> bonds = ring.getConnectedBondsList(startAtom);
         /*
          * Store all atoms to draw in consecutive order relative to the
