@@ -68,7 +68,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 	{
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		
-		Assert.assertTrue(th.getTemplateCount() > 0);
+		Assert.assertEquals(5, th.getTemplateCount());
 	}
 
 	@Test public void testDetection() throws Exception
