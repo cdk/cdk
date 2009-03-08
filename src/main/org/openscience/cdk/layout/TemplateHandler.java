@@ -198,8 +198,8 @@ public class TemplateHandler
 		boolean mapped = false;
 		IAtomContainer template = null;
 		RMap map = null;
-		org.openscience.cdk.interfaces.IAtom atom1 = null;
-		org.openscience.cdk.interfaces.IAtom atom2 = null;
+		IAtom atom1 = null;
+		IAtom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = templates.get(f);
