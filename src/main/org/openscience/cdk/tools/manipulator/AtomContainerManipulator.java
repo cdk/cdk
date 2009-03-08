@@ -47,6 +47,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
@@ -133,7 +134,12 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Get the summed exact mass of all atoms in an AtomContainer
+     * Get the summed exact mass of all atoms in an AtomContainer. It
+     * requires isotope information for all atoms to be set. Either set
+     * this information using the {@link IsotopeFactory}, or use the
+     * {@link MolecularFormulaManipulator#getMajorIsotopeMass(org.openscience.cdk.interfaces.IMolecularFormula)}
+     * method, after converting the {@link IAtomContainer} to a
+     * {@link IMolecularFormula} with the {@link MolecularFormulaManipulator}.
      * 
      * @param  atomContainer The IAtomContainer to manipulate
      * @return The summed exact mass of all atoms in this AtomContainer.
