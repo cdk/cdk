@@ -146,4 +146,25 @@ public class SDFWriterTest extends ChemObjectIOTest {
         sdfWriter.close();
         Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
     }
+
+    @Test public void testWrite_IMolecule_Multimolecule() throws Exception {
+        StringWriter writer = new StringWriter();
+        SDFWriter sdfWriter = new SDFWriter(writer);
+
+        Molecule molecule = new Molecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.setProperty("foo", "bar");
+        sdfWriter.write(molecule);
+
+        molecule = new Molecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.setProperty("toys", "r-us");
+        sdfWriter.write(molecule);
+        
+        sdfWriter.close();
+        Assert.assertTrue(writer.toString().indexOf("foo") != -1);
+        Assert.assertTrue(writer.toString().indexOf("bar") != -1);
+        Assert.assertTrue(writer.toString().indexOf("toys") != -1);
+        Assert.assertTrue(writer.toString().indexOf("r-us") != -1);
+    }
 }
