@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
@@ -78,7 +79,35 @@ public class TemplateHandlerTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertTrue(th.mapTemplates(mol));
 	}
-	
+
+	/**
+	 * Tests if a template matches if just an element is non-carbon.
+	 */
+    @Test public void testOtherElements() throws Exception {
+        boolean itIsInThere = false;
+        TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = MoleculeFactory.makeCyclohexane();
+        itIsInThere = th.mapTemplates(mol);
+        Assert.assertTrue(itIsInThere);
+        mol.getAtom(0).setSymbol("N");
+        itIsInThere = th.mapTemplates(mol);
+        Assert.assertTrue(itIsInThere);
+    }
+
+    /**
+     * Tests if a template matches if just and bond order is changed.
+     */
+    @Test public void testOtherBondOrder() throws Exception {
+        boolean itIsInThere = false;
+        TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = MoleculeFactory.makeCyclohexane();
+        itIsInThere = th.mapTemplates(mol);
+        Assert.assertTrue(itIsInThere);
+        mol.getBond(0).setOrder(IBond.Order.DOUBLE);
+        itIsInThere = th.mapTemplates(mol);
+        Assert.assertTrue(itIsInThere);
+    }
+
 	@Test public void testAddMolecule() throws Exception
 	{
 		logger.debug("***TestAddMolecule***");
