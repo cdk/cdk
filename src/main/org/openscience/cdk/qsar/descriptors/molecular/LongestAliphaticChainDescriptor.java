@@ -266,8 +266,6 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     
     private IAtomContainer createAtomContainerFromPath(IAtomContainer container, List<IAtom> path){
     	IAtomContainer aliphaticChain = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-for (IAtom a : path) System.out.println("a = " + a);
-        System.out.println("---");
         for (int i=0;i<path.size()-1;i++){
     		if (!aliphaticChain.contains(path.get(i))){
     			aliphaticChain.addAtom(path.get(i));
