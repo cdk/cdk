@@ -249,6 +249,21 @@ NO_CHARGES
                 else if (bond.getOrder().equals(IBond.Order.TRIPLE)) sybylBondOrder = "3";
                 if (bond.getFlag(CDKConstants.ISAROMATIC)) sybylBondOrder = "ar";
 
+                // we need to check the atom types to see if we have an amide bond
+                // and we're assuming a 2-centered bond
+                IAtom bondAtom1 = bond.getAtom(0);
+                IAtom bondAtom2 = bond.getAtom(1);
+                try {
+                    if ( (matcher.findMatchingAtomType(mol, bondAtom1).getAtomTypeName().equals("N.am") &&
+                            matcher.findMatchingAtomType(mol, bondAtom2).getAtomTypeName().equals("C.2")) ||
+                        (matcher.findMatchingAtomType(mol, bondAtom2).getAtomTypeName().equals("N.am") &&
+                            matcher.findMatchingAtomType(mol, bondAtom1).getAtomTypeName().equals("C.2")) ) {
+                        sybylBondOrder = "am";
+                    }
+                } catch (CDKException e) {
+                    e.printStackTrace(); 
+                }
+
                 writer.write((counter+1) + " " +
                         (mol.getAtomNumber(bond.getAtom(0))+1) + " " +
                         (mol.getAtomNumber(bond.getAtom(1))+1) + " " +
