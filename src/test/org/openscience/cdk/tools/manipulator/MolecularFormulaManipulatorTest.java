@@ -952,14 +952,26 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	 * TODO: REACT: Introduce method
 	 * 
 	 * @return    The test suite
+     * @cdk.bug 2672696
 	 */
-	@Test 
+    @Test
     public void testGetHillString_IMolecularFormula() {
-    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
-		String listGenerated = MolecularFormulaManipulator.getHillString(formula);
-		Assert.assertEquals(null,listGenerated);
-		
-	}
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
+        String listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("CH4O", listGenerated);
+
+        formula = MolecularFormulaManipulator.getMolecularFormula("CH3CH2Br", builder);
+        listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("C2H5Br", listGenerated);
+
+        formula = MolecularFormulaManipulator.getMolecularFormula("HCl", builder);
+        listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("ClH", listGenerated);
+
+        formula = MolecularFormulaManipulator.getMolecularFormula("HBr", builder);
+        listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("BrH", listGenerated);
+    }
 
     /**
      * @cdk.bug 1944604
