@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 /**
- * TestCase for the writer MDL SD file writer.
+ * TestCase for the writer MOL2 writer.
  *
  * @cdk.module test-io
  * @see Mol2Writer
