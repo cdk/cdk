@@ -28,43 +28,45 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.*;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.BufferedWriter;
-import java.io.StringWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * TestCase for the writer MDL SD file writer.
  *
  * @cdk.module test-io
- *
  * @see Mol2Writer
  */
 public class Mol2WriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new Mol2Writer());
     }
 
-    @Test public void testAccepts() throws Exception {
-    	Mol2Writer writer = new Mol2Writer();
-    	Assert.assertTrue(writer.accepts(ChemFile.class));
-    	Assert.assertTrue(writer.accepts(ChemModel.class));
-    	Assert.assertTrue(writer.accepts(MoleculeSet.class));
+    @Test
+    public void testAccepts() throws Exception {
+        Mol2Writer writer = new Mol2Writer();
+        Assert.assertTrue(writer.accepts(ChemFile.class));
+        Assert.assertTrue(writer.accepts(ChemModel.class));
+        Assert.assertTrue(writer.accepts(MoleculeSet.class));
         Assert.assertTrue(writer.accepts(AtomContainerSet.class));
     }
 
     /**
-     * @cdk.bug 2675188
      * @throws CDKException
      * @throws IOException
+     * @cdk.bug 2675188
      */
     @Test
     public void testWriter1() throws CDKException, IOException {
@@ -83,12 +85,19 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     public void testWriter2() throws CDKException, IOException {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1C=O");
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 
         StringWriter swriter = new StringWriter();
         Mol2Writer writer = new Mol2Writer(swriter);
         writer.write(molecule);
         writer.close();
-        System.out.println(swriter.getBuffer());
+
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.ar") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 O8 0.000 0.000 0.000 O.2") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("7 C7 0.000 0.000 0.000 C.2") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 ar") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 8 7 2") > 0);
+
 
     }
 }
