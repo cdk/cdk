@@ -34,6 +34,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -612,8 +613,22 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertFalse(mol.getAtom(1) instanceof IPseudoAtom);
 	}
 
+    /**
+     * @cdk.bug 2596061
+     * @throws InvalidSmilesException
+     */
+    @org.junit.Test
+    public void testUnknownAtomType2() throws InvalidSmilesException {
+        String smiles = "[12*H2-]";
+        IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1, mol.getAtomCount());
+		Assert.assertEquals(0, mol.getBondCount());
+		Assert.assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
+        Assert.assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
+    }
 
-	/**
+
+    /**
 	 *  A unit test for JUnit
 	 */
 	@org.junit.Test (timeout=1000)
