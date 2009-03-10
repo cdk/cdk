@@ -246,7 +246,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	}
 
     /**
-     * @cdk.bug 2276507
+	 * A unit test suite for JUnit.
      */
     @Test
     public void testBug2276507() {
@@ -921,7 +921,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
 	/**
-	 * A unit test suite for JUnit. Not null.
+	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
@@ -948,21 +948,31 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		
 	}
 	/**
-	 * A unit test suite for JUnit. Not null.
-	 * TODO: REACT: Introduce method
+	 * A unit test suite for JUnit. 
 	 * 
 	 * @return    The test suite
 	 */
-	@Test 
+    @Test
     public void testGetHillString_IMolecularFormula() {
-    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
-		String listGenerated = MolecularFormulaManipulator.getHillString(formula);
-		Assert.assertEquals(null,listGenerated);
-		
-	}
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
+        String listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("CH4O", listGenerated);
+
+        formula = MolecularFormulaManipulator.getMolecularFormula("CH3CH2Br", builder);
+        listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("C2H5Br", listGenerated);
+
+        formula = MolecularFormulaManipulator.getMolecularFormula("HCl", builder);
+        listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("ClH", listGenerated);
+
+        formula = MolecularFormulaManipulator.getMolecularFormula("HBr", builder);
+        listGenerated = MolecularFormulaManipulator.getHillString(formula);
+        Assert.assertEquals("BrH", listGenerated);
+    }
 
     /**
-     * @cdk.bug 1944604
+	 * A unit test suite for JUnit. 
      * @throws InvalidSmilesException
      */
     @Test

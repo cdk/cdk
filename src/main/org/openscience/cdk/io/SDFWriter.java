@@ -182,7 +182,6 @@ public class SDFWriter extends DefaultChemObjectWriter {
 	private void writeMoleculeSet(IAtomContainerSet som) throws Exception {
 		for (IAtomContainer mol : som.atomContainers()) {
 		    writeMolecule(mol);
-		    writer.write("$$$$\n");
 		}
 	}
 	
@@ -215,6 +214,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
                     }
                 }
             }
+            writer.write("$$$$\n");
         } catch (IOException exception) {
             throw new CDKException(
                 "Error while writing a SD file entry: " +

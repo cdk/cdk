@@ -111,9 +111,9 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
-		}
+        for (Class anInterface : interfaces) {
+            if (IMolecule.class.equals(anInterface)) return true;
+        }
 		return false;
 	}
 
@@ -133,20 +133,11 @@ public class Mol2Writer extends DefaultChemObjectWriter {
      * Writes a single frame in XYZ format to the Writer.
      *
      * @param mol the Molecule to write
+     * @throws java.io.IOException if there is an error during writing
      */
     public void writeMolecule(IMolecule mol) throws IOException {
         matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         try {
-
-/*
-#        Name: benzene 
-#        Creating user name: tom 
-#        Creation time: Wed Dec 28 00:18:30 1988 
-
-#        Modifying user name: tom 
-#        Modification time: Wed Dec 28 00:18:30 1988
-*/
-
         	logger.debug("Writing header...");
             if (mol.getProperty(CDKConstants.TITLE) != null) {
                 writer.write("#        Name: " + mol.getProperty(CDKConstants.TITLE));
@@ -202,8 +193,8 @@ NO_CHARGES
             writer.newLine();
             for (int i = 0; i < mol.getAtomCount(); i++) {
             	IAtom atom = mol.getAtom(i);
-                writer.write(i + " " +
-                             atom.getID() + " ");
+                writer.write((i+1) + " " +
+                             atom.getSymbol() + (mol.getAtomNumber(atom)+1) + " ");
                 if (atom.getPoint3d() != null) {
                     writer.write(atom.getPoint3d().x + " ");
                     writer.write(atom.getPoint3d().y + " ");
@@ -251,13 +242,32 @@ NO_CHARGES
             writer.newLine();
 
             int counter = 0;
-            Iterator bonds = mol.bonds().iterator();
-            while (bonds.hasNext()) {
-                IBond bond = (IBond) bonds.next();
-                writer.write(counter + " " +
-                             mol.getAtomNumber(bond.getAtom(0)) + " " +
-                             mol.getAtomNumber(bond.getAtom(1)) + " " +
-                             ((int)bond.getOrder().ordinal()));
+            for (IBond bond : mol.bonds()) {
+                String sybylBondOrder = "-1";
+                if (bond.getOrder().equals(IBond.Order.SINGLE)) sybylBondOrder = "1";
+                else if (bond.getOrder().equals(IBond.Order.DOUBLE)) sybylBondOrder = "2";
+                else if (bond.getOrder().equals(IBond.Order.TRIPLE)) sybylBondOrder = "3";
+                if (bond.getFlag(CDKConstants.ISAROMATIC)) sybylBondOrder = "ar";
+
+                // we need to check the atom types to see if we have an amide bond
+                // and we're assuming a 2-centered bond
+                IAtom bondAtom1 = bond.getAtom(0);
+                IAtom bondAtom2 = bond.getAtom(1);
+                try {
+                    if ( (matcher.findMatchingAtomType(mol, bondAtom1).getAtomTypeName().equals("N.am") &&
+                            matcher.findMatchingAtomType(mol, bondAtom2).getAtomTypeName().equals("C.2")) ||
+                        (matcher.findMatchingAtomType(mol, bondAtom2).getAtomTypeName().equals("N.am") &&
+                            matcher.findMatchingAtomType(mol, bondAtom1).getAtomTypeName().equals("C.2")) ) {
+                        sybylBondOrder = "am";
+                    }
+                } catch (CDKException e) {
+                    e.printStackTrace(); 
+                }
+
+                writer.write((counter+1) + " " +
+                        (mol.getAtomNumber(bond.getAtom(0))+1) + " " +
+                        (mol.getAtomNumber(bond.getAtom(1))+1) + " " +
+                        sybylBondOrder);
                 writer.newLine();
                 counter++;
             } 

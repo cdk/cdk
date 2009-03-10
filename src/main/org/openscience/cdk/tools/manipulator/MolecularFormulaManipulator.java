@@ -24,23 +24,19 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -252,13 +248,45 @@ public class MolecularFormulaManipulator {
         }
 		return isotopesList;
 	}
-	
-	@TestMethod("testGetHillString_IMolecularFormula")
-	public static String getHillString(IMolecularFormula formula){
-		return null;
-	}
 
-	/**
+    @TestMethod("testGetHillString_IMolecularFormula")
+    public static String getHillString(IMolecularFormula formula) {
+        StringBuffer hillString = new StringBuffer();
+
+        Map<String, Integer> hillMap = new TreeMap<String, Integer>();
+        for (IIsotope isotope : formula.isotopes()) {
+            String symbol = isotope.getSymbol();
+            if (hillMap.containsKey(symbol))
+                hillMap.put(symbol, hillMap.get(symbol) + formula.getIsotopeCount(isotope));
+            else hillMap.put(symbol, formula.getIsotopeCount(isotope));
+        }
+
+        // if we have a C append it and also add in the H
+        // and then remove these elements
+        int count;
+        if (hillMap.containsKey("C")) {
+            hillString.append("C");
+            count = hillMap.get("C");
+            if (count> 1) hillString.append(count);
+            hillMap.remove("C");
+            if (hillMap.containsKey("H")) {
+                hillString.append("H");
+                count = hillMap.get("H");
+                if (count > 1) hillString.append(count);
+                hillMap.remove("H");
+            }
+        }
+
+        // now take all the rest in alphabetical order
+        for (String key : hillMap.keySet()) {
+            hillString.append(key);
+            count = hillMap.get(key);
+            if (count > 1) hillString.append(count);
+        }
+        return hillString.toString();
+    }
+
+    /**
 	 * Returns the string representation of the molecule formula with
 	 * numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. 
 	 * Useful for displaying formulae in Swing components or on the web.

@@ -91,7 +91,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @param  atomContainer  The atomContainer to be removed from this container
 	 */
 	public void removeAtomContainer(org.openscience.cdk.interfaces.IAtomContainer atomContainer) {
-		for (int i = 0; i < atomContainerCount; i++) {
+		for (int i = atomContainerCount-1; i >= 0; i--) {
 			if (atomContainers[i] == atomContainer)
 				removeAtomContainer(i);
 		}

@@ -276,6 +276,21 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assert.assertEquals(ac2, som.getAtomContainer(0));
     }
     
+    /*
+     * @cdk.bug 2679343
+     */
+    @Test public void testBug2679343() {
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer ac1 = som.getBuilder().newAtomContainer();
+        IAtomContainer ac2 = som.getBuilder().newAtomContainer();
+        som.addAtomContainer(ac1);
+        som.addAtomContainer(ac2);
+        som.addAtomContainer(ac2);
+        Assert.assertEquals(3, som.getAtomContainerCount());
+        som.removeAtomContainer(ac2);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+    }
+
     @Test public void testReplaceAtomContainer_int_IAtomContainer() {
     	IAtomContainerSet som = (IAtomContainerSet)newChemObject();
         IAtomContainer ac1 = som.getBuilder().newAtomContainer();

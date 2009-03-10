@@ -105,12 +105,13 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
         if (type == null) return null;
-        String mappedType = mapCDKToSybylType(type);
+        else atom.setAtomTypeName(type.getAtomTypeName());
+        String mappedType = mapCDKToSybylType(atom);
         if (mappedType == null) return null;
         return factory.getAtomType(mappedType);
     }
     
-    private String mapCDKToSybylType(IAtomType atom) {
+    private String mapCDKToSybylType(IAtom atom) {
         String typeName = atom.getAtomTypeName();
         if (typeName == null) return null;
         String mappedType = mapper.mapAtomType(typeName);
