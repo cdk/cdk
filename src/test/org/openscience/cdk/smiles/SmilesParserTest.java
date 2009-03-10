@@ -799,7 +799,18 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount().intValue());
 	}
 
-	/**
+    /**
+     * @throws Exception
+     * @cdk.bug 2679607
+     */
+    @org.junit.Test
+    public void testHardCodedHydrogenCount2() throws Exception {
+        String smiles = "[CH2]CNC";
+        IMolecule mol = sp.parseSmiles(smiles);
+        Assert.assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
+    }
+
+    /**
 	 * A bug found with JCP.
 	 * 
 	 * @cdk.bug 956929 
