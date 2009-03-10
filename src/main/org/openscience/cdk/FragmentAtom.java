@@ -65,6 +65,10 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 		this.fragment = fragment;
 	}
 
+	public void setExactMass(Double mass) {
+	    throw new IllegalAccessError("Cannot set the mass of a IFragmentAtom.");
+	}
+
 	/**
 	 * The exact mass of an FragmentAtom is defined as the sum of exact masses
 	 * of the IAtom's in the fragment.

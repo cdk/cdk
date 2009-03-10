@@ -61,7 +61,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     @Test public void testSetFormalCharge_Integer() {
         IPseudoAtom atom = (IPseudoAtom)newChemObject();
         atom.setFormalCharge(+5);
-        Assert.assertEquals(0, atom.getFormalCharge().intValue());
+        Assert.assertEquals(+5, atom.getFormalCharge().intValue());
     }
 
     @Test public void testSetHydrogenCount_Integer() {
@@ -73,13 +73,13 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     @Test public void testSetCharge_Double() {
         IPseudoAtom atom = (IPseudoAtom)newChemObject();
         atom.setCharge(0.78);
-        Assert.assertEquals(0.0, atom.getCharge(), 0.001);
+        Assert.assertEquals(0.78, atom.getCharge(), 0.001);
     }
 
     @Test public void testSetExactMass_Double() {
         IPseudoAtom atom = (IPseudoAtom)newChemObject();
         atom.setExactMass(12.001);
-        Assert.assertEquals(0.0, atom.getExactMass(), 0.001);
+        Assert.assertEquals(12.001, atom.getExactMass(), 0.001);
     }
 
     @Test public void testSetStereoParity_Integer() {
@@ -165,56 +165,6 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Assert.assertEquals(0, a.getHydrogenCount().intValue());
         a.setHydrogenCount(null);
         Assert.assertEquals(0, a.getHydrogenCount().intValue());
-    }
-
-    /**
-     * Overwrite the method in {@link AbstractAtomTypeTest} to always
-     * expect zero formal charge.
-     */
-    @Test public void testClone_FormalCharge() throws Exception {
-        IAtomType at = (IAtomType)newChemObject();
-        at.setFormalCharge(1);
-        IAtomType clone = (IAtomType)at.clone();
-
-        at.setFormalCharge(2);
-        Assert.assertEquals(0, clone.getFormalCharge().intValue());
-    }
-
-    /**
-     * Overwrite the method in {@link AbstractAtomTypeTest} to always
-     * expect zero partial charge.
-     */
-    @Test public void testDefaultChargeValue() {
-        IAtom atom = (IAtom)newChemObject();
-        Assert.assertEquals(0.0, atom.getCharge(), 0.00000001);
-    }
-
-    /**
-     * Overwrite the method in {@link AbstractAtomTypeTest} to always
-     * expect zero partial charge.
-     */
-    @Test public void testClone_Charge() throws Exception {
-        IAtom atom = (IAtom)newChemObject();
-        atom.setCharge(1.0);
-        IAtom clone = (IAtom)atom.clone();
-
-        // test cloning
-        atom.setCharge(5.0);
-        Assert.assertEquals(0.0, clone.getCharge(), 0.001);
-    }
-
-    /**
-     * Overwrite the method in {@link AbstractIsotopeTest} to always
-     * expect zero partial charge.
-     */
-    @Test public void testClone_ExactMass() throws Exception {
-        IIsotope iso = (IIsotope)newChemObject();
-        iso.setExactMass(1.0);
-        IIsotope clone = (IIsotope)iso.clone();
-
-        // test cloning of exact mass
-        iso.setExactMass(2.0);
-        Assert.assertEquals(0.0, clone.getExactMass(), 0.001);
     }
 
     /**
