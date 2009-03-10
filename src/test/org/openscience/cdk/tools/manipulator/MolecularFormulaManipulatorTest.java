@@ -921,7 +921,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
 	/**
-	 * A unit test suite for JUnit. Not null.
+	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
@@ -948,11 +948,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		
 	}
 	/**
-	 * A unit test suite for JUnit. Not null.
-	 * TODO: REACT: Introduce method
+	 * A unit test suite for JUnit. 
 	 * 
 	 * @return    The test suite
-     * @cdk.bug 2672696
 	 */
     @Test
     public void testGetHillString_IMolecularFormula() {
