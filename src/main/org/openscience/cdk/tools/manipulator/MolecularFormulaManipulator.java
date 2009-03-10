@@ -525,10 +525,12 @@ public class MolecularFormulaManipulator {
 			if(thisChar == ']'){
 				// finish
 				finishBreak = true;
-			}else if(thisChar == '-' ||thisChar == '+' ){
+			}else if(thisChar == '-'){
 				multiple = thisChar + multiple;
 				break;
-			}else if(finishBreak)
+			}else if(thisChar == '+' )
+				break;
+			else if(finishBreak)
 				multiple += thisChar;
 		}
 		return new Integer(multiple);
