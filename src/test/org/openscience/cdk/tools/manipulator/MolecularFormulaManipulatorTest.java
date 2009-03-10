@@ -972,7 +972,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
     /**
-     * @cdk.bug 1944604
+	 * A unit test suite for JUnit. 
      * @throws InvalidSmilesException
      */
     @Test
