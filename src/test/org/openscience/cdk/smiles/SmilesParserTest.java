@@ -624,6 +624,7 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals(1, mol.getAtomCount());
 		Assert.assertEquals(0, mol.getBondCount());
 		Assert.assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
+        Assert.assertEquals(12, mol.getAtom(0).getMassNumber().intValue());
         Assert.assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
     }
 
