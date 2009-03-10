@@ -504,26 +504,26 @@ public class SmilesParser {
 	private int getImplicitHydrogenCount(String s, int position)
 	{
 		logger.debug("getImplicitHydrogenCount(): Parsing implicit hydrogens from: " + s);
-		int count = 1;
+		int count = 0;  // for the case of no H which is same as H0
 		if (s.charAt(position) == 'H')
 		{
 			StringBuffer multiplier = new StringBuffer();
 			while (position < (s.length() - 1) && Character.isDigit(s.charAt(position + 1)))
 			{
-				multiplier.append(position + 1);
+				multiplier.append(s.charAt(position + 1));
 				position++;
 			}
 			if (multiplier.length() > 0)
 			{
 				try
 				{
-					count = count + Integer.parseInt(multiplier.toString());
+					count = Integer.parseInt(multiplier.toString());
 				} catch (Exception exception)
 				{
 					logger.error("Could not parse number of implicit hydrogens from the multiplier: " + multiplier);
 					logger.debug(exception);
 				}
-			}
+			} else count = 1; // since H == H1
 		}
 		return count;
 	}
