@@ -246,7 +246,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	}
 
     /**
-     * @cdk.bug 2276507
+	 * A unit test suite for JUnit.
      */
     @Test
     public void testBug2276507() {
