@@ -496,6 +496,8 @@ public class MolecularFormulaManipulator {
 	 * @return         The corrected formula
 	 */
 	private static String cleanMFfromCharge(String formula) {
+		if(!(formula.contains("[") && formula.contains("]") ))
+				return formula;
 		boolean startBreak = false;
 		String finalFormula = "";
 		for (int f = 0; f < formula.length(); f++) {
@@ -518,6 +520,11 @@ public class MolecularFormulaManipulator {
 	 * @return        The charge
 	 */
 	private static int extractCharge(String formula) {
+		
+		if(!((formula.contains("[") && formula.contains("]")) 
+				&& (formula.contains("+") || formula.contains("-"))))
+			return 0;
+		
 		boolean finishBreak = false;
 		String multiple = "";
 		for (int f = 0; f < formula.length(); f++) {
@@ -533,6 +540,8 @@ public class MolecularFormulaManipulator {
 			else if(finishBreak)
 				multiple += thisChar;
 		}
+		if(multiple.equals("") || multiple.equals("-"))
+			multiple += 1;
 		return new Integer(multiple);
 	}
 
