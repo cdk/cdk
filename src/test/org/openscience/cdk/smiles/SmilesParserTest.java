@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -34,15 +31,9 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -52,6 +43,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -612,8 +606,23 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertFalse(mol.getAtom(1) instanceof IPseudoAtom);
 	}
 
+    /**
+     * @cdk.bug 2596061
+     * @throws InvalidSmilesException
+     */
+    @org.junit.Test
+    public void testUnknownAtomType2() throws InvalidSmilesException {
+        String smiles = "[12*H2-]";
+        IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1, mol.getAtomCount());
+		Assert.assertEquals(0, mol.getBondCount());
+		Assert.assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
+        Assert.assertEquals(12, mol.getAtom(0).getMassNumber().intValue());
+        Assert.assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
+    }
 
-	/**
+
+    /**
 	 *  A unit test for JUnit
 	 */
 	@org.junit.Test (timeout=1000)
@@ -769,6 +778,10 @@ public class SmilesParserTest extends CDKTestCase {
 		}
 	}
 
+    /**
+     * @cdk.bug 2679607
+     * @throws Exception
+     */
 	@org.junit.Test (timeout=1000)
 	public void testHardCodedHydrogenCount() throws Exception {
 		String smiles = "c1ccc[NH]1";
@@ -786,7 +799,18 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount().intValue());
 	}
 
-	/**
+    /**
+     * @throws Exception
+     * @cdk.bug 2679607
+     */
+    @org.junit.Test
+    public void testHardCodedHydrogenCount2() throws Exception {
+        String smiles = "[CH2]CNC";
+        IMolecule mol = sp.parseSmiles(smiles);
+        Assert.assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
+    }
+
+    /**
 	 * A bug found with JCP.
 	 * 
 	 * @cdk.bug 956929 
