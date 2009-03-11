@@ -28,11 +28,13 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -54,7 +56,8 @@ import java.util.*;
  *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
  *
- *  The FingerPrinter assumes that hydrogens are explicitly given! <p>
+ *  The FingerPrinter assumes that hydrogens are explicitly given! and ignores
+ * pseudo atoms if present<p>
  *
  *  <font color="#FF0000">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long
@@ -198,7 +201,11 @@ public class Fingerprinter implements IFingerprinter {
                 for (List<IAtom> path : p) {
                     StringBuffer sb = new StringBuffer();
                     IAtom x = path.get(0);
-                    sb.append(convertSymbol(x.getSymbol()));
+
+                    // we skip pseudo atoms, sinec they could be any
+                    // arbitrary structure
+                    if (!(x instanceof IPseudoAtom))
+                        sb.append( (char) Symbols.getAtomicNumber(x.getSymbol()).intValue() );
 
                     for (int i = 1; i < path.size(); i++) {
                         final IAtom[] y = {path.get(i)};
