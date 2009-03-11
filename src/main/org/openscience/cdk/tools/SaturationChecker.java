@@ -28,18 +28,23 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Provides methods for checking whether an atoms valences are saturated with
@@ -66,8 +71,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
 	private LoggingTool logger;
 
-	public SaturationChecker() throws IOException, ClassNotFoundException
-	{
+	public SaturationChecker() {
 		logger = new LoggingTool(this);
 	}
 
