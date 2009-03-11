@@ -850,13 +850,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             IAtomType type = getAtomType("S.3");
             if (isAcceptable(atom, atomContainer, type)) return type;
         } else if (neighborcount == 3) {
-            int doubleBondedOxygens = countAttachedDoubleBonds(atomContainer, atom, "O");
-            int doubleBondedNitrogens = countAttachedDoubleBonds(atomContainer, atom, "N");
-            if (doubleBondedOxygens + doubleBondedNitrogens == 1) {
+            int doubleBondedAtoms = countAttachedDoubleBonds(atomContainer, atom);
+            if (doubleBondedAtoms == 1) {
                 IAtomType type = getAtomType("S.inyl");
                 if (isAcceptable(atom, atomContainer, type)) return type;
-            }
-            if (countAttachedDoubleBonds(atomContainer, atom) == 3) {
+            } else if (doubleBondedAtoms == 3) {
                 IAtomType type = getAtomType("S.trioxide");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }

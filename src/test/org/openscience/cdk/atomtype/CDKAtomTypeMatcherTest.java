@@ -3076,6 +3076,25 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi     InChI=1/C3H8S/c1-4(2)3/h1H2,2-3H3
+     */
+    @Test public void testSulphonylLookalike() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("S"));
+        mol.addBond(0, 3, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(2, 3, Order.DOUBLE);
+
+        String[] expectedTypes = {
+            "C.sp3", "C.sp3", "C.sp2", "S.inyl"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test
     public void testNOxide() throws CDKException {
         IMolecule mol = new Molecule();
