@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * List of element symbols. Data is taken from the Blue Obelisk Data Repository,
@@ -157,4 +160,27 @@ public class Symbols {
 	
 	public final static int KNOWN_ELEMENTS = 116;
 	
+	private final static Map<String,Integer> symbolToAtomicNumberMap =
+	    new HashMap<String,Integer>();
+
+	/**
+	 * Returns the atomic number of the element identified by the given symbol.
+	 *
+	 * @return null, if the symbol is not recognized
+	 */
+	public static Integer getAtomicNumber(String symbol) {
+	    if (symbolToAtomicNumberMap.size() == 0)
+	        fillSymbolToAtomicNumberMap();
+
+	    return symbolToAtomicNumberMap.get(symbol);
+	}
+
+    private static void fillSymbolToAtomicNumberMap() {
+        for (int i=0; i<byAtomicNumber.length; i++) {
+            symbolToAtomicNumberMap.put(
+                byAtomicNumber[i],
+                Integer.valueOf(i)
+            );
+        }
+    }
 }
