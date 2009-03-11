@@ -186,7 +186,7 @@ public class SmilesParser {
             i++;
             try {
                 IAtomType type = matcher.findMatchingAtomType(molecule, atom);
-                AtomTypeManipulator.configureUnsetProperties(atom, type);
+                AtomTypeManipulator.configure(atom, type);
             } catch (Exception e) {
                 System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
                 atom.setAtomTypeName("X");
