@@ -76,7 +76,8 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     /**
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
      * 
-     *  Note that the constructor will explicitly set this field to 0
+     *  Note that some constructors ({@link #AtomType(String)} and
+     * {@link #AtomType(String, String)} ) will explicitly set this field to 0
      */
     protected Integer formalCharge = (Integer) CDKConstants.UNSET;
 
