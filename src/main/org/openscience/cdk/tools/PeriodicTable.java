@@ -155,80 +155,80 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static Double getVdwRadius(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getVdwRadius();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getVdwRadius();
     }
 
     @TestMethod("testTable")
     public static Double getCovalentRadius(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getCovalentRadius();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getCovalentRadius();
     }
 
     @TestMethod("testTable")
     public static String getCASId(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getCASid();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getCASid();
     }
 
     @TestMethod("testTable")
     public static String getChemicalSeries(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getChemicalSerie();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getChemicalSerie();
     }
 
     @TestMethod("testTable")
     public static Integer getGroup(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getGroup();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getGroup();
     }
 
     @TestMethod("testTable")
     public static String getName(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getName();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getName();
     }
 
     @TestMethod("testTable")
     public static Integer getPeriod(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getPeriod();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getPeriod();
     }
 
     @TestMethod("testTable")
     public static String getPhase(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getPhase();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getPhase();
     }
 
     @TestMethod("testTable")
     public static Integer getAtomicNumber(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getAtomicNumber();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getAtomicNumber();
     }
 
     @TestMethod("testTable")
     public static Double getPaulingElectronegativity(String symbol) {
         initialize();
-        PeriodicTableElement e = elements.get(symbol);
-        if (e == null) return null;
-        else return e.getPaulingEneg();
+        PeriodicTableElement element = elements.get(symbol);
+        if (element == null) return null;
+        else return element.getPaulingEneg();
     }
 }

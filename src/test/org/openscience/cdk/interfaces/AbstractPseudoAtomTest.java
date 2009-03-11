@@ -24,11 +24,11 @@
  */
 package org.openscience.cdk.interfaces;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  * Checks the functionality of {@link IPseudoAtom} implementations.
@@ -67,7 +67,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     @Test public void testSetHydrogenCount_Integer() {
         IPseudoAtom atom = (IPseudoAtom)newChemObject();
         atom.setHydrogenCount(+5);
-        Assert.assertEquals(0, atom.getHydrogenCount().intValue());
+        Assert.assertEquals(5, atom.getHydrogenCount().intValue());
     }
 
     @Test public void testSetCharge_Double() {
@@ -145,12 +145,12 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
      */
     @Test public void testClone_HydrogenCount() throws Exception {
         IAtom atom = (IAtom)newChemObject();
-        atom.setHydrogenCount(Integer.valueOf(3));
+        atom.setHydrogenCount(3);
         IAtom clone = (IAtom)atom.clone();
 
         // test cloning
-        atom.setHydrogenCount(Integer.valueOf(4));
-        Assert.assertEquals(0, clone.getHydrogenCount().intValue());
+        atom.setHydrogenCount(4);
+        Assert.assertEquals(3, clone.getHydrogenCount().intValue());
     }
 
     /**
@@ -160,11 +160,11 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     @Test public void testGetHydrogenCount() {
         // expect zero by definition
         IAtom a = (IAtom)newChemObject();
-        Assert.assertEquals(0, a.getHydrogenCount().intValue());
+        Assert.assertNull(a.getHydrogenCount());
         a.setHydrogenCount(5);
-        Assert.assertEquals(0, a.getHydrogenCount().intValue());
+        Assert.assertEquals(5, a.getHydrogenCount().intValue());
         a.setHydrogenCount(null);
-        Assert.assertEquals(0, a.getHydrogenCount().intValue());
+        Assert.assertNull(a.getHydrogenCount());
     }
 
     /**
@@ -181,4 +181,14 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Assert.assertEquals(0, clone.getStereoParity().intValue());
     }
 
+
+    @Test public void testPseudoAtomCharges() {
+        String label = "charged patom";
+        IPseudoAtom a = (IPseudoAtom)newChemObject();
+        a.setLabel(label);
+        a.setFormalCharge(-1);
+        Assert.assertNotNull(a);
+        Assert.assertNotNull(a.getFormalCharge());
+        Assert.assertEquals(-1, a.getFormalCharge().intValue());
+    }
 }

@@ -24,16 +24,8 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -43,21 +35,14 @@ import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
@@ -1542,6 +1527,8 @@ public class SmilesGenerator
 	private void parseAtom(IAtom a, StringBuffer buffer, IAtomContainer container, boolean chiral, boolean[] doubleBondConfiguration, IAtom parent, List atomsInOrderOfSmiles, List currentChain, boolean useAromaticity)
 	{
 		String symbol = a.getSymbol();
+        if (a instanceof PseudoAtom) symbol = "*";
+        
 		boolean stereo = BondTools.isStereo(container, a);
 		boolean brackets = symbol.equals("B") || symbol.equals("C") || symbol.equals("N") || symbol.equals("O") || symbol.equals("P") || symbol.equals("S") || symbol.equals("F") || symbol.equals("Br") || symbol.equals("I") || symbol.equals("Cl");
 		brackets = !brackets;
@@ -1552,11 +1539,6 @@ public class SmilesGenerator
 			buffer.append('/');
 		}
 
-		if (a instanceof IPseudoAtom)
-		{
-			buffer.append("[*]");
-		} else
-		{
 			String mass = generateMassString(a);
 			brackets = brackets | !mass.equals("");
 
@@ -1583,6 +1565,8 @@ public class SmilesGenerator
 			} else
 			{
 				buffer.append(symbol);
+                if (symbol.equals("*") && a.getHydrogenCount() != null && a.getHydrogenCount() > 0)
+                    buffer.append("H").append(a.getHydrogenCount());
 			}
 			if (a.getProperty(RING_CONFIG) != null && a.getProperty(RING_CONFIG).equals(UP))
 			{
@@ -1607,7 +1591,7 @@ public class SmilesGenerator
 			{
 				buffer.append(']');
 			}
-		}
+
 		//logger.debug("in parseAtom() after dealing with Pseudoatom or not");
 		//Deal with the end of a double bond configuration
 		if (isEndOfDoubleBond(container, a, parent, doubleBondConfiguration))
@@ -1739,7 +1723,10 @@ public class SmilesGenerator
 	{
 		if (isotopeFactory == null) setupIsotopeFactory(a.getBuilder());
 
-        if (a instanceof IPseudoAtom) return Integer.toString(a.getMassNumber());
+        if (a instanceof IPseudoAtom) {
+            if (a.getMassNumber() != null) return Integer.toString(a.getMassNumber());
+            else return "";
+        }
 
         IIsotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
 		if (majorIsotope.getMassNumber() == a.getMassNumber())

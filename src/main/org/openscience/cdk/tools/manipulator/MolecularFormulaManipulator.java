@@ -417,15 +417,6 @@ public class MolecularFormulaManipulator {
 		
 		if(stringMF.contains(".") || stringMF.contains("(") || stringMF.charAt(0) >= '0' && stringMF.charAt(0) <= '9')
 			stringMF = simplifyMolecularFormula(stringMF);
-		
-		// Extract charge from String when contains []X- format 
-		Integer charge = null;
-		if((stringMF.contains("[") && stringMF.contains("]") )
-				&& (stringMF.contains("+") || stringMF.contains("-"))){
-			charge = extractCharge(stringMF);
-			stringMF = cleanMFfromCharge(stringMF);
-		}
-		
 		// FIXME: MF: variables with lower case first char
 		char ThisChar;
 		/*
@@ -486,65 +477,8 @@ public class MolecularFormulaManipulator {
 				
 			}
 		}
-		if(charge != null)
-			formula.setCharge(charge);
 		return formula;
 	}
-	/**
-	 * Extract the molecular formula when it is defined with charge. e.g. [O3S]2-.
-	 * @param formula  The formula to inspect
-	 * @return         The corrected formula
-	 */
-	private static String cleanMFfromCharge(String formula) {
-		if(!(formula.contains("[") && formula.contains("]") ))
-				return formula;
-		boolean startBreak = false;
-		String finalFormula = "";
-		for (int f = 0; f < formula.length(); f++) {
-			char thisChar = formula.charAt(f);
-			if(thisChar == '['){
-				// start
-				startBreak = true;
-			}else if(thisChar == ']'){
-				break;
-			}else if(startBreak)
-				finalFormula += thisChar;
-		}
-		return finalFormula;
-	}
-
-	/**
-	 * Extract the charge given a molecular formula format [O3S]2-.
-	 * 
-	 * @param formula The formula to inspect
-	 * @return        The charge
-	 */
-	private static int extractCharge(String formula) {
-		
-		if(!((formula.contains("[") && formula.contains("]")) 
-				&& (formula.contains("+") || formula.contains("-"))))
-			return 0;
-		
-		boolean finishBreak = false;
-		String multiple = "";
-		for (int f = 0; f < formula.length(); f++) {
-			char thisChar = formula.charAt(f);
-			if(thisChar == ']'){
-				// finish
-				finishBreak = true;
-			}else if(thisChar == '-'){
-				multiple = thisChar + multiple;
-				break;
-			}else if(thisChar == '+' )
-				break;
-			else if(finishBreak)
-				multiple += thisChar;
-		}
-		if(multiple.equals("") || multiple.equals("-"))
-			multiple += 1;
-		return new Integer(multiple);
-	}
-
 	/**
 	 * Get the summed exact mass of all isotopes from an MolecularFormula. It
 	 * assumes isotope masses to be preset, and returns 0.0 if not.
@@ -803,7 +737,7 @@ public class MolecularFormulaManipulator {
 	}
 	/**
 	 * Generate the order of the Elements according Hill system 
-	 * when doesn't contain carbons.
+	 * when contains carbons.
 	 *
 	 * @return  Array with the elements ordered
 	 */
@@ -912,13 +846,13 @@ public class MolecularFormulaManipulator {
 	@TestMethod("testSimplifyMolecularFormula_String")
 	public static String simplifyMolecularFormula(String formula) {
 		String newFormula = formula;
-		char thisChar;
+		char ThisChar;
 		
 		if(formula.contains(" ")){
 			newFormula = newFormula.replace(" ", "");
 		}
 		if(!formula.contains("."))
-			return breakExtractor(formula);
+			return formula;
 		
 		List<String> listMF = new ArrayList<String>();
 		while(newFormula.contains(".")){
@@ -944,8 +878,6 @@ public class MolecularFormulaManipulator {
 			}
 			newFormula = thisFormula;
 		}
-		if(newFormula.contains("("))
-			newFormula = breakExtractor(newFormula);
 		
 		String recentElementSymbol = new String();
 		String recentElementCountString = new String("0");
@@ -955,17 +887,17 @@ public class MolecularFormulaManipulator {
 		for(int i = 0 ; i < listMF.size(); i++){
 			String thisFormula = listMF.get(i);
 			for (int f = 0; f < thisFormula.length(); f++) {
-				thisChar = thisFormula.charAt(f);
+				ThisChar = thisFormula.charAt(f);
 				if (f < thisFormula.length()) {
-					if (thisChar >= 'A' && thisChar <= 'Z') {
-						recentElementSymbol = String.valueOf(thisChar);
+					if (ThisChar >= 'A' && ThisChar <= 'Z') {
+						recentElementSymbol = String.valueOf(ThisChar);
 						recentElementCountString = "0";
 					}
-					if (thisChar >= 'a' && thisChar <= 'z') {
-						recentElementSymbol += thisChar;
+					if (ThisChar >= 'a' && ThisChar <= 'z') {
+						recentElementSymbol += ThisChar;
 					}
-					if (thisChar >= '0' && thisChar <= '9') {
-						recentElementCountString += thisChar;
+					if (ThisChar >= '0' && ThisChar <= '9') {
+						recentElementCountString += ThisChar;
 					}
 				}
 				if (f == thisFormula.length() - 1 || (thisFormula.charAt(f + 1) >= 'A' && thisFormula.charAt(f + 1) <= 'Z')) {

@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -2987,6 +2988,112 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1S/C6H5IO/c8-7-6-4-2-1-3-5-6/h1-5H
+     */
+    @Test public void testIodosobenzene() throws Exception {
+        IMolecule mol = MoleculeFactory.makeBenzene();
+        IAtom iodine = mol.getBuilder().newAtom("I");
+        IAtom oxygen = mol.getBuilder().newAtom("O");
+        mol.addAtom(iodine);
+        mol.addAtom(oxygen);
+        mol.addBond(0, 6, Order.SINGLE);
+        mol.addBond(6, 7, Order.DOUBLE);
+
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            "I.3", "O.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C6H5IO2/c8-7(9)6-4-2-1-3-5-6/h1-5H
+     */
+    @Test public void testIodoxybenzene() throws Exception {
+        IMolecule mol = MoleculeFactory.makeBenzene();
+        IAtom iodine = mol.getBuilder().newAtom("I");
+        IAtom oxygen1 = mol.getBuilder().newAtom("O");
+        IAtom oxygen2 = mol.getBuilder().newAtom("O");
+        mol.addAtom(iodine);
+        mol.addAtom(oxygen1);
+        mol.addAtom(oxygen2);
+        mol.addBond(0, 6, Order.SINGLE);
+        mol.addBond(6, 7, Order.DOUBLE);
+        mol.addBond(6, 8, Order.DOUBLE);
+
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            "I.5", "O.sp2", "O.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C7H7NOS/c8-7(10-9)6-4-2-1-3-5-6/h1-5H,8H2
+     */
+    @Test public void testThiobenzamideSOxide() throws Exception {
+        IMolecule mol = MoleculeFactory.makeBenzene();
+        IAtom carbon = mol.getBuilder().newAtom("C");
+        IAtom sulphur = mol.getBuilder().newAtom("S");
+        IAtom oxygen = mol.getBuilder().newAtom("O");
+        IAtom nitrogen = mol.getBuilder().newAtom("N");
+        mol.addAtom(carbon);
+        mol.addAtom(sulphur);
+        mol.addAtom(oxygen);
+        mol.addAtom(nitrogen);
+        mol.addBond(0, 6, Order.SINGLE);
+        mol.addBond(6, 7, Order.DOUBLE);
+        mol.addBond(7, 8, Order.DOUBLE);
+        mol.addBond(6, 9, Order.SINGLE);
+
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            "C.sp2", "S.inyl.2", "O.sp2", "N.thioamide"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C4H10S/c1-5(2)3-4-5/h3-4H2,1-2H3
+     */
+    @Test public void testDimethylThiirane() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("S"));
+        mol.addBond(0, 4, Order.SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
+        mol.addBond(4, 2, Order.SINGLE);
+        mol.addBond(4, 3, Order.SINGLE);
+
+        String[] expectedTypes = {
+            "C.sp3", "C.sp3", "C.sp3", "C.sp3", "S.anyl"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi     InChI=1/C3H8S/c1-4(2)3/h1H2,2-3H3
+     */
+    @Test public void testSulphonylLookalike() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("S"));
+        mol.addBond(0, 3, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(2, 3, Order.DOUBLE);
+
+        String[] expectedTypes = {
+            "C.sp3", "C.sp3", "C.sp2", "S.inyl"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @Test
     public void testNOxide() throws CDKException {

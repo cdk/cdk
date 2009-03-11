@@ -1522,5 +1522,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
     }
+
+    @Test
+    public void testLactamRecursiveAlternate() throws Exception {
+        int[] results = match("[!R]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
 }
 

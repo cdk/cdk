@@ -606,6 +606,15 @@
     <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="S.inyl.2">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;S"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>2</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="S.oxide">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;S"/>
@@ -692,6 +701,15 @@
     <at:hasElement rdf:resource="&elem;S"/>
     <at:formalNeighbourCount>6</at:formalNeighbourCount>
     <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3d2"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="S.anyl">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;S"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:lonePairCount>1</at:lonePairCount>
     <at:piBondCount>0</at:piBondCount>
     <at:hybridization rdf:resource="&at;sp3d2"/>
   </at:AtomType>
@@ -914,6 +932,24 @@
     <at:formalNeighbourCount>1</at:formalNeighbourCount>
     <at:lonePairCount>2</at:lonePairCount>
     <at:piBondCount>1</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="I.3">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;I"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:lonePairCount>1</at:lonePairCount>
+    <at:piBondCount>1</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="I.5">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;I"/>
+    <at:formalNeighbourCount>3</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>2</at:piBondCount>
     <at:hybridization rdf:resource="&at;sp2"/>
   </at:AtomType>
 

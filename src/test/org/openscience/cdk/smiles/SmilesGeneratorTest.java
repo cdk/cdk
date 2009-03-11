@@ -29,6 +29,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.*;
@@ -846,6 +847,20 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IMolecule cdkRoundTripMol 
             = smilesParser.parseSmiles(genSmiles);
         Assert.assertTrue(cdkRoundTripMol != null);
+    }
+
+    /**
+     * @cdk.bug 2596061
+     */
+    @Test
+    public void testRoundTripPseudoAtom() throws InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String smiles = "[12*H2-]";
+        IMolecule mol = sp.parseSmiles(smiles);
+        SmilesGenerator smilesGenerator = new SmilesGenerator();
+        smilesGenerator.setUseAromaticityFlag(true);
+        String genSmiles = smilesGenerator.createSMILES(mol);
+        Assert.assertTrue(genSmiles.equals(smiles));
     }
 }
 

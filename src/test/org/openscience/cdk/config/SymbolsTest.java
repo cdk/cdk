@@ -42,6 +42,18 @@ public class SymbolsTest extends CDKTestCase {
 		Assert.assertEquals("Uuh", Symbols.byAtomicNumber[116]);
 	}
 
+	@Test public void testGetAtomicNumber() {
+	    Assert.assertNull(Symbols.getAtomicNumber("X"));
+
+	    // test consistency of array and method
+	    for (int i=0; i<Symbols.byAtomicNumber.length; i++) {
+	        Assert.assertEquals(
+	            Integer.valueOf(i),
+	            Symbols.getAtomicNumber(Symbols.byAtomicNumber[i])
+	        );
+	    }
+	}
+
 }
 
 

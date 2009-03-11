@@ -33,6 +33,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 
 /**
@@ -61,29 +62,42 @@ public class AtomTypeManipulator {
             throw new IllegalArgumentException("The IAtomType was null.");
         }
 
-        atom.setSymbol(atomType.getSymbol());
+        // we set the atom type name, but nothing else
         atom.setAtomTypeName(atomType.getAtomTypeName());
-        atom.setMaxBondOrder(atomType.getMaxBondOrder());
-        atom.setBondOrderSum(atomType.getBondOrderSum());
-        atom.setCovalentRadius(atomType.getCovalentRadius());
-        atom.setValency(atomType.getValency());
-        atom.setFormalCharge(atomType.getFormalCharge());
-        atom.setHybridization(atomType.getHybridization());
-        atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
-        atom.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
-        atom.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
-        Object constant = atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
-        if (constant != null) {
-            atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, constant);
-        }
-        atom.setFlag(CDKConstants.ISAROMATIC, atomType.getFlag(CDKConstants.ISAROMATIC));
 
-        Object color = atomType.getProperty("org.openscience.cdk.renderer.color");
-        if (color != null) {
-            atom.setProperty("org.openscience.cdk.renderer.color", color);
+        // configuring aotm type information is not really valid
+        // for pseudo atoms - first because they basically have no
+        // type information and second because they may have information
+        // associated with them from another context, which should not be
+        // overwritten. So we only do the stuff below if we have a non pseudoatom
+        //
+        // a side effect of this is that it is probably not valid to get the atom
+        // type of a peudo atom. I think this is OK, since you can always check
+        // whether an atom is a pseudo atom without looking at its atom type
+        if (!(atom instanceof IPseudoAtom)) {
+            atom.setSymbol(atomType.getSymbol());
+            atom.setMaxBondOrder(atomType.getMaxBondOrder());
+            atom.setBondOrderSum(atomType.getBondOrderSum());
+            atom.setCovalentRadius(atomType.getCovalentRadius());
+            atom.setValency(atomType.getValency());
+            atom.setFormalCharge(atomType.getFormalCharge());
+            atom.setHybridization(atomType.getHybridization());
+            atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
+            atom.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+            atom.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+            Object constant = atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
+            if (constant != null) {
+                atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, constant);
+            }
+            atom.setFlag(CDKConstants.ISAROMATIC, atomType.getFlag(CDKConstants.ISAROMATIC));
+
+            Object color = atomType.getProperty("org.openscience.cdk.renderer.color");
+            if (color != null) {
+                atom.setProperty("org.openscience.cdk.renderer.color", color);
+            }
+            if (atomType.getAtomicNumber() != CDKConstants.UNSET) atom.setAtomicNumber(atomType.getAtomicNumber());
+            if (atomType.getExactMass() != CDKConstants.UNSET) atom.setExactMass(atomType.getExactMass());
         }
-        if (atomType.getAtomicNumber() != CDKConstants.UNSET) atom.setAtomicNumber(atomType.getAtomicNumber());
-        if (atomType.getExactMass() != CDKConstants.UNSET) atom.setExactMass(atomType.getExactMass());        
     }
 
     /**

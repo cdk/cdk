@@ -619,6 +619,7 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
         Assert.assertEquals(12, mol.getAtom(0).getMassNumber().intValue());
         Assert.assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
+        Assert.assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
     }
 
 
@@ -1769,6 +1770,25 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(0, mol.getAtom(1).getHydrogenCount().intValue());
         Assert.assertNotNull(mol.getAtom(3).getHydrogenCount());
         Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount().intValue());
+    }
+
+    /**
+     * @cdk.bug 2514200
+     * @throws InvalidSmilesException
+     */
+    @Test public void testHardcodedH() throws InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C[CH1]NC");
+        Assert.assertNotNull(mol.getAtom(1).getHydrogenCount());
+        Assert.assertEquals(1, mol.getAtom(1).getHydrogenCount().intValue());
+
+        mol = sp.parseSmiles("C[CH]NC");
+        Assert.assertNotNull(mol.getAtom(1).getHydrogenCount());
+        Assert.assertEquals(1, mol.getAtom(1).getHydrogenCount().intValue());
+
+        mol = sp.parseSmiles("C[CH0]NC");
+        Assert.assertNotNull(mol.getAtom(1).getHydrogenCount());
+        Assert.assertEquals(0, mol.getAtom(1).getHydrogenCount().intValue());
     }
 }
 

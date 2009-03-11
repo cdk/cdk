@@ -246,7 +246,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	}
 
     /**
-	 * A unit test suite for JUnit.
+     * @cdk.bug 2276507
      */
     @Test
     public void testBug2276507() {
@@ -921,7 +921,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
 	/**
-	 * A unit test suite for JUnit.
+	 * A unit test suite for JUnit. Not null.
 	 *
 	 * @return    The test suite
 	 */
@@ -948,9 +948,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		
 	}
 	/**
-	 * A unit test suite for JUnit. 
+	 * A unit test suite for JUnit. Not null.
+	 * TODO: REACT: Introduce method
 	 * 
 	 * @return    The test suite
+     * @cdk.bug 2672696
 	 */
     @Test
     public void testGetHillString_IMolecularFormula() {
@@ -972,7 +974,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
     /**
-	 * A unit test suite for JUnit. 
+     * @cdk.bug 1944604
      * @throws InvalidSmilesException
      */
     @Test
@@ -1079,31 +1081,4 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
       	  Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
       	  Assert.assertEquals("C54H74N8O25", MolecularFormulaManipulator.getString(ff));
       }
-	  /**
-	   */
-	  @Test
-      public void test5() {
-          String formula = "[SO3]2-";
-          IMolecularFormula formula1 = new MolecularFormula();
-          formula1.addIsotope(builder.newIsotope("S"),1);
-      	  formula1.addIsotope(builder.newIsotope("O"),3);
-      	  formula1.setCharge(-2);
-      	  IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-      	  Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-      	  Assert.assertEquals("O3S", MolecularFormulaManipulator.getString(ff));
-      	  Assert.assertEquals(-2, ff.getCharge(),0.00001);
-      }
-	  /**
-	   */
-	  @Test
-      public void test6() {
-          String formula = "(CH3)2";
-          IMolecularFormula formula1 = new MolecularFormula();
-          formula1.addIsotope(builder.newIsotope("C"),2);
-      	  formula1.addIsotope(builder.newIsotope("H"),6);
-      	  IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
-      	  Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-      	  Assert.assertEquals("C2H6", MolecularFormulaManipulator.getString(ff));
-      }
-	  
 }
