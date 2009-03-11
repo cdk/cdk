@@ -825,6 +825,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             } else if (countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
                 IAtomType type = getAtomType("S.oxide");
                 if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (countAttachedDoubleBonds(atomContainer, atom) == 2) {
+                IAtomType type = getAtomType("S.inyl.2");
+                if (isAcceptable(atom, atomContainer, type)) return type;
             } else {
                 IAtomType type = getAtomType("S.3");
                 if (isAcceptable(atom, atomContainer, type)) return type;
