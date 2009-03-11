@@ -181,4 +181,14 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Assert.assertEquals(0, clone.getStereoParity().intValue());
     }
 
+
+    @Test public void testPseudoAtomCharges() {
+        String label = "charged patom";
+        IPseudoAtom a = (IPseudoAtom)newChemObject();
+        a.setLabel(label);
+        a.setFormalCharge(-1);
+        Assert.assertNotNull(a);
+        Assert.assertNotNull(a.getFormalCharge());
+        Assert.assertEquals(-1, a.getFormalCharge().intValue());
+    }
 }
