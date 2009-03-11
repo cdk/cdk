@@ -1772,6 +1772,10 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount().intValue());
     }
 
+    /**
+     * @cdk.bug 2514200
+     * @throws InvalidSmilesException
+     */
     @Test public void testHardcodedH() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("C[CH1]NC");
