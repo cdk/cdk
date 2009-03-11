@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
@@ -54,10 +53,11 @@ public class OrderQueryBond extends SMARTSBond {
 	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
 	 */
 	public boolean matches(IBond bond) {
-        if (getOrder() == IBond.Order.SINGLE) {
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) return false;
-            return getOrder() == bond.getOrder();            
-        } else return getOrder() == bond.getOrder();
+        return getOrder() == bond.getOrder();
+//        if (getOrder() == IBond.Order.SINGLE) {
+//            if (bond.getFlag(CDKConstants.ISAROMATIC)) return false;
+//            return getOrder() == bond.getOrder();
+//        } else return getOrder() == bond.getOrder();
     }
 
     /* (non-Javadoc)
