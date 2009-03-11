@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -2987,6 +2988,24 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1S/C6H5IO/c8-7-6-4-2-1-3-5-6/h1-5H
+     */
+    @Test public void testIodosobenzene() throws Exception {
+        IMolecule mol = MoleculeFactory.makeBenzene();
+        IAtom iodine = mol.getBuilder().newAtom("I");
+        IAtom oxygen = mol.getBuilder().newAtom("O");
+        mol.addAtom(iodine);
+        mol.addAtom(oxygen);
+        mol.addBond(0, 6, Order.SINGLE);
+        mol.addBond(6, 7, Order.DOUBLE);
+
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            "I.3", "O.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @Test
     public void testNOxide() throws CDKException {
