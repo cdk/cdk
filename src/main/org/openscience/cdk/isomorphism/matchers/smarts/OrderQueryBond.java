@@ -23,10 +23,14 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
  * This matches a bond with a certain bond order.
+ *
+ * Daylight spec indicates that if match a single bond
+ * using '-', it should be an aliphatic single bond
  * 
  * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
@@ -50,7 +54,10 @@ public class OrderQueryBond extends SMARTSBond {
 	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
 	 */
 	public boolean matches(IBond bond) {
-        return this.getOrder() == bond.getOrder();
+        if (getOrder() == IBond.Order.SINGLE) {
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) return false;
+            return getOrder() == bond.getOrder();            
+        } else return getOrder() == bond.getOrder();
     }
 
     /* (non-Javadoc)
