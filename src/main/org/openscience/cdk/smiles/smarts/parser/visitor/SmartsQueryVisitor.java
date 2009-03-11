@@ -190,13 +190,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		atom = (SMARTSAtom)first.jjtAccept(this, null);
 		if (data != null) { // this is a sub smarts
 			bond = (SMARTSBond)((Object[])data)[1];	
-			if (bond == null) {
-				if (((SMARTSAtom)((Object[])data)[0]).getFlag(CDKConstants.ISAROMATIC) &&
-						atom.getFlag(CDKConstants.ISAROMATIC)) {
-					bond = new AromaticQueryBond();
-				} else {
-					bond = new OrderQueryBond(IBond.Order.SINGLE);
-				}
+			if (bond == null) { // since no bond was specified it could be aromatic or single
+                bond = new AromaticOrSingleQueryBond();
 				bond.setAtoms(new IAtom[] {atom, (SMARTSAtom)((Object[])data)[0]});
 			} else {
 				bond.setAtoms(new IAtom[] {(SMARTSAtom)((Object[])data)[0], atom});
@@ -214,13 +209,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 				bond = (SMARTSBond) child.jjtAccept(this, data);
 			} else if (child instanceof ASTAtom) {
 				SMARTSAtom newAtom = (SMARTSAtom)child.jjtAccept(this, null);
-				if (bond == null) {
-					if (newAtom.getFlag(CDKConstants.ISAROMATIC) &&
-							atom.getFlag(CDKConstants.ISAROMATIC)) {
-						bond = new AromaticQueryBond();
-					} else {
-						bond = new OrderQueryBond(IBond.Order.SINGLE);
-					}
+				if (bond == null) { // since no bond was specified it could be aromatic or single
+                    bond = new AromaticOrSingleQueryBond();
 				}
 				bond.setAtoms(new IAtom[] {atom, newAtom});
 				if (isParsingRS) {

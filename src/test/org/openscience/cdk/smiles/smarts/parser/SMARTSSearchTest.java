@@ -1508,6 +1508,40 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(26, results[0]);
         Assert.assertEquals(13, results[1]);
 
+        results = match("cc", "c1ccccc1c2ccccc2");
+        Assert.assertEquals(26, results[0]);
+        Assert.assertEquals(13, results[1]);
+    }
+
+    @Test
+    public void testUnspecifiedBond() throws Exception {
+        int[] results = match("CC", "CCc1ccccc1");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+        results = match("[#6][#6]", "CCc1ccccc1");
+        Assert.assertEquals(16, results[0]);
+        Assert.assertEquals(8, results[1]);
+
+        results = match("[#6]-[#6]", "CCc1ccccc1");
+        Assert.assertEquals(4, results[0]);
+        Assert.assertEquals(2, results[1]);
+
+        results = match("[#6]:[#6]", "CCc1ccccc1");
+        Assert.assertEquals(12, results[0]);
+        Assert.assertEquals(6, results[1]);
+
+        results = match("cc", "CCc1ccccc1");
+        Assert.assertEquals(12, results[0]);
+        Assert.assertEquals(6, results[1]);
+
+        results = match("c-c", "CCc1ccccc1");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+
+        results = match("c-C", "CCc1ccccc1");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
     }
 
     /**
