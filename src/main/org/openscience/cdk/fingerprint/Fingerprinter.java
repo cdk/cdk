@@ -56,8 +56,9 @@ import java.util.*;
  *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
  *
- *  The FingerPrinter assumes that hydrogens are explicitly given! and ignores
- * pseudo atoms if present<p>
+ *  The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if
+ *  pseudo atoms or atoms with malformed symbols are present, their atomic number is
+ *  taken as one more than the last element currently supported in {@link org.openscience.cdk.config.Symbols}. 
  *
  *  <font color="#FF0000">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long
@@ -202,10 +203,15 @@ public class Fingerprinter implements IFingerprinter {
                     StringBuffer sb = new StringBuffer();
                     IAtom x = path.get(0);
 
-                    // we skip pseudo atoms, sinec they could be any
-                    // arbitrary structure
-                    if (!(x instanceof IPseudoAtom))
-                        sb.append( (char) Symbols.getAtomicNumber(x.getSymbol()).intValue() );
+                    // TODO if we ever get more than 255 elements, this will fail
+                    // maybe we should use 0 for pseudo atoms and malformed symbols?
+                    if (x instanceof IPseudoAtom)
+                        sb.append((char) Symbols.byAtomicNumber.length + 1);
+                    else {
+                        Integer atnum = Symbols.getAtomicNumber(x.getSymbol());
+                        if (atnum != null) sb.append((char) atnum.intValue());
+                        else sb.append((char) Symbols.byAtomicNumber.length + 1);
+                    }
 
                     for (int i = 1; i < path.size(); i++) {
                         final IAtom[] y = {path.get(i)};
