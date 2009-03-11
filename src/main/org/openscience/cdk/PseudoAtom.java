@@ -77,7 +77,8 @@ public class PseudoAtom extends Atom
         super.point3d = null;
         super.point2d = null;
         // set these default, unchangeable values
-        super.hydrogenCount = 0;
+        super.hydrogenCount = null;
+        super.formalCharge = null;
         super.stereoParity = 0;
     }
 
@@ -139,13 +140,7 @@ public class PseudoAtom extends Atom
 	notifyChanged();
     }
 
-    /**
-     * Dummy method: the hydrogen count is 0, final. 
-     */
-    public void setHydrogenCount(Integer hydrogenCount) {
-        // hydrogen count = 0, always
-    }
-
+  
     /**
      * Dummy method: the stereo parity is undefined, final.
      */
