@@ -96,7 +96,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    @Test public void testPseedoAtomCharges() {
+    @Test public void testPseudoAtomCharges() {
         String label = "charged patom";
         IPseudoAtom a = new PseudoAtom(label);
         a.setFormalCharge(-1);
