@@ -12,7 +12,13 @@
     <metadata name="cvs:date" content="$Date$"/>
     <metadata name="cvs:revision" content="$Revision$"/>
   </metadataList>
-  
+
+  <elementType id="R">
+      <label dictRef="cas:id"></label>
+      <scalar dataType="xsd:String" dictRef="cdk:name">Pseudoatom</scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:atomicNumber">0</scalar>
+  </elementType>
+
   <elementType id="H">
       <label dictRef="cas:id">1333-74-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
