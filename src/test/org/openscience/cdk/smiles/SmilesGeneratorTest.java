@@ -860,7 +860,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);
         String genSmiles = smilesGenerator.createSMILES(mol);
-        System.out.println("genSmiles = " + genSmiles);
         Assert.assertTrue(genSmiles.equals(smiles));
     }
 }
