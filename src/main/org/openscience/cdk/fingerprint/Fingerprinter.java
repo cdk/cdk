@@ -28,11 +28,13 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -54,7 +56,9 @@ import java.util.*;
  *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
  *
- *  The FingerPrinter assumes that hydrogens are explicitly given! <p>
+ *  The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if
+ *  pseudo atoms or atoms with malformed symbols are present, their atomic number is
+ *  taken as one more than the last element currently supported in {@link org.openscience.cdk.config.Symbols}. 
  *
  *  <font color="#FF0000">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long
@@ -198,7 +202,16 @@ public class Fingerprinter implements IFingerprinter {
                 for (List<IAtom> path : p) {
                     StringBuffer sb = new StringBuffer();
                     IAtom x = path.get(0);
-                    sb.append(convertSymbol(x.getSymbol()));
+
+                    // TODO if we ever get more than 255 elements, this will fail
+                    // maybe we should use 0 for pseudo atoms and malformed symbols?
+                    if (x instanceof IPseudoAtom)
+                        sb.append((char) Symbols.byAtomicNumber.length + 1);
+                    else {
+                        Integer atnum = Symbols.getAtomicNumber(x.getSymbol());
+                        if (atnum != null) sb.append((char) atnum.intValue());
+                        else sb.append((char) Symbols.byAtomicNumber.length + 1);
+                    }
 
                     for (int i = 1; i < path.size(); i++) {
                         final IAtom[] y = {path.get(i)};

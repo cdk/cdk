@@ -27,7 +27,6 @@ package org.openscience.cdk.fingerprint;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -35,17 +34,12 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -67,9 +61,9 @@ public class FingerprinterTest extends CDKTestCase
 		IMolecule mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
 		BitSet bs1 = fingerprinter.getFingerprint(mol1);
-		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33, bs1.cardinality());
+		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 45, bs1.cardinality());
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
-		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
+		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 16, bs2.cardinality());
 	}
 
 	/**
@@ -350,7 +344,7 @@ public class FingerprinterTest extends CDKTestCase
     Assert.assertNotNull(fingerprinter);
     Molecule mol = MoleculeFactory.makeIndole();
     BitSet bs = fingerprinter.getFingerprint(mol);
-    Assert.assertEquals(994, bs.length()); // highest set bit
+    Assert.assertEquals(991, bs.length()); // highest set bit
     Assert.assertEquals(1024, bs.size()); // actual bit set size
   }
 
@@ -370,7 +364,7 @@ public class FingerprinterTest extends CDKTestCase
         IAtomContainer product = reaction.getProducts().getAtomContainer(0);
 
         Fingerprinter fingerprinter = new Fingerprinter(64*26,8);
-        BitSet bs1 = fingerprinter.getFingerprint(reactant);
+            BitSet bs1 = fingerprinter.getFingerprint(reactant);
         Assert.assertNotNull(bs1);
         BitSet bs2 = fingerprinter.getFingerprint(product);
         Assert.assertNotNull(bs2);
@@ -447,19 +441,7 @@ public class FingerprinterTest extends CDKTestCase
 		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
 		return mol;
 	}
-
-    @Test
-    public void testFoo() throws FileNotFoundException, CDKException {
-        IteratingSMILESReader reader = new IteratingSMILESReader(new FileInputStream("/home/rguha/fp2.txt"),
-                DefaultChemObjectBuilder.getInstance());
-        List<IMolecule> mols = new ArrayList<IMolecule>();
-        Fingerprinter fp = new Fingerprinter();
-        for (int i = 0;i < 1; i++) {
-            for (IMolecule mol : mols) {
-                fp.getFingerprint(mol);
-            }
-        }
-    }
+ 
     public static void main(String[] args) throws Exception
 	{
 		BigInteger bi=new BigInteger("0");
