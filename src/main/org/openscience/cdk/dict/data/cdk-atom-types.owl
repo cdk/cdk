@@ -705,6 +705,15 @@
     <at:hybridization rdf:resource="&at;sp3d2"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="S.anyl">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;S"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:lonePairCount>1</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3d2"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="Li">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Li"/>

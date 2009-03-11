@@ -818,6 +818,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("S.octahedral");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
+        } else if (neighborcount == 6) {
+            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+            if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+                IAtomType type = getAtomType("S.octahedral");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         } else if (neighborcount == 2) {
             if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
                 IAtomType type = getAtomType("S.planar3");
@@ -843,22 +849,28 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (neighborcount == 0) {
             IAtomType type = getAtomType("S.3");
             if (isAcceptable(atom, atomContainer, type)) return type;
-        } else {
-            // count the number of double bonded oxygens
+        } else if (neighborcount == 3) {
             int doubleBondedOxygens = countAttachedDoubleBonds(atomContainer, atom, "O");
             int doubleBondedNitrogens = countAttachedDoubleBonds(atomContainer, atom, "N");
-            if (doubleBondedOxygens + doubleBondedNitrogens == 2 &&
-                    neighborcount == 4){
-                IAtomType type = getAtomType("S.onyl");
-                if (isAcceptable(atom, atomContainer, type)) return type;
-            } else if (doubleBondedOxygens + doubleBondedNitrogens == 1 &&
-                       neighborcount == 3){
+            if (doubleBondedOxygens + doubleBondedNitrogens == 1) {
                 IAtomType type = getAtomType("S.inyl");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-            if (countAttachedDoubleBonds(atomContainer, atom) == 3 &&
-                neighborcount == 3) {
+            if (countAttachedDoubleBonds(atomContainer, atom) == 3) {
                 IAtomType type = getAtomType("S.trioxide");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+         } else if (neighborcount == 4) {
+            // count the number of double bonded oxygens
+            int doubleBondedOxygens = countAttachedDoubleBonds(atomContainer, atom, "O");
+            int doubleBondedNitrogens = countAttachedDoubleBonds(atomContainer, atom, "N");
+            if (doubleBondedOxygens + doubleBondedNitrogens == 2){
+                IAtomType type = getAtomType("S.onyl");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+            if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+                IAtomType type = getAtomType("S.anyl");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
         }

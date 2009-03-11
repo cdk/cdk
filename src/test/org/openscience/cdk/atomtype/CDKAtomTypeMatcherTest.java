@@ -3054,6 +3054,28 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1S/C4H10S/c1-5(2)3-4-5/h3-4H2,1-2H3
+     */
+    @Test public void testDimethylThiirane() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("C"));
+        mol.addAtom(mol.getBuilder().newAtom("S"));
+        mol.addBond(0, 4, Order.SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
+        mol.addBond(4, 2, Order.SINGLE);
+        mol.addBond(4, 3, Order.SINGLE);
+
+        String[] expectedTypes = {
+            "C.sp3", "C.sp3", "C.sp3", "C.sp3", "S.anyl"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test
     public void testNOxide() throws CDKException {
         IMolecule mol = new Molecule();
