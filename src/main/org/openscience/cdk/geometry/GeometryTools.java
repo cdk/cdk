@@ -721,6 +721,39 @@ public class GeometryTools {
 
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
+	 *  coordinates and is not the atom.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  xPosition  The x coordinate
+	 *@param  yPosition  The y coordinate
+	 *@param  atomCon    The molecule that is searched for the closest atom
+	 *@param toignore    This molecule will not be returned.
+	 *@return            The atom that is closest to the given coordinates
+	 */
+	public static IAtom getClosestAtom(double xPosition, double yPosition, IAtomContainer atomCon, IAtom toignore) {
+		IAtom closestAtom = null;
+		IAtom currentAtom;
+		double smallestMouseDistance = -1;
+		double mouseDistance;
+		double atomX;
+		double atomY;
+		for (int i = 0; i < atomCon.getAtomCount(); i++) {
+			currentAtom = atomCon.getAtom(i);
+			if(currentAtom!=toignore){
+				atomX = currentAtom.getPoint2d().x;
+				atomY = currentAtom.getPoint2d().y;
+				mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
+				if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
+					smallestMouseDistance = mouseDistance;
+					closestAtom = currentAtom;
+				}
+			}
+		}
+		return closestAtom;
+	}
+	
+	/**
+	 *  Returns the atom of the given molecule that is closest to the given
 	 *  coordinates.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
