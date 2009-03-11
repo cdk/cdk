@@ -182,18 +182,16 @@ public class SmilesParser {
 		// perceive atom types
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		int i = 0;
-		Iterator<IAtom> atoms = molecule.atoms().iterator();
-		while (atoms.hasNext()) {
-			IAtom atom = atoms.next();
-			i++;
-			try {
-				IAtomType type = matcher.findMatchingAtomType(molecule, atom);
-				AtomTypeManipulator.configure(atom, type);
-			} catch (Exception e) {
-				System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
-				atom.setAtomTypeName("X");
-			}
-		}
+        for (IAtom atom : molecule.atoms()) {
+            i++;
+            try {
+                IAtomType type = matcher.findMatchingAtomType(molecule, atom);
+                AtomTypeManipulator.configureUnsetProperties(atom, type);
+            } catch (Exception e) {
+                System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
+                atom.setAtomTypeName("X");
+            }
+        }
 		this.addImplicitHydrogens(molecule);
 		this.perceiveAromaticity(molecule);
 
