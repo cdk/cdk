@@ -1565,6 +1565,8 @@ public class SmilesGenerator
 			} else
 			{
 				buffer.append(symbol);
+                if (symbol.equals("*") && a.getHydrogenCount() != null && a.getHydrogenCount() > 0)
+                    buffer.append("H").append(a.getHydrogenCount());
 			}
 			if (a.getProperty(RING_CONFIG) != null && a.getProperty(RING_CONFIG).equals(UP))
 			{
