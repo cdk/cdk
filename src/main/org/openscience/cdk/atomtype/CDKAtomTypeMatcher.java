@@ -1118,6 +1118,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					if (isAcceptable(atom, atomContainer, type)) return type;
     				}
     			}
+            } else if (atomContainer.getConnectedBondsCount(atom) == 3) {
+                int doubleBondCount = countAttachedDoubleBonds(atomContainer, atom);
+                if (doubleBondCount == 2) {
+                    IAtomType type = getAtomType("I.5");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
             } else if (atomContainer.getConnectedBondsCount(atom) == 2) {
                 IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
                 if (maxBondOrder == IBond.Order.DOUBLE) {

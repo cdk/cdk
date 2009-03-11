@@ -3007,6 +3007,28 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1S/C6H5IO2/c8-7(9)6-4-2-1-3-5-6/h1-5H
+     */
+    @Test public void testIodoxybenzene() throws Exception {
+        IMolecule mol = MoleculeFactory.makeBenzene();
+        IAtom iodine = mol.getBuilder().newAtom("I");
+        IAtom oxygen1 = mol.getBuilder().newAtom("O");
+        IAtom oxygen2 = mol.getBuilder().newAtom("O");
+        mol.addAtom(iodine);
+        mol.addAtom(oxygen1);
+        mol.addAtom(oxygen2);
+        mol.addBond(0, 6, Order.SINGLE);
+        mol.addBond(6, 7, Order.DOUBLE);
+        mol.addBond(6, 8, Order.DOUBLE);
+
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            "I.5", "O.sp2", "O.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test
     public void testNOxide() throws CDKException {
         IMolecule mol = new Molecule();
