@@ -29,11 +29,11 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 
 /**
@@ -74,7 +74,7 @@ public class AtomTypeManipulator {
         // a side effect of this is that it is probably not valid to get the atom
         // type of a peudo atom. I think this is OK, since you can always check
         // whether an atom is a pseudo atom without looking at its atom type
-        if (!(atom instanceof PseudoAtom)) {
+        if (!(atom instanceof IPseudoAtom)) {
             atom.setSymbol(atomType.getSymbol());
             atom.setMaxBondOrder(atomType.getMaxBondOrder());
             atom.setBondOrderSum(atomType.getBondOrderSum());
