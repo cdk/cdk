@@ -55,7 +55,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
 
     @Test public void testGetFormalCharge() {
         IPseudoAtom atom = (IPseudoAtom)newChemObject();
-        Assert.assertNull(atom.getFormalCharge());
+        Assert.assertEquals(0, atom.getFormalCharge().intValue());
     }
 
     @Test public void testSetFormalCharge_Integer() {

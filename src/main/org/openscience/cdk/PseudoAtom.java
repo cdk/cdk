@@ -77,9 +77,6 @@ public class PseudoAtom extends Atom
         super.point3d = null;
         super.point2d = null;
 
-        super.hydrogenCount = null;
-        super.formalCharge = null;
-
         // set these default, unchangeable values
         super.stereoParity = 0;
     }
