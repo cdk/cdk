@@ -504,6 +504,18 @@ public class SmilesParser {
 	private int getImplicitHydrogenCount(String s, int position)
 	{
 		logger.debug("getImplicitHydrogenCount(): Parsing implicit hydrogens from: " + s);
+
+        // from the calling code, we only come here if we hit an H
+        //
+        // so if the function returns an explicit 0, it means that an
+        // H0 was encountered.
+        //
+        // Howvever, H is equivalent to H1. In the latter, the calling code has
+        // to increment the positon by 1, but in the former it shouldn't. So we
+        // need a way to differentiate these two cases. We do so by returning
+        // -1 if we get just H, and 1 if we see H1.
+        //
+        // This is a horrible kludge :( We need a JavaCC parser!
 		int count = 0;  // for the case of no H which is same as H0
 		if (s.charAt(position) == 'H')
 		{
@@ -523,7 +535,7 @@ public class SmilesParser {
 					logger.error("Could not parse number of implicit hydrogens from the multiplier: " + multiplier);
 					logger.debug(exception);
 				}
-			} else count = 1; // since H == H1
+			} else count = -1; // since H == H1
 		}
 		return count;
 	}
@@ -711,10 +723,14 @@ public class SmilesParser {
 					// count implicit hydrogens
 					implicitHydrogens = getImplicitHydrogenCount(s, position);
 					position++;
-					if (implicitHydrogens > 1)
+
+                    // we check if H was followed by a number. if it wasn't, then the return value
+                    // of getImplicitHydrogens is -1. See comments in that method
+					if (implicitHydrogens >= 0)
 					{
 						position++;
 					}
+                    if (implicitHydrogens == -1) implicitHydrogens = 1;                    
 					atom.setHydrogenCount(implicitHydrogens);
 				} else if (mychar == '+' || mychar == '-')
 				{
