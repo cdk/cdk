@@ -39,7 +39,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -197,9 +196,7 @@ public class PharmacophoreUtils {
                 pcore.addAttribute(new Attribute("name", (String) name));
 
             // we add the pcore groups for this query as local to the group
-            Iterator<IAtom> atoms = query.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : query.atoms()) {
                 Element group = new Element("group");
                 group.addAttribute(new Attribute("id", atom.getSymbol()));
                 group.appendChild(((PharmacophoreQueryAtom) atom).getSmarts());
@@ -207,9 +204,7 @@ public class PharmacophoreUtils {
             }
 
             // now add the constraints
-            Iterator<IBond> bonds = query.bonds().iterator();
-            while (bonds.hasNext()) {
-                IBond bond = bonds.next();
+            for (IBond bond : query.bonds()) {
                 Element elem = null;
                 if (bond instanceof PharmacophoreQueryBond) {
                     PharmacophoreQueryBond dbond = (PharmacophoreQueryBond) bond;
@@ -226,9 +221,8 @@ public class PharmacophoreUtils {
                 }
 
                 // now add the group associated with this constraint
-                Iterator<IAtom> constraintGroups = bond.atoms().iterator();
-                while (constraintGroups.hasNext()) {
-                    PharmacophoreQueryAtom atom = (PharmacophoreQueryAtom) constraintGroups.next();
+                for (IAtom iAtom : bond.atoms()) {
+                    PharmacophoreQueryAtom atom = (PharmacophoreQueryAtom) iAtom;
                     Element gelem = new Element("groupRef");
                     gelem.addAttribute(new Attribute("id", atom.getSymbol()));
                     if (elem != null) {
@@ -285,7 +279,7 @@ public class PharmacophoreUtils {
     /* process a single pcore definition */
     private static IQueryAtomContainer processPharmacophoreElement(Element e,
                                                                    HashMap<String, String> global) throws CDKException {
-        QueryAtomContainer ret = new QueryAtomContainer();
+        IQueryAtomContainer ret = new QueryAtomContainer();
         ret.setProperty("description", e.getAttributeValue("description"));
         ret.setProperty(CDKConstants.TITLE, e.getAttributeValue("name"));
 
@@ -308,7 +302,7 @@ public class PharmacophoreUtils {
     private static void processDistanceConstraint(Element child,
                                                   HashMap<String, String> local,
                                                   HashMap<String, String> global,
-                                                  QueryAtomContainer ret) throws CDKException {
+                                                  IQueryAtomContainer ret) throws CDKException {
         double lower;
         String tmp = child.getAttributeValue("lower");
         if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
@@ -349,9 +343,7 @@ public class PharmacophoreUtils {
 
         // now add the constraint as a bond
         IAtom a1 = null, a2 = null;
-        Iterator<IAtom> atoms = ret.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom queryAtom = atoms.next();
+        for (IAtom queryAtom : ret.atoms()) {
             if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
             if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
         }
@@ -361,7 +353,7 @@ public class PharmacophoreUtils {
     private static void processAngleConstraint(Element child,
                                                HashMap<String, String> local,
                                                HashMap<String, String> global,
-                                               QueryAtomContainer ret) throws CDKException {
+                                               IQueryAtomContainer ret) throws CDKException {
         double lower;
         String tmp = child.getAttributeValue("lower");
         if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
@@ -412,9 +404,7 @@ public class PharmacophoreUtils {
         // now add the constraint as a bond
         IAtom a1 = null, a2 = null;
         IAtom a3 = null;
-        Iterator<IAtom> atoms = ret.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom queryAtom = atoms.next();
+        for (IAtom queryAtom : ret.atoms()) {
             if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
             if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
             if (queryAtom.getSymbol().equals(id3)) a3 = queryAtom;
@@ -426,9 +416,8 @@ public class PharmacophoreUtils {
     }
 
     private static boolean containsPatom(IQueryAtomContainer q, String id) {
-        Iterator<IAtom> atoms = q.atoms().iterator();
-        while (atoms.hasNext()) {
-            IQueryAtom queryAtom = (IQueryAtom) atoms.next();
+        for (IAtom iAtom : q.atoms()) {
+            IQueryAtom queryAtom = (IQueryAtom) iAtom;
             if (queryAtom.getSymbol().equals(id)) return true;
         }
         return false;
