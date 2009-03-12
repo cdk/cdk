@@ -129,4 +129,16 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
         return (double) tmp / factor;
     }
 
+    /**
+     * String representation of an angle constraint.
+     *
+     * @return String representation of and angle constraint
+     */
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("AC ").append(getAtom(0)).append(" ").append(getAtom(1)).append(" ").append(getAtom(2));
+        sb.append(" [").append(getLower()).append(" - ").append(getUpper()).append("] ");
+        return sb.toString();
+    }
+
 }

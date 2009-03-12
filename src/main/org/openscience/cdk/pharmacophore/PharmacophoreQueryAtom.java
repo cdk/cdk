@@ -91,4 +91,15 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
     public void setOperator(String ID) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    /**
+     * String representation of this pharmacophore group.
+     *
+     * @return String representation of this pharmacophore group
+     */
+    public String toString() {
+        StringBuffer s = new StringBuffer();
+        s.append(getSymbol()).append("[").append(getSmarts()).append("]");
+        return s.toString();
+    }
 }
