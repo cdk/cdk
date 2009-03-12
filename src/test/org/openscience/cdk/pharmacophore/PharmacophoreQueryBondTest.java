@@ -73,5 +73,12 @@ public class PharmacophoreQueryBondTest {
         Assert.assertEquals(1.732, qbond2.getLower(), 0.01);
     }
 
-
+     @Test
+    public void testToString() {
+        PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
+        PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
+        PharmacophoreQueryBond qbond1 = new PharmacophoreQueryBond(qatom1, qatom2, 1.0, 2.0);
+        String repr = qbond1.toString();
+        Assert.assertEquals("DC::Amine [[CX2]N]::aromatic [c1ccccc1]::[1.0 - 2.0]", repr);        
+     }
 }

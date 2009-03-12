@@ -75,4 +75,14 @@ public class PharmacophoreQueryAngleBondTest {
         Assert.assertEquals(54.74, qbond1.getLower(), 0.01);
         Assert.assertEquals(50.00, qbond2.getLower(), 0.01);
     }
+
+    @Test
+    public void testToString() {
+        PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
+        PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
+        PharmacophoreQueryAtom qatom3 = new PharmacophoreQueryAtom("blah", "C");
+        PharmacophoreQueryAngleBond qbond1 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 54.735);
+        String repr = qbond1.toString();
+        Assert.assertEquals("AC::Amine [[CX2]N]::aromatic [c1ccccc1]::blah [C]::[54.74 - 54.74]", repr);        
+    }
 }

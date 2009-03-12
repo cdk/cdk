@@ -131,9 +131,10 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      *
      * @return  String representation of a distance constraint
      */
+    @TestMethod("testToString")
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("DC " + getAtom(0) + " " + getAtom(1) + " [" + getLower() + " - " + getUpper() + "] ");
+        sb.append("DC::" + getAtom(0) + "::" + getAtom(1) + "::[" + getLower() + " - " + getUpper() + "] ");
         return sb.toString();
     }
 

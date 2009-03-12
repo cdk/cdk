@@ -60,4 +60,11 @@ public class PharmacophoreQueryAtomTest {
         Assert.assertTrue(qatom.matches(patom3));
         Assert.assertFalse(qatom.matches(patom4));
     }
+
+    @Test
+    public void testToString() {
+        PharmacophoreQueryAtom qatom = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
+        String repr = qatom.toString();
+        Assert.assertEquals("aromatic [c1ccccc1]", repr);
+    }
 }

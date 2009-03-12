@@ -97,9 +97,10 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      *
      * @return String representation of this pharmacophore group
      */
+    @TestMethod("testToString")
     public String toString() {
         StringBuffer s = new StringBuffer();
-        s.append(getSymbol()).append("[").append(getSmarts()).append("]");
+        s.append(getSymbol()).append(" [").append(getSmarts()).append("]");
         return s.toString();
     }
 }
