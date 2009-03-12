@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+ * $Author: egonw $
+ * $Date: 2008-03-04 17:00:17 -0500 (Tue, 04 Mar 2008) $
+ * $Revision: 10299 $
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -25,50 +25,48 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
- * This matches a bond with a certain bond order.
+ * This matches an aromatic or a single bond, used when no bond is specified between an atom
  *
- * Daylight spec indicates that if match a single bond
- * using '-', it should be an aliphatic single bond
- * 
- * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.module  isomorphism
+ * @cdk.svnrev  $Revision: 10299 $
  * @cdk.keyword SMARTS
  */
-public class OrderQueryBond extends SMARTSBond {
+public class AromaticOrSingleQueryBond extends SMARTSBond {
 
-    private static final long serialVersionUID = -5139538872961160661L;
+    private static final long serialVersionUID = 6941220923564432716L;
 
     /**
      * Creates a new instance
      *
-     * @param order the order of bond
      */
-    public OrderQueryBond(IBond.Order order) {
+    public AromaticOrSingleQueryBond() {
     	super();
-    	this.setOrder(order);
+    	setFlag(CDKConstants.ISAROMATIC, true);
     }
-    
+
+    /**
+     * Creates a new instance
+     *
+     */
+    public AromaticOrSingleQueryBond(IQueryAtom atom1, IQueryAtom atom2, Order order) {
+    	super(atom1, atom2, order);
+    	setFlag(CDKConstants.ISAROMATIC, true);
+    }
+
 	/* (non-Javadoc)
 	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
 	 */
-    public boolean matches(IBond bond) {
-        if (getOrder() == IBond.Order.SINGLE) {
-            return !bond.getFlag(CDKConstants.ISAROMATIC) && getOrder() == bond.getOrder();
-        } else return getOrder() == bond.getOrder();
+	public boolean matches(IBond bond) {
+        return bond.getFlag(CDKConstants.ISAROMATIC) || bond.getOrder() == IBond.Order.SINGLE;        
     }
 
     /* (non-Javadoc)
      * @see org.openscience.cdk.Bond#toString()
      */
     public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("OrderQueryBond(");
-        s.append(this.hashCode() + ", ");
-		s.append("#O:" + getOrder());
-		s.append(")");
-		return s.toString();
+		return "AromaticOrSingleQueryBond()";
     }
 }
-
