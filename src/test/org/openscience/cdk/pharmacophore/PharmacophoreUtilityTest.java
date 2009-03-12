@@ -39,7 +39,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -62,7 +61,7 @@ public class PharmacophoreUtilityTest {
     public void testReadPcoreDef() throws IOException, CDKException {
         String filename = "data/pcore/pcore.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
-        List<IQueryAtomContainer> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+        List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
         Assert.assertEquals(2, defs.size());
 
@@ -78,9 +77,7 @@ public class PharmacophoreUtilityTest {
         Assert.assertNull(def2.getProperty(CDKConstants.TITLE));
         
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
-        Iterator<IAtom> atoms = def2.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : def2.atoms()) {
             String sym = atom.getSymbol();
             boolean found = false;
             for (String s : ids) {
@@ -97,7 +94,7 @@ public class PharmacophoreUtilityTest {
     public void testReadPcoreAngleDef() throws CDKException, IOException {
         String filename = "data/pcore/pcoreangle.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
-        List<IQueryAtomContainer> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+        List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
         Assert.assertEquals(1, defs.size());
 
@@ -108,9 +105,7 @@ public class PharmacophoreUtilityTest {
 
 
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
-        Iterator<IAtom> atoms = def1.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : def1.atoms()) {
             String sym = atom.getSymbol();
             boolean found = false;
             for (String s : ids) {
@@ -122,9 +117,7 @@ public class PharmacophoreUtilityTest {
             Assert.assertTrue("'" + sym + "' in pcore.xml is invalid", found);
         }
 
-        Iterator<IBond> bonds = def1.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : def1.bonds()) {
             if (bond instanceof PharmacophoreQueryBond) {
                 PharmacophoreQueryBond cons = (PharmacophoreQueryBond) bond;
                 IAtom[] a = getAtoms(cons);
@@ -148,9 +141,9 @@ public class PharmacophoreUtilityTest {
     public void testPCoreWrite() throws CDKException, IOException {
         String filename = "data/pcore/pcore.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
-        List<IQueryAtomContainer> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+        List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
-        IQueryAtomContainer[] defarray = defs.toArray(new IQueryAtomContainer[]{});
+        PharmacophoreQuery[] defarray = defs.toArray(new PharmacophoreQuery[]{});
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PharmacophoreUtils.writePharmacophoreDefinition(defarray, baos);
         String s = baos.toString();
@@ -173,10 +166,8 @@ public class PharmacophoreUtilityTest {
 
     private IAtom[] getAtoms(IBond bond) {
         ArrayList<IAtom> alist = new ArrayList<IAtom>();
-        Iterator<IAtom> atoms = bond.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
-            alist.add(atom);
+        for (IAtom iAtom : bond.atoms()) {
+            alist.add(iAtom);
         }
         return alist.toArray(new IAtom[]{});
     }

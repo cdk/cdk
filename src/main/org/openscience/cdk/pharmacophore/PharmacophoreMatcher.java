@@ -40,7 +40,10 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point3d;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
@@ -137,7 +140,7 @@ import java.util.*;
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreMatcherTest")
 public class PharmacophoreMatcher {
     private LoggingTool logger = new LoggingTool(PharmacophoreMatcher.class);
-    private IQueryAtomContainer pharmacophoreQuery = null;
+    private PharmacophoreQuery pharmacophoreQuery = null;
     private List<List<PharmacophoreAtom>> matchingPAtoms = null;
     private List<List<IBond>> matchingPBonds = null;
 
@@ -161,7 +164,7 @@ public class PharmacophoreMatcher {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
      */
-    public PharmacophoreMatcher(IQueryAtomContainer pharmacophoreQuery) {
+    public PharmacophoreMatcher(PharmacophoreQuery pharmacophoreQuery) {
         this.pharmacophoreQuery = pharmacophoreQuery;
     }
 
@@ -213,9 +216,8 @@ public class PharmacophoreMatcher {
             // even though the atoms comprising the pcore groups are
             // constant, their coords will differ, so we need to make
             // sure we get the latest set of effective coordinates
-            Iterator<IAtom> atoms = pharmacophoreMolecule.atoms().iterator();
-            while (atoms.hasNext()) {
-                PharmacophoreAtom patom = (PharmacophoreAtom) atoms.next();
+            for (IAtom iAtom : pharmacophoreMolecule.atoms()) {
+                PharmacophoreAtom patom = (PharmacophoreAtom) iAtom;
                 List<Integer> tmpList = new ArrayList<Integer>();
                 for (int idx : patom.getMatchingAtoms()) tmpList.add(idx);
                 Point3d coords = getEffectiveCoordinates(atomContainer, tmpList);
@@ -358,7 +360,7 @@ public class PharmacophoreMatcher {
      * @return The query
      */
     @TestMethod("testGetterSetter")
-    public IQueryAtomContainer getPharmacophoreQuery() {
+    public PharmacophoreQuery getPharmacophoreQuery() {
         return pharmacophoreQuery;
     }
 
@@ -368,7 +370,7 @@ public class PharmacophoreMatcher {
      * @param query The query
      */
     @TestMethod("testGetterSetter")
-    public void setPharmacophoreQuery(IQueryAtomContainer query) {
+    public void setPharmacophoreQuery(PharmacophoreQuery query) {
         pharmacophoreQuery = query;
     }
 
@@ -382,9 +384,8 @@ public class PharmacophoreMatcher {
 
         logger.debug("Converting [" + atomContainer.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
 
-        Iterator qatoms = pharmacophoreQuery.atoms().iterator();
-        while (qatoms.hasNext()) {
-            PharmacophoreQueryAtom qatom = (PharmacophoreQueryAtom) qatoms.next();
+        for (IAtom atom : pharmacophoreQuery.atoms()) {
+            PharmacophoreQueryAtom qatom = (PharmacophoreQueryAtom) atom;
             String smarts = qatom.getSmarts();
 
             // a pcore query might have multiple instances of a given pcore atom (say
@@ -440,9 +441,7 @@ public class PharmacophoreMatcher {
         if (hasAngleConstraints(pharmacophoreQuery)) {
             int nangleDefs = 0;
 
-            Iterator<IBond> qbonds = pharmacophoreQuery.bonds().iterator();
-            while (qbonds.hasNext()) {
-                IBond bond = qbonds.next();
+            for (IBond bond : pharmacophoreQuery.bonds()) {
                 if (!(bond instanceof PharmacophoreQueryAngleBond)) continue;
 
                 IAtom startQAtom = bond.getAtom(0);
@@ -455,9 +454,7 @@ public class PharmacophoreMatcher {
                 List<IAtom> middlel = new ArrayList<IAtom>();
                 List<IAtom> endl = new ArrayList<IAtom>();
 
-                Iterator<IAtom> tatoms = pharmacophoreMolecule.atoms().iterator();
-                while (tatoms.hasNext()) {
-                    IAtom tatom = tatoms.next();
+                for (IAtom tatom : pharmacophoreMolecule.atoms()) {
                     if (tatom.getSymbol().equals(startQAtom.getSymbol())) startl.add(tatom);
                     if (tatom.getSymbol().equals(middleQAtom.getSymbol())) middlel.add(tatom);
                     if (tatom.getSymbol().equals(endQAtom.getSymbol())) endl.add(tatom);
@@ -510,18 +507,14 @@ public class PharmacophoreMatcher {
     }
 
     private boolean hasDistanceConstraints(IQueryAtomContainer query) {
-        Iterator<IBond> bonds = query.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : query.bonds()) {
             if (bond instanceof PharmacophoreQueryBond) return true;
         }
         return false;
     }
 
     private boolean hasAngleConstraints(IQueryAtomContainer query) {
-        Iterator<IBond> bonds = query.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : query.bonds()) {
             if (bond instanceof PharmacophoreQueryAngleBond) return true;
         }
         return false;
@@ -586,6 +579,7 @@ public class PharmacophoreMatcher {
     }
 
     private boolean checkQuery(IQueryAtomContainer query) {
+        if (!(query instanceof PharmacophoreQuery)) return false;
         HashMap<String, String> map = new HashMap<String, String>();
         for (int i = 0; i < query.getAtomCount(); i++) {
             IQueryAtom atom = (IQueryAtom) query.getAtom(i);

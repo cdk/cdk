@@ -32,8 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -70,7 +68,7 @@ public class PharmacophoreMatcherTest {
         Assert.assertNotNull(conformers);
 
         // make a query
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
 
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -120,7 +118,7 @@ public class PharmacophoreMatcherTest {
         Assert.assertNotNull(conformers);
 
         // make a query
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
 
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -156,7 +154,7 @@ public class PharmacophoreMatcherTest {
        Assert.assertNotNull(conformers);
 
         // make a query
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
 
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -198,7 +196,7 @@ public class PharmacophoreMatcherTest {
 
     @Test(expected = CDKException.class)
     public void testInvalidQuery() throws CDKException {
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
 
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -227,7 +225,7 @@ public class PharmacophoreMatcherTest {
         IteratingMDLReader reader = new IteratingMDLReader(ins,
                 DefaultChemObjectBuilder.getInstance());
 
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
@@ -257,7 +255,7 @@ public class PharmacophoreMatcherTest {
         IteratingMDLReader reader = new IteratingMDLReader(ins,
                 DefaultChemObjectBuilder.getInstance());
 
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
@@ -294,7 +292,7 @@ public class PharmacophoreMatcherTest {
         IteratingMDLReader reader = new IteratingMDLReader(ins,
                 DefaultChemObjectBuilder.getInstance());
 
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryAtom n3 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
@@ -320,7 +318,7 @@ public class PharmacophoreMatcherTest {
         IteratingMDLReader reader = new IteratingMDLReader(ins,
                 DefaultChemObjectBuilder.getInstance());
 
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryAtom n3 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
@@ -344,7 +342,7 @@ public class PharmacophoreMatcherTest {
         Assert.assertNotNull(conformers);
 
         // make a query
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
 
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -384,7 +382,7 @@ public class PharmacophoreMatcherTest {
 
     @Test
     public void testGetterSetter() {
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
@@ -394,7 +392,7 @@ public class PharmacophoreMatcherTest {
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher();
         matcher.setPharmacophoreQuery(query);
-        IQueryAtomContainer retQuery = matcher.getPharmacophoreQuery();
+        PharmacophoreQuery retQuery = matcher.getPharmacophoreQuery();
         Assert.assertEquals(2, retQuery.getAtomCount());
         Assert.assertEquals(1, retQuery.getBondCount());
     }
@@ -402,7 +400,7 @@ public class PharmacophoreMatcherTest {
     @Test
     public void multiSmartsQuery() throws IOException, CDKException {
 
-        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom rings = new PharmacophoreQueryAtom("A", "c1ccccc1|C1CCCC1");
         PharmacophoreQueryAtom o1 = new PharmacophoreQueryAtom("Hd", "[OX1]");
         PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(rings, o1, 3.5, 5.8);
