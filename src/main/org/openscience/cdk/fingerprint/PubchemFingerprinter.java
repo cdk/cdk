@@ -57,7 +57,8 @@ import java.util.BitSet;
  *   fingerprint.length(); // returns the highest set bit
  * </pre>
  * Note that the fingerprinter assumes that you have detected aromaticity and atom
- * types before evaluating the fingerprint.
+ * types before evaluating the fingerprint. Also the fingerprinter expects that
+ * explicit H's are present
  * <p/>
  * Note that this fingerprint is not particularly fast, as it will perform
  * ring detection (see below) as well as multiple SMARTS queries.

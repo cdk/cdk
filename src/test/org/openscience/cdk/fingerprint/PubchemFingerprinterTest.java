@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -67,6 +68,7 @@ public class PubchemFingerprinterTest extends CDKTestCase {
     @Test
     public void testFingerprint() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter();
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
 
         IMolecule mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
         IMolecule mol2 = parser.parseSmiles("c1ccccc1CC");
@@ -74,6 +76,12 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 
+        adder.addImplicitHydrogens(mol1);
+        adder.addImplicitHydrogens(mol2);
+
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol2);
+        
         CDKHueckelAromaticityDetector.detectAromaticity(mol1);
         CDKHueckelAromaticityDetector.detectAromaticity(mol2);
 
@@ -82,7 +90,7 @@ public class PubchemFingerprinterTest extends CDKTestCase {
 
         Assert.assertEquals(881, printer.getSize());
 
-        Assert.assertTrue("c1ccccc1CC was not detected as a subset of c1ccccc1CCc1ccccc1",
+        Assert.assertFalse("c1ccccc1CC was detected as a subset of c1ccccc1CCc1ccccc1",
                 FingerprinterTool.isSubset(bs1, bs2));
     }
 
@@ -128,6 +136,23 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         IFingerprinter printer = new PubchemFingerprinter();
         BitSet fp = printer.getFingerprint(mol);
         BitSet ref = PubchemFingerprinter.decode("AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+
+        Assert.assertEquals(ref, fp);
+    }
+
+    @Test
+    public void testBenzene() throws CDKException {
+        IMolecule mol = parser.parseSmiles("c1ccccc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
+        adder.addImplicitHydrogens(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        IFingerprinter printer = new PubchemFingerprinter();
+        BitSet fp = printer.getFingerprint(mol);
+        BitSet ref = PubchemFingerprinter.decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+
         System.out.println("bits on in ref but missing from code");
         for (int i = 0; i < printer.getSize(); i++) {
             if (ref.get(i) && !fp.get(i)) System.out.print(i + " ");
@@ -138,17 +163,7 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         for (int i = 0; i < printer.getSize(); i++) {
             if (!ref.get(i) && fp.get(i)) System.out.print(i + " ");
         }
-        Assert.assertEquals(ref, fp);
-    }
-
-    @Test
-    public void testBenzene() throws CDKException {
-        IMolecule mol = parser.parseSmiles("c1ccccc1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        IFingerprinter printer = new PubchemFingerprinter();
-        BitSet fp = printer.getFingerprint(mol);
-        BitSet ref = PubchemFingerprinter.decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+        
         Assert.assertEquals(ref, fp);
 
     }
