@@ -81,7 +81,7 @@ public class PubchemFingerprinterTest extends CDKTestCase {
 
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol2);
-        
+
         CDKHueckelAromaticityDetector.detectAromaticity(mol1);
         CDKHueckelAromaticityDetector.detectAromaticity(mol2);
 
@@ -125,7 +125,7 @@ public class PubchemFingerprinterTest extends CDKTestCase {
      * @cdk.inchi InChI=1S/C13H24O10S/c1-20-12-8(18)6(16)10(4(2-14)21-12)23-13-9(19)7(17)11(24)5(3-15)22-13/h4-19,24H,2-3H2,1H3/t4-,5-,6-,7-,8-,9-,10-,11-,12-,13+/m1/s1
      */
     @Test
-    public void testBits() throws CDKException {
+    public void testCID2518130() throws CDKException {
         IMolecule mol = parser.parseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -140,6 +140,51 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         Assert.assertEquals(ref, fp);
     }
 
+    /**
+     * Test case for Pubchem CID 5934166.
+     *
+     * @throws InvalidSmilesException
+     * @cdk.inchi InChI=1S/C32H26N/c1-5-13-26(14-6-1)21-22-31-23-30(28-17-9-3-10-18-28)24-32(29-19-11-4-12-20-29)33(31)25-27-15-7-2-8-16-27/h1-24H,25H2/q+1/b22-21+
+     */
+    @Test
+    public void testCID5934166() throws CDKException {
+        IMolecule mol = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
+        adder.addImplicitHydrogens(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        IFingerprinter printer = new PubchemFingerprinter();
+        BitSet fp = printer.getFingerprint(mol);
+        BitSet ref = PubchemFingerprinter.decode("AAADceB+AAAAAAAAAAAAAAAAAAAAAAAAAAA8YMGCAAAAAAAB1AAAHAAAAAAADAjBHgQwgJMMEACgAyRiRACCgCAhAiAI2CA4ZJgIIOLAkZGEIAhggADIyAcQgMAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+
+        Assert.assertEquals(ref, fp);
+    }
+
+    /**
+       * Test case for Pubchem CID 25181289.
+       *
+       * @throws InvalidSmilesException
+       * @cdk.inchi  InChI=1S/C14H10Cl3N3O3/c1-6(7-2-4-8(21)5-3-7)19-20-11-9(15)12(14(22)23)18-13(17)10(11)16/h2-5,19,21H,1H2,(H,18,20)(H,22,23)
+       */
+      @Test
+      public void testCID25181289() throws CDKException {
+          IMolecule mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+          AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+          CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
+          adder.addImplicitHydrogens(mol);
+          AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+          CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+          IFingerprinter printer = new PubchemFingerprinter();
+          BitSet fp = printer.getFingerprint(mol);
+          BitSet ref = PubchemFingerprinter.decode("AAADccBzMAAGAAAAAAAAAAAAAAAAAAAAAAA8QAAAAAAAAAABwAAAHgIYCAAADA6BniAwzpJqEgCoAyTyTASChCAnJiIYumGmTtgKJnLD1/PEdQhkwBHY3Qe82AAOIAAAAAAAAABAAAAAAAAAAAAAAAAAAA==");
+
+          Assert.assertEquals(ref, fp);
+      }
+    
+
     @Test
     public void testBenzene() throws CDKException {
         IMolecule mol = parser.parseSmiles("c1ccccc1");
@@ -147,7 +192,7 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-        
+
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         IFingerprinter printer = new PubchemFingerprinter();
         BitSet fp = printer.getFingerprint(mol);
@@ -163,7 +208,7 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         for (int i = 0; i < printer.getSize(); i++) {
             if (!ref.get(i) && fp.get(i)) System.out.print(i + " ");
         }
-        
+
         Assert.assertEquals(ref, fp);
 
     }
