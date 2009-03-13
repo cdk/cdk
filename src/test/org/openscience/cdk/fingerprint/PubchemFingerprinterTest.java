@@ -128,29 +128,29 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         IFingerprinter printer = new PubchemFingerprinter();
         BitSet fp = printer.getFingerprint(mol);
         BitSet ref = PubchemFingerprinter.decode("AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+        System.out.println("bits on in ref but missing from code");
+        for (int i = 0; i < printer.getSize(); i++) {
+            if (ref.get(i) && !fp.get(i)) System.out.print(i + " ");
+        }
+        System.out.println("\n--");
 
+        System.out.println("bits on in code but not set in ref");
+        for (int i = 0; i < printer.getSize(); i++) {
+            if (!ref.get(i) && fp.get(i)) System.out.print(i + " ");
+        }
         Assert.assertEquals(ref, fp);
     }
 
     @Test
     public void testBenzene() throws CDKException {
-       IMolecule mol = parser.parseSmiles("c1ccccc1");
+        IMolecule mol = parser.parseSmiles("c1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
-        adder.addImplicitHydrogens(mol);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
-
         IFingerprinter printer = new PubchemFingerprinter();
         BitSet fp = printer.getFingerprint(mol);
         BitSet ref = PubchemFingerprinter.decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
-        System.out.println("ref = " + ref);
-        System.out.println("fp  = " + fp);
+        Assert.assertEquals(ref, fp);
 
-        System.out.println("bits on in ref but missing from code");
-        for (int i = 0; i < printer.getSize(); i++) {
-            if (ref.get(i) && !fp.get(i)) System.out.print(i+" ");
-        }
     }
 
 }
