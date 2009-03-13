@@ -35,26 +35,27 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * This matches an atom using the atomic number.
  *
- * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.module smarts
+ * @cdk.svnrev $Revision$
  * @cdk.keyword SMARTS
  */
 public class AtomicNumberAtom extends SMARTSAtom {
-	private static final long serialVersionUID = 4811205092161793129L;
-	
-	/**
-	 * Creates a new instance.
-	 *
-	 * @param atomicNumber
-	 */
-	public AtomicNumberAtom(int atomicNumber) {
-		this.setAtomicNumber(atomicNumber);
-	}
-	
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    private static final long serialVersionUID = 4811205092161793129L;
+
+    /**
+     * Creates a new instance.
+     *
+     * @param atomicNumber
      */
+    public AtomicNumberAtom(int atomicNumber) {
+        this.setAtomicNumber(atomicNumber);
+    }
+
+    /* (non-Javadoc)
+    * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    */
     public boolean matches(IAtom atom) {
-        return Symbols.getAtomicNumber(atom.getSymbol()).intValue() == getAtomicNumber().intValue();
+        Integer atNum = Symbols.getAtomicNumber(atom.getSymbol());
+        return atNum != null && atNum.intValue() == getAtomicNumber().intValue();
     }
 }

@@ -399,6 +399,16 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(1, results[1]);
     }
 
+    /**
+     * @cdk.bug 2686473
+     * @throws Exception
+     */
+    @Test public void testPropertyAtomicNumber9() throws Exception {
+        int[] results = match("[#6]", "[*]");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+    }
+
     @Test public void testPropertyR1() throws Exception {
         int[] results = match("[R2]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assert.assertEquals(7, results[0]);
