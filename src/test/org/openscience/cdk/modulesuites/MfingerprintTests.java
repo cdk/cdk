@@ -27,6 +27,7 @@ import org.openscience.cdk.coverage.FingerprintCoverageTest;
 import org.openscience.cdk.fingerprint.EStateFingerprinterTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
+import org.openscience.cdk.fingerprint.PubchemFingerprinterTest;
 import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.TanimotoTest;
 
@@ -42,6 +43,7 @@ import org.openscience.cdk.similarity.TanimotoTest;
     ExtendedFingerprinterTest.class,
     MACCSFingerprinterTest.class,
     EStateFingerprinterTest.class,
+    PubchemFingerprinterTest.class,    
     DistanceMomentTest.class,
     TanimotoTest.class
 })
