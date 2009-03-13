@@ -83,6 +83,6 @@ public class PharmacophoreQueryAngleBondTest {
         PharmacophoreQueryAtom qatom3 = new PharmacophoreQueryAtom("blah", "C");
         PharmacophoreQueryAngleBond qbond1 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 54.735);
         String repr = qbond1.toString();
-        Assert.assertEquals(0, repr.indexOf("AC::Amine [[CX2]N]::aromatic [c1ccccc1]::blah [C]::[54.74 - 54.74]"));        
+        Assert.assertEquals(0, repr.indexOf("AC::Amine [[CX2]N]::aromatic [c1ccccc1]::blah [C]::[54.74 - 54.74]"));
     }
 }
