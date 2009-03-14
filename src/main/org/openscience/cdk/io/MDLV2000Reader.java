@@ -732,11 +732,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			IAtom atom = atoms.next();
 			if (atom instanceof IPseudoAtom) {
 				IPseudoAtom pseudo = (IPseudoAtom)atom;
-				if ("D".equals(pseudo.getLabel()) && atom.getMassNumber() == 2) {
+                Integer massNumber = atom.getMassNumber();
+                if ("D".equals(pseudo.getLabel()) &&
+				        massNumber != null && massNumber == 2) {
 					IAtom newAtom = molecule.getBuilder().newAtom(atom);
 					newAtom.setSymbol("H");
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
-				} else if ("T".equals(pseudo.getLabel()) && atom.getMassNumber() == 3) {
+				} else if ("T".equals(pseudo.getLabel()) &&
+				        massNumber != null && massNumber == 3) {
 					IAtom newAtom = molecule.getBuilder().newAtom(atom);
 					newAtom.setSymbol("H");
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);

@@ -29,43 +29,33 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matches an atom using the atomic number.
  *
- * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.module smarts
+ * @cdk.svnrev $Revision$
  * @cdk.keyword SMARTS
  */
 public class AtomicNumberAtom extends SMARTSAtom {
-	private static final long serialVersionUID = 4811205092161793129L;
-	
-	/**
-	 * Creates a new instance.
-	 *
-	 * @param atomicNumber
-	 */
-	public AtomicNumberAtom(int atomicNumber) {
-		this.setAtomicNumber(atomicNumber);
-	}
-	
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    private static final long serialVersionUID = 4811205092161793129L;
+
+    /**
+     * Creates a new instance.
+     *
+     * @param atomicNumber
      */
+    public AtomicNumberAtom(int atomicNumber) {
+        this.setAtomicNumber(atomicNumber);
+    }
+
+    /* (non-Javadoc)
+    * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    */
     public boolean matches(IAtom atom) {
-    	// TODO: this is just a hack for a few
-      if (atom.getAtomicNumber() != CDKConstants.UNSET) {
-            return (atom.getAtomicNumber() == getAtomicNumber());
-    	} 
-    	if (atom.getSymbol().equals("C")) {
-    		return getAtomicNumber() == 6;
-    	} else if (atom.getSymbol().equals("O")) {
-    		return getAtomicNumber() == 8;
-    	} else if (atom.getSymbol().equals("N")) {
-    		return getAtomicNumber() == 7;
-    	}
-    	return false;
+        Integer atNum = Symbols.getAtomicNumber(atom.getSymbol());
+        return atNum != null && atNum.intValue() == getAtomicNumber().intValue();
     }
 }
