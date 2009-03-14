@@ -4,10 +4,11 @@
     <property name="pathtojava3d" value="" />
 
     <path id="project.class.path">
-        <pathelement location="${java.ext.dirs}/rt.jar" />
-
         <pathelement location="." />
         <fileset dir="../../jar">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="../../develjar">
             <include name="*.jar" />
         </fileset>
         <fileset dir="${pathtojava3d}">
@@ -29,7 +30,7 @@
 
             <doclet name="net.sf.cdk.tools.JavaDocStats" path="."/>
 
-            <packageset dir="../../src/">
+            <packageset dir="../../src/main">
               <include name="org/openscience/cdk/**"/>
             </packageset>
         </javadoc>
@@ -123,13 +124,7 @@
 
     <target name="compileDoclets" id="compileDoclets">
       <javac srcdir="source" destdir="."
-             includes="*.java" debug="on" optimize="off">
-        <classpath>
-          <fileset dir="${java.ext.dirs}">
-            <include name="tools.jar" />
-          </fileset>
-        </classpath>
-      </javac>
+             includes="*.java" debug="on" optimize="off" />
     </target>
     
 </project>
