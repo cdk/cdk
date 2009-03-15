@@ -378,7 +378,7 @@ public class PeriodicTableElement extends Element
      */
     @TestMethod("testString")
     public String toString() {
-		StringBuffer resultString = new StringBuffer();
+		StringBuffer resultString = new StringBuffer(128);
 		resultString.append("PeriodicTableElement(");
 
 		resultString.append(getSymbol());
