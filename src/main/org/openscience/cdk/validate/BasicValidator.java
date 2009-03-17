@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.validate;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -379,12 +381,12 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest chargeConservation = new ValidationTest(reaction,
             "Total formal charge is not preserved during the reaction"
         );
-        java.util.Iterator atoms1 = reactants.atoms().iterator();
+        Iterator<IAtom> atoms1 = reactants.atoms().iterator();
         int totalCharge1 = 0;
         while (atoms1.hasNext()) {
             totalCharge1 =+ ((IAtom)atoms1.next()).getFormalCharge();
         }
-        java.util.Iterator atoms2 = products.atoms().iterator();
+        Iterator<IAtom> atoms2 = products.atoms().iterator();
         int totalCharge2 = 0;
         while (atoms2.hasNext()) {
             totalCharge2 =+ ((IAtom)atoms2.next()).getFormalCharge();
