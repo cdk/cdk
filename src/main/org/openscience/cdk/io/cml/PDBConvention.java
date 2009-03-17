@@ -185,18 +185,18 @@ public class PDBConvention extends CMLCoreModule {
     }
     
     public void newSequence(){
-    	altLocV = new ArrayList();
-    	chainIDV = new ArrayList();
-    	hetAtomV = new ArrayList();
-    	iCodeV = new ArrayList();
-    	nameV = new ArrayList();
-    	oxtV = new ArrayList();
-    	recordV = new ArrayList();
-    	resNameV = new ArrayList();
-    	resSeqV = new ArrayList();
-    	segIDV = new ArrayList();
-    	serialV = new ArrayList();
-    	tempFactorV = new ArrayList();
+    	altLocV = new ArrayList<String>();
+    	chainIDV = new ArrayList<String>();
+    	hetAtomV = new ArrayList<String>();
+    	iCodeV = new ArrayList<String>();
+    	nameV = new ArrayList<String>();
+    	oxtV = new ArrayList<String>();
+    	recordV = new ArrayList<String>();
+    	resNameV = new ArrayList<String>();
+    	resSeqV = new ArrayList<String>();
+    	segIDV = new ArrayList<String>();
+    	serialV = new ArrayList<String>();
+    	tempFactorV = new ArrayList<String>();
     	
     }
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
