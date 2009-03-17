@@ -322,7 +322,16 @@ public class Convertor {
         	cmlList.setId(moleculeSet.getID());
         	
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
-            cmlList.appendChild(cdkMoleculeToCMLMolecule(moleculeSet.getMolecule(i), false));
+            IAtomContainer container = moleculeSet.getMolecule(i);
+            if (container instanceof IMolecule) {
+                cmlList.appendChild(
+                    cdkMoleculeToCMLMolecule((IMolecule)container, false)
+                );
+            } else {
+                cmlList.appendChild(
+                    cdkAtomContainerToCMLMolecule((IMolecule)container, false)
+                );
+            }
         }
         return cmlList;
     }
