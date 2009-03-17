@@ -100,7 +100,7 @@ public class DeduceBondSystemTool {
         
         if (ringSet==null) throw new CDKException("failure in AllRingsFinder.findAllRings");
         
-        ArrayList MasterList = new ArrayList();
+        List MasterList = new ArrayList();
 
         //this.counter=0;// counter which keeps track of all current possibilities for placing double bonds
         
@@ -226,7 +226,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    private void fiveMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
+    private void fiveMemberedRingPossibilities(IMolecule m, IRing r, List MasterList) {
         // 5 possibilities for placing 2 double bonds
         // 5 possibilities for placing 1 double bond
 
@@ -290,7 +290,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    private void sixMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
+    private void sixMemberedRingPossibilities(IMolecule m, IRing r, List MasterList) {
         // 2 possibilities for placing 3 double bonds
         // 6 possibilities for placing 2 double bonds
         // 6 possibilities for placing 1 double bonds
@@ -398,7 +398,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    private void sevenMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
+    private void sevenMemberedRingPossibilities(IMolecule m, IRing r, List MasterList) {
         // for now only consider case where have 3 double bonds
 
         IAtom[] ringatoms = new Atom[7];
@@ -520,7 +520,7 @@ public class DeduceBondSystemTool {
     }
 
     private IMolecule loop(long starttime, IMolecule molecule, int index, 
-    		               ArrayList MasterList, int [] choices, IMoleculeSet som) throws CDKException {
+    		               List MasterList, int [] choices, IMoleculeSet som) throws CDKException {
 
         //logger.debug(System.currentTimeMillis());
 
