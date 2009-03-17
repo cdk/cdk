@@ -77,18 +77,18 @@ public class PDBConvention extends CMLCoreModule {
     private String connect_root;
 	private boolean hasScalar;
 	private String idValue = "";
-	private List altLocV;
-	private List chainIDV;
-	private List hetAtomV;
-	private List iCodeV;
-	private List nameV;
-	private List oxtV;
-	private List recordV;
-	private List resNameV;
-	private List resSeqV;
-	private List segIDV;
-	private List serialV;
-	private List tempFactorV;
+	private List<String> altLocV;
+	private List<String> chainIDV;
+	private List<String> hetAtomV;
+	private List<String> iCodeV;
+	private List<String> nameV;
+	private List<String> oxtV;
+	private List<String> recordV;
+	private List<String> resNameV;
+	private List<String> resSeqV;
+	private List<String> segIDV;
+	private List<String> serialV;
+	private List<String> tempFactorV;
 	
     public PDBConvention(IChemFile chemFile) {
         super(chemFile);
