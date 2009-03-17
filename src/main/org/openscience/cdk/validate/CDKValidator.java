@@ -25,7 +25,6 @@
 package org.openscience.cdk.validate;
 
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
