@@ -23,6 +23,7 @@ package org.openscience.cdk.templates;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.dict.DictRef;
@@ -71,7 +72,7 @@ public class AminoAcids {
         	total += acid.getBondCount();
         	logger.debug("total #bonds: ", total);
 
-            Iterator bonds = acid.bonds().iterator();
+            Iterator<IBond> bonds = acid.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
         		info[counter][0] = counter;
@@ -119,8 +120,8 @@ public class AminoAcids {
         );
         try {
         	list = (IChemFile)reader.read(list);
-        	List containersList = ChemFileManipulator.getAllAtomContainers(list);
-        	Iterator iterator = containersList.iterator();
+        	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(list);
+        	Iterator<IAtomContainer> iterator = containersList.iterator();
         	int counter = 0;
         	while(iterator.hasNext())
         	{
@@ -162,7 +163,7 @@ public class AminoAcids {
         			}
         		}
 //        		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
-                Iterator bonds = ac.bonds().iterator();
+                Iterator<IBond> bonds = ac.bonds().iterator();
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
         			aminoAcid.addBond(bond);
@@ -189,7 +190,7 @@ public class AminoAcids {
      * Returns a HashMap where the key is one of G, A, V, L, I, S, T, C, M, D,
      * N, E, Q, R, K, H, F, Y, W and P.
      */
-    public static HashMap getHashMapBySingleCharCode() {
+    public static Map<String,AminoAcid> getHashMapBySingleCharCode() {
         AminoAcid[] monomers = createAAs();
         HashMap map = new HashMap();
         for (int i=0; i<monomers.length; i++) {

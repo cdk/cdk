@@ -30,6 +30,7 @@ import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.CDKTestCase;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @cdk.module test-pdb
@@ -59,7 +60,7 @@ public class AminoAcidsTest extends CDKTestCase {
 
     @Test
     public void testGetHashMapBySingleCharCode() {
-        HashMap map = AminoAcids.getHashMapBySingleCharCode();
+        Map<String,AminoAcid> map = AminoAcids.getHashMapBySingleCharCode();
         Assert.assertNotNull(map);
         Assert.assertEquals(20, map.size());
 
