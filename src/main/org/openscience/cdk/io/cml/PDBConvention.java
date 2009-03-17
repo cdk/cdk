@@ -26,6 +26,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
@@ -76,18 +77,18 @@ public class PDBConvention extends CMLCoreModule {
     private String connect_root;
 	private boolean hasScalar;
 	private String idValue = "";
-	private ArrayList altLocV;
-	private ArrayList chainIDV;
-	private ArrayList hetAtomV;
-	private ArrayList iCodeV;
-	private ArrayList nameV;
-	private ArrayList oxtV;
-	private ArrayList recordV;
-	private ArrayList resNameV;
-	private ArrayList resSeqV;
-	private ArrayList segIDV;
-	private ArrayList serialV;
-	private ArrayList tempFactorV;
+	private List altLocV;
+	private List chainIDV;
+	private List hetAtomV;
+	private List iCodeV;
+	private List nameV;
+	private List oxtV;
+	private List recordV;
+	private List resNameV;
+	private List resSeqV;
+	private List segIDV;
+	private List serialV;
+	private List tempFactorV;
 	
     public PDBConvention(IChemFile chemFile) {
         super(chemFile);
