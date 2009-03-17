@@ -105,7 +105,7 @@ public class Dictionary {
     public Entry[] getEntries() {
         int size = entries.size();
         Entry[] entryArray = new Entry[size];
-        Enumeration elements = entries.elements();
+        Enumeration<Entry> elements = entries.elements();
         int counter = 0;
         while (elements.hasMoreElements() && counter < size) {
             entryArray[counter] = (Entry)elements.nextElement();
