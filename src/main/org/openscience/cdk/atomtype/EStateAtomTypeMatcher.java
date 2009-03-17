@@ -23,11 +23,18 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * Determines the EState atom types.
@@ -75,7 +82,7 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 
 			String element = atom.getSymbol();
 
-			java.util.List attachedAtoms = atomContainer.getConnectedAtomsList(atom);
+			List<IAtom> attachedAtoms = atomContainer.getConnectedAtomsList(atom);
 
 			for (int j = 0; j <= attachedAtoms.size() - 1; j++) {
 				IAtom attached = (IAtom)attachedAtoms.get(j);
