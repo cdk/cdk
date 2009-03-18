@@ -164,6 +164,26 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         Assert.assertFalse(listener.changed);
         
     }
+    
+    @Test public void testRemoveReaction_IReaction() {
+  		IReactionSet reactionSet = (IReactionSet)newChemObject();
+  		IReaction reaction = reactionSet.getBuilder().newReaction();
+  		reaction.setID("1");
+   		reactionSet.addReaction(reaction);
+   		IReaction relevantReaction = reactionSet.getBuilder().newReaction();
+   		relevantReaction.setID("2");
+   		reactionSet.addReaction(relevantReaction);
+   		Assert.assertEquals(2,reactionSet.getReactionCount());
+   		reactionSet.removeReaction(relevantReaction);
+   		Assert.assertEquals(1,reactionSet.getReactionCount());
+   		Assert.assertEquals("1",reactionSet.getReaction(0).getID());
+   		reactionSet.addReaction(relevantReaction);
+   		reactionSet.addReaction(relevantReaction);
+   		Assert.assertEquals(3,reactionSet.getReactionCount());
+   		reactionSet.removeReaction(relevantReaction);
+   		Assert.assertEquals(1,reactionSet.getReactionCount());
+   		Assert.assertEquals("1",reactionSet.getReaction(0).getID());
+    }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;

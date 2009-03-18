@@ -250,5 +250,50 @@ public class ReactionSetManipulator {
         }
         return list;
     }
-    
+
+
+	/**
+     * Gets a reaction from a ReactionSet by ID of any product or reactant. If several exist,
+     * only the first one will be returned.
+     * 
+     * @param reactionSet The reactionSet to search in
+     * @param id The id to search for.
+     * @return The Reaction or null;
+     */
+    @TestMethod("testGetReactionByAtomContainerID_IReactionSet_String")
+	public static IReaction getReactionByAtomContainerID(IReactionSet reactionSet,
+			String id) {
+        for (IReaction reaction : reactionSet.reactions()) {
+        	if(AtomContainerSetManipulator.containsByID(reaction.getProducts(),id))
+                return reaction;
+        }
+        for (IReaction reaction : reactionSet.reactions()) {
+        	if(AtomContainerSetManipulator.containsByID(reaction.getReactants(),id))
+                return reaction;
+        }
+        return null;
+    }  
+	
+	
+	/**
+     * Gets a reaction from a ReactionSet by ID. If several exist,
+     * only the first one will be returned.
+     * 
+     * @param reactionSet The reactionSet to search in
+     * @param id The id to search for.
+     * @return The Reaction or null;
+     */
+    @TestMethod("testGetReactionByReactionID_IReactionSet_String")
+	public static IReaction getReactionByReactionID(IReactionSet reactionSet, String id)
+	{
+		Iterable<IReaction> reactionIter = reactionSet.reactions();
+		for (IReaction reaction : reactionIter)
+		{
+			if (reaction.getID()!=null && reaction.getID().equals(id))
+			{
+				return reaction;
+			}
+		}
+		return null;
+	}
 }

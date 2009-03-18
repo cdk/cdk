@@ -162,5 +162,10 @@ public class DebugReactionSet extends org.openscience.cdk.ReactionSet
 		logger.debug("Removing all reactions");
 		super.removeAllReactions();
 	}
+	
+	public void removeReaction(IReaction reaction){
+		logger.debug("Removing reaction "+reaction.getID());
+		super.removeReaction(reaction);
+	}
 
 }

@@ -208,5 +208,14 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 		Assert.assertSame("forth order: cycloHexaneNitrogen", cycloHexaneNitrogen, atomContainerSet.getAtomContainer(3));
 		Assert.assertSame("firth order: cycloHexeneNitrogen", cycloHexeneNitrogen, atomContainerSet.getAtomContainer(4));
 	}
+	
+	@Test public void testContainsByID_IAtomContainerSet_IAtomContainer(){
+		IAtomContainer relevantAtomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+		IAtomContainerSet atomContainerSet = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+		atomContainerSet.addAtomContainer(relevantAtomContainer);
+		Assert.assertFalse(AtomContainerSetManipulator.containsByID(atomContainerSet, relevantAtomContainer.getID()));
+		relevantAtomContainer.setID("1");
+		Assert.assertTrue(AtomContainerSetManipulator.containsByID(atomContainerSet, relevantAtomContainer.getID()));
+	}
 }
 
