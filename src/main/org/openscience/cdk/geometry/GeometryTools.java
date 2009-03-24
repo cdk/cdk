@@ -43,11 +43,11 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
 /**
  * A set of static utility classes for geometric calculations and operations.
  * This class is extensively used, for example, by JChemPaint to edit molecule.
@@ -690,6 +690,32 @@ public class GeometryTools {
 		}
 		return closestAtom;
 	}
+
+    /**
+     * Returns the atom of the given molecule that is closest to the given atom
+     * (excluding itself).
+     *
+     * @param atomCon The molecule that is searched for the closest atom
+     * @param atom    The atom to search around
+     * @return        The atom that is closest to the given coordinates
+     */
+	public static IAtom getClosestAtom(IAtomContainer atomCon, IAtom atom) {
+		IAtom closestAtom = null;
+		double min = Double.MAX_VALUE;
+		Point2d atomPosition = atom.getPoint2d();
+		for (int i = 0; i < atomCon.getAtomCount(); i++) {
+			IAtom currentAtom = atomCon.getAtom(i);
+			if (currentAtom != atom) {
+				double d = atomPosition.distance(currentAtom.getPoint2d());
+				if (d < min) {
+					min = d;
+					closestAtom = currentAtom;
+				}
+			}
+		}
+		return closestAtom;
+	}
+
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
 	 *  coordinates.

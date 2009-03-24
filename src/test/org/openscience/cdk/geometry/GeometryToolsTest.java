@@ -394,7 +394,18 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom2);
     	Assert.assertEquals(GeometryTools.getLength2D(bond),2.23,0.01);
     }
-
+    
+    @Test public void testGetClosestAtom_IAtomContainer_IAtom() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(-1,-1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IAtomContainer acont = new AtomContainer();
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom1));
+        Assert.assertEquals(atom1, GeometryTools.getClosestAtom(acont, atom2));
+    }
 
     @Test public void
     testShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_double()
