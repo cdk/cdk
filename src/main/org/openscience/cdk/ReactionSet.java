@@ -239,4 +239,13 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	public void stateChanged(IChemObjectChangeEvent event) {
 		notifyChanged(event);
 	}
+
+
+
+	public void removeReaction(IReaction relevantReaction) {
+		for (int i = reactionCount-1; i >= 0; i--) {
+			if (reactions[i] == relevantReaction)
+				removeReaction(i);
+		}
+	}
 }

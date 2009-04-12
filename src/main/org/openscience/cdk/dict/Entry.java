@@ -28,7 +28,8 @@
  */
 package org.openscience.cdk.dict;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Entry in a Dictionary.
@@ -46,7 +47,7 @@ public class Entry {
 	private String className;
     private String label;
     private String identifier;
-    private Vector<String> descriptorInfo;
+    private List<String> descriptorInfo;
 	private String definition;
 	private String description;
 	private Object rawContent;
@@ -54,7 +55,7 @@ public class Entry {
     public Entry(String identifier, String term) {
         this.identifier = identifier.toLowerCase();
         this.label = term;
-        this.descriptorInfo = new Vector<String>();
+        this.descriptorInfo = new ArrayList<String>();
     }
     
     public Entry(String identifier) {
@@ -101,7 +102,7 @@ public class Entry {
         this.descriptorInfo.add( metadata );
     }
     
-    public Vector getDescriptorMetadata() {
+    public List<String> getDescriptorMetadata() {
         return this.descriptorInfo;
     }
     

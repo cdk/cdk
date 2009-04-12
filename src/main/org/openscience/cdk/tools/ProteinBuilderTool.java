@@ -36,6 +36,7 @@ import org.openscience.cdk.templates.AminoAcids;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Class that facilitates building protein structures. Building DNA and RNA
@@ -109,7 +110,7 @@ public class ProteinBuilderTool {
      * </pre>
      */
     public static BioPolymer createProtein(String sequence) throws CDKException {
-        HashMap templates = AminoAcids.getHashMapBySingleCharCode();
+        Map<String,AminoAcid> templates = AminoAcids.getHashMapBySingleCharCode();
         BioPolymer protein = new BioPolymer();
         Strand strand = new Strand();
         AminoAcid previousAA = null;

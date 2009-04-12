@@ -26,6 +26,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
@@ -76,18 +77,18 @@ public class PDBConvention extends CMLCoreModule {
     private String connect_root;
 	private boolean hasScalar;
 	private String idValue = "";
-	private ArrayList altLocV;
-	private ArrayList chainIDV;
-	private ArrayList hetAtomV;
-	private ArrayList iCodeV;
-	private ArrayList nameV;
-	private ArrayList oxtV;
-	private ArrayList recordV;
-	private ArrayList resNameV;
-	private ArrayList resSeqV;
-	private ArrayList segIDV;
-	private ArrayList serialV;
-	private ArrayList tempFactorV;
+	private List<String> altLocV;
+	private List<String> chainIDV;
+	private List<String> hetAtomV;
+	private List<String> iCodeV;
+	private List<String> nameV;
+	private List<String> oxtV;
+	private List<String> recordV;
+	private List<String> resNameV;
+	private List<String> resSeqV;
+	private List<String> segIDV;
+	private List<String> serialV;
+	private List<String> tempFactorV;
 	
     public PDBConvention(IChemFile chemFile) {
         super(chemFile);
@@ -184,18 +185,18 @@ public class PDBConvention extends CMLCoreModule {
     }
     
     public void newSequence(){
-    	altLocV = new ArrayList();
-    	chainIDV = new ArrayList();
-    	hetAtomV = new ArrayList();
-    	iCodeV = new ArrayList();
-    	nameV = new ArrayList();
-    	oxtV = new ArrayList();
-    	recordV = new ArrayList();
-    	resNameV = new ArrayList();
-    	resSeqV = new ArrayList();
-    	segIDV = new ArrayList();
-    	serialV = new ArrayList();
-    	tempFactorV = new ArrayList();
+    	altLocV = new ArrayList<String>();
+    	chainIDV = new ArrayList<String>();
+    	hetAtomV = new ArrayList<String>();
+    	iCodeV = new ArrayList<String>();
+    	nameV = new ArrayList<String>();
+    	oxtV = new ArrayList<String>();
+    	recordV = new ArrayList<String>();
+    	resNameV = new ArrayList<String>();
+    	resSeqV = new ArrayList<String>();
+    	segIDV = new ArrayList<String>();
+    	serialV = new ArrayList<String>();
+    	tempFactorV = new ArrayList<String>();
     	
     }
     public void endElement(CMLStack xpath, String uri, String local, String raw) {

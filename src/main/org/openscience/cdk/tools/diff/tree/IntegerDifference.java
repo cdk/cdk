@@ -50,7 +50,7 @@ public class IntegerDifference implements IDifference {
         if (first == null || second == null) {
             return new IntegerDifference(name, first, second);
         }
-        if (first == second) {
+        if (first.intValue() == second.intValue()) {
             return null; // no difference
         }
         return new IntegerDifference(name, first, second);

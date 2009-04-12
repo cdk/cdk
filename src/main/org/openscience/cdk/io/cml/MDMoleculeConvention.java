@@ -26,8 +26,6 @@
 
 package org.openscience.cdk.io.cml;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.libio.md.ChargeGroup;
@@ -144,9 +142,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 					// ok, an atom is referenced; look it up
 					currentAtom = null;
 //					System.out.println("#atoms: " + currentMolecule.getAtomCount());
-					Iterator atoms = currentMolecule.atoms().iterator();
-					while (atoms.hasNext()) {
-						IAtom nextAtom = (IAtom)atoms.next();
+					for (IAtom nextAtom : currentMolecule.atoms()) {
 						if (nextAtom.getID().equals(id)) {
 							currentAtom = nextAtom; 
 						}
@@ -163,9 +159,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 					// ok, an atom is referenced; look it up
 					IAtom referencedAtom = null;
 //					System.out.println("#atoms: " + currentMolecule.getAtomCount());
-					Iterator atoms = currentMolecule.atoms().iterator();
-					while (atoms.hasNext()) {
-						IAtom nextAtom = (IAtom)atoms.next();
+                    for (IAtom nextAtom : currentMolecule.atoms()) {
 						if (nextAtom.getID().equals(id)) {
 							referencedAtom = nextAtom; 
 						}

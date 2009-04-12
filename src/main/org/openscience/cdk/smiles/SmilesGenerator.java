@@ -372,7 +372,7 @@ public class SmilesGenerator
 			for (int i = 0; i < v.size(); i++)
 			{
 				int counter = 0;
-				Iterator containers = RingSetManipulator.getAllAtomContainers((IRingSet) v.get(i)).iterator();
+				Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers((IRingSet) v.get(i)).iterator();
 				while (containers.hasNext()) {
 					IAtomContainer allrings = (IAtomContainer) containers.next();
 					for (int k = 0; k < allrings.getAtomCount(); k++)
@@ -468,7 +468,7 @@ public class SmilesGenerator
 		{
 			if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N"))))
 			{
-				List atoms = container.getConnectedAtomsList(atom);
+				List<IAtom> atoms = container.getConnectedAtomsList(atom);
 				org.openscience.cdk.interfaces.IAtom one = null;
 				org.openscience.cdk.interfaces.IAtom two = null;
 				IAtom atomi = null;
@@ -608,7 +608,7 @@ public class SmilesGenerator
 	 */
 	private List getCanNeigh(final org.openscience.cdk.interfaces.IAtom a, final IAtomContainer container)
 	{
-		List v = container.getConnectedAtomsList(a);
+		List<IAtom> v = container.getConnectedAtomsList(a);
 		if (v.size() > 1)
 		{
 			Collections.sort(v,

@@ -332,6 +332,60 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		Assert.assertEquals(reaction3,reactionSet1.getReaction(0));
 		
 	}
+    
+    @Test public void testGetReactionByReactionID_IReactionSet_String(){
+		IReactionSet set = builder.newReactionSet();
+		IReaction reaction1 = builder.newReaction();
+		reaction1.setID("1");
+		set.addReaction(reaction1);
+		IMolecule mol1a = builder.newMolecule();
+		IMolecule mol1b = builder.newMolecule();
+		reaction1.addReactant(mol1a);
+		reaction1.addReactant(mol1b);
+		reaction1.addProduct(builder.newMolecule());
+		reaction1.addProduct(builder.newMolecule());
+		
+		IReaction reaction2 = builder.newReaction();
+		reaction2.setID("2");
+		reaction2.addReactant(mol1b);
+		reaction2.addProduct(builder.newMolecule());
+		set.addReaction(reaction2);
+		
+		IReaction reaction3 = builder.newReaction();
+		reaction3.setID("3");
+		reaction3.addReactant(builder.newMolecule());
+		reaction3.addProduct(mol1a);
+		set.addReaction(reaction3);
+		Assert.assertEquals(reaction1, ReactionSetManipulator.getReactionByReactionID(set, "1"));
+		Assert.assertNull(ReactionSetManipulator.getReactionByAtomContainerID(set, "4"));
+    }
+
+    @Test public void testGetReactionByAtomContainerID_IReactionSet_String(){
+		IReactionSet set = builder.newReactionSet();
+		IReaction reaction1 = builder.newReaction();
+		set.addReaction(reaction1);
+		IMolecule mol1a = builder.newMolecule();
+		mol1a.setID("1");
+		IMolecule mol1b = builder.newMolecule();
+		mol1b.setID("2");
+		reaction1.addReactant(mol1a);
+		reaction1.addReactant(builder.newMolecule());
+		reaction1.addProduct(builder.newMolecule());
+		reaction1.addProduct(builder.newMolecule());
+		
+		IReaction reaction2 = builder.newReaction();
+		reaction2.addReactant(builder.newMolecule());
+		reaction2.addProduct(mol1b);
+		set.addReaction(reaction2);
+		
+		IReaction reaction3 = builder.newReaction();
+		reaction3.addReactant(builder.newMolecule());
+		reaction3.addProduct(builder.newMolecule());
+		set.addReaction(reaction3);
+		Assert.assertEquals(reaction1, ReactionSetManipulator.getReactionByAtomContainerID(set, "1"));
+		Assert.assertEquals(reaction2, ReactionSetManipulator.getReactionByAtomContainerID(set, "2"));
+		Assert.assertNull(ReactionSetManipulator.getReactionByAtomContainerID(set, "3"));
+    }
 }
 
 

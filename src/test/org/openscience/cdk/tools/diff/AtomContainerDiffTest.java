@@ -30,6 +30,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import java.io.*;
+
 /**
  * @cdk.module test-diff
  */
@@ -75,5 +77,37 @@ public class AtomContainerDiffTest extends CDKTestCase {
 
         IDifference difference = AtomContainerDiff.difference(container1, container2);
         Assert.assertNotNull(difference);
+    }
+
+    @Test
+    public void testDiffFromSerialized() throws IOException, ClassNotFoundException {
+        IAtomContainer atomContainer = new AtomContainer();
+        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
+        bond1.setOrder(IBond.Order.SINGLE);
+        atomContainer.addBond(bond1);
+
+        File tmpFile = File.createTempFile("serialized", ".dat");
+        tmpFile.deleteOnExit();
+        String objFilename = tmpFile.getAbsolutePath();
+
+        FileOutputStream fout = new FileOutputStream(objFilename);
+        ObjectOutputStream ostream = new ObjectOutputStream(fout);
+        ostream.writeObject(atomContainer);
+
+        ostream.close();
+        fout.close();
+
+        // now read the serialized atomContainer in
+        FileInputStream fin = new FileInputStream(objFilename);
+        ObjectInputStream istream = new ObjectInputStream(fin);
+        Object obj = istream.readObject();
+
+        Assert.assertTrue(obj instanceof IAtomContainer);
+
+        IAtomContainer newAtomContainer = (IAtomContainer) obj;
+        String diff = AtomDiff.diff(atomContainer, newAtomContainer);
+
+        Assert.assertTrue("There were differences between original and deserialized version!", diff.equals(""));
+
     }
 }

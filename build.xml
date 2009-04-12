@@ -246,7 +246,7 @@
             <mkdir dir="${build}" />
         	<javac includes="net/sf/cdk/tools/MakeJavafilesFiles.java"
         	    srcdir="${src}/main/" destdir="${build}" optimize="${optimization}"
-        	    debug="${debug}" deprecation="${deprecation}"/>
+        	    debug="${debug}" deprecation="${deprecation}" source="1.5"/>
         	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
                   <arg value="${src}/META-INF"/>
                   <arg value="${src}/main"/>

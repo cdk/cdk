@@ -54,8 +54,8 @@ public class DictionaryValidator extends AbstractValidator {
 
     public ValidationReport validateChemObject(IChemObject subject) {
         ValidationReport report = new ValidationReport();
-        Map properties = subject.getProperties();
-        Iterator iter = properties.keySet().iterator();
+        Map<Object,Object> properties = subject.getProperties();
+        Iterator<Object> iter = properties.keySet().iterator();
         ValidationTest noNamespace = new ValidationTest(subject,
             "Dictionary Reference lacks a namespace indicating the dictionary."
         );
