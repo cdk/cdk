@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @author         egonw
  * @cdk.created    2008-07-13
- * @cdk.module     atomtype
+ * @cdk.module     atom type
  * @cdk.svnrev     $Revision$
  * @cdk.keyword    atom types, Sybyl
  */
@@ -50,13 +50,13 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 
     private final static String SYBYL_ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/sybyl-atom-types.owl";
     private final static String CDK_TO_SYBYL_MAP = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
-    
+
 	private AtomTypeFactory factory;
 	private CDKAtomTypeMatcher cdkMatcher;
 	private AtomTypeMapper mapper;
 
-    private static Map<IChemObjectBuilder,SybylAtomTypeMatcher> 
-        factories = new Hashtable<IChemObjectBuilder,SybylAtomTypeMatcher>(1); 
+    private static Map<IChemObjectBuilder,SybylAtomTypeMatcher>
+        factories = new Hashtable<IChemObjectBuilder,SybylAtomTypeMatcher>(1);
 
     private SybylAtomTypeMatcher(IChemObjectBuilder builder) {
         InputStream stream = this.getClass().getClassLoader().getResourceAsStream(SYBYL_ATOM_TYPE_LIST);
@@ -96,7 +96,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     /**
-     * Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is not perceived; 
+     * Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is not perceived;
      * Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not <i>C.ar</i>. If the latter is
      * required, please use findMatchingAtomType(IAtomContainer) instead.
      */
@@ -110,7 +110,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         if (mappedType == null) return null;
         return factory.getAtomType(mappedType);
     }
-    
+
     private String mapCDKToSybylType(IAtom atom) {
         String typeName = atom.getAtomTypeName();
         if (typeName == null) return null;
@@ -124,6 +124,6 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return mappedType;
     }
-    
+
 }
 
