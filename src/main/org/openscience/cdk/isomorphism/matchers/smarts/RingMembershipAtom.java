@@ -48,7 +48,9 @@ public class RingMembershipAtom extends SMARTSAtom {
 		if (atom.getFlag(CDKConstants.ISINRING)) {
 			IRingSet ringSet = (IRingSet)atom.getProperty(CDKConstants.SMALLEST_RINGS);
 			return ringSet.getAtomContainerCount() == numSSSR;
-		}
+		} else {
+            if (numSSSR == 0) return true;
+        }
 		return false;
 	}
 }

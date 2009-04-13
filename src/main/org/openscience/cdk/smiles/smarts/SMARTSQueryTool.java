@@ -391,6 +391,8 @@ public class SMARTSQueryTool {
                 }
                 atom.setProperty(CDKConstants.RING_SIZES, ringsizes);
                 atom.setProperty(CDKConstants.SMALLEST_RINGS, sssr.getRings(atom));
+            } else {
+                atom.setFlag(CDKConstants.ISINRING, false);
             }
 
             // determine how many rings bonds each atom is a part of
@@ -442,7 +444,6 @@ public class SMARTSQueryTool {
             logger.debug(e.toString());
             throw new CDKException(e.toString());
         }
-
     }
 
     /**
