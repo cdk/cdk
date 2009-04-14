@@ -257,11 +257,9 @@ public class PathTools {
      */
     @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IMolecule_int")
     public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IMolecule molecule, int max) {
-        IAtom atom;
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<IAtom>();
-        for (int f = 0; f < sphere.size(); f++) {
-            atom = sphere.get(f);
+        for (IAtom atom : sphere) {
             //logger.debug("atoms  "+ atom + f);
             //logger.debug("sphere size  "+ sphere.size());
             molecule.addAtom(atom);
@@ -320,12 +318,10 @@ public class PathTools {
         if (pathLength > cutOff) {
             return -1;
         }
-        IAtom atom;
 
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<IAtom>();
-        for (int f = 0; f < sphere.size(); f++) {
-            atom = sphere.get(f);
+        for (IAtom atom : sphere) {
             List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
             for (IBond bond : bonds) {
                 if (!bond.getFlag(CDKConstants.VISITED)) {
@@ -593,6 +589,7 @@ public class PathTools {
      * @param length        The maximum length of paths to look for
      * @return A  <code>List</code> containing the paths found
      */
+    @TestMethod("getPathsOfLengthUpto")
     public static List<List<IAtom>> getPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length) {
         List<IAtom> curPath = new ArrayList<IAtom>();
         List<List<IAtom>> paths = new ArrayList<List<IAtom>>();

@@ -359,5 +359,17 @@ public class PathToolsTest extends CDKTestCase {
             Assert.assertEquals("C", atom.getSymbol());
         }
     }
+
+
+    @Test
+    public void testGetPathsOfLengthUpto() throws InvalidSmilesException {
+        IAtomContainer container = sp.parseSmiles("CCCC");
+        List<List<IAtom>> paths = PathTools.getPathsOfLengthUpto(container, container.getAtom(0), 2);
+        Assert.assertEquals(3, paths.size());
+
+        container = sp.parseSmiles("C(C)CCC");
+        paths = PathTools.getPathsOfLengthUpto(container, container.getAtom(0), 2);
+        Assert.assertEquals(4, paths.size());
+    }
 }
 

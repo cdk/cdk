@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,6 +33,9 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+
+import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Checks the functionality of the MolecularFormula.
@@ -371,6 +372,19 @@ public class MolecularFormulaTest extends CDKTestCase {
         Assert.assertEquals(1.0,mf.getCharge(), 0.001);
         
     }
+
+    @Test
+    public void testSetCharge_Integer() {
+
+        IMolecularFormula mf = getBuilder().newMolecularFormula();
+        mf.setCharge(1);
+        mf.addIsotope(getBuilder().newAtom("C"));
+        mf.addIsotope(getBuilder().newAtom("F"));
+        mf.addIsotope(getBuilder().newAtom("H"), 3);
+
+        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
+
+    }
     /**
 	 * A unit test suite for JUnit.
 	 *
@@ -554,5 +568,25 @@ public class MolecularFormulaTest extends CDKTestCase {
     	IChemObjectBuilder builder = add.getBuilder();
     	Assert.assertNotNull(getBuilder());
     	Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
+    }
+
+    @Test
+    public void testIsTheSame() throws IOException {
+        MolecularFormula mf = new MolecularFormula();
+        IIsotope carb = getBuilder().newIsotope("C");
+        IIsotope anotherCarb = getBuilder().newIsotope("C");
+        IIsotope h = getBuilder().newIsotope("H");
+
+        carb.setExactMass(12.0);
+        anotherCarb.setExactMass(12.0);
+        h.setExactMass(1.0);
+
+        carb.setNaturalAbundance(34.0);
+        anotherCarb.setNaturalAbundance(34.0);
+        h.setNaturalAbundance(99.0);
+
+        Assert.assertTrue(mf.isTheSame(carb, carb));
+        Assert.assertTrue(mf.isTheSame(carb, anotherCarb));
+        Assert.assertFalse(mf.isTheSame(carb, h));
     }
 }

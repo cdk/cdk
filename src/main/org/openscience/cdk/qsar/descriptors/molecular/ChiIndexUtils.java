@@ -1,4 +1,4 @@
-package org.openscience.cdk.qsar;
+package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -9,9 +9,13 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.qsar.AtomValenceTool;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Utility methods for chi index calculations.
@@ -23,7 +27,7 @@ import java.util.*;
  * @cdk.module qsarmolecular
  * @cdk.svnrev $Revision$
  */
-public class ChiIndexUtils {
+class ChiIndexUtils {
 
     /**
      * Gets the fragments from a target <code>AtomContainer</code> matching a set of query fragments.
@@ -78,16 +82,14 @@ public class ChiIndexUtils {
      * Evaluates the simple chi index for a set of fragments.
      *
      * @param atomContainer The target <code>AtomContainer</code>
-     * @param fragList      A list of fragments
+     * @param fragLists      A list of fragments
      * @return The simple chi index
      */
-    public static double evalSimpleIndex(IAtomContainer atomContainer, List<List<Integer>> fragList) {
+    public static double evalSimpleIndex(IAtomContainer atomContainer, List<List<Integer>> fragLists) {
         double sum = 0;
-        for (int i = 0; i < fragList.size(); i++) {
-            ArrayList frag = (ArrayList) fragList.get(i);
+        for (List<Integer> fragList : fragLists) {
             double prod = 1.0;
-            for (int j = 0; j < frag.size(); j++) {
-                int atomSerial = (Integer) frag.get(j);
+            for (Integer atomSerial : fragList) {
                 IAtom atom = atomContainer.getAtom(atomSerial);
                 int nconnected = atomContainer.getConnectedAtomsCount(atom);
                 prod = prod * nconnected;
@@ -116,11 +118,11 @@ public class ChiIndexUtils {
             throw new CDKException("IO problem occured when using the CDK atom config");
         }
         double sum = 0;
-        for (int i = 0; i < fragList.size(); i++) {
-            ArrayList frag = (ArrayList) fragList.get(i);
+        for (Object aFragList : fragList) {
+            ArrayList frag = (ArrayList) aFragList;
             double prod = 1.0;
-            for (int j = 0; j < frag.size(); j++) {
-                int atomSerial = (Integer) frag.get(j);
+            for (Object aFrag : frag) {
+                int atomSerial = (Integer) aFrag;
                 IAtom atom = atomContainer.getAtom(atomSerial);
 
                 String sym = atom.getSymbol();
@@ -178,16 +180,14 @@ public class ChiIndexUtils {
 
         // check whether it's a S in S-S
         List<IAtom> connected = atomContainer.getConnectedAtomsList(atom);
-        for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = connected.get(i);
+        for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("S")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE)
                 return .89;
         }
 
         // check whether it's a S in -SO-
-        for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = connected.get(i);
+        for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("O")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
                 return 1.33;
@@ -195,8 +195,7 @@ public class ChiIndexUtils {
 
         // check whether it's a S in -SO2-
         int count = 0;
-        for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = connected.get(i);
+        for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("O")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
                 count++;
@@ -224,8 +223,7 @@ public class ChiIndexUtils {
 
         if (connected.size() == 4) conditions++;
 
-        for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = connected.get(i);
+        for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("O")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
                 conditions++;
@@ -270,9 +268,7 @@ public class ChiIndexUtils {
             List<Integer> tmp = new ArrayList<Integer>();
             for (Object anABondList : aBondList) {
                 int bondNumber = (Integer) anABondList;
-                Iterator<IAtom> atomIterator = ac.getBond(bondNumber).atoms().iterator();
-                while (atomIterator.hasNext()) {
-                    IAtom atom = atomIterator.next();
+                for (IAtom atom : ac.getBond(bondNumber).atoms()) {
                     Integer atomInt = ac.getAtomNumber(atom);
                     if (!tmp.contains(atomInt)) tmp.add(atomInt);
                 }

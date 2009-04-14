@@ -23,11 +23,6 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -35,6 +30,11 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 /**
  * Class defining a molecular formula object. It maintains
  * a list of list {@link IIsotope}.
@@ -222,7 +222,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
      *
      * @see    #getCharge
      */
-    @TestMethod("testCharge_Integer")
+    @TestMethod("testSetCharge_Integer")
 	public void setCharge(Integer charge) {
 		this.charge = charge;
 	}
@@ -375,16 +375,25 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 * @param isotopeTwo   The second Isotope to compare
 	 * @return             True, if both isotope are the same
 	 */
-	private boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
-		
+    @TestMethod("testIsTheSame")
+	protected boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
+
+        Double natAbund1 = isotopeOne.getNaturalAbundance();
+        Double natAbund2 = isotopeTwo.getNaturalAbundance();
+
+        Double exactMass1 = isotopeOne.getExactMass();
+        Double exactMass2 = isotopeTwo.getExactMass();
+
+        if (natAbund1 == null) natAbund1 = -1.0;
+        if (natAbund2 == null) natAbund2 = -1.0;
+        if (exactMass1 == null) exactMass1 = -1.0;
+        if (exactMass2 == null) exactMass2 = -1.0;
+
 		if(!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol() ))
 			return false;
-		if(isotopeOne.getNaturalAbundance() != isotopeTwo.getNaturalAbundance() )
+		if(natAbund1.doubleValue() != natAbund2)
 			return false;
-		if(isotopeOne.getExactMass() != isotopeTwo.getExactMass() )
-			return false;
-		
-		return true;
+		return exactMass1.doubleValue() == exactMass2;
 	}
 
 	public IChemObjectBuilder getBuilder() {
