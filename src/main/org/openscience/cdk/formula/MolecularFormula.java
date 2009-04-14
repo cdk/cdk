@@ -23,11 +23,6 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -35,6 +30,11 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 /**
  * Class defining a molecular formula object. It maintains
  * a list of list {@link IIsotope}.
@@ -222,7 +222,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
      *
      * @see    #getCharge
      */
-    @TestMethod("testCharge_Integer")
+    @TestMethod("testSetCharge_Integer")
 	public void setCharge(Integer charge) {
 		this.charge = charge;
 	}
