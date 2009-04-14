@@ -1,4 +1,4 @@
-package org.openscience.cdk.qsar;
+package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -9,6 +9,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.qsar.AtomValenceTool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.List;
  * @cdk.module qsarmolecular
  * @cdk.svnrev $Revision$
  */
-public class ChiIndexUtils {
+class ChiIndexUtils {
 
     /**
      * Gets the fragments from a target <code>AtomContainer</code> matching a set of query fragments.
