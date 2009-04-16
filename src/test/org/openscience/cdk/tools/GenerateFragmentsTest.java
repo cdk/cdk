@@ -19,18 +19,19 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -359,5 +360,37 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	}
     	Assert.assertEquals("C1CCC2=CC=CC=C2(C1)",smiles[0]);
 	}
+
+    /**
+     * @cdk.bug 2729120
+     */
+    @Test
+    public void testFourRings() throws CDKException {
+        String smiles = "C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles(smiles);
+    	gf.generateMurckoFragments(mol,true,true,5);        
+        String[] mfrags = gf.getMurckoFrameworksAsSmileArray();
+        Assert.assertEquals(6, mfrags.length);
+
+        boolean found = false;
+        for (String frag : mfrags) {
+            if (frag.equals("C=1C=CC(C=1)CC2CCCC2")) {
+                found = true;
+                break;
+            }
+        }
+        Assert.assertTrue(found);
+        found = false;
+        for (String frag : mfrags) {
+            if (frag.equals("C1CCC(CC1)CCC2CC(CC2)CC3C=CC=C3")) {
+                found = true;
+                break;
+            }
+        }
+        Assert.assertTrue(found);
+
+    }
+    
 }
 	            

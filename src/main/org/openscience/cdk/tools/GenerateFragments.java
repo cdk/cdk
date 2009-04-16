@@ -224,8 +224,8 @@ public class GenerateFragments {
 												if (!path.contains(firstRingSubstituents.getAtom(i))){
 													path.addAtom(firstRingSubstituents.getAtom(i));
 												}
-												if (!path.contains(secondRingSubstituents.getAtom(i))){
-													path.addAtom(secondRingSubstituents.getAtom(i));
+												if (!path.contains(secondRingSubstituents.getAtom(k))){
+													path.addAtom(secondRingSubstituents.getAtom(k));
 												}
 //													//add both ring atoms to path
 												//if (!path.contains(firstRingAtom)){
