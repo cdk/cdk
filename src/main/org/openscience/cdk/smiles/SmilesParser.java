@@ -430,6 +430,10 @@ public class SmilesParser {
 			logger.debug("Parsing next char");
 		} while (position < smiles.length());
 
+
+        if (thisRing != -1 && ringbonds[thisRing] != null && rings[thisRing] != null)
+            throw new InvalidSmilesException("Rings weren't properly closed. Check ring numbers");
+
 		return molecule;
 	}
 

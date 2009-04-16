@@ -27,12 +27,6 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -40,16 +34,13 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -812,7 +803,8 @@ public class AtomContainerManipulator {
 	 * @param  atom  The atom for which to calculate the bond order sum
 	 * @return       The number of bond order equivalents for this atom
 	 */
-	public double getBondOrderSum(IAtomContainer container, IAtom atom) {
+    @TestMethod("testBondOrderSum")
+	public static double getBondOrderSum(IAtomContainer container, IAtom atom) {
 		double count = 0;
 		for (IBond bond : container.getConnectedBondsList(atom)) {
 			if (bond.getOrder() == IBond.Order.SINGLE) {

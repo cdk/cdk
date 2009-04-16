@@ -198,7 +198,7 @@
     </Category>
 
     <Category rdf:ID="proteinDescriptor">
-        <rdfs:label>Proteinl Descriptor</rdfs:label>
+        <rdfs:label>Protein Descriptor</rdfs:label>
         <dc:contributor rdf:resource="#rg"/>
         <dc:date>2006-11-02</dc:date>
         <definition rdf:parseType='Literal'>

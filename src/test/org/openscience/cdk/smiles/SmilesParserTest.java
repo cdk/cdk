@@ -1790,5 +1790,25 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertNotNull(mol.getAtom(1).getHydrogenCount());
         Assert.assertEquals(0, mol.getAtom(1).getHydrogenCount().intValue());
     }
+
+    /**
+     * @cdk.bug 2714283
+     * @throws InvalidSmilesException
+     */
+    @Test(expected = InvalidSmilesException.class)
+    public void testBadRingClosure1() throws InvalidSmilesException {
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        p.parseSmiles("c1ccccc1Cc1ccccc");
+    }
+
+    /**
+     * @cdk.bug 2714283
+     * @throws InvalidSmilesException
+     */
+    @Test(expected = InvalidSmilesException.class)
+    public void testBadRingClosure2() throws InvalidSmilesException {
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        p.parseSmiles("NC1=CC=C(N)C=C");
+    }
 }
 
