@@ -935,19 +935,24 @@ public class CML2Test extends CDKTestCase {
     /**
      * @cdk.bug 2697568
      */
-    @Test public void testBug2697568() throws CDKException, FileNotFoundException {
+    @Test public void testReadReactionWithPointersToMoleculeSet() throws CDKException, FileNotFoundException {
         String filename = "data/cml/AlanineTree.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
         Assert.assertSame(chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0), chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0));
-        filename = "data/cml/AlanineTreeReverse.cml";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        reader = new CMLReader(ins);
-        chemFile = new ChemFile();
+    }
+
+    /**
+     * @cdk.bug 2697568
+     */
+    @Test public void testBug2697568() throws CDKException, FileNotFoundException {
+        String filename = "data/cml/AlanineTreeReverse.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
         Assert.assertSame(chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0), chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0));
     }
-
 }
