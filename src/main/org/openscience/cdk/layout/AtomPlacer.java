@@ -28,13 +28,6 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -46,6 +39,12 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Vector;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -311,27 +310,27 @@ public class AtomPlacer
 
 
     /**
-     *  Places the atoms in a linear chain. Expects the first atom to be placed and
-     *  places the next atom according to initialBondVector. The rest of the chain
-     *  is placed such that it is as linear as possible (in the overall result, the
-     *  angles in the chain are set to 120 Deg.)
+     * Places the atoms in a linear chain.
      *
-     *@param  ac                 The AtomContainer containing the chain atom to be
-     *      placed
-     *@param  initialBondVector  The Vector indicating the direction of the first
-     *      bond
-     *@param  bondLength         Description of the Parameter
+     * <p>Expects the first atom to be placed and
+     * places the next atom according to initialBondVector. The rest of the chain
+     * is placed such that it is as linear as possible (in the overall result, the
+     * angles in the chain are set to 120 Deg.)
+     *
+     * @param  atomContainer  The IAtomContainer containing the chain atom to be placed
+     * @param  initialBondVector  The Vector indicating the direction of the first bond
+     * @param  bondLength         The factor used to scale the initialBondVector
      */
-    public void placeLinearChain(IAtomContainer ac, Vector2d initialBondVector, double bondLength)
+    public void placeLinearChain(IAtomContainer atomContainer, Vector2d initialBondVector, double bondLength)
     {
-        IMolecule withh = ac.getBuilder().newMolecule(ac);
+        IMolecule withh = atomContainer.getBuilder().newMolecule(atomContainer);
 
         // BUGFIX - withh does not have cloned cloned atoms, so changes are
         // reflected in our atom container. If we're using implicit hydrogens
         // the correct counts need saving and restoring
-        int[] numh = new int[ac.getAtomCount()];
-        for (int i = 0, n = ac.getAtomCount(); i < n; i ++) {
-            Integer tmp = ac.getAtom(i).getHydrogenCount();
+        int[] numh = new int[atomContainer.getAtomCount()];
+        for (int i = 0, n = atomContainer.getAtomCount(); i < n; i ++) {
+            Integer tmp = atomContainer.getAtom(i).getHydrogenCount();
             if (tmp == CDKConstants.UNSET) numh[i]= 0;
             else numh[i] = tmp;            
         }
@@ -341,7 +340,7 @@ public class AtomPlacer
 //      removed during debugging. Before you put this in again, contact
 //      er@doktor-steinbeck.de
         
-//        if(GeometryTools.has2DCoordinatesNew(ac)==2){
+//        if(GeometryTools.has2DCoordinatesNew(atomContainer)==2){
 //            try{
 //                new HydrogenAdder().addExplicitHydrogensToSatisfyValency(withh);
 //            }catch(Exception ex){
@@ -350,15 +349,15 @@ public class AtomPlacer
 //            }
 //            new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
 //        }
-        logger.debug("Placing linear chain of length " + ac.getAtomCount());
+        logger.debug("Placing linear chain of length " + atomContainer.getAtomCount());
         Vector2d bondVector = initialBondVector;
         IAtom atom = null;
         Point2d atomPoint = null;
         IAtom nextAtom = null;
-        for (int f = 0; f < ac.getAtomCount() - 1; f++)
+        for (int f = 0; f < atomContainer.getAtomCount() - 1; f++)
         {
-            atom = ac.getAtom(f);
-            nextAtom = ac.getAtom(f + 1);
+            atom = atomContainer.getAtom(f);
+            nextAtom = atomContainer.getAtom(f + 1);
             atomPoint = new Point2d(atom.getPoint2d());
             bondVector.normalize();
             bondVector.scale(bondLength);
@@ -366,7 +365,7 @@ public class AtomPlacer
             nextAtom.setPoint2d(atomPoint);
             nextAtom.setFlag(CDKConstants.ISPLACED, true);
             boolean trans=false;
-            if(GeometryTools.has2DCoordinatesNew(ac)==2){
+            if(GeometryTools.has2DCoordinatesNew(atomContainer)==2){
                 try{
                     if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtom(f-2),withh.getAtom(f-1)))){
                         trans=BondTools.isCisTrans(withh.getAtom(f-3),withh.getAtom(f-2),withh.getAtom(f-1),withh.getAtom(f-0),withh);
@@ -381,8 +380,8 @@ public class AtomPlacer
         }
 
         // BUGFIX part 2 - restore hydrogen counts
-        for (int i = 0, n = ac.getAtomCount(); i < n; i ++) {
-            ac.getAtom(i).setHydrogenCount(numh[i]);
+        for (int i = 0, n = atomContainer.getAtomCount(); i < n; i ++) {
+            atomContainer.getAtom(i).setHydrogenCount(numh[i]);
         }
     }
 
