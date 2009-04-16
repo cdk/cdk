@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -754,6 +755,19 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(2, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(0, ac.getAtomCount());
+    }
+
+    @Test
+    public void testBondOrderSum() throws InvalidSmilesException {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("C=CC");
+        double bosum = AtomContainerManipulator.getBondOrderSum(mol, mol.getAtom(0));
+        Assert.assertEquals(2.0, bosum, 0.001);
+        bosum = AtomContainerManipulator.getBondOrderSum(mol, mol.getAtom(1));
+        Assert.assertEquals(3.0, bosum, 0.001);
+        bosum = AtomContainerManipulator.getBondOrderSum(mol, mol.getAtom(2));
+        Assert.assertEquals(1.0, bosum, 0.001);
+
     }
 }
 
