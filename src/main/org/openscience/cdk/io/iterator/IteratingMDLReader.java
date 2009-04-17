@@ -97,7 +97,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
     private BooleanIOSetting forceReadAs3DCoords;
 
     /**
-     * Contructs a new IteratingMDLReader that can read Molecule from a given Reader.
+     * Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
      * @param builder The builder

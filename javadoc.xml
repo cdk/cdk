@@ -8,7 +8,7 @@
     <property name="vecmath.javadoc.dir" value="doc/vecmath/api" />
 
     <property name="src" value="src" />
-    <property name="javadoc.dir" value="doc/api" />
+    <property name="javadoc.dir" value="doc/cdk-javadoc-${version}" />
     <property name="doxygen.dir" value="doc/doxygen" />
 
     <property name="pathtojava3d" value="" />

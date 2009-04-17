@@ -117,9 +117,9 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      * @param  number  The position of the Molecule to be returned. 
      * @return         The Molecule at position <code>number</code> . 
      */
-    public org.openscience.cdk.interfaces.IMolecule getMolecule(int number)
+    public IMolecule getMolecule(int number)
     {
-        return (Molecule)super.getAtomContainer(number);
+        return (IMolecule)super.getAtomContainer(number);
     }
     
     

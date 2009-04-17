@@ -19,19 +19,23 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -391,6 +395,21 @@ public class GenerateFragmentsTest extends CDKTestCase{
         Assert.assertTrue(found);
 
     }
-    
+
+    /**
+     * @cdk.bug 1848591
+     */
+    @Test public void testFragmentWithThreeRings() throws Exception {
+        String filename = "data/mdl/bugtest.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+        gf.generateMurckoFragments(mol,true,true,4);
+        List frameworks = gf.getMurckoFrameworks();
+        Assert.assertEquals(1,frameworks.size());
+        SSSRFinder sssr = new SSSRFinder((IAtomContainer)frameworks.get(0));
+        IRingSet ringSet = sssr.findSSSR();
+        Assert.assertEquals(3, ringSet.getAtomContainerCount());
+    }
 }
 	            
