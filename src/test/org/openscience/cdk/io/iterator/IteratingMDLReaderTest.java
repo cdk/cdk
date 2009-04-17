@@ -28,17 +28,20 @@
 package org.openscience.cdk.io.iterator;
 
 import java.io.InputStream;
+import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
+import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -157,6 +160,30 @@ public class IteratingMDLReaderTest extends CDKTestCase {
 
         Assert.assertEquals(2, molCount);
 
+    }
+
+    /**
+     * @cdk.bug 2692107
+     */
+    @Test public void testZeroZCoordinates() throws CDKException {
+        String filename = "data/mdl/nozcoord.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        Properties prop = new Properties();
+        prop.setProperty("ForceReadAs3DCoordinates","true");
+        PropertiesListener listener = new PropertiesListener(prop);
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        reader.addChemObjectIOListener(listener);
+        reader.customizeJob();
+        int molCount = 0;
+        while (reader.hasNext()) {
+            Object object = reader.next();
+            Assert.assertNotNull(object);
+            Assert.assertTrue(object instanceof IMolecule);
+            molCount++;
+            boolean has3d = GeometryTools.has3DCoordinates((IMolecule)object);
+            Assert.assertTrue(has3d);
+        }
     }
 
     @Test public void testNo3DCoordsButForcedAs() {
