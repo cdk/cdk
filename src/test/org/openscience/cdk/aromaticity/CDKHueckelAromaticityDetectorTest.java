@@ -24,9 +24,19 @@ package org.openscience.cdk.aromaticity;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -756,6 +766,23 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
         String diff = AtomContainerDiff.diff(aromaticForm, kekuleForm);
         Assert.assertTrue("There should be no difference between these molecules", diff.equals(""));
+    }
+
+    /**
+     * @cdk.bug 1579235
+     */
+    @Test
+    public void testIndolizine() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer aromaticForm = sp.parseSmiles("c2cc1cccn1cc2");
+
+        boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(aromaticForm);
+        Assert.assertTrue(isAromatic);
+
+        // all atoms are supposed to be aromatic
+        for (IAtom atom : aromaticForm.atoms()) {            
+            Assert.assertTrue(atom.toString()+" should be aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
+        }
     }
 
 
