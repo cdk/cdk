@@ -74,7 +74,7 @@ import java.util.BitSet;
  * @cdk.author Rajarshi Guha
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module standard
+ * @cdk.module fingerprint
  * @cdk.svnrev $Revision$
  */
 @TestClass("org.openscience.cdk.fingerprint.PubchemFingerprinterTest")
