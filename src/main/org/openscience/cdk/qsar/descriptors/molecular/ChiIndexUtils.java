@@ -27,7 +27,7 @@ import java.util.List;
  * @cdk.module qsarmolecular
  * @cdk.svnrev $Revision$
  */
-public class ChiIndexUtils {
+class ChiIndexUtils {
 
     /**
      * Gets the fragments from a target <code>AtomContainer</code> matching a set of query fragments.
