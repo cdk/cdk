@@ -12,3 +12,4 @@ cdk.log*
 cdk-src+libs-*.tar.gz
 cdk-src+libs-*.zip
 sourcedist
+*~
