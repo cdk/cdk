@@ -40,6 +40,15 @@ files.each {
           } catch (FileNotFoundException exc) {}
         }
       }
+      p(){
+        a(href:nightly+"javadoc/$module/", "DocCheck Results")
+      }
+      p(){
+        span("PDM: ")
+        a(href:nightly+"pmd-unused/"+module+".html", "unused")
+        a(href:nightly+"pmd-migrating/"+module+".html", "migration")
+        a(href:nightly+"pmd/"+module+".html", "all")
+      }
       h2("Depends")
       p(){
         if (file.exists()) {
