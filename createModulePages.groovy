@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def nightly = "http://pele.farmbio.uu.se/nightly-1.2.x/api/"
+def nightly = "http://pele.farmbio.uu.se/nightly-1.2.x/"
 
 ant = new AntBuilder()
 
@@ -24,6 +24,22 @@ files.each {
     } 
     body(){
       h1("CDK Module: " + module)
+      if (!module.contains("test")) {
+        h2("QA Reports")
+        p(){
+          junitURL = nightly+"test/result-"+module
+          stats = "";
+          try {
+            junitURL.toURL().eachLine {
+              if (it =~ ~/Tests\srun/) {
+                stats = it
+              }
+            }
+            a(href:junitURL,"JUnit")
+            span(": " + stats)
+          } catch (FileNotFoundException exc) {}
+        }
+      }
       h2("Depends")
       p(){
         if (file.exists()) {
@@ -48,7 +64,7 @@ files.each {
       classes.eachLine {
         classURL = it.replaceAll(/.java/,"")
         clazz = classURL.replaceAll(/\//,".")
-        a(href:nightly+classURL+".html", clazz)
+        a(href:nightly+"api/"+classURL+".html", clazz)
         br()
       }
     }
