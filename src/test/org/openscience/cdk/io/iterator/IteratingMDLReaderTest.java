@@ -105,6 +105,17 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
     }
 
+    @Test public void testMultipleEntryFields() throws Exception {
+        String filename = "data/mdl/test.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+
+        IMolecule m = (IMolecule)reader.next();
+        Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
+        m = (IMolecule)reader.next();
+        Assert.assertEquals("120-78-5", m.getProperty("E_CAS"));
+    }
+
     @Test public void testOnMDLMolfile() throws Exception {
         String filename = "data/mdl/bug682233.mol";
         logger.info("Testing: " + filename);

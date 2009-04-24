@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cml xmlns="http://www.xml-cml.org/schema">
+    <moleculeList title="Ion list">
+        <molecule id="ion0_C3H7NO2" formula="C 3 H 7 N 1 O 2">
+            <atomArray>
+                <atom id="a1" elementType="N" x2="0.0" y2="0.0" formalCharge="0" hydrogenCount="2" isotopeNumber="14"/>
+                <atom id="a2" elementType="C" x2="0.0" y2="1.5" formalCharge="0" hydrogenCount="1" isotopeNumber="12"/>
+                <atom id="a3" elementType="C" x2="-1.299038105676657" y2="2.2500000000000018" formalCharge="0" hydrogenCount="0" isotopeNumber="12"/>
+                <atom id="a4" elementType="C" x2="1.2990381056766584" y2="2.249999999999999" formalCharge="0" hydrogenCount="3" isotopeNumber="12"/>
+                <atom id="a5" elementType="O" x2="-1.2990381056766538" y2="3.7500000000000018" formalCharge="0" hydrogenCount="0" isotopeNumber="16"/>
+                <atom id="a6" elementType="O" x2="-2.598076211353316" y2="1.500000000000004" formalCharge="0" hydrogenCount="1" isotopeNumber="16"/>
+            </atomArray>
+            <bondArray>
+                <bond id="b1" atomRefs2="a1 a2" order="S"/>
+                <bond id="b2" atomRefs2="a2 a3" order="S"/>
+                <bond id="b3" atomRefs2="a2 a4" order="S"/>
+                <bond id="b4" atomRefs2="a3 a5" order="D"/>
+                <bond id="b5" atomRefs2="a3 a6" order="S"/>
+            </bondArray>
+        </molecule>
+        <molecule id="ion1_C2H5N" formula="C 2 H 5 N 1">
+            <atomArray>
+                <atom id="a1" elementType="N" x2="0.0" y2="0.0" formalCharge="0" hydrogenCount="2" isotopeNumber="14"/>
+                <atom id="a2" elementType="C" x2="0.0" y2="1.5" formalCharge="0" hydrogenCount="1" isotopeNumber="12"/>
+                <atom id="a4" elementType="C" x2="1.2990381056766584" y2="2.249999999999999" formalCharge="0" hydrogenCount="2" isotopeNumber="12"/>
+            </atomArray>
+            <bondArray>
+                <bond id="b1" atomRefs2="a1 a2" order="S"/>
+                <bond id="b3" atomRefs2="a2 a4" order="D"/>
+            </bondArray>
+        </molecule>
+    </moleculeList>
+    <moleculeList title="Neutral loss list">
+        <molecule id="nl0_CH2O2" formula="C 1 H 2 O 2">
+            <atomArray>
+                <atom id="a3" elementType="C" x2="-1.299038105676657" y2="2.2500000000000018" formalCharge="0" hydrogenCount="1" isotopeNumber="12"/>
+                <atom id="a5" elementType="O" x2="-1.2990381056766538" y2="3.7500000000000018" formalCharge="0" hydrogenCount="0" isotopeNumber="16"/>
+                <atom id="a6" elementType="O" x2="-2.598076211353316" y2="1.500000000000004" formalCharge="0" hydrogenCount="1" isotopeNumber="16"/>
+            </atomArray>
+            <bondArray>
+                <bond id="b4" atomRefs2="a3 a5" order="D"/>
+                <bond id="b5" atomRefs2="a3 a6" order="S"/>
+            </bondArray>
+        </molecule>
+    </moleculeList>
+    <reactionList>
+        <reaction>
+            <reactantList>
+                <reactant>
+                    <molecule ref="ion0_C3H7NO2"/>
+                </reactant>
+            </reactantList>
+            <productList>
+                <product role="ion">
+                    <molecule ref="ion1_C2H5N"/>
+                </product>
+                <product role="neutral_loss">
+                    <molecule ref="nl0_CH2O2"/>
+                </product>
+            </productList>
+        </reaction>
+    </reactionList>
+</cml>
