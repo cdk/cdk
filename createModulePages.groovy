@@ -1,5 +1,7 @@
 #!/usr/bin/groovy
 
+def nightly = "http://pele.farmbio.uu.se/nightly-1.2.x/api/"
+
 ant = new AntBuilder()
 
 ant.delete(dir:"doc/modules")
@@ -40,6 +42,14 @@ files.each {
             span(it)
           }
         }
+      }
+      h2("Classes")
+      classes = new File("build/" + module + ".javafiles").text
+      classes.eachLine {
+        classURL = it.replaceAll(/.java/,"")
+        clazz = classURL.replaceAll(/\//,".")
+        a(href:nightly+classURL+".html", clazz)
+        br()
       }
     }
   } 
