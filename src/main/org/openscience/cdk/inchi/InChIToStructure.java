@@ -84,7 +84,7 @@ protected JniInchiInputInchi input;
         try {
             input = new JniInchiInputInchi(inchi, "");
         } catch (JniInchiException jie) {
-            throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage());
+            throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage(), jie);
         }
         generateAtomContainerFromInchi(builder);
     }
@@ -99,7 +99,7 @@ protected JniInchiInputInchi input;
         try {
             input = new JniInchiInputInchi(inchi, options);
         } catch (JniInchiException jie) {
-            throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage());
+            throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage(), jie);
         }
         generateAtomContainerFromInchi(builder);
     }
@@ -129,7 +129,7 @@ protected JniInchiInputInchi input;
         try {
             output = JniInchiWrapper.getStructureFromInchi(input);
         } catch (JniInchiException jie) {
-            throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage());
+            throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage(), jie);
         }
         
         //molecule = new AtomContainer();

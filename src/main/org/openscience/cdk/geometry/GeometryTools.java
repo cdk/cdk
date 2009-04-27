@@ -1336,7 +1336,7 @@ public class GeometryTools {
 					n++;
 				}
 			}catch (Exception ex){
-                throw new CDKException(ex.toString());
+                throw new CDKException(ex.getMessage(), ex);
             }
 		}
 		RMSD=Math.sqrt(sum/n);

@@ -366,7 +366,7 @@ public class SMARTSQueryTool {
             allRings = arf.findAllRings(atomContainer);
         } catch (CDKException e) {
             logger.debug(e.toString());
-            throw new CDKException(e.toString());
+            throw new CDKException(e.toString(), e);
         }
 
         // sets SSSR information
@@ -442,7 +442,7 @@ public class SMARTSQueryTool {
             CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         } catch (CDKException e) {
             logger.debug(e.toString());
-            throw new CDKException(e.toString());
+            throw new CDKException(e.toString(), e);
         }
     }
 

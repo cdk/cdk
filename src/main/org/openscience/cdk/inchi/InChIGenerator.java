@@ -107,7 +107,7 @@ public class InChIGenerator {
             input = new JniInchiInput("");
             generateInchiFromCDKAtomContainer(atomContainer);
         } catch (JniInchiException jie) {
-            throw new CDKException("InChI generation failed: " + jie.getMessage());
+            throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
     
@@ -128,7 +128,7 @@ public class InChIGenerator {
             input = new JniInchiInput(options);
             generateInchiFromCDKAtomContainer(atomContainer);
         } catch (JniInchiException jie) {
-            throw new CDKException("InChI generation failed: " + jie.getMessage());
+            throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
     
@@ -148,7 +148,7 @@ public class InChIGenerator {
             input = new JniInchiInput(options);
             generateInchiFromCDKAtomContainer(atomContainer);
         } catch (JniInchiException jie) {
-            throw new CDKException("InChI generation failed: " + jie.getMessage());
+            throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
     
@@ -353,7 +353,7 @@ public class InChIGenerator {
         try {
             output = JniInchiWrapper.getInchi(input);
         } catch (JniInchiException jie) {
-            throw new CDKException("Failed to generate InChI: " + jie.getMessage());
+            throw new CDKException("Failed to generate InChI: " + jie.getMessage(), jie);
         }
     }
     
