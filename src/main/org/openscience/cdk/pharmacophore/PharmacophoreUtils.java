@@ -72,7 +72,7 @@ public class PharmacophoreUtils {
      * <p/>
      * Example usage is
      * <pre>
-     * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions"mydefs.xml");
+     * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions("mydefs.xml");
      * System.out.println("Number of definitions = "+defs.size());
      * for (int i = 0; i < defs.size(); i++) {
      *     System.out.println("Desc: "+defs.get(i).getProperty("description");
