@@ -1,9 +1,9 @@
 /* $Revision: 10903 $ $Author: egonw $ $Date: 2008-05-07 09:48:07 -0400 (Wed, 07 May 2008) $    
  * 
- * Copyright (C) 2008 Rajarshi Guha
+ * Copyright (C) 2009 Rajarshi Guha
  * 
  * Contact: cdk-devel@lists.sourceforge.net
- * Contact: rajarshi@users.sourceforge.net
+ * Contact: Rajarshi Guha <rajarshi@users.sourceforge.net>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -197,17 +197,6 @@ public class PubchemFingerprinterTest extends CDKTestCase {
         IFingerprinter printer = new PubchemFingerprinter();
         BitSet fp = printer.getFingerprint(mol);
         BitSet ref = PubchemFingerprinter.decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
-
-        System.out.println("bits on in ref but missing from code");
-        for (int i = 0; i < printer.getSize(); i++) {
-            if (ref.get(i) && !fp.get(i)) System.out.print(i + " ");
-        }
-        System.out.println("\n--");
-
-        System.out.println("bits on in code but not set in ref");
-        for (int i = 0; i < printer.getSize(); i++) {
-            if (!ref.get(i) && fp.get(i)) System.out.print(i + " ");
-        }
 
         Assert.assertEquals(ref, fp);
 

@@ -61,7 +61,8 @@ import java.util.BitSet;
  * explicit H's are present
  * <p/>
  * Note that this fingerprint is not particularly fast, as it will perform
- * ring detection (see below) as well as multiple SMARTS queries.
+ * ring detection using {@link org.openscience.cdk.ringsearch.AllRingsFinder}
+ * as well as multiple SMARTS queries.
  * <p/>
  * Some SMARTS patterns have been modified from the original code, since they were based on
  * explicit H matching. As a result, we replace the explicit H's with a query of the #N&!H0
@@ -88,6 +89,13 @@ public class PubchemFingerprinter implements IFingerprinter {
     private static SMARTSQueryTool sqt;
 
     public PubchemFingerprinter() {
+        try {
+            sqt = new SMARTSQueryTool("C");
+        } catch (CDKException e) {
+            // bad practice but, the above initialization
+            // will never fail so we don't bother throwing
+            // the exception
+        }
         m_bits = new byte[(FP_SIZE + 7) >> 3];
     }
 
@@ -95,7 +103,7 @@ public class PubchemFingerprinter implements IFingerprinter {
      * Calculate 881 bit Pubchem fingperprint for a molecule.
      * <p/>
      * See <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">here</a>
-     * fora description of each bit position.
+     * for a description of each bit position.
      *
      * @param atomContainer the molecule to consider
      * @return the fingerprint
@@ -104,7 +112,6 @@ public class PubchemFingerprinter implements IFingerprinter {
      */
     @TestMethod("testFingerprint")
     public BitSet getFingerprint(IAtomContainer atomContainer) throws CDKException {
-        sqt = new SMARTSQueryTool("C");
         generateFp(atomContainer);
         BitSet fp = new BitSet(FP_SIZE);
         for (int i = 0; i < FP_SIZE; i++) {
@@ -124,7 +131,7 @@ public class PubchemFingerprinter implements IFingerprinter {
     }
 
     static class CountElements {
-        int[] counts = new int[512];
+        int[] counts = new int[120];
 
         public CountElements(IAtomContainer m) {
             for (int i = 0; i < m.getAtomCount(); i++)
