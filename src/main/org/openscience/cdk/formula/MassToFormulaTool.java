@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
 
 /**
  * <p>Tool to determine molecular formula consistent with a given accurate mass. The 
@@ -253,6 +254,15 @@ public class MassToFormulaTool {
 		
 		if(mass <= 0.0){
 			logger.error("Proposed mass is not valid: ",mass);
+			return null;
+		}
+		IMolecularFormula minimalMF = MolecularFormulaRangeManipulator.getMinimalFormula(mfRange,builder);
+		IMolecularFormula maximalMF = MolecularFormulaRangeManipulator.getMaximalFormula(mfRange,builder);
+		double massMim = MolecularFormulaManipulator.getTotalExactMass(minimalMF)-tolerance;
+		double massMap = MolecularFormulaManipulator.getTotalExactMass(maximalMF)+tolerance;
+		if(massMim > mass ||
+				massMap < mass){
+			logger.error("Proposed mass is out of the range: ",mass);
 			return null;
 		}
 		

@@ -794,5 +794,79 @@ public class MassToFormulaToolTest extends CDKTestCase {
         
 		
 	}
+	@Test 
+	public void testFixedFormulaRange() throws CDKException {
+		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		
+		List<IRule> myRules = new ArrayList<IRule>();
+		
+		IRule rule1  = new ElementRule();
+		Object[] params = new Object[1];
+		MolecularFormulaRange mfRange = new MolecularFormulaRange();
+    	mfRange.addIsotope( ifac.getMajorIsotope("C"), 12, 12);
+    	mfRange.addIsotope( ifac.getMajorIsotope("H"), 25, 25);
+    	mfRange.addIsotope( ifac.getMajorIsotope("O"), 2, 2);
+    	params[0] = mfRange;
+		rule1.setParameters(params);
+    	myRules.add(rule1);
+    	
+    	ToleranceRangeRule rule2  = new ToleranceRangeRule();
+		Object[] params2 = new Object[2];
+		params2[0] = 318.915722;
+        params2[1] = 0.5;
+        rule2.setParameters(params2);
+    	myRules.add(rule2);
+    	
+		mfTool.setRestrictions(myRules);
+		
+		IMolecularFormulaSet mfSet = mfTool.generate(199.16973802990927);
+		
+		Assert.assertNull(mfSet);
+		
+	}
+	@Test 
+	public void testFixedFormulaRange2() throws CDKException {
+		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		
+		List<IRule> myRules = new ArrayList<IRule>();
+		
+		IRule rule1  = new ElementRule();
+		Object[] params = new Object[1];
+		MolecularFormulaRange mfRange = new MolecularFormulaRange();
+    	mfRange.addIsotope( ifac.getMajorIsotope("C"), 7, 7);
+    	mfRange.addIsotope( ifac.getMajorIsotope("H"), 15, 15);
+    	mfRange.addIsotope( ifac.getMajorIsotope("O"), 4, 4);
+    	mfRange.addIsotope( ifac.getMajorIsotope("N"), 2, 2);
+    	params[0] = mfRange;
+		rule1.setParameters(params);
+    	myRules.add(rule1);
+    	
+    	ToleranceRangeRule rule2  = new ToleranceRangeRule();
+		Object[] params2 = new Object[2];
+		params2[0] = 318.915722;
+        params2[1] = 0.05;
+        rule2.setParameters(params2);
+    	myRules.add(rule2);
+    	
+		mfTool.setRestrictions(myRules);
+		
+		IMolecularFormulaSet mfSet = mfTool.generate(191.10318196);
+		
+		Assert.assertNotNull(mfSet);
+		
+		IMolecularFormula mf1 = new MolecularFormula();
+		IIsotope carb = ifac.getMajorIsotope("C");
+		mf1.addIsotope(carb,7);
+		IIsotope h = ifac.getMajorIsotope("H");
+		mf1.addIsotope(h,15);
+		IIsotope oxy = ifac.getMajorIsotope("O");
+		mf1.addIsotope(oxy,4);
+		IIsotope nit = ifac.getMajorIsotope("N");
+		mf1.addIsotope(nit,2);
+		
+		Assert.assertEquals(MolecularFormulaManipulator.getString(mf1), MolecularFormulaManipulator.getString(mfSet.getMolecularFormula(0)));
+		
+	}
+
 }
 
