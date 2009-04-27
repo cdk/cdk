@@ -25,14 +25,28 @@ package org.openscience.cdk.smiles;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -862,5 +876,20 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String genSmiles = smilesGenerator.createSMILES(mol);
         Assert.assertTrue(genSmiles.equals(smiles));
     }
+
+    /**
+     * @cdk.bug 2781199
+     */
+    @Test
+    public void testBug2781199() throws InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String smiles = "n1ncn(c1)CC";
+        IMolecule mol = sp.parseSmiles(smiles);
+        SmilesGenerator smilesGenerator = new SmilesGenerator();
+        smilesGenerator.setUseAromaticityFlag(true);
+        String genSmiles = smilesGenerator.createSMILES(mol);
+        Assert.assertTrue("Generated SMILES should not have explicit H: "+genSmiles, genSmiles.indexOf("H") == -1);
+    }
+    
 }
 
