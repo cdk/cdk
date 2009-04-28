@@ -517,7 +517,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula2.addIsotope(br1);
         formula2.addIsotope(br2);
 
-        Assert.assertEquals(2,formula2.getIsotopeCount());
+        Assert.assertEquals(1,formula2.getIsotopeCount(),0.000001);
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
 
         Assert.assertEquals(0.25694761,totalAbudance,0.000001);
