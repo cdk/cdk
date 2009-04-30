@@ -1,6 +1,7 @@
 /* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2002-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *                    2009  Mark Rijnbeek <mark_rynbeek@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -49,7 +50,11 @@ import java.util.List;
  *
  * <p><b>WARNING</b>: This class has now a timeout of 5 seconds, after which it aborts
  * its ringsearch. The timeout value can be customized by the setTimeout()
- * method of this class.  
+ * method of this class.
+ * <br>Also, by using the optional argument "maxRingSize" timeouts can possibly be avoided
+ * because recursion depth will be limited accordingly.
+ * Example: given a complex atom container and a maxRingSize of six, the find method 
+ * will return all rings only of size six or smaller.
  *
  * @author        steinbeck
  * @cdk.created   2002-06-23
@@ -77,7 +82,8 @@ public class AllRingsFinder
 
 	/**
 	 *  Returns a ringset containing all rings in the given AtomContainer
-	 *
+	 *  Calls {@link #findAllRings(IAtomContainer, Integer)} with max ring size argument set to null (=unlimited ring sizes)
+   *  
 	 *@param  atomContainer     The AtomContainer to be searched for rings
 	 *@return                   A RingSet with all rings in the AtomContainer
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
@@ -85,20 +91,34 @@ public class AllRingsFinder
     @TestMethod("testFindAllRings_IAtomContainer,testBondsWithinRing")
     public IRingSet findAllRings(IAtomContainer atomContainer) throws CDKException
 	{
-		startTime = System.currentTimeMillis();
-		SpanningTree spanningTree = new SpanningTree(atomContainer);
-		IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
-		Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules().iterator();
-		IRingSet resultSet = atomContainer.getBuilder().newRingSet();
-		while (separateRingSystem.hasNext()) {
-			resultSet.add(findAllRingsInIsolatedRingSystem((IMolecule)separateRingSystem.next()));
-		}
-		return resultSet;
+	    return findAllRings(atomContainer, null);
 	}
+
+  /**
+   *  Returns a ringset containing all rings up to a provided maximum size in a given AtomContainer
+   *
+   *@param atomContainer      The AtomContainer to be searched for rings
+   *@param maxRingSize        Maximum ring size to consider. Provides a possible breakout from recursion for complex compounds.
+   *@return                   A RingSet with all rings in the AtomContainer
+   *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
+   */
+    public IRingSet findAllRings(IAtomContainer atomContainer, Integer maxRingSize) throws CDKException 
+  {
+        startTime = System.currentTimeMillis();
+        SpanningTree spanningTree = new SpanningTree(atomContainer);
+        IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
+        Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules().iterator();
+        IRingSet resultSet = atomContainer.getBuilder().newRingSet();
+        while (separateRingSystem.hasNext()) {
+            resultSet.add(findAllRingsInIsolatedRingSystem((IMolecule)separateRingSystem.next(), maxRingSize));
+        }
+        return resultSet;
+  }
 
 
 	/**
 	 *  Fings the set of all rings in a molecule
+   *  Calls {@link #findAllRingsInIsolatedRingSystem(IAtomContainer,Integer)} with max ring size argument set to null (=unlimited ring sizes)
 	 *
 	 *@param  atomContainer     the molecule to be searched for rings
 	 *@return                   a RingSet containing the rings in molecule
@@ -107,17 +127,30 @@ public class AllRingsFinder
 
     public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer) throws CDKException
 	{
-		if (startTime == 0) {
-			startTime = System.currentTimeMillis();
-		}
-		List<Path> paths = new ArrayList<Path>();
-		IRingSet ringSet = atomContainer.getBuilder().newRingSet();
-		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
-		originalAc = atomContainer;
-		ac.add(atomContainer);
-		doSearch(ac, paths, ringSet);
-		return ringSet;
+	    return findAllRingsInIsolatedRingSystem(atomContainer, null);
 	}
+
+  /**
+   *Finds the set of all rings in a molecule
+   *
+   *@param  atomContainer     the molecule to be searched for rings
+   *@param  maxRingSize       Maximum ring size to consider. Provides a possible breakout from recursion for complex compounds.
+   *@return                   a RingSet containing the rings in molecule
+   *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
+   */
+    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer, Integer maxRingSize) throws CDKException 
+  {
+        if (startTime == 0) {
+            startTime = System.currentTimeMillis();
+        }
+        List<Path> paths = new ArrayList<Path>();
+        IRingSet ringSet = atomContainer.getBuilder().newRingSet();
+        IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+        originalAc = atomContainer;
+        ac.add(atomContainer);
+        doSearch(ac, paths, ringSet, maxRingSize);
+        return ringSet;
+  }
 
 
 	/**
@@ -126,7 +159,7 @@ public class AllRingsFinder
 	 *@param  ringSet           A ringset to be extended while we search
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	private void doSearch(IAtomContainer ac, List<Path> paths, IRingSet ringSet) throws CDKException
+	private void doSearch(IAtomContainer ac, List<Path> paths, IRingSet ringSet, Integer maxPathLen) throws CDKException
 	{
 		IAtom atom;
 		/*
@@ -141,38 +174,11 @@ public class AllRingsFinder
 			atom = selectAtom(ac);
 			if (atom != null)
 			{
-				remove(atom, ac, paths, ringSet);
+				remove(atom, ac, paths, ringSet, maxPathLen);
 			}
 		} while (paths.size() > 0 && atom != null);
 		logger.debug("paths.size(): ", paths.size());
 		logger.debug("ringSet.size(): ", ringSet.getAtomContainerCount());
-	}
-
-
-	/**
-	 *  Removes all external aliphatic chains by chopping them off from the
-	 *  ends
-	 *
-	 *@param  ac                The AtomContainer to work with
-	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
-	 */
-	private void removeAliphatic(IAtomContainer ac) throws CDKException
-	{
-		boolean removedSomething;
-		IAtom atom;
-		do
-		{
-			removedSomething = false;
-			for (Iterator e = ac.atoms().iterator(); e.hasNext(); )
-			{
-				atom = (IAtom) e.next();
-				if (ac.getConnectedBondsCount(atom) == 1)
-				{
-					ac.removeAtomAndConnectedElectronContainers(atom);
-					removedSomething = true;
-				}
-			}
-		} while (removedSomething);
 	}
 
 
@@ -185,9 +191,10 @@ public class AllRingsFinder
 	 *@param  ac                The AtomContainer to work on
 	 *@param  paths            The paths to manipulate
 	 *@param  rings             The ringset to be extended
+   *@param  maxPathLen        Max path length = max ring size detected = max recursion depth
 	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
 	 */
-	private void remove(IAtom atom, IAtomContainer ac, List<Path> paths, IRingSet rings) throws CDKException
+	private void remove(IAtom atom, IAtomContainer ac, List<Path> paths, IRingSet rings, Integer maxPathLen) throws CDKException
 	{
 		Path path1;
 		Path path2;
@@ -219,7 +226,9 @@ public class AllRingsFinder
 								newPaths.add(union);
 							} else
 							{
-								potentialRings.add(union);
+	  				    if (maxPathLen == null || union.size() <= (maxPathLen+1)) {
+								   potentialRings.add(union);
+                }
 							}
 							//logger.debug("Intersection Size: " + intersectionSize);
 							logger.debug("Union: ", union.toString(originalAc));
@@ -239,7 +248,9 @@ public class AllRingsFinder
             paths.remove(removePath);
         }
         for (Path newPath : newPaths) {
-            paths.add(newPath);
+            if (maxPathLen == null || newPath.size() <= (maxPathLen+1)) {
+                paths.add(newPath);
+            }
         }
 		detectRings(potentialRings, rings, originalAc);
 		ac.removeAtomAndConnectedElectronContainers(atom);

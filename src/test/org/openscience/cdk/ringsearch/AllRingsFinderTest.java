@@ -287,5 +287,55 @@ public class AllRingsFinderTest extends CDKTestCase
         }
         Assert.assertEquals("All atoms in 1-ethyl-cyclopentane were not marked as being in a ring", 5, count);
     }
+
+    @Test
+    public void testBigRingSystem_MaxRingSize6_03419() throws Exception {
+      IRingSet ringSet = null;
+      AllRingsFinder arf = new AllRingsFinder();
+      String filename = "data/mdl/ring_03419.mol";
+      InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+      MDLV2000Reader reader = new MDLV2000Reader(ins);
+      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+      IChemSequence seq = chemFile.getChemSequence(0);
+      IChemModel model = seq.getChemModel(0);
+      IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+      ringSet = arf.findAllRings(molecule,6);
+      Assert.assertEquals(12, ringSet.getAtomContainerCount());
+    }
+
+    @Test
+    public void testBigRingSystem_MaxRingSize4_fourRing5x10() throws Exception {
+      IRingSet ringSet = null;
+      AllRingsFinder arf = new AllRingsFinder();
+      String filename = "data/mdl/four-ring-5x10.mol";
+      InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+      MDLV2000Reader reader = new MDLV2000Reader(ins);
+      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+      IChemSequence seq = chemFile.getChemSequence(0);
+      IChemModel model = seq.getChemModel(0);
+      IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+      // there are 5x10 squares (four-rings) in the 5x10 molecule 
+      ringSet = arf.findAllRings(molecule,4);
+      Assert.assertEquals(50, ringSet.getAtomContainerCount());
+    }
+
+    @Test
+    public void testBigRingSystem_MaxRingSize6_fourRing5x10() throws Exception {
+      IRingSet ringSet = null;
+      AllRingsFinder arf = new AllRingsFinder();
+      String filename = "data/mdl/four-ring-5x10.mol";
+      InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+      MDLV2000Reader reader = new MDLV2000Reader(ins);
+      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+      IChemSequence seq = chemFile.getChemSequence(0);
+      IChemModel model = seq.getChemModel(0);
+      IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+      // there are 5x10 four-rings (squares ) = 50
+      // there are (9x5) + (4x10) six-rings   = 85
+      // combined 135
+      ringSet = arf.findAllRings(molecule,6);
+      Assert.assertEquals(135, ringSet.getAtomContainerCount());
+    }
+
 }
 
