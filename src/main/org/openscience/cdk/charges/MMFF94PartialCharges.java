@@ -84,7 +84,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 		double theta = 0;
 		double sumOfFormalCharges = 0;
 		double sumOfBondIncrements = 0;
-		org.openscience.cdk.interfaces.IAtom thisAtom = null;
+		IAtom thisAtom = null;
 		List<IAtom> neighboors;
 		Object data = null;
 		Object bondData = null;

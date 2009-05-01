@@ -51,7 +51,7 @@ public class DebugBond extends Bond
 		super();
 	}
 	
-	public DebugBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
+	public DebugBond(IAtom atom1, IAtom atom2) {
 		super(atom1, atom2);
 	}
 	

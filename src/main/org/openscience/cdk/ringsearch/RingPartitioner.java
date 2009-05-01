@@ -27,6 +27,7 @@ package org.openscience.cdk.ringsearch;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
@@ -102,7 +103,7 @@ public class RingPartitioner {
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
             ring = (IRing) ringSet.getAtomContainer(i);
             for (int r = 0; r < ring.getBondCount(); r++) {
-            	org.openscience.cdk.interfaces.IBond bond = ring.getBond(r);
+            	IBond bond = ring.getBond(r);
                 if (!ac.contains(bond)) {
                     for (int j = 0; j < bond.getAtomCount(); j++) {
                         ac.addAtom(bond.getAtom(j));

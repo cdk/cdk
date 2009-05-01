@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.math.qm;
  
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
 
@@ -79,7 +80,7 @@ public class GaussiansBasis implements IBasis
    *
    * @param atoms The atom will need to calculate the core potential
    */
-  public GaussiansBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, org.openscience.cdk.interfaces.IAtom[] atoms)
+  public GaussiansBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, IAtom[] atoms)
   {
     setBasis(nx, ny, nz, alpha, r, atoms);
   }
@@ -90,7 +91,7 @@ public class GaussiansBasis implements IBasis
    *
    * @param atoms The atom will need to calculate the core potential
    */
-  protected void setBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, org.openscience.cdk.interfaces.IAtom[] atoms)
+  protected void setBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, IAtom[] atoms)
   {
     int i;
 

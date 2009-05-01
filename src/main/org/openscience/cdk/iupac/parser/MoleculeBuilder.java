@@ -266,7 +266,7 @@ public class MoleculeBuilder
             }
             
             //Stuff which applied no matter where the N atom is:
-            org.openscience.cdk.interfaces.IAtom nitrogenAtom = currentMolecule.getLastAtom();
+            IAtom nitrogenAtom = currentMolecule.getLastAtom();
             nitrogenAtom.setFormalCharge(+1);
             addAtom("O", nitrogenAtom, IBond.Order.SINGLE, 0);
             currentMolecule.getLastAtom().setFormalCharge(-1);

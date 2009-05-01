@@ -92,7 +92,7 @@ public class InductivePartialCharges implements IChargeCalculator {
         }
 
 		int stepsLimit = 9;
-		org.openscience.cdk.interfaces.IAtom[] atoms = AtomContainerManipulator.getAtomArray(ac);
+		IAtom[] atoms = AtomContainerManipulator.getAtomArray(ac);
 		double[] pChInch = new double[atoms.length * (stepsLimit + 1)];
 		double[] ElEn = new double[atoms.length * (stepsLimit + 1)];
 		double[] pCh = new double[atoms.length * (stepsLimit + 1)];
@@ -218,7 +218,7 @@ public class InductivePartialCharges implements IChargeCalculator {
             factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
                 ac.getBuilder());
         }
-		org.openscience.cdk.interfaces.IAtom target = null;
+		IAtom target = null;
 		double core = 0;
 		double radiusTarget = 0;
 		target = ac.getAtom(atomPosition);
@@ -284,8 +284,8 @@ public class InductivePartialCharges implements IChargeCalculator {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	private double getAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int as) throws CDKException {
-		org.openscience.cdk.interfaces.IAtom[] allAtoms = null;
-		org.openscience.cdk.interfaces.IAtom target = null;
+		IAtom[] allAtoms = null;
+		IAtom target = null;
 		double incrementedCharge = 0;
 		double radiusTarget = 0;
 		target = ac.getAtom(atomPosition);
@@ -392,7 +392,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 	 *@param  atom2  second atom
 	 *@return        squared distance between the 2 atoms
 	 */
-	private double calculateSquaredDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
+	private double calculateSquaredDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
 		double distance = 0;
 		double tmp = 0;
 		Point3d firstPoint = atom1.getPoint3d();

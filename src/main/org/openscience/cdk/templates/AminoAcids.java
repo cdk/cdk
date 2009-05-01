@@ -152,7 +152,7 @@ public class AminoAcids {
         			}
         		}
         		while (atoms.hasNext()) {
-        			org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
+        			IAtom atom = (IAtom)atoms.next();
         			String dictRef = (String)atom.getProperty("org.openscience.cdk.dict");
         			if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
         				aminoAcid.addNTerminus(atom);
@@ -162,7 +162,6 @@ public class AminoAcids {
         				aminoAcid.addAtom(atom);
         			}
         		}
-//        		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
                 Iterator<IBond> bonds = ac.bonds().iterator();
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
