@@ -52,7 +52,7 @@ public class HuLuIndexTool
    *
    * @cdk.keyword EAID number
    */
-    public static double getEAIDNumber(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException,
+    public static double getEAIDNumber(AtomContainer atomContainer) throws NoSuchAtomException,
             BadMatrixFormatException,IndexOutOfBoundsException
     {
         boolean debug = false;
@@ -82,7 +82,7 @@ public class HuLuIndexTool
 
 
     public static double[][] getExtendedAdjacenyMatrix(AtomContainer atomContainer)
-        throws org.openscience.cdk.exception.NoSuchAtomException
+        throws NoSuchAtomException
     {
         boolean debug = false;
         double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);

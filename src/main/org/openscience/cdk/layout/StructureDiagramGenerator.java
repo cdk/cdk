@@ -581,7 +581,7 @@ public class StructureDiagramGenerator
 	 *
 	 * @throws org.openscience.cdk.exception.CDKException if an error occurs
 	 */
-	private void handleAliphatics() throws org.openscience.cdk.exception.CDKException
+	private void handleAliphatics() throws CDKException
 	{
 		logger.debug("Start of handleAliphatics");
 
