@@ -27,13 +27,22 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.*;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * Class with convenience methods that provide methods from
@@ -183,7 +192,9 @@ public class ChemModelManipulator {
     }
 
     /**
-     * Create a new ChemModel containing an IAtomContainer.
+     * Create a new ChemModel containing an IAtomContainer. It will create an
+     * IMolecule from the passed IAtomContainer when needed, which may cause
+     * information loss.
      * 
      * @param  atomContainer  The AtomContainer to have inside the ChemModel.
      * @return                The new IChemModel object.
@@ -192,7 +203,13 @@ public class ChemModelManipulator {
     public static IChemModel newChemModel(IAtomContainer atomContainer) {
         IChemModel model = atomContainer.getBuilder().newChemModel();
         IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
-        moleculeSet.addAtomContainer(atomContainer);
+        if (atomContainer instanceof IMolecule) {
+            moleculeSet.addAtomContainer(atomContainer);
+        } else {
+            moleculeSet.addAtomContainer(
+                atomContainer.getBuilder().newMolecule(atomContainer)
+            );
+        }
         model.setMoleculeSet(moleculeSet);
         return model;
     }

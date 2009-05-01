@@ -69,7 +69,22 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
 
 	public MoleculeSet() {}
 	
-    /**
+	/**
+	 * Adds an atomContainer to this container.
+	 *
+	 * @param  atomContainer  The IMolecule to be added to this container
+	 * @throws IllegalArgumentException when the passed IAtomContainer is not
+	 *         an IMolecule.
+	 */
+	public void addAtomContainer(IAtomContainer atomContainer) {
+	    if (!(atomContainer instanceof IMolecule))
+	        throw new IllegalArgumentException(
+	            "Only IMolecule's can be stored in an IMoleculeSet"
+	        );
+	    super.addAtomContainer(atomContainer);
+	}
+
+	/**
      *  Adds an molecule to this container.
      *
      * @param  molecule  The molecule to be added to this container 
