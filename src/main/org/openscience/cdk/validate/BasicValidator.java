@@ -107,12 +107,12 @@ public class BasicValidator extends AbstractValidator {
     }
     public ValidationReport validateReaction(Reaction subject) {
         ValidationReport report = new ValidationReport();
-        AtomContainer container1 = new org.openscience.cdk.AtomContainer();
+        AtomContainer container1 = new AtomContainer();
         IMoleculeSet reactants = subject.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             container1.add(reactants.getMolecule(i));
         }
-        AtomContainer container2 = new org.openscience.cdk.AtomContainer();
+        AtomContainer container2 = new AtomContainer();
         IMoleculeSet products = subject.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
             container2.add(products.getMolecule(i));

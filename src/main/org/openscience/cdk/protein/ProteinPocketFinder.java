@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.protein;
 
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -122,7 +123,7 @@ public class ProteinPocketFinder {
 			ISimpleChemObjectReader reader = new ReaderFactory()
 					.createReader(fileReader);
 			IChemFile chemFile = (IChemFile) reader
-					.read((IChemObject) new org.openscience.cdk.ChemFile());
+					.read((IChemObject) new ChemFile());
 			// Get molecule from ChemFile
 			IChemSequence chemSequence = chemFile.getChemSequence(0);
 			IChemModel chemModel = chemSequence.getChemModel(0);

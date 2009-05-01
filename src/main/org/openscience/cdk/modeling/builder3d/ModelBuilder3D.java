@@ -33,7 +33,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -302,7 +301,7 @@ public class ModelBuilder3D {
 				setAtomsToUnVisited(molecule);
 				atom = ap3d.getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(molecule);
 				if (atom != null) {
-					ac = new org.openscience.cdk.AtomContainer();
+					ac = atom.getBuilder().newAtomContainer();
 					ac.addAtom(atom);
 					searchAndPlaceBranches(molecule, ac, ap3d, atlp3d, atomPlacer);
 					ac = null;
@@ -408,7 +407,7 @@ public class ModelBuilder3D {
 	 */
 	private void setBranchAtom(IMolecule molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
 		//logger.debug("****** SET Branch Atom ****** >"+molecule.getAtomNumber(unplacedAtom));
-		IAtomContainer noCoords = new org.openscience.cdk.AtomContainer();
+		IAtomContainer noCoords = molecule.getBuilder().newAtomContainer();
 		noCoords.addAtom(unplacedAtom);
 		Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
 		IAtom atomB = atomNeighbours.getAtom(0);
@@ -469,8 +468,8 @@ public class ModelBuilder3D {
 	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
 		java.util.List atoms = null;
-		IAtomContainer branchAtoms = new org.openscience.cdk.AtomContainer();
-		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
+		IAtomContainer branchAtoms = molecule.getBuilder().newAtomContainer();
+		IAtomContainer connectedAtoms = molecule.getBuilder().newAtomContainer();
 		for (int i = 0; i < chain.getAtomCount(); i++) {
 			atoms = molecule.getConnectedAtomsList(chain.getAtom(i));
 			for (int j = 0; j < atoms.size(); j++) {
@@ -512,7 +511,7 @@ public class ModelBuilder3D {
 		//logger.debug("****** PLACE LINEAR CHAINS ******");
 		IAtom dihPlacedAtom = null;
 		IAtom thirdPlacedAtom = null;
-		IAtomContainer longestUnplacedChain = new org.openscience.cdk.AtomContainer();
+		IAtomContainer longestUnplacedChain = molecule.getBuilder().newAtomContainer();
 		if (startAtoms.getAtomCount() == 0) {
 			//no branch points ->linear chain
 			//logger.debug("------ LINEAR CHAIN - FINISH ------");

@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Helper class for Structure Diagram Generation. Resolves atom or bond
@@ -62,7 +63,7 @@ public class OverlapResolver
 	
 	public OverlapResolver()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this);	
+		logger = new LoggingTool(this);	
 	}
 	
 	

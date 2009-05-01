@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  * A radical in CDK is represented by an AtomContainer that contains an Atom
  * and a SingleElectron type ElectronContainer:
  * <pre>
- *   AtomContainer radical = new org.openscience.cdk.AtomContainer();
+ *   AtomContainer radical = new AtomContainer();
  *   Atom carbon = new Atom("C");
  *   carbon.setImplicitHydrogens(3);
  *   radical.addElectronContainer(new SingleElectron(carbon));
