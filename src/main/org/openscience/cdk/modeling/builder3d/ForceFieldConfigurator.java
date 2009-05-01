@@ -243,7 +243,7 @@ public class ForceFieldConfigurator {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public IRingSet assignAtomTyps(IMolecule molecule) throws Exception {
-		org.openscience.cdk.interfaces.IAtom atom = null;
+		IAtom atom = null;
 		String hoseCode = "";
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		int NumberOfRingAtoms = 0;

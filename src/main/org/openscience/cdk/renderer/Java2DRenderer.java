@@ -552,7 +552,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 *@param  atom      The atom to be drawn
 	 *@param  color     The color of the atom to be drawn
 	 */
-	public void paintColouredAtomBackground(final org.openscience.cdk.interfaces.IAtom atom, final Color color, final Graphics2D graphics)
+	public void paintColouredAtomBackground(final IAtom atom, final Color color, final Graphics2D graphics)
 	{
 		double x = atom.getPoint2d().x;
 		double y = atom.getPoint2d().y;

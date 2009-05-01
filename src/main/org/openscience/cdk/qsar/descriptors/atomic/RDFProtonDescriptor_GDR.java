@@ -226,7 +226,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
             }
         }
 // SET ISINRING FLAGS FOR ATOMS
-        org.openscience.cdk.interfaces.IRingSet ringsWithThisAtom;
+        IRingSet ringsWithThisAtom;
 
         for (int w = 0; w < varAtomContainer.getAtomCount(); w++) {
             ringsWithThisAtom = varRingSet.getRings(varAtomContainer.getAtom(w));
@@ -391,10 +391,10 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 		step = (limitSup - limitInf)/7;
 		position = 0;
 		partial = 0;
-		org.openscience.cdk.interfaces.IBond theDoubleBond;
+		IBond theDoubleBond;
 		smooth = -1.15;
 		int goodPosition = 0;
-		org.openscience.cdk.interfaces.IBond goodBond;
+		IBond goodBond;
 		ArrayList gDr_function = new ArrayList(7);
 		int counter = 0;
 		for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
@@ -446,7 +446,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 
 //Others definitions
 
-    private boolean getIfBondIsNotRotatable(Molecule mol, org.openscience.cdk.interfaces.IBond bond, IAtomContainer detected) {
+    private boolean getIfBondIsNotRotatable(Molecule mol, IBond bond, IAtomContainer detected) {
         boolean isBondNotRotatable = false;
         int counter = 0;
         IAtom atom0 = bond.getAtom(0);
@@ -475,7 +475,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
     private boolean getIfACarbonIsDoubleBondedToAnOxygen(Molecule mol, IAtom carbonAtom) {
         boolean isDoubleBondedToOxygen = false;
         List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
-        org.openscience.cdk.interfaces.IBond tmpBond;
+        IBond tmpBond;
         int counter = 0;
         for (IAtom neighbour : neighToCarbon) {
             if (neighbour.getSymbol().equals("O")) {
@@ -532,7 +532,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 
     // given a double bond
     // this method returns a bond bonded to this double bond
-    private int getNearestBondtoAGivenAtom(Molecule mol, IAtom atom, org.openscience.cdk.interfaces.IBond bond) {
+    private int getNearestBondtoAGivenAtom(Molecule mol, IAtom atom, IBond bond) {
         int nearestBond = 0;
         double[] values;
         double distance = 0;
@@ -564,7 +564,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 
     // method which calculated distance btw an atom and the middle point of a bond
     // and returns distance and coordinates of middle point
-    private double[] calculateDistanceBetweenAtomAndBond(IAtom proton, org.openscience.cdk.interfaces.IBond theBond) {
+    private double[] calculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond) {
         Point3d middlePoint = theBond.get3DCenter();
         Point3d protonPoint = proton.getPoint3d();
         double[] values = new double[4];

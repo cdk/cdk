@@ -38,6 +38,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -268,7 +269,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             for (int i = 0; i < natom - 1; i++) {
                 for (int j = i + 1; j < natom; j++) {
                     for (int k = 0; k < local.getBondCount(); k++) {
-                        org.openscience.cdk.interfaces.IBond bond = local.getBond(k);
+                        IBond bond = local.getBond(k);
                         if (bond.contains(local.getAtom(i)) && bond.contains(local.getAtom(j))) {
                             if (bond.getFlag(CDKConstants.ISAROMATIC)) matrix[i][j] = 0.15;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) matrix[i][j] = 0.1;

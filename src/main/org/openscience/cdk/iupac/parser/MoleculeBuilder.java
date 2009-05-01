@@ -59,7 +59,7 @@ public class MoleculeBuilder
 {
     /** The molecule which is worked upon throughout the class and returned at the end */
     private Molecule currentMolecule = new Molecule();
-    private org.openscience.cdk.interfaces.IAtom endOfChain;
+    private IAtom endOfChain;
         
     /**
      * Builds the main chain which may act as a foundation for futher working groups.
@@ -495,7 +495,7 @@ public class MoleculeBuilder
                 Token locationToken = (Token) locationsIterator.next();
                 
                 int joinLocation = Integer.parseInt(locationToken.image) - 1;
-                org.openscience.cdk.interfaces.IAtom connectingAtom;
+                IAtom connectingAtom;
                 
                 //If join location wasn't specified we must be dealing with the "hack" which makes
                 //mainchains a substituent if a real substituent has already been parsed and interpreted as a main chain

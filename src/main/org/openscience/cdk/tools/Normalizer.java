@@ -28,21 +28,23 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Adjusts parts of an AtomContainer to the congiguratin of a fragment.
@@ -98,16 +100,16 @@ public class Normalizer {
           Iterator bondit = l.iterator();
           while (bondit.hasNext()) {
             RMap rmap = (RMap) bondit.next();
-            org.openscience.cdk.interfaces.IBond acbond = ac.getBond(rmap.getId1());
-            org.openscience.cdk.interfaces.IBond replacebond = replacementStructure.getBond(rmap.getId2());
+            IBond acbond = ac.getBond(rmap.getId1());
+            IBond replacebond = replacementStructure.getBond(rmap.getId2());
             acbond.setOrder(replacebond.getOrder());
             change=true;
           }
           Iterator atomit = l2.iterator();
           while (atomit.hasNext()) {
             RMap rmap = (RMap) atomit.next();
-            org.openscience.cdk.interfaces.IAtom acatom = ac.getAtom(rmap.getId1());
-            org.openscience.cdk.interfaces.IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
+            IAtom acatom = ac.getAtom(rmap.getId1());
+            IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
             acatom.setFormalCharge(replaceatom.getFormalCharge());
             change=true;
           }

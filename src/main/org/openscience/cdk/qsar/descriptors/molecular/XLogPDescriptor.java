@@ -1000,7 +1000,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The hydrogenCount value
      */
-    private boolean checkRingLink(IRingSet ringSet, org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private boolean checkRingLink(IRingSet ringSet, IAtomContainer ac, IAtom atom) {
         List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         if (ringSet.contains(atom)){
             return true;
@@ -1022,7 +1022,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The hydrogenCount value
      */
-    private int getHydrogenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getHydrogenCount(IAtomContainer ac, IAtom atom) {
         List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int hcounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1041,7 +1041,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The alogenCount value
      */
-    private int getHalogenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getHalogenCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int acounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1059,7 +1059,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The nitrogenOrOxygenCount value
      */
-    private int getAtomTypeXCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getAtomTypeXCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int nocounter = 0;
         IBond bond;
@@ -1083,7 +1083,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The aromaticCarbonsCount value
      */
-    private int getAromaticCarbonsCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getAromaticCarbonsCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int carocounter = 0;
         for (IAtom neighbour : neighbours) {            
@@ -1102,7 +1102,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The carbonsCount value
      */
-    private int getCarbonsCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getCarbonsCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int ccounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1122,7 +1122,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The carbonsCount value
      */
-    private int getOxygenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getOxygenCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int ocounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1143,7 +1143,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The doubleBondedCarbonsCount value
      */
-    private int getDoubleBondedCarbonsCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getDoubleBondedCarbonsCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int cdbcounter = 0;
@@ -1166,7 +1166,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The doubleBondedOxygenCount value
      */
-    private int getDoubleBondedOxygenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getDoubleBondedOxygenCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int odbcounter = 0;
@@ -1198,7 +1198,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The doubleBondedSulfurCount value
      */
-    private int getDoubleBondedSulfurCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getDoubleBondedSulfurCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int sdbcounter = 0;
@@ -1226,7 +1226,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The doubleBondedNitrogenCount value
      */
-    private int getDoubleBondedNitrogenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getDoubleBondedNitrogenCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int ndbcounter = 0;
@@ -1251,7 +1251,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The aromaticNitrogensCount value
      */
-    private int getAromaticNitrogensCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getAromaticNitrogensCount(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int narocounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1272,7 +1272,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The piSystemsCount value
      */
-    private int getPiSystemsCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getPiSystemsCount(IAtomContainer ac, IAtom atom) {
         java.util.List neighbours = ac.getConnectedAtomsList(atom);
         int picounter = 0;
         java.util.List bonds=null;
@@ -1302,7 +1302,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The presenceOfCarbonil value
      */
-    private boolean getPresenceOfHydroxy(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private boolean getPresenceOfHydroxy(IAtomContainer ac, IAtom atom) {
         IAtom neighbour0 = (IAtom)ac.getConnectedAtomsList(atom).get(0);
         java.util.List first = null;
         if (neighbour0.getSymbol().equals("C")) {
@@ -1331,7 +1331,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The presenceOfNitor [boolean]
      */
-    private boolean getPresenceOfNitro(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private boolean getPresenceOfNitro(IAtomContainer ac, IAtom atom) {
         java.util.List neighbours = ac.getConnectedAtomsList(atom);
         java.util.List second = null;
         IBond bond = null;
@@ -1361,7 +1361,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The presenceOfSulfat [boolean]
      */
-    private boolean getPresenceOfSulfat(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private boolean getPresenceOfSulfat(IAtomContainer ac, IAtom atom) {
         java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         //org.openscience.cdk.interfaces.IAtom[] second = null;
         //IBond bond = null;
@@ -1381,7 +1381,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The presenceOfCarbonil value
      */
-    private int getPresenceOfCarbonil(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getPresenceOfCarbonil(IAtomContainer ac, IAtom atom) {
         java.util.List neighbours = ac.getConnectedAtomsList(atom);
         java.util.List second = null;
         IBond bond = null;
@@ -1413,7 +1413,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  atom  Description of the Parameter
      *@return       The ifCarbonIsHydrophobic value
      */
-    private boolean getIfCarbonIsHydrophobic(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+    private boolean getIfCarbonIsHydrophobic(IAtomContainer ac, IAtom atom) {
         java.util.List first = ac.getConnectedAtomsList(atom);
         java.util.List second = null;
         java.util.List third = null;
