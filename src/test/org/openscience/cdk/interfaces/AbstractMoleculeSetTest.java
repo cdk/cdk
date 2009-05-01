@@ -439,4 +439,20 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertEquals(-1.0, som.getMultiplier(som.getBuilder().newAtomContainer()), 0.00001);
     }
 
+    @Override @Test public void testGetMultipliers() {
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newMolecule(), 1.0);
+
+        Double[] multipliers = som.getMultipliers();
+        Assert.assertNotNull(multipliers);
+        Assert.assertEquals(1, multipliers.length);
+    }
+
+    @Override @Test public void testAddAtomContainer_IAtomContainer_double() {
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newMolecule(), 2.0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        Assert.assertEquals(2.0, som.getMultiplier(0), 0.00001);
+    }
+
 }
