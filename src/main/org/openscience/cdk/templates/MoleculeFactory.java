@@ -23,6 +23,10 @@
  */
 package org.openscience.cdk.templates;
 
+import java.io.FileInputStream;
+
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -30,12 +34,12 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point2d;
-import java.io.FileInputStream;
 
 /**
  * This class contains methods for generating simple organic molecules.
@@ -1274,14 +1278,14 @@ public class MoleculeFactory {
     }
 
 
-    public static org.openscience.cdk.interfaces.IMolecule loadMolecule(String inFile)
+    public static IMolecule loadMolecule(String inFile)
 	{
 		MDLReader mr = null;
 		ChemFile chemFile = null;
-		org.openscience.cdk.interfaces.IChemSequence chemSequence = null;
-		org.openscience.cdk.interfaces.IChemModel chemModel = null;
-		org.openscience.cdk.interfaces.IMoleculeSet setOfMolecules = null;
-		org.openscience.cdk.interfaces.IMolecule molecule = null;
+		IChemSequence chemSequence = null;
+		IChemModel chemModel = null;
+		IMoleculeSet setOfMolecules = null;
+		IMolecule molecule = null;
 		try
 		{
 			FileInputStream fis = new FileInputStream(inFile);

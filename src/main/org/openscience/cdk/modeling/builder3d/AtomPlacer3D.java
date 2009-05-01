@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -288,7 +289,7 @@ public class AtomPlacer3D {
 	 *@return                The doubleBondConfiguration2D value
 	 *@exception  Exception  Description of the Exception
 	 */
-	private int getDoubleBondConfiguration2D(org.openscience.cdk.interfaces.IBond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
+	private int getDoubleBondConfiguration2D(IBond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
 		if (bond.getOrder() != IBond.Order.DOUBLE){
 			return 0;
 		}
@@ -526,7 +527,7 @@ public class AtomPlacer3D {
 	public IAtomContainer getPlacedHeavyAtoms(IAtomContainer molecule, IAtom atom) {
 
 		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
-		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
+		IAtomContainer connectedAtoms = molecule.getBuilder().newAtomContainer();
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
 			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
@@ -559,7 +560,7 @@ public class AtomPlacer3D {
 	 * @return    The allPlacedAtoms value
 	 */
 	private IAtomContainer getAllPlacedAtoms(IAtomContainer molecule) {
-		IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
+		IAtomContainer placedAtoms = new AtomContainer();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			if (molecule.getAtom(i).getFlag(CDKConstants.ISPLACED)) {
 				placedAtoms.addAtom(molecule.getAtom(i));

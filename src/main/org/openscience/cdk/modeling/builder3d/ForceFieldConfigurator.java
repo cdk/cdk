@@ -243,7 +243,7 @@ public class ForceFieldConfigurator {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public IRingSet assignAtomTyps(IMolecule molecule) throws Exception {
-		org.openscience.cdk.interfaces.IAtom atom = null;
+		IAtom atom = null;
 		String hoseCode = "";
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		int NumberOfRingAtoms = 0;
@@ -351,7 +351,7 @@ public class ForceFieldConfigurator {
 	 * @param  ID    the atom type id
 	 * @return       the assigned atom
 	 */
-	private org.openscience.cdk.interfaces.IAtom setAtom(org.openscience.cdk.interfaces.IAtom atom, String ID) throws Exception {
+	private IAtom setAtom(IAtom atom, String ID) throws Exception {
 		IAtomType at = null;
 		String key = "";
 		List<?> data = null;
@@ -385,7 +385,7 @@ public class ForceFieldConfigurator {
 		return atom;
 	}
 	
-	public org.openscience.cdk.interfaces.IAtom configureAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode, boolean _boolean) throws Exception {
+	public IAtom configureAtom(IAtom atom, String hoseCode, boolean _boolean) throws Exception {
 		if (ffName.equals("mm2")){
 			return configureMM2BasedAtom(atom, hoseCode,_boolean);
 		}else if (ffName.equals("mmff94")){

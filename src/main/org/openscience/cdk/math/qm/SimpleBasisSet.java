@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.math.qm;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.math.Vector;
 
 /**
@@ -48,7 +49,7 @@ public class SimpleBasisSet extends GaussiansBasis
   /**
    * Create a base set
    */
-  public SimpleBasisSet(org.openscience.cdk.interfaces.IAtom[] atoms)
+  public SimpleBasisSet(IAtom[] atoms)
   {
     int i, j;
     int size = 0;

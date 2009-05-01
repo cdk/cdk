@@ -65,9 +65,9 @@ public class AtomTools {
      */
     public static void add3DCoordinates1(AtomContainer atomContainer) {
             // atoms without coordinates
-        AtomContainer noCoords = new org.openscience.cdk.AtomContainer();
+        AtomContainer noCoords = new AtomContainer();
         // get vector of possible referenceAtoms?
-        AtomContainer refAtoms = new org.openscience.cdk.AtomContainer();
+        AtomContainer refAtoms = new AtomContainer();
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
         	IAtom atom = atomContainer.getAtom(i);
             // is this atom without 3D coords, and has only one ligand?
@@ -123,7 +123,7 @@ public class AtomTools {
      * @return        new coords for atom 2
      */
     public static Point3d rescaleBondLength(
-    		org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, Point3d point2) {
+    		IAtom atom1, IAtom atom2, Point3d point2) {
         Point3d point1 = atom1.getPoint3d();
         double d1 = atom1.getCovalentRadius();
         double d2 = atom2.getCovalentRadius();
@@ -186,7 +186,7 @@ public class AtomTools {
      * @cdk.keyword coordinate generation
      */
     public static Point3d[] calculate3DCoordinatesForLigands(
-        AtomContainer atomContainer, org.openscience.cdk.interfaces.IAtom refAtom, int nwanted, 
+        AtomContainer atomContainer, IAtom refAtom, int nwanted, 
         double length, double angle) {
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
@@ -196,7 +196,7 @@ public class AtomTools {
             return newPoints;
         }
         int nligands = connectedAtoms.size();
-        AtomContainer ligandsWithCoords    = new org.openscience.cdk.AtomContainer();
+        AtomContainer ligandsWithCoords    = new AtomContainer();
         for (int i = 0; i < nligands; i++) {
             Atom ligand = (Atom) connectedAtoms.get(i);
             if (ligand.getPoint3d() != null) {
@@ -212,7 +212,7 @@ public class AtomTools {
             newPoints = calculate3DCoordinates0(refAtom.getPoint3d(), nwanted, length);
         } else if (nwithCoords == 1) {
 // ligand on A            
-        	org.openscience.cdk.interfaces.IAtom bAtom = ligandsWithCoords.getAtom(0);
+        	IAtom bAtom = ligandsWithCoords.getAtom(0);
             connectedAtoms = ligandsWithCoords.getConnectedAtomsList(bAtom);
 // does B have a ligand (other than A)            
             Atom jAtom = null;

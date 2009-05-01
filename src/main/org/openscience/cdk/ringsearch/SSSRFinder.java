@@ -64,7 +64,7 @@ import java.util.List;
 @TestClass("org.openscience.cdk.ringsearch.SSSRFinderTest")
 public class SSSRFinder {
 
-	private org.openscience.cdk.interfaces.IAtomContainer atomContainer;
+	private IAtomContainer atomContainer;
 	private CycleBasis cycleBasis;
 	
 	/**

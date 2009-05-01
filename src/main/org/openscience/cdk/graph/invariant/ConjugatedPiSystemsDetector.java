@@ -76,7 +76,7 @@ public class ConjugatedPiSystemsDetector {
         IAtomContainerSet piSystemSet = ac.getBuilder().newAtomContainerSet();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = ac.getAtom(i);
+        	IAtom atom = ac.getAtom(i);
             atom.setFlag(CDKConstants.VISITED, false);
         }
 

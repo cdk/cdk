@@ -84,7 +84,7 @@ public class AtomTypeTools {
 		//logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		String hoseCode = "";
-		org.openscience.cdk.interfaces.IRingSet ringSetA = null;
+		IRingSet ringSetA = null;
 		IRingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		logger.debug(ringSetMolecule);
 		

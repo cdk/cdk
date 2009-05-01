@@ -20,17 +20,19 @@
 
 package org.openscience.cdk.geometry.alignment;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
 
-import javax.vecmath.Point3d;
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * Aligns two structures to minimize the RMSD using the Kabsch algorithm.
@@ -104,7 +106,7 @@ public class KabschAlignment {
     private Point3d cm1, cm2;
     private double[] atwt1, atwt2;
     
-    private Point3d[] getPoint3dArray(org.openscience.cdk.interfaces.IAtom[] a) {
+    private Point3d[] getPoint3dArray(IAtom[] a) {
         Point3d[] p = new Point3d[ a.length ];
         for (int i = 0; i < a.length; i++) {
             p[i] = new Point3d( a[i].getPoint3d() );
@@ -112,7 +114,7 @@ public class KabschAlignment {
         return(p);
     }
 
-    private Point3d[] getPoint3dArray(org.openscience.cdk.interfaces.IAtomContainer ac) {
+    private Point3d[] getPoint3dArray(IAtomContainer ac) {
         Point3d[] p = new Point3d[ ac.getAtomCount() ];
         for (int i = 0; i < ac.getAtomCount(); i++) {
             p[i] = new Point3d( ac.getAtom(i).getPoint3d() );
@@ -120,7 +122,7 @@ public class KabschAlignment {
         return(p);
     }
     
-    private double[] getAtomicMasses(org.openscience.cdk.interfaces.IAtom[] a) {
+    private double[] getAtomicMasses(IAtom[] a) {
         double[] am = new double[a.length];
         IsotopeFactory factory = null;
         try {
@@ -138,7 +140,7 @@ public class KabschAlignment {
         return(am);
     }
     
-    private double[] getAtomicMasses(org.openscience.cdk.interfaces.IAtomContainer ac) {
+    private double[] getAtomicMasses(IAtomContainer ac) {
         double[] am = new double[ac.getAtomCount()];
         IsotopeFactory factory = null;
         try {

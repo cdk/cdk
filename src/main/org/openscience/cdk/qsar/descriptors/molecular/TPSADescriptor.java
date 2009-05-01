@@ -319,7 +319,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
 
                 // isIn3MemberRing checker
                 if (rs.contains(atom)) {
-                    org.openscience.cdk.interfaces.IRingSet rsAtom = rs.getRings(atom);
+                    IRingSet rsAtom = rs.getRings(atom);
                     for (int ringSetIndex = 0; ringSetIndex < rsAtom.getAtomContainerCount(); ringSetIndex++) {
                         Ring ring = (Ring) rsAtom.getAtomContainer(ringSetIndex);
                         if (ring.getRingSize() == 3)

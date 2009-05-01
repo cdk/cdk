@@ -74,7 +74,7 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      *
      * @param  molecule  The molecule to be added to this container 
      */
-    public void addMolecule(org.openscience.cdk.interfaces.IMolecule molecule) {
+    public void addMolecule(IMolecule molecule) {
         super.addAtomContainer(molecule);
 	/* notifyChanged() called in super.addAtomContainer() */
     }

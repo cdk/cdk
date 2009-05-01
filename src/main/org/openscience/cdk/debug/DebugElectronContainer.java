@@ -22,6 +22,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Map;
 
+import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -35,7 +36,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugElectronContainer extends org.openscience.cdk.ElectronContainer 
+public class DebugElectronContainer extends ElectronContainer 
     implements IElectronContainer{
 
     private static final long serialVersionUID = 5309193617982266230L;

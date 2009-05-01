@@ -32,7 +32,9 @@ package org.openscience.cdk.graph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Utility class to create a molecule graph for use with jgrapht.
@@ -62,12 +64,12 @@ public class MoleculeGraphs {
     static public SimpleGraph getMoleculeGraph(IAtomContainer molecule) {
 		SimpleGraph graph = new SimpleGraph();
 		for (int i=0; i<molecule.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(i);
+			IAtom atom = molecule.getAtom(i);
 			graph.addVertex(atom);
 		}
 		
 		for (int i=0; i<molecule.getBondCount(); i++	) {
-			org.openscience.cdk.interfaces.IBond bond = molecule.getBond(i);
+			IBond bond = molecule.getBond(i);
 			
 			/*
 			int order = (int) bond.getOrder();

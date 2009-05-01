@@ -30,6 +30,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -201,7 +202,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
 
         double sum = 0;
         for (int i = 0; i < container.getBondCount(); i++) {
-            org.openscience.cdk.interfaces.IBond bond = container.getBond(i);
+            IBond bond = container.getBond(i);
 
             if (bond.getAtomCount() != 2) {
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
@@ -227,7 +228,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         // heavy atoms only
         double heavysum = 0;
         for (int i = 0; i < container.getBondCount(); i++) {
-            org.openscience.cdk.interfaces.IBond b = container.getBond(i);
+            IBond b = container.getBond(i);
 
             if (b.getAtomCount() != 2) {
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));

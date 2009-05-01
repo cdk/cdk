@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  * A radical in CDK is represented by an AtomContainer that contains an Atom
  * and a SingleElectron type ElectronContainer:
  * <pre>
- *   AtomContainer radical = new org.openscience.cdk.AtomContainer();
+ *   AtomContainer radical = new AtomContainer();
  *   Atom carbon = new Atom("C");
  *   carbon.setImplicitHydrogens(3);
  *   radical.addElectronContainer(new SingleElectron(carbon));
@@ -63,14 +63,14 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
     protected final int electronCount = 1;
 
     /** The atom with which this single electron is associated. */
-    protected org.openscience.cdk.interfaces.IAtom atom;
+    protected IAtom atom;
 
     /**
      * Constructs an single electron orbital on an Atom.
      *
      * @param atom The atom to which the single electron belongs.
      */
-    public SingleElectron(org.openscience.cdk.interfaces.IAtom atom) {
+    public SingleElectron(IAtom atom) {
         this.atom = atom;
     }
 
@@ -96,7 +96,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @see    #setAtom
 	 */
-	public org.openscience.cdk.interfaces.IAtom getAtom() {
+	public IAtom getAtom() {
 		return (Atom)this.atom;
 	}
 
@@ -107,7 +107,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @see    #getAtom
 	 */
-	public void setAtom(org.openscience.cdk.interfaces.IAtom atom) {
+	public void setAtom(IAtom atom) {
 		this.atom = atom;
 		notifyChanged();
 	}
@@ -118,7 +118,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this SingleElectron is associated with the atom
      */
-    public boolean contains(org.openscience.cdk.interfaces.IAtom atom)     {
+    public boolean contains(IAtom atom)     {
         return (this.atom == atom) ? true : false;
     }
 

@@ -28,6 +28,7 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.*;
@@ -106,7 +107,7 @@ public class GenerateFragments {
 	 * @param minimumRingSize int indicates the minimum ring size as to considered as fragment (ringSize<minimimRingSize)
 	 * return	void
 	 */
-	public void generateMurckoFragments(IMolecule molecule, boolean sidechainHetatoms,boolean exocyclicDoubleBonds, int minimumRingSize) throws org.openscience.cdk.exception.CDKException{
+	public void generateMurckoFragments(IMolecule molecule, boolean sidechainHetatoms,boolean exocyclicDoubleBonds, int minimumRingSize) throws CDKException {
 		//logger.debug("****** generatemurckoFragments *******");
 		//VARIABLES
 		this.murckoFragments =new Vector();

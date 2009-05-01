@@ -309,9 +309,9 @@ public class Polarizability {
      *@param  atom  Description of the Parameter
      *@return       The numberOfHydrogen value
      */
-    private int getNumberOfHydrogen(IAtomContainer atomContainer, org.openscience.cdk.interfaces.IAtom atom) {
+    private int getNumberOfHydrogen(IAtomContainer atomContainer, IAtom atom) {
         java.util.List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
-        org.openscience.cdk.interfaces.IAtom connectedAtom;
+        IAtom connectedAtom;
         int hCounter = 0;
         for (IBond bond : bonds) {
             connectedAtom = bond.getConnectedAtom(atom);

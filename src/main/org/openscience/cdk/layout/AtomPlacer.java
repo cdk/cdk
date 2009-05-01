@@ -29,6 +29,7 @@
 package org.openscience.cdk.layout;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
@@ -542,7 +543,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.NoSuchAtomException  Description of
      *      the Exception
      */
-    public IAtomContainer getInitialLongestChain(IMolecule molecule) throws org.openscience.cdk.exception.CDKException
+    public IAtomContainer getInitialLongestChain(IMolecule molecule) throws CDKException
     {
         logger.debug("Start of getInitialLongestChain()");
         double[][] conMat = ConnectionMatrix.getMatrix(molecule);
@@ -599,7 +600,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public IAtomContainer getLongestUnplacedChain(IMolecule molecule, IAtom startAtom) throws org.openscience.cdk.exception.CDKException
+    public IAtomContainer getLongestUnplacedChain(IMolecule molecule, IAtom startAtom) throws CDKException
     {
         logger.debug("Start of getLongestUnplacedChain.");
         //ConnectivityChecker cc = new ConnectivityChecker();
@@ -654,7 +655,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public  void breadthFirstSearch(IAtomContainer ac, Vector sphere, IAtomContainer[] pathes) throws org.openscience.cdk.exception.CDKException
+    public  void breadthFirstSearch(IAtomContainer ac, Vector sphere, IAtomContainer[] pathes) throws CDKException
     {
         IAtom atom = null;
         IAtom nextAtom = null;
@@ -747,7 +748,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public  String listNumbers(IAtomContainer mol, IAtomContainer ac) throws org.openscience.cdk.exception.CDKException
+    public  String listNumbers(IAtomContainer mol, IAtomContainer ac) throws CDKException
     {
         String s = "Numbers: ";
         for (int f = 0; f < ac.getAtomCount(); f++)

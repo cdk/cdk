@@ -31,6 +31,7 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * An algorithm for topological symmetry.
@@ -76,7 +77,7 @@ public class EquivalentClassPartitioner
 		nodeMatrix=new double[nodeNumber][layerNumber+1];
 		bondMatrix=new double[nodeNumber][layerNumber];
 		weight=new double[nodeNumber+1];
-		logger = new org.openscience.cdk.tools.LoggingTool(this);
+		logger = new LoggingTool(this);
 	}
 
 

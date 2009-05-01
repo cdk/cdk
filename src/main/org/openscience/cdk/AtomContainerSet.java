@@ -47,7 +47,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	private static final long serialVersionUID = -521290255592768395L;
 
 	/**  Array of AtomContainers. */
-	protected org.openscience.cdk.interfaces.IAtomContainer[] atomContainers;
+	protected IAtomContainer[] atomContainers;
 
 	/**  Number of AtomContainers contained by this container. */
 	protected int atomContainerCount;
@@ -77,7 +77,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 *
 	 * @param  atomContainer  The atomContainer to be added to this container
 	 */
-	public void addAtomContainer(org.openscience.cdk.interfaces.IAtomContainer atomContainer) {
+	public void addAtomContainer(IAtomContainer atomContainer) {
 		atomContainer.addListener(this);
 		addAtomContainer(atomContainer, 1.0);
 		/*
@@ -90,7 +90,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 *
 	 * @param  atomContainer  The atomContainer to be removed from this container
 	 */
-	public void removeAtomContainer(org.openscience.cdk.interfaces.IAtomContainer atomContainer) {
+	public void removeAtomContainer(IAtomContainer atomContainer) {
 		for (int i = atomContainerCount-1; i >= 0; i--) {
 			if (atomContainers[i] == atomContainer)
 				removeAtomContainer(i);
@@ -215,7 +215,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @param  atomContainer  The atomContainer to be added to this container
 	 * @param  multiplier     The multiplier of this atomContainer
 	 */
-	public void addAtomContainer(org.openscience.cdk.interfaces.IAtomContainer atomContainer, double multiplier) {
+	public void addAtomContainer(IAtomContainer atomContainer, double multiplier) {
 		if (atomContainerCount + 1 >= atomContainers.length) {
 			growAtomContainerArray();
 		}
@@ -281,7 +281,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @param  number  The position of the AtomContainer to be returned.
 	 * @return         The AtomContainer at position <code>number</code> .
 	 */
-	public org.openscience.cdk.interfaces.IAtomContainer getAtomContainer(int number) {
+	public IAtomContainer getAtomContainer(int number) {
 		return atomContainers[number];
 	}
 
@@ -304,7 +304,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @return            -1, if the given molecule is not a container in this set
 	 * @see               #setMultiplier(IAtomContainer, Double)
 	 */
-	public Double getMultiplier(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public Double getMultiplier(IAtomContainer container) {
 		for (int i = 0; i < atomContainerCount; i++) {
 			if (atomContainers[i].equals(container)) {
 				return multipliers[i];

@@ -20,10 +20,15 @@
  */
 package org.openscience.cdk.debug;
 
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.util.Map;
+
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Debugging data class.
@@ -32,7 +37,7 @@ import java.util.Map;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugChemSequence extends org.openscience.cdk.ChemSequence
+public class DebugChemSequence extends ChemSequence
     implements IChemSequence {
 
     private static final long serialVersionUID = -628120469241907704L;

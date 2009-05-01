@@ -80,7 +80,7 @@ public class FiguerasSSSRFinder {
 		RingSet sssr = new RingSet();
 		Molecule molecule = new Molecule();
 		molecule.add(mol);
-		org.openscience.cdk.interfaces.IAtom smallest;
+		IAtom smallest;
 		int smallestDegree, nodesToBreakCounter, degree;
 		Atom[] rememberNodes;
 		Ring ring;
@@ -112,7 +112,7 @@ public class FiguerasSSSRFinder {
 			nodesN2.clear();
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(f);
+				IAtom atom = molecule.getAtom(f);
 				degree = molecule.getConnectedBondsCount(atom);
 				if (degree == 0)
 				{
@@ -347,7 +347,7 @@ public class FiguerasSSSRFinder {
 	private void initPath(Molecule molecule)
 	{
 	 	for (int i = 0; i < molecule.getAtomCount(); i++) {
-	 		org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(i);
+	 		IAtom atom = molecule.getAtom(i);
 			atom.setProperty(PATH, new Vector());
 	 	}		
 	}
@@ -414,7 +414,7 @@ public class FiguerasSSSRFinder {
 	{
 		Ring r1, r2;
 		RingSet ringSet = new RingSet();
-		org.openscience.cdk.interfaces.IBond bond;
+		IBond bond;
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
 		logger.debug("Molecule: " + molecule);

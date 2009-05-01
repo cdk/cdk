@@ -31,6 +31,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -107,12 +108,12 @@ public class BasicValidator extends AbstractValidator {
     }
     public ValidationReport validateReaction(Reaction subject) {
         ValidationReport report = new ValidationReport();
-        AtomContainer container1 = new org.openscience.cdk.AtomContainer();
+        AtomContainer container1 = new AtomContainer();
         IMoleculeSet reactants = subject.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             container1.add(reactants.getMolecule(i));
         }
-        AtomContainer container2 = new org.openscience.cdk.AtomContainer();
+        AtomContainer container2 = new AtomContainer();
         IMoleculeSet products = subject.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
             container2.add(products.getMolecule(i));
@@ -235,13 +236,13 @@ public class BasicValidator extends AbstractValidator {
                 bond.getBuilder()
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
-                org.openscience.cdk.interfaces.IAtom atom = bond.getAtom(i);
+                IAtom atom = bond.getAtom(i);
                 if (atom instanceof PseudoAtom) {
                     // ok, all is fine; we don't know the properties of pseudo atoms
                     break;
                 }
-                org.openscience.cdk.interfaces.IAtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
-                org.openscience.cdk.interfaces.IAtomType failedOn = null;
+                IAtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+                IAtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
                     if (!BondManipulator.isHigherOrder(bond.getOrder(), atomTypes[j].getMaxBondOrder())) {
@@ -307,7 +308,7 @@ public class BasicValidator extends AbstractValidator {
     
     // the Molecule tests
 
-    private ValidationReport validateBondOrderSum(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
+    private ValidationReport validateBondOrderSum(IAtom atom, Molecule molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkBondSum = new ValidationTest(atom,
             "The atom's total bond order is too high."
@@ -326,10 +327,10 @@ public class BasicValidator extends AbstractValidator {
                 );
                 report.addWarning(checkBondSum);
             } else {
-                org.openscience.cdk.interfaces.IAtomType failedOn = null;
+                IAtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
-                    org.openscience.cdk.interfaces.IAtomType type = atomTypes[j];
+                    IAtomType type = atomTypes[j];
                     if (atom.getFormalCharge() == type.getFormalCharge()) {
                         foundMatchingAtomType = true;
                         if (bos == type.getBondOrderSum()) {

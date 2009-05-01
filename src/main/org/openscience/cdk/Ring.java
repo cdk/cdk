@@ -23,7 +23,10 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
 
 /** 
  * Class representing a ring structure in a molecule.
@@ -36,7 +39,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.svnrev  $Revision$
  * @cdk.keyword ring
  */
-public class Ring extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IRing
+public class Ring extends AtomContainer implements java.io.Serializable, IRing
 {
 
 	/**
@@ -62,7 +65,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
      *
      * @param atomContainer The IAtomContainer object containing the atoms to form the ring
      */
-	public Ring(org.openscience.cdk.interfaces.IAtomContainer atomContainer)
+	public Ring(IAtomContainer atomContainer)
 	{
 		super(atomContainer);
 	}
@@ -117,9 +120,9 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	 * @param   atom  A atom from the bond above to assign a search direction
 	 * @return  The next bond in the order given by the above assignment   
 	 */
-	public org.openscience.cdk.interfaces.IBond getNextBond(org.openscience.cdk.interfaces.IBond bond, org.openscience.cdk.interfaces.IAtom atom)
+	public IBond getNextBond(IBond bond, IAtom atom)
 	{
-		org.openscience.cdk.interfaces.IBond tempBond;
+		IBond tempBond;
 		for (int f = 0; f < getBondCount(); f++) {
 			tempBond = getBond(f);
             if (tempBond.contains(atom) && bond != tempBond) return tempBond;

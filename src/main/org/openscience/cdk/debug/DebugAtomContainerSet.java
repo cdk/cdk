@@ -22,6 +22,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Map;
 
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -36,7 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
+public class DebugAtomContainerSet extends AtomContainerSet
     implements IAtomContainerSet {
 
     private static final long serialVersionUID = -8358480615782437454L;

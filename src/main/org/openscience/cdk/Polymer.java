@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPolymer;
 
 import java.util.Collection;
 import java.util.Hashtable;
@@ -47,7 +48,7 @@ import java.util.Map;
  * @cdk.created 2001-08-06
  * @cdk.keyword polymer
  */
-public class Polymer extends Molecule implements java.io.Serializable, org.openscience.cdk.interfaces.IPolymer
+public class Polymer extends Molecule implements java.io.Serializable, IPolymer
 { 
 	/**
      * Determines if a de-serialized object is compatible with this class.

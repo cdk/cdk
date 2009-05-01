@@ -25,10 +25,12 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
 import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -50,7 +52,7 @@ public class HuLuIndexTool
    *
    * @cdk.keyword EAID number
    */
-    public static double getEAIDNumber(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException,
+    public static double getEAIDNumber(AtomContainer atomContainer) throws NoSuchAtomException,
             BadMatrixFormatException,IndexOutOfBoundsException
     {
         boolean debug = false;
@@ -80,7 +82,7 @@ public class HuLuIndexTool
 
 
     public static double[][] getExtendedAdjacenyMatrix(AtomContainer atomContainer)
-        throws org.openscience.cdk.exception.NoSuchAtomException
+        throws NoSuchAtomException
     {
         boolean debug = false;
         double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
@@ -119,10 +121,10 @@ public class HuLuIndexTool
         return adjaMatrix;
     }
 
-    public static double[] getAtomWeights(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
+    public static double[] getAtomWeights(AtomContainer atomContainer) throws NoSuchAtomException
     {
         boolean debug = false;
-        org.openscience.cdk.interfaces.IAtom atom,headAtom,endAtom;        
+        IAtom atom,headAtom,endAtom;        
         int headAtomPosition,endAtomPosition;
 
         //int k = 0;

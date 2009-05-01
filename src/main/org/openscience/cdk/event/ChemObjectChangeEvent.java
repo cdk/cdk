@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk.event;
 
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+
 /**
  * Event fired by cdk classes to their registered listeners
  * in case something changes within them.
@@ -34,7 +36,7 @@ package org.openscience.cdk.event;
  * @cdk.module data
  * @cdk.svnrev  $Revision$
  */
-public class ChemObjectChangeEvent extends java.util.EventObject implements org.openscience.cdk.interfaces.IChemObjectChangeEvent
+public class ChemObjectChangeEvent extends java.util.EventObject implements IChemObjectChangeEvent
 {
 
     private static final long serialVersionUID = 5418604788783986725L;

@@ -227,7 +227,7 @@ public class InductiveAtomicSoftnessDescriptor implements IAtomicDescriptor {
                     names);
         }
 
-	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
+	private double calculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
 		double distance;
 		double tmp;
 		Point3d firstPoint = atom1.getPoint3d();

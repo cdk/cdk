@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 
 import java.util.Arrays;
@@ -104,8 +105,8 @@ public class IsomorphismTester implements java.io.Serializable
     @TestMethod("testIsIsomorphic_IMolecule")
     public boolean isIsomorphic(IMolecule mol2) {
 		boolean found;
-		org.openscience.cdk.interfaces.IAtom atom1 = null;
-		org.openscience.cdk.interfaces.IAtom atom2 = null;
+		IAtom atom1 = null;
+		IAtom atom2 = null;
 		setCompareTable(mol2);
 		for (int f = 0; f < sortedBaseTable.length; f++)
 		{

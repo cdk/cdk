@@ -20,12 +20,18 @@
  */
 package org.openscience.cdk.debug;
 
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.util.Map;
+
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Debugging data class.
@@ -34,7 +40,7 @@ import java.util.Map;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugBond extends org.openscience.cdk.Bond
+public class DebugBond extends Bond
     implements IBond {
 
     private static final long serialVersionUID = -2330398179697796261L;
@@ -45,7 +51,7 @@ public class DebugBond extends org.openscience.cdk.Bond
 		super();
 	}
 	
-	public DebugBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
+	public DebugBond(IAtom atom1, IAtom atom2) {
 		super(atom1, atom2);
 	}
 	

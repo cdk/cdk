@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -41,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom 
+public class DebugPseudoAtom extends PseudoAtom 
     implements IPseudoAtom {
 
     private static final long serialVersionUID = -5935090219383862070L;

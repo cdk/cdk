@@ -549,7 +549,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@return The SphereCode value
 	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong
 	 */
-	private String getSphereCode(List<TreeNode> sphereNodes) throws org.openscience.cdk.exception.CDKException
+	private String getSphereCode(List<TreeNode> sphereNodes) throws CDKException
 	{
 		if (sphereNodes == null || sphereNodes.size() < 1)
 		{

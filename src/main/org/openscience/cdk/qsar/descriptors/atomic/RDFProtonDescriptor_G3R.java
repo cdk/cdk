@@ -236,7 +236,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			}
 		}
 		// SET ISINRING FLAGS FOR ATOMS
-		org.openscience.cdk.interfaces.IRingSet ringsWithThisAtom;
+		IRingSet ringsWithThisAtom;
 
 		for (int w = 0; w < varAtomContainer.getAtomCount(); w++) {
 			ringsWithThisAtom = varRingSet
@@ -494,7 +494,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		if (bondsInCycloex.size() > 0) {
 			IAtom cycloexBondAtom0;
 			IAtom cycloexBondAtom1;
-			org.openscience.cdk.interfaces.IBond theInCycloexBond;
+			IBond theInCycloexBond;
 			distance = 0;
 			limitInf = 0;
 			limitSup = Math.PI;
@@ -570,7 +570,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	// Others definitions
 
 	private boolean getIfBondIsNotRotatable(Molecule mol,
-			org.openscience.cdk.interfaces.IBond bond, IAtomContainer detected) {
+			IBond bond, IAtomContainer detected) {
 		boolean isBondNotRotatable = false;
 		int counter = 0;
 		IAtom atom0 = bond.getAtom(0);
@@ -606,7 +606,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			IAtom carbonAtom) {
 		boolean isDoubleBondedToOxygen = false;
 		List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
-		org.openscience.cdk.interfaces.IBond tmpBond;
+		IBond tmpBond;
 		int counter = 0;
         for (IAtom neighbour : neighToCarbon) {
             if (neighbour.getSymbol().equals("O")) {
@@ -673,7 +673,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	// given a double bond
 	// this method returns a bond bonded to this double bond
 	private int getNearestBondtoAGivenAtom(Molecule mol, IAtom atom,
-			org.openscience.cdk.interfaces.IBond bond) {
+			IBond bond) {
 		int nearestBond = 0;
 		double[] values;
 		double distance = 0;
@@ -706,7 +706,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	// bond
 	// and returns distance and coordinates of middle point
 	private double[] calculateDistanceBetweenAtomAndBond(IAtom proton,
-			org.openscience.cdk.interfaces.IBond theBond) {
+			IBond theBond) {
 		Point3d middlePoint = theBond.get3DCenter();
 		Point3d protonPoint = proton.getPoint3d();
 		double[] values = new double[4];

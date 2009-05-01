@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.AminoAcid;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -112,7 +113,7 @@ public class AminoAcids {
         // Create set of AtomContainers
         aminoAcids = new AminoAcid[20];
 
-        IChemFile list = new org.openscience.cdk.ChemFile();
+        IChemFile list = new ChemFile();
         CMLReader reader = new CMLReader(
         	AminoAcids.class.getClassLoader().getResourceAsStream(
         			"org/openscience/cdk/templates/data/list_aminoacids.cml"
@@ -152,7 +153,7 @@ public class AminoAcids {
         			}
         		}
         		while (atoms.hasNext()) {
-        			org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
+        			IAtom atom = (IAtom)atoms.next();
         			String dictRef = (String)atom.getProperty("org.openscience.cdk.dict");
         			if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
         				aminoAcid.addNTerminus(atom);
@@ -162,7 +163,6 @@ public class AminoAcids {
         				aminoAcid.addAtom(atom);
         			}
         		}
-//        		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
                 Iterator<IBond> bonds = ac.bonds().iterator();
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
