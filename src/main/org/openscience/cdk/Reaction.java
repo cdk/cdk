@@ -108,7 +108,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return A MoleculeSet containing the reactants in this reaction
      * @see    #setReactants
      */
-    public org.openscience.cdk.interfaces.IMoleculeSet getReactants() {
+    public IMoleculeSet getReactants() {
         return reactants;
     }
 
@@ -118,7 +118,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param setOfMolecules The new set of reactants
      * @see   #getReactants
      */
-    public void setReactants(org.openscience.cdk.interfaces.IMoleculeSet setOfMolecules) {
+    public void setReactants(IMoleculeSet setOfMolecules) {
         reactants = setOfMolecules;
 	notifyChanged();
     }
@@ -129,7 +129,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return A MoleculeSet containing the products in this reaction
      * @see    #setProducts
      */
-    public org.openscience.cdk.interfaces.IMoleculeSet getProducts() {
+    public IMoleculeSet getProducts() {
         return products;
     }
     
@@ -139,7 +139,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param setOfMolecules The new set of products
      * @see   #getProducts
      */
-    public void setProducts(org.openscience.cdk.interfaces.IMoleculeSet setOfMolecules) {
+    public void setProducts(IMoleculeSet setOfMolecules) {
         products = setOfMolecules;
 	notifyChanged();
     }
@@ -150,7 +150,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return A MoleculeSet containing the agents in this reaction
      * @see    #addAgent
      */
-    public org.openscience.cdk.interfaces.IMoleculeSet getAgents() {
+    public IMoleculeSet getAgents() {
         return agents;
     }
     
@@ -196,7 +196,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param reactant   Molecule added as reactant to this reaction
      * @see   #getReactants
      */
-    public void addReactant(org.openscience.cdk.interfaces.IMolecule reactant) {
+    public void addReactant(IMolecule reactant) {
         addReactant(reactant, 1.0);
 	/* notifyChanged() is called by 
 	   addReactant(Molecule reactant, double coefficient) */
@@ -208,7 +208,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param agent   Molecule added as agent to this reaction
      * @see   #getAgents
      */
-    public void addAgent(org.openscience.cdk.interfaces.IMolecule agent) {
+    public void addAgent(IMolecule agent) {
         agents.addAtomContainer(agent);
 	notifyChanged();
     }
@@ -231,7 +231,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param product    Molecule added as product to this reaction
      * @see   #getProducts
      */
-    public void addProduct(org.openscience.cdk.interfaces.IMolecule product) {
+    public void addProduct(IMolecule product) {
         this.addProduct(product, 1.0);
 	/* notifyChanged() is called by 
 	addProduct(Molecule product, double coefficient)*/
@@ -379,7 +379,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param mapping Mapping to add.
      * @see   #mappings
      */
-    public void addMapping(org.openscience.cdk.interfaces.IMapping mapping) {
+    public void addMapping(IMapping mapping) {
         if (mappingCount + 1 >= map.length) growMappingArray();
         map[mappingCount] = mapping;
         mappingCount++;

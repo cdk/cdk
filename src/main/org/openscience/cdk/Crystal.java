@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ICrystal;
 
 /**
@@ -85,7 +86,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @param container  the AtomContainer providing the atoms and bonds
      */
-    public Crystal(org.openscience.cdk.interfaces.IAtomContainer container) {
+    public Crystal(IAtomContainer container) {
         super(container);
         setZeroAxes();
     }

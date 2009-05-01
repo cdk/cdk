@@ -92,7 +92,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *
      * @see            #getChemModel
 	 */
-	public void addChemModel(org.openscience.cdk.interfaces.IChemModel chemModel)
+	public void addChemModel(IChemModel chemModel)
 	{
 		if (chemModelCount + 1 >= chemModels.length)
 		{
@@ -167,7 +167,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *
      * @see            #addChemModel
 	 */
-	public org.openscience.cdk.interfaces.IChemModel getChemModel(int number)
+	public IChemModel getChemModel(int number)
 	{
 		return chemModels[number];
 	}

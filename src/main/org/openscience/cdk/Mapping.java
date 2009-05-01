@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
 
 import java.util.Iterator;
 
@@ -42,7 +43,7 @@ import java.util.Iterator;
  * @author  Egon Willighagen
  * @cdk.created 2003-08-16
  */
-public class Mapping extends ChemObject implements java.io.Serializable, Cloneable, org.openscience.cdk.interfaces.IMapping {
+public class Mapping extends ChemObject implements java.io.Serializable, Cloneable, IMapping {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
