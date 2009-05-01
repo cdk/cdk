@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.debug;
 
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
@@ -33,7 +34,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugRingSet extends org.openscience.cdk.RingSet
+public class DebugRingSet extends RingSet
     implements IRingSet {
 
     private static final long serialVersionUID = -4144201128508373352L;

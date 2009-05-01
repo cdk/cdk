@@ -22,6 +22,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Map;
 
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -36,7 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugLonePair extends org.openscience.cdk.LonePair
+public class DebugLonePair extends LonePair
     implements ILonePair {
 
     private static final long serialVersionUID = 5683399496728893341L;

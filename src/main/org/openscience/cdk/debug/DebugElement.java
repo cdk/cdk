@@ -22,6 +22,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Map;
 
+import org.openscience.cdk.Element;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -35,7 +36,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugElement extends org.openscience.cdk.Element
+public class DebugElement extends Element
     implements IElement {
 
     private static final long serialVersionUID = -8520499563841667066L;

@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.debug;
 
+import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.tools.LoggingTool;
@@ -31,7 +32,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugAtomParity extends org.openscience.cdk.AtomParity
+public class DebugAtomParity extends AtomParity
     implements IAtomParity {
 
     private static final long serialVersionUID = 6305428844566539948L;

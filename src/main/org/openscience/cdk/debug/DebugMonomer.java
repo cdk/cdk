@@ -20,12 +20,23 @@
  */
 package org.openscience.cdk.debug;
 
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.util.List;
 import java.util.Map;
+
+import org.openscience.cdk.Monomer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Debugging data class.
@@ -34,7 +45,7 @@ import java.util.Map;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugMonomer extends org.openscience.cdk.Monomer
+public class DebugMonomer extends Monomer
     implements IMonomer {
 
     private static final long serialVersionUID = -7312839949399572435L;

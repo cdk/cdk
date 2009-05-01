@@ -22,6 +22,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Map;
 
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -39,7 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugChemModel extends org.openscience.cdk.ChemModel
+public class DebugChemModel extends ChemModel
     implements IChemModel {
 
     private static final long serialVersionUID = -920209300005079592L;

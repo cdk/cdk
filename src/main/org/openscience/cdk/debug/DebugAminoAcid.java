@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.debug;
 
+import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.LoggingTool;
@@ -34,7 +35,7 @@ import java.util.Map;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
+public class DebugAminoAcid extends AminoAcid
     implements IAminoAcid {
 
     private static final long serialVersionUID = 4092864536013855890L;

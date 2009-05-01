@@ -22,6 +22,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Map;
 
+import org.openscience.cdk.Isotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -36,7 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  * @cdk.svnrev  $Revision$
  */
-public class DebugIsotope extends org.openscience.cdk.Isotope
+public class DebugIsotope extends Isotope
     implements IIsotope {
 
     private static final long serialVersionUID = -2659188100080921299L;
