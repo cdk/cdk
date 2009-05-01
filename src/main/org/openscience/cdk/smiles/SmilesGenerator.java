@@ -35,14 +35,30 @@ import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
@@ -1566,8 +1582,10 @@ public class SmilesGenerator
 			{
                 // we put in a special check for N.planar3 cases such
                 // as for indole and pyrrole, which require an explicit
-                // H on the nitrogen
-                if (a.getSymbol().equals("N") && a.getHybridization() == IAtomType.Hybridization.PLANAR3) {
+                // H on the nitrogen. However this only makes sense when
+                // the connectivity is not 3 - so for a case such as n1ncn(c1)CC
+                // the PLANAR3 N already has 3 bonds, so don't add a H for this case
+                if (a.getSymbol().equals("N") && a.getHybridization() == IAtomType.Hybridization.PLANAR3 && container.getConnectedAtomsList(a).size() != 3) {
                     buffer.append("[").append(a.getSymbol().toLowerCase()).append("H]");
                 } else buffer.append(a.getSymbol().toLowerCase());
 			} else
