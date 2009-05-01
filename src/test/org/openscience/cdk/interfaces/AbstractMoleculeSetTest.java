@@ -230,6 +230,18 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertNotNull(molecule);
     }
 
+    /**
+     * @cdk.bug 2784182
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void noClassCastException2() throws Exception {
+        IMoleculeSet set = (IMoleculeSet)newChemObject();
+        IAtomContainerSet set2 = set.getBuilder().newAtomContainerSet();
+        IAtomContainer container = set.getBuilder().newAtomContainer();
+        set2.addAtomContainer(container);
+        set.add(set2);
+    }
+
     @Override @Test public void testGetAtomContainerCount() {
         IAtomContainerSet som = (IAtomContainerSet)newChemObject();
         som.addAtomContainer(som.getBuilder().newMolecule());
