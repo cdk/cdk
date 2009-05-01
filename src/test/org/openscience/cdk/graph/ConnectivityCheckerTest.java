@@ -197,5 +197,16 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
     }
 
+    /**
+     * @cdk.bug 2784209
+     */
+    @Test public void testNoAtomsIsConnected() {
+        IAtomContainer container = new AtomContainer();
+        Assert.assertTrue(
+            "Molecule appears not to be connected",
+            ConnectivityChecker.isConnected(container)
+        );
+    }
+
 }
 
