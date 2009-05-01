@@ -62,6 +62,10 @@ public class ConnectivityChecker
     @TestMethod("testIsConnected_IAtomContainer,testPartitionIntoMolecules_IsConnected_Consistency")
     public static boolean isConnected(IAtomContainer atomContainer)
 	{
+        // with one atom or less, we define it to be connected, as there is no
+        // partitioning needed
+        if (atomContainer.getAtomCount() < 2) return true;
+
 		IAtomContainer newContainer = atomContainer.getBuilder().newAtomContainer();
 		IMolecule molecule = atomContainer.getBuilder().newMolecule();
 		List<IAtom> sphere = new ArrayList<IAtom>();
