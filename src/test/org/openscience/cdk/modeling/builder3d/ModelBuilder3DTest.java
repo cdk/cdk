@@ -371,4 +371,20 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	ac = mb3d.generate3DCoordinates(ac, false);
     	checkAverageBondLength(ac);
 	}
+
+    @Test
+    public void testModelBuilder3D_reserpine() throws Exception{
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	String filename = "data/mdl/reserpine.mol";
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins);
+    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+    	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+    	IMolecule ac= new NNMolecule((IAtomContainer)containersList.get(0));
+    	ac = mb3d.generate3DCoordinates(ac, false);
+		for (int i=0;i<ac.getAtomCount();i++){
+			Assert.assertNotNull(ac.getAtom(i).getPoint3d());
+		}
+		checkAverageBondLength(ac);
+	}
 }
