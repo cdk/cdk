@@ -58,7 +58,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class CarbonylEliminationReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -220,7 +221,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 		try {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 	        lpcheck.saturate(molecule);
 			makeSureAtomTypesAreRecognized(molecule);
 		} catch (CDKException e) {

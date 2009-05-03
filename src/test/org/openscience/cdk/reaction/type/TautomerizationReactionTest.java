@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class TautomerizationReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method

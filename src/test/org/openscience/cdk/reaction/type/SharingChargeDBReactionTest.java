@@ -59,7 +59,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class SharingChargeDBReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -254,7 +255,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		try {
 			addExplicitHydrogens(molecule);
 	        
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 	        lpcheck.saturate(molecule);
 		} catch (Exception e) {
@@ -281,7 +282,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		
 		try {
 			addExplicitHydrogens(molecule);
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 	        lpcheck.saturate(molecule);
 		} catch (Exception e) {

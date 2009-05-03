@@ -90,7 +90,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  */
  
 public class RearrangementAnionReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -290,7 +291,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 		molecule.addBond(6, 1, IBond.Order.SINGLE);
 		
 		addExplicitHydrogens(molecule);
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
 		

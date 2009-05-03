@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-reaction
  */
 public class PiBondingMovementReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method

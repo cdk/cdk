@@ -53,7 +53,7 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  */
  
 public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method

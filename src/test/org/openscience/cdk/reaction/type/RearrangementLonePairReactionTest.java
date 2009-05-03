@@ -91,7 +91,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  */
  
 public class RearrangementLonePairReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -304,7 +305,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 			addExplicitHydrogens(molecule);
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 	        lpcheck.saturate(molecule);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -338,7 +339,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 			addExplicitHydrogens(molecule);
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 	        lpcheck.saturate(molecule);
 	        
 		} catch (Exception e) {
@@ -392,7 +393,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		
 		addExplicitHydrogens(molecule);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    
         lpcheck.saturate(molecule);
 		
 		IReactionProcess type = new RearrangementLonePairReaction();

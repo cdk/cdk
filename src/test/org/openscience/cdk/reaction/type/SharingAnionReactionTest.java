@@ -60,7 +60,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  */
  
 public class SharingAnionReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -171,7 +172,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 		
 		addExplicitHydrogens(molecule);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    
         lpcheck.saturate(molecule);
      	
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
@@ -308,7 +309,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 		try {
 			addExplicitHydrogens(molecule);
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 	        lpcheck.saturate(molecule);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -333,7 +334,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 		try {
 			addExplicitHydrogens(molecule);
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 	        lpcheck.saturate(molecule);
 		} catch (Exception e) {
 			e.printStackTrace();

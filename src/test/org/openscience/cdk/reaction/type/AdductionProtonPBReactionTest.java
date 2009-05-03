@@ -57,7 +57,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class AdductionProtonPBReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -244,7 +245,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
         try {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 	        lpcheck.saturate(molecule);
 		} catch (CDKException e) {
 			e.printStackTrace();
@@ -278,7 +279,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
         try {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	    
 	        lpcheck.saturate(molecule);
 		} catch (CDKException e) {
 			e.printStackTrace();
