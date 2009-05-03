@@ -85,11 +85,9 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 
 		IReactionProcess type = new TautomerizationReaction();
-
-		IMolecule molecule = getAcetaldehyde();
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/* initiate */
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -104,7 +102,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         
-        IMolecule molecule2 = getEthenol();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -134,10 +132,9 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new TautomerizationReaction();
-		IMolecule molecule = getAcetaldehyde();
-	    
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/*manually putting the active center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -161,7 +158,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        IMolecule molecule2 = getEthenol();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -198,8 +195,9 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new TautomerizationReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
-		IMolecule molecule = getAcetaldehyde();
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/*manually putting the active center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -210,7 +208,6 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -247,10 +244,8 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new TautomerizationReaction();
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		IMolecule molecule = getAcetaldehyde();
-        
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/*automatic looking for active center*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -290,7 +285,9 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * @return The IMolecule
 	 * @throws CDKException
 	 */
-	private IMolecule getAcetaldehyde() throws Exception {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
 		IMolecule molecule = builder.newMolecule();
         molecule.addAtom(builder.newAtom("O"));
         molecule.addAtom(builder.newAtom("C"));
@@ -305,34 +302,45 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 4, IBond.Order.SINGLE);
         molecule.addBond(2, 5, IBond.Order.SINGLE);
         molecule.addBond(2, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		return molecule;
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+        
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
-
 	/**
-	 * Get the Ethenol structure.
+	 * Get the expected set of molecules.
 	 * 
 	 * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2
-	 * 
-	 * @return The IMolecule
-	 * @throws CDKException
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getEthenol() throws Exception {
-		IMolecule molecule2 = builder.newMolecule();
-        molecule2.addAtom(builder.newAtom("O"));
-        molecule2.addAtom(builder.newAtom("C"));
-        molecule2.addBond(0, 1, IBond.Order.SINGLE);
-        molecule2.addAtom(builder.newAtom("C"));
-        molecule2.addBond(1, 2, IBond.Order.DOUBLE);
-        molecule2.addAtom(builder.newAtom("H"));
-        molecule2.addAtom(builder.newAtom("H"));
-        molecule2.addAtom(builder.newAtom("H"));
-        molecule2.addAtom(builder.newAtom("H"));
-        molecule2.addBond(1, 3, IBond.Order.SINGLE);
-        molecule2.addBond(2, 4, IBond.Order.SINGLE);
-        molecule2.addBond(2, 5, IBond.Order.SINGLE);
-        molecule2.addBond(0, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
-		return molecule2;
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+
+		IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(builder.newAtom("O"));
+        molecule.addAtom(builder.newAtom("C"));
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
+        molecule.addAtom(builder.newAtom("C"));
+        molecule.addBond(1, 2, IBond.Order.DOUBLE);
+        molecule.addAtom(builder.newAtom("H"));
+        molecule.addAtom(builder.newAtom("H"));
+        molecule.addAtom(builder.newAtom("H"));
+        molecule.addAtom(builder.newAtom("H"));
+        molecule.addBond(1, 3, IBond.Order.SINGLE);
+        molecule.addBond(2, 4, IBond.Order.SINGLE);
+        molecule.addBond(2, 5, IBond.Order.SINGLE);
+        molecule.addBond(0, 6, IBond.Order.SINGLE);
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+        
+        setOfProducts.addMolecule(molecule);
+		return setOfProducts;
 	}
 }

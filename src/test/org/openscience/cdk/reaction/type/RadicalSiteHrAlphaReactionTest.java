@@ -83,10 +83,8 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RadicalSiteHrAlphaReaction();
 		
-		IMolecule molecule = getMolecule();
-        
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/* initiate */
 		makeSureAtomTypesAreRecognized(molecule);
@@ -102,7 +100,7 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product = setOfReactions.getReaction(2).getProducts().getMolecule(0);
-        IMolecule molecule2 = getProduct1();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -111,11 +109,11 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 	/**
 	 * create the compound
 	 * 
-	 * @return The IMolecule
-	 * @throws Exception
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule() throws Exception {
-
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.addAtom(builder.newAtom("C"));
@@ -129,43 +127,61 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 		molecule.addBond(3, 4, IBond.Order.SINGLE);
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
-		addExplicitHydrogens(molecule);
+		try {
+			addExplicitHydrogens(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		molecule.getAtom(2).setFormalCharge(0);
 		molecule.addSingleElectron(new SingleElectron(molecule.getAtom(2)));
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		makeSureAtomTypesAreRecognized(molecule);
-		return molecule;
+		try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
 	/**
-	 * create the compound
+	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMolecule
-	 * @throws Exception 
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getProduct1() throws Exception {
-		IMolecule molecule2 = builder.newMolecule();
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.getAtom(0).setFormalCharge(1);
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(0, 1, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(1, 2, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(2, 3, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(3, 4, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(4, 5, IBond.Order.SINGLE);
-		addExplicitHydrogens(molecule2);
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.getAtom(0).setFormalCharge(1);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(2, 3, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(3, 4, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(4, 5, IBond.Order.SINGLE);
+		try {
+			addExplicitHydrogens(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		molecule2.getAtom(0).setFormalCharge(0);
-        molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
+		molecule.getAtom(0).setFormalCharge(0);
+        molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
         
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
-		makeSureAtomTypesAreRecognized(molecule2);
-		return molecule2;
+		try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+        setOfProducts.addMolecule(molecule);
+		return setOfProducts;
 	}
 
 	/**
@@ -175,9 +191,9 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new RadicalSiteHrAlphaReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
-
-		IMolecule molecule = getMolecule();
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -185,7 +201,6 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 		molecule.getAtom(6).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -215,12 +230,10 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type  = new RadicalSiteHrAlphaReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
-
-		IMolecule molecule = getMolecule();
 		
-		setOfReactants.addMolecule(molecule);
-		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
+        
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -249,7 +262,7 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());

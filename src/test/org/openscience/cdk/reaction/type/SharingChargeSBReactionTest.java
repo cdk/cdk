@@ -87,11 +87,9 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new SharingChargeSBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
-		IMolecule molecule = getMolecule1();
-		setOfReactants.addMolecule(molecule);
-
+		IMoleculeSet setOfReactants = getExampleReactants();
+        
 		/* initiate */
 		
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -106,12 +104,12 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 
         IMolecule product1 = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         
-		IMolecule molecule1 = getMolecule2();
+		IMolecule molecule1 = getExpectedProducts().getMolecule(0);
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
         
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
-		IMolecule expected2 = getMolecule2();
+		IMolecule expected2 = getExpectedProducts().getMolecule(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
         
@@ -126,10 +124,9 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new SharingChargeSBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
-		IMolecule molecule = getMolecule1();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the center active*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -149,12 +146,12 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        IMolecule molecule1 = getMolecule2();
+        IMolecule molecule1 = getExpectedProducts().getMolecule(0);
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
         
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
-		IMolecule expected2 = getMolecule3();
+		IMolecule expected2 = getExpectedProducts().getMolecule(1);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 	}
@@ -166,16 +163,15 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new SharingChargeSBReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
-
-		IMolecule molecule = getMolecule1();
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -201,10 +197,9 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new SharingChargeSBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
-		IMolecule molecule = getMolecule1();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -237,7 +232,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 * Test to recognize if this IMolecule_1 matches correctly into the CDKAtomTypes.
 	 */
 	@Test public void testAtomTypesMolecule1() throws Exception{
-		IMolecule moleculeTest = getMolecule1();
+		IMolecule moleculeTest = getExampleReactants().getMolecule(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
 	}
@@ -246,16 +241,17 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 * Test to recognize if this IMolecule_2 matches correctly into the CDKAtomTypes.
 	 */
 	@Test public void testAtomTypesMolecule2() throws Exception{
-		IMolecule moleculeTest = getMolecule2();
+		IMolecule moleculeTest = getExpectedProducts().getMolecule(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
 	}
 	/**
 	 * get the molecule 1: C[O+]!-!C
 	 * 
-	 * @return The IMolecule
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule1()throws Exception {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("C"));
@@ -278,17 +274,24 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		molecule.addBond(2, 7, IBond.Order.SINGLE);
 		molecule.addBond(2, 8, IBond.Order.SINGLE);
 		molecule.addBond(2, 9, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		
-        return molecule;
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			lpcheck.saturate(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
 	/**
-	 * get the molecule 2: [C+]
+	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMolecule
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule2()throws Exception {
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+
 		IMolecule expected1 = builder.newMolecule();
         expected1.addAtom(builder.newAtom("C"));
 		expected1.addAtom(builder.newAtom("O"));
@@ -301,16 +304,13 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		expected1.addBond(0, 3, IBond.Order.SINGLE);
 		expected1.addBond(0, 4, IBond.Order.SINGLE);
 		expected1.addBond(1, 5, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
-		lpcheck.saturate(expected1);
-        return expected1;
-	}
-	/**
-	 * get the molecule 3: [C+]
-	 * 
-	 * @return The IMolecule
-	 */
-	private IMolecule getMolecule3()throws Exception {
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+			lpcheck.saturate(expected1);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		
 		IMolecule expected2 = builder.newMolecule();
         expected2.addAtom(builder.newAtom("C"));
         expected2.getAtom(0).setFormalCharge(+1);
@@ -320,8 +320,15 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
-        return expected2;
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+        
+        setOfProducts.addMolecule(expected1);
+        setOfProducts.addMolecule(expected2);
+        return setOfProducts;
 	}
 	/**
 	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.

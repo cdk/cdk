@@ -87,25 +87,20 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
 		IReactionProcess type = new AdductionProtonLPReaction();
 
-		IMolecule molecule = getAcetaldehyde();
-		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
-
 		/* initiate */
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
         type.setParameterList(paramList);
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        IReactionSet setOfReactions = type.initiate(getExampleReactants(), null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         
-        IMolecule molecule2 = getExpected();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -122,13 +117,10 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new AdductionProtonLPReaction();
-		IMolecule molecule = getAcetaldehyde();
+		IMoleculeSet setOfReactants = getExampleReactants();
 	    
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
-
 		/*manually putting the active center*/
-		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		setOfReactants.getMolecule(0).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
 		/* initiate */
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -143,7 +135,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        IMolecule molecule2 = getExpected();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -158,10 +150,10 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new AdductionProtonLPReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
-		IMolecule molecule = getAcetaldehyde();
+		IMoleculeSet setOfReactants = getExampleReactants();
 
 		/*manually putting the active center*/
+		IMolecule molecule = setOfReactants.getMolecule(0);
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -170,7 +162,6 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -205,12 +196,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new AdductionProtonLPReaction();
-		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		IMolecule molecule = getAcetaldehyde();
         
-		setOfReactants.addMolecule(molecule);
-
 		/*automatic looking for active center*/
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
         IParameterReact param = new SetReactionCenter();
@@ -219,14 +205,14 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         
 		/* initiate */
-		
+		IMoleculeSet setOfReactants = getExampleReactants();
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
         Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
         
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), setOfReactants.getMolecule(0).getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
         
 		
@@ -236,10 +222,10 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 	 * 
 	 * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
 	 * 
-	 * @return The IMolecule
-	 * @throws CDKException
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getAcetaldehyde() throws Exception {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		IMolecule molecule = builder.newMolecule();
         molecule.addAtom(builder.newAtom("O"));
         molecule.addAtom(builder.newAtom("C"));
@@ -254,20 +240,27 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 4, IBond.Order.SINGLE);
         molecule.addBond(2, 5, IBond.Order.SINGLE);
         molecule.addBond(2, 6, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.saturate(molecule);
-		return molecule;
+	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	        lpcheck.saturate(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
 
 	/**
-	 * Get the expected structure.
+	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMolecule
-	 * @throws CDKException
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getExpected() throws Exception {
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
 		IMolecule molecule = builder.newMolecule();
         molecule.addAtom(builder.newAtom("O"));
         molecule.getAtom(0).setFormalCharge(1);
@@ -285,10 +278,16 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         molecule.addBond(2, 5, IBond.Order.SINGLE);
         molecule.addBond(2, 6, IBond.Order.SINGLE);
         molecule.addBond(0, 7, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.saturate(molecule);
-		return molecule;
+	        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	        lpcheck.saturate(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+
+        setOfProducts.addMolecule(molecule);
+		return setOfProducts;
 	}
 }
