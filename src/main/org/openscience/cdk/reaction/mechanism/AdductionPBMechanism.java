@@ -125,8 +125,6 @@ public class AdductionPBMechanism implements IReactionMechanism{
         reaction.addMapping(mapping);
         mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom2, atom2C);
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, reactantCloned.getBond(posBond1));
-        reaction.addMapping(mapping);
         
     	reaction.addProduct(reactantCloned);
     	

@@ -141,7 +141,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
         Assert.assertEquals(1, molecule.getSingleElectronCount());
 
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
 		
 	}
 	/**
@@ -233,7 +233,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
         
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
 		
 	}
 	/**
@@ -302,14 +302,12 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA2, product.getAtom(1));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-        Assert.assertEquals(mappedProductB1, product.getBond(0));     
-	}
+ 	}
 	/**
 	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
 	 * 

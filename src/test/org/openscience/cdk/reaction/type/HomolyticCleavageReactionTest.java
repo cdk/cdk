@@ -1421,13 +1421,11 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        
 	        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-	        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+	        Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
 	        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
 	        Assert.assertEquals(mappedProductA1, product.getAtom(0));
 	        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
 	        Assert.assertEquals(mappedProductA2, product.getAtom(1));
-	        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-	        Assert.assertEquals(mappedProductB1, product.getBond(0));        
 		}
 	/**
 	 * A unit test suite for JUnit. Reaction: Ethylbenzaldehyde.

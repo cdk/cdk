@@ -158,11 +158,7 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
         reaction.addMapping(mapping);
         mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom3, atom3C);
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, reactantCloned.getBond(posBond1));
-    	reaction.addMapping(mapping);
-    	if(bond2.getOrder() != IBond.Order.SINGLE) {
-        	mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond2, reactantCloned.getBond(posBond2));
-        	reaction.addMapping(mapping);
+        if(bond2.getOrder() != IBond.Order.SINGLE) {
         	reaction.addProduct(reactantCloned);
         } else{
 	        IMoleculeSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);

@@ -241,16 +241,14 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(6));
         Assert.assertEquals(mappedProductA2, product.getAtom(6));
         IAtom mappedProductA3 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(3));
         Assert.assertEquals(mappedProductA3, product.getAtom(3));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(5));
-        Assert.assertEquals(mappedProductB1, product.getBond(17));        
-	}
+    }
 	/**
 	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 

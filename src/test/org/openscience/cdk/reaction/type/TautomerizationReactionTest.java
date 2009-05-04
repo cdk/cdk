@@ -259,7 +259,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(7,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
         
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
@@ -269,13 +269,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         Assert.assertEquals(mappedProductA1, product.getAtom(2));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(4));
         Assert.assertEquals(mappedProductA1, product.getAtom(4));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-        Assert.assertEquals(mappedProductB1, product.getBond(0));
-        mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(1));
-        Assert.assertEquals(mappedProductB1, product.getBond(1));
-        mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(3));
-        Assert.assertEquals(mappedProductB1, product.getBond(5));
-		
+       	
 	}
 	/**
 	 * Get the Acetaldehyde structure.

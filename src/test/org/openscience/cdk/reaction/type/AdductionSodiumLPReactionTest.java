@@ -222,10 +222,9 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
         
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
-        Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        
-		
+        IAtom mappedProductA0 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        Assert.assertEquals(mappedProductA0, product.getAtom(0));
+   	
 	}
 	/**
 	 * Get the Acetaldehyde structure.

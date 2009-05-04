@@ -124,9 +124,7 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
         reaction.addMapping(mapping);
         mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom3, atom3C);
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, newBond);
-    	reaction.addMapping(mapping);
-    	
+        
     	reaction.addProduct(reactantCloned);
     	
 		return reaction;

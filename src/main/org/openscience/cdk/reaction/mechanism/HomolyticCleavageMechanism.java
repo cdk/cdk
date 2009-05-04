@@ -118,8 +118,6 @@ public class HomolyticCleavageMechanism implements IReactionMechanism{
         mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom2, atom2C);
         reaction.addMapping(mapping);
         if(bond1.getOrder() != IBond.Order.SINGLE) {
-        	mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, reactantCloned.getBond(posBond1));
-        	reaction.addMapping(mapping);
         	reaction.addProduct(reactantCloned);
         } else{
 	        IMoleculeSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);

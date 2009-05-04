@@ -130,9 +130,7 @@ public class RadicalSiteIonizationMechanism implements IReactionMechanism{
         reaction.addMapping(mapping);
         mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom3, atom3C);
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, reactantCloned.getBond(posBond1));
-    	reaction.addMapping(mapping);
-    	
+        
     	IMoleculeSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
 		for(int z = 0; z < moleculeSetP.getAtomContainerCount() ; z++)
 			reaction.addProduct(moleculeSetP.getMolecule(z));

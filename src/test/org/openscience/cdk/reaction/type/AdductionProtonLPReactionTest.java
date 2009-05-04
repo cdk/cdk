@@ -207,16 +207,16 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         
 		/* initiate */
 		IMoleculeSet setOfReactants = getExampleReactants();
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+		IMolecule molecule = setOfReactants.getMolecule(0);
+		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
         Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
         
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), setOfReactants.getMolecule(0).getAtom(0));
-        Assert.assertEquals(mappedProductA1, product.getAtom(0));
+        IAtom mappedProductA0 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        Assert.assertEquals(mappedProductA0, product.getAtom(0));
         
-		
 	}
 	/**
 	 * Get the Acetaldehyde structure.
