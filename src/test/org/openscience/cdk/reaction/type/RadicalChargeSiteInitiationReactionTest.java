@@ -179,7 +179,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(9,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
 		Assert.assertEquals(mappedProductA1, product1.getAtom(1));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));

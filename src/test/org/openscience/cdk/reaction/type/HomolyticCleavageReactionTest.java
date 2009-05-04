@@ -1421,7 +1421,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        
 	        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-	        Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
+	        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
 	        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
 	        Assert.assertEquals(mappedProductA1, product.getAtom(0));
 	        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
@@ -1649,7 +1649,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
         IMolecule product11 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule product12 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
-		Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
+		Assert.assertEquals(20,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product11.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
@@ -1658,7 +1658,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		IMolecule product21 = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         IMolecule product22 = setOfReactions.getReaction(1).getProducts().getMolecule(1);
 				
-		Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
+		Assert.assertEquals(20,setOfReactions.getReaction(0).getMappingCount());
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(1), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product21.getAtom(1));
         mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(1), molecule.getAtom(2));

@@ -171,7 +171,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 
-		Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
+		Assert.assertEquals(6,setOfReactions.getReaction(0).getMappingCount());
 		IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
 		Assert.assertEquals(mappedProductA1, product1.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(4));

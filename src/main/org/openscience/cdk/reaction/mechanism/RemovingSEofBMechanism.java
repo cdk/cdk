@@ -115,11 +115,11 @@ public class RemovingSEofBMechanism implements IReactionMechanism{
 		reaction.addReactant(molecule);
 		
 		/* mapping */
-        IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, atom1C);
-        reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom2, atom2C);
-        reaction.addMapping(mapping);
-        if(bond1.getOrder() != IBond.Order.SINGLE) {
+		for(IAtom atom:molecule.atoms()){
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			reaction.addMapping(mapping);
+	    }
+		if(bond1.getOrder() != IBond.Order.SINGLE) {
         	reaction.addProduct(reactantCloned);
         }else{
 	        IMoleculeSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);

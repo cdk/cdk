@@ -246,7 +246,7 @@ public class RadicalSiteHrAlphaReactionTest extends ReactionProcessTest {
         
         IMolecule product = setOfReactions.getReaction(2).getProducts().getMolecule(0);
 
-        Assert.assertEquals(3,setOfReactions.getReaction(2).getMappingCount());
+        Assert.assertEquals(19,setOfReactions.getReaction(2).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(2), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(2), molecule.getAtom(6));
