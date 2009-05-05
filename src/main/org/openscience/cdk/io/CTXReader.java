@@ -112,7 +112,7 @@ public class CTXReader extends DefaultChemObjectReader {
         IChemSequence seq = file.getBuilder().newChemSequence();
         IChemModel model = file.getBuilder().newChemModel();
         IMoleculeSet containerSet = file.getBuilder().newMoleculeSet();
-        IAtomContainer container = file.getBuilder().newAtomContainer();
+        IMolecule container = file.getBuilder().newMolecule();
         
         int lineNumber = 0;
         

@@ -110,15 +110,25 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         ChemModel chemFile = (ChemModel)reader.read((ChemObject)new ChemModel());
         Assert.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemModelManipulator.getAllAtomContainers(chemFile);
-        
+
         Assert.assertEquals(2, containersList.size());
     }
-    
+
     @Test public void testNewChemModel_IAtomContainer()
     {
-    	IAtomContainer ac = new AtomContainer();
-    	IChemModel model = ChemModelManipulator.newChemModel(ac);
-    	Assert.assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("C"));
+        IChemModel model = ChemModelManipulator.newChemModel(ac);
+        IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(ac.getAtomCount(), mol.getAtomCount());
+    }
+
+    @Test public void testNewChemModel_IMolecule()
+    {
+        IMolecule ac = new Molecule();
+        IChemModel model = ChemModelManipulator.newChemModel(ac);
+        Assert.assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
     }
     
     @Test public void testGetAtomCount_IChemModel()
