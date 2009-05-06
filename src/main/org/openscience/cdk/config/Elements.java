@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IElement;
  * 
  * @author     egonw
  * @cdk.module extra 
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class Elements {
 	

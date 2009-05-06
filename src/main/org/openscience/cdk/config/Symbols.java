@@ -34,7 +34,7 @@ import java.util.Map;
  * 
  * @author     egonw
  * @cdk.module standard 
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class Symbols {
 

@@ -36,7 +36,7 @@ import org.openscience.cdk.io.IChemObjectIO;
  * for very large files, with thousands of molecules.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see org.openscience.cdk.io.IChemObjectIO
  *

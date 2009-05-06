@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      Rajarshi Guha
  * @cdk.created     2005-03-19
  * @cdk.module  qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
  */

@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see ChemModelManipulator
  */

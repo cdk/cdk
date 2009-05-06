@@ -30,7 +30,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class DebugAtomParity extends AtomParity
     implements IAtomParity {

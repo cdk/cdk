@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword file format, ShelXL
  * @author E.L. Willighagen

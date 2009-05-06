@@ -41,7 +41,7 @@ import java.util.Map;
  * XML Reader for the {@link OWLBasedAtomTypeConfigurator}.
  *
  * @cdk.module  atomtype
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReaderTest")
 public class OWLAtomTypeMappingReader {

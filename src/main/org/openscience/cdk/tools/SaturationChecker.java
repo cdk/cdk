@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.keyword    atom, valency
  * 
  * @cdk.module     valencycheck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.SaturationCheckerTest")
 public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool {

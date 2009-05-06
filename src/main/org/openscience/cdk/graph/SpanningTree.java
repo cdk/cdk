@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  *
  * @author      Nina Jeliazkova
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.dictref blue-obelisk:graphSpanningTree
  * @cdk.keyword spanning tree
  * @cdk.keyword ring finding

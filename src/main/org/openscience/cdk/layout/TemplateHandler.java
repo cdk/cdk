@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.keyword  structure diagram generation
  * @cdk.require  java1.4+
  * @cdk.module   sdg
- * @cdk.svnrev   $Revision$
+ * @cdk.githash
  */
 public class TemplateHandler
 {

@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author     Rajarshi Guha
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 public class ChiIndexUtils {
 

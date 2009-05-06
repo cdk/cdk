@@ -43,7 +43,7 @@ import java.io.Serializable;
  * @author       steinbeck
  * @cdk.created  2001-08-08
  * @cdk.module   data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword  atom, type
  */
 public class AtomType extends Isotope implements IAtomType, Serializable, Cloneable

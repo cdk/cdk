@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * two electrons.
  *
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword orbital
  * @cdk.keyword lone-pair

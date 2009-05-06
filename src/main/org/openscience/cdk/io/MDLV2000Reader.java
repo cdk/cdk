@@ -82,7 +82,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * This is introduced due to the SAR table generation procedure of Scitegics PipelinePilot.  
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     steinbeck
  * @author     Egon Willighagen

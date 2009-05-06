@@ -47,7 +47,7 @@ import java.util.TreeMap;
  * @author      shk3
  * @cdk.created 2005-08-04
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.BondToolsTest")
 public class BondTools {

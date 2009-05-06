@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *@author     vlabarta
  *@cdk.created    March 2, 2005
  *@cdk.module     forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class Torsions {
 

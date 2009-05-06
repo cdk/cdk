@@ -31,7 +31,7 @@ import java.io.Serializable;
  * atoms connected by bonds.
  *
  * @cdk.module  data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      steinbeck
  * @cdk.created 2000-10-02

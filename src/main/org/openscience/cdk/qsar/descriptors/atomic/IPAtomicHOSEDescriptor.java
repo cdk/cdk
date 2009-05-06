@@ -69,7 +69,7 @@ import java.util.StringTokenizer;
  * @author       Miguel Rojas
  * @cdk.created  2006-05-26
  * @cdk.module   qsaratomic
- * @cdk.svnrev   $Revision$
+ * @cdk.githash
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:ionizationPotential
  */

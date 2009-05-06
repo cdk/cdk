@@ -47,7 +47,7 @@ import org.openscience.cdk.libio.cml.Convertor;
  * are put in separately. All other objects are made CML and put in.
  *
  * @cdk.module       libiocml
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.builddepends xom-1.0.jar
  *
  * @author Stefan Kuhn

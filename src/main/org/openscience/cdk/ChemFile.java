@@ -38,7 +38,7 @@ import java.util.Iterator;
  *  document
  *
  *@author        steinbeck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *@cdk.module    data
  */
 public class ChemFile extends ChemObject implements Serializable, Cloneable,

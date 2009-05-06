@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@author         vlabarta
  *@cdk.created    2005-02-15
  *@cdk.module     forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class StretchBendInteractions {
 

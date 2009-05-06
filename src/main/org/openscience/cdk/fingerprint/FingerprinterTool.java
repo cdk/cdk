@@ -39,7 +39,7 @@ import java.util.List;
  * @cdk.created    2002-02-24
  * @cdk.keyword    fingerprint
  * @cdk.module     standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.FingerprinterToolTest")
 public class FingerprinterTool {

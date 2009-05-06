@@ -38,7 +38,7 @@ import org.openscience.cdk.math.Primes;
  * {@link IAtomContainer}s.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.smiles.InvPairTest")
 public class InvPair implements java.io.Serializable{

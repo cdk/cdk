@@ -38,7 +38,7 @@ import javax.vecmath.Point3d;
  *
  * @author        egonw
  * @cdk.module    nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 

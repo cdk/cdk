@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NNAtomParity extends AtomParity  {
     

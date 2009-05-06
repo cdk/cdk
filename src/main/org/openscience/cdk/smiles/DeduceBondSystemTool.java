@@ -49,7 +49,7 @@ import java.util.List;
  *
  * @author Todd Martin
  * @cdk.module smiles
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword bond order
  * 
  * @cdk.bug 1895805

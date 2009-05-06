@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * This matcher checks the hybridization state of an atom.
  *
  * @cdk.module smarts
- * @cdk.svnrev $Revision: 11746 $
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 

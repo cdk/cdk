@@ -33,7 +33,7 @@ import org.openscience.cdk.exception.CDKException;
  * This class is the interface that all IO readers should implement.
  *
  * @cdk.module io
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  *
  * @author     Egon Willighagen <egonw@users.sf.net>
  **/

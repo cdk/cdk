@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author      steinbeck
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2001-06-17
  * @cdk.bug     1817487
  */

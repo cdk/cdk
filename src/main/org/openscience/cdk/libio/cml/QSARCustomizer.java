@@ -61,7 +61,7 @@ import org.xmlcml.cml.element.CMLScalar;
  * @author        egonw
  * @cdk.created   2005-05-04
  * @cdk.module    qsarcml
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set       libio-cml-customizers
  * @cdk.require   java1.5+
  */

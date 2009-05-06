@@ -42,7 +42,7 @@ import java.util.List;
  *
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.ringsearch.RingPartitionerTest")
 public class RingPartitioner {

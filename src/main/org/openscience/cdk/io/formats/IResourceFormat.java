@@ -33,7 +33,7 @@ package org.openscience.cdk.io.formats;
  * only private constructors, and implement the getInstance() method.
  *
  * @cdk.module ioformats
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2006-03-04

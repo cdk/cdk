@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * like the MDL molfile <code>Group</code> concept.
  * 
  * @cdk.module nonotify
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * 
  * @author egonw
  */

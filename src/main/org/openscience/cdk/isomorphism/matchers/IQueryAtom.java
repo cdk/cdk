@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * is in isomorphism and substructure matching in the {@link org.openscience.cdk.isomorphism.UniversalIsomorphismTester}.
  * 
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryAtom extends IAtom {

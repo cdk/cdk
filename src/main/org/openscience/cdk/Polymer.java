@@ -41,7 +41,7 @@ import java.util.Map;
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>

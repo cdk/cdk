@@ -30,7 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * Abstract smarts atom.
  * 
  * @cdk.module  isomorphism
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS 
  */
 public abstract class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements

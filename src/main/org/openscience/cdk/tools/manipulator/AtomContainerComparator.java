@@ -54,7 +54,7 @@ import java.util.Iterator;
  * @author Andreas Schueller
  * @cdk.created  2007-09-05
  * @cdk.module   standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
 public class AtomContainerComparator implements Comparator {

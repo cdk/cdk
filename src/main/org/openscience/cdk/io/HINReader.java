@@ -52,7 +52,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * Reads an object from HIN formated input.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Rajarshi Guha <rajarshi@presidency.com>
  * @cdk.created 2004-01-27

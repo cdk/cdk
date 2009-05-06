@@ -54,7 +54,7 @@ import java.util.List;
  * @author        Niels Out
  * 
  * @cdk.module    standard
- * @cdk.svnrev    $Revision$
+ * @cdk.githash
  */
 public class GeometryTools {
 

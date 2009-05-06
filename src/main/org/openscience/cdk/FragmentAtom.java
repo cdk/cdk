@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  * like the MDL Molfile <code>Group</code> concept.
  * 
  * @cdk.module data
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * 
  * @author egonw
  */

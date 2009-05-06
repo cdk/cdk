@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author         egonw
  * @cdk.created    2008-07-13
  * @cdk.module     atomtype
- * @cdk.svnrev     $Revision$
+ * @cdk.githash
  * @cdk.keyword    atom type, Sybyl
  */
 @TestClass("org.openscience.cdk.atomtype.SybylAtomTypeMatcherTest")

@@ -31,7 +31,7 @@ import javax.vecmath.Point3d;
  *
  * @author        egonw
  * @cdk.module    datadebug
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 

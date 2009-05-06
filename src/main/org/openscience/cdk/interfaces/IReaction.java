@@ -38,7 +38,7 @@ package org.openscience.cdk.interfaces;
  * be represented with a ChemSequence.
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Egon Willighagen <elw38@cam.ac.uk>
  * @cdk.created 2003-02-13

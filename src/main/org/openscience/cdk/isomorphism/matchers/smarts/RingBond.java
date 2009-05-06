@@ -26,7 +26,7 @@ import org.openscience.cdk.interfaces.IBond;
  * This smarts bond matches any bond that is in a ring.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS 
  */
 public class RingBond extends SMARTSBond {

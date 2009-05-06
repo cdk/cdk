@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-03-01
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.formula.MassToFormulaToolTest")
 public class MassToFormulaTool {

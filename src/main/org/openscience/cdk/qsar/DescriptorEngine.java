@@ -66,7 +66,7 @@ import java.util.jar.JarFile;
  *
  * @cdk.created 2004-12-02
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.depends xom-1.0.jar
  * @see DescriptorSpecification
  * @see Dictionary

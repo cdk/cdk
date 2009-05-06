@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created   May 8, 2005
  * @cdk.keyword   element
  * @cdk.module    extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.PeriodicTableElementTest")
 public class PeriodicTableElement extends Element

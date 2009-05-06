@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * @author     Todd Martin
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class AtomicProperties {
 

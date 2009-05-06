@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  * </pre>
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword reaction
  * @cdk.keyword molecule

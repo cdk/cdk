@@ -34,7 +34,7 @@ import java.util.EventObject;
  * A ChangeListener for the CDK, to be independent from the Swing package.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */ 
 public interface ICDKSelectionChangeListener extends EventListener
 {

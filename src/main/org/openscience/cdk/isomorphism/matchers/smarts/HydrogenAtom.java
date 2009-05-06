@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * This matches Hydrogen atoms.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS 
  */
 public class HydrogenAtom extends SMARTSAtom {

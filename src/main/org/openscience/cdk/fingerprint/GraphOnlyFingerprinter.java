@@ -42,7 +42,7 @@ import java.util.Random;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
  * @cdk.module     standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */

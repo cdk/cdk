@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  * stored in one ChemModel.
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword animation
  * @cdk.keyword reaction

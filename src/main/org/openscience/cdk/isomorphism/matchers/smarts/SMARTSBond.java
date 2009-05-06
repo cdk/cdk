@@ -31,7 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * Abstract smarts bond.
  *
  * @cdk.module  isomorphism
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {

@@ -49,7 +49,7 @@ import java.util.List;
  *
  * @author steinbeck
  * @cdk.module data
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.created 2003-10-02
  * @cdk.keyword bond
  * @cdk.keyword atom

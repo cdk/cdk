@@ -59,7 +59,7 @@ import java.util.List;
  * @author        steinbeck
  * @cdk.created   2002-06-23
  * @cdk.module    standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.ringsearch.AllRingsFinderTest")
 public class AllRingsFinder

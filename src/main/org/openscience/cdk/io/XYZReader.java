@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>This class is based on Dan Gezelter's XYZReader from Jmol
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword file format, XYZ
  */

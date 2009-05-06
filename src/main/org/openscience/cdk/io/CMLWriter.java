@@ -94,7 +94,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * For bonds it outputs: order, atoms (2, or more) and wedges.
  *
  * @cdk.module       libiocml
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.builddepends xom-1.0.jar
  * @cdk.depends      jumbo50.jar
  * @cdk.require      java1.5+

@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * Iterating PubChem PCCompound ASN reader.
  *
  * @cdk.module io
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  *
  * @see org.openscience.cdk.io.PCCompoundASNReader
  * 

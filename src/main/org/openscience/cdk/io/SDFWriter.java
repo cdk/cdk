@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * complemented by properties.
  *
  * @cdk.module  io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword file format, MDL SD file
  */
 @TestClass("org.openscience.cdk.io.SDFWriterTest")

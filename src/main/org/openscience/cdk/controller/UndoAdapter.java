@@ -35,7 +35,7 @@ import javax.swing.undo.UndoableEdit;
  * 
  * @author      tohel
  * @cdk.module  control
- * @cdk.svnrev  $Revision: 12257 $
+ * @cdk.githash
  */
 public class UndoAdapter implements UndoableEditListener {
 

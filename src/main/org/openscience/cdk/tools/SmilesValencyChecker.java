@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.created  2004-06-12
  * @cdk.keyword  atom, valency
  * @cdk.module   valencycheck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
 

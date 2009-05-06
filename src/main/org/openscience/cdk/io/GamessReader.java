@@ -83,7 +83,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * quantum chemistry program by Gordon research group atIowa State University.
  * 
  * @cdk.module  extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword Gamess
  * @cdk.keyword file format
  * @cdk.keyword output

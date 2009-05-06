@@ -64,7 +64,7 @@ import java.util.Vector;
  * @author      chhoppe from EUROSCREEN
  * @cdk.created 2006-3-23
  * @cdk.module  extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword Murcko fragments
  * @cdk.bug     1848591
  **/

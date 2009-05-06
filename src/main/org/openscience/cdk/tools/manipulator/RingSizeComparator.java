@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IRing;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.manipulator.RingSizeComparatorTest")
 public class RingSizeComparator implements Comparator<IRing> {

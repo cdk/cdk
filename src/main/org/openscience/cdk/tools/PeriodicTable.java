@@ -49,7 +49,7 @@ import java.util.Map;
  * @cdk.keyword radius, vanderwaals 
  * @cdk.keyword electronegativity
  * @cdk.module  extra
- * @cdk.svnrev  $Revision: 10123 $
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.PeriodicTableTest")
 public class PeriodicTable {

@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * The output can be read with Platon.
  *
  * @cdk.module  extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author Egon Willighagen
  *

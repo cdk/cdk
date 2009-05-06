@@ -81,7 +81,7 @@ import java.util.*;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
  * @cdk.module     standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.FingerprinterTest")
 public class Fingerprinter implements IFingerprinter {

@@ -12,7 +12,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @author Rajarshi Guha
  * @cdk.created 2008-10-13
  * @cdk.module smarts
- * @cdk.svnrev $Revision: 12556 $
+ * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
 public class ASTPeriodicGroupNumber extends SimpleNode {

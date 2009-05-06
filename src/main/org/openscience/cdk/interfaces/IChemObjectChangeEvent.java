@@ -32,7 +32,7 @@ package org.openscience.cdk.interfaces;
  * in case something changed within them.
  *
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IChemObjectChangeEvent {
     

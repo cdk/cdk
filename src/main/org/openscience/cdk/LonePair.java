@@ -34,7 +34,7 @@ import java.io.Serializable;
  * two electrons.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword orbital
  * @cdk.keyword lone-pair

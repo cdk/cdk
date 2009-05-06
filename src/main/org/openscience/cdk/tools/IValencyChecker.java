@@ -40,7 +40,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.created    2004-01-08
  * 
  * @cdk.module     valencycheck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IValencyChecker {
 

@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @author Todd Martin
  * @author nick
  * @cdk.module standard
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.keyword atom type, E-state
  */
 @TestClass("org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest")

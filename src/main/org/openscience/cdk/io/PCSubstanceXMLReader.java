@@ -48,7 +48,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * it extracts the InChI and canonical SMILES properties.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword file format, PubChem Compound ASN
  */

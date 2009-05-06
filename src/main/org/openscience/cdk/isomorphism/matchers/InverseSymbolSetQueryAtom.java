@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *  match for all non-"C"-Atoms).
  *
  *@author        kha
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *@cdk.created   2004-09-16
  *@see           SymbolSetQueryAtom
  *@cdk.module    isomorphism

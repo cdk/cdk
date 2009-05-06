@@ -33,7 +33,7 @@ import java.util.Iterator;
  *
  * @author        hel
  * @cdk.module    data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class AtomContainerSet extends ChemObject implements Serializable, IAtomContainerSet, IChemObjectListener, Cloneable {
 

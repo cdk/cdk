@@ -32,7 +32,7 @@ import java.util.Map;
  * SAX Handler for the {@link OWLAtomTypeMappingReader}.
  *
  * @cdk.module  atomtype
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingHandlerTest")
 public class OWLAtomTypeMappingHandler extends DefaultHandler {

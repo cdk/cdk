@@ -37,7 +37,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * retrieved one by one.
  *
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public abstract class AbstractAtomicDescriptor implements IAtomicDescriptor {
     

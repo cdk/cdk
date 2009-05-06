@@ -79,7 +79,7 @@ import java.util.List;
  * @author Rajarshi Guha
  * @cdk.created 2006-11-13
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:chiCluster
  * @cdk.keyword chi cluster index

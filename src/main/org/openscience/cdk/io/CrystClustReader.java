@@ -36,7 +36,7 @@ import java.io.*;
 
 /**
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.io.CrystClustReaderTest")
 public class CrystClustReader extends DefaultChemObjectReader {

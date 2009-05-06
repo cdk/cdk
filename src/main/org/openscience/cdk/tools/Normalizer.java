@@ -52,7 +52,7 @@ import org.w3c.dom.NodeList;
  * @author        shk3
  * @cdk.created   2004-03-04
  * @cdk.module    smiles
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.NormalizerTest")
 public class Normalizer {

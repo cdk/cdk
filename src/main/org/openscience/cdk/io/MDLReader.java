@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * </pre>
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     steinbeck
  * @author     Egon Willighagen

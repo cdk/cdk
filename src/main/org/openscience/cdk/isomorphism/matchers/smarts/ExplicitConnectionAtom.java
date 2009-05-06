@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * connections.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS 
  */
 public class ExplicitConnectionAtom extends SMARTSAtom {

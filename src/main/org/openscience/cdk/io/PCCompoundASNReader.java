@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * it extracts the InChI and canonical SMILES properties.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword file format, PubChem Compound ASN
  */

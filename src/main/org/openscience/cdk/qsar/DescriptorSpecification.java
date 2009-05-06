@@ -31,7 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * Class that is used to distribute descriptor specifications.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.DescriptorSpecificationTest")
 public class DescriptorSpecification implements IImplementationSpecification {

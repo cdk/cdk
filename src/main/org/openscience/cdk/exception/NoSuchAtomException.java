@@ -36,7 +36,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * does not exist in the relevant environment.
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.exception.NoSuchAtomExceptionTest")
 public class NoSuchAtomException extends CDKException {

@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  * This query atom matches any atom with a certain number of SSSR. 
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS 
  */
 public class RingMembershipAtom extends SMARTSAtom {

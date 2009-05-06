@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * It'll match any atom right now.  
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class ChiralityAtom extends SMARTSAtom {

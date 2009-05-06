@@ -29,7 +29,7 @@ package org.openscience.cdk.qsar.model;
  *
  * @author Rajarshi Guha
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IModel {
 

@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * @cdk.module nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NNMonomer extends Monomer {
 

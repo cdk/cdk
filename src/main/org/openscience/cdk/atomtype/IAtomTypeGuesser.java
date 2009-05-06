@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @author      egonw
  * @cdk.created 2006-09-22
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @see         IAtomTypeMatcher
  */

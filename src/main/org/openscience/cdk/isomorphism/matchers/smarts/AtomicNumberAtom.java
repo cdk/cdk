@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matches an atom using the atomic number.
  *
  * @cdk.module smarts
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class AtomicNumberAtom extends SMARTSAtom {

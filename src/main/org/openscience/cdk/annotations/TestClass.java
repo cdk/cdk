@@ -33,7 +33,7 @@ import java.lang.annotation.RetentionPolicy;
  * class tests the functionality.
  *
  * @author Egon Willighagen
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.module annotation
  */
 @Documented

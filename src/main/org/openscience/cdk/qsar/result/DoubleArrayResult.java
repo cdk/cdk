@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.result.DoubleArrayResultTest")
 public class DoubleArrayResult extends DoubleArrayResultType {

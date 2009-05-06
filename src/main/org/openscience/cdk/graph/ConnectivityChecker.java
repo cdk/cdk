@@ -46,7 +46,7 @@ import java.util.List;
  * </pre> 
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword connectivity
  */

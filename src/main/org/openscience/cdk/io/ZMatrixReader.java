@@ -47,7 +47,7 @@ import java.util.StringTokenizer;
  * is given later.
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword file format, Z-matrix
  */

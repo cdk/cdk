@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
  * </pre>
  *
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword bond order
  * @cdk.keyword stereochemistry

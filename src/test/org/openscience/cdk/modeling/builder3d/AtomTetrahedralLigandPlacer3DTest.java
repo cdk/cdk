@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
  * Tests for AtomPlacer3D
  *
  * @cdk.module test-builder3d
- * @cdk.svnrev  $Revision: 12144 $
+ * @cdk.githash
  */
 public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 	

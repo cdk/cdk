@@ -86,7 +86,7 @@ import org.xmlcml.cml.element.CMLSubstanceList;
 
 /**
  * @cdk.module       libiocml
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword      CML
  * @cdk.keyword      class convertor
  * @cdk.builddepends jumbo52.jar

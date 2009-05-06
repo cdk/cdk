@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @author      mfe4
  * @cdk.created 2004-12-02
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @see         IAtomTypeGuesser
  */

@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * without electron electron interactions
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2001-09-03
  * @cdk.module  qm
  */

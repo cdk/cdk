@@ -33,7 +33,7 @@ import java.util.Map;
  * 
  * @author     egonw
  * @cdk.module datadebug
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class DebugAminoAcid extends AminoAcid
     implements IAminoAcid {

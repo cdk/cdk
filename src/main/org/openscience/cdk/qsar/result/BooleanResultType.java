@@ -27,7 +27,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * IDescriptorResult type for booleans. 
  *
  * @cdk.module standard
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.result.BooleanResultTypeTest")
 public class BooleanResultType implements IDescriptorResult {

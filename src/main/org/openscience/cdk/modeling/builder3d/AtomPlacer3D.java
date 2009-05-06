@@ -42,7 +42,7 @@ import java.util.Map;
  * @cdk.keyword    AtomPlacer3D
  * @cdk.created    2004-10-8
  * @cdk.module     builder3d
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class AtomPlacer3D {
 

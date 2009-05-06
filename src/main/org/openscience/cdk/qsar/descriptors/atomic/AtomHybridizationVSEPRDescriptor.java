@@ -89,7 +89,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *@author         Miguel Rojas
  *@cdk.created    2005-03-24
  *@cdk.module     qsaratomic
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */

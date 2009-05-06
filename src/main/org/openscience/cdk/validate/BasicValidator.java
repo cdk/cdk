@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * Validator which tests a number of basic chemical semantics.
  *
  * @author   Egon Willighagen
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created  2003-08-22
  */ 
 public class BasicValidator extends AbstractValidator {

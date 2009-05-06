@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
  * See {@cdk.cite TRI92}.
  *
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword adjacency matrix
  *
  * @author      steinbeck

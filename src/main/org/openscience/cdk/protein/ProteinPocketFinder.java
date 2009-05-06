@@ -52,7 +52,7 @@ import java.util.Vector;
  * @author      cho
  * @cdk.created 2005-09-30
  * @cdk.module     extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword    protein
  * @cdk.keyword    pocket
  */

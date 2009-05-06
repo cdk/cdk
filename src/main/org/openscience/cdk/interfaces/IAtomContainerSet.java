@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  *
  * @author     egonw
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IAtomContainerSet extends IChemObject {
 

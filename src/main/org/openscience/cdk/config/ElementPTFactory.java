@@ -46,7 +46,7 @@ import java.util.List;
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
  * @cdk.module     extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.ElementPTFactoryTest")
 public class ElementPTFactory

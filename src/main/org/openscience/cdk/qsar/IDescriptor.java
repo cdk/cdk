@@ -78,7 +78,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * returned.
  *
  * @cdk.module qsar
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * 
  * @see        DescriptorValue
  * @see        IDescriptorResult

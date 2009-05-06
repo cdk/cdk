@@ -35,7 +35,7 @@ import java.util.Map;
  * additional informations about the Polymer which are connected to BioPolymers.
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-06 

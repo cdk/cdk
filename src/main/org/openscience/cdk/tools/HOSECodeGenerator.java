@@ -54,7 +54,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * for this method to work properly.
  *
  * @author     steinbeck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword    HOSE code, spherical atom search
  * @cdk.created    2002-05-10
  * @cdk.module     standard

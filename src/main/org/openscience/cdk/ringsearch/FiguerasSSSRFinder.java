@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * algorithm for finding the SSSR.
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Figueras

@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * This matches recursive smarts atoms. 
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class RecursiveSmartsAtom extends SMARTSAtom {

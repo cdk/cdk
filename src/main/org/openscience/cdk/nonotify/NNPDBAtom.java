@@ -35,7 +35,7 @@ import org.openscience.cdk.protein.data.PDBAtom;
 
 /**
  * @cdk.module nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NNPDBAtom extends PDBAtom {
 	

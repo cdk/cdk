@@ -33,7 +33,7 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @author      Miguel Rojas
  * @cdk.module  reaction
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass(value="org.openscience.cdk.reaction.ReactionSpecificationTest")
 public class ReactionSpecification implements IImplementationSpecification {

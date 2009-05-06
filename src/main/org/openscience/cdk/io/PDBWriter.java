@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * writing of PDBProtein data structures.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.io.PDBWriterTest")
 public class PDBWriter extends DefaultChemObjectWriter {

@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * buildup of ringsystems by the user.
  * 
  * @cdk.module sdg
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  **/
 public class RingPlacer 
 {

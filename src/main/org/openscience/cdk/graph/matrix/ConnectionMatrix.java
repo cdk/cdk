@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * bond order value. Otherwise it is zero. See {@cdk.cite TRI92}.
  *
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword connection matrix
  * @cdk.dictref blue-obelisk:calculateConnectivityMatrix
  *

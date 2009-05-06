@@ -28,7 +28,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     Miguel Rojas
  * @cdk.module datadebug
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class DebugPDBStructure extends PDBStructure {
 

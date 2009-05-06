@@ -32,7 +32,7 @@ import java.io.Serializable;
  * Maintains a set of Ring objects.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword     ring, set of
  */

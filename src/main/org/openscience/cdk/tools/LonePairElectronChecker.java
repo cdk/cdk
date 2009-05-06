@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.ILonePair;
  * with respect to a particular atom type.
  * 
  * @author         Miguel Rojas
- * @cdk.svnrev     $Revision$
+ * @cdk.githash
  * @cdk.created    2006-04-01
  *
  * @cdk.keyword    saturation

@@ -41,7 +41,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * by using Swing dialogs.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-07-18

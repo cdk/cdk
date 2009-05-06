@@ -31,7 +31,7 @@ import java.text.DecimalFormat;
  * This class contains a matrix.
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2001-06-07
  * @cdk.module  qm
  */

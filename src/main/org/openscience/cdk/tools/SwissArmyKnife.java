@@ -31,7 +31,7 @@ import java.util.GregorianCalendar;
  *  A set of utilities which did not really fit into any other category
  *
  * @author     steinbeck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created    2001-06-19
  */
 public class SwissArmyKnife {

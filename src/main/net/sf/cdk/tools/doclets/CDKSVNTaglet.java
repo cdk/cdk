@@ -27,7 +27,7 @@ import com.sun.javadoc.Tag;
 import com.sun.tools.doclets.Taglet;
 
 /**
- * Taglet that expands @cdk.svnrev tag into a link to the SVN
+ * @cdk.githash
  * source tree. The syntax must be as follows:
  * <pre>
  *   @cdk.svnrev $Revision: 7973 $

@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
  * is in isomorphism and substructure matching in the UniversalIsomorphismTester.
  * 
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryBond {

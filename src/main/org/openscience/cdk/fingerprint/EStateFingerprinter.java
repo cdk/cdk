@@ -53,7 +53,7 @@ import java.util.BitSet;
  * @cdk.keyword estate
  *
  * @cdk.module fingerprint
- * @cdk.svnrev $Revision: 11674 $
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.EStateFingerprinterTest")
 public class EStateFingerprinter implements IFingerprinter {

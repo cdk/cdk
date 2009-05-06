@@ -50,7 +50,7 @@ import org.openscience.cdk.io.formats.XYZFormat;
  * </pre>
  *
  * @cdk.module  ioformats
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @author  Bradley A. Smith <bradley@baysmith.com>

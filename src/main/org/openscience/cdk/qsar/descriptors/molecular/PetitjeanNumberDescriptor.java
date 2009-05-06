@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    December 7, 2004
  * @cdk.created    2004-11-03
  * @cdk.module     qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:petitjeanNumber
  * @cdk.keyword    Petit-Jean, number

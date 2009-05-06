@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
  * disregarding any aromaticity flag.
  * 
  * @cdk.module  isomorphism
- * @cdk.svnrev  $Revision: $
+ * @cdk.githash
  */
 public class OrderQueryBondOrderOnly extends Bond implements IQueryBond {
 

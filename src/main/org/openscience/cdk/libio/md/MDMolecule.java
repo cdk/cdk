@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @cdk.module libiomd
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class MDMolecule extends Molecule{
 

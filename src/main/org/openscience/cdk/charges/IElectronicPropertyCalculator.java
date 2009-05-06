@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @author      egonw
  * @cdk.module  charges
- * @cdk.svnrev  $Revision: 10902 $
+ * @cdk.githash
  */
 public interface IElectronicPropertyCalculator {
 

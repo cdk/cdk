@@ -116,7 +116,7 @@ import java.util.*;
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
  * @cdk.bug 1760973

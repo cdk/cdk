@@ -46,7 +46,7 @@ import java.util.List;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
  * @cdk.module     fingerprint
- * @cdk.svnrev     $Revision$
+ * @cdk.githash
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */

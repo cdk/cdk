@@ -35,7 +35,7 @@ import java.util.List;
  * Entry in a Dictionary.
  * 
  * @author       Egon Willighagen <egonw@users.sf.net>
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created  2003-08-23
  * @cdk.keyword  dictionary
  * @cdk.module   dict

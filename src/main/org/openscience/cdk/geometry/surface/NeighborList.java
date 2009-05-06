@@ -37,7 +37,7 @@ import java.util.List;
  * @author Rajarshi Guha
  * @cdk.created 2005-05-09
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NeighborList {
     HashMap<String,List> boxes;

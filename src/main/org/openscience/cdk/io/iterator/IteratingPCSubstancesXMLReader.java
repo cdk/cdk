@@ -47,7 +47,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * Iterating PubChem PC-Substances ASN.1 XML reader.
  *
  * @cdk.module   io
- * @cdk.svnrev   $Revision$
+ * @cdk.githash
  * 
  * @author       Egon Willighagen <egonw@users.sf.net>
  * @cdk.created  2008-05-05

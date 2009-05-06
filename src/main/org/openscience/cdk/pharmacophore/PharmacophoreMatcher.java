@@ -126,7 +126,7 @@ import java.util.*;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom

@@ -86,7 +86,7 @@ import java.io.IOException;
  *@author         mfe4
  *@cdk.created    2004-11-03
  *@cdk.module     qsaratomic
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomicSoftness
  */

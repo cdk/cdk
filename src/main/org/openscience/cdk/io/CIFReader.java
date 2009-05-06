@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * in the PDB database.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword file format, CIF
  * @cdk.keyword file format, mmCIF

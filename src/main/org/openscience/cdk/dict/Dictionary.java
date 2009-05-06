@@ -46,7 +46,7 @@ import java.util.Hashtable;
  * DOM type thing.
  *
  * @author     Egon Willighagen
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created    2003-08-23
  * @cdk.keyword    dictionary
  * @cdk.module     dict

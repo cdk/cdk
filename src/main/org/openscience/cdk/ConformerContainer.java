@@ -55,7 +55,7 @@ import java.util.*;
  * </pre>
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @author Rajarshi Guha
  * @see org.openscience.cdk.io.iterator.IteratingMDLConformerReader
  */

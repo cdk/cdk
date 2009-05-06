@@ -34,7 +34,7 @@ import javax.vecmath.Point3d;
  * Generates a grid of points in 3D space within given boundaries.
  * 
  * @author cho
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2005-09-30
  */
 public class GridGenerator {

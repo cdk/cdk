@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * Object that provides access to the calculated descriptor value.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.result.BooleanResultTest")
 public class BooleanResult extends BooleanResultType {

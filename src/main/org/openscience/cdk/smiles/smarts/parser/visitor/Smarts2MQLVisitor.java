@@ -28,7 +28,7 @@ import org.openscience.cdk.smiles.smarts.parser.*;
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
 public class Smarts2MQLVisitor implements SMARTSParserVisitor {

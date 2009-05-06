@@ -31,7 +31,7 @@ import java.util.Map;
  * table for administration of physical or chemical properties
  *
  *@author        egonw
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *@cdk.module    interfaces
  */
 public interface IChemObject extends Cloneable {

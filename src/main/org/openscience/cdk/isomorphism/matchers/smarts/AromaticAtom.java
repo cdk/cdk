@@ -31,7 +31,7 @@ import org.openscience.cdk.CDKConstants;
  * has been perceived.
  *
  * @cdk.module  isomorphism
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class AromaticAtom extends SMARTSAtom {
