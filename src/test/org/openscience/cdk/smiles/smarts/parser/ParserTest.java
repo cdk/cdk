@@ -23,6 +23,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
@@ -136,6 +137,16 @@ public class ParserTest extends CDKTestCase {
         Assert.assertEquals(1, container.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
         Assert.assertTrue(bond instanceof AnyOrderQueryBond);
+    }
+
+    /**
+     * @cdk.bug 2786624
+     */
+    @Test
+    public void test2LetterSMARTS() throws CDKException {
+        QueryAtomContainer query = SMARTSParser.parse("Sc1ccccc1");
+        Assert.assertEquals(7, query.getAtomCount());
+        Assert.assertTrue(query.getAtom(0).getSymbol().equals("S"));
     }
 
     @Test public void testPattern1() throws Exception {

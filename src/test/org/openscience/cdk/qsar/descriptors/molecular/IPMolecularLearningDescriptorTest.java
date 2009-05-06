@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,10 +31,17 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.qsar.DescriptorEngine;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -237,4 +247,63 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		
 //        Assert.assertEquals(3, reactionSet.getReactionCount());
 //    }
+    /**
+     * 
+	 *  A unit test for JUnit with Triclosan. Oc2cc(ccc2(Oc1ccc(cc1Cl)Cl))Cl
+	 *  
+	 * @cdk.inchi InChI=1S/C12H7Cl3O2/c13-7-1-3-11(9(15)5-7)17-12-4-2-8(14)6-10(12)16/h1-6,16H
+     * @cdk.bug 2787332 
+	 *  
+     * @throws CDKException
+     */
+    @Test
+    public void testBug_2787332_triclosan() throws CDKException {
+    	IMolecule mol = builder.newMolecule();
+    	mol.addAtom(builder.newAtom("C"));//0
+    	mol.addAtom(builder.newAtom("C"));//1
+    	mol.addAtom(builder.newAtom("C"));//2
+    	mol.addAtom(builder.newAtom("C"));//3
+    	mol.addAtom(builder.newAtom("C"));//4
+    	mol.addAtom(builder.newAtom("C"));//5
+    	mol.addAtom(builder.newAtom("O"));//6
+    	mol.addAtom(builder.newAtom("C"));//7
+    	mol.addAtom(builder.newAtom("C"));//8
+    	mol.addAtom(builder.newAtom("C"));//9
+    	mol.addAtom(builder.newAtom("C"));//10
+    	mol.addAtom(builder.newAtom("C"));//11
+    	mol.addAtom(builder.newAtom("C"));//12
+    	mol.addAtom(builder.newAtom("Cl"));//13
+    	mol.addAtom(builder.newAtom("Cl"));//14
+    	mol.addAtom(builder.newAtom("O"));//15
+    	mol.addAtom(builder.newAtom("Cl"));//16
+    	
+    	mol.addBond(0, 1, Order.SINGLE);
+    	mol.addBond(1, 2, Order.DOUBLE);
+    	mol.addBond(2, 3, Order.SINGLE);
+    	mol.addBond(3, 4, Order.DOUBLE);
+    	mol.addBond(4, 5, Order.SINGLE);
+    	mol.addBond(5, 0, Order.DOUBLE);
+    	mol.addBond(5, 6, Order.SINGLE);
+    	mol.addBond(6, 7, Order.SINGLE);
+    	mol.addBond(7, 8, Order.DOUBLE);
+    	mol.addBond(8, 9, Order.SINGLE);
+    	mol.addBond(9, 10, Order.DOUBLE);
+    	mol.addBond(10, 11, Order.SINGLE);
+    	mol.addBond(11, 12, Order.DOUBLE);
+    	mol.addBond(12, 7, Order.SINGLE);
+    	mol.addBond(0, 13, Order.SINGLE);
+    	mol.addBond(2, 14, Order.SINGLE);
+    	mol.addBond(10, 16, Order.SINGLE);
+    	mol.addBond(12, 15, Order.SINGLE);
+    	
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
+        adder.addImplicitHydrogens(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+
+        IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
+		DoubleArrayResult dar = ((DoubleArrayResult)((IPMolecularLearningDescriptor)descriptor).calculatePlus(mol).getValue());
+		
+        Assert.assertEquals(6, dar.length());
+    }
 }
