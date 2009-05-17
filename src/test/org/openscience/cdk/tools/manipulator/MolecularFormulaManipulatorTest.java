@@ -660,6 +660,26 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemH), MolecularFormulaManipulator.getElementCount(mf1,elemH));
 				
 	}
+
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test 
+    public void testGetMolecularFormula_IAtomContainer_withCharge(){
+		IAtomContainer ac = builder.newAtomContainer();
+		ac.addAtom(builder.newAtom("C"));
+		ac.getAtom(0).setFormalCharge(1);
+		ac.addAtom(builder.newAtom("C"));
+		ac.addAtom(builder.newAtom("H"));
+		ac.addAtom(builder.newAtom("H"));
+		ac.addAtom(builder.newAtom("H"));
+
+		IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula(ac);		
+
+		Assert.assertEquals(1, mf1.getCharge(),0.000);
+	}
 	/**
 	 * A unit test suite for JUnit.
 	 *
