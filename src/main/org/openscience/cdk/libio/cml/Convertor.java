@@ -511,17 +511,19 @@ public class Convertor {
         	ident.setCMLValue(structure.getProperty(CDKConstants.INCHI).toString());
           cmlMolecule.appendChild(ident);
         }
-        for (int i = 0; i < structure.getAtomCount(); i++) {
-            IAtom cdkAtom = structure.getAtom(i);
-            CMLAtom cmlAtom = cdkAtomToCMLAtom(structure, cdkAtom);
-            if (structure.getConnectedSingleElectronsCount(cdkAtom) > 0) {
-                cmlAtom.setSpinMultiplicity(structure.getConnectedSingleElectronsCount(cdkAtom) + 1);
-            }
-            cmlMolecule.addAtom(cmlAtom);
-        }
-        for (int i = 0; i < structure.getBondCount(); i++) {
-            CMLBond cmlBond = cdkBondToCMLBond(structure.getBond(i));
-            cmlMolecule.addBond(cmlBond);
+        if(!isRef){
+	        for (int i = 0; i < structure.getAtomCount(); i++) {
+	            IAtom cdkAtom = structure.getAtom(i);
+	            CMLAtom cmlAtom = cdkAtomToCMLAtom(structure, cdkAtom);
+	            if (structure.getConnectedSingleElectronsCount(cdkAtom) > 0) {
+	                cmlAtom.setSpinMultiplicity(structure.getConnectedSingleElectronsCount(cdkAtom) + 1);
+	            }
+	            cmlMolecule.addAtom(cmlAtom);
+	        }
+	        for (int i = 0; i < structure.getBondCount(); i++) {
+	            CMLBond cmlBond = cdkBondToCMLBond(structure.getBond(i));
+	            cmlMolecule.addBond(cmlBond);
+	        }
         }
         
         // ok, output molecular properties, but not TITLE, INCHI, or DictRef's
