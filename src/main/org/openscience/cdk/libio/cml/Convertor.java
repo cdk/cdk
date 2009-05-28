@@ -349,6 +349,24 @@ public class Convertor {
         if (reaction.getID() != null && !reaction.getID().equals(""))
         	cmlReaction.setId(reaction.getID());
         
+        Map<Object, Object> props = reaction.getProperties();
+ 		Iterator<Object> keys = props.keySet().iterator();
+        while (keys.hasNext()) {
+        	Object key = keys.next();
+    		if (key instanceof String &&  
+         			props.get(key) instanceof String) {
+         		Object value = props.get(key);
+         		if (!key.toString().equals(CDKConstants.TITLE)) {
+         		     CMLScalar scalar = new CMLScalar();
+                     this.checkPrefix(scalar);
+                     scalar.setDictRef("cdk:reactionProperty");
+                     scalar.setTitle(key.toString());
+                     scalar.setValue(value.toString());  
+                     cmlReaction.appendChild(scalar);
+         		}
+         	}
+        }
+        
         // reactants
         CMLReactantList cmlReactants = new CMLReactantList();
         Iterator<IAtomContainer> reactants = reaction.getReactants().molecules().iterator();

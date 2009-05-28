@@ -955,4 +955,17 @@ public class CML2Test extends CDKTestCase {
         chemFile = (IChemFile) reader.read(chemFile);
         Assert.assertSame(chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0), chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0));
     }
+
+    /**
+     */
+    @Test public void testReactionProperties() throws CDKException, FileNotFoundException {
+        String filename = "data/cml/reaction.2.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = new ChemFile();
+        chemFile = (IChemFile) reader.read(chemFile);
+        IReaction reaction = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
+     
+        Assert.assertEquals("3",(String)reaction.getProperty("Ka"));
+    }
 }

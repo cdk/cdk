@@ -1014,6 +1014,10 @@ public class CMLCoreModule implements ICMLModule {
                 	moleculeCustomProperty.add(elementTitle);
                 	moleculeCustomProperty.add(cData.trim());
                 }
+            } else if (xpath.endsWith("reaction", "scalar")) {
+                if (DICTREF.equals("cdk:reactionProperty")) {
+                	currentReaction.setProperty(elementTitle, cData);
+                }
             } else {
                 logger.warn("Ignoring scalar: " + xpath);
             }

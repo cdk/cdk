@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <reactionList>
 <reaction>
+<scalar dictRef="cdk:reactionProperty" title="Ka" dataType="xsd:string">3</scalar>
 <reactantList>
 <reactant>
 <molecule  id="react">

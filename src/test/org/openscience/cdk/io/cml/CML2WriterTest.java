@@ -449,6 +449,20 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("******************************");
         Assert.assertTrue(cmlContent.indexOf("<moleculeList convention=\"cdk:moleculeSet\" id=\"ms0") != -1);
     }
+
+    @Test public void testReactionProperty() throws Exception {
+    	StringWriter writer = new StringWriter();
+    	IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+        reaction.setID("r1");
+        reaction.setProperty("blabla", "blabla2");
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.write(reaction);
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        Assert.assertTrue(cmlContent.indexOf("<scalar dictRef=\"cdk:reactionProperty") != -1);
+    }
     /**
      * TODO: introduce concept for ReactionStepList and ReactionStep.
      */
