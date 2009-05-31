@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IBond;
  * AminoAcid's.
  *
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Egon Willighagen
  * @cdk.created 2005-08-19

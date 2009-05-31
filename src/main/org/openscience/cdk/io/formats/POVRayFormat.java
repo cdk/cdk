@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author Miguel Rojas
  * 
  * @cdk.module ioformats
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set    io-formats
  */
 public class POVRayFormat implements IResourceFormat {

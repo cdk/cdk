@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * @author      vlabarta
  * @cdk.module  forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword geometry
  * @cdk.keyword 3D coordinates

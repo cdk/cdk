@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestClass;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.exception.UnsupportedChemObjectExceptionTest")
 public class UnsupportedChemObjectException extends CDKException {

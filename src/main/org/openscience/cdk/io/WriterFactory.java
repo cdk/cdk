@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  **/
 public class WriterFactory {
 

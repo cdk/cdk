@@ -28,7 +28,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.result.DoubleResultTest")
 public class DoubleResult implements IDescriptorResult {

@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword layout
  * @cdk.keyword 2D-coordinates
  * @cdk.module  sdg
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class OverlapResolver
 {

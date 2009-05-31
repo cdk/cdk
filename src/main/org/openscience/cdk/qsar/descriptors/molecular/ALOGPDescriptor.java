@@ -83,7 +83,7 @@ import java.lang.reflect.Method;
  * 
  * @author     Todd Martin
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set    qsar-descriptors
  * @cdk.keyword logP
  * @cdk.keyword lipophilicity

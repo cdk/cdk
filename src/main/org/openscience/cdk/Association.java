@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * The ElectronContainer contains zero electrons by default.
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword orbital
  * @cdk.keyword association

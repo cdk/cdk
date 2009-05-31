@@ -73,7 +73,7 @@ import java.util.List;
  * @author ulif
  * @cdk.created 2004-11-03
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:tpsa
  * @cdk.keyword TPSA

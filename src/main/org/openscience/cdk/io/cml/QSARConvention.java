@@ -37,7 +37,7 @@ import java.util.StringTokenizer;
  * This is an implementation for the CDK convention.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @author egonw
  */

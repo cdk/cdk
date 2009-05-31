@@ -68,7 +68,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author Bradley A. Smith <yeldar@home.com>
  * @author Egon Willighagen
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class Gaussian03Reader extends DefaultChemObjectReader {
 

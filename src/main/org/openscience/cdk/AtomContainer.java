@@ -54,7 +54,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
  *  </pre>
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author steinbeck
  * @cdk.created 2000-10-02

@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matcher any heavy atom that is not C or H.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision: 11746 $
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class NonCHHeavyAtom extends SMARTSAtom {

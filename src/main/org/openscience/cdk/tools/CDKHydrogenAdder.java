@@ -72,7 +72,7 @@ import java.util.Map;
  * 
  * @author     egonw
  * @cdk.module valencycheck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.CDKHydrogenAdderTest")
 public class CDKHydrogenAdder {

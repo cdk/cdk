@@ -72,7 +72,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.keyword Coordinate generation, 2D
  * @cdk.dictref blue-obelisk:layoutMolecule
  * @cdk.module  sdg
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.bug     1536561
  * @cdk.bug     1788686
  */

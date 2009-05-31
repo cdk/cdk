@@ -27,7 +27,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author Rajarshi Guha
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class QSARModelException extends CDKException {
 

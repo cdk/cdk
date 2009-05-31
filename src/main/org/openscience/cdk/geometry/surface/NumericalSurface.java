@@ -51,7 +51,7 @@ import java.util.Iterator;
  * @author      Rajarshi Guha
  * @cdk.created 2005-05-08  
  * @cdk.module  extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.bug     1846421
  */
 public class NumericalSurface {

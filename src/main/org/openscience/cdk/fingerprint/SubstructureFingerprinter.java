@@ -367,7 +367,7 @@ import java.util.BitSet;
  * @cdk.keyword  similarity
  * 
  * @cdk.module   fingerprint
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.SubstructureFingerprinterTest")
 public class SubstructureFingerprinter implements IFingerprinter {

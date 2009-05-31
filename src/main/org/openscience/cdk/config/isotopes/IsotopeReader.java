@@ -49,7 +49,7 @@ import java.util.List;
  * Xerces parser.
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     Egon Willighagen
  */

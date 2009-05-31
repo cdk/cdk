@@ -103,7 +103,7 @@ import java.util.HashMap;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword linear regression
  * @cdk.keyword R
  */

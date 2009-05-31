@@ -108,7 +108,7 @@ import java.util.*;
  * @author      Rajarshi Guha
  * @cdk.created 2006-08-23
  * @cdk.module  qsarprotein
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:taeAminoAcid
  * @see         IBioPolymer

@@ -34,7 +34,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * Exception that is thrown by CDK classes when some problem has occured.
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.exception.CDKExceptionTest")
 public class CDKException extends Exception {

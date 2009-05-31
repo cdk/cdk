@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module    standard
- * @cdk.svnrev    $Revision$
+ * @cdk.githash
  */
 public class AtomMappingTools {
 

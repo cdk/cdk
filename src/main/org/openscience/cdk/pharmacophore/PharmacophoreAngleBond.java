@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see PharmacophoreAtom

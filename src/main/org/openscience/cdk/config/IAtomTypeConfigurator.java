@@ -35,7 +35,7 @@ import java.util.List;
  * source.
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IAtomTypeConfigurator {
 

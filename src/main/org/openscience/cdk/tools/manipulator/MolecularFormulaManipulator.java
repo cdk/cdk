@@ -728,10 +728,12 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetMolecularFormula_IAtomContainer_IMolecularFormula")
 	public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
-
+		int charge = 0;
         for (IAtom iAtom : atomContainer.atoms()) {
             formula.addIsotope(iAtom);
+            charge += iAtom.getFormalCharge();
         }
+        formula.setCharge(charge);
 		return formula;
 	}
 	/**

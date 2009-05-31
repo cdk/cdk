@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * like the MDL molfile <code>Group</code> concept.
  * 
  * @cdk.module interfaces
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * 
  * @author egonw
  */

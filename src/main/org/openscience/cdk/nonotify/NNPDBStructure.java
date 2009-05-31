@@ -33,7 +33,7 @@ import org.openscience.cdk.protein.data.PDBStructure;
 
 /**
  * @cdk.module  nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NNPDBStructure extends PDBStructure {
 

@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @author Todd Martin
  * @author nick
  * @cdk.module standard
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.keyword atom type, E-state
  */
 @TestClass("org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest")
@@ -174,7 +174,11 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
     public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1,
 			IAtom atom2, IRingSet rs)
 	{
+<<<<<<< HEAD:src/main/org/openscience/cdk/atomtype/EStateAtomTypeMatcher.java
 		if (rs == null)
+=======
+		if (rs == null) 
+>>>>>>> 3d7adae977dcaf251932959c2c065bd20dd6a403:src/main/org/openscience/cdk/atomtype/EStateAtomTypeMatcher.java
 			return false;
 		for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++)
 		{

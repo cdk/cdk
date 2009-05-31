@@ -29,7 +29,7 @@ import org.openscience.cdk.CDKConstants;
 
 /**
  * @cdk.module isomorphism
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 public class OrderQueryBond extends org.openscience.cdk.Bond implements IQueryBond {
 

@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module  isomorphism
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryAtom {
     

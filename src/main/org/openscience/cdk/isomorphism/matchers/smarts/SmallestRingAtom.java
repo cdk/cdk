@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * certain value.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS 
  */
 public class SmallestRingAtom extends SMARTSAtom {

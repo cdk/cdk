@@ -27,7 +27,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @author Dazhi Jiao
  * @cdk.created 2007-05-10
  * @cdk.module smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class ASTAtom extends SimpleNode {	

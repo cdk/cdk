@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
  * normally associated with atoms in such files.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see  PDBAtom
  */

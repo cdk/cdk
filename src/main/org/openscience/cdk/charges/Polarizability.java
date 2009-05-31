@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * P, Osp3 and Osp2. Aromaticity must be calculated beforehand.
  *
  * @author         chhoppe
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created    2004-11-03
  * @cdk.keyword polarizability
  * @cdk.module     charges

@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author         egonw
  * @cdk.created    2006-09-22
  * @cdk.module     structgen
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.githash
  */
 public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 

@@ -35,7 +35,7 @@ import org.openscience.cdk.math.Vector;
 /**
  * At this time this class does not work correcly.
  * The theory were from {@cdk.cite MAR89}.
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author    Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created   2001-07-02

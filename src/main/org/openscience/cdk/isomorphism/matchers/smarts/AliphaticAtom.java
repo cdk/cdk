@@ -31,7 +31,7 @@ import org.openscience.cdk.CDKConstants;
  * molecule has been perceived.
  * 
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class AliphaticAtom extends SMARTSAtom {

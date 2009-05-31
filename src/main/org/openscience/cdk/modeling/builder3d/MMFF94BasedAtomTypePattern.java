@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * @author     chhoppe
  * @cdk.created    2004-09-07
  * @cdk.module     forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class MMFF94BasedAtomTypePattern {
 

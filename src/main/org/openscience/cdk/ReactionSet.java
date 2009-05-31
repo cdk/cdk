@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * </pre>
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword reaction
  */

@@ -28,7 +28,7 @@ package org.openscience.cdk.interfaces;
  * additional informations about the Atom
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Miguel Rojas <miguel.rojas@uni-koeln.de>
  * @cdk.created 2006-11-20 

@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.features.MoleculeFeaturesTool;
  * Utility that helps determine which data features are present.
  * 
  * @author egonw
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @see    org.openscience.cdk.tools.DataFeatures
  */

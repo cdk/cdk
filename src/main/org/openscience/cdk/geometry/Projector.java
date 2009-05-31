@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Tool to make projections from 3D to 2D
  *
  * @cdk.keyword projection in 2D
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class Projector  {
   

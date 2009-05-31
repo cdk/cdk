@@ -43,7 +43,7 @@ import java.util.*;
  * stable and runs in n log(n).
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @cdk.created  2002-02-26

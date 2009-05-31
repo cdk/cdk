@@ -89,7 +89,7 @@ import java.io.StringReader;
  * <p>The class uses log4j as a backend if available, and System.out otherwise.
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.builddepends log4j.jar
  */
 @TestClass("org.openscience.cdk.tools.LoggingToolTest")

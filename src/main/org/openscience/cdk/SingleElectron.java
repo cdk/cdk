@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  * </pre> 
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired

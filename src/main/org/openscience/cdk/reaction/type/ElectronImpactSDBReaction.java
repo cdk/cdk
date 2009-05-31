@@ -72,7 +72,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @cdk.created    2006-04-01
  * @cdk.module     reaction
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set        reaction-types
  * 
  * @see RemovingSEofBMechanism

@@ -27,7 +27,7 @@ import com.sun.javadoc.Tag;
 import com.sun.tools.doclets.Taglet;
 
 /**
- * Taglet that expands @cdk.svnrev tag into a link to the SVN
+ * @cdk.githash
  * source tree. The syntax must be as follows:
  * <pre>
  *   @cdk.svnrev $Revision: 7973 $
@@ -36,9 +36,9 @@ import com.sun.tools.doclets.Taglet;
  * <p>The actual version number is automatically updated by the
  * SVN repository.
  */
-public class CDKSVNTaglet implements Taglet {
+public class CDKGitTaglet implements Taglet {
     
-    private static final String NAME = "cdk.svnrev";
+    private static final String NAME = "cdk.githash";
     private final static Pattern svnrevPattern = Pattern.compile("\\$Revision:\\s*(\\d*)\\s*\\$");
     private final static Pattern pathPattern = Pattern.compile(".*/(src/.*\\.java)");
     
@@ -74,8 +74,8 @@ public class CDKSVNTaglet implements Taglet {
         return false;
     }
     
-    public static void register(Map<String, CDKSVNTaglet> tagletMap) {
-       CDKSVNTaglet tag = new CDKSVNTaglet();
+    public static void register(Map<String, CDKGitTaglet> tagletMap) {
+       CDKGitTaglet tag = new CDKGitTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {
            tagletMap.remove(tag.getName());
@@ -99,23 +99,15 @@ public class CDKSVNTaglet implements Taglet {
     private String expand(Tag tag) {
     	// get the version number
     	String text = tag.text();
-    	Matcher matcher = svnrevPattern.matcher(text);
-    	String revision = "HEAD";
-    	if (matcher.matches()) {
-    		revision = matcher.group(1);
-    	} else {
-    		System.out.println("Malformed @cdk.svnrev content: " + text);
-    		return "";
-    	}
+
     	// create the URL
     	SourcePosition file = tag.position();
     	String path = correctSlashes(file.file().getAbsolutePath());
-    	matcher = pathPattern.matcher(path);
+    	Matcher matcher = pathPattern.matcher(path);
     	if (matcher.matches()) {
-        	String url = "http://cdk.svn.sourceforge.net/viewvc/cdk/cdk/trunk/" +
-            			 matcher.group(1) + "?revision=" + 
-            			 revision + "&amp;view=markup";
-        	return "<a href=\"" + url + "\">revision " + revision + "</a>";
+	    String url = "http://cdk.git.sourceforge.net/git/gitweb.cgi?p=cdk;a=blob;f=" + 
+		matcher.group(1) + ";hb=HEAD";
+        	return "<a href=\"" + url + "\" target=\"_blank\">HEAD</a>";
     	} else {
     		System.out.println("Could not resolve class name from: " + path);
     	}

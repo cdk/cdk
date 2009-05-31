@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * @cdk.module  nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NNMolecularFormulaSet extends MolecularFormulaSet {
 	

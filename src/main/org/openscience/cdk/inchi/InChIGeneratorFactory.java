@@ -51,7 +51,7 @@ import java.util.List;
  * @author Sam Adams
  *
  * @cdk.module inchi
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class InChIGeneratorFactory {
     

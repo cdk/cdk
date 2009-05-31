@@ -38,7 +38,7 @@ import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
  *@author     vlabarta
  *@cdk.created    January 27, 2005
  *@cdk.module     forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class BondStretching {
 

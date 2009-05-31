@@ -33,7 +33,7 @@ import java.util.Vector;
  *  the atoms or calculate the distance between two atoms.
  *
  * @author      vlabarta
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2005-03-03
  */
 public abstract class ForceFieldTools {

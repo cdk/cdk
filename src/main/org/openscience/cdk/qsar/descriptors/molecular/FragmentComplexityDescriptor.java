@@ -43,7 +43,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @author      chhoppe from EUROSCREEN
  * @cdk.created 2006-8-22
  * @cdk.module  qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:NilaComplexity
  */

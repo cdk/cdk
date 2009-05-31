@@ -36,7 +36,7 @@ package org.openscience.cdk.qsar.model.R;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @deprecated 
  */
 public class CNNRegressionModelPredict {

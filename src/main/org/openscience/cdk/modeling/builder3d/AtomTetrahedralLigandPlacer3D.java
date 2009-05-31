@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.IBond;
  *@author         Peter Murray-Rust,chhoppe,egonw
  *@cdk.created    2003-??-??
  * @cdk.module    builder3d
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class AtomTetrahedralLigandPlacer3D {
 

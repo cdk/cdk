@@ -34,7 +34,7 @@ import java.util.Map;
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.
  *
  * @cdk.module  render
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword atom coloring, CPK
  */
 public class CPKAtomColors implements IAtomColorer, java.io.Serializable

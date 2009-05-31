@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * This matches an atom in a specific size ring.
  * 
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class RingAtom extends SMARTSAtom {

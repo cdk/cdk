@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * informations for a group of Atoms.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created    2001-08-06 

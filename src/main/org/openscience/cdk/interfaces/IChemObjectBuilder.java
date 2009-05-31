@@ -29,7 +29,7 @@ import javax.vecmath.Point3d;
  *
  * @author        egonw
  * @cdk.module    interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IChemObjectBuilder {
 

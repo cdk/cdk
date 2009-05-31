@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * A set of reactions, for example those taking part in a reaction.
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword reaction
  */

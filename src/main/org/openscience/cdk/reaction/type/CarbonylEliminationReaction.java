@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @cdk.created    2006-10-16
  * @cdk.module     reaction
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set        reaction-types
  * 
  * @see HeterolyticCleavageMechanism

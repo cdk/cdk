@@ -37,7 +37,7 @@ import java.util.Vector;
  * Implementation of a Queue (FIFO stack).
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.ringsearch.QueueTest")
 public class Queue extends Vector

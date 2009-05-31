@@ -46,7 +46,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * Iterating PubChem PCCompound ASN.1 XML reader.
  *
  * @cdk.module io
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  *
  * @see org.openscience.cdk.io.PCCompoundASNReader
  * 

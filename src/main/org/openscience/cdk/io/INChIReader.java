@@ -55,7 +55,7 @@ import org.xml.sax.XMLReader;
  * <P>The elements that are read are given in the INChIHandler class.
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2004-05-17

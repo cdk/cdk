@@ -22,8 +22,8 @@ package org.openscience.cdk.smiles.smarts;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -48,6 +48,15 @@ import java.util.List;
  * @cdk.require ant1.6
  */
 public class SMARTSQueryToolTest extends CDKTestCase {
+
+    /**
+     * @throws CDKException
+     * @cdk.bug 2788357
+     */
+    @Test(expected = CDKException.class)
+    public void testLexicalError() throws CDKException {
+        SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide");
+    }
 
     @Test
     public void testQueryTool() throws CDKException {

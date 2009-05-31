@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.daylight.com/smiles/f_smiles.html">here</a>.
  * 
  * @cdk.module ioformats
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.SMILESFormatTest")

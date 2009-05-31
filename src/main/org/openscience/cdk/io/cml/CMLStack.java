@@ -31,7 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * Low weigth alternative to Sun's Stack class.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword stack
  */

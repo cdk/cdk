@@ -49,7 +49,7 @@ import java.util.Iterator;
  * @author         seb
  * @cdk.created    13. April 2005
  * @cdk.module     extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword    aromatic ring, bond order adjustment
  */
 @TestClass("org.openscience.cdk.tools.DeAromatizationToolTest")

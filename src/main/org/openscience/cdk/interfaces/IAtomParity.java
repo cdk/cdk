@@ -32,7 +32,7 @@ package org.openscience.cdk.interfaces;
  * around an atom, given four neighbouring atoms.
  *
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      egonw
  * @cdk.created 2005-08-24

@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * 
  * @author     Todd Martin
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @see        org.openscience.cdk.tools.Normalizer
  */

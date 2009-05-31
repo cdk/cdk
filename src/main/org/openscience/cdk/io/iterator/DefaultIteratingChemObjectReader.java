@@ -36,7 +36,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  * take care of basic stuff, like managing the ReaderListeners.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public abstract class DefaultIteratingChemObjectReader implements IIteratingChemObjectReader {
 

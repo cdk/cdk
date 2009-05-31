@@ -36,7 +36,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * but no such atom type was found.
  * 
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest")
 public class NoSuchAtomTypeException extends CDKException {

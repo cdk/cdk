@@ -42,7 +42,7 @@ import java.util.List;
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.manipulator.ChemFileManipulatorTest")
 public class ChemFileManipulator {

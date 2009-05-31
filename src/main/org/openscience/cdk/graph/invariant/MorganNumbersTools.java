@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Tool for calculating Morgan numbers {@cdk.cite MOR65}.
  *
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      shk3
  * @cdk.created 2003-06-30

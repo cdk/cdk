@@ -118,7 +118,7 @@ import java.util.Map;
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:WHIM
  * @cdk.keyword WHIM

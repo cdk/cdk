@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Writes the atoms and the bonds only at this moment.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     Egon Willighagen
  */

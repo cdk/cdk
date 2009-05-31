@@ -31,7 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * This matches an aromatic bond
  * 
  * @cdk.module  isomorphism
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class AromaticQueryBond extends SMARTSBond {

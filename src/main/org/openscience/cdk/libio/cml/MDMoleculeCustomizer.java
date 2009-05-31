@@ -45,7 +45,7 @@ import org.xmlcml.cml.element.CMLScalar;
  * 
  * @author ola
  * @cdk.module libiomd
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @cdk.set       libio-cml-customizers
  */

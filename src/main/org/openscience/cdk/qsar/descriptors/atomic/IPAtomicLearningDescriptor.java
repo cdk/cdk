@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author       Miguel Rojas
  * @cdk.created  2006-05-26
  * @cdk.module   qsarionpot
- * @cdk.svnrev   $Revision: 10995 $
+ * @cdk.githash
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:ionizationPotential
  */

@@ -29,7 +29,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module ioformats
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.CMLRSSFormatTest")

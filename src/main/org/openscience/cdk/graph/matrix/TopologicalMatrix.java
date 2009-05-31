@@ -11,7 +11,7 @@ import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
  * two atoms in a molecule.
  * 
  * @author federico
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  */
 

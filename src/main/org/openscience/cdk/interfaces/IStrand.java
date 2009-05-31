@@ -35,7 +35,7 @@ import java.util.Map;
  * informations for a group of Atoms.
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  */

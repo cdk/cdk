@@ -28,7 +28,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author      Miguel Howard
  * @cdk.created 2003-05
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.graph.rebond.PointTest")
 public class Point implements Bspt.Tuple {

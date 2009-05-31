@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author Rajarshi Guha <rajarshi@presidency.com>
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2004-01-27
  */
 @TestClass("org.openscience.cdk.io.HINWriterTest")

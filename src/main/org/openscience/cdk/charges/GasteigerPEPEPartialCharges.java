@@ -23,11 +23,6 @@
  */
 package org.openscience.cdk.charges;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -53,6 +48,11 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
  * {@cdk.cite Saller85}. This class doesn't implement the original method of the Marsili but the 
@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      Miguel Rojas
  * 
  * @cdk.module  charges
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2006-05-14
  * @cdk.keyword partial atomic charges
  * @cdk.keyword charge distribution
@@ -148,7 +148,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
         // we save the aromaticity flags for the input molecule so that
         // we can add them back before we return
-        boolean[] oldBondAromaticity = new boolean[ac.getAtomCount()];
+        boolean[] oldBondAromaticity = new boolean[ac.getBondCount()];
         boolean[] oldAtomAromaticity = new boolean[ac.getAtomCount()];
         for (int i = 0; i < ac.getAtomCount(); i++) oldAtomAromaticity[i] = ac.getAtom(i).getFlag(CDKConstants.ISAROMATIC);
         for (int i = 0; i < ac.getBondCount(); i++) oldBondAromaticity[i] = ac.getBond(i).getFlag(CDKConstants.ISAROMATIC);

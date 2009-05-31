@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IElement;
 
 /**
  * @cdk.module nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NNIsotope extends Isotope {
 

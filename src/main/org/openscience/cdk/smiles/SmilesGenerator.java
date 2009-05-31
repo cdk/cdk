@@ -83,7 +83,7 @@ import java.util.Vector;
  * @cdk.created    2002-02-26
  * @cdk.keyword    SMILES, generator
  * @cdk.module     smiles
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.bug        1793446
  */
 @TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")

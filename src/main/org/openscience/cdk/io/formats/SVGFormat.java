@@ -27,7 +27,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * @cdk.module ioformats
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set    io-formats
  */
 public class SVGFormat implements IResourceFormat {

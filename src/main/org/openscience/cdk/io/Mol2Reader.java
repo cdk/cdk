@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author         Egon Willighagen
  * @cdk.created    2003-08-21

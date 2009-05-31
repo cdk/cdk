@@ -52,7 +52,7 @@ import java.util.List;
  * </pre>
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.isotopes.IsotopeHandlerTest")
 public class IsotopeHandler extends DefaultHandler {

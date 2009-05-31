@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Dictionary with entries build from an OWL file.
  *
  * @author       Egon Willighagen <egonw@users.sf.net>
- * @cdk.svnrev   $Revision$
+ * @cdk.githash
  * @cdk.created  2005-11-18
  * @cdk.keyword  dictionary
  * @cdk.module   dict

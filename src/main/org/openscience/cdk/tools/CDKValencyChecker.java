@@ -40,7 +40,7 @@ import java.util.Map;
  * 
  * @author     egonw
  * @cdk.module valencycheck
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.CDKValencyCheckerTest")
 public class CDKValencyChecker implements IValencyChecker {

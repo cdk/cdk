@@ -42,7 +42,7 @@ import java.util.List;
  * it participates too.
  *
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07

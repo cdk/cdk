@@ -65,7 +65,7 @@ import org.xml.sax.Attributes;
  * </ul>
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

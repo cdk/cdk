@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      Federico
  * @cdk.created 2007-02-27
  * @cdk.module  qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.bug     1728862
  */

@@ -30,7 +30,7 @@ import org.openscience.cdk.exception.CDKException;
  * Exception that is thrown by descriptor routines when a problem has occured.
  *
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.DescriptorExceptionTest")
 public class DescriptorException extends CDKException {

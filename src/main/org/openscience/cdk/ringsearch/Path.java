@@ -39,7 +39,7 @@ import java.util.Vector;
 * Implementation of a Path as needed by {@cdk.cite HAN96}.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword graph, path
  *

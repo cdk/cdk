@@ -69,7 +69,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * See {@cdk.cite DAL92}.
  *
  * @cdk.module  io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword file format, MDL molfile
  */
 @TestClass("org.openscience.cdk.io.MDLWriterTest")

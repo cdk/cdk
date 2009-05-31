@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@author     vlabarta
  *@cdk.created    February 8, 2005
  *@cdk.module     forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class AngleBending {
 

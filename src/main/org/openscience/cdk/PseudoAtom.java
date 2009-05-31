@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * <p>This should be replaced by the mechanism explained in RFC #8.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see  Atom
  */

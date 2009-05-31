@@ -100,7 +100,7 @@ import org.rosuda.JRI.Rengine;
  * @cdk.require r-project
  * @cdk.require JRI.jar
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword R
  * @cdk.keyword JRI
  */

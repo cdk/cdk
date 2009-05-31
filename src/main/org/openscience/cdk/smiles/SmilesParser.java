@@ -65,7 +65,7 @@ import java.util.StringTokenizer;
  * @author         Christoph Steinbeck
  * @author         Egon Willighagen
  * @cdk.module     smiles
- * @cdk.svnrev     $Revision$
+ * @cdk.githash
  * @cdk.created    2002-04-29
  * @cdk.keyword    SMILES, parser
  * @cdk.bug        1579230

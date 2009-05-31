@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @cdk.keyword  structure generator
  * @cdk.module   structgen
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.bug      1632610
  */
 public class VicinitySampler {

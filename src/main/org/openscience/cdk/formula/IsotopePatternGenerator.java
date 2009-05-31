@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.module  formula
  * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword isotope pattern
  * 

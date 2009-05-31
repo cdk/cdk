@@ -51,7 +51,7 @@ import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
  * @author      chhoppe
  * @cdk.created 2004-11-03
  * @cdk.module  forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class MMFF94PartialCharges implements IChargeCalculator {
 

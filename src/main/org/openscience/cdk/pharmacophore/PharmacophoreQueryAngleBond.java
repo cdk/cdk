@@ -35,7 +35,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see PharmacophoreQueryAtom

@@ -43,7 +43,7 @@ import java.io.*;
  * @cdk.created 2004-01-01
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.io.CrystClustWriterTest")
 public class CrystClustWriter extends DefaultChemObjectWriter {

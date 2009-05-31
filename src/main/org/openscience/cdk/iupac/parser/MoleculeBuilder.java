@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @see Token
  * @author David Robinson
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @author Bhupinder Sandhu
  * @author Stephen Tomkinson
  *

@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://dx.doi.org/10.1021/ci034207y">here</a>.
  * 
  * @cdk.module ioformats
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.SybylDescriptorFormatTest")

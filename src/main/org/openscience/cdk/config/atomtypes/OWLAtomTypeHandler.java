@@ -36,7 +36,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * SAX Handler for the {@link OWLAtomTypeReader}.
  *
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeHandlerTest")
 public class OWLAtomTypeHandler extends DefaultHandler {

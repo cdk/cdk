@@ -34,7 +34,7 @@ import javax.vecmath.Vector3d;
  * Though this is not enforced, it is assumed by all methods.
  *
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword crystal
  */

@@ -42,7 +42,7 @@ import java.io.IOException;
  * @author      Egon Willighagen
  * @cdk.created 2007-12-29
  * @cdk.module  qsarbond
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
  */

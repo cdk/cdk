@@ -77,7 +77,7 @@ import java.util.Map;
  * @author Sam Adams
  *
  * @cdk.module inchi
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.inchi.InChIGeneratorTest")
 public class InChIGenerator {

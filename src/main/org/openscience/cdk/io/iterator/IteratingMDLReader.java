@@ -70,7 +70,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * </pre>
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see org.openscience.cdk.io.MDLV2000Reader
  * @see org.openscience.cdk.io.MDLV3000Reader

@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * with closed shells
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2001-06-14
  * @cdk.module  qm
  */

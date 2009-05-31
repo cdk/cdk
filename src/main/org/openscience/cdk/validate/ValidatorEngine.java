@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * </pre>
  *
  * @author   Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created  2003-08-22
  */ 
 public class ValidatorEngine implements IValidator {

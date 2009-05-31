@@ -44,7 +44,7 @@ import java.util.Map;
  * written).
  * 
  * @cdk.module pdb
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class ProteinBuilderTool {
 

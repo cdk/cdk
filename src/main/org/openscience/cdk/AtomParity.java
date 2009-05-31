@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtomParity;
  * around an atom, given four neighbouring atoms.
  * 
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.created 2000-10-02
  * @cdk.keyword atom parity

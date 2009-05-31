@@ -43,7 +43,7 @@ import java.util.List;
  * @see AtomTypeReader
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.atomtypes.AtomTypeHandlerTest")
 public class AtomTypeHandler extends DefaultHandler {

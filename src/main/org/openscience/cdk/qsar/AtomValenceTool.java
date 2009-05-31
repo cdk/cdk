@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @author      mfe4
  * @cdk.created 2004-11-13
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.dictref valence, atom
  */
 public class AtomValenceTool {

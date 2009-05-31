@@ -45,7 +45,7 @@ import java.util.List;
  * @author uli
  *
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created 2004-10-19
  */
 @TestClass("org.openscience.cdk.graph.BFSShortestPathTest")

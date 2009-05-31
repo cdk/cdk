@@ -31,7 +31,7 @@ import javax.vecmath.GVector;
  *  calculate the distance between two atoms.
  *@author     vlabarta
  *@cdk.module     forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  */
 public class ForceField extends GeometricMinimizer{

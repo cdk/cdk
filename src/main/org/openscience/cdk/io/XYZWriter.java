@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Bradley A. Smith <bradley@baysmith.com>
  * @author  J. Daniel Gezelter

@@ -48,7 +48,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * atoms.3d, bonds.aid1, bonds.aid2.
  *
  * @cdk.module  io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword file format, PubChem Compound XML
  */

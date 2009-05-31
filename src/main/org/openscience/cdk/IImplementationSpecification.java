@@ -28,7 +28,7 @@ package org.openscience.cdk;
  * implementation of an algorithm.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IImplementationSpecification {
 

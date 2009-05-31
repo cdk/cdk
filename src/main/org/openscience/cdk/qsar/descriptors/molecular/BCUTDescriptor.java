@@ -119,7 +119,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:BCUT
  * @cdk.keyword BCUT

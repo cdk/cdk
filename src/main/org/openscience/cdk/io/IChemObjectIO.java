@@ -41,7 +41,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  * subclass the DefaultChemObjectReader.
  *
  * @cdk.module  io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see DefaultChemObjectReader
  *

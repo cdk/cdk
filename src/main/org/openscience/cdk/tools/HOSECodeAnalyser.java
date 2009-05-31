@@ -40,7 +40,7 @@ import java.util.List;
  * @author         egonw
  * @cdk.created    2007-03-08
  * @cdk.module     extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class HOSECodeAnalyser {
 

@@ -28,7 +28,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * bond specified. For example, <code>C=1CCCCC1</code>.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS 
  */
 public class RingIdentifierAtom extends SMARTSAtom {

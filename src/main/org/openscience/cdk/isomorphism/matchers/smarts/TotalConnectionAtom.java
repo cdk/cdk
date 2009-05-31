@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matches an atom using total number of connections.
  * 
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class TotalConnectionAtom extends SMARTSAtom {

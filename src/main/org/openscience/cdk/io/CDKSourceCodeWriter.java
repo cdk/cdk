@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * </pre>
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-10-01

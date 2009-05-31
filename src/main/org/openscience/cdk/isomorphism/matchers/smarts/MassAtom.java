@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This class matches an atom based on the atomic mass.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class MassAtom extends SMARTSAtom{

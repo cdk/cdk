@@ -32,7 +32,7 @@ import org.openscience.cdk.qsar.result.*;
  * Class that is used to store descriptor values as IChemObject properties.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.DescriptorValueTest")
 public class DescriptorValue {

@@ -15,7 +15,7 @@ import java.util.List;
  * @author egonw
  * 
  * @cdk.module fingerprint
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.StandardSubstructureSetsTest")
 public class StandardSubstructureSets {

@@ -36,7 +36,7 @@ import org.openscience.cdk.reaction.type.parameters.IParameterReact;
  *
  * @author      Miguel Rojas
  * @cdk.module  reaction
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IReactionProcess {
 	

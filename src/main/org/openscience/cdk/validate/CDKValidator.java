@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
  * tries to detect inconsistencies in it.
  *
  * @author   Egon Willighagen
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.created  2003-08-22
  */ 
 public class CDKValidator extends AbstractValidator {

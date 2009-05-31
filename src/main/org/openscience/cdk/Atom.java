@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IElement;
  * Junit test for this class.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     steinbeck
  * @cdk.created    2000-10-02

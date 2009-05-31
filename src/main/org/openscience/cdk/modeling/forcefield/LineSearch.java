@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  
  * @author      vlabarta
  * @cdk.module  forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @cdk.keyword line search
  */

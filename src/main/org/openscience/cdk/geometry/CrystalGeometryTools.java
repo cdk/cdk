@@ -40,7 +40,7 @@ import javax.vecmath.Vector3d;
  * A set of static methods for working with crystal coordinates.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *

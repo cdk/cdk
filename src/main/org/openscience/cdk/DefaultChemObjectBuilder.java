@@ -40,7 +40,7 @@ import javax.vecmath.Point3d;
  *
  * @author        egonw
  * @cdk.module    data
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 

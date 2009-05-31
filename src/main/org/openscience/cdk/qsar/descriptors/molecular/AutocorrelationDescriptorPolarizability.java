@@ -52,7 +52,7 @@ import java.util.Iterator;
  * @author Federico
  * @cdk.created 2007-03-01
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.set qsar-descriptors
  */
 

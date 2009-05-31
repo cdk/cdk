@@ -38,7 +38,7 @@ import java.util.Random;
  * its static methods.
  *
  * @cdk.module standard
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.math.RandomNumbersToolTest")
 public class RandomNumbersTool extends Random {

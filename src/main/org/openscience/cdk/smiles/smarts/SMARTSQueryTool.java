@@ -39,10 +39,15 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
+import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching
@@ -116,7 +121,7 @@ import java.util.*;
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
  * @cdk.bug 1760973
@@ -134,7 +139,11 @@ public class SMARTSQueryTool {
     public SMARTSQueryTool(String smarts) throws CDKException {
         logger = new LoggingTool(this);
         this.smarts = smarts;
-        initializeQuery();
+        try {
+            initializeQuery();
+        } catch (TokenMgrError error) {
+            throw new CDKException("Error parsing SMARTS", error);
+        }
     }
 
     /**

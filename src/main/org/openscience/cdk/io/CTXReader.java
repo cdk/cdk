@@ -41,7 +41,7 @@ import java.io.*;
  * blocks in CTX files.
  * 
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.io.CTXReaderTest")
 public class CTXReader extends DefaultChemObjectReader {

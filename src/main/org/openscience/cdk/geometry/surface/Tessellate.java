@@ -39,7 +39,7 @@ import javax.vecmath.Point3d;
  * @author Rajarshi Guha
  * @cdk.created 2005-05-08  
  * @cdk.module extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class Tessellate {
 

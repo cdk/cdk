@@ -55,7 +55,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * it with the removeAtomAndConnectedElectronContainers(Atom) method.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  */

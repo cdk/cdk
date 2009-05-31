@@ -112,7 +112,7 @@ import java.util.HashMap;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  * @cdk.keyword neural network
  * @cdk.keyword classification

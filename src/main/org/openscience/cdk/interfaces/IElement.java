@@ -27,7 +27,7 @@ package org.openscience.cdk.interfaces;
  * Implements the idea of an element in the periodic table.
  *
  * @cdk.module interfaces
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword element
  * @cdk.keyword atomic number
  * @cdk.keyword number, atomic

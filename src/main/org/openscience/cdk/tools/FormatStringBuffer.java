@@ -61,7 +61,7 @@ import java.text.NumberFormat;
  * @author      Fred Long (flong(AT)skcc.org, implemented 'e', 'E' and 'g')
  * @version     1.7
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.license BSD
  */
 @TestClass("org.openscience.cdk.tools.FormatStringBufferTest")

@@ -40,7 +40,7 @@ import java.util.List;
  * IDs for all ChemObjects, you need to delete them first.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-04-01

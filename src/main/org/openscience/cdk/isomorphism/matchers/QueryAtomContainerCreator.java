@@ -35,7 +35,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 
 /**
  *@cdk.module   isomorphism
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class QueryAtomContainerCreator {
 

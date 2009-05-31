@@ -26,7 +26,7 @@ import org.openscience.cdk.interfaces.IBond;
  * implemented.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class StereoBond extends SMARTSBond {

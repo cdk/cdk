@@ -29,7 +29,7 @@ import javax.vecmath.GVector;
  *
  * @author     vlabarta
  *@cdk.module     forcefield
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * 
  */
 

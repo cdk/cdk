@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * Class providing convenience methods for simple mathematical operations.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.math.MathToolsTest")
 public class MathTools {

@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.manipulator.RingSetManipulatorTest")
 public class RingSetManipulator {

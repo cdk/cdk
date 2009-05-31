@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * can be used to instantiate a ChemObjectReader.
  *
  * @cdk.module io
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  *
  * @see DefaultChemObjectReader
  *

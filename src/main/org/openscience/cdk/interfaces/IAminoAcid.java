@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * informations, like the N-terminus atom.
  *
  * @cdk.module  interfaces 
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Egon Willighagen <e.willighagen@science.ru.nl>
  * @cdk.created 2005-12-05

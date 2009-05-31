@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * Tests for AtomPlacer3D
  *
  * @cdk.module test-builder3d
- * @cdk.svnrev  $Revision: 12144 $
+ * @cdk.githash
  */
 public class AtomPlacer3DTest extends CDKTestCase{
 

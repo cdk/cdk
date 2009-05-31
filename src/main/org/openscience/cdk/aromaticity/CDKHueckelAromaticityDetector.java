@@ -56,7 +56,7 @@ import java.util.List;
  *
  * @author         egonw
  * @cdk.module     standard
- * @cdk.svnrev     $Revision$
+ * @cdk.githash
  * @cdk.created    2007-10-05
  * 
  * @see org.openscience.cdk.CDKConstants

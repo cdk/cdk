@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matcher any Atom.
  *
  * @cdk.module  isomorphism
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class AnyAtom extends SMARTSAtom {

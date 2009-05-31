@@ -26,7 +26,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This class matches aromatic atom with element symbol specified.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class AromaticSymbolAtom extends SMARTSAtom {

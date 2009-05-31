@@ -55,7 +55,7 @@ import java.util.List;
  * </pre> 
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     steinbeck
  * @cdk.created    2001-08-29

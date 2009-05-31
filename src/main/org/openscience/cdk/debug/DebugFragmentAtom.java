@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * like the MDL molfile <code>Group</code> concept.
  * 
  * @cdk.module datadebug
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  * 
  * @author egonw
  */

@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module  nonotify
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class NNMolecularFormula extends MolecularFormula {
 	

@@ -35,7 +35,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author      Egon Willighagen
  * @cdk.created 2003-08-24
  * @cdk.module  standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.dict.DictRefTest")
 public class DictRef implements java.io.Serializable, Cloneable  {

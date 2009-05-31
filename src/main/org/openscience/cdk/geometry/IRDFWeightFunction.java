@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * Weight function used in the <code>RDFCalculator</code>.
  *
  * @cdk.module  extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author      Egon Willighagen
  * @cdk.created 2005-01-14

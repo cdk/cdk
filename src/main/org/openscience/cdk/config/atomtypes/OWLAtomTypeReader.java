@@ -43,7 +43,7 @@ import org.xml.sax.XMLReader;
  * XML Reader for the {@link OWLBasedAtomTypeConfigurator}.
  *
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeReaderTest")
 public class OWLAtomTypeReader {

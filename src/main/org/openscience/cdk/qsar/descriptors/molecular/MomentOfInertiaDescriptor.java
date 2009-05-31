@@ -80,7 +80,7 @@ import javax.vecmath.Point3d;
  * @cdk.builddepends Jama-1.0.2.jar
  * @cdk.depends      Jama-1.0.2.jar
  * @cdk.module       qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set          qsar-descriptors
  * @cdk.dictref      qsar-descriptors:momentOfInertia
  * @cdk.keyword      moment of inertia

@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * @author         egonw
  * @cdk.created    2007-07-20
  * @cdk.module     core
- * @cdk.svnrev     $Revision$
+ * @cdk.githash
  * @cdk.bug        1802998
  */
 @TestClass("org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest")

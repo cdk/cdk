@@ -33,7 +33,7 @@ import org.openscience.cdk.math.RandomNumbersTool;
 
 /**
  * @cdk.module     structgen
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class ChemGraph
 {

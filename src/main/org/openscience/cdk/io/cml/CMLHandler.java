@@ -38,7 +38,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * use CDK for internal data storage, use this CML library.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

@@ -33,7 +33,7 @@ import java.util.Stack;
 
 /**
  * @author       kaihartmann
- * @cdk.svnrev   $Revision$
+ * @cdk.githash
  * @cdk.created  2004-09-17
  * @cdk.module   reaction
  *

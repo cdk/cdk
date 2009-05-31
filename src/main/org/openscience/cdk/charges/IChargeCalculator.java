@@ -26,7 +26,7 @@ package org.openscience.cdk.charges;
  * 
  * @author      egonw
  * @cdk.module  charges
- * @cdk.svnrev  $Revision: 10902 $
+ * @cdk.githash
  */
 public interface IChargeCalculator extends IElectronicPropertyCalculator {
 

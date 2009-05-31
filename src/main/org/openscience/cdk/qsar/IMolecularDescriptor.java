@@ -28,7 +28,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * for <code>IMolecule</code> objects.
  *
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public interface IMolecularDescriptor extends IDescriptor {
 

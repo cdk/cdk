@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.PeriodicTable;
  * This matcher checks the periodic group number of an atom.
  *
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision: 11746 $
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 

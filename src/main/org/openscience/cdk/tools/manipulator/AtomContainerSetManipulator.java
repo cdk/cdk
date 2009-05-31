@@ -39,7 +39,7 @@ import java.util.List;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @see ChemModelManipulator
  */

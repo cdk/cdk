@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IBond;
  * using '-', it should be an aliphatic single bond
  * 
  * @cdk.module  smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword SMARTS
  */
 public class OrderQueryBond extends SMARTSBond {

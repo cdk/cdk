@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * read as MoleculeSet.
  *
  * @cdk.module  smiles
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.keyword file format, SMILES
  *
  * @see org.openscience.cdk.io.iterator.IteratingSMILESReader

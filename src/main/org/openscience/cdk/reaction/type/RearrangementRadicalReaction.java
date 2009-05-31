@@ -78,7 +78,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @cdk.created    2006-05-05
  * @cdk.module     reaction
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  * @cdk.set        reaction-types
  * 
  * @see RearrangementChargeMechanism

@@ -64,7 +64,7 @@ import java.util.List;
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module  fingerprint
- * @cdk.svnrev $Revision: 11674 $
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.MACCSFingerprinterTest")
 public class MACCSFingerprinter implements IFingerprinter {

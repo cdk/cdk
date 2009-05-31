@@ -44,7 +44,7 @@ import java.util.StringTokenizer;
  * background, but this is not clear. 
  *
  * @cdk.module core
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author     Bradley A. Smith <bradley@baysmith.com>
  *

@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  *
  * @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @cdk.created 2002-02-26

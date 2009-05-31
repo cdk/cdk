@@ -48,7 +48,7 @@ import org.xml.sax.XMLReader;
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
  * @cdk.module     extra
- * @cdk.svnrev  $Revision$
+ * @cdk.githash
  */
 public class ElementPTReader {
 
