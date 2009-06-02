@@ -310,8 +310,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // write formal atomic charges
         for (int i = 0; i < container.getAtomCount(); i++) {
         	IAtom atom = container.getAtom(i);
-            int charge = atom.getFormalCharge();
-            if (charge != 0) {
+            Integer charge = atom.getFormalCharge();
+            if (charge != null && charge != 0) {
                 writer.write("M  CHG  1 ");
                 writer.write(formatMDLInt(i+1,3));
                 writer.write(" ");
