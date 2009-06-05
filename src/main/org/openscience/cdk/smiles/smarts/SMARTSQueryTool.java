@@ -68,7 +68,12 @@ import java.util.Map;
  *    }
  * }
  * </pre>
- *
+ * <h3>Unsupported Features</h3>
+ * <ul>
+ * <li>Component level grouping
+ * <li>Stereochemistry
+ * <li>Reaction support
+ * </ul>
  * <h3>SMARTS Extensions</h3>
  *
  * Currently the CDK supports the following SMARTS symbols, that are not described

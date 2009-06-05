@@ -124,4 +124,21 @@ public class MDLWriterTest extends ChemObjectIOTest {
         String output = writer.toString();
         Assert.assertEquals("Test for zero length pseudo atom label in MDL file", -1, output.indexOf("0.0000    0.0000    0.0000     0  0  0  0  0  0  0  0  0  0  0  0"));
     }
+
+    @Test public void testNullFormalCharge() throws Exception {
+        StringWriter writer = new StringWriter();
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom = builder.newAtom("C");
+        atom.setFormalCharge(null);
+        molecule.addAtom(atom);
+
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
+        String output = writer.toString();
+        // test ensures that the writer does not throw an exception on
+        // null formal charges, so a mere assert on output being non-zero
+        // length is enough
+        Assert.assertNotNull(output);
+        Assert.assertNotSame(0, output.length());
+    }
 }
