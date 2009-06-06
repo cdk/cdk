@@ -158,6 +158,51 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         Assert.assertTrue(listener.changed);
     }
 
+    @Test public void testStateChanged_EventPropagation_MoleculeSet() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IMoleculeSet molSet = chemObject.getBuilder().newMoleculeSet();
+        chemObject.setMoleculeSet(molSet);
+        Assert.assertTrue(listener.changed);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.changed);
+        // changing the set should trigger a change event in the IChemModel
+        molSet.addAtomContainer(chemObject.getBuilder().newMolecule());
+        Assert.assertTrue(listener.changed);
+    }
+
+    @Test public void testStateChanged_EventPropagation_ReactionSet() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IReactionSet reactionSet = chemObject.getBuilder().newReactionSet();
+        chemObject.setReactionSet(reactionSet);
+        Assert.assertTrue(listener.changed);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.changed);
+        // changing the set should trigger a change event in the IChemModel
+        reactionSet.addReaction(chemObject.getBuilder().newReaction());
+        Assert.assertTrue(listener.changed);
+    }
+
+    @Test public void testStateChanged_EventPropagation_RingSet() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IRingSet ringSet = chemObject.getBuilder().newRingSet();
+        chemObject.setRingSet(ringSet);
+        Assert.assertTrue(listener.changed);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.changed);
+        // changing the set should trigger a change event in the IChemModel
+        ringSet.addAtomContainer(chemObject.getBuilder().newRing());
+        Assert.assertTrue(listener.changed);
+    }
+
     private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         
