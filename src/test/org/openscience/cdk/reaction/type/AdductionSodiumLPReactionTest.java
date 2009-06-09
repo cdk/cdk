@@ -240,7 +240,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 	 * @return The IMolecule
 	 * @throws CDKException
 	 */
-	private IMolecule getAcetaldehyde() throws CDKException {
+	private IMolecule getAcetaldehyde() throws Exception {
 		IMolecule molecule = builder.newMolecule();
         molecule.addAtom(builder.newAtom("O"));
         molecule.addAtom(builder.newAtom("C"));
@@ -268,7 +268,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 	 * @return The IMolecule
 	 * @throws CDKException
 	 */
-	private IMolecule getExpected() throws CDKException {
+	private IMolecule getExpected() throws Exception {
 		IMolecule molecule = builder.newMolecule();
         molecule.addAtom(builder.newAtom("O"));
         molecule.getAtom(0).setFormalCharge(1);

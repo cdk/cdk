@@ -293,7 +293,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(mol.getBond(4), bonds[4]);
     }
 
-    @Test public void testGetAtomById_IAtomContainer_String() throws CDKException {
+    @Test public void testGetAtomById_IAtomContainer_String() throws Exception {
         Molecule mol = new Molecule(); // ethene
         mol.addAtom(new Atom("C")); mol.getAtom(0).setID("a1");
         mol.addAtom(new Atom("C")); mol.getAtom(1).setID("a2");
@@ -319,11 +319,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * Test removeHydrogens for B2H6, which contains two multiply bonded H.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
-    @Test public void testRemoveHydrogensBorane() throws IOException, ClassNotFoundException, CDKException
+    @Test public void testRemoveHydrogensBorane() throws Exception
     {
     	IAtomContainer borane = new Molecule();
     	borane.addAtom(borane.getBuilder().newAtom("H"));
@@ -353,11 +350,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * Test total formal charge.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
-    @Test public void testGetTotalFormalCharge_IAtomContainer() throws IOException, ClassNotFoundException, CDKException
+    @Test public void testGetTotalFormalCharge_IAtomContainer() throws Exception
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
@@ -369,11 +363,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * Test total Exact Mass.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
-    @Test public void testGetTotalExactMass_IAtomContainer() throws IOException, ClassNotFoundException, CDKException{
+    @Test public void testGetTotalExactMass_IAtomContainer() throws Exception{
     	
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = parser.parseSmiles("CCl");
@@ -402,11 +393,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * Test total natural abundance.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
-    @Test public void testGetTotalNaturalAbundance_IAtomContainer() throws IOException, ClassNotFoundException, CDKException{
+    @Test public void testGetTotalNaturalAbundance_IAtomContainer() throws Exception{
     	
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = parser.parseSmiles("CCl");
@@ -420,11 +408,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * Test total positive formal charge.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
-    @Test public void testGetTotalPositiveFormalCharge_IAtomContainer() throws IOException, ClassNotFoundException, CDKException
+    @Test public void testGetTotalPositiveFormalCharge_IAtomContainer() throws Exception
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
@@ -436,11 +421,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * Test total negative formal charge.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
-    @Test public void testGetTotalNegativeFormalCharge_IAtomContainer() throws IOException, ClassNotFoundException, CDKException
+    @Test public void testGetTotalNegativeFormalCharge_IAtomContainer() throws Exception
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
@@ -512,7 +494,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testClearConfig() throws CDKException {
+    public void testClearConfig() throws Exception {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
         IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
@@ -587,7 +569,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testCountH() throws CDKException {
+    public void testCountH() throws Exception {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
         atom1.setCharge(1.0);
@@ -648,9 +630,6 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     /**
      * Test removeHydrogensPreserveMultiplyBonded for B2H6, which contains two multiply bonded H.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
     @Test public void testRemoveHydrogensPreserveMultiplyBonded() throws Exception {
     	IAtomContainer borane = new Molecule();
@@ -715,10 +694,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     /**
      * @cdk.bug  1969156
-     * @throws CDKException
      */
     @Test
-    public void testOverWriteConfig() throws CDKException {
+    public void testOverWriteConfig() throws Exception {
         String filename = "data/mdl/lobtest2.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

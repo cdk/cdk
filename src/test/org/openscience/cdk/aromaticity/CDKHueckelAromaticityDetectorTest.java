@@ -25,7 +25,6 @@ package org.openscience.cdk.aromaticity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -615,7 +614,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * @cdk.bug 1957684
      */
     @Test
-    public void test3Amino2MethylPyridine() throws CDKException {
+    public void test3Amino2MethylPyridine() throws Exception {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("N");
@@ -727,7 +726,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     @Test
-    public void testPolyCyclicSystem() throws CDKException {
+    public void testPolyCyclicSystem() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer kekuleForm = sp.parseSmiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
         IAtomContainer aromaticForm = sp.parseSmiles("c1ccc2cc3cc4ccccc4cc3cc2c1");

@@ -80,7 +80,7 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testPetiteJeanShapeNo3D() throws CDKException {
+    public void testPetiteJeanShapeNo3D() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CCCOCCC(O)=O");
         DescriptorValue result = descriptor.calculate(atomContainer);

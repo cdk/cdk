@@ -37,7 +37,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -91,9 +90,6 @@ public class InductivePartialChargesTest extends CDKTestCase {
     /**
 	 *  A unit test for JUnit with beta-amino-acetic-acid
 	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
     @Test
     public void testCalculateCharges_IAtomContainer() throws java.lang.Exception {
@@ -140,9 +136,6 @@ public class InductivePartialChargesTest extends CDKTestCase {
     /**
 	 *  A unit test for JUnit with beta-amino-acetic-acid
 	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
     @Test
     public void testInductivePartialCharges() throws java.lang.Exception {
@@ -188,7 +181,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
 	}
 
     @Test
-    public void testGetPaulingElectronegativities() throws Exception, ClassNotFoundException {
+    public void testGetPaulingElectronegativities() throws Exception {
         InductivePartialCharges ipc = new InductivePartialCharges();
         double[] eneg = ipc.getPaulingElectronegativities(mol, true);
         long[] expected = {};
@@ -200,7 +193,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
     }
 
     @Ignore @Test
-    public void testGetAtomicSoftness() throws IOException, ClassNotFoundException, CDKException {
+    public void testGetAtomicSoftness() throws Exception {
         InductivePartialCharges ipc = new InductivePartialCharges();
         double softness = ipc.getAtomicSoftnessCore(mol, 0);
         Assert.fail("Not validated - need known values");

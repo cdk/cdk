@@ -62,7 +62,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
     
     @Test
-    public void testMethane() throws CDKException {
+    public void testMethane() throws Exception {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	molecule.addAtom(newAtom);
@@ -76,7 +76,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	Assert.assertEquals(4, newAtom.getHydrogenCount().intValue());
     }
 
-    @Test public void testFormaldehyde() throws CDKException {
+    @Test public void testFormaldehyde() throws Exception {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.OXYGEN);
@@ -98,7 +98,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	Assert.assertEquals(0, newAtom2.getHydrogenCount().intValue());
     }
 
-    @Test public void testMethanol() throws CDKException {
+    @Test public void testMethanol() throws Exception {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.OXYGEN);
@@ -120,7 +120,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	Assert.assertEquals(1, newAtom2.getHydrogenCount().intValue());
     }
 
-    @Test public void testHCN() throws CDKException {
+    @Test public void testHCN() throws Exception {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
@@ -142,7 +142,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	Assert.assertEquals(0, newAtom2.getHydrogenCount().intValue());
     }
 
-    @Test public void testMethylAmine() throws CDKException {
+    @Test public void testMethylAmine() throws Exception {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
@@ -164,7 +164,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	Assert.assertEquals(2, newAtom2.getHydrogenCount().intValue());
     }
 
-    @Test public void testMethyleneImine() throws CDKException {
+    @Test public void testMethyleneImine() throws Exception {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
@@ -763,7 +763,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Assert.assertEquals(1, hCount);
     }
 
-    private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws CDKException {
+    private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws Exception {
     	Iterator<IAtom> atoms = container.atoms().iterator();
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();

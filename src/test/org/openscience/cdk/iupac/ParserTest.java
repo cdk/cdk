@@ -94,7 +94,7 @@ public class ParserTest extends CDKTestCase
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }
     
-    @Test public void testTokenMgrErrorCharacterName() throws CDKException
+    @Test public void testTokenMgrErrorCharacterName() throws Exception
     {
         try
         {

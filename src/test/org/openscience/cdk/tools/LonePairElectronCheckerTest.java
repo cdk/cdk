@@ -30,7 +30,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -59,7 +58,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testAllSaturated_Formaldehyde() throws CDKException
+	@Test public void testAllSaturated_Formaldehyde() throws Exception
 	{
 		// test Formaldehyde, CH2=O with explicit hydrogen
 		Molecule m = new Molecule();
@@ -86,7 +85,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testAllSaturated_Methanethiol() throws CDKException {
+	@Test public void testAllSaturated_Methanethiol() throws Exception {
 		// test Methanethiol, CH4S
 		Atom c = new Atom("C");
 		c.setHydrogenCount(3);
@@ -110,7 +109,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testNewSaturate_Methyl_chloride() throws CDKException {
+	@Test public void testNewSaturate_Methyl_chloride() throws Exception {
 		// test Methyl chloride, CH3Cl
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -130,7 +129,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testNewSaturate_Methyl_alcohol() throws CDKException {
+	@Test public void testNewSaturate_Methyl_alcohol() throws Exception {
 		// test Methyl chloride, CH3OH
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -151,7 +150,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testNewSaturate_Methyl_alcohol_AddH() throws CDKException {
+	@Test public void testNewSaturate_Methyl_alcohol_AddH() throws Exception {
 		// test Methyl alcohol, CH3OH
 		Molecule m = new Molecule();
 		m.addAtom(new Atom("C"));
@@ -173,7 +172,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testNewSaturate_Methyl_alcohol_protonated() throws CDKException {
+	@Test public void testNewSaturate_Methyl_alcohol_protonated() throws Exception {
 		// test Methyl alcohol protonated, CH3OH2+
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -195,7 +194,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testNewSaturate_methoxide_anion() throws CDKException {
+	@Test public void testNewSaturate_methoxide_anion() throws Exception {
 		// test methoxide anion, CH3O-
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -216,7 +215,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testNewSaturate_Ammonia() throws CDKException {
+	@Test public void testNewSaturate_Ammonia() throws Exception {
 		// test Ammonia, H3N
 		Atom n = new Atom("N");
 		n.setHydrogenCount(3);
@@ -232,7 +231,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testNewSaturate_methylamine_radical_cation() throws CDKException {
+	@Test public void testNewSaturate_methylamine_radical_cation() throws Exception {
 		// test Ammonia, CH3NH3+
 		Atom c = new Atom("C");
 		c.setHydrogenCount(3);
@@ -254,7 +253,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
 	 */
-	@Test public void testNewSaturate_withHAdded() throws CDKException {
+	@Test public void testNewSaturate_withHAdded() throws Exception {
 		// O=C([H])[C+]([H])[C-]([H])[H]
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");

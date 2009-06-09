@@ -27,7 +27,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -79,7 +78,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
 	 */
-    @Test public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor0() throws Exception{
         
     	IMolecule mol = builder.newMolecule();
 		mol.addAtom(builder.newAtom("C"));
@@ -108,11 +107,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     /**
 	 *  A unit test for JUnit with C-Cl
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
 	 */
-    @Test public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_1() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("C-Cl");
 
@@ -129,7 +125,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     /**
 	 *  A unit test for JUnit with COCCCC=O
 	 */
-    @Test public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_2() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("COCCCC=O");
 
@@ -148,7 +144,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     /**
 	 *  A unit test for JUnit with C=CCC(=O)CC
 	 */
-    @Test public void testCalculatePlus_IAtomContainer() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_3() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("C=CCCC(=O)C");
 		
@@ -257,7 +253,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      * @throws CDKException
      */
     @Test
-    public void testBug_2787332_triclosan() throws CDKException {
+    public void testBug_2787332_triclosan() throws Exception {
     	IMolecule mol = builder.newMolecule();
     	mol.addAtom(builder.newAtom("C"));//0
     	mol.addAtom(builder.newAtom("C"));//1

@@ -28,7 +28,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -49,7 +48,7 @@ public class DescriptorNamesTest extends CDKTestCase {
     }
 
     @Test
-    public void checkUniqueMolecularDescriptorNames() throws CDKException {
+    public void checkUniqueMolecularDescriptorNames() throws Exception {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         List<DescriptorSpecification> specs = engine.getDescriptorSpecifications();
 

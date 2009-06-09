@@ -233,7 +233,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 	 * @return The IMolecule
 	 * @throws CDKException
 	 */
-	private IMolecule getEthene() throws CDKException {
+	private IMolecule getEthene() throws Exception {
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("C"));
         molecule.addAtom(builder.newAtom("C"));
@@ -259,7 +259,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 	 * @return The IMolecule
 	 * @throws CDKException
 	 */
-	private IMolecule getExpected() throws CDKException {
+	private IMolecule getExpected() throws Exception {
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.getAtom(0).setFormalCharge(1);

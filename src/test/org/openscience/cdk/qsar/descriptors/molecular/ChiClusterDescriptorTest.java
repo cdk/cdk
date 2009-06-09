@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -29,7 +28,7 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDan64() throws CDKException {
+    public void testDan64() throws Exception {
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
         a1.setPoint2d(new Point2d(0.7500000000000004, 2.799038105676658));
@@ -64,7 +63,7 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
-    @Test public void testDan154() throws CDKException {
+    @Test public void testDan154() throws Exception {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -120,7 +119,7 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
-    @Test public void testDan248() throws CDKException {
+    @Test public void testDan248() throws Exception {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");

@@ -31,7 +31,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
@@ -62,7 +61,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     /**
      * Tests the method saturate().
      */
-    @Test public void testSaturate_WithNitrate() throws CDKException {
+    @Test public void testSaturate_WithNitrate() throws Exception {
         Molecule mol = new Molecule();
         Atom a1 = new Atom("O");
         mol.addAtom(a1);
@@ -136,7 +135,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     /**
      * Tests the method saturate().
      */
-    @Test public void testSaturation_S4AtomType() throws CDKException {
+    @Test public void testSaturation_S4AtomType() throws Exception {
         Molecule mol = new Molecule();
         Atom a1 = new Atom("N");
         mol.addAtom(a1);
@@ -242,7 +241,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     /**
      * Tests the method saturate().
      */
-    @Test public void testSaturate_NumberingProblem() throws CDKException {
+    @Test public void testSaturate_NumberingProblem() throws Exception {
         Molecule mol = new Molecule();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
@@ -291,7 +290,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     /**
      * Tests whether the saturation checker gets a proton right.
      */
-	@Test public void testIsSaturated_Proton() throws CDKException {
+	@Test public void testIsSaturated_Proton() throws Exception {
 		// test H+
 		Molecule m = new Molecule();
 		Atom h = new Atom("H");
@@ -300,7 +299,7 @@ public class SaturationCheckerTest extends CDKTestCase {
 		Assert.assertTrue(satcheck.isSaturated(h, m));
 	}
     
-    @Test public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
+    @Test public void testCalculateMissingHydrogens_Aromatic() throws Exception{
 	    Molecule pyrrole = MoleculeFactory.makePyrrole();
 	    IAtom n = pyrrole.getAtom(1);
 	    IRingSet rs = (new SSSRFinder(pyrrole)).findSSSR();

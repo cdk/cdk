@@ -129,7 +129,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(3, som.getMoleculeCount());
     }
 
-    @Test public void testIsConnectedFromHINFile() throws CDKException {
+    @Test public void testIsConnectedFromHINFile() throws Exception {
         String filename = "data/hin/connectivity1.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

@@ -28,7 +28,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -58,7 +57,7 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
     }
 
     @Test
-    public void testStructGenAtomTypeGuesser() throws ClassNotFoundException, CDKException {
+    public void testStructGenAtomTypeGuesser() throws Exception {
         StructGenAtomTypeGuesser matcher = new StructGenAtomTypeGuesser();
         Assert.assertNotNull(matcher);
     }

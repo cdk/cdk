@@ -48,7 +48,7 @@ public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 	}
 	
 	@Test
-    public void test1() throws CDKException {
+    public void test1() throws Exception {
 		String filename = "data/mdl/clorobenzene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
 				filename);

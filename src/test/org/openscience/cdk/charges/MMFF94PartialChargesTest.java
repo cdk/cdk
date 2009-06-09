@@ -27,8 +27,6 @@ package org.openscience.cdk.charges;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.charges.MMFF94PartialCharges;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.CDKTestCase;
@@ -49,12 +47,9 @@ public class MMFF94PartialChargesTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit with beta-amino-acetic-acid
 	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
     @Test
-    public void testMMFF94PartialCharges() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testMMFF94PartialCharges() throws Exception {
 		double [] testResult={-0.99,0.314,0.66,-0.57,-0.65,0.36,0.36,0,0,0.5};
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule ac = sp.parseSmiles("NCC(=O)O");

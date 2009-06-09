@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.exception.CDKException;
 
 /**
  * A Test case for the "GamessReader" class.
@@ -145,12 +144,12 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 	 * 	<li>The <code>read(IChemObject object)</code> method must return a "IChemObject" instance.</li>
 	 * </ul>
 	 * 
-	 * @throws	CDKException	may be thrown by the "IChemObject" object.
+	 * @throws	Exception	may be thrown by the "IChemObject" object.
 	 * 
 	 * @see org.openscience.cdk.ChemObject
 	 */
 	//TODO Update method comments with appropriate information.
-	@Test public void testRead() throws CDKException {
+	@Test public void testRead() throws Exception {
 		Assert.assertNotNull("TEST: The GamessReader object is constructed.", this.gamessReaderUnderTest);
 		Assert.assertTrue("TEST: read(IChemObject) returns a IChemObject.", this.gamessReaderUnderTest.read(new ChemFile()) instanceof ChemObject);
 	}

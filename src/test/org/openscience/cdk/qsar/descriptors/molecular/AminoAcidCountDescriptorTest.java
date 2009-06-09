@@ -24,7 +24,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
@@ -46,7 +45,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
         setDescriptor(AminoAcidCountDescriptor.class);
     }
 
-	@Test public void testAACount() throws CDKException {
+	@Test public void testAACount() throws Exception {
         BioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
@@ -58,7 +57,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 	}
 
 	@Test
-    public void testFCount() throws CDKException {
+    public void testFCount() throws Exception {
         BioPolymer protein = ProteinBuilderTool.createProtein("FF");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
@@ -67,7 +66,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(4, iaResult.get(5)); // thingy is symmetrical, so two mappings at each AA position possible
 	}
 
-	@Test public void testTCount() throws CDKException {
+	@Test public void testTCount() throws Exception {
         BioPolymer protein = ProteinBuilderTool.createProtein("TT");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);

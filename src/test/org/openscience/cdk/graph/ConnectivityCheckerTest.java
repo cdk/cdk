@@ -28,7 +28,6 @@ package org.openscience.cdk.graph;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -172,7 +171,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     /**
      * @cdk.bug 2126904
      */
-    @Test public void testIsConnectedFromHINFile() throws CDKException {
+    @Test public void testIsConnectedFromHINFile() throws Exception {
         String filename = "data/hin/connectivity1.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -186,7 +185,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
      /**
      * @cdk.bug 2126904
      */
-    @Test public void testIsConnectedFromSDFile() throws CDKException {
+    @Test public void testIsConnectedFromSDFile() throws Exception {
         String filename = "data/mdl/mdeotest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

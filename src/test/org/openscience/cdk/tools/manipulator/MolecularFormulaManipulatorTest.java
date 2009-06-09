@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -363,12 +362,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	/**
      * A unit test suite for JUnit. Test total Exact Mass.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
     @Test 
-    public void testGetTotalExactMass_IMolecularFormula() throws IOException, ClassNotFoundException, CDKException{
+    public void testGetTotalExactMass_IMolecularFormula() throws Exception{
 
 		IMolecularFormula formula = new MolecularFormula();
 		IIsotope carb = builder.newIsotope("C");
@@ -391,7 +387,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
      * @throws CDKException
      */
     @Test 
-    public void testGetTotalExactMassWithCharge_IMolecularFormula() throws IOException, ClassNotFoundException, CDKException{
+    public void testGetTotalExactMassWithCharge_IMolecularFormula() throws Exception{
 
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("CH5O", builder);
         
@@ -443,12 +439,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
      * necessary to have added the corresponding isotope before to calculate
      * the exact mass.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
     @Test 
-    public void testBug_1944604() throws IOException, ClassNotFoundException, CDKException{
+    public void testBug_1944604() throws Exception{
 
 		IMolecularFormula formula = new MolecularFormula();
 		IIsotope carb = builder.newIsotope("C");
@@ -464,12 +457,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit. Test total natural abundance.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
     @Test 
-    public void testGetTotalNaturalAbundance_IMolecularFormula() throws IOException, ClassNotFoundException, CDKException{
+    public void testGetTotalNaturalAbundance_IMolecularFormula() throws Exception{
 
 		IMolecularFormula formula = new MolecularFormula();
 		IIsotope carb = builder.newIsotope("C");
@@ -487,9 +477,6 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit. Test total natural abundance.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws CDKException
      */
     @Test 
     public void testGetTotalNaturalAbundance_IMolecularFormula2() throws Exception{
@@ -541,7 +528,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testGetDBE_IMolecularFormula()throws IOException, ClassNotFoundException, CDKException{
+    public void testGetDBE_IMolecularFormula()throws Exception{
     	IMolecularFormula formula = new MolecularFormula();
     	formula.addIsotope(builder.newIsotope("C"),10);
     	formula.addIsotope(builder.newIsotope("H"),22);

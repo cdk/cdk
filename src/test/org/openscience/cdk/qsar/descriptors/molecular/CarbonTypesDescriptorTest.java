@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -26,7 +25,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testButane() throws CDKException {
+    public void testButane() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("CCCC");
 
@@ -44,7 +43,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
     }
 
 
-    @Test public void testComplex1() throws CDKException {
+    @Test public void testComplex1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("C(C)(C)C=C(C)C");
 
@@ -61,7 +60,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0, ret.get(8));
     }
 
-    @Test public void testComplex2() throws CDKException {
+    @Test public void testComplex2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("C#CC(C)=C");
 

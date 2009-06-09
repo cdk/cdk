@@ -34,7 +34,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -202,7 +201,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBondCount() throws CDKException {
+    public void testGetBondCount() throws Exception {
         IAtomContainer mol = MoleculeFactory.makeAdenine();
         AllRingsFinder arf = new AllRingsFinder();
         IRingSet ringSet = arf.findAllRings(mol);
@@ -216,7 +215,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
 
     @Test
-    public void markAromatic() throws CDKException {
+    public void markAromatic() throws Exception {
         IAtomContainer mol = MoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -239,7 +238,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     }
     
     @Test
-    public void testGetLargestRingSet_List_IRingSet() throws CDKException{
+    public void testGetLargestRingSet_List_IRingSet() throws Exception{
     	List<IRingSet> list=new Vector<IRingSet>();
     	list.add(ringset);
         IAtomContainer mol = MoleculeFactory.makeBiphenyl();

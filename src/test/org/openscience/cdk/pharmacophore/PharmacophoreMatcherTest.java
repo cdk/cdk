@@ -66,7 +66,7 @@ public class PharmacophoreMatcherTest {
 
 
     @Test
-    public void testMatcherQuery1() throws CDKException {
+    public void testMatcherQuery1() throws Exception {
         Assert.assertNotNull(conformers);
 
         // make a query
@@ -116,7 +116,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchedAtoms() throws CDKException {
+    public void testMatchedAtoms() throws Exception {
         Assert.assertNotNull(conformers);
 
         // make a query
@@ -152,7 +152,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchedBonds() throws CDKException {
+    public void testMatchedBonds() throws Exception {
        Assert.assertNotNull(conformers);
 
         // make a query
@@ -197,7 +197,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test(expected = CDKException.class)
-    public void testInvalidQuery() throws CDKException {
+    public void testInvalidQuery() throws Exception {
         QueryAtomContainer query = new QueryAtomContainer();
 
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
@@ -288,7 +288,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch1() throws CDKException {
+    public void testAngleMatch1() throws Exception {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
@@ -314,7 +314,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch2() throws CDKException {
+    public void testAngleMatch2() throws Exception {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
@@ -340,7 +340,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch3() throws CDKException {
+    public void testAngleMatch3() throws Exception {
         Assert.assertNotNull(conformers);
 
         // make a query

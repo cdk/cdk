@@ -26,7 +26,6 @@ package org.openscience.cdk.io.cml;
 
 import java.io.InputStream;
 import java.util.Iterator;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -44,7 +43,6 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -711,7 +709,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     /**
      * @cdk.bug 1930029
      */
-    @Test public void testAtomProperties() throws CDKException{
+    @Test public void testAtomProperties() throws Exception{
         String filename = "data/cml/custompropertiestest.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);

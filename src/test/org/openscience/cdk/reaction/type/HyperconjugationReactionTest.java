@@ -137,7 +137,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());

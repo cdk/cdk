@@ -24,7 +24,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -54,7 +53,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testCPSA() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testCPSA() throws Exception {
         String filename = "data/hin/benzene.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -77,7 +76,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
     }
 
-    @Test public void testChargedMolecule() throws CDKException {
+    @Test public void testChargedMolecule() throws Exception {
         String filename = "data/mdl/cpsa-charged.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -90,7 +89,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
         for (int i = 0; i < ndesc; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
     }
 
-    @Test public void testUnChargedMolecule() throws CDKException {
+    @Test public void testUnChargedMolecule() throws Exception {
         String filename = "data/mdl/cpsa-uncharged.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

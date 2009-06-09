@@ -59,7 +59,7 @@ abstract public class AbstractSybylAtomTypeTest extends AbstractAtomTypeTest {
 		return SybylAtomTypeMatcher.getInstance(builder);
 	}
 
-    public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws CDKException {
+    public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws Exception {
         Assert.assertEquals(
             "The number of expected atom types is unequal to the number of atoms",
             expectedTypes.length, mol.getAtomCount()
