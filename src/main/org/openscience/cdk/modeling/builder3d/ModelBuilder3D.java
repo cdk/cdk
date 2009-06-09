@@ -139,7 +139,7 @@ public class ModelBuilder3D {
 			forceFieldName = ffname;
 			ffc.setForceFieldConfigurator(ffname);
 			parameterSet = ffc.getParameterSet();
-		} catch (Exception ex1) {
+		} catch (CDKException ex1) {
 			logger.error("Problem with ForceField configuration due to>" + ex1.getMessage());
 			logger.debug(ex1);
 			throw new CDKException("Problem with ForceField configuration due to>" + ex1.getMessage(), ex1);
@@ -150,7 +150,7 @@ public class ModelBuilder3D {
 	/**
 	 * Generate 3D coordinates with force field information.
 	 */
-	public IMolecule generate3DCoordinates(IMolecule molecule, boolean clone) throws Exception {
+	public IMolecule generate3DCoordinates(IMolecule molecule, boolean clone) throws CDKException, NoSuchAtomTypeException, CloneNotSupportedException, IOException{
 	    String[] originalAtomTypeNames = new String[molecule.getAtomCount()];
 	    for (int i=0; i<originalAtomTypeNames.length; i++) {
 	        originalAtomTypeNames[i] = molecule.getAtom(i).getAtomTypeName();
@@ -182,7 +182,7 @@ public class ModelBuilder3D {
 			molecule.getAtom(0).setPoint3d(new Point3d(0.0, 0.0, 0.0));
 			try {
 				atlp3d.add3DCoordinatesForSinglyBondedLigands(molecule);
-			} catch (Exception ex3) {
+			} catch (CDKException ex3) {
 				logger.error("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage());
 				logger.debug(ex3);
 				throw new CDKException("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage(), ex3);
@@ -227,10 +227,10 @@ public class ModelBuilder3D {
 		//logger.debug("******* PLACE SUBSTITUENTS ******");
 		try {
 			atlp3d.add3DCoordinatesForSinglyBondedLigands(molecule);
-		} catch (Exception ex3) {
+		} catch (CDKException ex3) {
 			logger.error("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage());
 			logger.debug(ex3);
-			throw new Exception("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage(), ex3);
+			throw new CDKException("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage(), ex3);
 		}
 		// restore the original atom type names
     for (int i=0; i<originalAtomTypeNames.length; i++) {
@@ -262,9 +262,8 @@ public class ModelBuilder3D {
 	 * Layout the molecule, starts with ring systems and than aliphatic chains.
 	 *
 	 *@param  ringSetMolecule  ringSystems of the molecule
-	 *@exception  Exception    Description of the Exception
 	 */
-	private void layoutMolecule(List ringSetMolecule, IMolecule molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
+	private void layoutMolecule(List ringSetMolecule, IMolecule molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException, IOException, CloneNotSupportedException {
 		//logger.debug("****** LAYOUT MOLECULE MAIN *******");
 		IAtomContainer ac = null;
 		int safetyCounter = 0;
@@ -403,9 +402,8 @@ public class ModelBuilder3D {
 	 *@param  unplacedAtom    The new branchAtom 
 	 *@param  atomA           placed atom to which the unplaced satom is connected
 	 *@param  atomNeighbours  placed atomNeighbours of atomA
-	 *@exception  Exception   Description of the Exception
 	 */
-	private void setBranchAtom(IMolecule molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
+	private void setBranchAtom(IMolecule molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws CDKException {
 		//logger.debug("****** SET Branch Atom ****** >"+molecule.getAtomNumber(unplacedAtom));
 		IAtomContainer noCoords = molecule.getBuilder().newAtomContainer();
 		noCoords.addAtom(unplacedAtom);
@@ -431,15 +429,11 @@ public class ModelBuilder3D {
 				, length, angle);
 		double distance = 0;
 		int farthestPoint = 0;
-		try {
-			for (int i = 0; i < branchPoints.length; i++) {
-				if (Math.abs(branchPoints[i].distance(centerPlacedMolecule)) > Math.abs(distance)) {
-					distance = branchPoints[i].distance(centerPlacedMolecule);
-					farthestPoint = i;
-				}
+		for (int i = 0; i < branchPoints.length; i++) {
+			if (Math.abs(branchPoints[i].distance(centerPlacedMolecule)) > Math.abs(distance)) {
+				distance = branchPoints[i].distance(centerPlacedMolecule);
+				farthestPoint = i;
 			}
-		} catch (Exception ex2) {
-			throw new IOException("SetBranchAtomERROR: Not enough branch Points");
 		}
 
 		int stereo = -1;
@@ -463,9 +457,8 @@ public class ModelBuilder3D {
 	 * Search and place branches of a chain or ring.
 	 *
 	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system 
-	 *@exception  Exception  Description of the Exception
 	 */
-	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
+	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
 		java.util.List atoms = null;
 		IAtomContainer branchAtoms = molecule.getBuilder().newAtomContainer();
@@ -476,18 +469,13 @@ public class ModelBuilder3D {
 				IAtom atom = (IAtom)atoms.get(j);
 				if (!(atom.getSymbol()).equals("H") & !(atom.getFlag(CDKConstants.ISPLACED)) & !(atom.getFlag(CDKConstants.ISINRING))) {
 					//logger.debug("SEARCH PLACE AND FOUND Branch Atom "+molecule.getAtomNumber(chain.getAtomAt(i))+
-					//			" New Atom:"+molecule.getAtomNumber(atoms[j])+" -> STORE");
-					try {
-						connectedAtoms.add(ap3d.getPlacedHeavyAtoms(molecule, chain.getAtom(i)));
-						//logger.debug("Connected atom1:"+molecule.getAtomNumber(connectedAtoms.getAtomAt(0))+" atom2:"+
-						//molecule.getAtomNumber(connectedAtoms.getAtomAt(1))+ " Length:"+connectedAtoms.getAtomCount());
-					} catch (Exception ex1) {
-						logger.error("SearchAndPlaceBranchERROR: Cannot find connected placed atoms due to" + ex1.toString());
-						throw new IOException("SearchAndPlaceBranchERROR: Cannot find connected placed atoms");
-					}
+					//		" New Atom:"+molecule.getAtomNumber(atoms[j])+" -> STORE");
+					connectedAtoms.add(ap3d.getPlacedHeavyAtoms(molecule, chain.getAtom(i)));
+					//logger.debug("Connected atom1:"+molecule.getAtomNumber(connectedAtoms.getAtomAt(0))+" atom2:"+
+					//molecule.getAtomNumber(connectedAtoms.getAtomAt(1))+ " Length:"+connectedAtoms.getAtomCount());
 					try {
 						setBranchAtom(molecule, atom, chain.getAtom(i), connectedAtoms, ap3d, atlp3d);
-					} catch (Exception ex2) {
+					} catch (CDKException ex2) {
 						logger.error("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to" + ex2.toString());
 						throw new CDKException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms: " + ex2.getMessage(), ex2);
 					}
@@ -505,9 +493,8 @@ public class ModelBuilder3D {
 	 * Layout all aliphatic chains with ZMatrix.
 	 *
 	 *@param  startAtoms     AtomContainer of possible start atoms for a chain
-	 *@exception  Exception  Description of the Exception
 	 */
-	private void placeLinearChains3D(IMolecule molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
+	private void placeLinearChains3D(IMolecule molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
 		//logger.debug("****** PLACE LINEAR CHAINS ******");
 		IAtom dihPlacedAtom = null;
 		IAtom thirdPlacedAtom = null;

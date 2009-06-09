@@ -135,7 +135,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
 	}
 	
 	@Test
-	public void testGeometricCenterAllPlacedAtoms_IAtomContainer() throws CDKException, Exception {
+	public void testGeometricCenterAllPlacedAtoms_IAtomContainer() throws CDKException {
 	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
 		for(int i=0;i<ac.getAtomCount();i++){
 			ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);

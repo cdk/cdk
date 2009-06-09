@@ -111,9 +111,8 @@ public class AtomPlacer3D {
 	 *  Method assigns 3Dcoordinates to the heavy atoms in an aliphatic chain
 	 *
 	 * @param  chain          the atoms to be assigned, must be connected
-	 * @exception  Exception  Description of the Exception
 	 */
-	public void placeAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain) throws Exception {
+	public void placeAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain) throws CDKException{
 		//logger.debug("******** Place aliphatic Chain *********");
 		int[] first = new int[2];
 		int counter = 1;
@@ -171,7 +170,7 @@ public class AtomPlacer3D {
 							==5){
 							dihedrals[counter] = DIHEDRAL_BRANCHED_CHAIN;
 						}else{ dihedrals[counter] = DIHEDRAL_EXTENDED_CHAIN;}
-					}catch(Exception ex1){
+					}catch(CDKException ex1){
 						dihedrals[counter] = DIHEDRAL_EXTENDED_CHAIN;
 					}
 				} else {
@@ -287,9 +286,8 @@ public class AtomPlacer3D {
 	 *@param  c              coordinates (Point2d) of atom3 connected to bond
 	 *@param  d              coordinates (Point2d) of atom4 connected to bond
 	 *@return                The doubleBondConfiguration2D value
-	 *@exception  Exception  Description of the Exception
 	 */
-	private int getDoubleBondConfiguration2D(IBond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
+	private int getDoubleBondConfiguration2D(IBond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws CDKException{
 		if (bond.getOrder() != IBond.Order.DOUBLE){
 			return 0;
 		}
@@ -308,9 +306,8 @@ public class AtomPlacer3D {
 	 * @param  id1            atom1 id
 	 * @param  id2            atom2 id
 	 * @return                The distanceValue value from the force field parameter set
-	 * @exception  Exception  Description of the Exception
 	 */
-	public double getBondLengthValue(String id1, String id2) throws Exception {
+	public double getBondLengthValue(String id1, String id2){
 		String dkey = "";
 		if (pSet.containsKey(("bond" + id1 + ";" + id2))) {
 			dkey="bond" + id1 + ";" + id2;
@@ -330,9 +327,8 @@ public class AtomPlacer3D {
 	 * @param  id2            Description of the Parameter
 	 * @param  id3            Description of the Parameter
 	 * @return                The angleKey value
-	 * @exception  Exception  Description of the Exception
 	 */
-	public double getAngleValue(String id1, String id2, String id3) throws Exception {
+	public double getAngleValue(String id1, String id2, String id3) {
 		String akey = "";
 		if (pSet.containsKey(("angle" + id1 + ";" + id2 + ";" + id3))) {
 			akey = "angle" + id1 + ";" + id2 + ";" + id3;
