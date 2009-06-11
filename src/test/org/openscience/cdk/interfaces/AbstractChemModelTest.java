@@ -234,7 +234,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         chemObject.setReactionSet(null);
         // changing the set must *not* trigger a change event in the IChemModel
         reactionSet.addReaction(chemObject.getBuilder().newReaction());
-        Assert.assertTrue(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
 
     @Test public void testStateChanged_ButNotAfterRemoval_RingSet() {
@@ -251,7 +251,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         chemObject.setRingSet(null);
         // changing the set must *not* trigger a change event in the IChemModel
         ringSet.addAtomContainer(chemObject.getBuilder().newRing());
-        Assert.assertTrue(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
