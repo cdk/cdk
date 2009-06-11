@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.StringWriter;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -140,5 +143,24 @@ public class MDLWriterTest extends ChemObjectIOTest {
         // length is enough
         Assert.assertNotNull(output);
         Assert.assertNotSame(0, output.length());
+    }
+
+    @Test public void testPrefer3DCoordinateOutput() throws Exception {
+        StringWriter writer = new StringWriter();
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom = builder.newAtom("C");
+        atom.setPoint2d(new Point2d(1.0, 2.0));
+        atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
+        molecule.addAtom(atom);
+
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
+        mdlWriter.close();
+        String output = writer.toString();
+        // the current behavior is that if both 2D and 3D coordinates
+        // are available, the 3D is outputed, and the 2D not
+        Assert.assertTrue(output.contains("3.0"));
+        Assert.assertTrue(output.contains("4.0"));
+        Assert.assertTrue(output.contains("5.0"));
     }
 }
