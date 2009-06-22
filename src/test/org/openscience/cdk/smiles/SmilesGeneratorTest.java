@@ -860,7 +860,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         // check that we can read in the SMILES we got
         IMolecule cdkRoundTripMol 
             = smilesParser.parseSmiles(genSmiles);
-        Assert.assertTrue(cdkRoundTripMol != null);
+        Assert.assertNotNull(cdkRoundTripMol);
     }
 
     /**

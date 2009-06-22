@@ -50,7 +50,7 @@ public class DebugLonePairTest extends AbstractLonePairTest {
 
     @Test public void testDebugLonePair() {
         ILonePair lp = new DebugLonePair();
-        Assert.assertTrue(lp.getAtom() == null);
+        Assert.assertNull(lp.getAtom());
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     

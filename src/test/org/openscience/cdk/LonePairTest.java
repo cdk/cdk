@@ -52,7 +52,7 @@ public class LonePairTest extends AbstractLonePairTest {
 
     @Test public void testLonePair() {
         ILonePair lp = new LonePair();
-        Assert.assertTrue(lp.getAtom() == null);
+        Assert.assertNull(lp.getAtom());
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     
