@@ -81,9 +81,17 @@ public class LoggingToolFactory {
      */
     @TestMethod("testCreateLoggingTool")
     public static ILoggingTool createLoggingTool(Class<?> sourceClass) {
+        ILoggingTool tool = initializeLoggingTool(
+            sourceClass, DEFAULT_LOGGING_TOOL_CLASS
+        );
+        return tool;
+    }
+
+    private static ILoggingTool initializeLoggingTool(
+        Class<?> sourceClass, String className) {
         try {
             Class<?> possibleLoggingToolClass = sourceClass.getClassLoader()
-               .loadClass(DEFAULT_LOGGING_TOOL_CLASS);
+               .loadClass(className);
             if (ILoggingTool.class.isAssignableFrom(possibleLoggingToolClass)) {
                 Method createMethod = possibleLoggingToolClass.getMethod(
                     "create", Class.class
