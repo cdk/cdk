@@ -50,7 +50,8 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -62,10 +63,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Mol2ReaderTest.class);
 
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(Mol2ReaderTest.class);
         setSimpleChemObjectReader(new Mol2Reader(), "data/mol2/fromWebsite.mol2");
     }
 

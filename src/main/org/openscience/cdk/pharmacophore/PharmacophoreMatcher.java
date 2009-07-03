@@ -23,6 +23,13 @@
  */
 package org.openscience.cdk.pharmacophore;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -37,13 +44,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point3d;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
@@ -139,7 +141,8 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreMatcherTest")
 public class PharmacophoreMatcher {
-    private LoggingTool logger = new LoggingTool(PharmacophoreMatcher.class);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(PharmacophoreMatcher.class);
     private PharmacophoreQuery pharmacophoreQuery = null;
     private List<List<PharmacophoreAtom>> matchingPAtoms = null;
     private List<List<IBond>> matchingPBonds = null;

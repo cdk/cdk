@@ -23,17 +23,22 @@
  */
 package org.openscience.cdk.config;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.isotopes.IsotopeReader;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.isotopes.IsotopeReader;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a
@@ -70,7 +75,8 @@ public class IsotopeFactory
 	private List<IIsotope> isotopes = null;
     private HashMap<String, IIsotope> majorIsotopes = null;
     private boolean debug = false;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
 
     /**
      * Private constructor for the IsotopeFactory object.
@@ -80,7 +86,6 @@ public class IsotopeFactory
      * @param builder The builder from which we the factory will be generated
      */
 	private IsotopeFactory(IChemObjectBuilder builder) throws IOException {
-        logger = new LoggingTool(this);
         logger.info("Creating new IsotopeFactory");
 
         InputStream ins;

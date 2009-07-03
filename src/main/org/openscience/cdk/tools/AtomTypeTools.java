@@ -46,7 +46,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 public class AtomTypeTools {
 	
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
 	HOSECodeGenerator hcg=null;
 	SmilesGenerator sg=null;
 	
@@ -54,7 +55,6 @@ public class AtomTypeTools {
 	 * Constructor for the MMFF94AtomTypeMatcher object.
 	 */
 	public AtomTypeTools() {
-		logger = new LoggingTool(this);
 		hcg = new HOSECodeGenerator();
 	}
 	

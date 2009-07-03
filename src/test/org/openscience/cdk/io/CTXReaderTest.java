@@ -40,7 +40,8 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading CTX files using a test file.
@@ -51,10 +52,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CTXReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CTXReaderTest.class);
 
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(CTXReaderTest.class);
         setSimpleChemObjectReader(new CTXReader(), "data/ctx/methanol_with_descriptors.ctx");
     }
 

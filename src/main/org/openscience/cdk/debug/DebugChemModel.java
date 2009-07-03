@@ -31,7 +31,8 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -45,7 +46,8 @@ public class DebugChemModel extends ChemModel
 
     private static final long serialVersionUID = -920209300005079592L;
     
-    LoggingTool logger = new LoggingTool(DebugChemModel.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugChemModel.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

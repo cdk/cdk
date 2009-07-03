@@ -24,14 +24,15 @@
 
 package org.openscience.cdk.qsar.model.R2;
 
+import java.io.File;
+import java.util.HashMap;
+
 import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.rosuda.JRI.RBool;
 import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.RList;
-
-import java.io.File;
-import java.util.HashMap;
 
 /**
  * A modeling class that provides a computational neural network regression model.
@@ -127,7 +128,8 @@ public class CNNRegressionModel extends RModel {
 
     private double[][] modelPredict = null;
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CNNRegressionModel.class);
 
     private void setDefaults() {
         // lets set the default values of the arguments that are specified
@@ -171,8 +173,6 @@ public class CNNRegressionModel extends RModel {
      */
     public CNNRegressionModel() throws QSARModelException {
         super();
-        logger = new LoggingTool(this);
-
         params = new HashMap();
         int currentID = CNNRegressionModel.globalID;
         CNNRegressionModel.globalID++;
@@ -205,8 +205,6 @@ public class CNNRegressionModel extends RModel {
      */
     public CNNRegressionModel(double[][] x, double[] y, int size) throws QSARModelException {
         super();
-        logger = new LoggingTool(this);
-
         params = new HashMap();
         int currentID = CNNRegressionModel.globalID;
         CNNRegressionModel.globalID++;
@@ -259,8 +257,6 @@ public class CNNRegressionModel extends RModel {
      */
     public CNNRegressionModel(double[][] x, double[][] y, int size) throws QSARModelException {
         super();
-        logger = new LoggingTool(this);
-
         params = new HashMap();
         int currentID = CNNRegressionModel.globalID;
         CNNRegressionModel.globalID++;

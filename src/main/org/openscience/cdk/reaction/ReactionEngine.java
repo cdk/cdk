@@ -36,7 +36,8 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>The base class for all chemical reactions objects in this cdk. 
@@ -51,7 +52,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 @TestClass("org.openscience.cdk.reaction.ReactionEngineTest")
 public class ReactionEngine{
-	private static LoggingTool logger = new LoggingTool(ReactionEngine.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ReactionEngine.class);
 
 	private Dictionary dictionary;
 	public HashMap<String, Object> paramsMap;

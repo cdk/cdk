@@ -23,18 +23,19 @@
  */
 package org.openscience.cdk.config;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.elements.ElementPTReader;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Used to store and return data of a particular chemicalElement. As this class is a
@@ -55,7 +56,8 @@ public class ElementPTFactory
 	private static ElementPTFactory efac = null;
 	private List<PeriodicTableElement> elements = null;
 	private boolean debug = false;
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(ElementPTFactory.class);
 
 	/**
 	 * Private constructor for the ElementPTFactory object.
@@ -64,7 +66,6 @@ public class ElementPTFactory
 	 */
 	private ElementPTFactory() throws IOException
 	{
-		logger = new LoggingTool(this);
 		logger.info("Creating new ElementPTFactory");
 
 		InputStream ins = null;

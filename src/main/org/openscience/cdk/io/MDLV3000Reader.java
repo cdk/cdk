@@ -51,7 +51,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -71,7 +72,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 public class MDLV3000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
 
     private Pattern keyValueTuple;
     private Pattern keyValueTuple2;
@@ -82,7 +84,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     	this(in, Mode.RELAXED);
     }
     public MDLV3000Reader(Reader in, Mode mode) {
-    	logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
         super.mode = mode;

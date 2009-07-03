@@ -47,7 +47,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Reads an object from ASN formated input for PubChem Compound entries. The following
@@ -63,7 +64,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
     
     IMolecule molecule = null;
     Map atomIDs = null;
@@ -75,7 +77,6 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
      */
     public PCCompoundASNReader(Reader input) {
         this.input = new BufferedReader(input);
-        logger = new LoggingTool(this);
     }
 
     public PCCompoundASNReader(InputStream input) {

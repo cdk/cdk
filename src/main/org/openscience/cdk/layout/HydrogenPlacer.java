@@ -35,7 +35,8 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This is a wrapper class for some existing methods in AtomPlacer. It helps
@@ -53,7 +54,8 @@ public class HydrogenPlacer {
 	public final static boolean debug1 = false;
 	
 	public  void placeHydrogens2D(IAtomContainer atomContainer, double bondLength){
-	    LoggingTool logger = new LoggingTool(this);
+	    ILoggingTool logger =
+	        LoggingToolFactory.createLoggingTool(HydrogenPlacer.class);
 	    logger.debug("Entering Hydrogen Placement...");
 	    IAtom atom = null; 
 	    for (int f = 0; f < atomContainer.getAtomCount();f++)
@@ -79,7 +81,8 @@ public class HydrogenPlacer {
 	}
 	
 	public  void placeHydrogens2D(IAtomContainer atomContainer, IAtom atom, double bondLength){
-		LoggingTool logger = new LoggingTool(this);
+		ILoggingTool logger =
+		    LoggingToolFactory.createLoggingTool(HydrogenPlacer.class);
 		
 		//double startAngle = 0.0;
 		//double addAngle = 0.0; 

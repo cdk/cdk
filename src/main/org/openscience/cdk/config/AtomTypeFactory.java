@@ -36,7 +36,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  *  General class for defining AtomTypes. This class itself does not define the
@@ -94,7 +95,8 @@ public class AtomTypeFactory {
     private final static String XML_EXTENSION = "xml";
     private final static String OWL_EXTENSION = "owl";
     
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AtomTypeFactory.class);
     private static Map<String, AtomTypeFactory> tables = null;
     private List<IAtomType> atomTypes = null;
 
@@ -104,9 +106,6 @@ public class AtomTypeFactory {
 	 *
 	 */
     private AtomTypeFactory(String configFile, IChemObjectBuilder builder) {
-        if (logger == null) {
-            logger = new LoggingTool(this);
-        }
         atomTypes = new ArrayList<IAtomType>(100);
         readConfiguration(configFile, builder);
     }
@@ -116,9 +115,6 @@ public class AtomTypeFactory {
 	 *
 	 */
     private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) {
-        if (logger == null) {
-            logger = new LoggingTool(this);
-        }
         atomTypes = new ArrayList<IAtomType>(100);
         readConfiguration(ins, format, builder);
     }

@@ -58,7 +58,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -72,11 +73,11 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CMLRoundTripTest extends CDKTestCase {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CMLRoundTripTest.class);
     private static Convertor convertor;
 
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(CMLRoundTripTest.class);
         convertor = new Convertor(false, "");
         convertor.registerCustomizer(new QSARCustomizer());
     }

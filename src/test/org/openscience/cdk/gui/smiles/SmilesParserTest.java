@@ -28,7 +28,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  *@author         steinbeck
@@ -37,7 +38,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class SmilesParserTest {
 	
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(SmilesParserTest.class);
 	boolean standAlone = false;
 	private SmilesParser sp;
 
@@ -48,7 +50,6 @@ public class SmilesParserTest {
 	 */
 	public SmilesParserTest(String name) {
 		sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		logger = new LoggingTool(this);
 	}
 
 	public void testSMILES() {

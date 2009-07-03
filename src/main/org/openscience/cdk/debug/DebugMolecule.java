@@ -36,7 +36,8 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -50,7 +51,8 @@ public class DebugMolecule extends Molecule
 
     private static final long serialVersionUID = -7263404200270132412L;
     
-    LoggingTool logger = new LoggingTool(DebugMolecule.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugMolecule.class);
 
 	public DebugMolecule() {
 		super();

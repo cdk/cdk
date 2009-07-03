@@ -20,13 +20,24 @@
  */
 package org.openscience.cdk.debug;
 
-import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.util.List;
 import java.util.Map;
+
+import org.openscience.cdk.AminoAcid;
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -40,7 +51,8 @@ public class DebugAminoAcid extends AminoAcid
 
     private static final long serialVersionUID = 4092864536013855890L;
     
-    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

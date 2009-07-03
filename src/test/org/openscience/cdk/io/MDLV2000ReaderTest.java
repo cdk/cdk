@@ -53,7 +53,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -68,10 +69,10 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
 
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(MDLV2000ReaderTest.class);
         setSimpleChemObjectReader(new MDLV2000Reader(), "data/mdl/bug682233.mol");
     }
 

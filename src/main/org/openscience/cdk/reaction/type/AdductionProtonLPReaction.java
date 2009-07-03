@@ -43,7 +43,8 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.AdductionLPMechanism;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -83,14 +84,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.AdductionProtonLPReactionTest")
 public class AdductionProtonLPReaction extends ReactionEngine implements IReactionProcess{
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(AdductionProtonLPReaction.class);
 	
 	/**
 	 * Constructor of the AdductionProtonLPReaction object.
 	 *
 	 */
 	public AdductionProtonLPReaction(){
-		logger = new LoggingTool(this);
 	}
 
 	/**

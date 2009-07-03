@@ -71,7 +71,6 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	 *  Constructor for the PeriodicTablePositionDescriptor object
 	 */
 	public PeriodicTablePositionDescriptor() {
-		//logger = new LoggingTool(this);
 	    if (periodicTable == null) { 
 		periodicTable = new Hashtable<String, Integer>();
 		periodicTable.put("H", 1);

@@ -67,15 +67,10 @@ public class BondStretching {
 	double[][] dDeltar = null;
 	double[][][] ddDeltar = null;
 
-	//private LoggingTool logger;
-
-
 	/**
 	 *  Constructor for the BondStretching object
 	 */
-	public BondStretching() {        
-		//logger = new LoggingTool(this);
-	}
+	public BondStretching() {}
 
 
 	/**

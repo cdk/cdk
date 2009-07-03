@@ -38,7 +38,8 @@ import java.util.Set;
 
 import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.RList;
 import org.rosuda.JRI.RMainLoopCallbacks;
@@ -118,7 +119,8 @@ public abstract class RModel implements IModel {
      * A boolean that indicates whether the R/Java subsystem has been initialized or not.
      */
     private static boolean doneInit = false;
-    private static LoggingTool logger = new LoggingTool(RModel.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(RModel.class);
 
     private void checkEnvironmentVariables()  throws QSARModelException {
         String rhome = System.getenv("R_HOME");

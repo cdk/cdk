@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.modeling.forcefield;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -37,10 +35,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 
@@ -68,7 +66,8 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	String input;
 
-	private LoggingTool logger = new LoggingTool(ForceFieldTests.class);
+	private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ForceFieldTests.class);
 	private boolean standAlone = false;
 
 	/**

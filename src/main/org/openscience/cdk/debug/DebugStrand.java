@@ -38,7 +38,8 @@ import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -52,7 +53,8 @@ public class DebugStrand extends Strand
 
     private static final long serialVersionUID = 1794588804926192427L;
     
-    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

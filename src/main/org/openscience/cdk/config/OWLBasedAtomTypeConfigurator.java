@@ -20,17 +20,18 @@
  */
 package org.openscience.cdk.config;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * AtomType resource that reads the atom type configuration from an OWL file.
@@ -42,10 +43,10 @@ import java.util.List;
 public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private InputStream ins = null;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
     
     public OWLBasedAtomTypeConfigurator() {
-        logger = new LoggingTool(this);
     }
 
     @TestMethod("testSetInputStream_InputStream")

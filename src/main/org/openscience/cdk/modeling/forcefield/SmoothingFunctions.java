@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.modeling.forcefield;
 
-//import org.openscience.cdk.tools.LoggingTool;
-
 
 /**			
  *  Cutoffs and Smoothing Functions.
@@ -36,15 +34,11 @@ public class SmoothingFunctions {
 	double cutoffr0 = 5;	// For Smoothing function (s)
 	double cutoffr1 = 6;	// For Smoothing function (s)
 	double dampingFactor = 1;	// For Smoothing function (s)
-	//private LoggingTool logger;
-
 
 	/**
 	 *  Constructor for the SmoothingFunctions object
 	 */
-	public SmoothingFunctions() {        
-		//logger = new LoggingTool(this);
-	}
+	public SmoothingFunctions() {}
 
 
 	/**

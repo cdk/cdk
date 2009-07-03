@@ -48,7 +48,8 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This Reader reads files which has one SMILES string on each
@@ -73,7 +74,8 @@ public class SMILESReader extends DefaultChemObjectReader {
 
     private BufferedReader input = null;
     private SmilesParser sp = null;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(SMILESReader.class);
 
     /* 
      * construct a new reader from a Reader type object
@@ -81,7 +83,6 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @param input reader from which input is read
      */
     public SMILESReader(Reader input) {
-        logger = new LoggingTool(this);
         this.input = new BufferedReader(input);
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }

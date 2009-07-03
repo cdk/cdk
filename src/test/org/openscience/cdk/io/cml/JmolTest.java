@@ -42,7 +42,8 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for reading CML files using a few test files
@@ -53,7 +54,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class JmolTest extends CDKTestCase {
 
-    private LoggingTool logger = new LoggingTool(JmolTest.class);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(JmolTest.class);
 
     /**
      * Now come the actual tests...

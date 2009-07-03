@@ -39,7 +39,8 @@ import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -53,7 +54,8 @@ public class DebugBioPolymer extends BioPolymer
 
     private static final long serialVersionUID = 5349870327516864575L;
     
-    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

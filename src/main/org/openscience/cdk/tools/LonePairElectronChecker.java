@@ -44,16 +44,10 @@ import org.openscience.cdk.interfaces.ILonePair;
  */
 public class LonePairElectronChecker {
 	
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(LonePairElectronChecker.class);	    
 	private static AtomTypeFactory factory;
 
-	/**
-	 * Constructor of the LonePairElectronChecker object.
-	 */
-	public LonePairElectronChecker() {
-		logger = new LoggingTool(LonePairElectronChecker.class);
-	}
-	
 	private void createAtomTypeFactory(IChemObjectBuilder builder) {
 		if (factory == null) {
 			factory = AtomTypeFactory.getInstance(

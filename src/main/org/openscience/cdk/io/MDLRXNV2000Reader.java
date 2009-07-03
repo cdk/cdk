@@ -50,7 +50,8 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLRXNFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
@@ -69,7 +70,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
 
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -80,7 +82,6 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
     	this(in, Mode.RELAXED);
     }
     public MDLRXNV2000Reader(Reader in, Mode mode) {
-        logger = new LoggingTool(this);
         if (in instanceof BufferedReader) {
         	input = (BufferedReader)in;
         } else {

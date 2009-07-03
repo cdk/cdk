@@ -24,7 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.Matrix;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -37,10 +38,11 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.PeriodicTable;
 
-import javax.vecmath.Point3d;
+import Jama.Matrix;
 
 /**
  * Evaluates length over breadth descriptors.
@@ -66,14 +68,14 @@ import javax.vecmath.Point3d;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest")
 public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
 
     private static final String[] names = {"LOBMAX", "LOBMIN"};
     /**
      * Constructor for the LengthOverBreadthDescriptor object.
      */
     public LengthOverBreadthDescriptor() {
-        logger = new LoggingTool(this);
     }
 
 

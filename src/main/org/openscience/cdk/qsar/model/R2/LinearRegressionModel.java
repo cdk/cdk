@@ -23,13 +23,14 @@
  */
 package org.openscience.cdk.qsar.model.R2;
 
-import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.tools.LoggingTool;
-import org.rosuda.JRI.REXP;
-import org.rosuda.JRI.RList;
-
 import java.io.File;
 import java.util.HashMap;
+
+import org.openscience.cdk.qsar.model.QSARModelException;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.rosuda.JRI.REXP;
+import org.rosuda.JRI.RList;
 
 /**
  * A modeling class that provides a linear least squares regression model.
@@ -115,7 +116,8 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
 
     private RList modelPredict = null;
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(LinearRegressionModel.class);
 
     /**
      * Constructs a LinearRegressionModel object.
@@ -130,7 +132,6 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
      */
     public LinearRegressionModel() throws QSARModelException {
         super();
-        logger = new LoggingTool(this);
         params = new HashMap();
         int currentID = LinearRegressionModel.globalID;
         org.openscience.cdk.qsar.model.R2.LinearRegressionModel.globalID++;

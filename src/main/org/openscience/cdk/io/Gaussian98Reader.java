@@ -51,7 +51,8 @@ import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -78,7 +79,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Gaussian98Reader.class);;
     private int atomCount = 0;
     private String lastRoute = "";
 
@@ -131,7 +133,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @param input source of Gaussian98 data
      */
     public Gaussian98Reader(Reader input) {
-        logger = new LoggingTool(this);
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader) input;
         } else {

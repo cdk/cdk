@@ -63,7 +63,8 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 public class HOSECodeGenerator implements java.io.Serializable
 {
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(HOSECodeGenerator.class);
 	
     private static final long serialVersionUID = -4353471818831864513L;
     
@@ -165,8 +166,6 @@ public class HOSECodeGenerator implements java.io.Serializable
 	@TestMethod("test1Sphere")
 	public HOSECodeGenerator()
 	{
-		logger = new LoggingTool(this);
-		
 		sphereNodes = new ArrayList<TreeNode>();
 		sphereNodesWithAtoms = new ArrayList<IAtom>();
 		nextSphereNodes = new ArrayList<TreeNode>();

@@ -33,7 +33,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.math.MathTools;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -49,7 +50,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class VicinitySampler {
 	
-	private final static LoggingTool logger = new LoggingTool(VicinitySampler.class);
+	private final static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(VicinitySampler.class);
 	
 	int molCounter = 0;
 

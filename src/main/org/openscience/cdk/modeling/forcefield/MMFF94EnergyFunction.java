@@ -20,15 +20,12 @@
  */
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Hashtable;
 import java.util.Map;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-//import org.openscience.cdk.tools.LoggingTool;
-
 
 /**
  * MMFF94 energy function.
@@ -50,8 +47,6 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 	GMatrix energyHessian = null;
 	double[] forHessian = null;
 	
-	//private LoggingTool logger;
-	
 	BondStretching bs = new BondStretching();
 	AngleBending ab = new AngleBending();
 	StretchBendInteractions sbi = new StretchBendInteractions();
@@ -72,8 +67,6 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 		t.setMMFF94TorsionsParameters(molecule, mmff94Tables);
 		vdwi.setMMFF94VanDerWaalsParameters(molecule, mmff94Tables);        
 		ei.setMMFF94ElectrostaticParameters(molecule, mmff94Tables);
-		
-		//logger = new LoggingTool(this);
 	}
 
 

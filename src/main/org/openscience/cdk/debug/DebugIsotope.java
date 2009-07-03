@@ -28,7 +28,8 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -42,7 +43,8 @@ public class DebugIsotope extends Isotope
 
     private static final long serialVersionUID = -2659188100080921299L;
     
-    LoggingTool logger = new LoggingTool(DebugIsotope.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugIsotope.class);
 
 	public DebugIsotope(String elementSymbol) {
 		super(elementSymbol);

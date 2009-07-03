@@ -25,7 +25,8 @@ package org.openscience.cdk.formula.rules;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the rule of nitrogen is kept.
@@ -55,13 +56,13 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 public class NitrogenRule implements IRule{
 
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(NitrogenRule.class);
 
     /**
      *  Constructor for the NitrogenRule object.
      */
     public NitrogenRule() {
-        logger = new LoggingTool(this);
     }
 
     /**

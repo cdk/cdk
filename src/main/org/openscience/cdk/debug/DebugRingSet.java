@@ -25,7 +25,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -39,7 +40,8 @@ public class DebugRingSet extends RingSet
 
     private static final long serialVersionUID = -4144201128508373352L;
     
-    LoggingTool logger = new LoggingTool(DebugRingSet.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugRingSet.class);
 
 	public DebugRingSet() {
 		super();

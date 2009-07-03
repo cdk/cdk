@@ -40,7 +40,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -55,7 +56,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class RingPlacer 
 {
 	final static boolean debug = false;
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(RingPlacer.class);
 	
 	private IMolecule molecule; 
 	
@@ -70,7 +72,6 @@ public class RingPlacer
 	 */
 	public RingPlacer() 
 	{
-		logger = new LoggingTool(this);
 	}
 
 

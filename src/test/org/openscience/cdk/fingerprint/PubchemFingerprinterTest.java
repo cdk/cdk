@@ -26,6 +26,8 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,10 +40,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.BitSet;
 
 /**
  * @cdk.module test-fingerprint
@@ -49,7 +48,6 @@ import java.util.BitSet;
 public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
 
     SmilesParser parser;
-    private static LoggingTool logger = new LoggingTool(PubchemFingerprinterTest.class);
 
     public IFingerprinter getFingerprinter() {
         return new PubchemFingerprinter();

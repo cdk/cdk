@@ -43,7 +43,8 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.RadicalSiteIonizationMechanism;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>IReactionProcess which participate mass spectrum process. Homolitic dissocitation. 
@@ -80,14 +81,14 @@ import org.openscience.cdk.tools.LoggingTool;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.RadicalChargeSiteInitiationHReactionTest")
 public class RadicalChargeSiteInitiationHReaction extends ReactionEngine implements IReactionProcess{
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(RadicalChargeSiteInitiationReaction.class);
 	
 	/**
 	 * Constructor of the RadicalChargeSiteInitiationHReaction object
 	 *
 	 */
 	public RadicalChargeSiteInitiationHReaction(){
-		logger = new LoggingTool(this);
 	}
 	/**
 	 *  Gets the specification attribute of the RadicalChargeSiteInitiationHReaction object

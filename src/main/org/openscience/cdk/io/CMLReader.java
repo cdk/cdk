@@ -43,7 +43,8 @@ import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.cml.ICMLModule;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -70,7 +71,8 @@ public class CMLReader extends DefaultChemObjectReader {
     
     private Map<String,ICMLModule> userConventions = new HashMap<String,ICMLModule>();
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CMLReader.class);
 
     /**
      * Reads CML from an java.io.InputStream, for example the FileInputStream.
@@ -121,8 +123,6 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     private void init() {
-        logger = new LoggingTool(this);
-
         url = ""; // make sure it is not null
 
         boolean success = false;

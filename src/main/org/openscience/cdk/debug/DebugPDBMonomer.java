@@ -22,7 +22,8 @@ package org.openscience.cdk.debug;
 
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.protein.data.PDBMonomer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -35,7 +36,8 @@ public class DebugPDBMonomer extends PDBMonomer  implements IPDBMonomer {
 
 	private static final long serialVersionUID = -5156111560946745699L;
 	
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
 	public void setICode(String newICode) {
     	logger.debug("Setting I Code: ", newICode);

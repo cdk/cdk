@@ -39,7 +39,8 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for reading CML files using a few test files
@@ -50,7 +51,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class JChemPaintTest extends CDKTestCase {
 
-    private LoggingTool logger = new org.openscience.cdk.tools.LoggingTool(this);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
 
     /**
      * This one tests a CML2 file.

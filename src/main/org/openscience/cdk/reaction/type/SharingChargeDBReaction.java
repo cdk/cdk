@@ -45,7 +45,8 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanism;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -83,14 +84,14 @@ import org.openscience.cdk.tools.LoggingTool;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.SharingChargeDBReactionTest")
 public class SharingChargeDBReaction extends ReactionEngine implements IReactionProcess{
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(SharingChargeDBReaction.class);
 
 	/**
 	 * Constructor of the SharingChargeDBReaction object.
 	 *
 	 */
 	public SharingChargeDBReaction(){
-		logger = new LoggingTool(this);
 	}
 	/**
 	 *  Gets the specification attribute of the SharingChargeDBReaction object

@@ -31,7 +31,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading XYZ files using a test file.
@@ -42,10 +43,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class XYZReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(XYZReaderTest.class);
 
     @BeforeClass public static void setup() throws Exception {
-        logger = new LoggingTool(XYZReaderTest.class);
         setSimpleChemObjectReader(new XYZReader(), "data/xyz/viagra.xyz");
     }
 

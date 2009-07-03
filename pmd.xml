@@ -33,6 +33,7 @@
       <!-- the other modules -->
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="interfaces"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="core"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="log4j"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="standard"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="atomtype"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="io"/></antcall>
@@ -86,6 +87,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-charges"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-diff"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qm"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-log4j"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"

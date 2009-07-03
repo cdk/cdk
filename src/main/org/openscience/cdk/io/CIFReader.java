@@ -39,19 +39,20 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.CIFFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This is not a reader for the CIF and mmCIF crystallographic formats.
@@ -76,7 +77,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class CIFReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CIFReader.class);
 
     private ICrystal crystal = null;
     // cell parameters
@@ -94,7 +96,6 @@ public class CIFReader extends DefaultChemObjectReader {
      */
     public CIFReader(Reader input) {
         this.input = new BufferedReader(input);
-        this.logger = new LoggingTool(this);
     }
     
     public CIFReader(InputStream input) {

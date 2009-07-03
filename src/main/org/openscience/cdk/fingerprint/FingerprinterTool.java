@@ -24,13 +24,14 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Tool with helper methods for IFingerprint.
@@ -44,7 +45,8 @@ import java.util.List;
 @TestClass("org.openscience.cdk.fingerprint.FingerprinterToolTest")
 public class FingerprinterTool {
 	
-	private final static LoggingTool logger = new LoggingTool(FingerprinterTool.class);
+	private final static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(FingerprinterTool.class);
 	
 	/**
 	 *  Checks whether all the positive bits in BitSet bs2 occur in BitSet bs1. If

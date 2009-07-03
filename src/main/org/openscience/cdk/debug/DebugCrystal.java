@@ -38,7 +38,8 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -52,16 +53,15 @@ public class DebugCrystal extends Crystal
 
     private static final long serialVersionUID = -1749989529794094087L;
     
-    LoggingTool logger;
+    static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugCrystal.class);
 
 	public DebugCrystal() {
 		super();
-		logger = new LoggingTool(DebugCrystal.class);
 	}
     
 	public DebugCrystal(IAtomContainer container) {
 		super(container);
-		logger = new LoggingTool(DebugCrystal.class);
 	}
 
 	public void addAtomParity(IAtomParity parity) {

@@ -29,11 +29,12 @@ import java.io.InputStreamReader;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -41,7 +42,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
 
-    private LoggingTool logger = new LoggingTool(this);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingPCSubstancesXMLReaderTest.class);
 
     @Test public void testTaxols() throws Exception {
         String filename = "data/asn/pubchem/taxols.xml";

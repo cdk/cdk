@@ -28,16 +28,17 @@
  */
 package org.openscience.cdk.dict;
 
-import org.openscience.cdk.tools.LoggingTool;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Enumeration;
 import java.util.Hashtable;
+
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * Dictionary with entries.
@@ -61,7 +62,8 @@ public class Dictionary {
     }
     
     public static Dictionary unmarshal(Reader reader) {
-        LoggingTool logger = new LoggingTool(Dictionary.class);
+        ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(Dictionary.class);
         DictionaryHandler handler = new DictionaryHandler();
         XMLReader parser = null;
         try {

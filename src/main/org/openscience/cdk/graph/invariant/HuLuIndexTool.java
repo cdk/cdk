@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
@@ -32,9 +34,8 @@ import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.Iterator;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Collection of methods for the calculation of topological indices of a 
@@ -44,7 +45,8 @@ import java.util.Iterator;
  */
 public class HuLuIndexTool
 {
-	private final static LoggingTool logger = new LoggingTool(HuLuIndexTool.class);
+	private final static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(HuLuIndexTool.class);
 	
     /**
    * Calculates the extended adjacency matrix index.

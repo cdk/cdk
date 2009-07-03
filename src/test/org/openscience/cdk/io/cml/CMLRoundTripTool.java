@@ -39,7 +39,8 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Helper tool for round tripping CDK classes via CML.
@@ -50,7 +51,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CMLRoundTripTool extends CDKTestCase {
 
-    private static LoggingTool logger = new LoggingTool(CMLRoundTripTool.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
     private static Convertor convertor = new Convertor(true, null);
 
     /**

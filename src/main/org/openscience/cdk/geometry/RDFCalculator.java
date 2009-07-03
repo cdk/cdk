@@ -31,7 +31,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Calculator of radial distribution functions. The RDF has bins defined around
@@ -64,7 +65,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class RDFCalculator {
 
-    private static LoggingTool logger = new LoggingTool(RDFCalculator.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(RDFCalculator.class);
     
     private double startCutoff;
     private double cutoff;

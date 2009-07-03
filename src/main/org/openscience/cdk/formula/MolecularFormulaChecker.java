@@ -33,7 +33,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p> Validate a molecular formula given in IMolecularformula object. The
@@ -49,7 +50,8 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass("org.openscience.cdk.formula.MolecularFormulaCheckerTest")
 public class MolecularFormulaChecker {
 
-	private LoggingTool logger = new LoggingTool(MolecularFormulaChecker.class);
+	private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
 	
 
 	/** List of IRules to be applied in the validation.*/
@@ -109,8 +111,6 @@ public class MolecularFormulaChecker {
 	 */
 	@TestMethod("testIsValid_IMolecularFormula")
 	public IMolecularFormula isValid(IMolecularFormula formula){
-		logger = new LoggingTool(this);
-	
 		logger.info("Generating the validity of the molecular formula");
 		
 		if(formula.getIsotopeCount() == 0){

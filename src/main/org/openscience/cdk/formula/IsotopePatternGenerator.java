@@ -29,7 +29,8 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -50,7 +51,8 @@ public class IsotopePatternGenerator{
 	private IsotopeFactory isoFactory;
 	private IsotopePattern abundance_Mass = null;
 	
-	private LoggingTool logger = new LoggingTool(IsotopePatternGenerator.class);
+	private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class);
 	
 	/** Minimal abundance of the isotopes to be added in the combinatorial search.*/
 	private double minAbundance = .1;

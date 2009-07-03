@@ -40,7 +40,8 @@ import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
 
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Dictionary with entries build from an OWL React.
@@ -70,7 +71,8 @@ public class OWLReact extends Dictionary {
      * @return       The Dictionary
      */
     public static Dictionary unmarshal(Reader reader) {
-        LoggingTool logger = new LoggingTool(OWLReact.class);
+        ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(OWLReact.class);
         Dictionary dict = new OWLReact();
         try {
             Builder parser = new Builder();
@@ -114,7 +116,8 @@ public class OWLReact extends Dictionary {
     }
 
     public static EntryReact unmarshal(Element entry, String ownNS) {
-    	LoggingTool logger = new LoggingTool(OWLReact.class);
+    	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(OWLReact.class);
 
         // create a new entry by ID
         Attribute id = entry.getAttribute("ID", rdfNS);

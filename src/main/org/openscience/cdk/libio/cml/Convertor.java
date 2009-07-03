@@ -57,7 +57,8 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.tools.IDCreator;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionSchemeManipulator;
 import org.xmlcml.cml.base.CMLElement;
@@ -96,7 +97,8 @@ public class Convertor {
 
     public final static String NS_CML = "http://www.xml-cml.org/schema";
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Convertor.class);
 
     private final static String CUSTOMIZERS_LIST = "libio-cml-customizers.set";
     private static Map<String, ICMLCustomizer> customizers = null;
@@ -113,7 +115,6 @@ public class Convertor {
      * @param prefix    Namespace prefix to use. If null, then no prefix is used;
      */
     public Convertor(boolean useCMLIDs, String prefix) {
-        logger = new LoggingTool(this);
         this.useCMLIDs = useCMLIDs;
         this.prefix = prefix;
         setupCustomizers();

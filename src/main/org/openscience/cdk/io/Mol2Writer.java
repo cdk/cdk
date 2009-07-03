@@ -26,7 +26,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
@@ -40,7 +39,8 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * An output Writer that writes molecular data into the
@@ -56,7 +56,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class Mol2Writer extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(Mol2Writer.class);
 	  private SybylAtomTypeMatcher matcher;
     
     public Mol2Writer() {
@@ -68,7 +69,6 @@ public class Mol2Writer extends DefaultChemObjectWriter {
      * @param out the stream to write the Mol2 file to.
      */
     public Mol2Writer(Writer out) {
-    	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;

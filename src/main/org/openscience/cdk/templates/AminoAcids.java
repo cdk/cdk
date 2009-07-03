@@ -33,7 +33,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -49,7 +50,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class AminoAcids {
 
-	private static final LoggingTool logger = new LoggingTool(AminoAcids.class);
+	private static final ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AminoAcids.class);
 	
     /**
      * Creates matrix with info about the bonds in the amino acids.

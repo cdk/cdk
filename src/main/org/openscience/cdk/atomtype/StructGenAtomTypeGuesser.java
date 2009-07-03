@@ -28,7 +28,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -48,13 +49,13 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 
 	private static AtomTypeFactory factory = null;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(StructGenAtomTypeGuesser.class);
     
 	/**
 	 * Constructor for the StructGenMatcher object.
 	 */
 	public StructGenAtomTypeGuesser() {
-		logger = new LoggingTool(this);
 	}
 
 

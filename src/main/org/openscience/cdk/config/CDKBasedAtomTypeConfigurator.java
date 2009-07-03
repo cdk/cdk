@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.config;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * AtomType resource that reads the atom type configuration from an XML file.
@@ -49,10 +50,10 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
     private InputStream ins = null;
     
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CDKBasedAtomTypeConfigurator.class);
     
     public CDKBasedAtomTypeConfigurator() {
-        logger = new LoggingTool(this);
     }
 
     @TestMethod("testSetInputStream_InputStream")

@@ -28,16 +28,16 @@ import java.io.InputStream;
 import java.util.Vector;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -55,15 +55,9 @@ public class OverlapResolverTest extends CDKTestCase {
 	 *  Description of the Field
 	 */
 	public boolean standAlone = false;
-	private static LoggingTool logger = null;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(OverlapResolverTest.class);
 	StructureDiagramGenerator sdg = null;
-
-	/**
-	 *  The JUnit setup method
-	 */
-	@BeforeClass public static void setUp() throws Exception {
-		logger = new LoggingTool(OverlapResolverTest.class);
-	}
 
 	/**
 	 *  A unit test for JUnit

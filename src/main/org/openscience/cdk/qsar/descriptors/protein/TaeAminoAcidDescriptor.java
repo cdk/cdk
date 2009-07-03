@@ -24,6 +24,17 @@
 
 package org.openscience.cdk.qsar.descriptors.protein;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
 import org.openscience.cdk.annotations.TestMethod;
@@ -35,13 +46,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 /**
@@ -114,7 +120,8 @@ import java.util.*;
  * @see         IBioPolymer
  */
 public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
     private Map<String, Double[]> TAEParams = new HashMap<String, Double[]>();
     private int ndesc = 147;
 
@@ -176,8 +183,6 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     }
 
     public TaeAminoAcidDescriptor() {
-        logger = new LoggingTool(this);
-
         nametrans.put("a", "ala");
         nametrans.put("c", "cys");
         nametrans.put("d", "asp");

@@ -28,17 +28,17 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.IOException;
+import java.util.Comparator;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.IOException;
-import java.util.Comparator;
-import java.util.Iterator;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>Compares two IAtomContainers for order with the following criteria with decreasing priority:</p>
@@ -60,7 +60,8 @@ import java.util.Iterator;
 public class AtomContainerComparator implements Comparator {
   
   /** Configure LoggingTool */
-  private LoggingTool logger = new LoggingTool(AtomContainerComparator.class);
+  private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
   
   /** Creates a new instance of AtomContainerComparator */
   public AtomContainerComparator() {

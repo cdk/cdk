@@ -38,7 +38,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -50,10 +51,10 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class HINReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(HINReaderTest.class);
     
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(HINReaderTest.class);
         setSimpleChemObjectReader(new HINReader(), "data/hin/benzene.hin");
     }
 

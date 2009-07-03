@@ -20,16 +20,18 @@
 
 package org.openscience.cdk.geometry.surface;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.PeriodicTable;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point3d;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * A class representing the solvent acessible surface area surface of a molecule.
@@ -55,7 +57,8 @@ import java.util.Iterator;
  * @cdk.bug     1846421
  */
 public class NumericalSurface {
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(NumericalSurface.class);
     double solvent_radius = 1.4;
     int tesslevel = 4;
     IAtom[] atoms;
@@ -73,7 +76,6 @@ public class NumericalSurface {
      */
     public NumericalSurface(IAtomContainer atomContainer) {
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
-        logger = new LoggingTool(this);
     }
     /**
      * Constructor to initialize the surface calculation with user specified values.
@@ -91,7 +93,6 @@ public class NumericalSurface {
         this.solvent_radius = solvent_radius;
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         this.tesslevel = tesslevel;
-        logger = new LoggingTool(this);
     }
 
     /**

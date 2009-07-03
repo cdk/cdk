@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
@@ -46,9 +44,13 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -127,7 +129,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptorTest")
 public class BCUTDescriptor implements IMolecularDescriptor {
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
 
     // the number of negative & positive eigenvalues
     // to return for each class of BCUT descriptor
@@ -136,8 +139,6 @@ public class BCUTDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity;
 
     public BCUTDescriptor() {
-        logger = new LoggingTool(this);
-
         // set the default number of BCUT's
         this.nhigh = 1;
         this.nlow = 1;

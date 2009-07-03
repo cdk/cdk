@@ -44,7 +44,8 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -79,7 +80,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class StructureDiagramGenerator
 {
 
-	private LoggingTool logger = new LoggingTool(StructureDiagramGenerator.class);
+	private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
 
 	private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = null;
 

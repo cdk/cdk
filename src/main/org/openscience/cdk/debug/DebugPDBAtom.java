@@ -25,7 +25,8 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.protein.data.PDBAtom;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -39,7 +40,8 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 
 	private static final long serialVersionUID = -2432127382224382452L;
 
-	LoggingTool logger = new LoggingTool(DebugPDBAtom.class);
+	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugPDBAtom.class);
 	
 	public DebugPDBAtom(IElement element) {
 		super(element);

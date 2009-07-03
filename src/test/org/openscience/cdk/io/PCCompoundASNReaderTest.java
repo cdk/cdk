@@ -34,7 +34,8 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -42,11 +43,10 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
 
     @BeforeClass public static void setup() throws Exception {
-        logger = new LoggingTool(PCCompoundASNReaderTest.class);
-        System.out.println("Foo");
         setSimpleChemObjectReader(new PCCompoundASNReader(), "data/asn/pubchem/cid1.asn");
     }
 

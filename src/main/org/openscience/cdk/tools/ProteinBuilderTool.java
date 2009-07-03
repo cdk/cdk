@@ -48,7 +48,8 @@ import java.util.Map;
  */
 public class ProteinBuilderTool {
 
-    private static LoggingTool logger = new LoggingTool(ProteinBuilderTool.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ProteinBuilderTool.class);
 
     /**
      * Builds a protein by connecting a new amino acid at the N-terminus of the

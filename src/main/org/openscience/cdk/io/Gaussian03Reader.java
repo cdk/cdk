@@ -43,7 +43,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.Gaussian03Format;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * A reader for Gaussian03 output.
@@ -73,11 +74,11 @@ import org.openscience.cdk.tools.LoggingTool;
 public class Gaussian03Reader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Gaussian03Reader.class);;
 
     public Gaussian03Reader(Reader reader) {
         input = new BufferedReader(reader);
-        logger = new LoggingTool(this);
     }
 
     public Gaussian03Reader(InputStream input) {

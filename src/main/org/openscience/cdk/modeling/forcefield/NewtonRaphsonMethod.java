@@ -27,7 +27,8 @@ package org.openscience.cdk.modeling.forcefield;
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import Jama.Matrix;
 
@@ -44,14 +45,13 @@ import Jama.Matrix;
 public class NewtonRaphsonMethod {
 	GVector gradientPerInverseHessianVector = null;
 	Matrix matrixForDeterminatCalculation = null;
-	private LoggingTool logger;
-
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(NewtonRaphsonMethod.class);
 
 	/**
 	 *  Constructor for the NR object
 	 */
 	public NewtonRaphsonMethod() {
-		logger = new LoggingTool(this);
 	}
 
 

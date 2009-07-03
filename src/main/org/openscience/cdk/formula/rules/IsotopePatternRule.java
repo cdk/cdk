@@ -33,7 +33,8 @@ import org.openscience.cdk.formula.IsotopePatternGenerator;
 import org.openscience.cdk.formula.IsotopePatternManipulator;
 import org.openscience.cdk.formula.IsotopePatternSimilarity;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * This class validate if the Isotope Pattern from a given IMolecularFormula
  *  correspond with other to compare.
@@ -60,7 +61,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class IsotopePatternRule implements IRule{
 
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(IsotopePatternRule.class);
 
 	/** Accuracy on the mass measuring isotope pattern*/
 	private double toleranceMass = 0.001;
@@ -81,8 +83,6 @@ public class IsotopePatternRule implements IRule{
     	isotopeGe = new IsotopePatternGenerator(0.01);
     	is = new IsotopePatternSimilarity();
 		is.seTolerance(toleranceMass);
-		
-    	logger = new LoggingTool(this);
     }
 
     /**

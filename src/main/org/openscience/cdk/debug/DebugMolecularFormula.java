@@ -26,14 +26,16 @@ import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module datadebug
  */
 public class DebugMolecularFormula extends MolecularFormula implements IMolecularFormula {
 
-    private LoggingTool logger = new LoggingTool(DebugMolecularFormula.class);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugMolecularFormula.class);
 
 	public IMolecularFormula add(IMolecularFormula formula) {
 	    logger.debug("Adding formula: ", formula);

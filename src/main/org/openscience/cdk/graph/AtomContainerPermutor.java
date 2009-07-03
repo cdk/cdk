@@ -32,7 +32,8 @@ package org.openscience.cdk.graph;
 import java.util.Iterator;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * The permutation code here is based on a pseudo code example 
@@ -52,7 +53,8 @@ public abstract class AtomContainerPermutor implements Iterator
 	int[] bookkeeping;
 	Object[] objects;
 	
-	private static LoggingTool logger = new LoggingTool(AtomContainerPermutor.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AtomContainerPermutor.class);
 
 	AtomContainer atomContainer;
 	

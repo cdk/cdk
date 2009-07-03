@@ -25,17 +25,23 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Finds the Set of all Rings. This is an implementation of the algorithm
@@ -64,7 +70,8 @@ import java.util.List;
 @TestClass("org.openscience.cdk.ringsearch.AllRingsFinderTest")
 public class AllRingsFinder
 {
-	private final LoggingTool logger = new LoggingTool(AllRingsFinder.class);
+	private final ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AllRingsFinder.class);
 	
 	public boolean debug = false;
 	private long timeout = 5000;

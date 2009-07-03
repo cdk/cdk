@@ -28,7 +28,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -42,7 +43,8 @@ public class DebugLonePair extends LonePair
 
     private static final long serialVersionUID = 5683399496728893341L;
     
-    LoggingTool logger = new LoggingTool(DebugLonePair.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugLonePair.class);
 
     public DebugLonePair() {
     	super();

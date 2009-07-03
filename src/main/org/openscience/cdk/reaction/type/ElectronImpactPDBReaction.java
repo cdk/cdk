@@ -44,7 +44,8 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.RemovingSEofBMechanism;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>IReactionProcess which make an electron impact for pi-Bond Dissociation.</p>
@@ -80,14 +81,14 @@ import org.openscience.cdk.tools.LoggingTool;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.ElectronImpactPDBReactionTest")
 public class ElectronImpactPDBReaction extends ReactionEngine implements IReactionProcess{
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ElectronImpactPDBReaction.class);
 
     /**
      * Constructor of the ElectronImpactPDBReaction object.
      *
      */
     public ElectronImpactPDBReaction(){
-        logger = new LoggingTool(this);
     }
     /**
      *  Gets the specification attribute of the ElectronImpactPDBReaction object.

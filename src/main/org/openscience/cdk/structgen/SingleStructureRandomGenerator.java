@@ -35,7 +35,8 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
@@ -69,7 +70,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class SingleStructureRandomGenerator {
 	
-	LoggingTool logger = new LoggingTool(SingleStructureRandomGenerator.class);
+	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
 	
 	IAtomContainer atomContainer;
 	SaturationChecker satCheck;

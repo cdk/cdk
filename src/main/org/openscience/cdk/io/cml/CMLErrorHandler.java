@@ -25,7 +25,8 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -41,7 +42,8 @@ import org.xml.sax.SAXParseException;
  **/
 public class CMLErrorHandler implements ErrorHandler {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CMLErrorHandler.class);
 
     public boolean reportErrors = true;
     public boolean abortOnErrors = false;
@@ -51,7 +53,6 @@ public class CMLErrorHandler implements ErrorHandler {
      * class to output errors and warnings to.
      **/
     public CMLErrorHandler() {
-        logger = new LoggingTool(this);
         logger.info("instantiated");
     }
 

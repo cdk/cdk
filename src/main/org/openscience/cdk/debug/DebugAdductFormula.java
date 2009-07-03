@@ -20,18 +20,24 @@
  */
 package org.openscience.cdk.debug;
 
-import org.openscience.cdk.formula.AdductFormula;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.util.Iterator;
+
+import org.openscience.cdk.formula.AdductFormula;
+import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module datadebug
  */
 public class DebugAdductFormula extends AdductFormula implements IAdductFormula {
 
-    private LoggingTool logger = new LoggingTool(DebugAdductFormula.class);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAdductFormula.class);
 	
     public DebugAdductFormula() {
     	super();

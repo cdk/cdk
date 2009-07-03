@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Writer that outputs in the HIN format.
@@ -65,7 +65,6 @@ public class HINWriter extends DefaultChemObjectWriter {
      * @param out the stream to write the HIN file to.
      */
     public HINWriter(Writer out) {
-        LoggingTool logger = new LoggingTool(this);
         try {
             if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter) out;
@@ -73,7 +72,8 @@ public class HINWriter extends DefaultChemObjectWriter {
                 writer = new BufferedWriter(out);
             }
         } catch (Exception exc) {
-            logger.debug(exc.toString());
+            LoggingToolFactory.createLoggingTool(HINWriter.class)
+                .debug(exc.toString());
         }
     }
 

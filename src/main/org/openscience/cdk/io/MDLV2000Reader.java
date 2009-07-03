@@ -56,7 +56,8 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -95,7 +96,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class MDLV2000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
 
     private BooleanIOSetting forceReadAs3DCoords;
     private BooleanIOSetting interpretHydrogenIsotopes;
@@ -125,7 +127,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         this(in, Mode.RELAXED);
 	}
 	public MDLV2000Reader(Reader in, Mode mode) {
-        logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
         super.mode = mode;

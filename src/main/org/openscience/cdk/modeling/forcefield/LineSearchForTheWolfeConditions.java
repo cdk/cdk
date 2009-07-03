@@ -22,7 +22,7 @@ package org.openscience.cdk.modeling.forcefield;
 
 import javax.vecmath.GVector;
 
-//import org.openscience.cdk.tools.LoggingTool;
+
 /**
  * 
  *
@@ -84,9 +84,6 @@ public class LineSearchForTheWolfeConditions {
 	private double d1;
 	private double d2;
 	private double alphaiplus1;
-	
-	//private LoggingTool logger;
-
 	
 	public LineSearchForTheWolfeConditions(IPotentialFunction pfUser, String method) {
 		this.pf = pfUser;

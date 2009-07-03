@@ -32,7 +32,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -62,7 +63,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 public class ElementRule implements IRule{
 
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(ElementRule.class);
 
 	private MolecularFormulaRange mfRange;
 
@@ -73,7 +75,6 @@ public class ElementRule implements IRule{
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public ElementRule(){
-        logger = new LoggingTool(this);
     }
 
     /**

@@ -43,7 +43,8 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.AtomTypeTools;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -55,7 +56,8 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
-	private static LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(MMFF94AtomTypeMatcherTest.class);
 	private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 	
 	private static IMolecule testMolecule = null;
@@ -63,8 +65,6 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
 	@BeforeClass public static void setUpTestMolecule() throws Exception {
-    	logger = new LoggingTool(MMFF94AtomTypeMatcherTest.class);
-    
     	if (testMolecule == null) {
         	//logger.debug("**** START ATOMTYPE TEST ******");
         	AtomTypeTools att=new AtomTypeTools();

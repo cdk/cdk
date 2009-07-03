@@ -75,9 +75,6 @@ public class Torsions {
 	IBond[] bondConnectedBefore = null;
 	IBond[] bondConnectedAfter = null;
 
-
-	//private LoggingTool logger;
-
 	GVector moleculeCurrentCoordinates = null;
 	boolean[] changeAtomCoordinates = null;
 	int changedCoordinates;
@@ -87,7 +84,6 @@ public class Torsions {
 	 *  Constructor for the Torsions object
 	 */
 	public Torsions() {        
-		//logger = new LoggingTool(this);
 	}
 
 

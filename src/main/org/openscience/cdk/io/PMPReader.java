@@ -56,7 +56,8 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Reads an frames from a PMP formated input.
@@ -78,7 +79,8 @@ public class PMPReader extends DefaultChemObjectReader {
 
 	private BufferedReader input;
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(PMPReader.class);
 
     /* Keep a copy of the PMP model */
     private IAtomContainer modelStructure;
@@ -108,7 +110,6 @@ public class PMPReader extends DefaultChemObjectReader {
      */
     public PMPReader(Reader input) {
         this.input = new BufferedReader(input);
-        logger = new LoggingTool(this);
         this.lineNumber = 0;
     
         /* compile patterns */

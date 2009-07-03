@@ -38,7 +38,8 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -59,15 +60,12 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class FiguerasSSSRFinder {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(FiguerasSSSRFinder.class);
     
 	int trimCounter = 0;
 	private static final String PATH = "org.openscience.cdk.ringsearch.FiguerasSSSRFinderRFinder.PATH";
 
-    public FiguerasSSSRFinder() {
-        logger = new LoggingTool(this);
-    }
-    
 	/**
 	 * Finds the Smallest Set of Smallest Rings.
 	 *

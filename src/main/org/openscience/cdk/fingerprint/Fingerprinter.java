@@ -24,6 +24,14 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -36,10 +44,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.*;
 
 /**
  *  Generates a fingerprint for a given AtomContainer. Fingerprints are
@@ -99,7 +106,8 @@ public class Fingerprinter implements IFingerprinter {
 
 	static int debugCounter = 0;
 
-	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Fingerprinter.class);
 
 	private static final Map<String, String> queryReplace 
 	        = new HashMap<String, String>() {

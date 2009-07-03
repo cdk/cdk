@@ -41,7 +41,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.PCCompoundASNReader;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -61,7 +62,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReader.class);
     private IChemObjectBuilder builder;
     
     private boolean nextAvailableIsKnown;
@@ -77,7 +79,6 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
      * @param  in  The Reader to read from
      */
     public IteratingPCCompoundASNReader(Reader in, IChemObjectBuilder builder) {
-        logger = new LoggingTool(this);
         this.builder = builder;
         setReader(in);
     }

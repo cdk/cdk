@@ -64,7 +64,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 public class ShelXWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-	//private LoggingTool logger;
 
     /**
      * Constructs a new ShelXWriter class. Output will be stored in the Writer
@@ -73,7 +72,6 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public ShelXWriter(Writer out) {
-    	//logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;

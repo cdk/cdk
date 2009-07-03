@@ -48,7 +48,7 @@ public class RingPartitionerTest extends CDKTestCase
 {
 
 	static boolean standAlone = false;
-	//private LoggingTool logger = null;
+	//private static ILoggingTool logger = null;
 
 
 

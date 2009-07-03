@@ -20,6 +20,12 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -40,14 +46,9 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching
@@ -134,7 +135,8 @@ import java.util.Map;
  */
 @TestClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest")
 public class SMARTSQueryTool {
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
     private String smarts;
     private IAtomContainer atomContainer = null;
     private QueryAtomContainer query = null;
@@ -142,7 +144,6 @@ public class SMARTSQueryTool {
     private List<List<Integer>> matchingAtoms = null;
 
     public SMARTSQueryTool(String smarts) throws CDKException {
-        logger = new LoggingTool(this);
         this.smarts = smarts;
         try {
             initializeQuery();

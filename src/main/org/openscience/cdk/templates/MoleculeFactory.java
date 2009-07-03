@@ -39,7 +39,8 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This class contains methods for generating simple organic molecules.
@@ -49,11 +50,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MoleculeFactory {
 
-    private static LoggingTool logger = null;
-    
-    static {
-        logger = new LoggingTool(MoleculeFactory.class);
-    }
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
     
 	public static Molecule makeAlphaPinene() {
 		Molecule mol = new Molecule();

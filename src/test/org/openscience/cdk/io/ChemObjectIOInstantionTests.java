@@ -35,7 +35,8 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Tests whether all Reader and Writer classes can be instantiated.
@@ -48,7 +49,8 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
     
     private final static String IO_FORMATS_LIST = "io-formats.set";
 
-    private static LoggingTool logger = new LoggingTool(ChemObjectIOInstantionTests.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ChemObjectIOInstantionTests.class);
 
     private static List<IChemFormat> formats = null;
 

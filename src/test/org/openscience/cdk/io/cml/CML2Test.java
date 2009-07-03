@@ -56,7 +56,8 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBPolymer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -68,7 +69,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CML2Test extends CDKTestCase {
 
-    private static LoggingTool logger = new LoggingTool(CML2Test.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CML2Test.class);
 
     @Test public void testFile3() throws Exception {
         String filename = "data/cml/3.cml";

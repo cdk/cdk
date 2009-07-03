@@ -54,7 +54,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
@@ -72,7 +73,7 @@ import org.xml.sax.Attributes;
  **/
 public class CMLCoreModule implements ICMLModule {
 
-    protected org.openscience.cdk.tools.LoggingTool logger;
+    protected ILoggingTool logger;
     protected final String SYSTEMID = "CML-1999-05-15";
 //    protected IChemicalDocumentObject cdo;
 
@@ -148,12 +149,12 @@ public class CMLCoreModule implements ICMLModule {
     boolean cartesianAxesSet = false;
     
     public CMLCoreModule(IChemFile chemFile) {
-        logger = new LoggingTool(this);
+        logger = LoggingToolFactory.createLoggingTool(CMLCoreModule.class);
 		this.currentChemFile = chemFile;
     }
     
     public CMLCoreModule(ICMLModule conv) {
-    	logger = new LoggingTool(this);
+    	logger = LoggingToolFactory.createLoggingTool(CMLCoreModule.class);
         inherit(conv);
     }
 

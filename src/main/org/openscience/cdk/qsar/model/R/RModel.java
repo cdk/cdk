@@ -24,13 +24,19 @@
 
 package org.openscience.cdk.qsar.model.R;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+
 import org.omegahat.R.Java.REvaluator;
 import org.omegahat.R.Java.ROmegahatInterpreter;
 import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.*;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /** Base class for modeling classes that use R as the backend.
  *
@@ -85,7 +91,8 @@ public abstract class RModel implements IModel {
      * A boolean that indicates whether the R/Java subsystem has been initialized or not.
      */
     private static boolean doneInit = false;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(RModel.class);
         
     private void loadRFunctions(REvaluator evaluator) {
         String scriptLocator = "org/openscience/cdk/qsar/model/data/cdkSJava.R";
@@ -160,8 +167,6 @@ public abstract class RModel implements IModel {
      * @param args A String[] containing the command line parameters as elements
      */
     public RModel(String[] args) {
-        logger = new LoggingTool(this);
-
         String initRFromString = System.getProperty("initRFromString");
         boolean useDisk = true;
         if (initRFromString != null && initRFromString.equals("true")) {
@@ -194,8 +199,6 @@ public abstract class RModel implements IModel {
      */
     public RModel() {
         String[] args = {"--vanilla","-q", "--slave"};
-        logger = new LoggingTool(this);
-
         String initRFromString = System.getProperty("initRFromString");
         boolean useDisk = true;
         if (initRFromString != null && initRFromString.equals("true")) {

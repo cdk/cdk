@@ -27,7 +27,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -41,7 +42,8 @@ public class DebugElectronContainer extends ElectronContainer
 
     private static final long serialVersionUID = 5309193617982266230L;
     
-    LoggingTool logger = new LoggingTool(DebugElectronContainer.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugElectronContainer.class);
 	
 	public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());

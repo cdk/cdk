@@ -23,7 +23,8 @@ package org.openscience.cdk.debug;
 import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -41,7 +42,8 @@ public class DebugAtomParity extends AtomParity
 		super(centralAtom, first, second, third, fourth, parity);
 	}
 
-	LoggingTool logger = new LoggingTool(DebugAtomParity.class);
+	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomParity.class);
 
 	public IAtom getAtom() {
 		logger.debug("Getting atom: ", super.getAtom());

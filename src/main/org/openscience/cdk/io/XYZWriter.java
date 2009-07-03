@@ -42,7 +42,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.FormatStringBuffer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module io
@@ -56,7 +57,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class XYZWriter extends DefaultChemObjectWriter {
   
     private BufferedWriter writer;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(XYZWriter.class);
     private FormatStringBuffer fsb;
 
     /**
@@ -65,7 +67,6 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * @param out the stream to write the XYZ file to.
     */
     public XYZWriter(Writer out) {
-    	logger = new LoggingTool(this);
     	fsb = new FormatStringBuffer("%-8.6f");
     	try {
     		if (out instanceof BufferedWriter) {

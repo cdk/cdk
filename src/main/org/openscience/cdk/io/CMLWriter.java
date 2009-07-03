@@ -65,7 +65,8 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.libio.cml.ICMLCustomizer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Serializes a {@link IMoleculeSet} or a {@link IMolecule} object to CML 2 code.
@@ -122,7 +123,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting indent;
     private BooleanIOSetting xmlDeclaration;
     
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CMLWriter.class);
     
     private static List<ICMLCustomizer> customizers = null;
 
@@ -140,14 +142,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
 				writer.write(anInt);
 			}
         };
-        logger = new LoggingTool(this);
         initIOSettings();
     }
 
     public CMLWriter(OutputStream output) {
         this.output = output;
         writer = null;
-        logger = new LoggingTool(this);
         initIOSettings();
     }
     

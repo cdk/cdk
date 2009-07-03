@@ -28,12 +28,13 @@
  */
 package org.openscience.cdk.dict;
 
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Enumeration;
 import java.util.Hashtable;
+
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Database of dictionaries listing entries with compounds, fragments
@@ -50,7 +51,8 @@ public class DictionaryDatabase {
 
     public final static String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
     
-    private LoggingTool logger;
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DictionaryDatabase.class);
     
     private String[] dictionaryNames = {
         "chemical", "elements", "descriptor-algorithms","reaction-processes"
@@ -62,8 +64,6 @@ public class DictionaryDatabase {
     private Hashtable<String, Dictionary> dictionaries;
 
     public DictionaryDatabase() {
-        logger = new LoggingTool(this);
-        
         // read dictionaries distributed with CDK
         dictionaries = new Hashtable<String, Dictionary>();
         for (int i=0; i<dictionaryNames.length; i++) {

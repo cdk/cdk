@@ -40,7 +40,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Engine that performs the validation by traversing the IChemObject
@@ -58,11 +59,11 @@ import org.openscience.cdk.tools.LoggingTool;
 public class ValidatorEngine implements IValidator {
     
     private Map<String,IValidator> validators;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
     
     public ValidatorEngine() {
         validators = new Hashtable<String,IValidator>();
-        logger = new LoggingTool(this);
     }
     
     public void addValidator(IValidator validator) {

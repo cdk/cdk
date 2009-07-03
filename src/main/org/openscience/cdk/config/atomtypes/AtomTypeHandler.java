@@ -23,19 +23,20 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * SAX Handler for the AtomTypeReader.
@@ -64,7 +65,8 @@ public class AtomTypeHandler extends DefaultHandler {
     private final int SCALAR_PIBONDCOUNT=13;
     private final int SCALAR_LONEPAIRCOUNT=14;
     
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AtomTypeHandler.class);
     private String currentChars;
     private List<IAtomType> atomTypes;
     private int scalarType;
@@ -79,7 +81,6 @@ public class AtomTypeHandler extends DefaultHandler {
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
     public AtomTypeHandler(IChemObjectBuilder build) {
-        logger = new LoggingTool(this);
         builder = build;
     }
 

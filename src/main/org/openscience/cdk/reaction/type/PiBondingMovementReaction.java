@@ -46,7 +46,8 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
@@ -83,14 +84,14 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.PiBondingMovementReactionTest")
 public class PiBondingMovementReaction extends ReactionEngine implements IReactionProcess{
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(PiBondingMovementReaction.class);
 	
 	/**
 	 * Constructor of the PiBondingMovementReaction object
 	 *
 	 */
 	public PiBondingMovementReaction(){
-		logger = new LoggingTool(this);
 	}
 
 	/**

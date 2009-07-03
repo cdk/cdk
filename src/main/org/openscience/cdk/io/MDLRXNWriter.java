@@ -51,7 +51,8 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 
@@ -76,7 +77,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MDLRXNWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLRXNWriter.class);
     private int reactionNumber;
     public Map rdFields=null;
 
@@ -88,7 +90,6 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public MDLRXNWriter(Writer out){
-    	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;

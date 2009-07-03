@@ -54,7 +54,8 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
@@ -85,7 +86,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLReader.class);
 
     private BooleanIOSetting forceReadAs3DCoords;
     
@@ -117,8 +119,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
 	public MDLReader(Reader in, Mode mode) {
-		super.mode = mode; 
-        logger = new LoggingTool(this);
+		super.mode = mode;
         input = new BufferedReader(in);
         initIOSettings();
 	}

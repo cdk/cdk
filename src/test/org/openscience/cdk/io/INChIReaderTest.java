@@ -35,7 +35,8 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading INChI files using one test file.
@@ -47,10 +48,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class INChIReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(INChIReaderTest.class);
 
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(INChIReaderTest.class);
         setSimpleChemObjectReader(new INChIReader(), "data/inchi/guanine.inchi.xml");
     }
     

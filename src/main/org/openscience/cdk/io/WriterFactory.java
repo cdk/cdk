@@ -39,7 +39,8 @@ import java.util.Map;
 
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Helper tool to create IChemObjectWriters.
@@ -52,7 +53,8 @@ public class WriterFactory {
 
     private final static String IO_FORMATS_LIST = "io-formats.set";
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(WriterFactory.class);
 
     private static List<IChemFormat> formats = null;
 
@@ -62,7 +64,6 @@ public class WriterFactory {
      * Constructs a ChemObjectIOInstantionTests.
      */
     public WriterFactory() {
-    	logger = new LoggingTool(this);
         registeredReaders = new HashMap<String, Class<IChemObjectWriter>>();
     }
 

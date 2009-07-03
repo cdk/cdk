@@ -28,7 +28,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -43,7 +44,8 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
 	private final String NS_ATOMTYPE = "http://cdk.sf.net/ontologies/atomtypes#";
 	
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(OWLAtomTypeHandler.class);
     private String currentChars;
     private List<IAtomType> atomTypes;
     private IAtomType currentAtomType;
@@ -57,7 +59,6 @@ public class OWLAtomTypeHandler extends DefaultHandler {
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
     public OWLAtomTypeHandler(IChemObjectBuilder build) {
-        logger = new LoggingTool(this);
         builder = build;
     }
 

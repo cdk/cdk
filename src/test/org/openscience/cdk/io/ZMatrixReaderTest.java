@@ -28,7 +28,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-io

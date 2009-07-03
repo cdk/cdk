@@ -31,7 +31,8 @@ import java.util.zip.GZIPInputStream;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * A factory for creating ChemObjectReaders. The type of reader
@@ -52,7 +53,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class ReaderFactory {
     
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ReaderFactory.class);
     private FormatFactory formatFactory = null;
     private int headerLength = 8192;
 
@@ -71,7 +73,6 @@ public class ReaderFactory {
      * @param headerLength length of the header in number of chars
      */
     public ReaderFactory(int headerLength) {
-        logger = new LoggingTool(this);
         formatFactory = new FormatFactory(headerLength);
         this.headerLength = headerLength;
     }

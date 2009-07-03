@@ -49,12 +49,10 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -71,7 +69,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class TemplateHandler3D {
 	
 	private static final IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-	private static final LoggingTool logger = new LoggingTool(TemplateHandler3D.class);
+	private static final ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 	
     IMolecule molecule;
     IRingSet sssr;

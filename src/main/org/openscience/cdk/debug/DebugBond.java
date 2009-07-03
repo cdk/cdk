@@ -31,7 +31,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -45,7 +46,8 @@ public class DebugBond extends Bond
 
     private static final long serialVersionUID = -2330398179697796261L;
     
-    LoggingTool logger = new LoggingTool(DebugBond.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugBond.class);
 	
 	public DebugBond() {
 		super();

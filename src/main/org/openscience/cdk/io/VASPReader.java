@@ -49,7 +49,8 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.math.FortranFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Read output files generated with the VASP software.
@@ -62,7 +63,8 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass("org.openscience.cdk.io.VSPReaderTest")
 public class VASPReader extends DefaultChemObjectReader {
 
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(VASPReader.class);
 
     // This variable is used to parse the input file
     protected StringTokenizer st =  new StringTokenizer("", "");;
@@ -88,7 +90,6 @@ public class VASPReader extends DefaultChemObjectReader {
      * @param input a <code>Reader</code> value
      */
     public VASPReader(Reader input) {
-        logger = new LoggingTool(this);
         if (input instanceof BufferedReader) {
             this.inputBuffer = (BufferedReader)input;
         } else {

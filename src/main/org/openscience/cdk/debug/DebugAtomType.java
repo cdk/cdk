@@ -29,7 +29,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -43,7 +44,8 @@ public class DebugAtomType extends AtomType
 
     private static final long serialVersionUID = 1427549696666679540L;
     
-    LoggingTool logger = new LoggingTool(DebugAtomType.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomType.class);
 
 	public DebugAtomType(String elementSymbol) {
 		super(elementSymbol);

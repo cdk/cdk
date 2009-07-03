@@ -44,7 +44,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -85,7 +86,8 @@ public class ModelBuilder3D {
 
 	String forceFieldName = "mm2";
 	
-	private LoggingTool logger = new LoggingTool(ModelBuilder3D.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ModelBuilder3D.class);
 	
 	/**
 	 * Constructor for the ModelBuilder3D object.

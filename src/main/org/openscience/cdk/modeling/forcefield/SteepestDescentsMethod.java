@@ -22,8 +22,6 @@ package org.openscience.cdk.modeling.forcefield;
 
 import javax.vecmath.GVector;
 
-//import org.openscience.cdk.tools.LoggingTool;
-
 
 /**
  * Find a direction from a point of the coordinates space using the steepest descents approach.
@@ -36,12 +34,8 @@ import javax.vecmath.GVector;
  */
 public class SteepestDescentsMethod {
 	GVector sk = null;
-	//private LoggingTool logger;
 
-
-	public SteepestDescentsMethod() {        
-		//logger = new LoggingTool(this);
-	}
+	public SteepestDescentsMethod() {}
 
 
 	/**

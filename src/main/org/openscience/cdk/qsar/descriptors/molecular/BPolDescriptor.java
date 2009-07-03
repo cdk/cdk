@@ -38,7 +38,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Sum of the absolute value of the difference between atomic polarizabilities 
@@ -72,7 +73,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptorTest")
 public class BPolDescriptor implements IMolecularDescriptor {
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(BPolDescriptor.class);
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
     private static final String[] names = {"bpol"};
@@ -81,7 +83,6 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *  Constructor for the APolDescriptor object
      */
     public BPolDescriptor() {
-        logger = new LoggingTool(this);
     // atomic polarizabilities ordered by atomic number from 1 to 102
     if (polarizabilities == null) {
             polarizabilities = new double[] {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76,

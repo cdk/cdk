@@ -51,7 +51,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -70,7 +71,8 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class Mol2Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Mol2Reader.class);
 
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -78,7 +80,6 @@ public class Mol2Reader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public Mol2Reader(Reader in) {
-        logger = new LoggingTool(this);
         input = new BufferedReader(in);
     }
 

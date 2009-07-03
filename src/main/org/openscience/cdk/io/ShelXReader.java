@@ -49,7 +49,8 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.math.FortranFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 /**
@@ -73,7 +74,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class ShelXReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ShelXReader.class);
 
     /**
      * Create an ShelX file reader.
@@ -82,7 +84,6 @@ public class ShelXReader extends DefaultChemObjectReader {
      */
     public ShelXReader(Reader input) {
         this.input = new BufferedReader(input);
-        this.logger = new LoggingTool(this);
     }
 
     public ShelXReader(InputStream input) {

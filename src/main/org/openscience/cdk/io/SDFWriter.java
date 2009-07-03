@@ -49,7 +49,8 @@ import org.openscience.cdk.io.formats.SDFFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.smiles.InvPair;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -63,7 +64,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 @TestClass("org.openscience.cdk.io.SDFWriterTest")
 public class SDFWriter extends DefaultChemObjectWriter {
 
-    private final static LoggingTool logger = new LoggingTool(SDFWriter.class);
+    private final static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(SDFWriter.class);
 
     private BufferedWriter writer;
     private BooleanIOSetting writerProperties;

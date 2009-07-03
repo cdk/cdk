@@ -23,15 +23,20 @@
  */
 package org.openscience.cdk.formula.rules;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-
-import java.util.*;
 
 /**
  * <p>Ring Double Bond Equivalents (RDBE) or 
@@ -64,7 +69,8 @@ public class RDBERule implements IRule{
 
 	private static Map<String,int[]> oxidationStateTable = null;
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(RDBERule.class);
 	private double min = -0.5;
 	private double max = 30;
 
@@ -72,7 +78,6 @@ public class RDBERule implements IRule{
      *  Constructor for the RDBE object.
      */
     public RDBERule() {
-        logger = new LoggingTool(this);
         createTable();
     }
 

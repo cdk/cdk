@@ -26,8 +26,6 @@ import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
-import java.util.Hashtable;
-//import org.openscience.cdk.tools.LoggingTool;
 import java.util.Map;
 
 
@@ -79,7 +77,6 @@ public class GeometricMinimizer {
 	double infiniteNorm;
 
 	NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
-	//private LoggingTool logger;
 
 	IMolecule molecule;
 
@@ -87,9 +84,7 @@ public class GeometricMinimizer {
 	/**
 	 *  Constructor for the GeometricMinimizer object
 	 */
-	public GeometricMinimizer() {
-		//logger = new LoggingTool(this);
-	}
+	public GeometricMinimizer() {}
 
 
 	public void setMolecule(IMolecule mol, boolean clone) throws Exception {

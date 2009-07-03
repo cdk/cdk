@@ -24,6 +24,19 @@
  */
 package org.openscience.cdk.geometry;
 
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector2d;
+import javax.vecmath.Vector3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -31,15 +44,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector2d;
-import javax.vecmath.Vector3d;
-import java.awt.*;
-import java.util.*;
-import java.util.List;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * A set of static utility classes for geometric calculations and operations.
@@ -58,7 +64,8 @@ import java.util.List;
  */
 public class GeometryTools {
 
-	private static LoggingTool logger = new LoggingTool(GeometryTools.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(GeometryTools.class);
 
 	/**
 	 *  Adds an automatically calculated offset to the coordinates of all atoms

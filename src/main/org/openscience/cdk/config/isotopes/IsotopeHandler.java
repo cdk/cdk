@@ -23,16 +23,17 @@
  */
 package org.openscience.cdk.config.isotopes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Reads an isotope list in CML2 format. An example definition is:
@@ -57,7 +58,8 @@ import java.util.List;
 @TestClass("org.openscience.cdk.config.isotopes.IsotopeHandlerTest")
 public class IsotopeHandler extends DefaultHandler {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IsotopeHandler.class);
     private String currentChars;
     private List<IIsotope> isotopes;
 
@@ -73,7 +75,6 @@ public class IsotopeHandler extends DefaultHandler {
      * @param builder The IChemObjectBuilder used to create new IIsotope's.
      */
     public IsotopeHandler(IChemObjectBuilder builder) {
-        logger = new LoggingTool(this);
         this.builder = builder;
     }
 

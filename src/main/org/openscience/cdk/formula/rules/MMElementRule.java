@@ -30,7 +30,8 @@ import java.util.Iterator;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the occurrence of the IElements in the IMolecularFormula, for
@@ -74,7 +75,8 @@ public class MMElementRule implements IRule{
 
 	private HashMap<String, Integer> hashMap;
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(MMElementRule.class);
 
 	/** A enumeration of the possible mass range
 	 * according the rules */
@@ -104,8 +106,6 @@ public class MMElementRule implements IRule{
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public MMElementRule(){
-        logger = new LoggingTool(this);
-        
         // initiate Hashmap default
         this.hashMap = getWisley_500();
     }

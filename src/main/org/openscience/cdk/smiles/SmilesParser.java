@@ -25,6 +25,11 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -32,17 +37,20 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Stack;
-import java.util.StringTokenizer;
 
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
@@ -77,7 +85,8 @@ public class SmilesParser {
 
 	private final static String HAS_HARDCODED_HYDROGEN_COUNT = "SmilesParser.HasHardcodedHydrogenCount";
 	
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(SmilesParser.class);
 	private CDKHydrogenAdder hAdder;
 		
 	private int status = 0;
@@ -90,7 +99,6 @@ public class SmilesParser {
 	 */
     public SmilesParser(IChemObjectBuilder builder)
 	{
-		logger = new LoggingTool(this);
 		this.builder = builder;
 		try {
 			hAdder = CDKHydrogenAdder.getInstance(builder);

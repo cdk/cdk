@@ -36,7 +36,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
@@ -51,7 +52,8 @@ public class DebugFragmentAtom extends FragmentAtom {
 
 	private static final long serialVersionUID = 0L;
 
-	LoggingTool logger = new LoggingTool(DebugFragmentAtom.class);
+	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugFragmentAtom.class);
 
 	public DebugFragmentAtom() {
 		super();

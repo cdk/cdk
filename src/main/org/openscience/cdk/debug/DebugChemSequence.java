@@ -28,7 +28,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -42,7 +43,8 @@ public class DebugChemSequence extends ChemSequence
 
     private static final long serialVersionUID = -628120469241907704L;
     
-    LoggingTool logger = new LoggingTool(DebugChemSequence.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugChemSequence.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

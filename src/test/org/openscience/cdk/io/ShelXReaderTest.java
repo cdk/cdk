@@ -35,17 +35,18 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module test-io
  */
 public class ShelXReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ShelXReaderTest.class);
 
     @BeforeClass public static void setup() throws Exception {
-        logger = new LoggingTool(ShelXReaderTest.class);
         setSimpleChemObjectReader(new ShelXReader(), "data/shelx/frame_1.res");
     }
 

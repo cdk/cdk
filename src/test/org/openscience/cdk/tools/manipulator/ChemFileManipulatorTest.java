@@ -20,30 +20,48 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.IDCreator;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.ReactionSet;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.tools.IDCreator;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+
 /**
  * @cdk.module test-standard
  */
 public class ChemFileManipulatorTest extends CDKTestCase {
     
-	private final static LoggingTool logger = new LoggingTool(ChemFileManipulatorTest.class);
+	private final static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ChemFileManipulatorTest.class);
 	
 	IMolecule molecule1 = null;
 	IMolecule molecule2 = null;

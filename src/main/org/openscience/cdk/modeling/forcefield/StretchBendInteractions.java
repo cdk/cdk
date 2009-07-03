@@ -33,7 +33,8 @@ import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -74,7 +75,8 @@ public class StretchBendInteractions {
 
 	BondStretching bs = new BondStretching();
 	AngleBending ab = new AngleBending();
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(StretchBendInteractions.class);
 
 	GVector moleculeCurrentCoordinates = null;
 	boolean[] changeAtomCoordinates = null;
@@ -85,7 +87,6 @@ public class StretchBendInteractions {
 	 *  Constructor for the StretchBendInteractions object
 	 */
 	public StretchBendInteractions() {
-		logger = new LoggingTool(this);
 	}
 
 

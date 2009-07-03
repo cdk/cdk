@@ -25,7 +25,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -41,10 +42,10 @@ import org.xml.sax.InputSource;
  **/
 public class CMLResolver implements EntityResolver {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CMLResolver.class);
 
     public CMLResolver() {
-        logger = new LoggingTool(this);
     }
 
     /**

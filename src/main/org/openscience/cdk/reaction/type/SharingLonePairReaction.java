@@ -44,7 +44,8 @@ import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -81,14 +82,14 @@ import org.openscience.cdk.tools.LoggingTool;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.SharingLonePairReactionTest")
 public class SharingLonePairReaction extends ReactionEngine implements IReactionProcess{
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(SharingLonePairReaction.class);
 
 	/**
 	 * Constructor of the SharingLonePairReaction object.
 	 *
 	 */
 	public SharingLonePairReaction(){
-		logger = new LoggingTool(this);
 	}
 	/**
 	 *  Gets the specification attribute of the SharingLonePairReaction object.

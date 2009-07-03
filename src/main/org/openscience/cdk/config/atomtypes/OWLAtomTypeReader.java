@@ -34,7 +34,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.OWLBasedAtomTypeConfigurator;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -50,7 +51,8 @@ public class OWLAtomTypeReader {
 
     private XMLReader parser;
     private Reader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
 
     /**
      * Instantiates the XML based AtomTypeReader.
@@ -63,7 +65,6 @@ public class OWLAtomTypeReader {
     }
 
     private void init() {
-        logger = new LoggingTool(this);
         boolean success = false;
         // If JAXP is preferred (comes with Sun JVM 1.4.0 and higher)
         if (!success) {

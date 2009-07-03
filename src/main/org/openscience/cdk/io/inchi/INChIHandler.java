@@ -28,7 +28,8 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -52,7 +53,8 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class INChIHandler extends DefaultHandler {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(INChIHandler.class);
     private INChIContentProcessorTool inchiTool;
 
     private ChemFile chemFile;
@@ -68,7 +70,6 @@ public class INChIHandler extends DefaultHandler {
      * Constructor for the IChIHandler.
      **/
     public INChIHandler() {
-        logger = new LoggingTool(this);
         inchiTool = new INChIContentProcessorTool();
     }
 

@@ -34,17 +34,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module test-io
  */
 public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(PCCompoundXMLReaderTest.class);
 
     @BeforeClass public static void setup() throws Exception {
-        logger = new LoggingTool(PCCompoundXMLReaderTest.class);
         setSimpleChemObjectReader(new PCCompoundXMLReader(), "data/asn/pubchem/cid1145.xml");
     }
 

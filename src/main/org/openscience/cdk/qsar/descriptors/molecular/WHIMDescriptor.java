@@ -23,8 +23,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -37,11 +40,11 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point3d;
-import java.util.HashMap;
-import java.util.Map;
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 
 /**
@@ -127,12 +130,12 @@ import java.util.Map;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest")
 public class WHIMDescriptor implements IMolecularDescriptor {
 
-    LoggingTool logger;
+    static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);
     String type = "";
     Map<String,Double> hashatwt, hashvdw, hasheneg, hashpol;
 
     public WHIMDescriptor() {
-        logger = new LoggingTool(this);
         this.type = "unity"; // default weighting scheme
 
         // set up the values from TOD98

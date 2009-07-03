@@ -36,7 +36,8 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This matches recursive smarts atoms. 
@@ -47,7 +48,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class RecursiveSmartsAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 1L;
-	private final static LoggingTool logger = new LoggingTool(
+	private final static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(
 			RecursiveSmartsAtom.class);
 	/**
 	 * AtomContainer of the target molecule to which this recursive smarts query trying to match

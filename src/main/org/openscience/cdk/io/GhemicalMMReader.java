@@ -47,7 +47,8 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.GhemicalMMFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Reads Ghemical (<a href="http://www.uku.fi/~thassine/ghemical/">
@@ -62,11 +63,11 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass("org.openscience.cdk.io.GhemicalMMReaderTest")
 public class GhemicalMMReader extends DefaultChemObjectReader {
 
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(GhemicalMMReader.class);
     private BufferedReader input = null;
 
     public GhemicalMMReader(Reader input) {
-        this.logger = new LoggingTool(this);
         this.input = new BufferedReader(input);
     }
 

@@ -28,7 +28,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -42,7 +43,8 @@ public class DebugSingleElectron extends SingleElectron
 
     private static final long serialVersionUID = -2895377834940311825L;
     
-    LoggingTool logger = new LoggingTool(DebugSingleElectron.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugSingleElectron.class);
 	
     public DebugSingleElectron() {
     	super();

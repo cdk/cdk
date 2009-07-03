@@ -19,13 +19,13 @@
  */
 package org.openscience.cdk.tools;
 
-import org.apache.log4j.Logger;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
+
+import org.apache.log4j.Logger;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:
@@ -82,7 +82,7 @@ import java.io.StringReader;
  *
  * <p>The class uses log4j as a backend if available, and System.out otherwise.
  *
- * @cdk.module core
+ * @cdk.module log4j
  * @cdk.githash
  * @cdk.builddepends log4j.jar
  */
@@ -93,7 +93,7 @@ public class LoggingTool implements ILoggingTool {
     private boolean toSTDOUT = false;
 
     private Logger log4jLogger;
-    private LoggingTool logger;
+    private static ILoggingTool logger;
     private String classname;
 
     private int stackLength;  // NOPMD

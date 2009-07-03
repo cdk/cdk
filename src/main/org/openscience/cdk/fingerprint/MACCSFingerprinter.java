@@ -24,6 +24,15 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -35,16 +44,8 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This fingerprinter generates 166 bit MACCS keys.
@@ -70,8 +71,8 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.fingerprint.MACCSFingerprinterTest")
 public class MACCSFingerprinter implements IFingerprinter {
-    private static LoggingTool logger 
-        = new LoggingTool(MACCSFingerprinter.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
     private MaccsKey[] keys = null;
 
     @TestMethod("testFingerprint")

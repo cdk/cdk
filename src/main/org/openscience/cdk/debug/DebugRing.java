@@ -37,7 +37,8 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -51,7 +52,8 @@ public class DebugRing extends Ring
 
     private static final long serialVersionUID = -6420813246421544803L;
     
-    LoggingTool logger = new LoggingTool(DebugRing.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugRing.class);
 
 	public DebugRing() {
 		super();

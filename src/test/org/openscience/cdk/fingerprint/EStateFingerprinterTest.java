@@ -32,14 +32,15 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.LoggingTool;
-
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-fingerprint
  */
 public class EStateFingerprinterTest extends AbstractFingerprinterTest {
 
-	private static LoggingTool logger = new LoggingTool(EStateFingerprinterTest.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
 
 	public IFingerprinter getFingerprinter() {
 		return new EStateFingerprinter();

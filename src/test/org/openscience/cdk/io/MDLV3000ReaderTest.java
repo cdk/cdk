@@ -35,7 +35,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading MDL V3000 mol files using one test file.
@@ -47,10 +48,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
 
     @BeforeClass public static void setup() throws Exception {
-        logger = new LoggingTool(MDLV3000ReaderTest.class);
         setSimpleChemObjectReader(new MDLV3000Reader(), "data/mdl/molV3000.mol");
     }
 

@@ -36,9 +36,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
@@ -66,7 +66,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -77,7 +78,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CML2WriterTest extends CDKTestCase {
 
-    private static LoggingTool logger = new LoggingTool(CML2WriterTest.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CML2WriterTest.class);
 
     @Test public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();

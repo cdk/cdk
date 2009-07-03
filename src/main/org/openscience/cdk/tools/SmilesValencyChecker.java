@@ -54,7 +54,8 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
 
 	private String atomTypeList = null;
 	protected AtomTypeFactory structgenATF;
-	protected LoggingTool logger;
+	protected static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(SmilesValencyChecker.class);
 
 	public SmilesValencyChecker() {
         this("org/openscience/cdk/dict/data/cdk-atom-types.owl");
@@ -62,7 +63,6 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
 
 	public SmilesValencyChecker(String atomTypeList) {
         this.atomTypeList = atomTypeList;
-        logger = new LoggingTool(this);
         logger.info("Using configuration file: ", atomTypeList);
     }
 

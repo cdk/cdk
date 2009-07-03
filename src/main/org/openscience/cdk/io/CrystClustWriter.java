@@ -20,6 +20,15 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+
+import javax.vecmath.Vector3d;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -30,11 +39,8 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Vector3d;
-import java.io.*;
-//import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Rather stupid file format used for storing crystal information.
@@ -49,7 +55,8 @@ import java.io.*;
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CrystClustWriter.class);
 
     /**
      * Constructs a new CrystClustWriter class. Output will be stored in the Writer
@@ -58,7 +65,6 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public CrystClustWriter(Writer out) {
-    	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;

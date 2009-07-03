@@ -33,7 +33,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.cml.CMLHandler;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * CDO object needed as interface with the JCFL library for reading CML
@@ -62,7 +63,8 @@ public class EventCMLHandler extends CMLHandler {
     private IBond.Stereo bond_stereo;
     private String bond_id;
     
-    protected LoggingTool logger;
+    protected static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
     
     private DefaultEventChemObjectReader eventReader;
     
@@ -73,7 +75,6 @@ public class EventCMLHandler extends CMLHandler {
     public EventCMLHandler(DefaultEventChemObjectReader eventReader,
     		                IChemObjectBuilder builder) {
     	super(builder.newChemFile());
-        logger = new LoggingTool(this);
         this.eventReader = eventReader;
         this.builder = builder;
         clearData();

@@ -33,7 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.PeriodicTableElement;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -55,7 +56,8 @@ public class ElementPTReader {
     private XMLReader parser;
     private Reader input;
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ElementPTReader.class);
 
     /**
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
@@ -68,7 +70,6 @@ public class ElementPTReader {
     }
 
     private void init() {
-        logger = new LoggingTool(this);
         boolean success = false;
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {

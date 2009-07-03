@@ -64,7 +64,8 @@ import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStrand;
 import org.openscience.cdk.protein.data.PDBStructure;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -88,7 +89,8 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 @TestClass("org.openscience.cdk.io.PDBReaderTest")
 public class PDBReader extends DefaultChemObjectReader {
 	
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(PDBReader.class);
 	private BufferedReader _oInput; // The internal used BufferedReader
 	private BooleanIOSetting useRebondTool;
 	private BooleanIOSetting readConnect;
@@ -125,7 +127,6 @@ public class PDBReader extends DefaultChemObjectReader {
 	 *
 	 */
 	public PDBReader(Reader oIn) {
-		logger = new LoggingTool(this.getClass());
 		_oInput = new BufferedReader(oIn);
 		initIOSettings();
 		pdbFactory = null;

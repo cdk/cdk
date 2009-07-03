@@ -27,9 +27,10 @@ package org.openscience.cdk.validate;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.dict.DictionaryDatabase;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Validates the existence of references to dictionaries.
@@ -40,11 +41,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */ 
 public class DictionaryValidator extends AbstractValidator {
 
-    private static LoggingTool logger;
-    
-    static {
-        logger = new LoggingTool(DictionaryValidator.class);
-    }
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DictionaryValidator.class);
     
     private DictionaryDatabase db;
     

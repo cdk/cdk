@@ -85,9 +85,7 @@ public class AngleBending {
 	/**
 	 *  Constructor for the AngleBending object
 	 */
-	public AngleBending() {
-	        //logger = new LoggingTool(this);
-	}
+	public AngleBending() {}
 
 	public void setAngleBendingFlag(boolean flag){
 		angleBending=flag;

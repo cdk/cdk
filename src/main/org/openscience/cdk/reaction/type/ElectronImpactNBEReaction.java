@@ -43,7 +43,8 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.RemovingSEofNBMechanism;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>IReactionProcess which make an electron impact for for Non-Bonding Electron Lost. 
@@ -80,7 +81,8 @@ import org.openscience.cdk.tools.LoggingTool;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.ElectronImpactNBEReactionTest")
 public class ElectronImpactNBEReaction extends ReactionEngine implements IReactionProcess{
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(ElectronImpactNBEReaction.class);
 
 	/**
 	 * Constructor of the ElectronImpactNBEReaction object.
@@ -88,7 +90,6 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 	 */
 	public ElectronImpactNBEReaction(){
 		super();
-		logger = new LoggingTool(this);
 	}
 	/**
 	 * Gets the specification attribute of the ElectronImpactNBEReaction object.

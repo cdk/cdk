@@ -27,7 +27,8 @@ import java.io.IOException;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the mass from an IMolecularFormula is
@@ -61,7 +62,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 public class ToleranceRangeRule implements IRule{
 
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(ToleranceRangeRule.class);
 
 	private double mass = 0.0;
 	
@@ -74,7 +76,6 @@ public class ToleranceRangeRule implements IRule{
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public ToleranceRangeRule(){
-        logger = new LoggingTool(this);
     }
 
     /**

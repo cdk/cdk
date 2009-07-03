@@ -24,17 +24,23 @@
  */
 package org.openscience.cdk.charges;
 
+import java.io.IOException;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point3d;
-import java.io.IOException;
 
 /**
  * The calculation of the inductive partial atomic charges and equalization of
@@ -54,7 +60,8 @@ public class InductivePartialCharges implements IChargeCalculator {
 	private static double[] pauling;
 	private IsotopeFactory ifac = null;
 	private AtomTypeFactory factory = null;
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
 
 
 	/**
@@ -73,7 +80,6 @@ public class InductivePartialCharges implements IChargeCalculator {
 					1.9, 2.2, 2.2, 2.2, 1.9, 1.7, 1.7, 1.8, 1.9, 2.1, 2.5, 0.7, 0.9, 1.1, 1.3, 1.5,
 					1.7, 1.9, 2.2, 2.2, 2.2, 2.4, 1.9, 1.8, 1.8, 1.9, 2.0, 2.2, 0, 0.7, 0.9, 1.1};
 		}
-		logger = new LoggingTool(this);
 	}
 
 

@@ -52,7 +52,8 @@ import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HOSECodeGenerator;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -89,14 +90,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.RadicalSiteRrBetaReactionTest")
 public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReactionProcess{
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(RadicalSiteRrBetaReaction.class);
 
 	/**
 	 * Constructor of the RadicalSiteRrBetaReaction object
 	 *
 	 */
 	public RadicalSiteRrBetaReaction(){
-		logger = new LoggingTool(this);
 	}
 	/**
 	 *  Gets the specification attribute of the RadicalSiteRrBetaReaction object

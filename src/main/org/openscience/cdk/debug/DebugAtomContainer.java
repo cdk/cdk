@@ -35,7 +35,8 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -49,7 +50,8 @@ public class DebugAtomContainer extends AtomContainer
 
     private static final long serialVersionUID = 7584711255625778345L;
     
-    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
 	public DebugAtomContainer() {
 		super();

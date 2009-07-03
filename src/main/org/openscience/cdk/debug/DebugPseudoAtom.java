@@ -33,7 +33,8 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -47,7 +48,8 @@ public class DebugPseudoAtom extends PseudoAtom
 
     private static final long serialVersionUID = -5935090219383862070L;
     
-    LoggingTool logger = new LoggingTool(DebugPseudoAtom.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugPseudoAtom.class);
 	
 	public DebugPseudoAtom() {
 		super();

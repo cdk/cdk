@@ -114,6 +114,7 @@
       <antcall target="doccheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="core"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="data"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="log4j"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="datadebug"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="nonotify"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="standard"/></antcall>

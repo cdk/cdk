@@ -1,14 +1,14 @@
 package org.openscience.cdk.io.iterator;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.InputStream;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -19,12 +19,8 @@ import java.io.InputStream;
  */
 public class IteratingMDLConformerReaderTest extends CDKTestCase {
 
-    private static LoggingTool logger;
-
-    @BeforeClass
-    public static void setup() {
-        logger = new LoggingTool(IteratingMDLConformerReaderTest.class);
-    }
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingMDLConformerReaderTest.class);
 
     @Test
     public void testSDF() throws Exception {

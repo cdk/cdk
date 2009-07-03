@@ -37,7 +37,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Sum of the atomic polarizabilities (including implicit hydrogens).
@@ -75,7 +76,8 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.APolDescriptorTest")
 public class APolDescriptor implements IMolecularDescriptor {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(APolDescriptor.class);
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
     private static final String[] names = {"apol"};
@@ -84,7 +86,6 @@ public class APolDescriptor implements IMolecularDescriptor {
      *  Constructor for the APolDescriptor object.
      */
     public APolDescriptor() {
-        logger = new LoggingTool(this);
         if (polarizabilities == null) {
             polarizabilities = new double[] {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 
                 1.1, 0.802, 0.557, 0.3956, 23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 

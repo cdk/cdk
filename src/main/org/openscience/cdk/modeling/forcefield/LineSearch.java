@@ -22,7 +22,8 @@ package org.openscience.cdk.modeling.forcefield;
 
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 /**
@@ -53,14 +54,14 @@ public class LineSearch {
 	double fxLS = 0;
 	double lambdabOld = 0;
 	double tol = 0.0001;
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(LineSearch.class);
 
 
 	/**
 	 *  Constructor for the LineSearch object
 	 */
 	public LineSearch() {        
-		logger = new LoggingTool(this);
 	}
 
 

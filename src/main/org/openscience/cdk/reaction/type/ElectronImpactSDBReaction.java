@@ -45,7 +45,8 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.RemovingSEofBMechanism;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>IReactionProcess which make an electron impact for Sigma Bond Dissociation.</p>
@@ -79,14 +80,14 @@ import org.openscience.cdk.tools.LoggingTool;
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.ElectronImpactSDBReactionTest")
 public class ElectronImpactSDBReaction extends ReactionEngine implements IReactionProcess{
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ElectronImpactSDBReaction.class);
 
     /**
      * Constructor of the ElectronImpactSDBReaction object.
      *
      */
     public ElectronImpactSDBReaction(){
-        logger = new LoggingTool(this);
     }
     /**
      *  Gets the specification attribute of the ElectronImpactSDBReaction object.

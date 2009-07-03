@@ -33,15 +33,14 @@ import java.awt.event.ActionEvent;
 import java.util.Hashtable;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JFrame;
 
-import org.openscience.cdk.interfaces.IChemObject;
-//import org.openscience.cdk.applications.jchempaint.JChemPaintMenuBar;
-//import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.controller.CDKPopupMenu;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Superclass of all JChemPaint GUI actions
@@ -71,7 +70,8 @@ public class JCPAction2D extends AbstractAction
 	/**
 	 *  Description of the Field
 	 */
-	protected static LoggingTool logger = null;
+	protected static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(JCPAction2D.class);
 
 	private Hashtable actions = null;
 	private Hashtable popupActions = null;
@@ -103,11 +103,7 @@ public class JCPAction2D extends AbstractAction
 	public JCPAction2D(JFrame jcpPanel, String type, boolean isPopupAction)
 	{
 		super();
-		//logger.debug("JCPAction->type: " + type);
-		if (JCPAction2D.logger == null)
-		{
-			JCPAction2D.logger = new LoggingTool(this);
-		}
+		logger.debug("JCPAction->type: " + type);
 		if (this.actions == null)
 		{
 			this.actions = new Hashtable();

@@ -69,11 +69,8 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
 	AtomTypeFactory structgenATF;
 
-	private LoggingTool logger;
-
-	public SaturationChecker() {
-		logger = new LoggingTool(this);
-	}
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(SaturationChecker.class);
 
     /**
      * @param builder the ChemObjectBuilder implementation used to construct the AtomType's.

@@ -28,11 +28,12 @@ import java.io.File;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Test for {@link RandomAccessSDFReader}.
@@ -42,7 +43,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class RandomAccessTest extends CDKTestCase {
 
-    private LoggingTool logger = new LoggingTool(this);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
 
     @Test public void test() throws Exception {
         String filename = "src/test/data/mdl/test2.sdf";

@@ -56,7 +56,8 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -77,7 +78,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 @TestClass("org.openscience.cdk.io.MDLWriterTest")
 public class MDLWriter extends DefaultChemObjectWriter {
 
-    private final static LoggingTool logger = new LoggingTool(MDLWriter.class);
+    private final static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLWriter.class);
 
     private BooleanIOSetting forceWriteAs2DCoords;
 

@@ -25,20 +25,24 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * Generate ring and Murcko-like fragments.
@@ -70,7 +74,8 @@ import java.util.Vector;
  **/
 public class GenerateFragments {
 	
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(GenerateFragments.class);
 	
 	private List murckoFragments =null;
 	private List ringFragments=null;
@@ -80,10 +85,6 @@ public class GenerateFragments {
 	private boolean exocyclicDoubleBonds=true;
 	private boolean smilesToUpperCase=false;
 	//private IChemObjectBuilder builder;
-	
-	public GenerateFragments() {
-		logger = new LoggingTool(this);
-    }
 	
 	/**
 	 * generates ring fragments from SSSR and RingPartitioner method

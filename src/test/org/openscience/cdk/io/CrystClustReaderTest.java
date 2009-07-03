@@ -37,7 +37,8 @@ import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -48,10 +49,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
         
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(CrystClustReaderTest.class);
         setSimpleChemObjectReader(new CrystClustReader(), "data/crystclust/estron.crystclust");
     }
 

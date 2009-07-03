@@ -30,7 +30,8 @@ package org.openscience.cdk.math.qm;
 
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Calculates the orbitals and orbital energies of electron systems
@@ -46,7 +47,8 @@ public class ClosedShellJob
   private Orbitals orbitals;
   private Vector E;
 
-  private LoggingTool log = new LoggingTool(ClosedShellJob.class);
+  private static ILoggingTool log =
+      LoggingToolFactory.createLoggingTool(ClosedShellJob.class);
 
   private int iterations = 0;
 

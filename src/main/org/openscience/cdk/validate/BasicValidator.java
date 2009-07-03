@@ -30,18 +30,19 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -53,11 +54,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */ 
 public class BasicValidator extends AbstractValidator {
 
-    private static LoggingTool logger;
-    
-    static {
-        logger = new LoggingTool(BasicValidator.class);
-    }
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(BasicValidator.class);
     
     public BasicValidator() {
     }

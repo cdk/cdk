@@ -36,7 +36,8 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -50,7 +51,8 @@ public class DebugMonomer extends Monomer
 
     private static final long serialVersionUID = -7312839949399572435L;
     
-    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

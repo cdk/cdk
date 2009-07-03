@@ -43,7 +43,8 @@ import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Random access to text files of compounds. 
@@ -59,7 +60,8 @@ public abstract class RandomAccessReader
     extends DefaultRandomAccessChemObjectReader
     implements IRandomAccessChemObjectReader<IChemObject> {
 
-    protected static LoggingTool logger = new LoggingTool(RandomAccessReader.class);
+    protected static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(RandomAccessReader.class);
     protected RandomAccessFile raFile;
     protected IOSetting[] headerOptions = null;
     private final String filename;

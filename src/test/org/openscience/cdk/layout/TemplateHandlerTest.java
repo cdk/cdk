@@ -25,8 +25,8 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -35,7 +35,8 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module  test-sdg
@@ -46,7 +47,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class TemplateHandlerTest extends CDKTestCase {
 
 	public boolean standAlone = false;
-	private static LoggingTool logger = null;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(TemplateHandlerTest.class);
 
 	private static SmilesParser sp = null;
 	private static StructureDiagramGenerator sdg = null;
@@ -55,7 +57,6 @@ public class TemplateHandlerTest extends CDKTestCase {
 	 *  The JUnit setup method
 	 */
 	@BeforeClass public static void setUp() throws Exception {
-		logger = new LoggingTool(TemplateHandlerTest.class);
 		sdg = new StructureDiagramGenerator();
 		sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 	}

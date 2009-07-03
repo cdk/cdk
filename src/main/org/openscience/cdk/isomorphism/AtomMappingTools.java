@@ -31,7 +31,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module    standard
@@ -39,7 +40,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class AtomMappingTools {
 
-	private static LoggingTool logger = new LoggingTool(AtomMappingTools.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
 	
     /**
      * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest

@@ -70,14 +70,10 @@ public class ElectrostaticInteractions {
 	double[] iQ = null;
 	double electrostatic14interactionsScale = 0.75;	// Scale factor for 1-4 interactions. To take in the future from mmff94.prm files.
 	
-	//private LoggingTool logger;
-	
 	/**
 	 *  Constructor for the ElectrostaticInteractions object
 	 */
-	public ElectrostaticInteractions() {        
-		//logger = new LoggingTool(this);
-	}
+	public ElectrostaticInteractions() {}
 
 
 	/**

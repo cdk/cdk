@@ -20,18 +20,6 @@
  */
 package org.openscience.cdk.protein;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.protein.data.PDBAtom;
-import org.openscience.cdk.tools.GridGenerator;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.PeriodicTable;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point3d;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -42,6 +30,26 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.tools.GridGenerator;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.PeriodicTable;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * The detection of pocket and cavities in a bioPolymer is done similar to the program 
@@ -58,7 +66,8 @@ import java.util.Vector;
  */
 public class ProteinPocketFinder {
 	
-	private final LoggingTool logger = new LoggingTool(ProteinPocketFinder.class);
+	private final ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(ProteinPocketFinder.class);
 
 	int solvantValue = 0;
 	int proteinInterior = -1;

@@ -21,7 +21,8 @@
 package org.openscience.cdk.debug;
 
 import org.openscience.cdk.protein.data.PDBStructure;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -35,7 +36,8 @@ public class DebugPDBStructure extends PDBStructure {
 	
 	private static final long serialVersionUID = 1934748703085969097L;
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     public Character getEndChainID() {
     	logger.debug("Getting End Chain ID: ", super.getEndChainID());

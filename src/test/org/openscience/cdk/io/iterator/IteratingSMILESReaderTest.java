@@ -27,18 +27,18 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.InputStream;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading SMILES mol files using one test file.
@@ -48,12 +48,8 @@ import java.io.InputStream;
  */
 public class IteratingSMILESReaderTest extends CDKTestCase {
 
-    private static LoggingTool logger;
-
-    @Before
-    public void setup() {
-       logger = new LoggingTool(IteratingSMILESReaderTest.class);
-    }
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
 
     @Test
     public void testSMILESFileWithNames() throws Exception {

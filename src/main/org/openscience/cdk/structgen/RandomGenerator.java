@@ -30,7 +30,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.math.MathTools;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -49,7 +50,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class RandomGenerator {
 	
-	LoggingTool logger = new LoggingTool(RandomGenerator.class);
+	ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(RandomGenerator.class);
 	
 	private IMolecule proposedStructure = null;
 	private IMolecule molecule = null;

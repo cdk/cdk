@@ -40,7 +40,8 @@ import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IReaderListener;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -66,7 +67,8 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     private IChemObjectBuilder builder;    
     private EventCMLHandler cdo;
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(EventCMLReader.class);;
 
     /**
      * Define this CMLReader to take the input from a java.io.Reader
@@ -101,8 +103,6 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     }
 
     private void init() {
-        logger = new LoggingTool(this);
-
         boolean success = false;
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {

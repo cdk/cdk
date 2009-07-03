@@ -40,7 +40,8 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module test-standard
@@ -48,7 +49,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class FingerprinterTest extends AbstractFingerprinterTest {
 
 	boolean standAlone = false;
-	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
+	private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
 	public IFingerprinter getFingerprinter() {
 	    return new Fingerprinter();

@@ -79,7 +79,8 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 @TestClass("org.openscience.cdk.tools.StructureResonanceGeneratorTest")
 public class StructureResonanceGenerator {
 	
-	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
+	private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class);
 	private List<IReactionProcess> reactionsList = new ArrayList<IReactionProcess>();
 	/**Generate resonance structure without looking at the symmetry*/
 	private boolean lookingSymmetry;

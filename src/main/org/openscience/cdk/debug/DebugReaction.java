@@ -29,7 +29,8 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
@@ -43,7 +44,8 @@ public class DebugReaction extends Reaction
 
     private static final long serialVersionUID = -8958358842308217875L;
     
-    LoggingTool logger = new LoggingTool(DebugReaction.class);
+    ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DebugReaction.class);
 
     public DebugReaction() {
     	super();

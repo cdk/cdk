@@ -23,14 +23,15 @@
  */
 package org.openscience.cdk.config.elements;
 
-import org.openscience.cdk.PeriodicTableElement;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.LoggingTool;
-import org.xml.sax.Attributes;
-import org.xml.sax.helpers.DefaultHandler;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Reads an element list in CML2 format. An example definition is:
@@ -65,7 +66,8 @@ public class ElementPTHandler extends DefaultHandler
 	private final int SCALAR_RADVDW = 9;
 	private final int SCALAR_PAULE = 10;
 	private int scalarType;
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(ElementPTHandler.class);
 	private String currentChars;
 	private List<PeriodicTableElement> elements;
 	
@@ -75,7 +77,6 @@ public class ElementPTHandler extends DefaultHandler
 	
 	public ElementPTHandler() 
 	{
-		logger = new LoggingTool(this);
 	}
 
 	/** 

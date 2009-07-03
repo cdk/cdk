@@ -50,7 +50,8 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.DataFeatures;
 import org.openscience.cdk.tools.IDCreator;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Converts a Molecule into CDK source code that would build the same
@@ -75,7 +76,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CDKSourceCodeWriter.class);
     
     private BooleanIOSetting write2DCoordinates;
     private BooleanIOSetting write3DCoordinates;
@@ -86,7 +88,6 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public CDKSourceCodeWriter(Writer out) {
-    	logger = new LoggingTool(this);
     	initIOSettings();
     	try {
     		setWriter(out);

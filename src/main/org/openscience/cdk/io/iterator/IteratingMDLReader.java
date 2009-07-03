@@ -48,7 +48,8 @@ import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Iterating MDL SDF reader. It allows to iterate over all molecules
@@ -84,7 +85,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class IteratingMDLReader extends DefaultIteratingChemObjectReader implements IChemObjectIOListener {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingMDLReader.class);
     private String currentLine;
     private IChemFormat currentFormat;
     private final ReaderFactory factory = new ReaderFactory();
@@ -103,7 +105,6 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
      * @param builder The builder
      */
     public IteratingMDLReader(Reader in, IChemObjectBuilder builder) {
-    	logger = new LoggingTool(this);
         this.builder = builder;
     	setReader(in);
     	initIOSettings();

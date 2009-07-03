@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -32,10 +34,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResultType;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.List;
 
 /**
  * Topological descriptor characterizing the carbon connectivity.
@@ -86,7 +85,6 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
     };
     
     public CarbonTypesDescriptor() {
-        LoggingTool logger = new LoggingTool(this);
     }
 
     @TestMethod("testGetSpecification")

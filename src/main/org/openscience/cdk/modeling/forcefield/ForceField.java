@@ -20,11 +20,10 @@
  */
 package org.openscience.cdk.modeling.forcefield;
 
+import javax.vecmath.GVector;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.ConnectivityChecker;
-
-import javax.vecmath.GVector;
-//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  To work with the coordinates of the molecule, like get the 3d coordinates of the atoms or 
@@ -42,19 +41,13 @@ public class ForceField extends GeometricMinimizer{
         boolean cgm_flag=true;
         boolean nrm_flag=true;
 	
-	//private LoggingTool logger;
-
-
 	/**
 	 *  Constructor for the ForceField object
 	 */
-	public ForceField() {        
-		//logger = new LoggingTool(this);
-	}
+	public ForceField() {}
 	
 	public ForceField(Molecule molecule) throws Exception {
 		setMolecule(molecule, false);
-		//logger = new LoggingTool(this);
 	}
 
 

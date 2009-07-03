@@ -35,7 +35,8 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
@@ -46,10 +47,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
 
     @BeforeClass public static void setup() throws Exception {
-        logger = new LoggingTool(MDLRXNV2000ReaderTest.class);
         setSimpleChemObjectReader(new MDLRXNV2000Reader(), "data/mdl/0024.stg02.rxn");
     }
 

@@ -65,7 +65,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	
     private static Map<Integer,Map<IChemObjectBuilder,CDKAtomTypeMatcher>> 
     	factories = new Hashtable<Integer,Map<IChemObjectBuilder,CDKAtomTypeMatcher>>(1); 
-    // private static LoggingTool logger = new LoggingTool(CDKAtomTypeMatcher.class);
     
     private CDKAtomTypeMatcher(IChemObjectBuilder builder, int mode) {
     	factory = AtomTypeFactory.getInstance(

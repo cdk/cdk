@@ -37,7 +37,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.AtomTypeTools;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Class implements methods to assign mmff94 atom types for a specific atom in an molecule. 
@@ -49,7 +50,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcher.class);
 
 	IBond.Order maxBondOrder = IBond.Order.SINGLE;
 	private AtomTypeFactory factory = null;
@@ -68,7 +70,6 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 	 * Constructor for the MMFF94AtomTypeMatcher object.
 	 */
 	public MM2AtomTypeMatcher() {
-		logger = new LoggingTool(this);
 		atomTypeTools=new AtomTypeTools();
 	}
 

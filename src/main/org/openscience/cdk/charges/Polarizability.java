@@ -35,7 +35,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -54,13 +55,13 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 @TestClass("org.openscience.cdk.charges.PolarizabilityTest")
 public class Polarizability {
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Polarizability.class);
 
     /**
      * Constructor for the Polarizability object
      */
     public Polarizability() {
-        logger = new LoggingTool(this);
     }
 
     private void addExplicitHydrogens(IAtomContainer container) {

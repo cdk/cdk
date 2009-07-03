@@ -20,20 +20,6 @@
  */
 package org.openscience.cdk.qsar;
 
-import nu.xom.Attribute;
-import nu.xom.Element;
-import nu.xom.Elements;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.dict.Dictionary;
-import org.openscience.cdk.dict.DictionaryDatabase;
-import org.openscience.cdk.dict.Entry;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -47,6 +33,33 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import nu.xom.Attribute;
+import nu.xom.Element;
+import nu.xom.Elements;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.dict.Dictionary;
+import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.dict.Entry;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * A class that provides access to automatic descriptor calculation and more.
@@ -90,7 +103,8 @@ public class DescriptorEngine {
     private List<String> classNames = null;
     private List<IDescriptor> descriptors = null;
     private List<DescriptorSpecification> speclist = null;
-    private static LoggingTool logger = new LoggingTool(DescriptorEngine.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(DescriptorEngine.class);
 
     /**
      * Instantiates the DescriptorEngine.

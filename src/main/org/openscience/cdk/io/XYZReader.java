@@ -51,7 +51,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Reads an object from XYZ formated input.
@@ -67,7 +68,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class XYZReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(XYZReader.class);
 
     /**
      * Construct a new reader from a Reader type object.
@@ -76,7 +78,6 @@ public class XYZReader extends DefaultChemObjectReader {
      */
     public XYZReader(Reader input) {
         this.input = new BufferedReader(input);
-        logger = new LoggingTool(this);
     }
 
     public XYZReader(InputStream input) {

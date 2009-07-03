@@ -38,7 +38,8 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.AtomTypeTools;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -50,14 +51,13 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
-	private static LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcherTest.class);
 	private static IMolecule testMolecule = null;
 	
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
     @BeforeClass public static void setUp() throws Exception {
-    	logger = new LoggingTool(MM2AtomTypeMatcherTest.class);
-    	
     	if (testMolecule == null) {
     		// read the test file and percieve atom types
     		AtomTypeTools att=new AtomTypeTools();

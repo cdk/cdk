@@ -25,7 +25,8 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -45,7 +46,8 @@ import org.xml.sax.helpers.DefaultHandler;
 public class CMLHandler extends DefaultHandler {
     
     private ICMLModule conv;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CMLHandler.class);
     private boolean debug = true;
     
     private Map<String,ICMLModule> userConventions;
@@ -59,7 +61,6 @@ public class CMLHandler extends DefaultHandler {
      * @param chemFile The document in which data is stored
      **/
     public CMLHandler(IChemFile chemFile) {
-        logger = new LoggingTool(this);
         conv = new CMLCoreModule(chemFile);
         userConventions = new Hashtable<String,ICMLModule>();
         xpath = new CMLStack();

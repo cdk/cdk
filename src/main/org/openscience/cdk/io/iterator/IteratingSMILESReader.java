@@ -27,6 +27,13 @@
  */
 package org.openscience.cdk.io.iterator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.NoSuchElementException;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -37,10 +44,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.*;
-import java.util.NoSuchElementException;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Iterating SMILES file reader. It allows to iterate over all molecules
@@ -64,7 +69,8 @@ import java.util.NoSuchElementException;
 public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
 
     private BufferedReader input;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingSMILESReader.class);
     private String currentLine;
     private SmilesParser sp = null;
     
@@ -82,7 +88,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      */
     @TestMethod("testSMILESFileWithNames")
     public IteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
-        logger = new LoggingTool(this);
         sp = new SmilesParser(builder);
         setReader(in);
     }

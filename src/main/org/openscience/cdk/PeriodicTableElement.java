@@ -27,7 +27,8 @@ package org.openscience.cdk;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>An PeriodicTableElement class is instantiated with at least the atom symbol:
@@ -66,7 +67,8 @@ public class PeriodicTableElement extends Element
 	 */
 	private static final long serialVersionUID = -2508810950266128526L;
 
-	private static LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(PeriodicTableElement.class);
 	
 	/** The name for this element. */
 	protected String name;
@@ -130,7 +132,6 @@ public class PeriodicTableElement extends Element
     public PeriodicTableElement(String symbol)
 	{
 		this.symbol = symbol;
-		logger = new LoggingTool(this);
 	}
 	/**
 	* Returns the name of this element.

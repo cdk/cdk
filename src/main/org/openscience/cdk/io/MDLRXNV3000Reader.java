@@ -40,7 +40,8 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLRXNV3000Format;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Class that implements the new MDL mol format introduced in August 2002.
@@ -61,13 +62,13 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private LoggingTool logger = null;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
 
     public MDLRXNV3000Reader(Reader in) {
     	this(in, Mode.RELAXED);
     }
     public MDLRXNV3000Reader(Reader in, Mode mode) {
-        logger = new LoggingTool(this);
         if (in instanceof BufferedReader) {
         	input = (BufferedReader)in;
         } else {

@@ -28,17 +28,19 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module test-io
  */
 public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
 
-    private LoggingTool logger = new LoggingTool(this);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReaderTest.class);
 
     @Test public void testList() throws Exception {
         String filename = "data/asn/pubchem/list.asn";

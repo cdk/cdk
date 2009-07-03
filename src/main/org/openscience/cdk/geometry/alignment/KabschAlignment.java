@@ -29,7 +29,8 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
@@ -96,7 +97,8 @@ import Jama.Matrix;
 @TestClass("org.openscience.cdk.geometry.alignment.KabschAlignmentTest")
 public class KabschAlignment {
 
-	private LoggingTool logger = new LoggingTool(KabschAlignment.class);
+	private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(KabschAlignment.class);
 	
     private double[][] U;
     private double rmsd = -1.0;

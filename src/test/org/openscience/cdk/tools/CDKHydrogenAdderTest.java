@@ -20,13 +20,31 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNMolecule;
@@ -35,11 +53,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of
@@ -52,7 +65,6 @@ import java.util.List;
  */
 public class CDKHydrogenAdderTest extends CDKTestCase {
 
-//	private final static LoggingTool logger = new LoggingTool(CDKHydrogenAdderTest.class);
 	private final static CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
 	private final static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
 

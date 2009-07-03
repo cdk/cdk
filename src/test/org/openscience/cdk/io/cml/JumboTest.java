@@ -38,7 +38,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for reading CML files using a few test files
@@ -49,7 +50,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class JumboTest extends CDKTestCase {
 
-    private LoggingTool logger = new LoggingTool(this);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(JumboTest.class);
 
     /**
      * Now come the actual tests...

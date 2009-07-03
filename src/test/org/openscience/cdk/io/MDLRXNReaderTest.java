@@ -48,7 +48,8 @@ import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NNChemModel;
 import org.openscience.cdk.nonotify.NNReaction;
 import org.openscience.cdk.nonotify.NNReactionSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
@@ -59,10 +60,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
-    private static LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MDLRXNReaderTest.class);
 
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(MDLRXNReaderTest.class);
         setSimpleChemObjectReader(new MDLRXNReader(), "data/mdl/reaction-1.rxn");
     }
 

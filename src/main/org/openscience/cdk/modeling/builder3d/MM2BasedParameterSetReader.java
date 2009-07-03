@@ -55,8 +55,6 @@ import org.openscience.cdk.interfaces.IAtomType;
  */
 public class MM2BasedParameterSetReader {
 
-//	private final LoggingTool logger = new LoggingTool(MM2BasedParameterSetReader.class);
-	
 	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
 	private InputStream ins = null;
 	private Map<String, Object> parameterSet;

@@ -48,7 +48,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -68,7 +69,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 public class TemplateHandler
 {
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(TemplateHandler.class);
 
 	private List<IAtomContainer> templates = null;
 
@@ -78,7 +80,6 @@ public class TemplateHandler
 	 */
 	public TemplateHandler(IChemObjectBuilder builder)
 	{
-		logger = new LoggingTool(this);
 		templates = new ArrayList<IAtomContainer>();
 		loadTemplates(builder);
 	}

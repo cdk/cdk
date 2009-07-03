@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.io.IOException;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -35,9 +37,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.IOException;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  *  This class return the covalent radius of a given atom.
@@ -67,8 +68,8 @@ import java.io.IOException;
 public class CovalentRadiusDescriptor implements IAtomicDescriptor {
 
     private AtomTypeFactory factory = null;
-    private LoggingTool logger;
-
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(CovalentRadiusDescriptor.class);
 
     /**
      *  Constructor for the CovalentRadiusDescriptor object.
@@ -77,7 +78,6 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
      *  @throws ClassNotFoundException if an error occurs during tom typing
      */
     public CovalentRadiusDescriptor() throws IOException, ClassNotFoundException {
-        logger = new LoggingTool(this);
     }
 
 

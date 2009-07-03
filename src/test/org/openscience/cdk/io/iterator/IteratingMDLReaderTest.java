@@ -43,7 +43,8 @@ import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -53,7 +54,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class IteratingMDLReaderTest extends CDKTestCase {
 
-    private LoggingTool logger = new LoggingTool(this);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingMDLReaderTest.class);
 
     @Test public void testSDF() throws Exception {
         String filename = "data/mdl/test2.sdf";

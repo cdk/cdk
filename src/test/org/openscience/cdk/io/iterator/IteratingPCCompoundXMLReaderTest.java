@@ -29,18 +29,20 @@ import java.io.InputStreamReader;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module test-io
  */
 public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 
-    private LoggingTool logger = new LoggingTool(this);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
 
     @Test public void testList() throws Exception {
         String filename = "data/asn/pubchem/aceticAcids38.xml";

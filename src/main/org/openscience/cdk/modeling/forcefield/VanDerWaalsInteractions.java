@@ -98,13 +98,10 @@ public class VanDerWaalsInteractions {
 	double[] ivdw = null;
 	double vdwScale14 = 1;	// Scale factor for 1-4 interactions. To take in the future from mmff94.prm files.
 	
-	//private LoggingTool logger;
-	
 	/**
 	 *  Constructor for the VanDerWaalsInteractions object
 	 */
 	public VanDerWaalsInteractions() {        
-		//logger = new LoggingTool(this);
 	}
 
 

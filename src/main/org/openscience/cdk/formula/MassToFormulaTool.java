@@ -43,7 +43,8 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
 
@@ -69,7 +70,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
 @TestClass("org.openscience.cdk.formula.MassToFormulaToolTest")
 public class MassToFormulaTool {
 
-	private LoggingTool logger = new LoggingTool(MassToFormulaTool.class);
+	private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(MassToFormulaTool.class);
 	
 	private IChemObjectBuilder builder;
 	

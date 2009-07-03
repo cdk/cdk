@@ -26,7 +26,8 @@
 package org.openscience.cdk.io.cml;
 
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
 
 /**
@@ -42,17 +43,16 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
 
     private int current;
     private String frame_energy;
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(JMOLANIMATIONConvention.class);
 
     public JMOLANIMATIONConvention(IChemFile chemFile) {
         super(chemFile);
-        logger = new LoggingTool(this);
         current = UNKNOWN;
     }
 
     public JMOLANIMATIONConvention(ICMLModule conv) {
         super(conv);
-        logger = new LoggingTool(this);
     }
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {

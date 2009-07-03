@@ -45,7 +45,8 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Writes the SMILES strings to a plain text file.
@@ -58,7 +59,8 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass("org.openscience.cdk.io.SMILESWriterTest")
 public class SMILESWriter extends DefaultChemObjectWriter {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(SMILESWriter.class);
     private BufferedWriter writer;
 
     /**
@@ -67,7 +69,6 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public SMILESWriter(Writer out) {
-    	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;

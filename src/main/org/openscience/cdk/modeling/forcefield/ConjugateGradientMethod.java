@@ -22,7 +22,8 @@ package org.openscience.cdk.modeling.forcefield;
 
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 /**
@@ -41,14 +42,14 @@ public class ConjugateGradientMethod {
 	boolean orthogonalDirectionsProperty = true;
 	GVector diffgk_gkminus1 = null;
 
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(ConjugateGradientMethod.class);
 
 
 	/**
 	 *  Constructor for the ConjugateGradientMethod object
 	 */
 	public ConjugateGradientMethod() {
-		logger = new LoggingTool(this);
 	}
 
 

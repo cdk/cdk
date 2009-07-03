@@ -29,7 +29,8 @@ import java.util.regex.Pattern;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Tool to help process INChI 1.12beta content.
@@ -39,10 +40,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class INChIContentProcessorTool {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class);;
     
     public INChIContentProcessorTool() {
-        logger = new LoggingTool(this);
     }
 
     /**

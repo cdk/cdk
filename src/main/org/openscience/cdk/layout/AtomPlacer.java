@@ -28,6 +28,13 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
@@ -38,14 +45,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -61,7 +63,8 @@ public class AtomPlacer
 {
 
     public final static boolean debug = true;
-    private static LoggingTool logger = new LoggingTool(AtomPlacer.class);
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AtomPlacer.class);
 
     /**
      *  The molecule to be laid out. To be assigned from outside

@@ -27,7 +27,8 @@ import java.io.IOException;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * This class validate if the charge in the IMolecularFormula correspond with
  * a specific value. As default it is defined as neutral == 0.0.
@@ -53,8 +54,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class ChargeRule implements IRule{
 
-
-	private LoggingTool logger;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(ChargeRule.class);
 	
 	private double charge = 0.0;
 
@@ -65,7 +66,6 @@ public class ChargeRule implements IRule{
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public ChargeRule() {
-        logger = new LoggingTool(this);
     }
 
     /**

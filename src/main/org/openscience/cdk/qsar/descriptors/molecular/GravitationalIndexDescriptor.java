@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -37,10 +41,8 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point3d;
-import java.util.ArrayList;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 /**
@@ -89,7 +91,8 @@ import java.util.ArrayList;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest")
 public class GravitationalIndexDescriptor implements IMolecularDescriptor {
 
-    private LoggingTool logger;
+    private static ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
 
     private class pair {
         int x, y;
@@ -107,7 +110,6 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
     };
 
     public GravitationalIndexDescriptor() {
-        logger = new LoggingTool(this);
     }
 
     @TestMethod("testGetSpecification")

@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -45,10 +44,6 @@ import java.util.Iterator;
  * @see        CDKTestCase
  */
 public class CDKTestCase {
-
-    static {
-        LoggingTool.configureLog4j();
-    }
 
     /**
      * Determines if slow JUnit tests are to be run. You can set this

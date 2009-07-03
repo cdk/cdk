@@ -40,7 +40,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Helper class for Structure Diagram Generation. Resolves atom or bond
@@ -56,14 +57,14 @@ import org.openscience.cdk.tools.LoggingTool;
 public class OverlapResolver
 {
 
-	private org.openscience.cdk.tools.LoggingTool logger = null;
+	private static ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(OverlapResolver.class);
 
 	double bondLength = 1.5;
 	int maxSteps = 10000;
 	
 	public OverlapResolver()
 	{
-		logger = new LoggingTool(this);	
 	}
 	
 	
