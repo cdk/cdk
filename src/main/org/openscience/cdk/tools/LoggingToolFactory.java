@@ -48,7 +48,7 @@ public class LoggingToolFactory {
     public final static String STDOUT_LOGGING_TOOL_CLASS =
         "org.openscience.cdk.tools.SystemOutLoggingTool";
 
-    private static Class<? extends ILoggingTool> loggingTool;
+    private static Class<? extends ILoggingTool> userSetILoggerTool;
 
     /**
      * Sets the {@link ILoggingTool} implementation to be used.
@@ -56,10 +56,10 @@ public class LoggingToolFactory {
      * @param loggingTool The new {@link ILoggingTool}.
      * @see   #getLoggingToolClass()
      */
-    @TestMethod("testSetGetLoggingToolClass")
+    @TestMethod("testSetGetLoggingToolClass,testCustomLogger")
     public static void setLoggingToolClass(
             Class<? extends ILoggingTool> loggingTool) {
-        LoggingToolFactory.loggingTool = loggingTool;
+        LoggingToolFactory.userSetILoggerTool = loggingTool;
     }
 
     /**
@@ -70,7 +70,7 @@ public class LoggingToolFactory {
      */
     @TestMethod("testSetGetLoggingToolClass")
     public static Class<? extends ILoggingTool> getLoggingToolClass() {
-        return LoggingToolFactory.loggingTool;
+        return LoggingToolFactory.userSetILoggerTool;
     }
 
     /**
@@ -83,9 +83,18 @@ public class LoggingToolFactory {
      */
     @TestMethod("testCreateLoggingTool")
     public static ILoggingTool createLoggingTool(Class<?> sourceClass) {
-        ILoggingTool tool = initializeLoggingTool(
-            sourceClass, DEFAULT_LOGGING_TOOL_CLASS
-        );
+        ILoggingTool tool = null;
+        // first attempt the user set ILoggingTool
+        if (userSetILoggerTool != null) {
+            tool = instantiateWithCreateMethod(
+                sourceClass, userSetILoggerTool
+            );
+        }
+        if (tool == null) {
+            tool = initializeLoggingTool(
+                sourceClass, DEFAULT_LOGGING_TOOL_CLASS
+            );
+        }
         if (tool == null) {
             tool = initializeLoggingTool(
                 sourceClass, STDOUT_LOGGING_TOOL_CLASS
@@ -100,24 +109,36 @@ public class LoggingToolFactory {
             Class<?> possibleLoggingToolClass = sourceClass.getClassLoader()
                .loadClass(className);
             if (ILoggingTool.class.isAssignableFrom(possibleLoggingToolClass)) {
-                Method createMethod = possibleLoggingToolClass.getMethod(
-                    "create", Class.class
-                );
-                Object createdLoggingTool = createMethod.invoke(
-                    null, sourceClass
-                );
-                if (createdLoggingTool instanceof ILoggingTool) {
-                    return (ILoggingTool)createdLoggingTool;
-                } else {
-                    System.out.println("Expected ILoggingTool, but found a:"
-                        + createdLoggingTool.getClass().getName());
-                }
+                return instantiateWithCreateMethod(sourceClass,
+                        possibleLoggingToolClass);
             }
         } catch (ClassNotFoundException e) {
-        } catch (IllegalAccessException e) {
+        } catch (SecurityException e) {
+        } catch (IllegalArgumentException e) {
+        }
+        return null;
+    }
+
+    private static ILoggingTool instantiateWithCreateMethod(
+            Class<?> sourceClass, Class<?> loggingToolClass) {
+        Method createMethod;
+        try {
+            createMethod = loggingToolClass.getMethod(
+                "create", Class.class
+            );
+            Object createdLoggingTool = createMethod.invoke(
+                null, sourceClass
+            );
+            if (createdLoggingTool instanceof ILoggingTool) {
+                return (ILoggingTool)createdLoggingTool;
+            } else {
+                System.out.println("Expected ILoggingTool, but found a:"
+                        + createdLoggingTool.getClass().getName());
+            }
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {
         } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
         } catch (InvocationTargetException e) {
         }
         return null;

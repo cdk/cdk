@@ -50,4 +50,70 @@ public class LoggingToolFactoryTest {
         );
         Assert.assertTrue(instance instanceof LoggingTool);
     }
+    
+    @Test public void testCustomLogger() {
+        LoggingToolFactory.setLoggingToolClass(CustomLogger.class);
+        ILoggingTool instance = LoggingToolFactory.createLoggingTool(
+            LoggingToolFactoryTest.class
+        );
+        Assert.assertTrue(instance instanceof CustomLogger);
+    }
+    
+    /**
+     * Custom dummy logger used in the
+     * {@link LoggingToolFactoryTest#testCustomLogger()} test to see if
+     * the custom {@link ILoggingTool} is really being used. It does
+     * not really implement any method, as the test uses a mere
+     * <code>instanceof</code> call.
+     */
+    private static class CustomLogger implements ILoggingTool {
+
+        private CustomLogger(Class<?> sourceClass) {}
+        
+        public static ILoggingTool create(Class<?> sourceClass) {
+            return new CustomLogger(sourceClass);
+        }
+        
+        public void debug(Object object) {}
+        public void debug(Object object, Object object2) {}
+        public void debug(Object object, int number) {}
+        public void debug(Object object, double number) {}
+        public void debug(Object object, boolean bool) {}
+        public void debug(Object obj, Object obj2, Object obj3) {}
+        public void debug(Object obj, Object obj2, Object obj3, Object obj4) {}
+        public void debug(Object obj, Object obj2, Object obj3, Object obj4,
+                Object obj5) {}
+        public void dumpClasspath() {}
+        public void dumpSystemProperties() {}
+        public void error(Object object) {}
+        public void error(Object object, int number) {}
+        public void error(Object object, double number) {}
+        public void error(Object object, boolean bool) {}
+        public void error(Object object, Object object2) {}
+        public void error(Object obj, Object obj2, Object obj3) {}
+        public void error(Object obj, Object obj2, Object obj3, Object obj4) {}
+        public void error(Object obj, Object obj2, Object obj3, Object obj4,
+                Object obj5) {}
+        public void fatal(Object object) {}
+        public void info(Object object) {}
+        public void info(Object object, int number) {}
+        public void info(Object object, double number) {}
+        public void info(Object object, boolean bool) {}
+        public void info(Object object, Object object2) {}
+        public void info(Object obj, Object obj2, Object obj3) {}
+        public void info(Object obj, Object obj2, Object obj3, Object obj4) {}
+        public void info(Object obj, Object obj2, Object obj3, Object obj4,
+                Object obj5) {}
+        public boolean isDebugEnabled() { return true; }
+        public void setStackLength(int length) {}
+        public void warn(Object object) {}
+        public void warn(Object object, int number) {}
+        public void warn(Object object, boolean bool) {}
+        public void warn(Object object, double number) {}
+        public void warn(Object object, Object object2) {}
+        public void warn(Object obj, Object obj2, Object obj3) {}
+        public void warn(Object obj, Object obj2, Object obj3, Object obj4) {}
+        public void warn(Object obj, Object obj2, Object obj3, Object obj4,
+                Object obj5) {}
+    }
 }
