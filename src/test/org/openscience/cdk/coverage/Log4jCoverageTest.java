@@ -38,7 +38,7 @@ public class Log4jCoverageTest extends CoverageAnnotationTest {
     }
 
     @Test public void testCoverage() {
-        super.runCoverageTest();
+        Assert.assertTrue(super.runCoverageTest());
     }
 
 }

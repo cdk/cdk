@@ -45,6 +45,8 @@ public class LoggingToolFactory {
     public final static String DEFAULT_LOGGING_TOOL_CLASS =
         "org.openscience.cdk.tools.LoggingTool";
     /** Back-up logging tool. Currently, a tool that outputs to System.out. */
+    public final static String STDOUT_LOGGING_TOOL_CLASS =
+        "org.openscience.cdk.tools.SystemOutLoggingTool";
 
     private static Class<? extends ILoggingTool> loggingTool;
 
@@ -84,6 +86,11 @@ public class LoggingToolFactory {
         ILoggingTool tool = initializeLoggingTool(
             sourceClass, DEFAULT_LOGGING_TOOL_CLASS
         );
+        if (tool == null) {
+            tool = initializeLoggingTool(
+                sourceClass, STDOUT_LOGGING_TOOL_CLASS
+            );
+        }
         return tool;
     }
 
