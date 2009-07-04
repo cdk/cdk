@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2005-2009  Egon Willighagen <egonw@users.sf.net>
+ *                    2007  Rajarshi Guha <rajarshi@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
