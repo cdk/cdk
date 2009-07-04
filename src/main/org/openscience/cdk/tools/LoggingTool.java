@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2001-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+/* Copyright (C) 2002-2003  Christoph Steinbeck <steinbeck@users.sf.net>
+ *               2002-2008  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,10 +31,8 @@ import java.io.StringReader;
  * Useful for logging messages. Often used as a class static variable instantiated like:
  * <pre>
  * public class SomeClass {
- *     private static LoggingTool logger;
- *     public SomeClass() {
- *         logger = new LoggingTool(this);
- *     }
+ *     private static ILoggingTool logger =
+ *         LoggingToolFactory.createLoggingTool(SomeClass.class);
  * }
  * </pre>
  * There is no special reason not to make the logger private and static, as the logging
@@ -93,7 +87,7 @@ import java.io.StringReader;
  * @cdk.builddepends log4j.jar
  */
 @TestClass("org.openscience.cdk.tools.LoggingToolTest")
-public class LoggingTool {
+public class LoggingTool implements ILoggingTool {
 
     private boolean doDebug = false;
     private boolean toSTDOUT = false;
@@ -131,7 +125,7 @@ public class LoggingTool {
      *
      * @param classInst Class from which the log messages originate
      */
-    public LoggingTool(Class classInst) {
+    public LoggingTool(Class<?> classInst) {
         this.logger = this;
         stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
@@ -804,6 +798,17 @@ public class LoggingTool {
         System.out.print(level);
         System.out.print(": ");
         System.out.println(message);
+    }
+
+    /**
+     * Creates a new {@link LoggingTool} for the given class.
+     *
+     * @param sourceClass Class for which logging messages are recorded.
+     * @return            A {@link LoggingTool}.
+     */
+    @TestMethod("testCreate")
+    public static ILoggingTool create(Class<?> sourceClass) {
+        return new LoggingTool(sourceClass);
     }
 
 }

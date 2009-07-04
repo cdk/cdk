@@ -47,6 +47,7 @@ import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
 import org.openscience.cdk.tools.DataFeaturesTest;
+import org.openscience.cdk.tools.LoggingToolFactoryTest;
 import org.openscience.cdk.tools.LoggingToolTest;
 import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
 
@@ -88,6 +89,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
     NoSuchAtomExceptionTest.class,
     NoSuchAtomTypeExceptionTest.class,
     LoggingToolTest.class,
+    LoggingToolFactoryTest.class,
     BondManipulatorTest.class,
     AdjacencyMatrixTest.class,
     PathToolsTest.class,

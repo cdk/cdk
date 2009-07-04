@@ -241,5 +241,9 @@ public class LoggingToolTest extends CDKTestCase {
 		logger.isDebugEnabled();
 	}
 	
+    @Test public void testCreate() throws Exception {
+        ILoggingTool logger = LoggingTool.create(this.getClass());
+        Assert.assertNotNull(logger);
+    }
 }
 
