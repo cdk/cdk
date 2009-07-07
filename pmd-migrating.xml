@@ -40,6 +40,7 @@
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="extra"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="formula"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="render"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="renderbasic"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="libiocml"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="builder3d"/></antcall>
@@ -87,6 +88,8 @@
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-qm"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-smsd"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-signature"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-render"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-renderbasic"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"

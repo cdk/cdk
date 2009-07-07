@@ -531,6 +531,9 @@
             list="io,structgen"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
+            list="renderbasic"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
             list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -580,6 +583,9 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-signature"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-renderbasic"/>
     </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">

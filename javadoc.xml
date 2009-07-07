@@ -111,6 +111,7 @@
       javacchome="jar"/>
   </target>
 
+      <antcall target="doccheck-module"><param name="module" value="renderbasic"/></antcall>
     <target name="ojdcheck" depends="compileDocTests">
       <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>
