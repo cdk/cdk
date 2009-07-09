@@ -42,6 +42,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="formula"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="render"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="renderbasic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="renderawt"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libiocml"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libiomd"/></antcall>
@@ -103,6 +104,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-iordf"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-render"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-renderbasic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-renderawt"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"
