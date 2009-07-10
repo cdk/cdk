@@ -43,12 +43,14 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 /**
  * A set of static utility classes for geometric calculations and operations.
  * This class is extensively used, for example, by JChemPaint to edit molecule.
@@ -1520,6 +1522,24 @@ public class GeometryTools {
     	}
     	return bondlenghtsum/containercount;
     }
+    /**
+     * Determines if this model contains 3D coordinates for all atoms.
+     *
+     * @param  chemModel the ChemModel to consider
+     * @return Boolean indication that 3D coordinates are available for all atoms.
+     */
+    public static boolean has3DCoordinates(IChemModel chemModel) {
+    	List<IAtomContainer> acs = ChemModelManipulator.getAllAtomContainers(chemModel);
+    	Iterator<IAtomContainer> it = acs.iterator();
+    	while(it.hasNext()){
+    		if (!has3DCoordinates(it.next())) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+
+
     /**
      * Shift the containers in a reaction vertically upwards to not overlap
      * with the reference Rectangle2D. The shift is such that the given
