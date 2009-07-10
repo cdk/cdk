@@ -22,11 +22,21 @@
  */
 package org.openscience.cdk.renderer;
 
+import javax.vecmath.Point2d;
+
 /**
  * @cdk.module render
  */
 public interface IRenderer {
 
 	public RendererModel getRenderer2DModel();
+
+	public Point2d toModelCoordinates(double screenXTo, double screenYTo);
+
+	public Point2d toScreenCoordinates(double screenXTo, double screenYTo);
 	
+	public void setZoom(double zoomFactor);
+
+	public void shiftDrawCenter(double screenX, double screenY);
+
 }
