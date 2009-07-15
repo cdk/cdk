@@ -105,7 +105,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @author maclean
  * @cdk.module renderbasic
  */
-public class AtomContainerRenderer {
+public class AtomContainerRenderer implements IRenderer {
 
 	/**
 	 * The default scale is used when the model is empty.
@@ -328,7 +328,7 @@ public class AtomContainerRenderer {
 		return this.rendererModel;
 	}
 
-    public Point2d toModelCoordinates(int screenX, int screenY) {
+    public Point2d toModelCoordinates(double screenX, double screenY) {
         try {
             double[] dest = new double[2];
             double[] src = new double[] { screenX, screenY };
@@ -345,7 +345,7 @@ public class AtomContainerRenderer {
         return new Point2d(dest[0], dest[1]);
     }
 
-	public void setModelCenter(double x, double y) {
+    public void setModelCenter(double x, double y) {
 	    this.modelCenter = new Point2d(x, y);
 	    setup();
 	}
@@ -590,4 +590,5 @@ public class AtomContainerRenderer {
 	public List<IGenerator<IAtomContainer>> getGenerators(){
 	    return new ArrayList<IGenerator<IAtomContainer>>(generators);
 	}
+
 }
