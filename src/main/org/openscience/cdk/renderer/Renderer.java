@@ -23,7 +23,6 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +104,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @author maclean
  * @cdk.module renderextra
  */
-public class Renderer extends AtomContainerRenderer {
+public class Renderer extends AtomContainerRenderer implements IRenderer {
 
 	/**
 	 * Generators specific to reactions
@@ -707,23 +706,6 @@ public class Renderer extends AtomContainerRenderer {
     public RendererModel getRenderer2DModel() {
 		return this.rendererModel;
 	}
-
-    public Point2d toModelCoordinates(int screenX, int screenY) {
-        try {
-            double[] dest = new double[2];
-            double[] src = new double[] { screenX, screenY };
-            transform.inverseTransform(src, 0, dest, 0, 1);
-            return new Point2d(dest[0], dest[1]);
-        } catch (NoninvertibleTransformException n) {
-            return new Point2d(0,0);
-        }
-    }
-
-    public Point2d toScreenCoordinates(double modelX, double modelY) {
-        double[] dest = new double[2];
-        transform.transform(new double[] { modelX, modelY }, 0, dest, 0, 1);
-        return new Point2d(dest[0], dest[1]);
-    }
 
 	public void setModelCenter(double x, double y) {
 	    this.modelCenter = new Point2d(x, y);
