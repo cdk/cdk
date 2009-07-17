@@ -56,7 +56,7 @@ public class DictionaryDatabase {
         "chemical", "elements", "descriptor-algorithms","reaction-processes"
     };
     private String[] dictionaryTypes = {
-        "xml", "xml", "owl", "owl_React"
+        "xml", "owl", "owl", "owl_React"
     };
     
     private Hashtable<String, Dictionary> dictionaries;
