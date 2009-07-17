@@ -4,11 +4,10 @@
         <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
         <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
         <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
-        ]>
-<rdf:RDF
-        xmlns="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#"
+        <!ENTITY me   "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#" >
+]>
+<rdf:RDF xmlns="&me;" xml:base="&me;"
         xmlns:owl="&owl;"
-        xml:base="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#"
         xmlns:rdf="&rdf;"
         xmlns:rdfs="&rdfs;"
         xmlns:bibtex="http://bibtexml.sf.net/"
@@ -22,38 +21,47 @@
         <dc:date>$Date$</dc:date>
         <cvs:last-changed-by>$Author$</cvs:last-changed-by>
         <cvs:revision>$Revision$</cvs:revision>
-        <rdfs:comment rdf:parseType="Literal">
-            Add some comment here.
-        </rdfs:comment>
     </owl:Ontology>
 
     <!-- classes and properties -->
 
-    <owl:Class rdf:ID="Category"/>
+    <owl:Class rdf:ID="Category">
+       <rdfs:label>Category</rdfs:label>
+    </owl:Class>
 
-    <owl:Class rdf:ID="Algorithm"/>
+    <owl:Class rdf:ID="Algorithm">
+       <rdfs:label>Algorithm</rdfs:label>
+    </owl:Class>
 
     <owl:Class rdf:ID="Descriptor">
+        <rdfs:label>Descriptor</rdfs:label>
         <owl:subClassOf rdf:resource="#Algorithm"/>
         <rdfs:comment>
-            A descriptor is an algorithm that operates on a chemical
+            A feature (descriptor) is an algorithm that operates on a chemical
             entity (commonly atoms and molecules)
-            and returns a numerical (descriptor) value which described
+            and returns a numerical or nominal (descriptor) value which described
             certain information on that entity.
         </rdfs:comment>
     </owl:Class>
 
     <owl:Class rdf:ID="Reference"/>
 
-    <owl:Class rdf:ID="Contributor"/>
+<owl:Class rdf:ID="Contributor">
+  <rdfs:label>Contributor</rdfs:label>
+</owl:Class>
 
-    <owl:Class rdf:ID="DataFeature"/>
+<owl:Class rdf:ID="DataFeature">
+  <rdfs:label>Data Feature</rdfs:label>
+</owl:Class>
 
-    <owl:Class rdf:ID="DataRepresentation">
-        <owl:subClassOf rdf:resource="#DataFeature"/>
-    </owl:Class>
+<owl:Class rdf:ID="DataRepresentation">
+  <rdfs:label>Data Representation</rdfs:label>
+  <owl:subClassOf rdf:resource="&me;DataFeature"/>
+</owl:Class>
 
-    <owl:Class rdf:ID="Implementation"/>
+<owl:Class rdf:ID="Implementation">
+  <rdfs:label>Implementation</rdfs:label>
+</owl:Class>
 
     <owl:Class rdf:ID="DescriptorValue">
         <rdfs:label>Descriptor Value</rdfs:label>
@@ -132,6 +140,10 @@
     </DataRepresentation>
 
     <!-- the facts: Contributors -->
+
+    <Contributor rdf:ID="jkw">
+        <rdfs:label>Joerg Kurt Wegner</rdfs:label>
+    </Contributor>
 
     <Contributor rdf:ID="elw">
         <rdfs:label>Egon Willighagen</rdfs:label>
@@ -1092,14 +1104,6 @@
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the number of hydrogen bond acceptors.
         </definition>
-        <description rdf:parseType='Literal'>
-            As defined by Daylight website,
-            <bibtex:cite ref="DAY01"/>
-            , a H-bond acceptor is a heteroatom with no positive charge, note that negatively
-            charged oxygen or sulphur are included. Excluded are halogens, including F,
-            heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
-            Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
-        </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
@@ -1115,15 +1119,83 @@
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the number of hydrogen bond donors.
         </definition>
-        <description rdf:parseType='Literal'>
-            As defined by Daylight website,
-            <bibtex:cite ref="DAY01"/>
-            , a H-bond acceptor
-            must have an N-H bond, an O-H bond, or a F-H bond
-        </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
+
+<Descriptor rdf:ID="hBondacceptorsDaylight">
+    <rdfs:label>Hydrogen Bond Acceptors (Daylight)</rdfs:label>
+        <dc:contributor rdf:resource="mf"/>
+        <dc:contributor rdf:resource="elw"/>
+        <dc:date>2004-11-26</dc:date>
+    <definition>
+        Descriptor that calculates the number of hydrogen bond acceptors.
+    </definition>
+    <description rdf:parseType='Literal'>
+        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor is a heteroatom with no positive charge, note that negatively 
+        charged oxygen or sulphur are included. Excluded are halogens, including F, 
+        heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
+        Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
+    </description>
+      <isClassifiedAs rdf:resource="electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="molecularDescriptor"/>
+</Descriptor>
+
+<Descriptor rdf:ID="hBondDonorsDaylight"><rdfs:label>Hydrogen Bond Donors (Daylight)</rdfs:label>
+        <dc:contributor rdf:resource="mf"/>
+        <dc:date>2004-11-26</dc:date>
+    <definition>
+        Descriptor that calculates the number of hydrogen bond donors.
+    </definition>
+    <description rdf:parseType='Literal'>
+        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor
+	must have an N-H bond, an O-H bond, or a F-H bond
+    </description>
+      <isClassifiedAs rdf:resource="electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="molecularDescriptor"/>
+</Descriptor>
+
+<Descriptor rdf:ID="hBondAcceptorsBoehmKlebe"><rdfs:label>Acceptor Field Atoms (Boehm,Klebe)</rdfs:label>
+        <dc:contributor rdf:resource="jkw"/>
+        <dc:date>2006-09-08</dc:date>
+    <definition>
+        Counts the number of acceptor field atoms for a carbonyl oxygen probe.
+    </definition>
+    <description rdf:parseType='Literal'>
+        Force field based definition of hydrogen bond acceptors <bibtex:cite ref="BK02"/>
+        This rule covers nitril, carbonyl, ether, and amin nitrogens.
+    </description>
+      <isClassifiedAs rdf:resource="electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="molecularDescriptor"/>
+</Descriptor>
+
+<Descriptor rdf:ID="hBondDonorsBoehmKlebe"><rdfs:label>Donor Field Atoms (Boehm,Klebe)</rdfs:label>
+        <dc:contributor rdf:resource="jkw"/>
+        <dc:date>2006-09-08</dc:date>
+    <definition>
+        Counts the number of donor field atoms for an amino hydrogen probe.
+    </definition>
+    <description rdf:parseType='Literal'>
+        Force field based definition of hydrogen bond donors <bibtex:cite ref="BK02"/>.
+        This rule covers amino groups, chloro, bromo and iodo atoms <bibtex:cite ref="PL96"/>.
+    </description>
+      <isClassifiedAs rdf:resource="electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="molecularDescriptor"/>
+</Descriptor>
+
+<Descriptor rdf:ID="hBondAcceptorsDonorsBoehmKlebe"><rdfs:label>Acceptors or Donors Field Atoms (Boehm,Klebe)</rdfs:label>
+        <dc:contributor rdf:resource="jkw"/>
+        <dc:date>2006-09-08</dc:date>
+    <definition>
+        Counts the number of acceptor/donor field atoms for a carbonyl oxygen or amino hydrogen probe.
+    </definition>
+    <description rdf:parseType='Literal'>
+        Force field based definition of hydrogen bond acceptors or donors <bibtex:cite ref="BK02"/>.
+        This rule covers amino and hydroxy groups.
+    </description>
+      <isClassifiedAs rdf:resource="electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="molecularDescriptor"/>
+</Descriptor>
 
     <Descriptor rdf:ID="isProtonInAromaticSystem">
         <rdfs:label>Proton belonging to an aromatic system</rdfs:label>
@@ -2470,6 +2542,19 @@
         </bibtex:entry>
     </Reference>
 
+    <Reference rdf:ID="BK02">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Böhm, M. and Klebe, G.</bibtex:author>
+                <bibtex:title>Development of New Hydrogen-Bond Descriptors and Their {A}pplication to Comparative Molecular Field Analyses</bibtex:title>
+                <bibtex:journal>J. Med. Chem.</bibtex:journal>
+                <bibtex:year>2002</bibtex:year>
+                <bibtex:volume>45</bibtex:volume>
+                <bibtex:pages>1585-1597</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
     <Reference rdf:ID="CHER2003">
         <bibtex:entry>
             <bibtex:article>
@@ -2525,6 +2610,19 @@
                 <bibtex:number>1</bibtex:number>
                 <bibtex:pages>80-90</bibtex:pages>
                 <bibtex:doi>10.1021/ac010737m</bibtex:doi>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="GWB98">
+        <bibtex:entry>
+            <bibtex:article>
+              <bibtex:author>Gillet, J. and Willett, P. and Bradshaw, J.</bibtex:author>
+              <bibtex:title>Identification of Biological Activity Profiles Using Substructural Analysis and Genetic Algorithms</bibtex:title>
+              <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+              <bibtex:year>1998</bibtex:year>
+              <bibtex:volume>38</bibtex:volume>
+              <bibtex:pages>165-179</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
     </Reference>
@@ -2622,7 +2720,19 @@
                 <bibtex:pages>331-337</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
+    </Reference>
 
+    <Reference rdf:ID="PL96">
+        <bibtex:entry>
+            <bibtex:article>
+              <bibtex:author>Patani, G. A. and LaVoie, E. J.</bibtex:author>
+              <bibtex:title>Bioisosterism: A Rational Approach in Drug Design</bibtex:title>
+              <bibtex:journal>Chem. Rev.</bibtex:journal>
+              <bibtex:year>1996</bibtex:year>
+              <bibtex:volume>96</bibtex:volume>
+              <bibtex:pages>3147-3176</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
     </Reference>
 
     <Reference rdf:ID="RAN84">
@@ -2653,6 +2763,17 @@
                 <bibtex:year>1985</bibtex:year>
                 <bibtex:volume>97</bibtex:volume>
                 <bibtex:pages>699-701</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="TC00">
+        <bibtex:entry>
+            <bibtex:article>
+              <bibtex:author>Todeschini, R. and Consonni, V.</bibtex:author>
+              <bibtex:title>Handbook of Molecular Descriptors</bibtex:title>
+              <bibtex:year>2000</bibtex:year>
+              <bibtex:isbn>3-52-29913-0</bibtex:isbn>
             </bibtex:article>
         </bibtex:entry>
     </Reference>
