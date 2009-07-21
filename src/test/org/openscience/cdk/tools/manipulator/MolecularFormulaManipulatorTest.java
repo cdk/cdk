@@ -406,7 +406,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
      * @throws CDKException
      */
     @Test 
-    public void testGetTotalExactMassWithChargeNeg_IMolecularFormula() throws IOException, ClassNotFoundException, CDKException{
+    public void testGetTotalExactMassWithChargeNeg_IMolecularFormula() throws IOException, ClassNotFoundException {
 
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("H2PO4", builder);
         formula.setCharge(-1);
