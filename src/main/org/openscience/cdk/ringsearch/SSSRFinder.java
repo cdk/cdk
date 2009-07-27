@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  Ulrich Bauer <baueru@cs.tum.edu>
+ * Copyright (C) 2004-2009  Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -49,7 +49,7 @@ import java.util.List;
  * 
  * <p>Additional related algorithms from {@cdk.cite BGdV04b}.
  *
- * @author Ulrich Bauer <baueru@cs.tum.edu>
+ * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  *
  * @cdk.module standard
  * @cdk.githash
@@ -104,7 +104,7 @@ public class SSSRFinder {
 		if (atomContainer==null) {
 			return null;
 		}
-		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
+		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().essentialCycles());
 //		atomContainer.setProperty(CDKConstants.ESSENTIAL_RINGS, ringSet);
 		return ringSet;
 	}
@@ -121,7 +121,7 @@ public class SSSRFinder {
 			return null;
 		}
 		
-		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
+		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().relevantCycles().keySet());
 //		atomContainer.setProperty(CDKConstants.RELEVANT_RINGS, ringSet);
 		return ringSet;	  
 	}

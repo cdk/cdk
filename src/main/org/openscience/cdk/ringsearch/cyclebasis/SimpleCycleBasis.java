@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2009  Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -44,7 +44,7 @@ import java.util.*;
 /**
  * Auxiliary class for <code>CycleBasis</code>.
  * 
- * @author Ulrich Bauer <baueru@cs.tum.edu>
+ * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  *
  * @cdk.module standard
@@ -122,7 +122,8 @@ public class SimpleCycleBasis {
 		// for the tree and can't just use the Edge objects of the graph, since the
 		// the edge in the graph might have a wrong or no direction.
 		
-		DirectedGraph spanningTree = new SimpleDirectedGraph();
+		
+		Graph spanningTree = new Subgraph(graph, new HashSet(), new HashSet());
 		
 		Set visitedEdges = new HashSet();
 		
@@ -173,45 +174,9 @@ public class SimpleCycleBasis {
 						// along the path to the root of the tree. We create a new cycle containing 
 						// these edges (not the tree edges, but the corresponding edges in the graph)
 						
-						List edgesOfCycle = new Vector();
+						List edgesOfCycle = BFSShortestPath.findPathBetween(spanningTree, edge.getSource(), edge.getTarget());
 						
-						// follow the path to the root of the tree
-						
-						Object vertex = currentVertex;
-						
-						// get parent of vertex
-						List incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-						Object parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);	
-						
-						while (parent != null) {
-							// add the corresponding edge to the cycle
-							edgesOfCycle.add(subgraph.getEdge(vertex, parent));
-							
-							// go up the tree
-							vertex = parent;
-							
-							// get parent of vertex
-							incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-							parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);	
-						}
-						
-						// do the same thing for nextVertex
-						vertex = nextVertex;
-						
-						// get parent of vertex
-						incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-						parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);
-						
-						while (parent != null) {
-							edgesOfCycle.add(subgraph.getEdge(vertex, parent));
-							vertex = parent;
-							
-							// get parent of vertex
-							incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-							parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);	
-						}
-						
-						// finally, add the non-tree edge to the cycle
+						// add the non-tree edge to the path
 						edgesOfCycle.add(edge);
 						
 						// add the edge to the index list for the incidence matrix
@@ -332,7 +297,11 @@ public class SimpleCycleBasis {
 						// Get the edge corresponding to the aux. edge
 						Edge e = (Edge) gu.edge(auxEdge);
 						
-						edgesOfNewCycle.add(e);					
+						if (edgesOfNewCycle.contains(e)) {
+							edgesOfNewCycle.remove(e);
+						} else {
+							edgesOfNewCycle.add(e);			
+						}
 						
 						// Get next vertex on path
 						v = e.oppositeVertex(v);
@@ -352,7 +321,7 @@ public class SimpleCycleBasis {
 			cycles.set(i, shortestCycle);
 			
 			// insert the new cycle into the matrix
-			for (int j=1; j<edgeList.size(); j++) {
+			for (int j=0; j<edgeList.size(); j++) {
 				a[i][j] = shortestCycle.containsEdge((Edge) edgeList.get(j));
 			}
 			
@@ -367,6 +336,9 @@ public class SimpleCycleBasis {
 		}
 		
 		isMinimized = true;
+		
+		//System.out.println("after minimization:");
+		//printIncidenceMatrix();
 		
 	}
 	
@@ -506,7 +478,11 @@ public class SimpleCycleBasis {
 							// Get the edge corresponding to the aux. edge
 							Edge e = (Edge) gu.edge(auxEdge);
 							
-							edgesOfNewCycle.add(e);
+							if (edgesOfNewCycle.contains(e)) {
+								edgesOfNewCycle.remove(e);
+							} else {
+								edgesOfNewCycle.add(e);			
+							}
 							
 						}
 						
@@ -591,7 +567,11 @@ public class SimpleCycleBasis {
 							// Get the edge corresponding to the aux. edge
 							Edge e = (Edge) gu.edge(auxEdge);
 							
-							edgesOfNewCycle.add(e);
+							if (edgesOfNewCycle.contains(e)) {
+								edgesOfNewCycle.remove(e);
+							} else {
+								edgesOfNewCycle.add(e);			
+							}
 							
 						}
 						
@@ -1048,4 +1028,32 @@ public class SimpleCycleBasis {
 			return super.edgesOf(auxVertex);
 		}
 	}
+	
+	public void printIncidenceMatrix() {
+		
+		/*
+		 for (int j=0; j<edgeList.size(); j++) {
+		 System.out.print(((Edge) edgeList.get(j)).getSource());
+		 }
+		 System.out.println();
+		 for (int j=0; j<edgeList.size(); j++) {
+		 System.out.print(((Edge) edgeList.get(j)).getTarget());
+		 }
+		 System.out.println();
+		 for (int j=0; j<edgeList.size(); j++) {
+		 System.out.print('-');
+		 }
+		 System.out.println();
+		 */
+		
+		boolean[][] incidMatr = getCycleEdgeIncidenceMatrix();
+		for (int i=0; i<incidMatr.length; i++) {
+			for (int j=0; j<incidMatr[i].length; j++) {
+				System.out.print(incidMatr[i][j]?1:0);
+			}
+			System.out.println();
+		}
+	}
 }
+
+

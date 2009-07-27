@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -47,7 +47,7 @@ import java.util.*;
  * Two edges belong to the same biconnected component if and only if they are 
  * identical or both belong to a simple cycle.
  * 
- * @author Ulrich Bauer <baueru@cs.tum.edu>
+ * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  *
  * @cdk.module standard
  * @cdk.githash

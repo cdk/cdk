@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -43,7 +43,7 @@ import java.util.*;
 /**
  * Iterates over all shortest paths between two vertices in an undirected, unweighted graph.
  * 
- * @author Ulrich Bauer <baueru@cs.tum.edu>
+ * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  *
  * @cdk.module standard

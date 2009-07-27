@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -42,7 +42,7 @@ import java.util.List;
  * Utility class that finds the shortest bond path between two atoms using
  * a breadth first search.
  *
- * @author uli
+ * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  *
  * @cdk.module  standard
  * @cdk.githash

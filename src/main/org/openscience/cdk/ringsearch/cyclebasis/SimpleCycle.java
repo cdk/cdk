@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  Ulrich Bauer <baueru@cs.tum.edu>
+ * Copyright (C) 2004-2009  Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -34,7 +34,7 @@ import java.util.*;
 /**
  * A cycle in a graph G is a subgraph in which every vertex has even degree.
  *
- * @author Ulrich Bauer <baueru@cs.tum.edu>
+ * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
  * 
  * @cdk.module standard
  * @cdk.githash
@@ -68,6 +68,7 @@ public class SimpleCycle extends UndirectedSubgraph {
 	 */
 	public SimpleCycle (UndirectedGraph g, Set edges) {
 		super(g, inducedVertices(edges), edges);
+		assert checkConsistency();
 	}
 	
 	static private Set inducedVertices(Set edges) {
@@ -110,13 +111,16 @@ public class SimpleCycle extends UndirectedSubgraph {
 		Object nextVertex = null;
 		
 		while (nextVertex != startVertex) {
+			assert(degreeOf(vertex)==2);
+			List edges = edgesOf(vertex);
+
 			vertices.add(vertex);
 			
-			Edge edge = (Edge) edgesOf(vertex).get(0);
+			Edge edge = (Edge) edges.get(0);
 			nextVertex = edge.oppositeVertex(vertex);
 			
 			if (nextVertex==previousVertex) {
-				edge = (Edge) edgesOf(vertex).get(1);
+				edge = (Edge) edges.get(1);
 				nextVertex = edge.oppositeVertex(vertex);
 			}
 			
@@ -139,6 +143,16 @@ public class SimpleCycle extends UndirectedSubgraph {
 	
 	public int hashCode() {
 		return edgeSet().hashCode();
+	}
+	
+	public boolean checkConsistency() {
+		if (vertexSet().size()!=edgeSet().size())
+			return false;
+		for (Object v: vertexSet()) {
+			if (degreeOf(v)!=2)
+				return false;
+		}
+		return true;
 	}
 
 }
