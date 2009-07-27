@@ -27,9 +27,11 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.nonotify.NNChemFile;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -59,4 +61,42 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testSmilesFiles() throws Exception {
+        CDKAtomTypeMatcher atomTypeMatcher =
+            CDKAtomTypeMatcher.getInstance(
+                NoNotificationChemObjectBuilder.getInstance()
+            );
+
+        // Read the first file
+        String filename = "data/cml/smiles1.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
+            filename
+        );
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+        Assert.assertNotNull(chemFile);
+        IAtomContainer mol1 = ChemFileManipulator
+            .getAllAtomContainers(chemFile).get(0);
+
+        // Read the second file
+        filename = "data/cml/smiles2.cml";
+        ins = this.getClass().getClassLoader().getResourceAsStream(
+            filename
+        );
+        reader = new CMLReader(ins);
+        chemFile = (IChemFile)reader.read(new NNChemFile());
+        Assert.assertNotNull(chemFile);
+        IAtomContainer mol2 = ChemFileManipulator
+            .getAllAtomContainers(chemFile).get(0);
+        
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        IAtomType[] types2 = atomTypeMatcher.findMatchingAtomType(mol2);
+        for (int i=0; i<mol1.getAtomCount(); i++) {
+            Assert.assertEquals(
+                "Atom type mismatch for the " + (i+1) + " atom",
+                types1[i].getAtomTypeName(),
+                types2[i].getAtomTypeName()
+            );
+        }
+    }
 }

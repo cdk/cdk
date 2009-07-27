@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<molecule id="m1" xmlns="http://www.xml-cml.org/schema">
+  <atomArray>
+    <atom id="a1" elementType="C" x2="5.167687356052645" y2="2.0431458276500116" formalCharge="0" hydrogenCount="3"/>
+    <atom id="a2" elementType="N" x2="3.797369169588745" y2="2.6532507922637154" formalCharge="0" hydrogenCount="0"/>
+    <atom id="a3" elementType="C" x2="3.640576474687268" y2="4.145033635316126" formalCharge="0" hydrogenCount="3"/>
+    <atom id="a4" elementType="C" x2="2.583843678026322" y2="1.7715729138250083" formalCharge="0" hydrogenCount="2"/>
+    <atom id="a5" elementType="C" x2="1.2135254915624212" y2="2.3816778784387096" formalCharge="0" hydrogenCount="2"/>
+    <atom id="a6" elementType="C" x2="0.0" y2="1.5" formalCharge="0" hydrogenCount="0"/>
+    <atom id="a7" elementType="C" x2="0.0" y2="0.0" formalCharge="0" hydrogenCount="1"/>
+    <atom id="a8" elementType="C" x2="-1.42658477444273" y2="1.9635254915624212" formalCharge="0" hydrogenCount="0"/>
+    <atom id="a9" elementType="N" x2="-1.4265847744427305" y2="-0.46352549156242084" formalCharge="0" hydrogenCount="1"/>
+    <atom id="a10" elementType="C" x2="-2.3082626528814396" y2="0.7500000000000002" formalCharge="0" hydrogenCount="0"/>
+    <atom id="a11" elementType="C" x2="-2.0366897390564302" y2="3.333843678026323" formalCharge="0" hydrogenCount="1"/>
+    <atom id="a12" elementType="C" x2="-3.80004549593385" y2="0.9067926949014806" formalCharge="0" hydrogenCount="1"/>
+    <atom id="a13" elementType="C" x2="-3.52847258210884" y2="3.4906363729278036" formalCharge="0" hydrogenCount="0"/>
+    <atom id="a14" elementType="C" x2="-4.41015046054755" y2="2.277110881365382" formalCharge="0" hydrogenCount="1"/>
+    <atom id="a15" elementType="C" x2="-4.138577546722541" y2="4.860954559391704" formalCharge="0" hydrogenCount="2"/>
+    <atom id="a16" elementType="C" x2="-5.6303603897749515" y2="5.017747254293186" formalCharge="0" hydrogenCount="1"/>
+    <atom id="a17" elementType="N" x2="-6.634056299313239" y2="3.9030300160770954" formalCharge="0" hydrogenCount="1"/>
+    <atom id="a18" elementType="C" x2="-6.38036038977495" y2="6.316785359969845" formalCharge="0" hydrogenCount="2"/>
+    <atom id="a19" elementType="C" x2="-8.00437448577714" y2="4.513134980690798" formalCharge="0" hydrogenCount="0"/>
+    <atom id="a20" elementType="O" x2="-7.847581790875658" y2="6.004917823743207" formalCharge="0" hydrogenCount="0"/>
+    <atom id="a21" elementType="O" x2="-9.3034125914538" y2="3.763134980690799" formalCharge="0" hydrogenCount="0"/>
+  </atomArray>
+  <bondArray>
+    <bond id="b1" atomRefs2="a2 a1" order="S"/>
+    <bond id="b2" atomRefs2="a3 a2" order="S"/>
+    <bond id="b3" atomRefs2="a4 a2" order="S"/>
+    <bond id="b4" atomRefs2="a5 a4" order="S"/>
+    <bond id="b5" atomRefs2="a6 a5" order="S"/>
+    <bond id="b6" atomRefs2="a7 a6" order="D">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b7" atomRefs2="a8 a6" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b8" atomRefs2="a9 a7" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b9" atomRefs2="a8 a10" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b10" atomRefs2="a11 a8" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b11" atomRefs2="a10 a9" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b12" atomRefs2="a12 a10" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b13" atomRefs2="a13 a11" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b14" atomRefs2="a12 a14" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b15" atomRefs2="a14 a13" order="S">
+      <bondType dictRef="cdk:aromaticBond"/>
+    </bond>
+    <bond id="b16" atomRefs2="a15 a13" order="S"/>
+    <bond id="b17" atomRefs2="a16 a15" order="S"/>
+    <bond id="b18" atomRefs2="a17 a16" order="S"/>
+    <bond id="b19" atomRefs2="a18 a16" order="S"/>
+    <bond id="b20" atomRefs2="a19 a17" order="S"/>
+    <bond id="b21" atomRefs2="a18 a20" order="S"/>
+    <bond id="b22" atomRefs2="a21 a19" order="D"/>
+    <bond id="b23" atomRefs2="a20 a19" order="S"/>
+  </bondArray>
+</molecule>

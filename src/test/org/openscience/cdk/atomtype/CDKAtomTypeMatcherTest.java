@@ -33,6 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Ring;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.interfaces.IAtom;
@@ -1780,6 +1781,26 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         molecule.getAtom(3).setSymbol("N");
         molecule.addAtom(molecule.getBuilder().newAtom("C"));
         molecule.addBond(1,5, IBond.Order.SINGLE);
+        assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+    }
+
+    @Test public void testBenzene() throws Exception {
+        String[] expectedTypes = {
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2"
+        };
+        IMolecule molecule = new Molecule();
+        molecule.add(new Ring(6, "C"));
+        for (IBond bond : molecule.bonds()) {
+            bond.setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        for (IAtom atom : molecule.atoms()) {
+            atom.setHydrogenCount(1);
+        }
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
