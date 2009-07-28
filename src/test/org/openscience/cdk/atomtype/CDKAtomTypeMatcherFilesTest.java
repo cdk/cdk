@@ -92,6 +92,14 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
         IAtomType[] types2 = atomTypeMatcher.findMatchingAtomType(mol2);
         for (int i=0; i<mol1.getAtomCount(); i++) {
+            Assert.assertNotNull(
+                "Atom typing in mol1 failed for atom " + (i+1),
+                types1[i]
+            );
+            Assert.assertNotNull(
+                "Atom typing in mol2 failed for atom " + (i+1),
+                types2[i]
+            );
             Assert.assertEquals(
                 "Atom type mismatch for the " + (i+1) + " atom",
                 types1[i].getAtomTypeName(),
