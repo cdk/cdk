@@ -49,13 +49,13 @@ import org.openscience.cdk.smiles.InvPair;
  *
  * @see org.openscience.cdk.io.SDFWriter
  */
-public class SDFWriterTest extends ChemObjectIOTest {
+public class SDFWriterTest extends ChemObjectWriterTest {
 
     private static IChemObjectBuilder builder;
 
     @BeforeClass public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
-        setChemObjectIO(new SDFWriter());
+        setChemObjectWriter(new SDFWriter());
     }
 
     @Test public void testAccepts() throws Exception {
