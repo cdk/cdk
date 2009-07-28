@@ -300,6 +300,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	                if (isAcceptable(atom, atomContainer, type)) return type;
 	            }
 	        } else {
+	            if (hasAromaticBond(atomContainer, atom)) {
+	                IAtomType type = getAtomType("C.sp2");
+	                if (isAcceptable(atom, atomContainer, type)) return type;
+	            }
 	            IAtomType type = getAtomType("C.sp3");
 	            if (isAcceptable(atom, atomContainer, type)) return type;
 	        }
@@ -1459,6 +1463,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom) {
     	return countAttachedDoubleBonds(container, atom, null);
+    }
+
+    private boolean hasAromaticBond(IAtomContainer container, IAtom atom) {
+        List<IBond> neighbors = container.getConnectedBondsList(atom);
+        for (IBond bond : neighbors) {
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) return true;
+        }
+        return false;
     }
 
     /**
