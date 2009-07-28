@@ -37,6 +37,8 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.listener.PropertiesListener;
@@ -85,6 +87,22 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.close();
         Assert.assertTrue(writer.toString().indexOf("<foo>") != -1);
         Assert.assertTrue(writer.toString().indexOf("bar") != -1);
+    }
+
+    /**
+     * @cdk.bug 2827745
+     */
+    @Test public void testWrite_IAtomContainerSet() throws Exception {
+        StringWriter writer = new StringWriter();
+        IAtomContainerSet molSet = builder.newAtomContainerSet();
+        IAtomContainer molecule = builder.newAtomContainer();
+        molecule.addAtom(builder.newAtom("C"));
+        molSet.addAtomContainer(molecule);
+
+        SDFWriter sdfWriter = new SDFWriter(writer);
+        sdfWriter.write(molSet);
+        sdfWriter.close();
+        Assert.assertNotSame(0, writer.toString().length());
     }
 
     @Test public void testWrite_IMoleculeSet_Properties() throws Exception {

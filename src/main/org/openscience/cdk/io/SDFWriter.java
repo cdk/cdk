@@ -43,7 +43,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SDFFormat;
@@ -147,8 +146,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
      */
 	public void write(IChemObject object) throws CDKException {
 		try {
-			if (object instanceof IMoleculeSet) {
-				writeMoleculeSet((IMoleculeSet)object);
+			if (object instanceof IAtomContainerSet) {
+				writeMoleculeSet((IAtomContainerSet)object);
 				return;
 			} else if (object instanceof IChemFile) {
 				writeChemFile((IChemFile)object);
@@ -160,8 +159,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
 				file.addChemSequence(sequence);
 				writeChemFile((IChemFile)file);
 				return;
-			} else if (object instanceof IMolecule) {
-				writeMolecule((IMolecule)object);
+			} else if (object instanceof IAtomContainer) {
+				writeMolecule((IAtomContainer)object);
 				return;
 			}
 		} catch (Exception ex) {
