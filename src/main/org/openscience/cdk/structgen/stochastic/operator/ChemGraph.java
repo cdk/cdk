@@ -47,7 +47,7 @@ public class ChemGraph
 	/*Flag: true if atom visited during a traversal*/
 	protected boolean[] visited;
 	/*Depth first traversal of the graph*/
-	protected List subGraph;
+	protected List<Integer> subGraph;
 		
 	public ChemGraph(IAtomContainer chrom)
 	{
@@ -57,12 +57,12 @@ public class ChemGraph
 		contab = ConnectionMatrix.getMatrix(chrom);
 	}
 	
-	public List pickDFgraph()
+	public List<Integer> pickDFgraph()
 	{
 		//depth first search from a randomly selected atom
 		
 		travIndex = 0;
-		subGraph = new ArrayList();		
+		subGraph = new ArrayList<Integer>();		
 		visited = new boolean[dim];			 		
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
@@ -81,7 +81,7 @@ public class ChemGraph
 			
 //			for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
 //				if (contab[atom][nextAtom] != 0) recursiveDFT(nextAtom);
-            List adjSet = new ArrayList();
+            List<Integer> adjSet = new ArrayList<Integer>();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++)
             {
 				if ((int)contab[atom][nextAtom] != 0)
@@ -99,17 +99,17 @@ public class ChemGraph
 		}
 	}
 	
-	public List pickBFgraph()
+	public List<Integer> pickBFgraph()
 	{
 		//breadth first search from a randomly selected atom
 		
 		travIndex = 0;
-		subGraph = new ArrayList();		
+		subGraph = new ArrayList<Integer>();		
 		visited = new boolean[dim];			 		
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
 		
-		List atomQueue = new ArrayList();
+		List<Integer> atomQueue = new ArrayList<Integer>();
 		atomQueue.add(Integer.valueOf(seedAtom));
 		visited[seedAtom] = true;		
 		
@@ -120,7 +120,7 @@ public class ChemGraph
 			atomQueue.remove(0);
 			travIndex++;
 			
-			List adjSet = new ArrayList();
+			List<Integer> adjSet = new ArrayList<Integer>();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++)
             {
 				if (((int)contab[foreAtom][nextAtom] != 0)&&(!visited[nextAtom]))
@@ -140,12 +140,12 @@ public class ChemGraph
 		return subGraph;	
 	}
 	
-	public List getSubgraph()
+	public List<Integer> getSubgraph()
 	{
 		return subGraph;
 	}
 	
-	public void setSubgraph(List subgraph)
+	public void setSubgraph(List<Integer> subgraph)
 	{
 		subGraph = subgraph;
 	}
