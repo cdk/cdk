@@ -11,4 +11,5 @@ cdk-extra.jar
 cdk-test.jar
 cdk-test-core.jar
 cdk-formula.jar
+cdk-io.jar
 cdk-sdg.jar
