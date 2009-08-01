@@ -190,6 +190,7 @@ public class MakeJavafilesFiles {
 				}
 				
 				if (!inComment && (line.indexOf("public class") != -1 ||
+                                                line.indexOf("public enum") != -1 ||
 						line.indexOf("public interface") != -1 ||
 						line.indexOf("public @interface") != -1 ||
 						line.indexOf("abstract class") != -1 ||
