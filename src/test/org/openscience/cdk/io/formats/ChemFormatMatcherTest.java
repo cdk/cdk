@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.io.formats;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -46,7 +50,23 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
         );
     }
 
-    @Test public void testMatches() {
+    protected boolean matches(String header)
+        throws IOException {
+        BufferedReader reader = new BufferedReader(
+            new StringReader(header)
+        );
+        int lineNumber = 0;
+        boolean matches = false;
+        String line = reader.readLine();
+        while (line != null) {
+            lineNumber++;
+            matches = matches || matcher.matches(lineNumber, line);
+            line = reader.readLine();
+        }
+        return matches;
+    }
+
+    @Test public void testMatches() throws Exception {
         Assert.assertTrue(true);
         // positive testing is done by the ReaderFactoryTest, and
         // negative tests are given below
