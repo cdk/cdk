@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,16 +20,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package nu.xom;
+package org.openscience.cdk.io.cml;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
+import nu.xom.Serializer;
+
 /**
  * Custom {@link Serializer} with the sole purpose and functionality to not
- * output the XML declaration. Needs to be in the <code>nu.xom</code> package
- * to allow overwriting of the writeXMLDeclaration method.
+ * output the XML declaration.
  * 
  * @author     egonw
  * @cdk.module libiocml
@@ -69,6 +68,3 @@ public class CustomSerializer extends Serializer {
     }
     
 }
- 
-
- 	  	 

@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nu.xom.Attribute;
-import nu.xom.CustomSerializer;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
@@ -58,6 +57,7 @@ import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.io.cml.CustomSerializer;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
