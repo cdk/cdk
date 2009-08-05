@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.io.formats;
 
+import junit.framework.Assert;
+
+import org.junit.Test;
+
 /**
  * @cdk.module test-ioformats
  */
@@ -33,4 +37,14 @@ public class PubChemSubstancesXMLFormatTest extends ChemFormatMatcherTest {
         super.setChemFormatMatcher((IChemFormatMatcher)PubChemSubstancesXMLFormat.getInstance());
     }
     
+    /**
+     * @cdk.bug 2832835
+     */
+    @Test @Override
+    public void testMatches() throws Exception {
+        String header =
+            "<?xml version=\"\"?><PC-Substances/>";
+        Assert.assertTrue(matches(header));
+    }
+
 }
