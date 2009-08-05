@@ -85,7 +85,7 @@ public class PubChemCompoundsXMLFormat implements IChemFormatMatcher {
 	}
 
 	public boolean matches(int lineNumber, String line) {
-		if (lineNumber == 2 && line.startsWith("<PC-Compounds")) return true;
+		if (line.contains("<PC-Compounds")) return true;
 		return false;
 	}
 }
