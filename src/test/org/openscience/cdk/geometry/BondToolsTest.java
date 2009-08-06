@@ -212,6 +212,18 @@ public class BondToolsTest extends CDKTestCase {
 		IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
 		Assert.assertEquals(2.0943946986086157,BondTools.giveAngleFromMiddle(mol.getAtom(0),mol.getAtom(2),mol.getAtom(3)),0.2);
 	}
+
+	/**
+	 * @cdk.bug 2831420
+	 */
+	@Test public void testBug2831420() throws Exception {
+		String filename = "data/mdl/bug2831420.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
+		Assert.assertTrue(BondTools.isStereo(mol, mol.getAtom(5)));
+	}
 }
 
 
