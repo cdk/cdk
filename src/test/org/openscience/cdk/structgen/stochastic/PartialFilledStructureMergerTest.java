@@ -1,6 +1,6 @@
 /* $Revision: 7691 $ $Author: egonw $ $Date: 2007-01-11 12:47:48 +0100 (Thu, 11 Jan 2007) $
  * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2009  Stefan Kuhn <shk3@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -27,7 +27,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.SaturationChecker;
 
@@ -36,7 +35,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  */
 public class PartialFilledStructureMergerTest extends CDKTestCase {
 	
-	@Test public void testPartialFilledStructureMerger() throws Exception{
+	@Test public void testGenerate_IAtomContainerSet() throws Exception{
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainerSet acs = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
 		acs.addAtomContainer(sp.parseSmiles("CCCCC"));
@@ -52,10 +51,9 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
 		acs.getAtomContainer(1).getAtom(3).setHydrogenCount(2);
 		acs.getAtomContainer(1).getAtom(4).setHydrogenCount(2);
 		PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-		IAtomContainerSet result = pfsm.generate(acs);
-		Assert.assertEquals(1, result.getAtomContainerCount());
-		Assert.assertTrue(ConnectivityChecker.isConnected(result.getAtomContainer(0)));
-		Assert.assertTrue(new SaturationChecker().allSaturated(result.getAtomContainer(0)));
+		IAtomContainer result = pfsm.generate(acs);
+		Assert.assertTrue(ConnectivityChecker.isConnected(result));
+		Assert.assertTrue(new SaturationChecker().allSaturated(result));
 	}
 	
 	@Test public void testPartialFilledStructureMerger2() throws Exception{
@@ -74,10 +72,9 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
 		acs.getAtomContainer(1).getAtom(3).setHydrogenCount(2);
 		acs.getAtomContainer(1).getAtom(4).setHydrogenCount(2);
 		PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-		IAtomContainerSet result = pfsm.generate(acs);
-		Assert.assertEquals(1, result.getAtomContainerCount());
-		Assert.assertTrue(ConnectivityChecker.isConnected(result.getAtomContainer(0)));
-		Assert.assertTrue(new SaturationChecker().allSaturated(result.getAtomContainer(0)));
+		IAtomContainer result = pfsm.generate(acs);
+		Assert.assertTrue(ConnectivityChecker.isConnected(result));
+		Assert.assertTrue(new SaturationChecker().allSaturated(result));
 	}
 	
 	@Test public void testPartialFilledStructureMerger3() throws Exception{
@@ -97,10 +94,9 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
 		acs.getAtomContainer(2).getAtom(0).setHydrogenCount(2);
 		acs.getAtomContainer(2).getAtom(1).setHydrogenCount(2);
 		PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-		IAtomContainerSet result = pfsm.generate(acs);
-		Assert.assertEquals(1, result.getAtomContainerCount());
-		Assert.assertTrue(ConnectivityChecker.isConnected(result.getAtomContainer(0)));
-		Assert.assertTrue(new SaturationChecker().allSaturated(result.getAtomContainer(0)));
+		IAtomContainer result = pfsm.generate(acs);
+		Assert.assertTrue(ConnectivityChecker.isConnected(result));
+		Assert.assertTrue(new SaturationChecker().allSaturated(result));
 	}
 	
 	@Test public void testPartialFilledStructureMerger4() throws Exception{
@@ -120,10 +116,9 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
 		acs.getAtomContainer(1).getAtom(3).setHydrogenCount(2);
 		acs.getAtomContainer(2).getAtom(0).setHydrogenCount(2);
 		PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-		IAtomContainerSet result = pfsm.generate(acs);
-		Assert.assertEquals(1, result.getAtomContainerCount());
-		Assert.assertTrue(ConnectivityChecker.isConnected(result.getAtomContainer(0)));
-		Assert.assertTrue(new SaturationChecker().allSaturated(result.getAtomContainer(0)));
+		IAtomContainer result = pfsm.generate(acs);
+		Assert.assertTrue(ConnectivityChecker.isConnected(result));
+		Assert.assertTrue(new SaturationChecker().allSaturated(result));
 	}
 
 	@Test public void testPartialFilledStructureMerger5() throws Exception{
@@ -143,10 +138,9 @@ public class PartialFilledStructureMergerTest extends CDKTestCase {
 		acs.getAtomContainer(1).getAtom(4).setHydrogenCount(2);
 		acs.getAtomContainer(2).getAtom(0).setHydrogenCount(2);
 		PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-		IAtomContainerSet result = pfsm.generate(acs);
-		Assert.assertEquals(1, result.getAtomContainerCount());
-		Assert.assertTrue(ConnectivityChecker.isConnected(result.getAtomContainer(0)));
-		Assert.assertTrue(new SaturationChecker().allSaturated(result.getAtomContainer(0)));
+		IAtomContainer result = pfsm.generate(acs);
+		Assert.assertTrue(ConnectivityChecker.isConnected(result));
+		Assert.assertTrue(new SaturationChecker().allSaturated(result));
 	}
 }
 
