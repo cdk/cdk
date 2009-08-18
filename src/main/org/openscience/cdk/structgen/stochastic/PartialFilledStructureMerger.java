@@ -1,6 +1,6 @@
 /*  $Revision$ $Author$ $Date$    
  *
- *  Copyright (C) 1997-2007  The CDK project
+ *  Copyright (C) 1997-2009  Christoph Steinbeck, Stefan Kuhn <shk3@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -64,14 +64,14 @@ public class PartialFilledStructureMerger {
 
 	/**
 	 * Randomly generates a single, connected, correctly bonded structure from
-	 * a number of fragments.
-	 * 
-	 * @param atomContainers The fragments to generate for. IMPORTANT: The AtomContainers in the set must be connected.
-	 * If an AtomContainer is disconnected, the generated structure is not guaranteed to be connected.
-	 * @return
-	 * @throws CDKException
+	 * a number of fragments.  IMPORTANT: The AtomContainers in the set must be 
+	 * connected. If an AtomContainer is disconnected, no valid result will 
+	 * be formed 
+	 * @param atomContainers The fragments to generate for.
+	 * @return The newly formed structure.
+	 * @throws CDKException No valid result could be formed.
 	 */
-	public IAtomContainerSet generate(IAtomContainerSet atomContainers) throws CDKException
+	public IAtomContainer generate(IAtomContainerSet atomContainers) throws CDKException
 	{
 		int iteration = 0;
 		boolean structureFound = false;
@@ -120,7 +120,7 @@ public class PartialFilledStructureMerger {
 		}
 		if(!structureFound)
 			throw new CDKException("Could not combine the fragments to combine a valid, satured structure");
-		return atomContainers;
+		return atomContainers.getAtomContainer(0);
 	}
 
 	

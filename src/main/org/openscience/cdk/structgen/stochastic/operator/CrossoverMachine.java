@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 2000-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2000-2009  Christoph Steinbeck, Stefan Kuhn<shk3@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -64,7 +64,11 @@ public class CrossoverMachine
     }
 	
 	/**
-     * Performs the n point crossover of two <code>IAtomContainer</code>.
+     * Performs the n point crossover of two {@link IAtomContainer}.
+     * Precondition: The atoms in the molecules are ordered by properties to 
+     * preserve (e. g. atom symbol). Due to its randomized nature, this method 
+     * fails in around 3% of all cases. A CDKException with message "Could not 
+     * mate these properly" will then be thrown.
      * 
      * @return The children.
      * @exception CDKException if it was not possible to form offsprings.
@@ -207,10 +211,10 @@ public class CrossoverMachine
 				for (int f = 0; f < 2; f++)
 				{
 					try{
-						children.add(f, pfsm.generate(newstrucs[f]).getAtomContainer(0));
-						//System.err.println("F "+writer.createSMILES(new Molecule(children.get(f))) );
+						children.add(f, pfsm.generate(newstrucs[f]));
 					}catch(Exception ex){
-						
+						//if children are not correct, the outer loop will repeat,
+						//so we ignore this
 					}
 				}
 				if(children.size()==2 && ConnectivityChecker.isConnected(children.get(0)) && ConnectivityChecker.isConnected(children.get(1)))
