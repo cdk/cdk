@@ -966,6 +966,17 @@ Method </bibtex:title>
             <bibtex:volume>18</bibtex:volume>
             <bibtex:pages>464-477</bibtex:pages>
         </bibtex:article>
-    </bibtex:entry>    
+    </bibtex:entry> 
+
+    <bibtex:entry id="IUPAC2006">
+        <bibtex:article>
+            <bibtex:author>Brecher, Jonathan</bibtex:author>
+            <bibtex:title>Graphical Representation of Stereochemical Configuration</bibtex:title>
+            <bibtex:journal>Pure Appl. Chem.</bibtex:journal>
+            <bibtex:year>2006</bibtex:year>
+            <bibtex:volume>78</bibtex:volume>
+            <bibtex:pages>1897-1970</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
 
 </bibtex:file>
