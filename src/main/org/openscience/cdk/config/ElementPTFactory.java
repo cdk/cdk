@@ -167,9 +167,11 @@ public class ElementPTFactory
 		element.setName(elementInt.getName());
 		element.setChemicalSerie(elementInt.getChemicalSerie());
 		element.setPeriod(elementInt.getPeriod());
-		element.setGroup(elementInt.getGroup());
+		if(elementInt.getGroup()!=null)
+			element.setGroup(elementInt.getGroup());
 		element.setPhase(elementInt.getPhase());
 		element.setCASid(elementInt.getCASid());
+		element.setPaulingEneg(elementInt.getPaulingEneg());
 		return element;
 	}
 	/**
