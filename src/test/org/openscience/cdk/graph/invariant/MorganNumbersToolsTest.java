@@ -93,6 +93,9 @@ public class MorganNumbersToolsTest extends CDKTestCase
 		}
 	}
     
+    /**
+     * @cdk.bug 2846213
+     */	
     @Test
     public void testBug2846213() throws CDKException{
         String filename = "data/mdl/bug2846213.mol";
