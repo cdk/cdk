@@ -1,6 +1,7 @@
 /* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *                     2009  Mark Rijnbeek <mark_rynbeek@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -29,6 +30,7 @@ import java.io.StringReader;
 import javax.vecmath.Vector2d;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -38,7 +40,9 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -842,6 +846,50 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 		// test completed, no timeout occured
 	}
+
+  /**
+     * For the SMILES compound below (the largest molecule in Chembl) a
+     * handful of atoms had invalid (NaN) Double coordinates.
+     * 
+     * @throws Exception if the test failed
+     * @cdk.bug 2842445
+     */
+  @Test (timeout=5000)
+  public void testBug2843445NaNCoords() throws Exception {
+        
+        SmilesParser sp = 
+            new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        String smiles = 
+            "CCCC[C@H](NC(=O)[C@H](CCC(O)=O)NC(=O)[C@@H](NC(=O)[C@@H](CCCC)NC" +
+            "(=O)[C@H](CC(N)=O)NC(=O)[C@H](CCC\\N=C(\\N)N)NC(=O)[C@H](CC(C)C)NC" +
+            "(=O)[C@H](CC(C)C)NC(=O)[C@H](CC1=CNC=N1)NC(=O)[C@H](CC1=CC=CC=C1" +
+            ")NC(=O)[C@@H](NC(=O)[C@H](CC(C)C)NC(=O)[C@H](CC(O)=O)NC(=O)[C@@H" +
+            "](NC(=O)[C@H](CO)NC(=O)[C@@H](NC(=O)[C@@H]1CCCN1C(=O)[C@@H]1CCCN" +
+            "1C(=O)[C@H](CC(O)=O)NC(=O)[C@H](CC(O)=O)NC(=O)[C@@H](N)CC(N)=O)[" +
+            "C@@H](C)CC)[C@@H](C)CC)[C@@H](C)O)[C@@H](C)CC)C(=O)N[C@@H](C)C(=" +
+            "O)N[C@@H](CCC\\N=C(\\N)N)C(=O)N[C@@H]([C@@H](C)CC)C(=O)N[C@@H](CCC" +
+            "(O)=O)C(=O)N[C@@H](CC(N)=O)C(=O)N[C@@H](CCC(=O)OC)C(=O)N[C@@H](C" +
+            "CC\\N=C(\\N)N)C(=O)N[C@@H](CCC(O)=O)C(=O)N[C@@H](CCC(O)=O)C(=O)N[C" +
+            "@@H](C)C(=O)NCC(=O)N[C@@H](CCCCN)C(=O)N[C@@H](CC(N)=O)C(=O)N[C@@" +
+            "H](CCC\\N=C(\\N)N)C(=O)N[C@@H](CCCCN)C(=O)N[C@@H](CC1=CC=C(O)C=C1)" +
+            "C(=O)N[C@@H](CC(C)C)C(=O)N[C@@H](CC(O)=O)C(=O)N[C@@H](CCC(O)=O)C" +
+            "(=O)N[C@@H](C(C)C)C(N)=O";
+        IMolecule mol = sp.parseSmiles(smiles);
+
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setMolecule(mol);
+        sdg.generateCoordinates(new Vector2d(0, 1));
+        mol = sdg.getMolecule();
+        
+        int invalidCoordCount=0;
+        for (IAtom atom: mol.atoms()) {
+            if (Double.isNaN(atom.getPoint2d().x) || Double.isNaN(atom.getPoint2d().y)) {
+                invalidCoordCount++;
+            }
+        }
+        Assert.assertEquals("No 2d coordinates should be NaN", 0, invalidCoordCount);
+  }
+
 
 }
 
