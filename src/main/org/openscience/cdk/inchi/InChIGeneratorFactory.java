@@ -66,7 +66,8 @@ public class InChIGeneratorFactory {
         try {
             JniInchiWrapper.loadLibrary();
         } catch (LoadNativeLibraryException lnle) {
-            throw new CDKException("Unable to load native code; " + lnle.getMessage(), lnle);
+            throw new CDKException( "Unable to load native code; " 
+                                    + lnle.getMessage(), lnle );
         }
     }
     
@@ -77,7 +78,8 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
+    public InChIGenerator getInChIGenerator(IAtomContainer container) 
+                          throws CDKException {
         return(new InChIGenerator(container));
     }
     
@@ -89,7 +91,9 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
-    public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
+    public InChIGenerator getInChIGenerator(IAtomContainer container, 
+                                            String options) 
+                          throws CDKException {
         return(new InChIGenerator(container, options));
     }
     
@@ -101,7 +105,8 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException  if the generator cannot be instantiated
      */
-    public InChIGenerator getInChIGenerator(IAtomContainer container, List options) throws CDKException {
+    public InChIGenerator getInChIGenerator(IAtomContainer container, 
+                                            List options) throws CDKException {
         return(new InChIGenerator(container, options));
     }
     
@@ -113,7 +118,9 @@ public class InChIGeneratorFactory {
      * @return   the InChI structure generator object
      * @throws CDKException    if the generator cannot be instantiated
      */
-    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+    public InChIToStructure getInChIToStructure(String inchi, 
+                                                IChemObjectBuilder builder) 
+                            throws CDKException {
         return(new InChIToStructure(inchi, builder));
     }
     
@@ -126,7 +133,10 @@ public class InChIGeneratorFactory {
      * @return   the InChI structure generator object
      * @throws CDKException    if the generator cannot be instantiated
      */
-    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+    public InChIToStructure getInChIToStructure(String inchi, 
+                                                IChemObjectBuilder builder, 
+                                                String options) 
+                            throws CDKException {
         return(new InChIToStructure(inchi, builder, options));
     }
     
@@ -139,7 +149,10 @@ public class InChIGeneratorFactory {
      * @return   the InChI structure generator object
      * @throws CDKException    if the generator cannot be instantiated     
      */
-    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List options) throws CDKException {
+    public InChIToStructure getInChIToStructure(String inchi, 
+                                                IChemObjectBuilder builder, 
+                                                List options) 
+                            throws CDKException {
         return(new InChIToStructure(inchi, builder, options));
     }
 }
