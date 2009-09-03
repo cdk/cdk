@@ -42,7 +42,7 @@ public class InChIGeneratorTest extends CDKTestCase {
     
     protected InChIGeneratorFactory getFactory() throws Exception {
         if (factory == null) {
-            factory = new InChIGeneratorFactory();
+            factory = InChIGeneratorFactory.getInstance();
         }
         return(factory);
     }

@@ -1,7 +1,8 @@
 /* $Revision$ $Author$ $Date$
+
  *
  * Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
- *
+ *                    2009  Jonathan Alvarsson <jonalv@users.sf.net>
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
@@ -32,11 +33,19 @@ import java.util.List;
  * <p>Factory providing access to InChIGenerator and InChIToStructure. See those
  * classes for examples of use. These methods make use of the JNI-InChI library.
  * 
+ * <p>The InchiGeneratorFactory is a singleton class, which means that there 
+ * exists only one instance of the class. An instance of this class is obtained 
+ * with:
+ * <pre>
+ * InchiGeneratorFactory factory = InchiGeneratorFactory.getInstance();
+ * </pre>
+ * 
  * <p>InChI/Structure interconversion is implemented in this way so that we can
  * check whether or not the native code required is available. If the native
- * code cannot be loaded a CDKException will be thrown when the constructor
- * is called. The most common problem is that the native code is not in the
- * the correct location. Java searches the locations in the PATH environmental
+ * code cannot be loaded during the first call to  <code>getInstance</code> 
+ * method (when the instance is created) a CDKException will be thrown. The 
+ * most common problem is that the native code is not in the * the correct 
+ * location. Java searches the locations in the PATH environmental
  * variable, under Windows, and LD_LIBRARY_PATH under Linux, so the JNI-InChI
  * native libraries must be in one of these locations. If the JNI-InChI jar file
  * is being used and either the current working directory, or '.' are contained
@@ -54,6 +63,8 @@ import java.util.List;
  * @cdk.githash
  */
 public class InChIGeneratorFactory {
+ 
+    private static InChIGeneratorFactory INSTANCE;
     
     /**
      * <p>Constructor for InChIGeneratorFactory. Ensures that native code
@@ -62,12 +73,29 @@ public class InChIGeneratorFactory {
      * 
      * @throws CDKException if unable to load native code
      */
-    public InChIGeneratorFactory() throws CDKException {
+    private InChIGeneratorFactory() throws CDKException {
         try {
             JniInchiWrapper.loadLibrary();
         } catch (LoadNativeLibraryException lnle) {
             throw new CDKException( "Unable to load native code; " 
                                     + lnle.getMessage(), lnle );
+        }
+    }
+    
+    /**
+     * Gives the one <code>InChIGeneratorFactory</code> instance, 
+     * if needed also creates it.
+     * 
+     * @return the one <code>InChIGeneratorFactory</code> instance
+     * @throws CDKException if unable to load native code when attempting 
+     * to create the factory
+     */
+    public static InChIGeneratorFactory getInstance() throws CDKException {
+        synchronized ( InChIGeneratorFactory.class ) {
+            if ( INSTANCE == null ) {
+                INSTANCE = new InChIGeneratorFactory();
+            }
+            return INSTANCE;
         }
     }
     
