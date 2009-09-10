@@ -566,4 +566,25 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    /**
+     * Tests that the '0' read from the bond block for bond stereo
+     * is read is 'no stereochemistry involved'.
+     */
+    @Test public void testStereoReadZeroDefault() throws Exception {
+        String filename = "data/mdl/withcharges.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader()
+            .getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        Assert.assertNotNull(chemFile);
+        List<IAtomContainer> containersList =
+        	ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(1, containersList.size());
+        IAtomContainer container = containersList.get(0);
+        Assert.assertEquals(
+        	IBond.Stereo.NONE,
+        	container.getBond(0).getStereo()
+        );
+    }
 }

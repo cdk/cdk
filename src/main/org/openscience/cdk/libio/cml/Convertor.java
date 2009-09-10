@@ -727,11 +727,11 @@ public class Convertor {
           cmlBond.appendChild(bType);
         }
 
-        if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP ||
-                cdkBond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+        if (cdkBond.getStereo() == IBond.Stereo.UP ||
+                cdkBond.getStereo() == IBond.Stereo.DOWN) {
         	CMLBondStereo bondStereo = new CMLBondStereo();
             this.checkPrefix(bondStereo);
-            if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+            if (cdkBond.getStereo() == IBond.Stereo.UP) {
                 bondStereo.setDictRef("cml:W");
             } else {
                 bondStereo.setDictRef("cml:H");

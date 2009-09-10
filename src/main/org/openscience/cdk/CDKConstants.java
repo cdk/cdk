@@ -57,26 +57,6 @@ public class CDKConstants {
 
     public final static IBond.Order BONDORDER_QUADRUPLE = IBond.Order.QUADRUPLE;
 
-    /** A bonds which end is above the drawing plane. */
-    public final static int STEREO_BOND_UP = 1;
-    /** A bonds which start is above the drawing plane. */
-    public final static int STEREO_BOND_UP_INV = 2;
-
-    /** A bonds for which the stereochemistry is undefined. */
-    public final static int STEREO_BOND_UNDEFINED = 4;
-
-    /** A bonds for which there is no stereochemistry. */
-    public final static int STEREO_BOND_NONE = 0;
-
-    /** A bonds which end is below the drawing plane.
-     *  The bond is draw from the first to the second bond atom.
-     */
-    public final static int STEREO_BOND_DOWN = -1;
-    /** A bonds which end is below the drawing plane.
-     *  The bond is draw from the second to the first bond atom.
-     */
-    public final static int STEREO_BOND_DOWN_INV = -2;
-
     /** A positive atom parity. */
     public final static int STEREO_ATOM_PARITY_PLUS = 1;
     /** A negative atom parity. */

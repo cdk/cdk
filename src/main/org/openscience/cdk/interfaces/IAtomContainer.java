@@ -566,7 +566,8 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  order   Bondorder
 	 *@param  stereo  Stereochemical orientation
 	 */
-	public void addBond(int atom1, int atom2, IBond.Order order, int stereo);
+	public void addBond(int atom1, int atom2, IBond.Order order,
+			            IBond.Stereo stereo);
 
 
 	/**

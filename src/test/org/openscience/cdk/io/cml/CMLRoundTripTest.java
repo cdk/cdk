@@ -35,11 +35,11 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
@@ -383,7 +383,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
-        int stereo = CDKConstants.STEREO_BOND_DOWN;
+        IBond.Stereo stereo = IBond.Stereo.DOWN;
         bond.setStereo(stereo);
         mol.addBond(bond);
         

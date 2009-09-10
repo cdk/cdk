@@ -32,6 +32,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -217,7 +218,7 @@ public class BasicValidator extends AbstractValidator {
             "Defining stereochemistry on bonds is not safe.",
             "Use atom based stereochemistry."
         );
-        if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE) {
+        if (bond.getStereo() != IBond.Stereo.NONE) {
             report.addWarning(bondStereo);
         } else {
             report.addOK(bondStereo);

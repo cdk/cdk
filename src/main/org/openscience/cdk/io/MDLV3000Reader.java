@@ -402,13 +402,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             if (key.equals("CFG")) {
                                 int configuration = Integer.parseInt(value);
                                 if (configuration == 0) {
-                                    bond.setStereo(CDKConstants.STEREO_BOND_NONE);
+                                    bond.setStereo(IBond.Stereo.NONE);
                                 } else if (configuration == 1) {
-                                    bond.setStereo(CDKConstants.STEREO_BOND_UP);
+                                    bond.setStereo(IBond.Stereo.UP);
                                 } else if (configuration == 2) {
-                                    bond.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+                                    bond.setStereo((IBond.Stereo)CDKConstants.UNSET);
                                 } else if (configuration == 3) {
-                                    bond.setStereo(CDKConstants.STEREO_BOND_DOWN);
+                                    bond.setStereo(IBond.Stereo.DOWN);
                                 }
                             } else {
                                 logger.warn("Not parsing key: " + key);

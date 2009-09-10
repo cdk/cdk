@@ -275,8 +275,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         	if (bond.getAtomCount() != 2) {
         		logger.warn("Skipping bond with more/less than two atoms: " + bond);
         	} else {
-        		if (bond.getStereo() == CDKConstants.STEREO_BOND_UP_INV || 
-        				bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
+        		if (bond.getStereo() == IBond.Stereo.UP_INVERTED || 
+        				bond.getStereo() == IBond.Stereo.DOWN_INVERTED) {
         			// turn around atom coding to correct for inv stereo
         			line = formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
         			line += formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
@@ -287,16 +287,16 @@ public class MDLWriter extends DefaultChemObjectWriter {
         		line += formatMDLInt((int)bond.getOrder().ordinal()+1,3);
         		line += "  ";
         		switch(bond.getStereo()){
-        		case CDKConstants.STEREO_BOND_UP:
+        		case UP:
         			line += "1";
         			break;
-        		case CDKConstants.STEREO_BOND_UP_INV:
+        		case UP_INVERTED:
         			line += "1";
         			break;
-        		case CDKConstants.STEREO_BOND_DOWN:
+        		case DOWN:
         			line += "6";
         			break;
-        		case CDKConstants.STEREO_BOND_DOWN_INV:
+        		case DOWN_INVERTED:
         			line += "6";
         			break;
         		default:

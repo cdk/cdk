@@ -319,7 +319,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         int atom1 = 0;
         int atom2 = 0;
         int order = 0;
-        int stereo = 0;
+        IBond.Stereo stereo = (IBond.Stereo)CDKConstants.UNSET;
         int RGroupCounter=1;
         int Rnumber=0;
         String [] rGroup=null;
@@ -538,26 +538,27 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 atom2 = Integer.parseInt(line.substring(3, 6).trim());
                 order = Integer.parseInt(line.substring(6, 9).trim());
                 if (line.length() >= 12) {
-                	if (line.length() > 12) {
-                		stereo = Integer.parseInt(line.substring(9, 12).trim());
-                	} else {
-                		stereo = Integer.parseInt(line.substring(9).trim());
-                	}
+                	int mdlStereo = line.length() > 12
+                		? Integer.parseInt(line.substring(9, 12).trim())
+                		: Integer.parseInt(line.substring(9).trim());
+                    if (mdlStereo == 1) {
+                        // MDL up bond
+                        stereo = IBond.Stereo.UP;
+                    } else if (mdlStereo == 6) {
+                        // MDL down bond
+                        stereo = IBond.Stereo.DOWN;
+                    } else if (mdlStereo == 0) {
+                        // bond has no stereochemistry
+                        stereo = IBond.Stereo.NONE;
+                    } else if (mdlStereo == 4) {
+                        //MDL bond undefined
+                        stereo = (IBond.Stereo)CDKConstants.UNSET;
+                    }
                 } else {
                 	logger.warn("Missing expected stereo field at line: " + line);
                 }
                 if (logger.isDebugEnabled()) {
                     logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
-                }
-                if (stereo == 1) {
-                    // MDL up bond
-                    stereo = CDKConstants.STEREO_BOND_UP;
-                } else if (stereo == 6) {
-                    // MDL down bond
-                    stereo = CDKConstants.STEREO_BOND_DOWN;
-                } else if (stereo == 4) {
-                    //MDL bond undefined
-                    stereo = CDKConstants.STEREO_BOND_UNDEFINED;
                 }
                 // interpret CTfile's special bond orders
                 IAtom a1 = molecule.getAtom(atom1 - 1);

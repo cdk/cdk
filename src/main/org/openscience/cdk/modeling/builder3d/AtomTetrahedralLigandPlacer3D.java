@@ -776,7 +776,7 @@ public class AtomTetrahedralLigandPlacer3D {
 		n1.normalize();
 
 		if (getSpatproduct(b, c, n1) >= 0) {
-			if (ax.getStereo() != CDKConstants.STEREO_BOND_UP_INV) {
+			if (ax.getStereo() != IBond.Stereo.UP_INVERTED) {
 				n1.cross(c, b);
 				n1.normalize();
 			}

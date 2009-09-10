@@ -59,7 +59,8 @@ public class DebugBond extends Bond
 		super(atom1, atom2, order);
 	}
 	
-	public DebugBond(IAtom atom1, IAtom atom2, IBond.Order order, int stereo) {
+	public DebugBond(IAtom atom1, IAtom atom2, IBond.Order order,
+			         IBond.Stereo stereo) {
 		super(atom1, atom2, order, stereo);
 	}
 
@@ -221,12 +222,12 @@ public class DebugBond extends Bond
 		super.setOrder(order);
 	}
 
-	public int getStereo() {
+	public IBond.Stereo getStereo() {
 		logger.debug("Getting stereo: ", super.getStereo());
 		return super.getStereo();
 	}
 
-	public void setStereo(int stereo) {
+	public void setStereo(IBond.Stereo stereo) {
 		logger.debug("Setting stereo: ", stereo);
 		super.setStereo(stereo);
 	}

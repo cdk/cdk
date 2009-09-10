@@ -209,15 +209,15 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
     }
 
     @Test
-    public void testSetStereo_int() {
+    public void testSetStereo_IBond_Stereo() {
     	IBond b = (IBond)newChemObject();
         IAtom c = b.getBuilder().newAtom("C");
         IAtom o = b.getBuilder().newAtom("O");
         b.setAtom(c, 0); b.setAtom(o, 1); b.setOrder(Order.DOUBLE);
-        b.setStereo(CDKConstants.STEREO_BOND_DOWN);
-        Assert.assertEquals(CDKConstants.STEREO_BOND_DOWN, b.getStereo());
-        b.setStereo(CDKConstants.STEREO_BOND_UP);
-        Assert.assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
+        b.setStereo(IBond.Stereo.DOWN);
+        Assert.assertEquals(IBond.Stereo.DOWN, b.getStereo());
+        b.setStereo(IBond.Stereo.UP);
+        Assert.assertEquals(IBond.Stereo.UP, b.getStereo());
     }
 
     @Test
@@ -226,8 +226,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom c = object.getBuilder().newAtom("C");
         IAtom o = object.getBuilder().newAtom("O");
 
-        IBond b = object.getBuilder().newBond(c, o, IBond.Order.DOUBLE, CDKConstants.STEREO_BOND_UP);
-        Assert.assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
+        IBond b = object.getBuilder().newBond(c, o, IBond.Order.DOUBLE, IBond.Stereo.UP);
+        Assert.assertEquals(IBond.Stereo.UP, b.getStereo());
     }
 
     @Test
@@ -292,12 +292,14 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
     	IChemObject object = newChemObject(); 
         IAtom atom1 = object.getBuilder().newAtom("C");
         IAtom atom2 = object.getBuilder().newAtom("O");
-        IBond bond = object.getBuilder().newBond(atom1, atom2, IBond.Order.SINGLE, 1);
+        IBond bond = object.getBuilder().newBond(
+        	atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.UP
+        );
         IBond clone = (IBond) bond.clone();
 
         // test cloning of bond order
-        bond.setStereo(2);
-        Assert.assertEquals(1, clone.getStereo());
+        bond.setStereo(IBond.Stereo.UP_INVERTED);
+        Assert.assertEquals(IBond.Stereo.UP, clone.getStereo());
     }
 
     /**

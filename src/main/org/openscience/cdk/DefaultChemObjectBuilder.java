@@ -116,7 +116,8 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Bond(atom1, atom2, order);
 	}
 	
-	public IBond newBond(IAtom atom1, IAtom atom2, IBond.Order order, int stereo) {
+	public IBond newBond(IAtom atom1, IAtom atom2, IBond.Order order,
+			             IBond.Stereo stereo) {
 		return new Bond(atom1, atom2, order, stereo);
 	}
 

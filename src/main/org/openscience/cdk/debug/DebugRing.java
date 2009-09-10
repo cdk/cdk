@@ -418,7 +418,8 @@ public class DebugRing extends Ring
 		super.removeAllBonds();
 	}
 
-	public void addBond(int atom1, int atom2, IBond.Order order, int stereo) {
+	public void addBond(int atom1, int atom2, IBond.Order order,
+            IBond.Stereo stereo) {
 		logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order + " stereo=" + stereo);
 		super.addBond(atom1, atom2, order, stereo);
 	}

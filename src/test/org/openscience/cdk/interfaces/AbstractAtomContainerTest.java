@@ -1222,7 +1222,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getBond(2).getOrder());
     }
 
-    @Test public void testAddBond_int_int_IBond_Order_int() {
+    @Test public void testAddBond_int_int_IBond_Order_IBond_Stereo() {
         // acetone molecule
     	IAtomContainer acetone = (IAtomContainer)newChemObject();
         IAtom c1 = acetone.getBuilder().newAtom("C");
@@ -1233,9 +1233,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        acetone.addBond(0, 1, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP); // yes this is crap
-        acetone.addBond(1, 3, IBond.Order.DOUBLE, CDKConstants.STEREO_BOND_DOWN);
-        acetone.addBond(1, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_NONE);
+        acetone.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP); // yes this is crap
+        acetone.addBond(1, 3, IBond.Order.DOUBLE, IBond.Stereo.DOWN);
+        acetone.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.NONE);
         
         Assert.assertEquals(3, acetone.getBondCount());
         Iterator bonds = acetone.bonds().iterator();
@@ -1244,15 +1244,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(c1, acetone.getBond(0).getAtom(0));
         Assert.assertEquals(c2, acetone.getBond(0).getAtom(1));
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getBond(0).getOrder());
-        Assert.assertEquals(CDKConstants.STEREO_BOND_UP, acetone.getBond(0).getStereo());
+        Assert.assertEquals(IBond.Stereo.UP, acetone.getBond(0).getStereo());
         Assert.assertEquals(c2, acetone.getBond(1).getAtom(0));
         Assert.assertEquals(o, acetone.getBond(1).getAtom(1));
         Assert.assertEquals(IBond.Order.DOUBLE, acetone.getBond(1).getOrder());
-        Assert.assertEquals(CDKConstants.STEREO_BOND_DOWN, acetone.getBond(1).getStereo());
+        Assert.assertEquals(IBond.Stereo.DOWN, acetone.getBond(1).getStereo());
         Assert.assertEquals(c2, acetone.getBond(2).getAtom(0));
         Assert.assertEquals(c3, acetone.getBond(2).getAtom(1));
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getBond(2).getOrder());
-        Assert.assertEquals(CDKConstants.STEREO_BOND_NONE, acetone.getBond(2).getStereo());
+        Assert.assertEquals(IBond.Stereo.NONE, acetone.getBond(2).getStereo());
     }
 
     @Test public void testContains_IElectronContainer() {

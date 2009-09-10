@@ -192,28 +192,28 @@ protected JniInchiInputInchi input;
             
             // No stereo definition
             if (stereo == INCHI_BOND_STEREO.NONE) {
-                cBo.setStereo(CDKConstants.STEREO_BOND_NONE);
+                cBo.setStereo(IBond.Stereo.NONE);
             }
             // Bond ending (fat end of wedge) below the plane
             else if (stereo == INCHI_BOND_STEREO.SINGLE_1DOWN) {
-                cBo.setStereo(CDKConstants.STEREO_BOND_DOWN);
+                cBo.setStereo(IBond.Stereo.DOWN);
             }
             // Bond ending (fat end of wedge) above the plane
             else if (stereo == INCHI_BOND_STEREO.SINGLE_1UP) {
-                cBo.setStereo(CDKConstants.STEREO_BOND_UP);
+                cBo.setStereo(IBond.Stereo.UP);
             }
             // Bond starting (pointy end of wedge) below the plane
             else if (stereo == INCHI_BOND_STEREO.SINGLE_2DOWN) {
-                cBo.setStereo(CDKConstants.STEREO_BOND_DOWN_INV);
+                cBo.setStereo(IBond.Stereo.DOWN_INVERTED);
             }
             // Bond starting (pointy end of wedge) above the plane
             else if (stereo == INCHI_BOND_STEREO.SINGLE_2UP) {
-                cBo.setStereo(CDKConstants.STEREO_BOND_UP_INV);
+                cBo.setStereo(IBond.Stereo.UP_INVERTED);
             } 
             // Bond with undefined stereochemistry
             else if (stereo == INCHI_BOND_STEREO.SINGLE_1EITHER
                   || stereo == INCHI_BOND_STEREO.DOUBLE_EITHER) {
-                cBo.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+                cBo.setStereo((IBond.Stereo)CDKConstants.UNSET);
             }
             
             molecule.addBond(cBo);

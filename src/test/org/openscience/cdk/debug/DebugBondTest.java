@@ -56,7 +56,7 @@ public class DebugBondTest extends AbstractBondTest {
         Assert.assertNull(bond.getAtom(0));
         Assert.assertNull(bond.getAtom(1));
         Assert.assertNull(bond.getOrder());
-        Assert.assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
+        Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class DebugBondTest extends AbstractBondTest {
         Assert.assertEquals(c, bond.getAtom(0));
         Assert.assertEquals(o, bond.getAtom(1));
         Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
-        Assert.assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
+        Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
 
     @Test
@@ -115,20 +115,20 @@ public class DebugBondTest extends AbstractBondTest {
         Assert.assertEquals(c, bond.getAtom(0));
         Assert.assertEquals(o, bond.getAtom(1));
         Assert.assertTrue(bond.getOrder() == IBond.Order.DOUBLE);
-        Assert.assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
+        Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
 
     @Test
-    public void testDebugBond_IAtom_IAtom_IBond_Order_int() {
+    public void testDebugBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
     	IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newAtom("C");
         IAtom o = object.getBuilder().newAtom("O");
-        IBond bond = new DebugBond(c, o, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
+        IBond bond = new DebugBond(c, o, IBond.Order.SINGLE, IBond.Stereo.UP);
 
         Assert.assertEquals(2, bond.getAtomCount());
         Assert.assertEquals(c, bond.getAtom(0));
         Assert.assertEquals(o, bond.getAtom(1));
         Assert.assertTrue(bond.getOrder() == IBond.Order.SINGLE);
-        Assert.assertEquals(CDKConstants.STEREO_BOND_UP, bond.getStereo());
+        Assert.assertEquals(IBond.Stereo.UP, bond.getStereo());
     }
 }

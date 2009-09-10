@@ -440,9 +440,10 @@ public class ModelBuilder3D {
 		}
 
 		int stereo = -1;
+		IBond unplacedBond = molecule.getBond(atomA, unplacedAtom);
 		if (atomA.getStereoParity() != CDKConstants.UNSET && atomA.getStereoParity() != 0 ||
-				(Math.abs((molecule.getBond(atomA, unplacedAtom)).getStereo()) < 2
-				 && Math.abs((molecule.getBond(atomA, unplacedAtom)).getStereo()) != 0)
+				(unplacedBond.getStereo() == IBond.Stereo.UP ||
+				 unplacedBond.getStereo() == IBond.Stereo.DOWN)
 				 && molecule.getMaximumBondOrder(atomA) == IBond.Order.SINGLE) {
 			if (atomNeighbours.getAtomCount() > 1) {
 				stereo = atlp3d.makeStereocenter(atomA.getPoint3d(), molecule.getBond(atomA, unplacedAtom), (atomNeighbours.getAtom(0)).getPoint3d(), (atomNeighbours.getAtom(1)).getPoint3d(), branchPoints);

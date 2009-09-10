@@ -140,9 +140,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 7
 		mol1.addBond(0, 1, IBond.Order.SINGLE);
 		// 1
-		mol1.addBond(1, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
+		mol1.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);
 		// 2
-		mol1.addBond(1, 3, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(1, 3, IBond.Order.SINGLE, IBond.Stereo.DOWN);
 		// 3
 		mol1.addBond(1, 4, IBond.Order.SINGLE);
 		// 4
@@ -160,8 +160,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Assert.assertEquals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]", smiles1);
 		
 		//by setting additional stereo descriptors, we should get another smiles
-		mol1.getBond(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
-		mol1.getBond(2).setStereo(CDKConstants.STEREO_BOND_UP);
+		mol1.getBond(1).setStereo(IBond.Stereo.DOWN);
+		mol1.getBond(2).setStereo(IBond.Stereo.UP);
 		smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]", smiles1);
@@ -198,9 +198,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 2
 		mol1.addAtom(new Atom("H", new Point2d(2, 3)));
 		// 3
-		mol1.addBond(0, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
 		// 1
-		mol1.addBond(1, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
+		mol1.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);
 		// 2
 		mol1.addBond(2, 3, IBond.Order.SINGLE);
 		// 3
@@ -212,9 +212,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 6
 		mol1.addBond(6, 7, IBond.Order.SINGLE);
 		// 3
-		mol1.addBond(7, 8, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
+		mol1.addBond(7, 8, IBond.Order.SINGLE, IBond.Stereo.UP);
 		// 4
-		mol1.addBond(7, 9, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(7, 9, IBond.Order.SINGLE, IBond.Stereo.DOWN);
 		// 5
 		mol1.addBond(7, 2, IBond.Order.SINGLE);
 		// 6
@@ -266,7 +266,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 2
 		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
 		// 3
-		mol1.addBond(0, 1, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.DOWN);
 		// 1
 		mol1.addBond(1, 2, IBond.Order.SINGLE);
 		// 2
@@ -278,7 +278,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 5
 		mol1.addBond(5, 6, IBond.Order.SINGLE);
 		// 6
-		mol1.addBond(6, 7, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(6, 7, IBond.Order.SINGLE, IBond.Stereo.DOWN);
 		// 3
 		mol1.addBond(6, 8, IBond.Order.SINGLE);
 		// 4
@@ -300,7 +300,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
-		mol1.getBond(6).setStereo(CDKConstants.STEREO_BOND_UP);
+		mol1.getBond(6).setStereo(IBond.Stereo.UP);
 		String smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		Assert.assertNotSame(smiles1, smiles3);
 	}

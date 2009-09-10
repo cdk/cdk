@@ -197,7 +197,7 @@ public class CML23FragmentsTest extends CDKTestCase {
     	Assert.assertEquals(2, mol.getAtomCount());
     	Assert.assertEquals(1, mol.getBondCount());
     	IBond bond = mol.getBond(0);
-    	Assert.assertEquals(CDKConstants.STEREO_BOND_DOWN, bond.getStereo());
+    	Assert.assertEquals(IBond.Stereo.DOWN, bond.getStereo());
     }
 
   @Test public void testBondAromatic() throws Exception {

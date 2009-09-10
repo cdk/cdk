@@ -396,7 +396,7 @@ public class SmilesGenerator
 						if (!BondTools.isStereo(molecule, allrings.getAtom(k)) && hasWedges(molecule, allrings.getAtom(k)) != null)
 						{
 							IBond bond = molecule.getBond(allrings.getAtom(k), hasWedges(molecule, allrings.getAtom(k)));
-							if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
+							if (bond.getStereo() == IBond.Stereo.UP)
 							{
 								allrings.getAtom(k).setProperty(RING_CONFIG, UP);
 							} else
@@ -412,7 +412,7 @@ public class SmilesGenerator
 						{
 							IBond bond = molecule.getBond(allrings.getAtom(k), hasWedges(molecule, allrings.getAtom(k)));
 							if(bond!=null){
-								if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
+								if (bond.getStereo() == IBond.Stereo.UP)
 								{
 									allrings.getAtom(k).setProperty(RING_CONFIG, UP);
 								} else
@@ -445,13 +445,13 @@ public class SmilesGenerator
         //		for (int i = 0; i < atoms.size(); i++)
 //		{
 //			atomi = (IAtom)atoms.get(i);
-//			if (ac.getBond(a, atomi).getStereo() != CDKConstants.STEREO_BOND_NONE && !atomi.getSymbol().equals("H"))
+//			if (ac.getBond(a, atomi).getStereo() != IBond.Stereo.NONE && !atomi.getSymbol().equals("H"))
 //			{
 //				return (atomi);
 //			}
 //		}
         for (IAtom atom : atoms) {
-            if (ac.getBond(a, atom).getStereo() != CDKConstants.STEREO_BOND_NONE) {
+            if (ac.getBond(a, atom).getStereo() != IBond.Stereo.NONE) {
                 return (atom);
             }
         }
@@ -675,8 +675,8 @@ public class SmilesGenerator
 //		{
 //			IBond bond = bonds[i];
 //			int stereo = bond.getStereo();
-//			if (stereo == CDKConstants.STEREO_BOND_DOWN ||
-//					stereo == CDKConstants.STEREO_BOND_UP)
+//			if (stereo == IBond.Stereo.DOWN ||
+//					stereo == IBond.Stereo.UP)
 //			{
 //				return true;
 //			}
@@ -826,56 +826,65 @@ public class SmilesGenerator
 					}
 					if (BondTools.isTetrahedral(container, atom,false) == 1)
 					{
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.DOWN)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0 && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if ((container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										 container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE) &&
+										BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0 && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if ((container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+									     container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE) &&
+									     !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
 								}
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.UP)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0 && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if ((container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										 container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE) &&
+										BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0 && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if ((container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										 container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE) &&
+										!BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
 								}
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_NONE)
+						if (container.getBond(parent, atom).getStereo() == CDKConstants.UNSET || container.getBond(parent, atom).getStereo() == IBond.Stereo.NONE)
 						{
 							boolean normalBindingIsLeft = false;
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE)
 									{
 										if (BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom))
 										{
@@ -891,29 +900,31 @@ public class SmilesGenerator
 								{
 									if (normalBindingIsLeft)
 									{
-										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0)
+										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+											container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE)
 										{
 											sorted[0] = (IAtom) chiralNeighbours.get(i);
 										}
-										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP)
 										{
 											sorted[2] = (IAtom) chiralNeighbours.get(i);
 										}
-										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN)
 										{
 											sorted[1] = (IAtom) chiralNeighbours.get(i);
 										}
 									} else
 									{
-										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP)
 										{
 											sorted[1] = (IAtom) chiralNeighbours.get(i);
 										}
-										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0)
+										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+											container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE)
 										{
 											sorted[0] = (IAtom) chiralNeighbours.get(i);
 										}
-										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+										if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN)
 										{
 											sorted[2] = (IAtom) chiralNeighbours.get(i);
 										}
@@ -924,28 +935,28 @@ public class SmilesGenerator
 					}
 					if (BondTools.isTetrahedral(container, atom,false) == 2)
 					{
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.UP)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
 								}
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.DOWN)
 						{
 							double angle1 = 0;
 							double angle2 = 0;
@@ -955,7 +966,7 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										if (angle1 == 0)
 										{
@@ -967,7 +978,7 @@ public class SmilesGenerator
 											atom2 = (IAtom) chiralNeighbours.get(i);
 										}
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
@@ -986,7 +997,7 @@ public class SmilesGenerator
 					}
 					if (BondTools.isTetrahedral(container, atom,false) == 3)
 					{
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.UP)
 						{
 							TreeMap hm = new TreeMap();
 							for (int i = 0; i < chiralNeighbours.size(); i++)
@@ -1002,7 +1013,8 @@ public class SmilesGenerator
 								sorted[i] = ((IAtom) chiralNeighbours.get(((Integer) ohere[i]).intValue()));
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == 0)
+						if (container.getBond(parent, atom).getStereo() == null ||
+							container.getBond(parent, atom).getStereo() == IBond.Stereo.NONE)
 						{
 							double angle1 = 0;
 							double angle2 = 0;
@@ -1012,7 +1024,9 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if ((container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										 container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE) &&
+										!isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										if (angle1 == 0)
 										{
@@ -1024,7 +1038,7 @@ public class SmilesGenerator
 											atom2 = (IAtom) chiralNeighbours.get(i);
 										}
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
@@ -1043,7 +1057,7 @@ public class SmilesGenerator
 					}
 					if (BondTools.isTetrahedral(container, atom,false) == 4)
 					{
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.DOWN)
 						{
 							TreeMap hm = new TreeMap();
 							for (int i = 0; i < chiralNeighbours.size(); i++)
@@ -1059,7 +1073,8 @@ public class SmilesGenerator
 								sorted[i] = ((IAtom) chiralNeighbours.get(((Integer) ohere[i]).intValue()));
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == 0)
+						if (container.getBond(parent, atom).getStereo() == null ||
+							container.getBond(parent, atom).getStereo() == IBond.Stereo.NONE)
 						{
 							double angle1 = 0;
 							double angle2 = 0;
@@ -1069,7 +1084,9 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if ((container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										 container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE) &&
+										!isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										if (angle1 == 0)
 										{
@@ -1081,7 +1098,7 @@ public class SmilesGenerator
 											atom2 = (IAtom) chiralNeighbours.get(i);
 										}
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
@@ -1100,63 +1117,65 @@ public class SmilesGenerator
 					}
 					if (BondTools.isTetrahedral(container, atom,false) == 5)
 					{
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.DOWN)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP)
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE)
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN)
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
 								}
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.UP)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE)
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
 								}
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_NONE)
+						if (container.getBond(parent, atom).getStereo() == CDKConstants.UNSET || container.getBond(parent, atom).getStereo() == IBond.Stereo.NONE)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP)
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
@@ -1166,63 +1185,65 @@ public class SmilesGenerator
 					}
 					if (BondTools.isTetrahedral(container, atom,false) == 6)
 					{
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.UP)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP)
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE)
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN)
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
 								}
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.DOWN)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == 0)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == null ||
+										container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.NONE)
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
 								}
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_NONE)
+						if (container.getBond(parent, atom).getStereo() == CDKConstants.UNSET || container.getBond(parent, atom).getStereo() == IBond.Stereo.NONE)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.UP && !BondTools.isLeft(((IAtom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((IAtom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+									if (container.getBond((IAtom) chiralNeighbours.get(i), atom).getStereo() == IBond.Stereo.DOWN)
 									{
 										sorted[1] = (IAtom) chiralNeighbours.get(i);
 									}
@@ -1252,15 +1273,16 @@ public class SmilesGenerator
 					{
 						sorted = new IAtom[container.getConnectedAtomsCount(atom) - 1];
 						TreeMap hm = new TreeMap();
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.UP)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
-								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == 0)
+								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == null ||
+									container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == IBond.Stereo.NONE)
 								{
 									hm.put(new Double(BondTools.giveAngle(atom, parent, ((IAtom) chiralNeighbours.get(i)))), Integer.valueOf(i));
 								}
-								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == IBond.Stereo.DOWN)
 								{
 									sorted[sorted.length - 1] = (IAtom) chiralNeighbours.get(i);
 								}
@@ -1271,15 +1293,16 @@ public class SmilesGenerator
 								sorted[i] = ((IAtom) chiralNeighbours.get(((Integer) ohere[i]).intValue()));
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+						if (container.getBond(parent, atom).getStereo() == IBond.Stereo.DOWN)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
-								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == 0)
+								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == null ||
+									container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == IBond.Stereo.NONE)
 								{
 									hm.put(new Double(BondTools.giveAngle(atom, parent, ((IAtom) chiralNeighbours.get(i)))), Integer.valueOf(i));
 								}
-								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == CDKConstants.STEREO_BOND_UP)
+								if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == IBond.Stereo.UP)
 								{
 									sorted[sorted.length - 1] = (IAtom) chiralNeighbours.get(i);
 								}
@@ -1290,21 +1313,23 @@ public class SmilesGenerator
 								sorted[i] = ((IAtom) chiralNeighbours.get(((Integer) ohere[i]).intValue()));
 							}
 						}
-						if (container.getBond(parent, atom).getStereo() == 0)
+						if (container.getBond(parent, atom).getStereo() == null ||
+							container.getBond(parent, atom).getStereo() == IBond.Stereo.NONE)
 						{
 							for (int i = 0; i < chiralNeighbours.size(); i++)
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == 0)
+									if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == null ||
+										container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == IBond.Stereo.NONE)
 									{
 										hm.put(new Double((BondTools.giveAngleFromMiddle(atom, parent, ((IAtom) chiralNeighbours.get(i))))), Integer.valueOf(i));
 									}
-									if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == CDKConstants.STEREO_BOND_UP)
+									if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == IBond.Stereo.UP)
 									{
 										sorted[0] = (IAtom) chiralNeighbours.get(i);
 									}
-									if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == CDKConstants.STEREO_BOND_DOWN)
+									if (container.getBond(atom, (IAtom) chiralNeighbours.get(i)).getStereo() == IBond.Stereo.DOWN)
 									{
 										sorted[sorted.length - 2] = (IAtom) chiralNeighbours.get(i);
 									}

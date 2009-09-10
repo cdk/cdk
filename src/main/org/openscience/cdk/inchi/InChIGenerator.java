@@ -291,29 +291,29 @@ public class InChIGenerator {
             input.addBond(ibond);
             
             // Check for bond stereo definitions
-            int stereo = bond.getStereo();
+            IBond.Stereo stereo = bond.getStereo();
             // No stereo definition
-            if (stereo == CDKConstants.STEREO_BOND_NONE) {
+            if (stereo == IBond.Stereo.NONE) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.NONE);
             }
             // Bond ending (fat end of wedge) below the plane
-            else if (stereo == CDKConstants.STEREO_BOND_DOWN) {
+            else if (stereo == IBond.Stereo.DOWN) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_1DOWN);
             }
             // Bond ending (fat end of wedge) above the plane
-            else if (stereo == CDKConstants.STEREO_BOND_UP) {
+            else if (stereo == IBond.Stereo.UP) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_1UP);
             } 
             // Bond starting (pointy end of wedge) below the plane
-            else if (stereo == CDKConstants.STEREO_BOND_DOWN_INV) {
+            else if (stereo == IBond.Stereo.DOWN_INVERTED) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_2DOWN);
             }
             // Bond starting (pointy end of wedge) above the plane
-            else if (stereo == CDKConstants.STEREO_BOND_UP_INV) {
+            else if (stereo == IBond.Stereo.UP_INVERTED) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_2UP);
             } 
             // Bond with undefined stereochemistry
-            else if (stereo == CDKConstants.STEREO_BOND_UNDEFINED) {
+            else if (stereo == CDKConstants.UNSET) {
                 if (order == INCHI_BOND_TYPE.SINGLE) {
                     ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_1EITHER);
                 } else if (order == INCHI_BOND_TYPE.DOUBLE) {

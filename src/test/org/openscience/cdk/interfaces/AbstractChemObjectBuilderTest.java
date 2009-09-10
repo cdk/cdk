@@ -178,11 +178,12 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
 		Assert.assertTrue(object instanceof IBond);
 	}
 	
-	@Test public void testNewBond_IAtom_IAtom_IBond_Order_int() {
+	@Test public void testNewBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
-			IBond.Order.SINGLE, 1
+			IBond.Order.SINGLE,
+			IBond.Stereo.UP
 		);
 		Assert.assertNotNull(object);
 		Assert.assertTrue(object instanceof IChemObject);

@@ -27,6 +27,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.XYZReader;
@@ -205,7 +206,7 @@ public class BondToolsTest extends CDKTestCase {
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
 		BondTools.makeUpDownBonds(mol);
-		Assert.assertEquals(-1,mol.getBond(3).getStereo());
+		Assert.assertEquals(IBond.Stereo.DOWN,mol.getBond(3).getStereo());
 	}
 
 	@Test public void testGiveAngle_IAtom_IAtom_IAtom() throws Exception {

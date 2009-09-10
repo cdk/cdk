@@ -59,7 +59,7 @@ public class EventCMLHandler extends CMLHandler {
     private int bond_a1;
     private int bond_a2;
     private IBond.Order bond_order;
-    private int bond_stereo;
+    private IBond.Stereo bond_stereo;
     private String bond_id;
     
     protected LoggingTool logger;
@@ -129,7 +129,7 @@ public class EventCMLHandler extends CMLHandler {
             numberOfAtoms++;
         } else if (objectType.equals("Bond")) {
             bond_id = null;
-            bond_stereo = -99;
+            bond_stereo = (IBond.Stereo)CDKConstants.UNSET;
         }
     }
     
@@ -155,7 +155,7 @@ public class EventCMLHandler extends CMLHandler {
             	IAtom a2 = currentMolecule.getAtom(bond_a2);
                 IBond b = builder.newBond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
-                if (bond_stereo != -99) {
+                if (bond_stereo != CDKConstants.UNSET) {
                     b.setStereo(bond_stereo);
                 }
                 currentMolecule.addBond(b);
@@ -291,9 +291,9 @@ public class EventCMLHandler extends CMLHandler {
                 }
             } else if (propertyType.equals("stereo")) {
                 if (propertyValue.equals("H")) {
-                    bond_stereo = CDKConstants.STEREO_BOND_DOWN;
+                    bond_stereo = IBond.Stereo.DOWN;
                 } else if (propertyValue.equals("W")) {
-                    bond_stereo = CDKConstants.STEREO_BOND_UP;
+                    bond_stereo = IBond.Stereo.UP;
                 }
             }
         }

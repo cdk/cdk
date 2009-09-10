@@ -83,17 +83,14 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
     /**
      * A descriptor the stereochemical orientation of this bond.
-     *
-     * @see org.openscience.cdk.CDKConstants for predefined values to be used
-     *      here.
      */
-    protected int stereo;
+    protected IBond.Stereo stereo;
 
     /**
      * Constructs an empty bond.
      */
     public Bond() {
-        this(null, null, null, CDKConstants.STEREO_BOND_NONE);
+        this(null, null, null, IBond.Stereo.NONE);
     }
 
 
@@ -104,7 +101,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @param atom2 the second Atom in the bond
      */
     public Bond(IAtom atom1, IAtom atom2) {
-        this(atom1, atom2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_NONE);
+        this(atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.NONE);
     }
 
 
@@ -116,7 +113,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @param order the bond order
      */
     public Bond(IAtom atom1, IAtom atom2, Order order) {
-        this(atom1, atom2, order, CDKConstants.STEREO_BOND_NONE);
+        this(atom1, atom2, order, IBond.Stereo.NONE);
     }
 
     /**
@@ -153,7 +150,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @param order  the bond order
      * @param stereo a descriptor the stereochemical orientation of this bond
      */
-    public Bond(IAtom atom1, IAtom atom2, Order order, int stereo) {
+    public Bond(IAtom atom1, IAtom atom2, Order order, IBond.Stereo stereo) {
         atoms = new Atom[2];
         atoms[0] = atom1;
         atoms[1] = atom2;
@@ -351,7 +348,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @see #setStereo
      * @see org.openscience.cdk.CDKConstants for predefined values.
      */
-    public int getStereo() {
+    public IBond.Stereo getStereo() {
         return this.stereo;
     }
 
@@ -363,7 +360,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @see #getStereo
      * @see org.openscience.cdk.CDKConstants for predefined values.
      */
-    public void setStereo(int stereo) {
+    public void setStereo(IBond.Stereo stereo) {
         this.stereo = stereo;
         notifyChanged();
     }

@@ -323,23 +323,23 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		case SMARTSParserConstants.UP_S_BOND:
 			bond = new StereoBond();
 			bond.setOrder(IBond.Order.SINGLE);
-			bond.setStereo(CDKConstants.STEREO_BOND_UP);
+			bond.setStereo(IBond.Stereo.UP);
 			break;
 		case SMARTSParserConstants.DN_S_BOND:
 			bond = new StereoBond();
 			bond.setOrder(IBond.Order.SINGLE);
-			bond.setStereo(CDKConstants.STEREO_BOND_DOWN);
+			bond.setStereo(IBond.Stereo.DOWN);
 			break;
 		case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
 			LogicalOperatorBond logical = new LogicalOperatorBond();
 			logical.setOperator("or");
 			StereoBond bond1 = new StereoBond();
 			bond1.setOrder(IBond.Order.SINGLE);
-			bond1.setStereo(CDKConstants.STEREO_BOND_UP);
+			bond1.setStereo(IBond.Stereo.UP);
 			logical.setLeft(bond1);
 			StereoBond bond2 = new StereoBond();
 			bond2.setOrder(IBond.Order.SINGLE);
-			bond2.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+			bond2.setStereo((IBond.Stereo)CDKConstants.UNSET);
 			logical.setRight(bond2);
 			bond = logical;
 			break;
@@ -348,11 +348,11 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			logical.setOperator("or");
 			bond1 = new StereoBond();
 			bond1.setOrder(IBond.Order.SINGLE);
-			bond1.setStereo(CDKConstants.STEREO_BOND_DOWN);
+			bond1.setStereo(IBond.Stereo.DOWN);
 			logical.setLeft(bond1);
 			bond2 = new StereoBond();
 			bond2.setOrder(IBond.Order.SINGLE);
-			bond2.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+			bond2.setStereo((IBond.Stereo)CDKConstants.UNSET);
 			logical.setRight(bond2);
 			bond = logical;
 			break;

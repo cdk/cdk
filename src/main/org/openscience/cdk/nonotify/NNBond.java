@@ -25,7 +25,6 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -40,18 +39,19 @@ public class NNBond extends Bond {
 	private static final long serialVersionUID = -6286559199533034379L;
 
 	public NNBond() {
-		this(null, null, null, CDKConstants.STEREO_BOND_NONE);
+		this(null, null, null, IBond.Stereo.NONE);
 	}
 
 	public NNBond(IAtom atom1, IAtom atom2) {
-		this(atom1, atom2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_NONE);
+		this(atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.NONE);
 	}
 
 	public NNBond(IAtom atom1, IAtom atom2, IBond.Order order) {
-		this(atom1, atom2, order, CDKConstants.STEREO_BOND_NONE);
+		this(atom1, atom2, order, IBond.Stereo.NONE);
 	}
 
-	public NNBond(IAtom atom1, IAtom atom2, IBond.Order order, int stereo) {
+	public NNBond(IAtom atom1, IAtom atom2, IBond.Order order,
+			      IBond.Stereo stereo) {
 		super(atom1, atom2, order, stereo);
 		setNotification(false);
 	}

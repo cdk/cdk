@@ -311,12 +311,13 @@ public class BondTools {
         int up = 0;
 		int down = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_NONE || bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED) {
-            }
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+            if (bond.getStereo() == IBond.Stereo.NONE ||
+            	bond.getStereo() == CDKConstants.UNSET) {
+            } else
+            if (bond.getStereo() == IBond.Stereo.UP) {
                 up++;
-            }
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+            } else
+            if (bond.getStereo() == IBond.Stereo.DOWN) {
                 down++;
             }
         }
@@ -369,16 +370,17 @@ public class BondTools {
 		{
 			return (0);
 		}
-		java.util.List<IBond> bonds = container.getConnectedBondsList(atom);
+		List<IBond> bonds = container.getConnectedBondsList(atom);
         int up = 0;
 		int down = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE) {
-            }
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+            if (bond.getStereo() == CDKConstants.UNSET ||
+            	bond.getStereo() == IBond.Stereo.NONE) {
+            } else
+            if (bond.getStereo() == IBond.Stereo.UP) {
                 up++;
-            }
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+            } else
+            if (bond.getStereo() == IBond.Stereo.DOWN) {
                 down++;
             }
         }
@@ -413,7 +415,8 @@ public class BondTools {
 		List<IBond> bonds = container.getConnectedBondsList(stereoAtom);
 		int stereo = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() != 0) {
+            if (bond.getStereo() != CDKConstants.UNSET &&
+            	bond.getStereo() != IBond.Stereo.NONE) {
                 stereo++;
             }
         }
@@ -513,12 +516,13 @@ public class BondTools {
         int up = 0;
 		int down = 0;
         for (IBond bond : bonds) {
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE) {
-            }
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+            if (bond.getStereo() == CDKConstants.UNSET ||
+            	bond.getStereo() == IBond.Stereo.NONE) {
+            } else
+            if (bond.getStereo() == IBond.Stereo.UP) {
                 up++;
-            }
-            if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+            } else
+            if (bond.getStereo() == IBond.Stereo.DOWN) {
                 down++;
             }
         }
@@ -545,8 +549,8 @@ public class BondTools {
 			hm.put(giveAngle(atom, atoms.get(0), atoms.get(i)), i);
 		}
 		Object[] ohere = hm.values().toArray();
-		int stereoOne = container.getBond(atom, atoms.get(0)).getStereo();
-		int stereoOpposite = container.getBond(atom, atoms.get((Integer) ohere[1])).getStereo();
+		IBond.Stereo stereoOne = container.getBond(atom, atoms.get(0)).getStereo();
+		IBond.Stereo stereoOpposite = container.getBond(atom, atoms.get((Integer) ohere[1])).getStereo();
         return stereoOpposite == stereoOne;
 	}
 
@@ -591,14 +595,14 @@ public class BondTools {
 	          IAtom h = null;
 	          for (int k = 0; k < 4; k++) {
 	        	  IAtom conAtom = container.getConnectedAtomsList(a).get(k);
-	        	  int stereo = container.getBond(a,conAtom).getStereo();
-	        	  if (stereo  == CDKConstants.STEREO_BOND_UP) {
+	        	  IBond.Stereo stereo = container.getBond(a,conAtom).getStereo();
+	        	  if (stereo == IBond.Stereo.UP) {
 	        		  up++;
 	        	  }
-	        	  else if (stereo == CDKConstants.STEREO_BOND_DOWN) {
+	        	  else if (stereo == IBond.Stereo.DOWN) {
 	        		  down++;
 	        	  }
-	        	  else if (stereo == CDKConstants.STEREO_BOND_NONE && conAtom.getSymbol().equals("H")) {
+	        	  else if (stereo == IBond.Stereo.NONE && conAtom.getSymbol().equals("H")) {
 	        		  h = conAtom;
 	        		  hs++;
 	        	  } else {
@@ -606,10 +610,10 @@ public class BondTools {
 	        	  }
 	          }
 	          if (up == 0 && down == 1 && h != null && hs == 1) {
-	            container.getBond(a, h).setStereo(CDKConstants.STEREO_BOND_UP);
+	            container.getBond(a, h).setStereo(IBond.Stereo.UP);
 	          }
 	          if (up == 1 && down == 0 && h != null && hs == 1) {
-	            container.getBond(a, h).setStereo(CDKConstants.STEREO_BOND_DOWN);
+	            container.getBond(a, h).setStereo(IBond.Stereo.DOWN);
 	          }
 	        }
 	      }

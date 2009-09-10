@@ -1390,7 +1390,8 @@ public class AtomContainer extends ChemObject
 	 *@param  order   Bondorder
 	 *@param  stereo  Stereochemical orientation
 	 */
-	public void addBond(int atom1, int atom2, IBond.Order order, int stereo)
+	public void addBond(int atom1, int atom2, IBond.Order order,
+			            IBond.Stereo stereo)
 	{
 		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order, stereo);
 

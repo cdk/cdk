@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.nonotify.NNMolecule;
@@ -160,6 +161,28 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(41, (containersList.get(0)).getBondCount());
         Assert.assertEquals(29, (containersList.get(1)).getAtomCount());
         Assert.assertEquals(28, (containersList.get(1)).getBondCount());
+    }
+
+    /**
+     * Tests that the '0' read from the bond block for bond stereo
+     * is read is 'no stereochemistry involved'.
+     */
+    @Test public void testStereoReadZeroDefault() throws Exception {
+        String filename = "data/mdl/prev2000.sd";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader()
+            .getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        Assert.assertNotNull(chemFile);
+        List<IAtomContainer> containersList =
+        	ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(2, containersList.size());
+        IAtomContainer container = containersList.get(0);
+        Assert.assertEquals(
+        	IBond.Stereo.NONE,
+        	container.getBond(0).getStereo()
+        );
     }
     
     @Test public void testEmptyString() throws Exception {
