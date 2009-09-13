@@ -20,26 +20,21 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.io.InputStream;
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.CDKTestCase;
+
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
@@ -223,18 +218,6 @@ public class BondToolsTest extends CDKTestCase {
 	 */
 	@Test public void testBug2831420() throws Exception {
 		String filename = "data/mdl/bug2831420.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
-		Assert.assertTrue(BondTools.isStereo(mol, mol.getAtom(5)));
-	}
-
-	/**
-	 * @cdk.bug 2831420
-	 */
-	@Test public void testBug2831420_withHs() throws Exception {
-		String filename = "data/mdl/bug2846213.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
