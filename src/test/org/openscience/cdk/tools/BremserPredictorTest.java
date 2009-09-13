@@ -58,7 +58,7 @@ public class BremserPredictorTest extends CDKTestCase {
 	 */
 	@Test public void testConstructor() {
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		Assert.assertTrue(bp != null);
+		Assert.assertNotNull(bp);
 	}
 
 	/**

@@ -35,7 +35,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 
 /**
@@ -56,7 +55,7 @@ public class MDLCMLRoundtripTest extends CDKTestCase {
      * @cdk.bug 1649526
      */
     @Test
-    public void testBug1649526() throws CDKException{
+    public void testBug1649526() throws Exception{
     	//Read the original
     	String filename = "data/mdl/bug-1649526.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

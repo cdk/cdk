@@ -252,34 +252,42 @@ public class UniversalIsomorphismTester {
    *
    * @param  g1  first molecule. Must not be an IQueryAtomContainer.
    * @param  g2  second molecule. May be an IQueryAtomContainer.
-   * @return     all subgraph atom mappings found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
+   * @return     all subgraph atom mappings found projected on g1. This is a
+   *             List of RMap objects containing Ids of matching atoms.
    */
-  public static List getSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2) throws CDKException {
+  public static List<List<RMap>> getSubgraphAtomsMaps(IAtomContainer g1,
+		                                              IAtomContainer g2)
+    throws CDKException {
       List<RMap> list = checkSingleAtomCases(g1, g2);
       if (list == null) {
-    	  // FIXME: this cannot be right... :(
-          return makeAtomsMapsOfBondsMaps(UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2);
+          return makeAtomsMapsOfBondsMaps(
+              UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2
+          );
       } else {
-          return list;
+          List<List<RMap>> atomsMap = new ArrayList<List<RMap>>();
+          atomsMap.add(list);
+          return atomsMap;
       }
   }
 
   /**
    * Returns the first subgraph 'atom mapping' found for g2 in g1.
    *
-   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
-   * @param  g2  second molecule. May be an IQueryAtomContainer.
-   * @return     the first subgraph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
+   * @param  g1 first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2 second molecule. May be an IQueryAtomContainer.
+   * @return    the first subgraph atom mapping found projected on g1.
+   *            This is a List of RMap objects containing Ids of matching atoms.
    */
-  public static List getSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2) throws CDKException {
+  public static List<RMap> getSubgraphAtomsMap(IAtomContainer g1,
+                                               IAtomContainer g2)
+      throws CDKException {
       List<RMap> list = checkSingleAtomCases(g1, g2);
       if (list == null) {
           return makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getSubgraphMap(g1, g2), g1, g2);
       } else if (list.isEmpty()) {
           return null;
       } else {
-    	  // FIXME: this cannot be right...
-          return (List)list.get(0);
+          return list;
       }
   }
 

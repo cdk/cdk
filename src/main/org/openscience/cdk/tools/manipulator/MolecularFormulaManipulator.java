@@ -586,7 +586,7 @@ public class MolecularFormulaManipulator {
 		  if(charge > 0)
 			mass -= massE*charge;
 		 else if(charge < 0)
-			mass += massE*charge; 
+			mass += massE*Math.abs(charge); 
 		 return mass;
 	}
 

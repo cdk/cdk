@@ -239,11 +239,8 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 	}
 	/**
 	 * Test to recognize if this IMolecule_1 matches correctly into the CDKAtomTypes.
-	 * @throws Exception 
-	 * @throws ClassNotFoundException 
-	 * @throws CDKException 
 	 */
-	@Test public void testAtomTypesMolecule1() throws CDKException, ClassNotFoundException, Exception{
+	@Test public void testAtomTypesMolecule1() throws Exception{
 		IMolecule moleculeTest = getMolecule1();
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
@@ -251,11 +248,8 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 
 	/**
 	 * Test to recognize if this IMolecule_2 matches correctly into the CDKAtomTypes.
-	 * @throws Exception 
-	 * @throws ClassNotFoundException 
-	 * @throws CDKException 
 	 */
-	@Test public void testAtomTypesMolecule2() throws CDKException, ClassNotFoundException, Exception{
+	@Test public void testAtomTypesMolecule2() throws Exception{
 		IMolecule moleculeTest = getMolecule2();
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
@@ -311,7 +305,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());

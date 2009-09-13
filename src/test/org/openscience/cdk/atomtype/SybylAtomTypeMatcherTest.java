@@ -261,7 +261,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         }
     }
 
-    private void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
+    private void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws Exception {
     	SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(container.getBuilder());
         Iterator<IAtom> atoms = container.atoms().iterator();
         while (atoms.hasNext()) {
@@ -575,7 +575,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void testH2S() throws CDKException {
+    @Test public void testH2S() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
@@ -711,7 +711,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     /**
      * @cdk.inchi InChI=1/H2Se/h1H2
      */
-    @Test public void testH2Se() throws CDKException {
+    @Test public void testH2Se() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");

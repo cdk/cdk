@@ -23,7 +23,7 @@ public class DistanceMomentTest extends CDKTestCase {
     boolean standAlone = false;
     //private static LoggingTool logger = new LoggingTool(TanimotoTest.class);
 
-    private IAtomContainer loadMolecule(String path) throws CDKException {
+    private IAtomContainer loadMolecule(String path) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
@@ -32,7 +32,7 @@ public class DistanceMomentTest extends CDKTestCase {
     }
 
     @Test
-    public void test3DSim1() throws IOException, CDKException {
+    public void test3DSim1() throws Exception {
         String filename = "data/mdl/sim3d1.sdf";
         IAtomContainer ac = loadMolecule(filename);
         float sim = DistanceMoment.calculate(ac, ac);
@@ -40,7 +40,7 @@ public class DistanceMomentTest extends CDKTestCase {
     }
 
     @Test
-    public void test3DSim2() throws IOException, CDKException {
+    public void test3DSim2() throws Exception {
         IAtomContainer ac1 = loadMolecule("data/mdl/sim3d1.sdf");
         IAtomContainer ac2 = loadMolecule("data/mdl/sim3d2.sdf");
         float sim = DistanceMoment.calculate(ac1, ac2);

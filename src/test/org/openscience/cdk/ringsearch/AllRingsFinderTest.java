@@ -106,13 +106,13 @@ public class AllRingsFinderTest extends CDKTestCase
 		}
 	}
 	
-	@Test public void testFindAllRings_IAtomContainer_boolean() throws CDKException {
+	@Test public void testFindAllRings_IAtomContainer_boolean() throws Exception {
 		AllRingsFinder arf = new AllRingsFinder();
 		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
 		arf.findAllRings(molecule);
 	}
 	
-	@Test(expected = CDKException.class) public void testSetTimeout_long() throws CDKException {
+	@Test(expected = CDKException.class) public void testSetTimeout_long() throws Exception {
 		AllRingsFinder arf = new AllRingsFinder();
 		arf.setTimeout(1);
 		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();

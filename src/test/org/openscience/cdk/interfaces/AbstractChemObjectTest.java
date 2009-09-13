@@ -134,10 +134,20 @@ public abstract class AbstractChemObjectTest extends CDKTestCase {
       Assert.assertTrue(chemObject2.getFlag(1));
     }
 
+    @Test public void testGetFlags_Array(){
+        IChemObject chemObject=newChemObject();
+        chemObject.setFlag(1,true);
+        boolean[] flags = chemObject.getFlags();
+        Assert.assertTrue(flags[1]);
+    }
+
     @Test public void testSetFlag_int_boolean() {
         IChemObject chemObject = newChemObject();
+        Assert.assertFalse(chemObject.getFlag(0));
         chemObject.setFlag(0, true);
         Assert.assertTrue(chemObject.getFlag(0));
+        chemObject.setFlag(0, false);
+        Assert.assertFalse(chemObject.getFlag(0));
     }
     @Test public void testGetFlag_int() {
         testSetFlag_int_boolean();

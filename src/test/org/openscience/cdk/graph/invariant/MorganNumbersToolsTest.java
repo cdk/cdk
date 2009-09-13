@@ -24,13 +24,21 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * Checks the functionality of the MorganNumberTools.
@@ -84,5 +92,19 @@ public class MorganNumbersToolsTest extends CDKTestCase
 			Assert.assertEquals(reference[f], morganNumbers[f]);
 		}
 	}
+    
+    /**
+     * @cdk.bug 2846213
+     */	
+    @Test
+    public void testBug2846213() throws CDKException{
+        String filename = "data/mdl/bug2846213.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        IAtomContainer ac = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        long[] morganNumbers = MorganNumbersTools.getMorganNumbers(ac);
+        Assert.assertFalse(morganNumbers[7]==morganNumbers[8]);
+    }
 	
 }

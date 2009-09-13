@@ -310,7 +310,7 @@ public class RecursiveTest extends CDKTestCase {
     }
 
 
-    @Test public void testBasicAmineOnDrugs() throws CDKException, IOException {
+    @Test public void testBasicAmineOnDrugs() throws Exception {
         String filename = "data/smiles/drugs.smi";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins);

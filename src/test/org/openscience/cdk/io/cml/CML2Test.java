@@ -40,7 +40,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -97,7 +96,7 @@ public class CML2Test extends CDKTestCase {
     /**
      * @cdk.bug 2114987
      */
-    @Test public void testCMLTestCase() throws CDKException, FileNotFoundException {
+    @Test public void testCMLTestCase() throws Exception {
         String filename = "data/cml/olaCmlAtomType.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -935,7 +934,7 @@ public class CML2Test extends CDKTestCase {
     /**
      * @cdk.bug 2697568
      */
-    @Test public void testReadReactionWithPointersToMoleculeSet() throws CDKException, FileNotFoundException {
+    @Test public void testReadReactionWithPointersToMoleculeSet() throws Exception {
         String filename = "data/cml/AlanineTree.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -947,7 +946,7 @@ public class CML2Test extends CDKTestCase {
     /**
      * @cdk.bug 2697568
      */
-    @Test public void testBug2697568() throws CDKException, FileNotFoundException {
+    @Test public void testBug2697568() throws Exception {
         String filename = "data/cml/AlanineTreeReverse.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);

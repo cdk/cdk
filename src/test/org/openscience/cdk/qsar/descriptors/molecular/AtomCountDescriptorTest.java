@@ -61,7 +61,7 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
     }
 
-    @Test public void testImplicitExplicitH() throws CDKException {
+    @Test public void testImplicitExplicitH() throws Exception {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

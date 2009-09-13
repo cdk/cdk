@@ -27,7 +27,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -54,7 +53,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	 *  A unit test for JUnit
 	 */
 	@Test
-    public void testAllSaturated() throws CDKException
+    public void testAllSaturated() throws Exception
 	{
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
@@ -86,7 +85,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testIsSaturated() throws CDKException
+	@Test public void testIsSaturated() throws Exception
 	{
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
@@ -115,7 +114,7 @@ public class SaturationCheckerTest extends CDKTestCase
      * Tests whether the saturation checker considers negative
      * charges.
      */
-	@Test public void testIsSaturated_NegativelyChargedOxygen() throws CDKException {
+	@Test public void testIsSaturated_NegativelyChargedOxygen() throws Exception {
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
 		Atom c = new Atom("C");
@@ -144,7 +143,7 @@ public class SaturationCheckerTest extends CDKTestCase
      * Tests whether the saturation checker considers positive
      * charges.
      */
-	@Test public void testIsSaturated_PositivelyChargedNitrogen() throws CDKException {
+	@Test public void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
 		Atom n = new Atom("N");
@@ -172,7 +171,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testSaturate() throws CDKException {
+	@Test public void testSaturate() throws Exception {
 		// test ethene
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(2);
@@ -191,7 +190,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testSaturate_Butene() throws CDKException {
+	@Test public void testSaturate_Butene() throws Exception {
 		// test ethene
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(2);
@@ -219,7 +218,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		Assert.assertEquals(IBond.Order.DOUBLE, b3.getOrder());
 	}
 
-    @Test public void testSaturate_ParaDiOxygenBenzene() throws CDKException {
+    @Test public void testSaturate_ParaDiOxygenBenzene() throws Exception {
         Molecule mol = new Molecule();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
@@ -282,7 +281,7 @@ public class SaturationCheckerTest extends CDKTestCase
     /**
      * Test sulfuric acid.
      */
-    @Test public void testBug772316() throws CDKException {
+    @Test public void testBug772316() throws Exception {
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
 		Atom sulphur = new Atom("S");
@@ -314,7 +313,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		Assert.assertTrue(satcheck.isSaturated(h2, m));
     }
     
-    @Test public void testBug777529() throws CDKException {
+    @Test public void testBug777529() throws Exception {
       Molecule m = new Molecule();
       m.addAtom(new Atom("C"));
       m.addAtom(new Atom("C"));
@@ -409,7 +408,7 @@ public class SaturationCheckerTest extends CDKTestCase
       Assert.assertTrue(m.getBond(13).getOrder() == IBond.Order.DOUBLE ^ m.getBond(3).getOrder() == IBond.Order.DOUBLE);
     }
     
-    @Test public void testCalculateNumberOfImplicitHydrogens() throws CDKException {
+    @Test public void testCalculateNumberOfImplicitHydrogens() throws Exception {
     	DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
     	
     	IMolecule proton = builder.newMolecule();

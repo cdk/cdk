@@ -222,7 +222,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  ID                           Atomtype id of the forcefield
 	 * @return                              The atomType 
-	 * @exception  NoSuchAtomTypeException  atomType is not known
+	 * @exception  NoSuchAtomTypeException  atomType is not known.
 	 */
 	private IAtomType getAtomType(String ID) throws NoSuchAtomTypeException {
 		IAtomType at = null;
@@ -240,9 +240,9 @@ public class ForceFieldConfigurator {
 	 *  Method assigns atom types to atoms (calculates sssr and aromaticity)
 	 *
 	 *@return                sssrf set
-	 *@exception  Exception  Description of the Exception
+	 *@exception  CDKException  Problems detecting aromaticity or making hose codes.
 	 */
-	public IRingSet assignAtomTyps(IMolecule molecule) throws Exception {
+	public IRingSet assignAtomTyps(IMolecule molecule) throws CDKException {
 		IAtom atom = null;
 		String hoseCode = "";
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -293,7 +293,7 @@ public class ForceFieldConfigurator {
 				configureAtom(atom, hoseCode, isInHeteroRing);
 			} catch (CDKException ex2) {
 				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
-				throw new Exception("Could not final configure atom due to problems with force field", ex2);
+				throw new CDKException("Could not final configure atom due to problems with force field", ex2);
 			}
 		}
 		
@@ -349,9 +349,10 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  atom  The atom to be aasigned
 	 * @param  ID    the atom type id
+	 * @exception  NoSuchAtomTypeException  atomType is not known
 	 * @return       the assigned atom
 	 */
-	private IAtom setAtom(IAtom atom, String ID) throws Exception {
+	private IAtom setAtom(IAtom atom, String ID) throws NoSuchAtomTypeException {
 		IAtomType at = null;
 		String key = "";
 		List<?> data = null;
@@ -385,7 +386,7 @@ public class ForceFieldConfigurator {
 		return atom;
 	}
 	
-	public IAtom configureAtom(IAtom atom, String hoseCode, boolean _boolean) throws Exception {
+	public IAtom configureAtom(IAtom atom, String hoseCode, boolean _boolean) throws CDKException {
 		if (ffName.equals("mm2")){
 			return configureMM2BasedAtom(atom, hoseCode,_boolean);
 		}else if (ffName.equals("mmff94")){
@@ -400,9 +401,9 @@ public class ForceFieldConfigurator {
 	 * @param  atom              atom to be configured
 	 * @param  hoseCode          the 4 sphere hose code of the atom
 	 * @return                   atom
-	 * @exception  CDKException  Description of the Exception
+	 * @exception  NoSuchAtomTypeException  atomType is not known
 	 */
-	public IAtom configureMM2BasedAtom(IAtom atom, String hoseCode,boolean hetRing) throws Exception {
+	public IAtom configureMM2BasedAtom(IAtom atom, String hoseCode,boolean hetRing) throws NoSuchAtomTypeException {
 		//logger.debug("CONFIGURE MM2 ATOM");
 		List<Pattern> atomTypePattern = null;
 		MM2BasedAtomTypePattern atp = new MM2BasedAtomTypePattern();
@@ -558,9 +559,9 @@ public class ForceFieldConfigurator {
 	 * @param  atom              atom to be configured
 	 * @param  hoseCode          the 4 sphere hose code of the atom
 	 * @return                   atom
-	 * @exception  CDKException  Description of the Exception
+	 * @exception  NoSuchAtomTypeException  atomType is not known
 	 */
-	public IAtom configureMMFF94BasedAtom(IAtom atom, String hoseCode, boolean isInHetRing) throws Exception {
+	public IAtom configureMMFF94BasedAtom(IAtom atom, String hoseCode, boolean isInHetRing) throws NoSuchAtomTypeException {
 		//logger.debug("****** Configure MMFF94 AtomType ******");
 		List<Pattern> atomTypePattern = null;
 		MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();

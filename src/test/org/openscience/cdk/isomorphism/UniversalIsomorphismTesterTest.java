@@ -42,7 +42,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -91,7 +90,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	/**
      * @cdk.bug 1708336 
      */
-	@Test public void testSFBug1708336() throws CDKException {
+	@Test public void testSFBug1708336() throws Exception {
 		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer atomContainer = builder.newAtomContainer();
         atomContainer.addAtom(builder.newAtom("C"));
@@ -185,7 +184,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		}
 	}
 	
-    @Test public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws CDKException
+    @Test public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception
     {
         String molfile = "data/mdl/decalin.mol";
         String queryfile = "data/mdl/decalin.mol";
@@ -217,7 +216,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 1110537
      */
-    @Test public void testGetOverlaps_IAtomContainer_IAtomContainer()  throws CDKException{
+    @Test public void testGetOverlaps_IAtomContainer_IAtomContainer()  throws Exception{
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
         Molecule mol1 = new Molecule();
@@ -240,7 +239,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 1208740
      */
-    @Test public void testSFBug1208740() throws CDKException {
+    @Test public void testSFBug1208740() throws Exception {
         String file1 = "data/mdl/bug1208740_1.mol";
         String file2 = "data/mdl/bug1208740_2.mol";
         Molecule mol1 = new Molecule();
@@ -280,7 +279,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 999330
      */
-    @Test public void testSFBug999330() throws CDKException {
+    @Test public void testSFBug999330() throws Exception {
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
         Molecule mol1 = new Molecule();

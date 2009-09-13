@@ -26,10 +26,10 @@ package org.openscience.cdk.io;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.debug.DebugChemFile;
 import org.openscience.cdk.debug.DebugChemModel;
@@ -39,9 +39,12 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.nonotify.NNAtomContainer;
+import org.openscience.cdk.nonotify.NNAtomContainerSet;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NNChemModel;
 import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.nonotify.NNMoleculeSet;
 import org.openscience.cdk.nonotify.NNReaction;
 
 /**

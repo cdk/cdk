@@ -427,7 +427,7 @@ public class BondTools {
 			boolean isDifferent = true;
 			for (int k = 0; k < i; k++)
 			{
-				if (atoms.get(i).getSymbol().equals(atoms.get(i).getSymbol()))
+				if (atoms.get(i).getSymbol().equals(atoms.get(k).getSymbol()))
 				{
 					isDifferent = false;
 					break;

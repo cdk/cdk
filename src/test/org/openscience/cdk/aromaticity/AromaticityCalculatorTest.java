@@ -23,8 +23,7 @@ package org.openscience.cdk.aromaticity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.AromaticityCalculator;
-import org.openscience.cdk.exception.CDKException;
+
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -42,7 +41,7 @@ public class AromaticityCalculatorTest extends CDKTestCase {
 	}
 
     @Test
-    public void testIsAromatic_IRing_IAtomContainer() throws CDKException {
+    public void testIsAromatic_IRing_IAtomContainer() throws Exception {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
 		IMolecule mol = sp.parseSmiles("c1ccncc1");

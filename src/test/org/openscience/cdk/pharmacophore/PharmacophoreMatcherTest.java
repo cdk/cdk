@@ -64,7 +64,7 @@ public class PharmacophoreMatcherTest {
 
 
     @Test
-    public void testMatcherQuery1() throws CDKException {
+    public void testMatcherQuery1() throws Exception {
         Assert.assertNotNull(conformers);
 
         // make a query
@@ -114,7 +114,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchedAtoms() throws CDKException {
+    public void testMatchedAtoms() throws Exception {
         Assert.assertNotNull(conformers);
 
         // make a query
@@ -150,7 +150,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchedBonds() throws CDKException {
+    public void testMatchedBonds() throws Exception {
        Assert.assertNotNull(conformers);
 
         // make a query
@@ -197,7 +197,6 @@ public class PharmacophoreMatcherTest {
     @Test(expected = CDKException.class)
     public void testInvalidQuery() throws CDKException {
         PharmacophoreQuery query = new PharmacophoreQuery();
-
         PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
         PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("A", "[NX3]");
@@ -286,7 +285,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch1() throws CDKException {
+    public void testAngleMatch1() throws Exception {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
@@ -312,7 +311,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch2() throws CDKException {
+    public void testAngleMatch2() throws Exception {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
@@ -338,7 +337,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testAngleMatch3() throws CDKException {
+    public void testAngleMatch3() throws Exception {
         Assert.assertNotNull(conformers);
 
         // make a query

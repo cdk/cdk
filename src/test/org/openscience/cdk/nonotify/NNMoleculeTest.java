@@ -52,12 +52,12 @@ public class NNMoleculeTest extends AbstractMoleculeTest {
 
     @Test public void testNNMolecule() {
         IMolecule m = new NNMolecule();
-        Assert.assertTrue(m != null);
+        Assert.assertNotNull(m);
     }
 
     @Test public void testNNMolecule_int_int_int_int() {
         IMolecule m = new NNMolecule(5,5,1,1);
-        Assert.assertTrue(m != null);
+        Assert.assertNotNull(m);
         Assert.assertEquals(0, m.getAtomCount());
         Assert.assertEquals(0, m.getBondCount());
         Assert.assertEquals(0, m.getLonePairCount());
@@ -82,7 +82,7 @@ public class NNMoleculeTest extends AbstractMoleculeTest {
         acetone.addBond(b3);
         
         IMolecule m = new NNMolecule(acetone);
-        Assert.assertTrue(m != null);
+        Assert.assertNotNull(m);
         Assert.assertEquals(4, m.getAtomCount());
         Assert.assertEquals(3, m.getBondCount());
     }

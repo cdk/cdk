@@ -58,7 +58,7 @@ public class PharmacophoreUtilityTest {
 
 
     @Test
-    public void testReadPcoreDef() throws IOException, CDKException {
+    public void testReadPcoreDef() throws Exception {
         String filename = "data/pcore/pcore.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
@@ -91,7 +91,7 @@ public class PharmacophoreUtilityTest {
     }
 
     @Test
-    public void testReadPcoreAngleDef() throws CDKException, IOException {
+    public void testReadPcoreAngleDef() throws Exception {
         String filename = "data/pcore/pcoreangle.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
@@ -138,7 +138,7 @@ public class PharmacophoreUtilityTest {
     }
 
     @Test
-    public void testPCoreWrite() throws CDKException, IOException {
+    public void testPCoreWrite() throws Exception {
         String filename = "data/pcore/pcore.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);

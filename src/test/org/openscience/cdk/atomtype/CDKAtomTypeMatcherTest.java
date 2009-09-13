@@ -33,9 +33,9 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Ring;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Symbols;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -58,12 +58,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
-    @Test public void testGetInstance_IChemObjectBuilder() throws CDKException {
+    @Test public void testGetInstance_IChemObjectBuilder() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
     }
 
-    @Test public void testGetInstance_IChemObjectBuilder_int() throws CDKException {
+    @Test public void testGetInstance_IChemObjectBuilder_int() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(
         	DefaultChemObjectBuilder.getInstance(),
         	CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS
@@ -464,7 +464,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
-    @Test public void testS3() throws CDKException {
+    @Test public void testS3() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
         IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
@@ -484,7 +484,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void testH2S() throws CDKException {
+    @Test public void testH2S() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
@@ -507,7 +507,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     /**
      * @cdk.inchi InChI=1/H2Se/h1H2
      */
-    @Test public void testH2Se() throws CDKException {
+    @Test public void testH2Se() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
@@ -527,7 +527,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void testH2S_Hybridization() throws CDKException {
+    @Test public void testH2S_Hybridization() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
         s.setHybridization(Hybridization.SP3);
@@ -536,7 +536,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void testHS() throws CDKException {
+    @Test public void testHS() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
         s.setFormalCharge(-1);
@@ -1784,6 +1784,26 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
+    @Test public void testBenzene() throws Exception {
+        String[] expectedTypes = {
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2"
+        };
+        IMolecule molecule = new Molecule();
+        molecule.add(new Ring(6, "C"));
+        for (IBond bond : molecule.bonds()) {
+            bond.setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        for (IAtom atom : molecule.atoms()) {
+            atom.setHydrogenCount(1);
+        }
+        assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+    }
+
     @Test public void testPyrrole() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
@@ -2358,7 +2378,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
 
     // [C-]#[N+]C
-    @Test public void testIsonitrile() throws CDKException {
+    @Test public void testIsonitrile() throws Exception {
         IMolecule mol = new Molecule();
 
         IAtom atom1 = new Atom("C");
@@ -3096,7 +3116,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
 
     @Test
-    public void testNOxide() throws CDKException {
+    public void testNOxide() throws Exception {
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
         IAtom a2 = mol.getBuilder().newAtom("C");
@@ -3134,7 +3154,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     /**
      * @cdk.bug 2424511
      */
-    @Test public void testWeirdNitrogen() throws CDKException {
+    @Test public void testWeirdNitrogen() throws Exception {
         IMolecule mol = new Molecule();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("N"));

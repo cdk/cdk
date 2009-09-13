@@ -290,7 +290,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * @return The IMolecule
 	 * @throws CDKException
 	 */
-	private IMolecule getAcetaldehyde() throws CDKException {
+	private IMolecule getAcetaldehyde() throws Exception {
 		IMolecule molecule = builder.newMolecule();
         molecule.addAtom(builder.newAtom("O"));
         molecule.addAtom(builder.newAtom("C"));
@@ -317,7 +317,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * @return The IMolecule
 	 * @throws CDKException
 	 */
-	private IMolecule getEthenol() throws CDKException {
+	private IMolecule getEthenol() throws Exception {
 		IMolecule molecule2 = builder.newMolecule();
         molecule2.addAtom(builder.newAtom("O"));
         molecule2.addAtom(builder.newAtom("C"));

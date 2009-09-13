@@ -32,7 +32,6 @@ import org.openscience.cdk.LonePair;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -173,9 +172,9 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
-	 * @throws CDKException 
+	 * @throws Exception Thrown to indicate the failure of this unit test
 	 */
-    @Test public void testSetReactions_List() throws CDKException{
+    @Test public void testSetReactions_List() throws Exception{
 
     	StructureResonanceGenerator sRG = new StructureResonanceGenerator();
 		List<IReactionProcess> reactionList = sRG.getReactions();

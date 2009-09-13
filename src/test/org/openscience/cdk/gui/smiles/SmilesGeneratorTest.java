@@ -1019,7 +1019,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     /**
      * @cdk.bug 1535055
      */
-    @Test public void testBug1535055() throws CDKException {
+    @Test public void testBug1535055() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("COC(=O)c1ccc2c(c1)c1ccccc1[nH]2");
         CDKHueckelAromaticityDetector.detectAromaticity(mol);

@@ -24,7 +24,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -63,7 +62,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
 	 *  A unit test for JUnit with CCCC=CCCCC
 	 */
-    @Test public void testIPDescriptor_1() throws java.lang.Exception{
+    @Test public void testIPDescriptor_1() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCCC=CCCCC");
@@ -108,9 +107,6 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
      * A unit test for JUnit with C=CCCCC
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test public void testIPDescriptorReaction1() throws  java.lang.Exception{
         
@@ -130,9 +126,6 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
      * A unit test for JUnit with CCCCCC
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test public void testIPDescriptorReaction2() throws  java.lang.Exception{
         
@@ -150,9 +143,6 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
      * A unit test for JUnit with C#CCC
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test public void testIPTripleDescriptor1() throws  java.lang.Exception{
         
@@ -169,9 +159,6 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
      * A unit test for JUnit with C(#CC(C)(C)C)C(C)(C)C
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test public void testIPTripleDescriptor2() throws  java.lang.Exception{
         
@@ -188,9 +175,6 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
      * A unit test for JUnit with C=C(C=CC)C
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test public void testIPConjugatedDescriptor1() throws  java.lang.Exception{
 
@@ -212,9 +196,6 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
      * A unit test for JUnit with C=CC=C
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test public void testIPPySystemReaction1() throws  java.lang.Exception{
         

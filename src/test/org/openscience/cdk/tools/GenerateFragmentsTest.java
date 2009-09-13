@@ -369,7 +369,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
      * @cdk.bug 2729120
      */
     @Test
-    public void testFourRings() throws CDKException {
+    public void testFourRings() throws Exception {
         String smiles = "C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles(smiles);

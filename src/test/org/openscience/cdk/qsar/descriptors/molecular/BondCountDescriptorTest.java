@@ -74,13 +74,10 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     /**
      * The default setting should be to count *all* bonds.
      * 
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      * 
      * @cdk.bug 1651263
      */
-    @Test public void testDefaultSetting() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test public void testDefaultSetting() throws Exception {
     	IMolecularDescriptor descriptor  = new BondCountDescriptor();
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());

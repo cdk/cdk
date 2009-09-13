@@ -364,7 +364,7 @@ public class ExtendedFingerprinterTest extends CDKTestCase {
      * @throws CloneNotSupportedException
      */
     @Test
-    public void testMoleculeInvariance() throws CDKException, CloneNotSupportedException {
+    public void testMoleculeInvariance() throws Exception, CloneNotSupportedException {
         IAtomContainer mol = MoleculeFactory.makePyrrole();
         IAtomContainer clone = (IAtomContainer) mol.clone();
 

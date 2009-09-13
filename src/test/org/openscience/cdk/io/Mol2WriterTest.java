@@ -69,7 +69,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
      * @cdk.bug 2675188
      */
     @Test
-    public void testWriter1() throws CDKException, IOException {
+    public void testWriter1() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("C([H])([H])([H])([H])");
 
@@ -82,7 +82,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testWriter2() throws CDKException, IOException {
+    public void testWriter2() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1C=O");
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -102,7 +102,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testWriterForAmide() throws CDKException, IOException {
+    public void testWriterForAmide() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("CC(=O)NC");
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);

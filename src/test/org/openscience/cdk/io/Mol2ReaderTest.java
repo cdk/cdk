@@ -28,7 +28,6 @@
 package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -123,8 +122,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     /**
      * Tests the Mol2Reader with about 30% of the NCI molecules.
      * 
-     * @throws IOException if an I/O error occurs
-     * @throws CDKException if an CDK error occurs
+     * @throws Exception if an error occurs
      */
     @Test public void testNCIfeb03_2D() throws Exception {
         Assume.assumeTrue(runSlowTests());
@@ -449,7 +447,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
     
     
-    private void checkMol(StringBuilder buf) throws CDKException {
+    private void checkMol(StringBuilder buf) throws Exception {
         StringReader sr = new StringReader(buf.toString());
         Mol2Reader reader = new Mol2Reader(sr);
         IChemFile mol = (IChemFile)reader.read(NoNotificationChemObjectBuilder.getInstance().newChemFile());

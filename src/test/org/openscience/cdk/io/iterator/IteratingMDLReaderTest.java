@@ -176,7 +176,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
     /**
      * @cdk.bug 2692107
      */
-    @Test public void testZeroZCoordinates() throws CDKException {
+    @Test public void testZeroZCoordinates() throws Exception {
         String filename = "data/mdl/nozcoord.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

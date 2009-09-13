@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IBond;
 public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 	
 	@Test
-	public void testAdd3DCoordinatesForSinglyBondedLigands_IAtomContainer() throws CDKException{
+	public void testAdd3DCoordinatesForSinglyBondedLigands_IAtomContainer() throws Exception{
 		IAtom atom1=new Atom("C");
 		atom1.setPoint3d(new Point3d(1,1,1));
 		IAtom atom2=new Atom("H");
@@ -80,7 +80,7 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 	}
 
 	@Test
-	public void testGet3DCoordinatesForLigands_IAtom_IAtomContainer_IAtomContainer_IAtom_int_double_double() throws CDKException{
+	public void testGet3DCoordinatesForLigands_IAtom_IAtomContainer_IAtomContainer_IAtom_int_double_double() throws Exception{
 		IAtom atom1=new Atom("C");
 		atom1.setPoint3d(new Point3d(1,1,1));
 		IAtom atom2=new Atom("H");

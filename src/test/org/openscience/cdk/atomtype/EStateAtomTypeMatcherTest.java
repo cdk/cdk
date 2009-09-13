@@ -31,7 +31,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -352,7 +351,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		Assert.assertTrue(testAtom("SsCH3",a7));
 	}
 
-    @Test public void testBenzeneFromSmiles() throws CDKException {
+    @Test public void testBenzeneFromSmiles() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         mol = sp.parseSmiles("C1=CC=CC=C1");
         CDKHueckelAromaticityDetector.detectAromaticity(mol);

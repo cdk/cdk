@@ -27,7 +27,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -279,7 +278,7 @@ public class PathToolsTest extends CDKTestCase {
     }
     
     @Test
-    public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws CDKException {
+    public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws Exception {
     	IMolecule molecule = sp.parseSmiles("C(COF)(Br)NC");
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {

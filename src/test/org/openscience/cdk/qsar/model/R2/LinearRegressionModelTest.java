@@ -26,8 +26,6 @@ package org.openscience.cdk.qsar.model.R2;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.model.QSARModelException;
 import org.rosuda.JRI.RList;
 
 /**
@@ -39,20 +37,21 @@ import org.rosuda.JRI.RList;
  */
 public class LinearRegressionModelTest extends RModelTest {
 
-    @Test public void testLinearRegressionModel() throws CDKException, Exception, QSARModelException {
+    @Test
+    public void testLinearRegressionModel() throws Exception {
         Assume.assumeTrue(runRModelTests());
         
         double[][] x = getXData();
         double[] y = getYData();
 
         LinearRegressionModel lrm = new LinearRegressionModel(x, y);
-        Assert.assertTrue(RModel.getRengine() != null);
+        Assert.assertNotNull(RModel.getRengine());
 
         lrm.build();
-        Assert.assertTrue(lrm.summary() != null);
+        Assert.assertNotNull(lrm.summary());
 
         double[] coeff = lrm.getCoefficients();
-        Assert.assertTrue(coeff != null);
+        Assert.assertNotNull(coeff);
         Assert.assertEquals(coeff[0], 0.5079196, .000001);
         Assert.assertEquals(coeff[1], 0.0017640, .000001);
         Assert.assertEquals(coeff[2], 0.0038752, .000001);
@@ -73,7 +72,7 @@ public class LinearRegressionModelTest extends RModelTest {
         RList predList = lrm.getModelPredict();
         double[] preds = predList.at("fit").asDoubleArray();
 
-        Assert.assertTrue(preds != null);
+        Assert.assertNotNull(preds);
         Assert.assertEquals(preds[0], 0.5235362, 0.0000001);
         Assert.assertEquals(preds[1], 0.5030381, 0.0000001);
         Assert.assertEquals(preds[2], 0.5184706, 0.0000001);
@@ -84,7 +83,7 @@ public class LinearRegressionModelTest extends RModelTest {
     }
 
 
-    @Test public void testModelLoadSave() throws QSARModelException {
+    @Test public void testModelLoadSave() throws Exception {
         Assume.assumeTrue(runRModelTests());
         
         double[][] x = getXData();
@@ -101,7 +100,7 @@ public class LinearRegressionModelTest extends RModelTest {
         Assert.assertNotNull(loadedModel.getModelObject());
 
         double[] coeff = loadedModel.getCoefficients();
-        Assert.assertTrue(coeff != null);
+        Assert.assertNotNull(coeff);
         Assert.assertEquals(coeff[0], 0.5079196, .000001);
         Assert.assertEquals(coeff[1], 0.0017640, .000001);
         Assert.assertEquals(coeff[2], 0.0038752, .000001);
@@ -123,7 +122,7 @@ public class LinearRegressionModelTest extends RModelTest {
 
 
         double[] preds = predList.at("fit").asDoubleArray();
-        Assert.assertTrue(preds != null);
+        Assert.assertNotNull(preds);
         Assert.assertEquals(preds[0], 0.5235362, 0.0000001);
         Assert.assertEquals(preds[1], 0.5030381, 0.0000001);
         Assert.assertEquals(preds[2], 0.5184706, 0.0000001);

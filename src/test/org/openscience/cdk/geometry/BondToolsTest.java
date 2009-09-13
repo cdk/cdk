@@ -160,6 +160,19 @@ public class BondToolsTest extends CDKTestCase {
 		Assert.assertFalse(BondTools.isStereo(mol,mol.getAtom(1)));
 	}
 
+	@Test public void testIsStereo_IAtomContainer_IAtom_forinvalid() throws Exception {
+		String filename = "data/mdl/trigonal_bipyramidal.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
+		for(int i=1;i<6;i++){
+			mol.getAtom(i).setSymbol("C");
+		}
+		Assert.assertFalse(BondTools.isStereo(mol,mol.getAtom(0)));
+		Assert.assertFalse(BondTools.isStereo(mol,mol.getAtom(1)));
+	}
+
 	@Test public void testIsSquarePlanar_IAtomContainer_IAtom() throws Exception {
 		String filename = "data/mdl/squareplanar.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

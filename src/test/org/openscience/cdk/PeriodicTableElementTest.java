@@ -126,14 +126,14 @@ public class PeriodicTableElementTest extends CDKTestCase {
     }
 
     @Test
-    public void testSetGroup() throws CDKException {
+    public void testSetGroup() throws Exception {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setGroup(14);
         Assert.assertEquals(14, pte.getGroup(),0.1);
     }
 
     @Test(expected = CDKException.class)
-    public void testSetBadGroup() throws CDKException {
+    public void testSetBadGroup() throws Exception {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setGroup(20);
     }
@@ -173,7 +173,7 @@ public class PeriodicTableElementTest extends CDKTestCase {
     }
 
     @Test
-    public void testString() throws CDKException {
+    public void testString() throws Exception {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         Assert.assertEquals("PeriodicTableElement(C, AN:null, N:null, CS:null, P:null, G:null, Ph:null, CAS:null, VdW:null, Cov:null, Eneg:null)",
         		pte.toString());

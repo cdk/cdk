@@ -26,7 +26,6 @@ package org.openscience.cdk.qsar.model.R2;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.openscience.cdk.qsar.model.QSARModelException;
 
 /**
  * TestSuite that runs a test for the CNNRegressionModel
@@ -37,7 +36,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  */
 public class CNNRegressionModelTest extends RModelTest {
 
-    @Test public void testCNNRegressionModel() throws Exception {
+    public void testCNNRegressionModel() throws Exception {
         Assume.assumeTrue(runRModelTests());
 
         double[][] x = getXData();
@@ -56,14 +55,14 @@ public class CNNRegressionModelTest extends RModelTest {
         Assert.assertEquals(value, 8.076735, .000001);
 
         double[] wts = cnnrm.getWts();
-        Assert.assertTrue(wts != null);
+        Assert.assertNotNull(wts);
         Assert.assertEquals(-1.635880, wts[0], .000001);
         Assert.assertEquals(-6.227619, wts[1], .000001);
         Assert.assertEquals(-4.639471, wts[2], .000001);
         Assert.assertEquals(-4.060546, wts[3], .000001);
 
         double[][] fitted = cnnrm.getFittedValues();
-        Assert.assertTrue(fitted != null);
+        Assert.assertNotNull(fitted);
         Assert.assertEquals(0.527783, fitted[0][0], .000001);
         Assert.assertEquals(0.527783, fitted[1][0], .000001);
         Assert.assertEquals(0.527783, fitted[2][0], .000001);
@@ -83,17 +82,17 @@ public class CNNRegressionModelTest extends RModelTest {
         cnnrm.predict();
 
         double[][] preds = cnnrm.getPredictions();
-        Assert.assertTrue(preds != null);
+        Assert.assertNotNull(preds);
         Assert.assertEquals(0.527783, preds[0][0], 0.000001);
         Assert.assertEquals(0.401678, preds[1][0], 0.000001);
         Assert.assertEquals(0.390702, preds[2][0], 0.000001);
         Assert.assertEquals(0.527783, preds[3][0], 0.000001);
         Assert.assertEquals(0.527783, preds[4][0], 0.000001);
 
-        Assert.assertTrue(cnnrm.summary() != null);
+        Assert.assertNotNull(cnnrm.summary());
     }
 
-    @Test public void testModelLoadSave() throws QSARModelException {
+    public void testModelLoadSave() throws Exception {
         Assume.assumeTrue(runRModelTests());
 
         double[][] x = getXData();
@@ -117,14 +116,14 @@ public class CNNRegressionModelTest extends RModelTest {
         Assert.assertNotNull(loadedModel.getModelObject());
 
         double[] wts = cnnrm.getWts();
-        Assert.assertTrue(wts != null);
+        Assert.assertNotNull(wts);
         Assert.assertEquals(-1.635880, wts[0], .000001);
         Assert.assertEquals(-6.227619, wts[1], .000001);
         Assert.assertEquals(-4.639471, wts[2], .000001);
         Assert.assertEquals(-4.060546, wts[3], .000001);
 
         double[][] fitted = cnnrm.getFittedValues();
-        Assert.assertTrue(fitted != null);
+        Assert.assertNotNull(fitted);
         Assert.assertEquals(0.527783, fitted[0][0], .000001);
         Assert.assertEquals(0.527783, fitted[1][0], .000001);
         Assert.assertEquals(0.527783, fitted[2][0], .000001);
@@ -144,7 +143,7 @@ public class CNNRegressionModelTest extends RModelTest {
         loadedModel.predict();
 
         double[][] preds = loadedModel.getPredictions();
-        Assert.assertTrue(preds != null);
+        Assert.assertNotNull(preds);
         Assert.assertEquals(0.527783, preds[0][0], 0.000001);
         Assert.assertEquals(0.401678, preds[1][0], 0.000001);
         Assert.assertEquals(0.390702, preds[2][0], 0.000001);

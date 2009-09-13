@@ -42,7 +42,6 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -415,7 +414,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertEquals(1, atom.getFormalCharge().intValue());
     }
 
-    @Test public void testReadingCharges() throws CDKException {
+    @Test public void testReadingCharges() throws Exception {
     	String filename = "data/mdl/withcharges.mol";
     	logger.info("Testing: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -432,7 +431,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNull(mol);
     }
 
-    @Test public void testNoAtomCase() throws CDKException {
+    @Test public void testNoAtomCase() throws Exception {
         String filename = "data/mdl/emptyStructure.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -459,7 +458,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     /**
      * @cdk.bug 1732307
      */
-    @Test public void testZeroZCoordinates() throws CDKException {
+    @Test public void testZeroZCoordinates() throws Exception {
         String filename = "data/mdl/nozcoord.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

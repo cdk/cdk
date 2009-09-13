@@ -103,7 +103,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 	 *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
 	 */
     @Test
-    public void testIPDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    public void testIPDescriptor1() throws Exception{
         
     	IMolecule mol = builder.newMolecule();
 		mol.addAtom(builder.newAtom("C"));
@@ -357,7 +357,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 	 *  @cdk.inchi InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
 	 */
     @Test
-    public void testIPDescriptor_14() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    public void testIPDescriptor_14() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("CCOCCCO");
 
@@ -435,12 +435,9 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
      * 
 	 *  @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
 	 *  
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test
-    public void testIPPySystemWithHeteroatomDescriptor3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    public void testIPPySystemWithHeteroatomDescriptor3() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("O(C=CC=C)C");
@@ -462,12 +459,9 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
      * 
 	 *  @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
 	 *  
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test
-    public void testIPPySystemWithHeteroatomDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    public void testIPPySystemWithHeteroatomDescriptor2() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("OC=CC");
@@ -489,12 +483,9 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
      * 
 	 *  @cdk.inchi  InChI=1/C5H8S/c1-5-2-3-6-4-5/h4H,2-3H2,1H3
 	 *  
-     * @throws ClassNotFoundException
-     * @throws CDKException
-     * @throws java.lang.Exception
      */
     @Test
-    public void testIPPySystemWithHeteroatomDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    public void testIPPySystemWithHeteroatomDescriptor1() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C1=C(C)CCS1");

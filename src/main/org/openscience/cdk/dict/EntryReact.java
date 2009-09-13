@@ -177,7 +177,7 @@ public class EntryReact extends Entry{
 	}
 
 	/**
-	 * @returns A List of reactions in XML schema.
+	 * @return A List of reactions in XML schema.
 	 */
 	public List<String> getExampleReactions() {
 		return this.reactionExample;
