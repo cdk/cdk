@@ -34,7 +34,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
 	/**
 	 * This is initially null, and must be set in the setTransform method!
 	 */
-	private AffineTransform transform = null;
+	protected AffineTransform transform = null;
 	
 	public int[] transformPoint(double x, double y) {
         double[] src = new double[] {x, y};

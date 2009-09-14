@@ -29,6 +29,8 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.font.TextAttribute;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -41,6 +43,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ArrowElement;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.ElementGroup;
+import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
@@ -49,6 +52,7 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.elements.TextElement;
 import org.openscience.cdk.renderer.elements.TextGroupElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement;
+import org.openscience.cdk.renderer.elements.path.Type;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.font.IFontManager;
 
@@ -308,6 +312,60 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
     }
     
+    public void visit(GeneralPath path) {
+        this.g.setColor( path.color );
+        java.awt.geom.GeneralPath gp = new java.awt.geom.GeneralPath();
+        gp.append( getPathIterator( path, transform) , false );
+        this.g.draw( gp );
+    }
+
+    private static PathIterator getPathIterator(final GeneralPath path,final AffineTransform transform) {
+        return new PathIterator() {
+
+            int index;
+
+            private int type(Type type) {
+                switch ( type ) {
+                    case MoveTo: return SEG_MOVETO;
+                    case LineTo: return SEG_LINETO;
+                    case QuadTo: return SEG_QUADTO;
+                    case CubicTo: return SEG_CUBICTO;
+                    case Close: return SEG_CLOSE;
+                    default: return SEG_CLOSE;
+                }
+            }
+            public void next() {
+               index++;
+            }
+
+            public boolean isDone() {
+                return index>= path.elements.size();
+            }
+
+            public int getWindingRule() {
+
+                return WIND_EVEN_ODD;
+            }
+
+            public int currentSegment( double[] coords ) {
+                float[] src = new float[6];
+                int type = currentSegment( src );
+                double[] srcD = coords;
+                for(int i=0;i<src.length;i++){
+                    srcD[i] = (double) src[i];
+                }
+                return type;
+            }
+
+            public int currentSegment( float[] coords ) {
+
+                float[] src = path.elements.get( index ).points();
+                transform.transform( src, 0, coords, 0, src.length/2 );
+                return type(path.elements.get( index ).type());
+            }
+        };
+    }
+
     public void visit(TextGroupElement textGroup) {
         this.g.setFont(this.fontManager.getFont());
         Point p = 
@@ -407,6 +465,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             visit((RectangleElement) element);
         else if (element instanceof PathElement)
             visit((PathElement) element);
+        else if (element instanceof GeneralPath)
+            visit((GeneralPath)element);
         else
             System.err.println("Visitor method for "
                     + element.getClass().getName() + " is not implemented");
