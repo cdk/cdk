@@ -189,12 +189,10 @@ public class MakeJavafilesFiles {
 					if (line.indexOf("*/") != -1) inComment = false;
 				}
 
-				if (!inComment && (line.indexOf("public class") != -1 ||
-                                                line.indexOf("public enum") != -1 ||
+				if (!inComment && (line.indexOf("class") != -1 ||
+                                   line.indexOf("public enum") != -1 ||
 						line.indexOf("public interface") != -1 ||
-						line.indexOf("public @interface") != -1 ||
-						line.indexOf("abstract class") != -1 ||
-						line.indexOf("final class") != -1)) {
+						line.indexOf("public @interface") != -1)) {
 					// Nothing specified: return the default 'extra'
 					reader.close();
 					return results;
