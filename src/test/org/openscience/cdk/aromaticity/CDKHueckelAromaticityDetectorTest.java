@@ -24,7 +24,6 @@ package org.openscience.cdk.aromaticity;
 
 import org.junit.Assert;
 import org.junit.Test;
-<<<<<<< HEAD:src/test/org/openscience/cdk/aromaticity/CDKHueckelAromaticityDetectorTest.java
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -38,10 +37,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-=======
-import org.openscience.cdk.*;
-import org.openscience.cdk.interfaces.*;
->>>>>>> cdk-1.2.x:src/test/org/openscience/cdk/aromaticity/CDKHueckelAromaticityDetectorTest.java
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
