@@ -37,6 +37,15 @@
          <property environment="env" />
 
     <!-- Include the ant-contrib goodies -->
+    <taskdef name="javancss" classname="javancss.JavancssAntTask">
+        <classpath>
+            <pathelement location="${basedir}/develjar/javacc.jar"/>
+            <pathelement location="${basedir}/develjar/javancss.jar"/>
+            <pathelement location="${basedir}/develjar/ccl.jar"/>
+            <pathelement location="${basedir}/develjar/jhbasic.jar"/>
+        </classpath>
+    </taskdef>
+    <!-- Include the JavaNCSS goodies -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
             <pathelement location="${basedir}/develjar/ant-contrib-1.0b3.jar"/>
@@ -1093,6 +1102,24 @@
         </java>
     </target>
 
+    <target name="javancss" id="javancss" depends="runDoclet">
+        <mkdir dir="${build}" />
+        <echo>Calculating source statistics...</echo>
+	<javancss srcdir="${src}/main" includes="**/*.java"
+            generateReport="true"
+            outputfile="${build}/cdk_metrics.xml"
+            format="plain"
+	    classMetrics="false"
+	    functionMetrics="false"
+	/>
+	<javancss srcdir="${src}/test" includes="**/*.java"
+            generateReport="true"
+            outputfile="${build}/cdktest_metrics.xml"
+            format="plain"
+	    classMetrics="false"
+	    functionMetrics="false"
+	/>
+    </target>
 
     <!-- Regenerate template fingerprints in case the fingerprint code has been updated
 	 so that fingerprint bits are different from a previous version -->
