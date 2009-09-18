@@ -38,7 +38,6 @@ import com.sun.tools.doclets.Taglet;
 public class CDKGitTaglet implements Taglet {
     
     private static final String NAME = "cdk.githash";
-    private final static Pattern svnrevPattern = Pattern.compile("\\$Revision:\\s*(\\d*)\\s*\\$");
     private final static Pattern pathPattern = Pattern.compile(".*/(src/.*\\.java)");
     
     public String getName() {
