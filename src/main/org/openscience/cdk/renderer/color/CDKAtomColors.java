@@ -46,10 +46,23 @@ public class CDKAtomColors implements IAtomColorer {
 
     private final static Color DEFAULT        = Color.darkGray;
 
+    /**
+     * Returns the CDK scheme color for the given atom's element.
+     *
+     * @param atom         IAtom to get a color for
+     */
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
     }
     
+    /**
+     * Returns the CDK scheme color for the given atom's element, or
+     * defaults to the given color if no color is defined.
+     *
+     * @param atom         IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define
+     *                     a color for the passed IAtom
+     */
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         int atomnumber = atom.getAtomicNumber();

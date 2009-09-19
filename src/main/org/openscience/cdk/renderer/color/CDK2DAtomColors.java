@@ -47,10 +47,23 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
     private final static Color DEFAULT        = Color.black;
     
+    /**
+     * Returns the CDK 2D color for the given atom's element.
+     *
+     * @param atom         IAtom to get a color for
+     */
     public Color getAtomColor(IAtom a) {
         return getAtomColor(a, DEFAULT);
     }
     
+    /**
+     * Returns the CDK 2D color for the given atom's element, or
+     * defaults to the given color if no color is defined.
+     *
+     * @param atom         IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define
+     *                     a color for the passed IAtom
+     */
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         int atomnumber = 0;

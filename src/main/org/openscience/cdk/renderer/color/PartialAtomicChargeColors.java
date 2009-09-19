@@ -42,10 +42,23 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class PartialAtomicChargeColors implements IAtomColorer {
 
+    /**
+     * Returns the a color reflecting the given atom's partial charge.
+     *
+     * @param atom         IAtom to get a color for
+     */
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, Color.white);
     }
     
+    /**
+     * Returns the a color reflecting the given atom's partial charge, or
+     * defaults to the given color if no color is defined.
+     *
+     * @param atom         IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define
+     *                     a color for the passed IAtom
+     */
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         double charge = atom.getCharge();
