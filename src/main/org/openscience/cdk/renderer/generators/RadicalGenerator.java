@@ -21,6 +21,7 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
@@ -74,5 +75,10 @@ public class RadicalGenerator implements IGenerator {
                     new OvalElement(rx, ry, modelRadius, true, RADICAL_COLOR));
         }
         return group;
+    }
+
+    public List<IGeneratorParameter> getParameters() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

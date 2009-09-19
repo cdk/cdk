@@ -21,6 +21,7 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
+import java.util.List;
 
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -38,6 +39,11 @@ public class AtomContainerBoundsGenerator implements IGenerator {
         return new RectangleElement(minMax[0], minMax[1], minMax[2], minMax[3],
                 new Color(.7f, .7f, 1.0f));
         
+    }
+
+    public List<IGeneratorParameter> getParameters() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -21,6 +21,7 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
@@ -89,5 +90,10 @@ public class LonePairGenerator implements IGenerator {
                             modelPointRadius, true, RADICAL_COLOR));
         }
         return group;
+    }
+
+    public List<IGeneratorParameter> getParameters() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
