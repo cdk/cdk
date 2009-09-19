@@ -26,7 +26,15 @@ package org.openscience.cdk.renderer.font;
  */
 public interface IFontManager {
     
-    public enum FontStyle { NORMAL, BOLD }
+	/**
+	 * Style of the font to use to draw text.
+	 */
+    public enum FontStyle {
+        /** Regular font style. */
+        NORMAL,
+        /** Bold font style. */
+        BOLD
+    }
     
     /**
      * For a particular zoom level, set the appropriate font size to use.
@@ -36,16 +44,16 @@ public interface IFontManager {
     public void setFontForZoom(double zoom);
     
     /**
-     * Set the font style (Normal or Bold).
+     * Set the font style.
      * 
-     * @param fontStyle
+     * @param fontStyle an {@link FontStyle} type
      */
     public void setFontStyle(IFontManager.FontStyle fontStyle);
     
     /**
      * Set the font name ('Arial', 'Times New Roman') and so on. 
      * 
-     * @param fontName
+     * @param fontName name of the font to use
      */
     public void setFontName(String fontName);
 

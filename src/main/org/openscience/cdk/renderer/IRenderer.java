@@ -25,18 +25,53 @@ package org.openscience.cdk.renderer;
 import javax.vecmath.Point2d;
 
 /**
+ * Interface that all 2D renderers implement.
+ *
  * @cdk.module render
  */
 public interface IRenderer {
 
+    /**
+     * Returns the drawing model, giving access to drawing parameters.
+     * 
+     * @return the rendering model
+     */
 	public RendererModel getRenderer2DModel();
 
+	/**
+	 * Converts screen coordinates into model (or world) coordinates.
+	 *
+	 * @param screenXTo the screen's x coordinate
+	 * @param screenYTo the screen's y coordinate
+	 * @return          the matching model coordinates
+	 *
+	 * @see #toScreenCoordinates(double, double)
+	 */
 	public Point2d toModelCoordinates(double screenXTo, double screenYTo);
 
+    /**
+     * Converts model (or world) coordinates into screen coordinates.
+     *
+     * @param screenXTo the model's x coordinate
+     * @param screenYTo the model's y coordinate
+     * @return          the matching screen coordinates
+     *
+     * @see #toModelCoordinates(double, double)
+     */
 	public Point2d toScreenCoordinates(double screenXTo, double screenYTo);
 	
+	/**
+	 * Set a new zoom factor.
+	 *
+	 * @param zoomFactor the new zoom factor
+	 */
 	public void setZoom(double zoomFactor);
 
+    /**
+     * Set a new drawing center in screen coordinates.
+     *
+     * @param zoomFactor the new new drawing center
+     */
 	public void shiftDrawCenter(double screenX, double screenY);
 
 }
