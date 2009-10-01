@@ -206,14 +206,14 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
     }
 
     private String extractFieldData(String str) throws IOException {
-        String data = "";
+        StringBuilder data = new StringBuilder();
         while (str.trim().length() > 0) {
             logger.debug("data line: ", currentLine);
-            data += str;
+            data.append(str);
             currentLine = input.readLine();
             str = new String(currentLine).trim();
         }
-        return data;
+        return data.toString();
     }
 
     private String skipOtherFieldHeaderLines(String str) throws IOException {
