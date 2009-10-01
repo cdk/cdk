@@ -307,7 +307,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
         		case DOWN_INVERTED:
         			line += "6";
         			break;
-        		default:
+        		case UP_OR_DOWN:
+        			line += "4";
+        			break;
+           		case E_OR_Z:
+          			line += "3";
+          			break;
+          		default:
         			line += "0";
         		}
         		line += "  0  0  0 ";

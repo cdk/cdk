@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -188,4 +189,18 @@ public class MDLWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.contains("1.0"));
         Assert.assertTrue(output.contains("2.0"));
     }
+
+    @Test public void testUndefinedStereo() throws Exception {
+      IMolecule mol = MoleculeFactory.makeAlphaPinene();
+      mol.getBond(0).setStereo(IBond.Stereo.UP_OR_DOWN);
+      mol.getBond(1).setStereo(IBond.Stereo.E_OR_Z);
+      StringWriter writer = new StringWriter();
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(mol);
+        String output = writer.toString();
+        Assert.assertTrue(output.indexOf("1  2  2  4  0  0  0")>-1);
+        Assert.assertTrue(output.indexOf("2  3  1  3  0  0  0")>-1);
+    }
+
+
 }

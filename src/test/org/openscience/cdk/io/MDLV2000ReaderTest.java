@@ -566,6 +566,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Assert.assertNull(atom.getPoint2d());
         }
     }
+    
+    @Test public void testUndefinedStereo() throws Exception {
+        String filename = "data/mdl/ChEBI_26120.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(1).getStereo());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(6).getStereo());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(7).getStereo());
+    }
 
     /**
      * Tests that the '0' read from the bond block for bond stereo
