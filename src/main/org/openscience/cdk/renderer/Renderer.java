@@ -149,7 +149,8 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
 	public void setup(IChemModel chemModel, Rectangle screen) {
 	    this.setScale(chemModel);
 	    Rectangle2D bounds = Renderer.calculateBounds(chemModel);
-	    this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
+	    if(bounds != null)
+	        this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
 	    this.drawCenter = new Point2d(screen.getCenterX(), screen.getCenterY());
 	    this.setup();
 	}
