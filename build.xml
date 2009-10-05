@@ -985,7 +985,8 @@
                       io,builder3d,forcefield,valencycheck,charges,reaction,
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
-                      structgen,libiomd,libiocml,formula,render,extra,sdg"/>
+                      structgen,libiomd,libiocml,formula,render,extra,sdg,
+                      ioformats"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
