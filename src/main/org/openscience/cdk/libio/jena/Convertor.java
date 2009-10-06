@@ -23,12 +23,12 @@
 package org.openscience.cdk.libio.jena;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
@@ -49,20 +49,29 @@ public class Convertor {
     public static Model molecule2Model(IMolecule molecule) {
         Model model = createCDKModel();
         Resource subject = model.createResource(
-            "http://cdk.sf.net/model/molecule/" + 1
+            createIdentifier(model, molecule)
         );
         model.add(subject, RDF.type, CDK.Molecule);
         int atomCounter = 0;
         for (IAtom atom : molecule.atoms()) {
             atomCounter++;
             Resource rdfAtom = model.createResource(
-                "http://cdk.sf.net/model/atom/" + atomCounter
+                createIdentifier(model, atom)
             );
             model.add(rdfAtom, RDF.type, CDK.Atom);
             model.add(rdfAtom, CDK.symbol, atom.getSymbol());
             model.add(subject, CDK.hasAtom, rdfAtom);
         }
         return model;
+    }
+
+    private static String createIdentifier(Model model, IChemObject object) {
+        StringBuilder result = new StringBuilder();
+        result.append("http://example.com/");
+        result.append(model.hashCode()).append('/');
+        result.append(object.getClass().getSimpleName()).append('/');
+        result.append(object.hashCode());
+        return result.toString();
     }
 
     public static IMolecule model2Molecule(Model model,
