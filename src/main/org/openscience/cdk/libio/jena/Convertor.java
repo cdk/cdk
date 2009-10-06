@@ -22,7 +22,11 @@
  */
 package org.openscience.cdk.libio.jena;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -55,15 +59,34 @@ public class Convertor {
             createIdentifier(model, molecule)
         );
         model.add(subject, RDF.type, CDK.Molecule);
-        int atomCounter = 0;
+        Map<IAtom,Resource> cdkToRDFAtomMap = new HashMap<IAtom, Resource>();
         for (IAtom atom : molecule.atoms()) {
-            atomCounter++;
             Resource rdfAtom = model.createResource(
                 createIdentifier(model, atom)
             );
+            cdkToRDFAtomMap.put(atom, rdfAtom);
             model.add(rdfAtom, RDF.type, CDK.Atom);
             model.add(rdfAtom, CDK.symbol, atom.getSymbol());
             model.add(subject, CDK.hasAtom, rdfAtom);
+        }
+        for (IBond bond : molecule.bonds()) {
+            Resource rdfBond = model.createResource(
+                createIdentifier(model, bond)
+            );
+            model.add(rdfBond, RDF.type, CDK.Bond);
+            for (IAtom atom : bond.atoms()) {
+                model.add(rdfBond, CDK.bindsAtom, cdkToRDFAtomMap.get(atom));
+            }
+            if (bond.getOrder() == IBond.Order.SINGLE) {
+                model.add(rdfBond, CDK.hasOrder, CDK.SingleBond);
+            } else if (bond.getOrder() == IBond.Order.DOUBLE) {
+                model.add(rdfBond, CDK.hasOrder, CDK.DoubleBond);
+            } else if (bond.getOrder() == IBond.Order.TRIPLE) {
+                model.add(rdfBond, CDK.hasOrder, CDK.TripleBond);
+            } else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
+                model.add(rdfBond, CDK.hasOrder, CDK.QuadrupleBond);
+            }
+            model.add(subject, CDK.hasBond, rdfBond);
         }
         return model;
     }
@@ -85,13 +108,41 @@ public class Convertor {
         if (mols.hasNext()) {
             Resource rdfMol = mols.next();
             mol = builder.newMolecule();
+            Map<Resource,IAtom> rdfToCDKAtomMap = new HashMap<Resource,IAtom>();
             StmtIterator atoms = rdfMol.listProperties(CDK.hasAtom);
             while (atoms.hasNext()) {
                 Statement rdfAtom = atoms.nextStatement();
                 IAtom atom = builder.newAtom();
+                rdfToCDKAtomMap.put(rdfAtom.getSubject(), atom);
                 Statement symbol = rdfAtom.getProperty(CDK.symbol);
                 if (symbol != null) atom.setSymbol(symbol.getString());
                 mol.addAtom(atom);
+            }
+            StmtIterator bonds = rdfMol.listProperties(CDK.hasBond);
+            while (bonds.hasNext()) {
+                Statement rdfBond = bonds.nextStatement();
+                IBond bond = builder.newBond();
+                StmtIterator bondAtoms = rdfBond.getResource()
+                    .listProperties(CDK.bindsAtom);
+                int atomCounter = 0;
+                while (bondAtoms.hasNext()) {
+                    Statement rdfAtom = bondAtoms.nextStatement();
+                    IAtom atom = rdfToCDKAtomMap.get(rdfAtom.getResource());
+                    bond.setAtom(atom, atomCounter);
+                    atomCounter++;
+                }
+                Resource order = rdfBond.
+                    getProperty(CDK.hasOrder).getResource();
+                if (order.equals(CDK.SingleBond)) {
+                    bond.setOrder(IBond.Order.SINGLE);
+                } else if (order.equals(CDK.DoubleBond)) {
+                    bond.setOrder(IBond.Order.DOUBLE);
+                } else if (order.equals(CDK.TripleBond)) {
+                    bond.setOrder(IBond.Order.TRIPLE);
+                } else if (order.equals(CDK.QuadrupleBond)) {
+                    bond.setOrder(IBond.Order.QUADRUPLE);
+                }
+                mol.addBond(bond);
             }
         }
         return mol;

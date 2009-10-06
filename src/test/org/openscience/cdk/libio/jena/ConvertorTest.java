@@ -26,6 +26,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNAtom;
@@ -54,6 +55,17 @@ public class ConvertorTest extends CDKTestCase {
     @Test public void roundtripAtom() {
         IMolecule mol = new NNMolecule();
         mol.addAtom(new NNAtom("C"));
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
+    @Test public void roundtripBond() {
+        IMolecule mol = new NNMolecule();
+        mol.addAtom(new NNAtom("C"));
+        mol.addAtom(new NNAtom("C"));
+        mol.addBond(0,1,IBond.Order.DOUBLE);
         Model model = Convertor.molecule2Model(mol);
         IMolecule rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);

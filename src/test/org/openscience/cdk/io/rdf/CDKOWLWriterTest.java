@@ -28,6 +28,7 @@ import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ChemObjectWriterTest;
 import org.openscience.cdk.nonotify.NNAtom;
@@ -50,8 +51,11 @@ public class CDKOWLWriterTest extends ChemObjectWriterTest {
 
         IMolecule mol = new NNMolecule();
         mol.addAtom(new NNAtom("C"));
+        mol.addAtom(new NNAtom("C"));
+        mol.addBond(0,1,IBond.Order.DOUBLE);
         writer.write(mol);
         String outputString = output.toString();
+        System.out.println(outputString);
         Assert.assertTrue(outputString.contains(
             "http://cdk.sourceforge.net/model.owl#"
         ));
