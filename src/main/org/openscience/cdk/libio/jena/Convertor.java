@@ -36,6 +36,9 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 /**
+ * Helper class that converts a CDK {@link IChemObject} into RDF using a
+ * Jena model and the CDK data model ontology.
+ *
  * @cdk.module       iordf
  * @cdk.githash
  * @cdk.keyword      Resource Description Framework
