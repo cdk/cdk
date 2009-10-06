@@ -30,6 +30,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ChemObjectWriterTest;
+import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNMolecule;
 
 /**
@@ -48,6 +49,7 @@ public class CDKOWLWriterTest extends ChemObjectWriterTest {
         CDKOWLWriter writer = new CDKOWLWriter(output);
 
         IMolecule mol = new NNMolecule();
+        mol.addAtom(new NNAtom("C"));
         writer.write(mol);
         String outputString = output.toString();
         Assert.assertTrue(outputString.contains(

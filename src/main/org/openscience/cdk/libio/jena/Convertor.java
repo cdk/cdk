@@ -22,12 +22,17 @@
  */
 package org.openscience.cdk.libio.jena;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 /**
@@ -42,22 +47,48 @@ import com.hp.hpl.jena.vocabulary.RDF;
 public class Convertor {
 
     public static Model molecule2Model(IMolecule molecule) {
-        Model model = ModelFactory.createOntologyModel();
-        model.setNsPrefix("cdk", "http://cdk.sourceforge.net/model.owl#");
+        Model model = createCDKModel();
         Resource subject = model.createResource(
             "http://cdk.sf.net/model/molecule/" + 1
         );
-        model.add(
-            subject, RDF.type,
-            model.createResource("cdk:Molecule")
-        );
+        model.add(subject, RDF.type, CDK.Molecule);
+        int atomCounter = 0;
+        for (IAtom atom : molecule.atoms()) {
+            atomCounter++;
+            Resource rdfAtom = model.createResource(
+                "http://cdk.sf.net/model/atom/" + atomCounter
+            );
+            model.add(rdfAtom, RDF.type, CDK.Atom);
+            model.add(rdfAtom, CDK.symbol, atom.getSymbol());
+            model.add(subject, CDK.hasAtom, rdfAtom);
+        }
         return model;
     }
 
     public static IMolecule model2Molecule(Model model,
         IChemObjectBuilder builder) {
-        IMolecule mol = builder.newMolecule();
+        ResIterator mols =
+            model.listSubjectsWithProperty(RDF.type, CDK.Molecule);
+        IMolecule mol = null;
+        if (mols.hasNext()) {
+            Resource rdfMol = mols.next();
+            mol = builder.newMolecule();
+            StmtIterator atoms = rdfMol.listProperties(CDK.hasAtom);
+            while (atoms.hasNext()) {
+                Statement rdfAtom = atoms.nextStatement();
+                IAtom atom = builder.newAtom();
+                Statement symbol = rdfAtom.getProperty(CDK.symbol);
+                if (symbol != null) atom.setSymbol(symbol.getString());
+                mol.addAtom(atom);
+            }
+        }
         return mol;
+    }
+
+    private static Model createCDKModel() {
+        Model model = ModelFactory.createOntologyModel();
+        model.setNsPrefix("cdk", "http://cdk.sourceforge.net/model.owl#");
+        return model;
     }
 
 }
