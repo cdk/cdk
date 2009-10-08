@@ -63,11 +63,24 @@ public class ConvertorTest extends CDKTestCase {
         Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
     }
 
-    @Test public void roundtripBond() {
+    @Test public void roundtripBond_SINGLE() {
+        roundtripBond_Order(IBond.Order.SINGLE);
+    }
+    @Test public void roundtripBond_DOUBLE() {
+        roundtripBond_Order(IBond.Order.DOUBLE);
+    }
+    @Test public void roundtripBond_TRIPLE() {
+        roundtripBond_Order(IBond.Order.TRIPLE);
+    }
+    @Test public void roundtripBond_QUAD() {
+        roundtripBond_Order(IBond.Order.QUADRUPLE);
+    }
+
+    private void roundtripBond_Order(IBond.Order order) {
         IMolecule mol = new NNMolecule();
         mol.addAtom(new NNAtom("C"));
         mol.addAtom(new NNAtom("C"));
-        mol.addBond(0,1,IBond.Order.DOUBLE);
+        mol.addBond(0,1,order);
         Model model = Convertor.molecule2Model(mol);
         IMolecule rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
