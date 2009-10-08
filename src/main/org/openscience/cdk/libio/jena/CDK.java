@@ -42,16 +42,33 @@ public class CDK {
     public static final Resource Atom = resource("Atom");
     public static final Resource Bond = resource("Bond");
     public static final Resource ChemObject = resource("ChemObject");
+    public static final Resource Element = resource("Element");
+    
+    // IBond.Order
     public static final Resource SingleBond = resource("SingleBond");
     public static final Resource DoubleBond = resource("DoubleBond");
     public static final Resource TripleBond = resource("TripleBond");
     public static final Resource QuadrupleBond = resource("QuadrupleBond");
 
+    // IAtomType.Hybridization
+    public static final Resource S = resource("S");
+    public static final Resource SP1 = resource("SP1");
+    public static final Resource SP2 = resource("SP2");
+    public static final Resource SP3 = resource("SP3");
+    public static final Resource PLANAR3 = resource("PLANAR3");
+    public static final Resource SP3D1 = resource("SP3D1");
+    public static final Resource SP3D2 = resource("SP3D2");
+    public static final Resource SP3D3 = resource("SP3D3");
+    public static final Resource SP3D4 = resource("SP3D4");
+    public static final Resource SP3D5 = resource("SP3D5");
+    
     public static final Property hasAtom = property("hasAtom");
     public static final Property hasBond = property("hasBond");
     public static final Property bindsAtom = property("bindsAtom");
     public static final Property hasOrder = property("hasOrder");
     public static final Property symbol = property("symbol");
     public static final Property identfier = property("identifier");
+    public static final Property hasAtomicNumber = property("hasAtomicNumber");
+    public static final Property hasHybridization = property("hasHybridization");
 
 }

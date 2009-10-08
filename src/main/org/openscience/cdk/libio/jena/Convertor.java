@@ -26,10 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -68,7 +71,7 @@ public class Convertor {
             model.add(rdfAtom, RDF.type, CDK.Atom);
             model.add(rdfAtom, CDK.symbol, atom.getSymbol());
             model.add(subject, CDK.hasAtom, rdfAtom);
-            serializeChemObjectFields(model, rdfAtom, atom);
+            serializeAtomTypeFields(model, rdfAtom, atom);
         }
         for (IBond bond : molecule.bonds()) {
             Resource rdfBond = model.createResource(
@@ -98,10 +101,89 @@ public class Convertor {
             model.add(rdfObject, CDK.identfier, object.getID());
     }
 
-    private static void deserializeChemObjectFields(Model model,
+    private static void deserializeChemObjectFields(
             Resource rdfObject, IChemObject object) {
         Statement id = rdfObject.getProperty(CDK.identfier);
         if (id != null) object.setID(id.getString());
+    }
+
+    private static void serializeElementFields(Model model,
+            Resource rdfObject, IElement element) {
+        serializeChemObjectFields(model, rdfObject, element);
+        if (element.getSymbol() != null)
+            model.add(rdfObject, CDK.symbol, element.getSymbol());
+        if (element.getAtomicNumber() != null)
+            model.add(rdfObject, CDK.hasAtomicNumber,
+                element.getAtomicNumber().toString());
+    }
+
+    private static void deserializeElementFields(
+            Resource rdfObject, IElement element) {
+        deserializeChemObjectFields(rdfObject, element);
+        Statement symbol = rdfObject.getProperty(CDK.symbol);
+        if (symbol != null) element.setSymbol(symbol.getString());
+        Statement atomicNumber = rdfObject.getProperty(CDK.hasAtomicNumber);
+        if (atomicNumber != null)
+            element.setAtomicNumber(atomicNumber.getInt());
+    }
+
+    private static void serializeAtomTypeFields(Model model,
+            Resource rdfObject, IAtomType type) {
+        serializeElementFields(model, rdfObject, type);
+        if (type.getHybridization() != null) {
+            Hybridization hybrid = type.getHybridization(); 
+            if (hybrid == Hybridization.S) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.S);
+            } else if (hybrid == Hybridization.SP1) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP1);
+            } else if (hybrid == Hybridization.SP2) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP2);
+            } else if (hybrid == Hybridization.SP3) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP3);
+            } else if (hybrid == Hybridization.PLANAR3) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.PLANAR3);
+            } else if (hybrid == Hybridization.SP3D1) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D1);
+            } else if (hybrid == Hybridization.SP3D2) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D2);
+            } else if (hybrid == Hybridization.SP3D3) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D3);
+            } else if (hybrid == Hybridization.SP3D4) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D4);
+            } else if (hybrid == Hybridization.SP3D5) {
+                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D5);
+            }
+        }
+    }
+
+    private static void deserializeAtomTypeFields(
+            Resource rdfObject, IAtomType element) {
+        deserializeElementFields(rdfObject, element);
+        Statement hybrid = rdfObject.getProperty(CDK.hasHybridization);
+        if (hybrid != null) {
+            Resource rdfHybrid = (Resource)hybrid.getObject();
+            if (rdfHybrid.equals(CDK.S)) {
+                element.setHybridization(Hybridization.S);
+            } else if (rdfHybrid.equals(CDK.SP1)) {
+                element.setHybridization(Hybridization.SP1);
+            } else if (rdfHybrid.equals(CDK.SP2)) {
+                element.setHybridization(Hybridization.SP2);
+            } else if (rdfHybrid.equals(CDK.SP3)) {
+                element.setHybridization(Hybridization.SP3);
+            } else if (rdfHybrid.equals(CDK.PLANAR3)) {
+                element.setHybridization(Hybridization.PLANAR3);
+            } else if (rdfHybrid.equals(CDK.SP3D1)) {
+                element.setHybridization(Hybridization.SP3D1);
+            } else if (rdfHybrid.equals(CDK.SP3D2)) {
+                element.setHybridization(Hybridization.SP3D2);
+            } else if (rdfHybrid.equals(CDK.SP3D3)) {
+                element.setHybridization(Hybridization.SP3D3);
+            } else if (rdfHybrid.equals(CDK.SP3D4)) {
+                element.setHybridization(Hybridization.SP3D4);
+            } else if (rdfHybrid.equals(CDK.SP3D5)) {
+                element.setHybridization(Hybridization.SP3D5);
+            }
+        }
     }
 
     private static String createIdentifier(Model model, IChemObject object) {
@@ -129,7 +211,7 @@ public class Convertor {
                 rdfToCDKAtomMap.put(rdfAtom, atom);
                 Statement symbol = rdfAtom.getProperty(CDK.symbol);
                 if (symbol != null) atom.setSymbol(symbol.getString());
-                deserializeChemObjectFields(model, rdfAtom, atom);
+                deserializeAtomTypeFields(rdfAtom, atom);
                 mol.addAtom(atom);
             }
             StmtIterator bonds = rdfMol.listProperties(CDK.hasBond);

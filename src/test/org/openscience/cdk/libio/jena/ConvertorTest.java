@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.libio.jena;
 
-import java.io.StringWriter;
-
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -32,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -79,6 +78,59 @@ public class ConvertorTest extends CDKTestCase {
         IMolecule mol = new NNMolecule();
         IAtom object = new NNAtom("C");
         object.setID("atom1");
+        mol.addAtom(object);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
+    @Test public void roundtripElement() {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setAtomicNumber(6);
+        mol.addAtom(object);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
+    @Test public void roundtripAtomType_S() {
+        roundtripAtomType_Hybridization(Hybridization.S);
+    }
+    @Test public void roundtripAtomType_SP1() {
+        roundtripAtomType_Hybridization(Hybridization.SP1);
+    }
+    @Test public void roundtripAtomType_SP2() {
+        roundtripAtomType_Hybridization(Hybridization.SP2);
+    }
+    @Test public void roundtripAtomType_SP3() {
+        roundtripAtomType_Hybridization(Hybridization.SP3);
+    }
+    @Test public void roundtripAtomType_PLANAR3() {
+        roundtripAtomType_Hybridization(Hybridization.PLANAR3);
+    }
+    @Test public void roundtripAtomType_SP3D1() {
+        roundtripAtomType_Hybridization(Hybridization.SP3D1);
+    }
+    @Test public void roundtripAtomType_SP3D2() {
+        roundtripAtomType_Hybridization(Hybridization.SP3D2);
+    }
+    @Test public void roundtripAtomType_SP3D3() {
+        roundtripAtomType_Hybridization(Hybridization.SP3D3);
+    }
+    @Test public void roundtripAtomType_SP3D4() {
+        roundtripAtomType_Hybridization(Hybridization.SP3D4);
+    }
+    @Test public void roundtripAtomType_SP3D5() {
+        roundtripAtomType_Hybridization(Hybridization.SP3D5);
+    }
+
+    private void roundtripAtomType_Hybridization(Hybridization hybrid) {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setHybridization(hybrid);
         mol.addAtom(object);
         Model model = Convertor.molecule2Model(mol);
         IMolecule rtMol = Convertor.model2Molecule(model, builder);
