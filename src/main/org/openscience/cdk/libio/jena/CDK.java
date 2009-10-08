@@ -73,5 +73,6 @@ public class CDK {
     public static final Property hasHybridization = property("hasHybridization");
     public static final Property hasAtomTypeName = property("hasAtomTypeName");
     public static final Property hasMaxBondOrder = property("hasMaxBondOrder");
+    public static final Property hasFormalCharge = property("hasFormalCharge");
 
 }

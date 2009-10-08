@@ -155,6 +155,12 @@ public class Convertor {
         if (type.getAtomTypeName() != null) {
             model.add(rdfObject, CDK.hasAtomTypeName, type.getAtomTypeName());
         }
+        if (type.getFormalCharge() != null) {
+            model.add(
+                rdfObject, CDK.hasFormalCharge,
+                type.getFormalCharge().toString()
+            );
+        }
         if (type.getMaxBondOrder() != null) {
             model.add(
                 rdfObject, CDK.hasMaxBondOrder,
@@ -200,6 +206,9 @@ public class Convertor {
             Resource maxOrder = (Resource)order.getResource();
             element.setMaxBondOrder(resource2Order(maxOrder));
         }
+        Statement formalCharge = rdfObject.getProperty(CDK.hasFormalCharge);
+        if (formalCharge != null)
+            element.setFormalCharge(formalCharge.getInt());
     }
 
     public static Order resource2Order(Resource rdfOrder) {

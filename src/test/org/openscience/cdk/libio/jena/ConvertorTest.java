@@ -114,6 +114,7 @@ public class ConvertorTest extends CDKTestCase {
         IMolecule mol = new NNMolecule();
         IAtom object = new NNAtom("C");
         object.setAtomTypeName("C.sp3");
+        object.setFormalCharge(+1);
         mol.addAtom(object);
         Model model = Convertor.molecule2Model(mol);
         IMolecule rtMol = Convertor.model2Molecule(model, builder);
