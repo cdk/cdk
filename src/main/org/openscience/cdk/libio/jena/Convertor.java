@@ -82,14 +82,11 @@ public class Convertor {
             for (IAtom atom : bond.atoms()) {
                 model.add(rdfBond, CDK.bindsAtom, cdkToRDFAtomMap.get(atom));
             }
-            if (bond.getOrder() == IBond.Order.SINGLE) {
-                model.add(rdfBond, CDK.hasOrder, CDK.SingleBond);
-            } else if (bond.getOrder() == IBond.Order.DOUBLE) {
-                model.add(rdfBond, CDK.hasOrder, CDK.DoubleBond);
-            } else if (bond.getOrder() == IBond.Order.TRIPLE) {
-                model.add(rdfBond, CDK.hasOrder, CDK.TripleBond);
-            } else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
-                model.add(rdfBond, CDK.hasOrder, CDK.QuadrupleBond);
+            if (bond.getOrder() != null) {
+                model.add(
+                    rdfBond, CDK.hasOrder,
+                    order2Resource(bond.getOrder())
+                );
             }
             model.add(subject, CDK.hasBond, rdfBond);
         }
@@ -274,15 +271,7 @@ public class Convertor {
                 }
                 Resource order = rdfBond.
                     getProperty(CDK.hasOrder).getResource();
-                if (order.equals(CDK.SingleBond)) {
-                    bond.setOrder(IBond.Order.SINGLE);
-                } else if (order.equals(CDK.DoubleBond)) {
-                    bond.setOrder(IBond.Order.DOUBLE);
-                } else if (order.equals(CDK.TripleBond)) {
-                    bond.setOrder(IBond.Order.TRIPLE);
-                } else if (order.equals(CDK.QuadrupleBond)) {
-                    bond.setOrder(IBond.Order.QUADRUPLE);
-                }
+                bond.setOrder(resource2Order(order));
                 mol.addBond(bond);
             }
         }
