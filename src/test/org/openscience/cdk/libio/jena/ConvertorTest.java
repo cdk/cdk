@@ -22,10 +22,13 @@
  */
 package org.openscience.cdk.libio.jena;
 
+import java.io.StringWriter;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -66,6 +69,17 @@ public class ConvertorTest extends CDKTestCase {
         mol.addAtom(new NNAtom("C"));
         mol.addAtom(new NNAtom("C"));
         mol.addBond(0,1,IBond.Order.DOUBLE);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
+    @Test public void roundtripChemObject() {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setID("atom1");
+        mol.addAtom(object);
         Model model = Convertor.molecule2Model(mol);
         IMolecule rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);

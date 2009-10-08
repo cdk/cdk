@@ -41,6 +41,7 @@ public class CDK {
     public static final Resource Molecule = resource("Molecule");
     public static final Resource Atom = resource("Atom");
     public static final Resource Bond = resource("Bond");
+    public static final Resource ChemObject = resource("ChemObject");
     public static final Resource SingleBond = resource("SingleBond");
     public static final Resource DoubleBond = resource("DoubleBond");
     public static final Resource TripleBond = resource("TripleBond");
@@ -51,5 +52,6 @@ public class CDK {
     public static final Property bindsAtom = property("bindsAtom");
     public static final Property hasOrder = property("hasOrder");
     public static final Property symbol = property("symbol");
+    public static final Property identfier = property("identifier");
 
 }

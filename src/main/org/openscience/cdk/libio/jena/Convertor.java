@@ -68,6 +68,7 @@ public class Convertor {
             model.add(rdfAtom, RDF.type, CDK.Atom);
             model.add(rdfAtom, CDK.symbol, atom.getSymbol());
             model.add(subject, CDK.hasAtom, rdfAtom);
+            serializeChemObjectFields(model, rdfAtom, atom);
         }
         for (IBond bond : molecule.bonds()) {
             Resource rdfBond = model.createResource(
@@ -91,6 +92,18 @@ public class Convertor {
         return model;
     }
 
+    private static void serializeChemObjectFields(Model model,
+            Resource rdfObject, IChemObject object) {
+        if (object.getID() != null)
+            model.add(rdfObject, CDK.identfier, object.getID());
+    }
+
+    private static void deserializeChemObjectFields(Model model,
+            Resource rdfObject, IChemObject object) {
+        Statement id = rdfObject.getProperty(CDK.identfier);
+        if (id != null) object.setID(id.getString());
+    }
+
     private static String createIdentifier(Model model, IChemObject object) {
         StringBuilder result = new StringBuilder();
         result.append("http://example.com/");
@@ -111,11 +124,12 @@ public class Convertor {
             Map<Resource,IAtom> rdfToCDKAtomMap = new HashMap<Resource,IAtom>();
             StmtIterator atoms = rdfMol.listProperties(CDK.hasAtom);
             while (atoms.hasNext()) {
-                Statement rdfAtom = atoms.nextStatement();
+                Resource rdfAtom = atoms.nextStatement().getResource();
                 IAtom atom = builder.newAtom();
-                rdfToCDKAtomMap.put(rdfAtom.getSubject(), atom);
+                rdfToCDKAtomMap.put(rdfAtom, atom);
                 Statement symbol = rdfAtom.getProperty(CDK.symbol);
                 if (symbol != null) atom.setSymbol(symbol.getString());
+                deserializeChemObjectFields(model, rdfAtom, atom);
                 mol.addAtom(atom);
             }
             StmtIterator bonds = rdfMol.listProperties(CDK.hasBond);
