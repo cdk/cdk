@@ -26,6 +26,9 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
+/**
+ * @cdk.module iordf
+ */
 public class CDK {
 
     public static final String URI ="http://cdk.sourceforge.net/model.owl#";
