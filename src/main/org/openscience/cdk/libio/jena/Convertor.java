@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -154,6 +155,15 @@ public class Convertor {
                 model.add(rdfObject, CDK.hasHybridization, CDK.SP3D5);
             }
         }
+        if (type.getAtomTypeName() != null) {
+            model.add(rdfObject, CDK.hasAtomTypeName, type.getAtomTypeName());
+        }
+        if (type.getMaxBondOrder() != null) {
+            model.add(
+                rdfObject, CDK.hasMaxBondOrder,
+                order2Resource(type.getMaxBondOrder())
+            );
+        }
     }
 
     private static void deserializeAtomTypeFields(
@@ -184,6 +194,41 @@ public class Convertor {
                 element.setHybridization(Hybridization.SP3D5);
             }
         }
+        Statement name = rdfObject.getProperty(CDK.hasAtomTypeName);
+        if (name != null) {
+            element.setAtomTypeName(name.getString());
+        }
+        Statement order = rdfObject.getProperty(CDK.hasMaxBondOrder);
+        if (order != null) {
+            Resource maxOrder = (Resource)order.getResource();
+            element.setMaxBondOrder(resource2Order(maxOrder));
+        }
+    }
+
+    public static Order resource2Order(Resource rdfOrder) {
+        if (rdfOrder.equals(CDK.SingleBond)) {
+            return Order.SINGLE;
+        } else if (rdfOrder.equals(CDK.DoubleBond)) {
+            return Order.DOUBLE;
+        } else if (rdfOrder.equals(CDK.TripleBond)) {
+            return Order.TRIPLE;
+        } else if (rdfOrder.equals(CDK.QuadrupleBond)) {
+            return Order.QUADRUPLE;
+        }
+        return null;
+    }
+
+    public static Resource order2Resource(Order order) {
+        if (order == Order.SINGLE) {
+            return CDK.SingleBond;
+        } else if (order == Order.DOUBLE) {
+            return CDK.DoubleBond;
+        } else if (order == Order.TRIPLE) {
+            return CDK.TripleBond;
+        } else if (order == Order.QUADRUPLE) {
+            return CDK.QuadrupleBond;
+        }
+        return null;
     }
 
     private static String createIdentifier(Model model, IChemObject object) {

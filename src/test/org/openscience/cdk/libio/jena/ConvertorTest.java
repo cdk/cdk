@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -109,6 +110,17 @@ public class ConvertorTest extends CDKTestCase {
         Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
     }
 
+    @Test public void roundtripAtomType() {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setAtomTypeName("C.sp3");
+        mol.addAtom(object);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
     @Test public void roundtripAtomType_S() {
         roundtripAtomType_Hybridization(Hybridization.S);
     }
@@ -151,4 +163,27 @@ public class ConvertorTest extends CDKTestCase {
         Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
     }
 
+    @Test public void testAtomType_MaxBondOrder_SINGLE() {
+        roundtripAtomType_MaxBondOrder(Order.SINGLE);
+    }
+    @Test public void testAtomType_MaxBondOrder_DOUBLE() {
+        roundtripAtomType_MaxBondOrder(Order.DOUBLE);
+    }
+    @Test public void testAtomType_MaxBondOrder_TRIPLE() {
+        roundtripAtomType_MaxBondOrder(Order.TRIPLE);
+    }
+    @Test public void testAtomType_MaxBondOrder_QUAD() {
+        roundtripAtomType_MaxBondOrder(Order.QUADRUPLE);
+    }
+
+    private void roundtripAtomType_MaxBondOrder(Order order) {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setMaxBondOrder(order);
+        mol.addAtom(object);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
 }
