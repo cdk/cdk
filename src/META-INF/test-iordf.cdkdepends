@@ -11,3 +11,4 @@ cdk-data.jar
 cdk-nonotify.jar
 cdk-test.jar
 cdk-test-io.jar
+cdk-datadebug.jar

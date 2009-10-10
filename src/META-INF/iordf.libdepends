@@ -1,16 +1,7 @@
 vecmath1.2-1.14.jar
-jena/antlr-2.7.5.jar
-jena/arq-extra.jar
-jena/arq.jar
 jena/commons-logging-1.1.1.jar
-jena/concurrent.jar
 jena/icu4j_3_4.jar
 jena/iri.jar
 jena/jena.jar
-jena/json.jar
-jena/log4j-1.2.12.jar
-jena/lucene-core-2.3.1.jar
+jena/slf4j-api-1.5.6.jar
 jena/slf4j-simple-1.5.0.jar
-jena/stax-api-1.0.jar
-jena/wstx-asl-3.0.0.jar
-jena/xml-apis.jar
