@@ -24,37 +24,35 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.io.MDLRXNV2000Reader;
-import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.BitSet;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.io.MDLRXNV2000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.LoggingTool;
+
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterTest extends CDKTestCase
-{
+public class FingerprinterTest extends AbstractFingerprinterTest {
 
 	boolean standAlone = false;
 	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
 
-	public FingerprinterTest()
-	{
-		super();
+	public IFingerprinter getFingerprinter() {
+	    return new Fingerprinter();
 	}
-
 
 	@Test public void testRegression() throws Exception {
 		IMolecule mol1 = MoleculeFactory.makeIndole();
@@ -64,221 +62,6 @@ public class FingerprinterTest extends CDKTestCase
 		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 45, bs1.cardinality());
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 16, bs2.cardinality());
-	}
-
-	/**
-	 * @cdk.bug 706786
-	 */
-	@Test public void testBug706786() throws java.lang.Exception
-	{
-		Molecule superstructure = null;
-		Molecule substructure = null;
-		/* We make a specifically substituted chromane here
-		 * as well as the pure chromane skeleton, which should
-		 * be a substructure of the first.
-		 */
-		String filename = "data/mdl/bug706786-1.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
-		filename = "data/mdl/bug706786-2.mol";
-		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLV2000Reader(ins, Mode.STRICT);
-		substructure = (Molecule) reader.read((ChemObject) new Molecule());
-		/* now we've read the two chromanes and we are going to check now
-		 * whether the latter is likely to be a substructure of the first by
-		 * using the fingerprinter.
-		*/
-
-		Fingerprinter fingerprinter = new Fingerprinter();
-
-		BitSet superBS = fingerprinter.getFingerprint(superstructure);
-		BitSet subBS = fingerprinter.getFingerprint(substructure);
-		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
-
-		if (standAlone)
-		{
-			System.out.println("BitString superstructure: " + superBS);
-			System.out.println("BitString substructure: " + subBS);
-			System.out.println("isSubset? " + isSubset);
-		}
-		Assert.assertTrue(isSubset);
-	}
-
-	/**
-	 * @cdk.bug 853254
-	 */
-	@Test public void testBug853254() throws java.lang.Exception
-	{
-		Molecule superstructure = null;
-		Molecule substructure = null;
-		/* We make a specifically substituted chromane here
-		 * as well as the pure chromane skeleton, which should
-		 * be a substructure of the first.
-		 */
-		String filename = "data/mdl/bug853254-2.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
-		//MoleculeViewer2D.display(superstructure, false, true);
-		filename = "data/mdl/bug853254-1.mol";
-		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLV2000Reader(ins, Mode.STRICT);
-		substructure = (Molecule) reader.read((ChemObject) new Molecule());
-		//MoleculeViewer2D.display(substructure, false, true);
-		/* now we've read the two and we are going to check now
-		 * whether the latter is likely to be a substructure of the first by
-		 * using the fingerprinter.
-		*/
-
-		Fingerprinter fingerprinter = new Fingerprinter();
-
-		BitSet superBS = fingerprinter.getFingerprint(superstructure);
-		BitSet subBS = fingerprinter.getFingerprint(substructure);
-		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
-
-		if (standAlone)
-		{
-			System.out.println("BitString superstructure: " + superBS);
-			System.out.println("BitString substructure: " + subBS);
-			System.out.println("isSubset? " + isSubset);
-		}
-		//Fingerprinter.listDifferences(superBS, subBS);
-		Assert.assertTrue(isSubset);
-	}
-
-
-
-	/**
-	 * Problems with different aromaticity concepts.
-	 *
-	 * @cdk.bug 771485
-	 */
-	@Test public void testBug771485() throws java.lang.Exception
-	{
-		Molecule structure1 = null;
-		Molecule structure2 = null;
-		/* We make a specifically substituted chromane here
-		 * as well as the pure chromane skeleton, which should
-		 * be a substructure of the first.
-		 */
-		String filename = "data/mdl/bug771485-1.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		structure1 = (Molecule) reader.read((ChemObject) new Molecule());
-		filename = "data/mdl/bug771485-2.mol";
-		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLV2000Reader(ins, Mode.STRICT);
-		structure2 = (Molecule) reader.read((ChemObject) new Molecule());
-		/* now we've read the two chromanes and we are going to check now
-		 * whether the latter is likely to be a substructure of the first by
-		 * using the fingerprinter.
-		*/
-
-		Fingerprinter fingerprinter = new Fingerprinter();
-
-		BitSet superBS = fingerprinter.getFingerprint(structure2);
-		BitSet subBS = fingerprinter.getFingerprint(structure1);
-		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
-		if (standAlone)
-		{
-			System.out.println("BitString 1: " + superBS);
-			System.out.println("BitString 2: " + subBS);
-			System.out.println("isSubset? " + isSubset);
-		}
-		Assert.assertTrue(isSubset);
-	}
-
-	/**
-	 * Fingerprint not subset.
-	 *
-	 * @cdk.bug 934819
-	 */
-	@Test public void testBug934819() throws java.lang.Exception
-	{
-		Molecule superstructure = null;
-		Molecule substructure = null;
-		/* We make a specifically substituted chromane here
-		 * as well as the pure chromane skeleton, which should
-		 * be a substructure of the first.
-		 */
-		String filename = "data/mdl/bug934819-1.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		substructure = (Molecule) reader.read((ChemObject) new Molecule());
-		filename = "data/mdl/bug934819-2.mol";
-		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLV2000Reader(ins, Mode.STRICT);
-		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
-		/* now we've read the two molecules and we are going to check now
-		 * whether the latter is likely to be a substructure of the first by
-		 * using the fingerprinter.
-		*/
-
-		Fingerprinter fingerprinter = new Fingerprinter();
-
-		BitSet superBS = fingerprinter.getFingerprint(superstructure);
-		BitSet subBS = fingerprinter.getFingerprint(substructure);
-		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
-		if (standAlone)
-		{
-			//MoleculeViewer2D.display(superstructure, false);
-			//MoleculeViewer2D.display(substructure, false);
-
-			logger.debug("BitString 1: " + superBS);
-			logger.debug("BitString 2: " + subBS);
-			logger.debug("isSubset? " + isSubset);
-		}
-		Assert.assertTrue(isSubset);
-	}
-
-
-	/**
-	 * Fingerprinter gives different fingerprints for same molecule.
-	 *
-	 * @cdk.bug 931608
-	 * @cdk.bug 934819
-	 */
-	@Test public void testBug931608() throws java.lang.Exception
-	{
-		Molecule structure1 = null;
-		Molecule structure2 = null;
-		/* We make a specifically substituted chromane here
-		 * as well as the pure chromane skeleton, which should
-		 * be a substructure of the first.
-		 */
-		String filename = "data/mdl/bug931608-1.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		structure1 = (Molecule) reader.read((ChemObject) new Molecule());
-		filename = "data/mdl/bug931608-2.mol";
-		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLV2000Reader(ins, Mode.STRICT);
-		structure2 = (Molecule) reader.read((ChemObject) new Molecule());
-		/* now we've read the two molecules and we are going to check now
-		 * whether the two give the same bitstring.
-		*/
-
-		Fingerprinter fingerprinter = new Fingerprinter();
-
-		BitSet bs1 = fingerprinter.getFingerprint(structure1);
-		BitSet bs2 = fingerprinter.getFingerprint(structure2);
-		// now we do the boolean XOR on the two bitsets, leading
-		// to a bitset that has all the bits set to "true" which differ
-		// between the two original bitsets
-		bs1.xor(bs2);
-		// cardinality gives us the number of "true" bits in the
-		// result of the XOR operation.
-		int cardinality = bs1.cardinality();
-		if (standAlone)
-		{
-			//MoleculeViewer2D.display(structure1, false);
-			//MoleculeViewer2D.display(structure1, false);
-
-			logger.debug("differing bits: " + bs1);
-			logger.debug("number of differing bits: " + cardinality);
-		}
-		Assert.assertEquals(0, cardinality);
 	}
 
 	@Test public void testGetSize() throws java.lang.Exception {
