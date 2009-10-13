@@ -158,9 +158,9 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile cf) throws CDKException {
         // have to do stuff here
         try {
-            String line = input.readLine();
-            while (line != null) {
-                if (line.startsWith("INChI=")) {
+            String line = null;
+            while ((line = input.readLine())!=null) {
+                if (line.startsWith("INChI=") || line.startsWith("InChI=")) {
                     // ok, the fun starts
                     cf = cf.getBuilder().newChemFile();
                     // ok, we need to parse things like:
@@ -186,9 +186,9 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     sequence.addChemModel(model);
                     cf.addChemSequence(sequence);
                 }
-                line = input.readLine();
             }
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new CDKException("Error while reading INChI file: " + exception.getMessage(), exception);
         }
         return cf;

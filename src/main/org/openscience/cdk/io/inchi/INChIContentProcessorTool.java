@@ -154,7 +154,10 @@ public class INChIContentProcessorTool {
                 branchLevel++;
             } else if (currentChar == ')') {
                 branchLevel--;
-                if (branchLevel == 0) doChop = false;
+                if (branchLevel == 0) {
+                    doChop = false;
+                    break;
+                }
                 if (doChop) choppedString.append(currentChar);
             } else if (doChop) {
                 choppedString.append(currentChar);
