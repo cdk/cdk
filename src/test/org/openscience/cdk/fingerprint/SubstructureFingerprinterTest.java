@@ -4,6 +4,7 @@
  * $Revision$
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CKD) project
+ *                    2009  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -27,19 +28,22 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import java.util.BitSet;
 
 /**
  * @cdk.module test-fingerprint
  */
-public class SubstructureFingerprinterTest extends CDKTestCase {
+public class SubstructureFingerprinterTest extends AbstractFingerprinterTest {
+
+    public IFingerprinter getFingerprinter() {
+        return new SubstructureFingerprinter();
+    }
 
     @Test
     public void testSize() throws Exception {

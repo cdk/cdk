@@ -1,6 +1,7 @@
 /* $Revision: 10903 $ $Author: egonw $ $Date: 2008-05-07 09:48:07 -0400 (Wed, 07 May 2008) $    
  * 
  * Copyright (C) 2009 Rajarshi Guha
+ *               2009 Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * Contact: Rajarshi Guha <rajarshi@users.sourceforge.net>
@@ -45,13 +46,13 @@ import java.util.BitSet;
 /**
  * @cdk.module test-fingerprint
  */
-public class PubchemFingerprinterTest extends CDKTestCase {
+public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
 
     SmilesParser parser;
     private static LoggingTool logger = new LoggingTool(PubchemFingerprinterTest.class);
 
-    public PubchemFingerprinterTest() {
-        super();
+    public IFingerprinter getFingerprinter() {
+        return new PubchemFingerprinter();
     }
 
     @Before

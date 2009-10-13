@@ -1,6 +1,7 @@
 /* $Revision: 10903 $ $Author: egonw $ $Date: 2008-05-07 09:48:07 -0400 (Wed, 07 May 2008) $    
  * 
  * Copyright (C) 2008 Rajarshi Guha
+ *               2009 Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * Contact: rajarshi@users.sourceforge.net
@@ -25,9 +26,10 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -35,17 +37,15 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.BitSet;
-
 /**
  * @cdk.module test-fingerprint
  */
-public class MACCSFingerprinterTest extends CDKTestCase {
+public class MACCSFingerprinterTest extends AbstractFingerprinterTest {
 
     private static LoggingTool logger = new LoggingTool(MACCSFingerprinterTest.class);
 
-    public MACCSFingerprinterTest() {
-        super();
+    public IFingerprinter getFingerprinter() {
+        return new MACCSFingerprinter();
     }
 
     @Test

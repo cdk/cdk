@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 1997-2009  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,35 +24,31 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.BitSet;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.fingerprint.FingerprinterTool;
-import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
-import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
  */
-public class GraphOnlyFingerprinterTest extends CDKTestCase {
+public class GraphOnlyFingerprinterTest extends AbstractFingerprinterTest {
 
 	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
 
-	public GraphOnlyFingerprinterTest() {
-		super();
+	public IFingerprinter getFingerprinter() {
+		return new GraphOnlyFingerprinter();
 	}
 
     @Test

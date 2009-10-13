@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 1997-2009  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,31 +24,39 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.InputStream;
+import java.util.BitSet;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.BitSet;
-import java.util.List;
-
 /**
  * @cdk.module test-fingerprint
  */
-public class ExtendedFingerprinterTest extends CDKTestCase {
+public class ExtendedFingerprinterTest extends AbstractFingerprinterTest {
 	
-	public ExtendedFingerprinterTest() {
-		super();
+	public IFingerprinter getFingerprinter() {
+		return new ExtendedFingerprinter();
 	}
-
 
 	@Test public void testExtendedFingerprinter() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
