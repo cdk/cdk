@@ -28,6 +28,7 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
+import java.io.StringBufferInputStream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -84,6 +85,28 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
 
         Assert.assertEquals(11, molecule.getAtomCount());
         Assert.assertEquals(12, molecule.getBondCount());
+    }
+    
+    
+    @Test public void testChebi26120() throws Exception {
+        StringBufferInputStream ins = new StringBufferInputStream("InChI=1/C40H62/c1-33(2)19-13-23-37(7)27-17-31-39(9)29-15-25-35(5)21-11-12-22-36(6)26-16-30-40(10)32-18-28-38(8)24-14-20-34(3)4/h11-12,15,19-22,25,27-30H,13-14,16-18,23-24,26,31-32H2,1-10H3");
+        INChIPlainTextReader reader = new INChIPlainTextReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        Assert.assertNotNull(model);
+        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
+        Assert.assertNotNull(moleculeSet);
+        org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
+        Assert.assertNotNull(molecule);
+
+        Assert.assertEquals(40, molecule.getAtomCount());
+        Assert.assertEquals(39, molecule.getBondCount());
     }
     
 }
