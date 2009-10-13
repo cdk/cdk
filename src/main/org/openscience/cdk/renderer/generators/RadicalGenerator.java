@@ -22,7 +22,9 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 
@@ -59,22 +61,26 @@ public class RadicalGenerator implements IGenerator {
             ((AtomRadius)model.getRenderingParameter(AtomRadius.class)).
             getValue();
         
-        double modelRadius = SCREEN_RADIUS / model.getScale(); 
+        double modelRadius = SCREEN_RADIUS / model.getScale();
+        Map<IAtom,Integer> singleElectronsPerAtom = new HashMap<IAtom, Integer>();
         for (ISingleElectron e : ac.singleElectrons()) {
             IAtom atom = e.getAtom();
+            if(singleElectronsPerAtom.get(atom)==null)
+                singleElectronsPerAtom.put(atom,0);
             Point2d p = atom.getPoint2d();
             int align = GeometryTools.getBestAlignmentForLabelXY(ac, atom);
             double rx = p.x;
             double ry = p.y;
             if (align == 1) {
-                rx += ATOM_RADIUS;
+                rx += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             } else if (align == -1) {
-                rx -= ATOM_RADIUS;
+                rx -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             } else if (align == 2) {
-                ry -= ATOM_RADIUS;
+                ry += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             } else if (align == -2) {
-                ry += ATOM_RADIUS;
+                ry -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             }
+            singleElectronsPerAtom.put(atom, singleElectronsPerAtom.get(atom)+1);
             group.add(
                     new OvalElement(rx, ry, modelRadius, true, RADICAL_COLOR));
         }
