@@ -82,6 +82,12 @@ public interface IBond extends IElectronContainer {
 		 * configuration.
 		 */
 		E_OR_Z,
+        /** Indication that this double bond has a E configuration.
+         */
+        E,
+        /** Indication that this double bond has a Z configuration.
+         */
+        Z,
 		/** Indication that this double bond has a fixed configuration, defined
 		 * by the 2D and/or 3D coordinates.
 		 */
