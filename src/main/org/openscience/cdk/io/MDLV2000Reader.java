@@ -619,7 +619,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         stereo = IBond.Stereo.E_OR_Z;
                     } else if (mdlStereo == 4) {
                         //MDL bond undefined
-                        stereo = (IBond.Stereo)CDKConstants.UNSET;
+                        stereo = IBond.Stereo.UP_OR_DOWN;
                     }
                 } else {
                 	handleError(

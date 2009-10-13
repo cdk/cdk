@@ -525,8 +525,11 @@ public class MDLReader extends DefaultChemObjectReader {
                         // bond has no stereochemistry
                         stereo = IBond.Stereo.NONE;
                     } else if (mdlStereo == 4) {
-                        //MDL bond undefined
-                        stereo = (IBond.Stereo)CDKConstants.UNSET;
+                        //MDL up or down bond
+                        stereo = IBond.Stereo.UP_OR_DOWN;
+                    } else if (mdlStereo == 3) {
+                        //MDL e or z undefined
+                        stereo = IBond.Stereo.E_OR_Z;
                     }
                 } else {
                 	logger.warn("Missing expected stereo field at line: " + line);
