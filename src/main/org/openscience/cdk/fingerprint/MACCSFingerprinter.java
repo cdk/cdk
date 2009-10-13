@@ -49,15 +49,17 @@ import java.util.List;
 /**
  * This fingerprinter generates 166 bit MACCS keys.
  * <p/>
- * The SMARTS patterns for each of the features was taken from <a href="http://www.rdkit.org">
- * RDKit</a>. However given that there is no official and explicit listing of the original
- * key definitions, the results of this implementation may differ from others.
+ * The SMARTS patterns for each of the features was taken from 
+ * <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no 
+ * official and explicit listing of the original key definitions, the results 
+ * of this implementation may differ from others.
  *
- * This class assumes that aromaticity perception and atom typing have been performed
- * prior to generating the fingerprint
+ * This class assumes that aromaticity perception and atom typing have been 
+ * performed prior to generating the fingerprint
  *
- * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit defs
- * do not provide a definition and I can't find an official description of them
+ * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit 
+ * defs do not provide a definition and I can't find an official description 
+ * of them
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-07-23
@@ -68,7 +70,8 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.fingerprint.MACCSFingerprinterTest")
 public class MACCSFingerprinter implements IFingerprinter {
-    private static LoggingTool logger = new LoggingTool(MACCSFingerprinter.class);
+    private static LoggingTool logger 
+        = new LoggingTool(MACCSFingerprinter.class);
     private MaccsKey[] keys = null;
 
     @TestMethod("testFingerprint")
@@ -86,8 +89,10 @@ public class MACCSFingerprinter implements IFingerprinter {
      * Calculates the substructure fingerprint for the given AtomContainer.
      */
     @TestMethod("testFingerprint,testfp2")
-    public BitSet getFingerprint(IAtomContainer atomContainer) throws CDKException {
-        if (keys == null) throw new CDKException("Could not setup key definitions");
+    public BitSet getFingerprint(IAtomContainer atomContainer) 
+                  throws CDKException {
+        if (keys == null) 
+            throw new CDKException("Could not setup key definitions");
 
         int bitsetLength = keys.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
@@ -134,7 +139,8 @@ public class MACCSFingerprinter implements IFingerprinter {
             }
         }
         // bit 166 (*).(*)
-        IMoleculeSet part = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+        IMoleculeSet part 
+            = ConnectivityChecker.partitionIntoMolecules(atomContainer);
         if (part.getMoleculeCount() > 1)  fingerPrint.set(165,true);
 
 
@@ -151,8 +157,10 @@ public class MACCSFingerprinter implements IFingerprinter {
     private MaccsKey[] readKeyDef() throws IOException, CDKException {
         List<MaccsKey> keys = new ArrayList<MaccsKey>();
         String filename = "org/openscience/cdk/fingerprint/data/maccs.txt";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
+        InputStream ins 
+            = this.getClass().getClassLoader().getResourceAsStream(filename);
+        BufferedReader reader 
+            = new BufferedReader(new InputStreamReader(ins));
 
         for (int i = 0; i < 32; i++) reader.readLine();
 
@@ -163,7 +171,9 @@ public class MACCSFingerprinter implements IFingerprinter {
             String[] toks = data.trim().split("\\s");
             keys.add(new MaccsKey(toks[1], Integer.parseInt(toks[2])));
         }
-        if (keys.size() != 166) throw new CDKException("Found " + keys.size() + " keys during setup. Should be 166");
+        if (keys.size() != 166) 
+            throw new CDKException("Found " + keys.size() 
+                                   + " keys during setup. Should be 166");
         return keys.toArray(new MaccsKey[]{});
     }
 

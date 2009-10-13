@@ -41,12 +41,14 @@ import java.util.BitSet;
 /**
  * Generates a Pubchem fingerprint for a molecule.
  * <p/>
- * These fingerprints are described <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">
+ * These fingerprints are described 
+ * <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">
  * here</a> and are of the structural key type, of length 881. See
  * {@link org.openscience.cdk.fingerprint.Fingerprinter} for a
- * more detailed description of fingerprints in general. This implementation is based on the
- * public domain code made available by the NCGC
- * <a href="http://www.ncgc.nih.gov/pub/openhts/code/NCGC_PubChemFP.java.txt">here</a>
+ * more detailed description of fingerprints in general. This implementation is 
+ * based on the public domain code made available by the NCGC
+ * <a href="http://www.ncgc.nih.gov/pub/openhts/code/NCGC_PubChemFP.java.txt">
+ * here</a>
  * <p/>
  * <p/>
  * A fingerprint is generated for an AtomContainer with this code: <pre>
@@ -56,20 +58,22 @@ import java.util.BitSet;
  *   fingerprint.size(); // returns 881
  *   fingerprint.length(); // returns the highest set bit
  * </pre>
- * Note that the fingerprinter assumes that you have detected aromaticity and atom
- * types before evaluating the fingerprint. Also the fingerprinter expects that
- * explicit H's are present
+ * Note that the fingerprinter assumes that you have detected aromaticity and 
+ * atom types before evaluating the fingerprint. Also the fingerprinter 
+ * expects that explicit H's are present
  * <p/>
  * Note that this fingerprint is not particularly fast, as it will perform
  * ring detection using {@link org.openscience.cdk.ringsearch.AllRingsFinder}
  * as well as multiple SMARTS queries.
  * <p/>
- * Some SMARTS patterns have been modified from the original code, since they were based on
- * explicit H matching. As a result, we replace the explicit H's with a query of the #N&!H0
- * where N is the atomic number. Thus bit 344 was originally <code>[#6](~[#6])([H])</code> but is written
- * here as <code>[#6&!H0]~[#6]</code>. In some cases, where the H count can be reduced to single possibility
- * we directly use that H count. An example is bit 35, which was <code>[#6](~[#6])(~[#6])(~[#6])([H])</code>
- * and is rewritten as <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
+ * Some SMARTS patterns have been modified from the original code, since they 
+ * were based on explicit H matching. As a result, we replace the explicit H's
+ * with a query of the #N&!H0 where N is the atomic number. Thus bit 344 was 
+ * originally <code>[#6](~[#6])([H])</code> but is written here as 
+ * <code>[#6&!H0]~[#6]</code>. In some cases, where the H count can be reduced
+ * to single possibility we directly use that H count. An example is bit 35, 
+ * which was <code>[#6](~[#6])(~[#6])(~[#6])([H])</code> and is rewritten as 
+ * <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
  * <p/>
  *
  * @cdk.author Rajarshi Guha
@@ -102,16 +106,19 @@ public class PubchemFingerprinter implements IFingerprinter {
     /**
      * Calculate 881 bit Pubchem fingperprint for a molecule.
      * <p/>
-     * See <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">here</a>
+     * See 
+     * <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">here</a>
      * for a description of each bit position.
      *
      * @param atomContainer the molecule to consider
      * @return the fingerprint
-     * @throws CDKException if there is an error during substructure searching or atom typing
+     * @throws CDKException if there is an error during substructure 
+     * searching or atom typing
      * @see #getFingerprintAsBytes()
      */
     @TestMethod("testFingerprint")
-    public BitSet getFingerprint(IAtomContainer atomContainer) throws CDKException {
+    public BitSet getFingerprint(IAtomContainer atomContainer) 
+                  throws CDKException {
         generateFp(atomContainer);
         BitSet fp = new BitSet(FP_SIZE);
         for (int i = 0; i < FP_SIZE; i++) {
@@ -194,7 +201,8 @@ public class PubchemFingerprinter implements IFingerprinter {
         private int countHeteroInRing(IAtomContainer ring) {
             int c = 0;
             for (IAtom ringAtom : ring.atoms()) {
-                if (!ringAtom.getSymbol().equals("C") && !ringAtom.getSymbol().equals("H"))
+                if (!ringAtom.getSymbol().equals("C") 
+                                && !ringAtom.getSymbol().equals("H"))
                     c++;
             }
             return c;
@@ -308,7 +316,8 @@ public class PubchemFingerprinter implements IFingerprinter {
         }
     }
 
-    static private void _generateFp(byte[] fp, IAtomContainer mol) throws CDKException {
+    static private void _generateFp(byte[] fp, IAtomContainer mol) 
+                        throws CDKException {
         countElements(fp, mol);
         countRings(fp, mol);
         countSubstructures(fp, mol);
@@ -347,15 +356,15 @@ public class PubchemFingerprinter implements IFingerprinter {
     public static BitSet decode(String enc) {
         byte[] fp = base64Decode(enc);
         if (fp.length < 4) {
-            throw new IllegalArgumentException
-                    ("Input is not a proper PubChem base64 encoded fingerprint");
+            throw new IllegalArgumentException(
+                "Input is not a proper PubChem base64 encoded fingerprint");
         }
 
         int len = (fp[0] << 24) | (fp[1] << 16)
                 | (fp[2] << 8) | (fp[3] & 0xff);
         if (len != FP_SIZE) {
-            throw new IllegalArgumentException
-                    ("Input is not a proper PubChem base64 encoded fingerprint");
+            throw new IllegalArgumentException(
+                "Input is not a proper PubChem base64 encoded fingerprint");
         }
 
         PubchemFingerprinter pc = new PubchemFingerprinter();
@@ -386,7 +395,8 @@ public class PubchemFingerprinter implements IFingerprinter {
     }
 
     private static String BASE64_LUT =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "abcdefghijklmnopqrstuvwxyz0123456789+/=";
 
     // based on NCBI C implementation
     private static String base64Encode(byte[] data) {

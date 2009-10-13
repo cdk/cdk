@@ -34,16 +34,19 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import java.util.BitSet;
 
 /**
- * This fingerprinter generates 79 bit fingerprints using the E-State fragments.
+ * This fingerprinter generates 79 bit fingerprints using the E-State 
+ * fragments.
  *
- * <p>The E-State fragments are those described in {@cdk.cite HALL1995} and the SMARTS
- * patterns were taken from <a href="http://www.rdkit.org">RDKit</a>. Note that this
- * fingerprint simply indicates the presence or occurrence of the fragments. If you need
- * counts of the fragments take a look at {@link org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor},
+ * <p>The E-State fragments are those described in {@cdk.cite HALL1995} and 
+ * the SMARTS patterns were taken from 
+ * <a href="http://www.rdkit.org">RDKit</a>. Note that this fingerprint simply
+ * indicates the presence or occurrence of the fragments. If you need counts 
+ * of the fragments take a look at {@link 
+ * org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor},
  * which also lists the substructures corresponding to each bit position.
  *
- * <p>This class assumes that aromaticity perception and atom typing have been performed
- * prior to generating the fingerprint
+ * <p>This class assumes that aromaticity perception and atom typing have 
+ * been performed prior to generating the fingerprint
  * 
  * @author Rajarhi Guha
  * @cdk.created 2008-07-23
@@ -58,20 +61,21 @@ import java.util.BitSet;
 @TestClass("org.openscience.cdk.fingerprint.EStateFingerprinterTest")
 public class EStateFingerprinter implements IFingerprinter {
 
-	private static final String[] patterns = EStateFragments.getSmarts();
+    private static final String[] patterns = EStateFragments.getSmarts();
 
     @TestMethod("testFingerprint,testGetSize")
     public EStateFingerprinter() {
     }
 
-	/**
-	 * Calculates the substructure fingerprint for the given AtomContainer.
-	 */
+    /**
+     * Calculates the substructure fingerprint for the given AtomContainer.
+     */
     @TestMethod("testFingerprint")
-    public BitSet getFingerprint(IAtomContainer atomContainer) throws CDKException {
+    public BitSet getFingerprint(IAtomContainer atomContainer) 
+                  throws CDKException {
 
         int bitsetLength = patterns.length;
-		BitSet fingerPrint = new BitSet(bitsetLength);
+        BitSet fingerPrint = new BitSet(bitsetLength);
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("C");
         for (int i = 0; i < patterns.length; i++) {
@@ -79,12 +83,12 @@ public class EStateFingerprinter implements IFingerprinter {
             boolean status = sqt.matches(atomContainer);
             if (status) fingerPrint.set(i, true);
         }
-		return fingerPrint;
-	}
+        return fingerPrint;
+    }
 
     @TestMethod("testGetSize")
     public int getSize() {
-		return patterns.length;
-	}
+        return patterns.length;
+    }
 
 }

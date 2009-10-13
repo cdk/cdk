@@ -372,10 +372,11 @@ import java.util.BitSet;
 @TestClass("org.openscience.cdk.fingerprint.SubstructureFingerprinterTest")
 public class SubstructureFingerprinter implements IFingerprinter {
 
-	private String[] smarts;
+    private String[] smarts;
 
     /**
-     * Set up the fingerprinter to use the fragments from {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
+     * Set up the fingerprinter to use the fragments from 
+     * {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
      */
     @TestMethod("testFingerprint")
     public SubstructureFingerprinter() {
@@ -393,14 +394,15 @@ public class SubstructureFingerprinter implements IFingerprinter {
      */
     @TestMethod("testUserFunctionalGroups")
     public SubstructureFingerprinter(String[] smarts) {
-		this.smarts = smarts;
-	}
-	
-	/**
-	 * Calculates the substructure fingerprint for the given AtomContainer.
-	 */
+        this.smarts = smarts;
+    }
+
+    /**
+     * Calculates the substructure fingerprint for the given AtomContainer.
+     */
     @TestMethod("testUserFunctionalGroups,testFingerprint")
-    public BitSet getFingerprint(IAtomContainer atomContainer) throws CDKException {
+    public BitSet getFingerprint(IAtomContainer atomContainer) 
+                  throws CDKException {
         if (smarts == null) {
             throw new CDKException("No substructures were defined");
         }
@@ -421,7 +423,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
 
     @TestMethod("testSize")
     public int getSize() {
-		return smarts.length;
-	}
+        return smarts.length;
+    }
 
 }

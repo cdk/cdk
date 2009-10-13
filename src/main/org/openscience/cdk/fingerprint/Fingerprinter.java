@@ -43,11 +43,12 @@ import java.util.*;
 
 /**
  *  Generates a fingerprint for a given AtomContainer. Fingerprints are
- *  one-dimensional bit arrays, where bits are set according to a the occurrence
- *  of a particular structural feature (See for example the Daylight inc. theory
- *  manual for more information). Fingerprints allow for a fast screening step to
- *  exclude candidates for a substructure search in a database. They are also a
- *  means for determining the similarity of chemical structures. <p>
+ *  one-dimensional bit arrays, where bits are set according to a the 
+ *  occurrence of a particular structural feature (See for example the 
+ *  Daylight inc. theory manual for more information). Fingerprints allow for 
+ *  a fast screening step to exclude candidates for a substructure search in a 
+ *  database. They are also a means for determining the similarity of chemical 
+ *  structures. <p>
  *
  *  A fingerprint is generated for an AtomContainer with this code: <pre>
  *   Molecule molecule = new Molecule();
@@ -56,24 +57,26 @@ import java.util.*;
  *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
  *
- *  The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if
- *  pseudo atoms or atoms with malformed symbols are present, their atomic number is
- *  taken as one more than the last element currently supported in {@link org.openscience.cdk.config.Symbols}. 
+ *  The FingerPrinter assumes that hydrogens are explicitly given! Furthermore,
+ *  if pseudo atoms or atoms with malformed symbols are present, their atomic 
+ *  number is taken as one more than the last element currently supported in 
+ *  {@link org.openscience.cdk.config.Symbols}. 
  *
  *  <font color="#FF0000">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long
- *  for some molecules with many cycles or special cyclic topologies. Thus, the
- *  AllRingsFinder has a built-in timeout of 5 seconds after which it aborts and
- *  throws an Exception. If you want your SMILES generated at any expense, you
- *  need to create your own AllRingsFinder, set the timeout to a higher value,
- *  and assign it to this FingerPrinter. In the vast majority of cases,
- *  however, the defaults will be fine. </font> <p>
+ *  for some molecules with many cycles or special cyclic topologies. Thus, 
+ *  the AllRingsFinder has a built-in timeout of 5 seconds after which it 
+ *  aborts and throws an Exception. If you want your SMILES generated at any 
+ *  expense, you need to create your own AllRingsFinder, set the timeout to a 
+ *  higher value, and assign it to this FingerPrinter. In the vast majority of 
+ *  cases, however, the defaults will be fine. </font> <p>
  *
  *  <font color="#FF0000">Another Warning : The daylight manual says:
  *  "Fingerprints are not so definite: if a fingerprint indicates a pattern is
  *  missing then it certainly is, but it can only indicate a pattern's presence
- *  with some probability." In the case of very small molecules, the probability
- *  that you get the same fingerprint for different molecules is high. </font>
+ *  with some probability." In the case of very small molecules, the 
+ *  probability that you get the same fingerprint for different molecules is 
+ *  high. </font>
  *  </p>
  *
  * @author         steinbeck
@@ -141,14 +144,18 @@ public class Fingerprinter implements IFingerprinter {
     /**
      * Generates a fingerprint of the default size for the given AtomContainer.
      *
-     *@param     container         The AtomContainer for which a Fingerprint is generated
-     *@param ringFinder An instance of {@link org.openscience.cdk.ringsearch.AllRingsFinder}
-     * @exception CDKException  if there is a timeout in ring or aromaticity perception
+     * @param container The AtomContainer for which a Fingerprint is generated
+     * @param ringFinder An instance of 
+     *                   {@link org.openscience.cdk.ringsearch.AllRingsFinder}
+     * @exception CDKException if there is a timeout in ring or aromaticity 
+     *                         perception
      * @return A {@link BitSet} representing the fingerprint
      */
 
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws CDKException {
+    public BitSet getFingerprint(IAtomContainer container, 
+                                 AllRingsFinder ringFinder) 
+                  throws CDKException {
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
 		logger.debug("Starting Aromaticity Detection");
@@ -156,7 +163,8 @@ public class Fingerprinter implements IFingerprinter {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 		CDKHueckelAromaticityDetector.detectAromaticity(container);
 		long after = System.currentTimeMillis();
-		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
+		logger.debug("time for aromaticity calculation: " 
+		             + (after - before) + " milliseconds");
 		logger.debug("Finished Aromaticity Detection");
 		BitSet bitSet = new BitSet(size);
 
@@ -173,10 +181,11 @@ public class Fingerprinter implements IFingerprinter {
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer.
 	 *
-	 *@param     container         The AtomContainer for which a Fingerprint is generated
+	 *@param container The AtomContainer for which a Fingerprint is generated
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container) throws CDKException {
+    public BitSet getFingerprint(IAtomContainer container) 
+                  throws CDKException {
 		return getFingerprint(container, null);
 	}
 
@@ -198,19 +207,24 @@ public class Fingerprinter implements IFingerprinter {
             = new HashMap<IAtom, Map<IAtom,IBond>>();
         
         for (IAtom startAtom : container.atoms()) {
-                List<List<IAtom>> p = PathTools.getPathsOfLengthUpto(container, startAtom, searchDepth);
+                List<List<IAtom>> p 
+                    = PathTools.getPathsOfLengthUpto(container, 
+                                                     startAtom, 
+                                                     searchDepth);
                 for (List<IAtom> path : p) {
                     StringBuffer sb = new StringBuffer();
                     IAtom x = path.get(0);
 
-                    // TODO if we ever get more than 255 elements, this will fail
-                    // maybe we should use 0 for pseudo atoms and malformed symbols?
+                    // TODO if we ever get more than 255 elements, this will 
+                    // fail maybe we should use 0 for pseudo atoms and 
+                    // malformed symbols?
                     if (x instanceof IPseudoAtom)
                         sb.append((char) Symbols.byAtomicNumber.length + 1);
                     else {
                         Integer atnum = Symbols.getAtomicNumber(x.getSymbol());
                         if (atnum != null) sb.append((char) atnum.intValue());
-                        else sb.append((char) Symbols.byAtomicNumber.length + 1);
+                        else sb.append((char) 
+                                       Symbols.byAtomicNumber.length + 1);
                     }
 
                     for (int i = 1; i < path.size(); i++) {
