@@ -33,6 +33,7 @@ import org.openscience.cdk.exception.UnsupportedChemObjectExceptionTest;
 import org.openscience.cdk.fingerprint.FingerprinterTest;
 import org.openscience.cdk.fingerprint.FingerprinterToolTest;
 import org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest;
+import org.openscience.cdk.fingerprint.HybridizationFingerprinterTest;
 import org.openscience.cdk.geometry.BondToolsTest;
 import org.openscience.cdk.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.graph.BFSShortestPathTest;
@@ -139,6 +140,7 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     CanonicalLabelerTest.class,
     // from cdk.test.fingerprint
     FingerprinterTest.class,
+    HybridizationFingerprinterTest.class,
     GraphOnlyFingerprinterTest.class,
     FingerprinterToolTest.class,
     ProblemMarkerTest.class,
