@@ -74,6 +74,10 @@ public interface IBond extends IElectronContainer {
 		 *  if it is UP or DOWN. The start atom is the stereocenter.
 		 */
 		UP_OR_DOWN,
+        /** A bond for which there is stereochemistry, we just do not know
+         *  if it is UP or DOWN. The end atom is the stereocenter.
+         */
+        UP_OR_DOWN_INVERTED,
 		/** Indication that this double bond has a fixed, but unknown E/Z
 		 * configuration.
 		 */
