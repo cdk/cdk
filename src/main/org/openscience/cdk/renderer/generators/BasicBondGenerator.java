@@ -1,5 +1,6 @@
 /* Copyright (C) 2008-2009  Arvid Berg <goglepox@users.sf.net>
  *               2008-2009  Gilleain Torrance <gilleain@users.sf.net> 
+ *                    2009  Mark Rijnbeek <markr@ebi.ac.uk>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -21,6 +22,7 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -44,6 +46,8 @@ import org.openscience.cdk.renderer.elements.WedgeLineElement.Direction;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
+import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -139,6 +143,11 @@ public class BasicBondGenerator implements IGenerator {
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup group = new ElementGroup();
 		this.ringSet = this.getRingSet(ac);
+
+                //Sort the ringSet consistently to ensure consistent rendering.
+                //If this is omitted, the bonds may 'tremble'.
+                ringSet.sortAtomContainers(new AtomContainerComparatorBy2DCenter());
+
 		for (IBond bond : ac.bonds()) {
 			group.add(this.generate(bond, model));
 		}
