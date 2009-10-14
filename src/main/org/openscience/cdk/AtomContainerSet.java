@@ -26,6 +26,8 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -381,6 +383,15 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	public void stateChanged(IChemObjectChangeEvent event) {
 		notifyChanged(event);
 	}
+
+
+        /**
+         * Sort the AtomContainers using a provided Comparator
+         * @param comparator defines the sorting method
+         */
+        public void sortAtomContainers(Comparator<IAtomContainer> comparator) {
+            Arrays.sort(atomContainers, comparator);
+        }
 
 }
 

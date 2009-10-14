@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Comparator;
+
 /**
  * A set of AtomContainers.
  *
@@ -164,5 +166,10 @@ public interface IAtomContainerSet extends IChemObject {
 	 */
 	public int getAtomContainerCount();
 
+        /**
+         * Sort the AtomContainers using a provided Comparator
+         * @param comparator defines the sorting method
+         */
+        public void sortAtomContainers( Comparator<IAtomContainer> comparator);
 }
 
