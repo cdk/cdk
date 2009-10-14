@@ -14,4 +14,5 @@ cdk-fingerprint.jar
 cdk-extra.jar
 cdk-formula.jar
 cdk-testdata.jar
+cdk-test-standard.jar
 cdk-diff.jar
