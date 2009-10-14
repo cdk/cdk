@@ -557,6 +557,7 @@ public class AtomContainerRenderer {
         try {
             this.transform = new AffineTransform();
             this.transform.translate(this.drawCenter.x, this.drawCenter.y);
+            this.transform.scale(1,-1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
             this.transform.scale(scale, scale);
             this.transform.scale(zoom, zoom);
             this.transform.translate(-this.modelCenter.x, -this.modelCenter.y);
