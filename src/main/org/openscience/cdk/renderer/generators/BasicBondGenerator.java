@@ -20,6 +20,7 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -332,5 +333,10 @@ public class BasicBondGenerator implements IGenerator {
 			return generateBondElement(bond, model);
 		}
 	}
+
+    public List<IGeneratorParameter> getParameters() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }
