@@ -16,24 +16,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer.generators;
+package org.openscience.cdk.renderer.generators.parameter;
+
+import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 /**
- * Parameter from some rendering of the 2D diagram. Such parameters
- * may be bond width, (relative) font sizes, coloring scheme, display or
- * not of atomic properties, rendering a circles for aromatic rings,
- * etc.
+ * Abstract class to provide the base functionality for
+ * {@link IGeneratorParameter} implementations.
  *
  * @cdk.module  render
  */
-public interface IGeneratorParameter<T> {
+public abstract class AbstractGeneratorParameter<T>
+    implements IGeneratorParameter<T>{
+
+    private T parameterSetting;
 
     /**
      * Sets the value for this parameter.
      *
      * @param value the new parameter value
      */
-    public void setValue(T value);
+    public void setValue(T value) {
+        this.parameterSetting = value;
+    }
 
     /**
      * Gets the value for this parameter. It must provide a reasonable
@@ -41,14 +46,8 @@ public interface IGeneratorParameter<T> {
      *
      * @param value the new parameter value
      */
-    public T getValue();
-
-    /**
-     * Gets the default value for this parameter. This value is set by the
-     * parameter class and cannot be changed.
-     *
-     * @param value the default value for this parameter
-     */
-    public T getDefault();
+    public T getValue() {
+        return this.parameterSetting;
+    }
 
 }
