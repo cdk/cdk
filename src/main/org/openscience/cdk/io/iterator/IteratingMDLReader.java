@@ -193,30 +193,9 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
             logger.debug("looking for data header: ", currentLine);
             String str = new String(currentLine);
             if (str.startsWith("> ")) {
-                // ok, should extract the field name
-                int index = str.indexOf("<");
-                if (index != -1) {
-                    int index2 = str.substring(index).indexOf(">");
-                    if (index2 != -1) {
-                        fieldName = str.substring(
-                        index+1,
-                        index+index2
-                        );
-                    }
-                }
-                // end skip all other lines
-                while (str.startsWith("> ")) {
-                    logger.debug("data header line: ", currentLine);
-                    currentLine = input.readLine();
-                    str = new String(currentLine);
-                }
-                String data = "";
-                while (str.trim().length() > 0) {
-                    logger.debug("data line: ", currentLine);
-                    data += str;
-                    currentLine = input.readLine();
-                    str = new String(currentLine).trim();
-                }
+                fieldName = extractFieldName(fieldName, str);
+                str = skipOtherFieldHeaderLines(str);
+                String data = extractFieldData(str);
                 if (fieldName != null) {
                     logger.info("fieldName, data: ", fieldName, ", ", data);
                     m.setProperty(fieldName, data);
@@ -224,6 +203,40 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
             }
             currentLine = input.readLine();
         }
+    }
+
+    private String extractFieldData(String str) throws IOException {
+        StringBuilder data = new StringBuilder();
+        while (str.trim().length() > 0) {
+            logger.debug("data line: ", currentLine);
+            data.append(str);
+            currentLine = input.readLine();
+            str = new String(currentLine).trim();
+        }
+        return data.toString();
+    }
+
+    private String skipOtherFieldHeaderLines(String str) throws IOException {
+        while (str.startsWith("> ")) {
+            logger.debug("data header line: ", currentLine);
+            currentLine = input.readLine();
+            str = new String(currentLine);
+        }
+        return str;
+    }
+
+    private String extractFieldName(String fieldName, String str) {
+        int index = str.indexOf("<");
+        if (index != -1) {
+            int index2 = str.substring(index).indexOf(">");
+            if (index2 != -1) {
+                fieldName = str.substring(
+                index+1,
+                index+index2
+                );
+            }
+        }
+        return fieldName;
     }
     
     /**

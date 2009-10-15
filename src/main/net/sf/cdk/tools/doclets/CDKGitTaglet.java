@@ -27,19 +27,17 @@ import com.sun.javadoc.Tag;
 import com.sun.tools.doclets.Taglet;
 
 /**
- * @cdk.githash
- * source tree. The syntax must be as follows:
+ * Source for the cdk.githash JavaDoc tag. When a class is tagged with this
+ * tag, the JavaDoc will contain a link to the source code in the Git repository.
+ *
+ * <p>The syntax must be as follows:
  * <pre>
- *   @cdk.svnrev $Revision: 7973 $
+ *   @cdk.githash
  * </pre>
- * 
- * <p>The actual version number is automatically updated by the
- * SVN repository.
  */
 public class CDKGitTaglet implements Taglet {
     
     private static final String NAME = "cdk.githash";
-    private final static Pattern svnrevPattern = Pattern.compile("\\$Revision:\\s*(\\d*)\\s*\\$");
     private final static Pattern pathPattern = Pattern.compile(".*/(src/.*\\.java)");
     
     public String getName() {

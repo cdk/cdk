@@ -65,8 +65,8 @@ public class CDKThreadNonSafeTaglet implements Taglet {
         return false;
     }
 
-    public static void register(Map<String, CDKThreadSafeTaglet> tagletMap) {
-        CDKThreadSafeTaglet tag = new CDKThreadSafeTaglet();
+    public static void register(Map<String, CDKThreadNonSafeTaglet> tagletMap) {
+        CDKThreadNonSafeTaglet tag = new CDKThreadNonSafeTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {
            tagletMap.remove(tag.getName());

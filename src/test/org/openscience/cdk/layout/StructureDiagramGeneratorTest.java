@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+/*  Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *                     2009  Mark Rijnbeek <markr@ebi.ac.uk>
  *                     2009  Mark Rijnbeek <mark_rynbeek@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -887,7 +886,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
                 invalidCoordCount++;
             }
         }
-        Assert.assertEquals("No 2d coordinates should be NaN", 0, invalidCoordCount);
+        Assert.assertEquals("No 2d coordinates should be NaN",
+            0, invalidCoordCount
+        );
   }
 
 

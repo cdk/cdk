@@ -129,7 +129,13 @@ public class OverlapResolver
 			v2 = new Vector2d(a2.getPoint2d());
 			v2.sub(v1);
 			v2.normalize();
-			v2.scale(bondLength / 20.0);
+
+      if(Double.isNaN(v2.x))
+	       v2.x=0.01;
+	    if(Double.isNaN(v2.y))
+	       v2.y=0.01;
+    
+  		v2.scale(bondLength / 20.0);
 			logger.debug("Calculation translation vector " + v2);
 			choice = Math.random();
 			if (choice > 0.5)

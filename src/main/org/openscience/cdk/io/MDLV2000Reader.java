@@ -264,7 +264,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             if (line == null) {
                 throw new CDKException("Expecting data line here, but found null!");
             }
-			String data = line;
+			StringBuilder data = new StringBuilder();
 			while ((line = input.readLine()) != null &&
 			       line.trim().length() > 0) {
                 if (line.equals("$$$$")) {
@@ -272,14 +272,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 	break;
                 }
                 logger.debug("data line: ", line);
-			    data += line;
+			    data.append(line);
 			    // preserve newlines, unless the line is exactly 80 chars; in that case it
 			    // is assumed to continue on the next line. See MDL documentation.
-			    if (line.length() < 80) data += System.getProperty("line.separator");
+			    if (line.length() < 80) data.append(System.getProperty("line.separator"));
 			}
 			if (fieldName != null) {
 			    logger.info("fieldName, data: ", fieldName, ", ", data);
-			    m.setProperty(fieldName, data);
+			    m.setProperty(fieldName, data.toString());
 			}
 		    }
 		}

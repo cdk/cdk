@@ -198,6 +198,7 @@ public class FormatFactoryTest extends CDKTestCase {
         if (expectedFormat instanceof IChemFormatMatcher) {
         	factory.registerFormat((IChemFormatMatcher)expectedFormat);
         }
+        ins = new BufferedInputStream(ins);
         IChemFormat format = factory.guessFormat(ins);
         Assert.assertNotNull(format);
         Assert.assertEquals(expectedFormat.getFormatName(), format.getFormatName());
@@ -209,6 +210,7 @@ public class FormatFactoryTest extends CDKTestCase {
     @Test public void testGuessFormat() throws Exception {
         String filename = "data/xyz/bf3.xyz";
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
+        input = new BufferedInputStream(input);
         IChemFormat format = factory.guessFormat(input);
         Assert.assertNotNull(format);
         // make sure the InputStream is properly reset

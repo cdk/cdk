@@ -175,7 +175,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
 			logger.debug(ex);
 			throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
 		}
-		throw new CDKException("Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
+		throw new CDKException("Only supported is writing of IChemFile, " +
+				"IChemModel, and IAtomContainer objects.");
 	}
 	
 	private void writeChemFile(IChemFile file) throws Exception {
