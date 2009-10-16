@@ -589,7 +589,7 @@ public class PathTools {
      * @param length        The maximum length of paths to look for
      * @return A  <code>List</code> containing the paths found
      */
-    @TestMethod("getPathsOfLengthUpto")
+    @TestMethod("testGetPathsOfLengthUpto")
     public static List<List<IAtom>> getPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length) {
         List<IAtom> curPath = new ArrayList<IAtom>();
         List<List<IAtom>> paths = new ArrayList<List<IAtom>>();
