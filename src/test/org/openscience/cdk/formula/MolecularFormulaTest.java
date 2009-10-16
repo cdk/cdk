@@ -60,7 +60,7 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
     }
 
     @Test
-    public void testIsTheSame() throws IOException {
+    public void testIsTheSame_IIsotope_IIsotope() throws IOException {
         MolecularFormula mf = new MolecularFormula();
         IIsotope carb = getBuilder().newIsotope("C");
         IIsotope anotherCarb = getBuilder().newIsotope("C");
