@@ -90,7 +90,8 @@ public class AtomicNumberDifferenceDescriptor implements IBondDescriptor {
         return descriptorName;
     }
 
-    @TestMethod(value="testCalculate_IBond_IAtomContainer,testDescriptor")
+    @TestMethod(value="testCalculate_IBond_IAtomContainer,testDescriptor1," +
+        "testDescriptor2")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
     	ensureIsotopeFactory(ac.getBuilder());
     	if (bond.getAtomCount() != 2) {
