@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.geometry;
 
+import java.awt.geom.Rectangle2D;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +33,14 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -46,6 +48,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -187,6 +190,21 @@ public class GeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(-1, minmax[1],.1);
         Assert.assertEquals(-2, minmax[2],.1);
         Assert.assertEquals(-1, minmax[3],.1);
+    }
+      
+    @Test public void testGetRectangle2D_IAtomContainer(){
+        Atom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(2,2));
+        Atom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(5,1));
+        IAtomContainer container = new AtomContainer();
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        Rectangle2D rectangle = GeometryTools.getRectangle2D(container);
+        Assert.assertEquals(2.0, rectangle.getMinX(), 0.0);
+        Assert.assertEquals(3.0, rectangle.getWidth(), 0.0);
+        Assert.assertEquals(1.0, rectangle.getMinY(), 0.0);
+        Assert.assertEquals(1.0, rectangle.getHeight(), 0.0);
     }
       
     @Test public void testRotate_IAtom_Point3d_Point3d_double(){

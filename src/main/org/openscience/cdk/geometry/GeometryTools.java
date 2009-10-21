@@ -25,6 +25,7 @@
 package org.openscience.cdk.geometry;
 
 import java.awt.Dimension;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -286,6 +287,19 @@ public class GeometryTools {
 		return new Dimension((int) (maxX - minX + 1), (int) (maxY - minY + 1));
 	}
 
+	/**
+	 * Returns the 2D rectangle spanning the space occupied by the atom
+	 * container.
+	 *
+	 * @param  container {@link IAtomContainer} to calculate the rectangle for
+	 * @return           a {@link Rectangle2D} describing the space occupied
+	 */
+	public static Rectangle2D getRectangle2D(IAtomContainer container) {
+	    double[] minmax = getMinMax(container);
+	    return new Rectangle2D.Double(
+	        minmax[0], minmax[1], minmax[2] - minmax[0], minmax[3] - minmax[1]
+	    );
+	}
 
 	/**
 	 *  Returns the minimum and maximum X and Y coordinates of the atoms in the
