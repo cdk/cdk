@@ -36,11 +36,13 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -482,5 +484,22 @@ public class GeometryToolsTest extends CDKTestCase {
             );
         }
     }
+
+    @Test public void testGetBondLengthAverage_IReaction() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule acont = new Molecule();
+        IReaction reaction = new Reaction();
+        reaction.addReactant(acont);
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addBond(0,1, IBond.Order.SINGLE);
+        Assert.assertEquals(
+            1.0, GeometryTools.getBondLengthAverage(reaction), 0.0
+        );
+    }
+
 }
 

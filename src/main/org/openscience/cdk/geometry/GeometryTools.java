@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 /**
  * A set of static utility classes for geometric calculations and operations.
  * This class is extensively used, for example, by JChemPaint to edit molecule.
@@ -1495,5 +1496,28 @@ public class GeometryTools {
             // the containers are not overlapping
             return bounds;
         }
+    }
+
+    /*
+     * Returns the average 2D bond length values of all products and reactants
+     * of the given reaction. The method uses
+     * {@link #getBondLengthAverage(IAtomContainer)} internally.
+     *
+     * @param  reaction  The IReaction for which the average 2D bond length is
+     *                   calculated
+     * @return           the average 2D bond length
+     *
+     * @see #getBondLengthAverage(IAtomContainer)
+     */
+    public static double getBondLengthAverage(IReaction reaction) {
+    	double bondlenghtsum = 0.0;
+    	int containercount = 0;
+    	List<IAtomContainer> containers = ReactionManipulator.
+    	    getAllAtomContainers(reaction);
+    	for (IAtomContainer container : containers) {
+    		containercount++;
+    		bondlenghtsum += getBondLengthAverage(container);
+    	}
+    	return bondlenghtsum/containercount;
     }
 }
