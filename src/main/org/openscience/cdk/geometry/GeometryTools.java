@@ -1426,4 +1426,34 @@ public class GeometryTools {
         }
 		return bondLengthSum / bondCounter;
 	}
+
+    /**
+     * Shift the container horizontally to the right to make its bounds not
+     * overlap with the other bounds.
+     *
+     * @param container the {@link IAtomContainer} to shift to the right
+     * @param bounds    the {@link Rectangle2D} of the {@link IAtomContainer}
+     *                  to shift
+     * @param last      the bounds that is used as reference
+     * @param gap       the gap between the two {@link Rectangle2D}s
+     * @return          the {@link Rectangle2D} of the {@link IAtomContainer}
+     *                  after the shift
+     */
+    public static Rectangle2D shiftContainer(
+        IAtomContainer container, Rectangle2D bounds, Rectangle2D last,
+        double gap) {
+        // determine if the containers are overlapping
+        if (last.getMaxX() + gap >= bounds.getMinX()) {
+            double xShift = bounds.getWidth() + last.getWidth() + gap;
+            Vector2d shift = new Vector2d(xShift, 0.0);
+            GeometryTools.translate2D(container, shift);
+            return new Rectangle2D.Double(bounds.getX() + xShift,
+                                          bounds.getY(),
+                                          bounds.getWidth(),
+                                          bounds.getHeight());
+        } else {
+            // the containers are not overlapping
+            return bounds;
+        }
+    }
 }

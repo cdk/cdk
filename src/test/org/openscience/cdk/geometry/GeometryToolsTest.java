@@ -377,5 +377,81 @@ public class GeometryToolsTest extends CDKTestCase {
     	Assert.assertEquals(GeometryTools.getLength2D(bond),2.23,0.01);
     }
 
+
+    @Test public void
+    testShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_double()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule react1 = new Molecule();
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        IMolecule react2 = (IMolecule)react1.clone();
+
+        // shift the second molecule right
+        GeometryTools.shiftContainer(
+            react2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second molecule moved right
+        AtomContainerDiff.diff(react1, react2);
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, y coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().y, atom2.getPoint2d().y, 0.0
+            );
+            // but, x coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().x < atom2.getPoint2d().x
+            );
+        }
+    }
+
+    /**
+     * Unit tests that tests the situation where two vertical two-atom
+     * molecules are with the same x coordinates.
+     *
+     * @throws Exception Thrown when the cloning failed.
+     */
+    @Test
+    public void testShiftContainerHorizontal_Two_vertical_molecules()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(0,1));
+        IMolecule react1 = new Molecule();
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        IMolecule react2 = (IMolecule)react1.clone();
+
+        // shift the second molecule right
+        GeometryTools.shiftContainer(
+            react2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second molecule moved right
+        AtomContainerDiff.diff(react1, react2);
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, y coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().y, atom2.getPoint2d().y, 0.0
+            );
+            // but, x coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().x < atom2.getPoint2d().x
+            );
+        }
+    }
 }
 
