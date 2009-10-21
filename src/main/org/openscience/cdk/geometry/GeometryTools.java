@@ -1520,4 +1520,36 @@ public class GeometryTools {
     	}
     	return bondlenghtsum/containercount;
     }
+    /**
+     * Shift the containers in a reaction vertically upwards to not overlap
+     * with the reference Rectangle2D. The shift is such that the given
+     * gap is realized, but only if the reactions are actually overlapping.
+     *
+     * @param reaction the reaction to shift
+     * @param bounds   the bounds of the reaction to shift
+     * @param last     the bounds of the last reaction
+     * @return         the Rectangle2D of the shifted reaction
+     */
+    public static Rectangle2D shiftReactionVertical(
+    		IReaction reaction, Rectangle2D bounds, Rectangle2D last,
+    		double gap) {
+        // determine if the reactions are overlapping
+    	if (last.getMaxY() + gap >= bounds.getMinY()) {
+    		double yShift = bounds.getHeight() + last.getHeight() + gap;
+            Vector2d shift = new Vector2d(0, yShift);
+    		List<IAtomContainer> containers = ReactionManipulator.
+    		    getAllAtomContainers(reaction);
+    		for (IAtomContainer container : containers) {
+    		    translate2D(container, shift);
+    		}
+    		return new Rectangle2D.Double(bounds.getX(),
+    				bounds.getY() + yShift,
+    				bounds.getWidth(),
+    				bounds.getHeight());
+    	} else {
+    	    // the reactions were not overlapping
+    		return bounds;
+    	}
+    }
+
 }

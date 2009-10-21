@@ -501,5 +501,92 @@ public class GeometryToolsTest extends CDKTestCase {
         );
     }
 
+    @Test public void
+    testShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_double()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule react1 = new Molecule();
+        IReaction reaction = new Reaction();
+        reaction.addReactant(react1);
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        react1.addBond(0,1, IBond.Order.SINGLE);
+        IReaction reaction2 = (IReaction)reaction.clone();
+        IMolecule react2 = reaction2.getReactants().getMolecule(0);
+
+        // shift the second reaction up
+        GeometryTools.shiftReactionVertical(
+            reaction2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second reaction moved up
+        AtomContainerDiff.diff(react1, react2);
+        System.out.println("R1: " + GeometryTools.getRectangle2D(react1));
+        System.out.println("R2: " + GeometryTools.getRectangle2D(react2));
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, x coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().x, atom2.getPoint2d().x, 0.0
+            );
+            // but, y coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().y < atom2.getPoint2d().y
+            );
+        }
+    }
+
+    /**
+     * Unit tests that tests the situation where two horizontal two-atom
+     * molecules are with the same y coordinates.
+     *
+     * @throws Exception Thrown when the cloning failed.
+     */
+    @Test
+    public void testShiftReactionVertical_Two_horizontal_molecules()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule react1 = new Molecule();
+        IReaction reaction = new Reaction();
+        reaction.addReactant(react1);
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        react1.addBond(0,1, IBond.Order.SINGLE);
+        IReaction reaction2 = (IReaction)reaction.clone();
+        IMolecule react2 = reaction2.getReactants().getMolecule(0);
+
+        // shift the second reaction up
+        GeometryTools.shiftReactionVertical(
+            reaction2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second reaction moved up
+        AtomContainerDiff.diff(react1, react2);
+        System.out.println("R1: " + GeometryTools.getRectangle2D(react1));
+        System.out.println("R2: " + GeometryTools.getRectangle2D(react2));
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, x coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().x, atom2.getPoint2d().x, 0.0
+            );
+            // but, y coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().y < atom2.getPoint2d().y
+            );
+        }
+    }
 }
 
