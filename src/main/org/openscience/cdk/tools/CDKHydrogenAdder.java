@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *  
- * Copyright (C) 2007  Egon Willighagen
+/* Copyright (C) 2007  Egon Willighagen
+ *               2009  Mark Rijnbeek <markr@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,6 +23,9 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -33,9 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import java.util.Hashtable;
-import java.util.Map;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * Adds implicit hydrogens based on atom type definitions. The class assumes
@@ -107,9 +107,11 @@ public class CDKHydrogenAdder {
     @TestMethod("testMethane,testFormaldehyde,testHCN")
     public void addImplicitHydrogens(IAtomContainer container) throws CDKException {
         for (IAtom atom : container.atoms()) {
-            addImplicitHydrogens(container, atom);
+            if ( !(atom instanceof IPseudoAtom) ){
+                addImplicitHydrogens(container, atom);
+            }
         }        
-	}
+    }
 	
 	/**
 	 * Sets the implicit hydrogen count for the indicated IAtom in the given IAtomContainer.
