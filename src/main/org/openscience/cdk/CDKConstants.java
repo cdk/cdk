@@ -165,14 +165,17 @@ public class CDKConstants {
      *  It is used for example in reaction.
      */
     public static final int REACTIVE_CENTER = 10;
-    /** Flag is set if a chemobject has reactive center.
-     *  It is used for example in reaction.
+    /** Flag is set if an atom could be typed.
      */
     public static final int IS_TYPEABLE = 11;
+    /** Flag is set in JCP if an arrow indicating move
+     *  should be shown.
+     */
+    public static final int SHOW_MOVE_ARRAY = 12;
     /**
      * Maximum flags array index.
      */
-    public final static int MAX_FLAG_INDEX = 11;
+    public final static int MAX_FLAG_INDEX = 13;
     /**
      * Flag used for JUnit testing the pointer functionality.
      */
