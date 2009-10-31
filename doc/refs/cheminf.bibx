@@ -401,6 +401,17 @@ obtained by accurate mass spectrometry</bibtex:title>
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Mannhold2009">
+    <bibtex:article>
+      <bibtex:author>Mannhold, R. and Poda, G.I. and Ostermann, C. and Tetko, I.V.</bibtex:author>
+      <bibtex:title>Calculation of molecular lipophilicity: State-of-the-art and comparison of log P methods on more than 96,000 compounds</bibtex:title>
+      <bibtex:journal>J.Pharm.Sci.</bibtex:journal>
+      <bibtex:year>2009</bibtex:year>
+      <bibtex:volume>98</bibtex:volume>
+      <bibtex:pages>861--893</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Molchanova96">
     <bibtex:article>
       <bibtex:author>Molchanova</bibtex:author>
