@@ -25,12 +25,14 @@ package org.openscience.cdk.libio.jena;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -127,7 +129,7 @@ public class Convertor {
 
     private static void serializeAtomTypeFields(Model model,
             Resource rdfObject, IAtomType type) {
-        serializeElementFields(model, rdfObject, type);
+        serializeIsotopeFields(model, rdfObject, type);
         if (type.getHybridization() != null) {
             Hybridization hybrid = type.getHybridization(); 
             if (hybrid == Hybridization.S) {
@@ -169,9 +171,32 @@ public class Convertor {
         }
     }
 
+    private static void serializeIsotopeFields(Model model, Resource rdfObject,
+            IIsotope isotope) {
+        serializeElementFields(model, rdfObject, isotope);
+        if (isotope.getMassNumber() != CDKConstants.UNSET) {
+            model.add(
+                 rdfObject, CDK.hasMassNumber,
+                 isotope.getMassNumber().toString()
+            );
+        }
+        if (isotope.getExactMass() != CDKConstants.UNSET) {
+            model.add(
+                 rdfObject, CDK.hasExactMass,
+                 isotope.getExactMass().toString()
+            );
+        }
+        if (isotope.getNaturalAbundance() != CDKConstants.UNSET) {
+            model.add(
+                 rdfObject, CDK.hasNaturalAbundance,
+                 isotope.getNaturalAbundance().toString()
+            );
+        }
+    }
+
     private static void deserializeAtomTypeFields(
             Resource rdfObject, IAtomType element) {
-        deserializeElementFields(rdfObject, element);
+        deserializeIsotopeFields(rdfObject, element);
         Statement hybrid = rdfObject.getProperty(CDK.hasHybridization);
         if (hybrid != null) {
             Resource rdfHybrid = (Resource)hybrid.getObject();
@@ -209,6 +234,21 @@ public class Convertor {
         Statement formalCharge = rdfObject.getProperty(CDK.hasFormalCharge);
         if (formalCharge != null)
             element.setFormalCharge(formalCharge.getInt());
+    }
+
+    private static void deserializeIsotopeFields(Resource rdfObject,
+            IIsotope isotope) {
+        deserializeElementFields(rdfObject, isotope);
+        Statement massNumber = rdfObject.getProperty(CDK.hasMassNumber);
+        if (massNumber != null)
+            isotope.setMassNumber(massNumber.getInt());
+        Statement exactMass = rdfObject.getProperty(CDK.hasExactMass);
+        if (exactMass != null)
+            isotope.setExactMass(exactMass.getDouble());
+        Statement naturalAbundance =
+            rdfObject.getProperty(CDK.hasNaturalAbundance);
+        if (naturalAbundance != null)
+            isotope.setNaturalAbundance(naturalAbundance.getDouble());
     }
 
     public static Order resource2Order(Resource rdfOrder) {

@@ -122,6 +122,39 @@ public class ConvertorTest extends CDKTestCase {
         Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
     }
 
+    @Test public void roundtripIsotope_ExactMass() {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setExactMass(0.3);
+        mol.addAtom(object);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
+    @Test public void roundtripIsotope_MassNumber() {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setMassNumber(13);
+        mol.addAtom(object);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
+    @Test public void roundtripIsotope_NaturalAbundance() {
+        IMolecule mol = new NNMolecule();
+        IAtom object = new NNAtom("C");
+        object.setNaturalAbundance(0.95);
+        mol.addAtom(object);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
     @Test public void roundtripAtomType_S() {
         roundtripAtomType_Hybridization(Hybridization.S);
     }

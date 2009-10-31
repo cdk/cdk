@@ -47,6 +47,7 @@ public class CDK {
     public static final Resource ChemObject = resource("ChemObject");
     public static final Resource Element = resource("Element");
     public static final Resource AtomType = resource("AtomType");
+    public static final Resource Isotope = resource("Isotope");
     
     // IBond.Order
     public static final Resource SingleBond = resource("SingleBond");
@@ -77,5 +78,9 @@ public class CDK {
     public static final Property hasAtomTypeName = property("hasAtomTypeName");
     public static final Property hasMaxBondOrder = property("hasMaxBondOrder");
     public static final Property hasFormalCharge = property("hasFormalCharge");
+    public static final Property hasMassNumber = property("hasMassNumber");
+    public static final Property hasExactMass = property("hasExactMass");
+    public static final Property hasNaturalAbundance =
+        property("hasNaturalAbundance");
 
 }
