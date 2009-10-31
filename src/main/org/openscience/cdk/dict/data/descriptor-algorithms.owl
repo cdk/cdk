@@ -1407,6 +1407,22 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="mannholdLogP">
+        <rdfs:label>Mannhold LogP</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#elw"/>
+                <dc:date>2009-10-31</dc:date>
+            </documentation>
+        </annotation>
+        <definition rdf:parseType='Literal'>
+            Descriptor that calculates the LogP based on a simple equation
+            using the number of carbons and hetero atoms <bibtex:cite
+            ref="Mannhold2009"/>.
+        </definition>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
     <Descriptor rdf:ID="partialPiCharge">
         <rdfs:label>Partial Pi Charge</rdfs:label>
         <dc:contributor rdf:resource="#mrc"/>
@@ -2558,6 +2574,22 @@
                 <bibtex:year>1980</bibtex:year>
                 <bibtex:volume>36</bibtex:volume>
                 <bibtex:pages>3219-3228</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="Mannhold2009">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Mannhold, R.</bibtex:author>
+                <bibtex:author>Poda, G.I.</bibtex:author>
+                <bibtex:author>Ostermann, C.</bibtex:author>
+                <bibtex:author>Tetko, I.V.</bibtex:author>
+                <bibtex:title>Calculation of molecular lipophilicity: State-of-the-art and comparison of log P methods on more than 96,000 compounds</bibtex:title>
+                <bibtex:journal>J.Pharm.Sci.</bibtex:journal>
+                <bibtex:year>2009</bibtex:year>
+                <bibtex:volume>98</bibtex:volume>
+                <bibtex:pages>861--893</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
     </Reference>
