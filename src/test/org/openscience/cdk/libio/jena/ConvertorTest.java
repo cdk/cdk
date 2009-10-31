@@ -88,6 +88,18 @@ public class ConvertorTest extends CDKTestCase {
         Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
     }
 
+    @Test public void roundtripElectronContainer_ElectronCount() {
+        IMolecule mol = new NNMolecule();
+        mol.addAtom(new NNAtom("C"));
+        mol.addAtom(new NNAtom("C"));
+        mol.addBond(0,1,IBond.Order.SINGLE);
+        mol.getBond(0).setElectronCount(1);
+        Model model = Convertor.molecule2Model(mol);
+        IMolecule rtMol = Convertor.model2Molecule(model, builder);
+        String diff = AtomContainerDiff.diff(mol, rtMol);
+        Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
+    }
+
     @Test public void roundtripChemObject() {
         IMolecule mol = new NNMolecule();
         IAtom object = new NNAtom("C");

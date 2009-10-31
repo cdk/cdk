@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -91,8 +92,19 @@ public class Convertor {
                 );
             }
             model.add(subject, CDK.hasBond, rdfBond);
+            serializeElectronContainerFields(model, rdfBond, bond);
         }
         return model;
+    }
+
+    private static void serializeElectronContainerFields(Model model,
+            Resource rdfBond, IElectronContainer bond) {
+        serializeChemObjectFields(model, rdfBond, bond);
+        if (bond.getElectronCount() != null)
+            model.add(
+                rdfBond, CDK.hasElectronCount,
+                bond.getElectronCount().toString()
+            );
     }
 
     private static void serializeChemObjectFields(Model model,
@@ -286,6 +298,14 @@ public class Convertor {
         return result.toString();
     }
 
+    private static void deserializeElectronContainerFields(
+            Resource rdfObject, IElectronContainer bond) {
+        deserializeChemObjectFields(rdfObject, bond);
+        Statement count = rdfObject.getProperty(CDK.hasElectronCount);
+        if (count != null)
+            bond.setElectronCount(count.getInt());
+    }
+
     public static IMolecule model2Molecule(Model model,
         IChemObjectBuilder builder) {
         ResIterator mols =
@@ -307,10 +327,9 @@ public class Convertor {
             }
             StmtIterator bonds = rdfMol.listProperties(CDK.hasBond);
             while (bonds.hasNext()) {
-                Statement rdfBond = bonds.nextStatement();
+                Resource rdfBond = bonds.nextStatement().getResource();
                 IBond bond = builder.newBond();
-                StmtIterator bondAtoms = rdfBond.getResource()
-                    .listProperties(CDK.bindsAtom);
+                StmtIterator bondAtoms = rdfBond.listProperties(CDK.bindsAtom);
                 int atomCounter = 0;
                 while (bondAtoms.hasNext()) {
                     Statement rdfAtom = bondAtoms.nextStatement();
@@ -322,6 +341,7 @@ public class Convertor {
                     getProperty(CDK.hasOrder).getResource();
                 bond.setOrder(resource2Order(order));
                 mol.addBond(bond);
+                deserializeElectronContainerFields(rdfBond, bond);
             }
         }
         return mol;

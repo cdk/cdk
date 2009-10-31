@@ -82,5 +82,7 @@ public class CDK {
     public static final Property hasExactMass = property("hasExactMass");
     public static final Property hasNaturalAbundance =
         property("hasNaturalAbundance");
+    public static final Property hasElectronCount =
+        property("hasElectronCount");
 
 }
