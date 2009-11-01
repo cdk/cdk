@@ -548,8 +548,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         // MDL down bond
                         stereo = IBond.Stereo.DOWN;
                     } else if (mdlStereo == 0) {
-                        // bond has no stereochemistry
-                        stereo = IBond.Stereo.NONE;
+                    	if (order == 2) {
+                    		// double bond stereo defined by coordinates
+                    		stereo = IBond.Stereo.E_Z_BY_COORDINATES;
+                    	} else {
+                    		// bond has no stereochemistry
+                    		stereo = IBond.Stereo.NONE;
+                    	}
+                    } else if (mdlStereo == 3 && order == 2) {
+                        // unknown E/Z stereochemistry
+                        stereo = IBond.Stereo.E_OR_Z;
                     } else if (mdlStereo == 4) {
                         //MDL bond undefined
                         stereo = (IBond.Stereo)CDKConstants.UNSET;

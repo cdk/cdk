@@ -61,7 +61,19 @@ public interface IBond extends IElectronContainer {
 		/** A bonds pointing down of which start is above the drawing plane. */
 		DOWN,
 		/** A bonds pointing down of which end is above the drawing plane. */
-		DOWN_INVERTED
+		DOWN_INVERTED,
+		/** A bond for which there is stereochemistry, we just don't know
+		 *  which one.
+		 */
+		UP_OR_DOWN,
+		/** Indication that this double bond has a fixed, but unknown E/Z
+		 * configuration.
+		 */
+		E_OR_Z,
+		/** Indication that this double bond has a fixed configuration, defined
+		 * by the 2D and/or 3D coordinates.
+		 */
+		E_Z_BY_COORDINATES
 	}
 	
 	/**

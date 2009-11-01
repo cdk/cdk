@@ -587,4 +587,60 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         	container.getBond(0).getStereo()
         );
     }
+
+    @Test public void testReadStereoBonds() throws Exception {
+        String mdl =
+                "cyclopropane.mol\n" +
+                "\n" +
+                "\n" +
+                "  9  9  0  0  0                 1 V2000\n" +
+                "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n" +
+                "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n" +
+                "    0.2103    0.4053   -0.1891 C   0  0  0  0  0\n" +
+                "    0.8019   -1.1711    1.2970 H   0  0  0  0  0\n" +
+                "   -0.6000   -0.2021    1.8155 H   0  0  0  0  0\n" +
+                "   -1.7511   -0.6586   -0.4435 H   0  0  0  0  0\n" +
+                "   -0.3492   -1.6277   -0.9620 H   0  0  0  0  0\n" +
+                "    1.1755    0.4303   -0.6860 H   0  0  0  0  0\n" +
+                "   -0.2264    1.3994   -0.1675 H   0  0  0  0  0\n" +
+                "  1  2  1  6  0  0\n" +
+                "  1  3  1  6  0  0\n" +
+                "  1  4  1  0  0  0\n" +
+                "  1  5  1  1  0  0\n" +
+                "  2  3  1  0  0  0\n" +
+                "  2  6  1  0  0  0\n" +
+                "  2  7  1  6  0  0\n" +
+                "  3  8  1  6  0  0\n" +
+                "  3  9  1  0  0  0\n" +
+                "M  END\n";
+        MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
+        IMolecule mol = (IMolecule) reader.read(new Molecule());
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(9, mol.getAtomCount());
+        Assert.assertEquals(9, mol.getBondCount());
+        Assert.assertEquals(IBond.Stereo.DOWN, mol.getBond(0).getStereo());
+        Assert.assertEquals(IBond.Stereo.UP, mol.getBond(3).getStereo());
+    }
+
+    @Test public void testStereoDoubleBonds() throws Exception {
+        String filename = "data/mdl/butadiene.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader()
+            .getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        Assert.assertNotNull(chemFile);
+        List<IAtomContainer> containersList =
+        	ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(1, containersList.size());
+        IAtomContainer container = containersList.get(0);
+        Assert.assertEquals(
+            IBond.Stereo.E_Z_BY_COORDINATES,
+            container.getBond(0).getStereo()
+        );
+        Assert.assertEquals(
+        	IBond.Stereo.E_OR_Z,
+        	container.getBond(2).getStereo()
+        );
+    }
 }
