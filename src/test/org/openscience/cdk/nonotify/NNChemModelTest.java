@@ -30,6 +30,10 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractChemModelTest;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -77,5 +81,133 @@ public class NNChemModelTest extends AbstractChemModelTest {
     }
     @Test public void testSetNotification_true() {
         NNChemObjectTestHelper.testSetNotification_true(newChemObject());
+    }
+
+    @Test public void testStateChanged_EventPropagation_Crystal() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        ICrystal crystal = chemObject.getBuilder().newCrystal();
+        chemObject.setCrystal(crystal);
+        Assert.assertFalse(listener.getChanged());
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set should trigger a change event in the IChemModel
+        crystal.add(chemObject.getBuilder().newMolecule());
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    @Test public void testStateChanged_EventPropagation_MoleculeSet() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IMoleculeSet molSet = chemObject.getBuilder().newMoleculeSet();
+        chemObject.setMoleculeSet(molSet);
+        Assert.assertFalse(listener.getChanged());
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set should trigger a change event in the IChemModel
+        molSet.addAtomContainer(chemObject.getBuilder().newMolecule());
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    @Test public void testStateChanged_EventPropagation_ReactionSet() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IReactionSet reactionSet = chemObject.getBuilder().newReactionSet();
+        chemObject.setReactionSet(reactionSet);
+        Assert.assertFalse(listener.getChanged());
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set should trigger a change event in the IChemModel
+        reactionSet.addReaction(chemObject.getBuilder().newReaction());
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    @Test public void testStateChanged_EventPropagation_RingSet() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IRingSet ringSet = chemObject.getBuilder().newRingSet();
+        chemObject.setRingSet(ringSet);
+        Assert.assertFalse(listener.getChanged());
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set should trigger a change event in the IChemModel
+        ringSet.addAtomContainer(chemObject.getBuilder().newRing());
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    @Test public void testStateChanged_ButNotAfterRemoval_Crystal() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        ICrystal crystal = chemObject.getBuilder().newCrystal();
+        chemObject.setCrystal(crystal);
+        Assert.assertFalse(listener.getChanged());
+        // remove the set from the IChemModel
+        chemObject.setCrystal(null);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set must *not* trigger a change event in the IChemModel
+        crystal.add(chemObject.getBuilder().newMolecule());
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    @Test public void testStateChanged_ButNotAfterRemoval_MoleculeSet() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IMoleculeSet molSet = chemObject.getBuilder().newMoleculeSet();
+        chemObject.setMoleculeSet(molSet);
+        Assert.assertFalse(listener.getChanged());
+        // remove the set from the IChemModel
+        chemObject.setMoleculeSet(null);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set must *not* trigger a change event in the IChemModel
+        molSet.addAtomContainer(chemObject.getBuilder().newMolecule());
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    @Test public void testStateChanged_ButNotAfterRemoval_ReactionSet() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IReactionSet reactionSet = chemObject.getBuilder().newReactionSet();
+        chemObject.setReactionSet(reactionSet);
+        Assert.assertFalse(listener.getChanged());
+        // remove the set from the IChemModel
+        chemObject.setReactionSet(null);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set must *not* trigger a change event in the IChemModel
+        reactionSet.addReaction(chemObject.getBuilder().newReaction());
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    @Test public void testStateChanged_ButNotAfterRemoval_RingSet() {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        IRingSet ringSet = chemObject.getBuilder().newRingSet();
+        chemObject.setRingSet(ringSet);
+        Assert.assertFalse(listener.getChanged());
+        // remove the set from the IChemModel
+        chemObject.setRingSet(null);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.getChanged());
+        // changing the set must *not* trigger a change event in the IChemModel
+        ringSet.addAtomContainer(chemObject.getBuilder().newRing());
+        Assert.assertFalse(listener.getChanged());
     }
 }

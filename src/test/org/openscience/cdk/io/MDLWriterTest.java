@@ -25,6 +25,10 @@
 package org.openscience.cdk.io;
 
 import java.io.StringWriter;
+import java.util.Properties;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -40,6 +44,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.listener.PropertiesListener;
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -140,5 +145,47 @@ public class MDLWriterTest extends ChemObjectIOTest {
         // length is enough
         Assert.assertNotNull(output);
         Assert.assertNotSame(0, output.length());
+    }
+
+    @Test public void testPrefer3DCoordinateOutput() throws Exception {
+        StringWriter writer = new StringWriter();
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom = builder.newAtom("C");
+        atom.setPoint2d(new Point2d(1.0, 2.0));
+        atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
+        molecule.addAtom(atom);
+
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
+        mdlWriter.close();
+        String output = writer.toString();
+        // the current behavior is that if both 2D and 3D coordinates
+        // are available, the 3D is outputed, and the 2D not
+        Assert.assertTrue(output.contains("3.0"));
+        Assert.assertTrue(output.contains("4.0"));
+        Assert.assertTrue(output.contains("5.0"));
+    }
+
+    @Test public void testForce2DCoordinates() throws Exception {
+        StringWriter writer = new StringWriter();
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom = builder.newAtom("C");
+        atom.setPoint2d(new Point2d(1.0, 2.0));
+        atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
+        molecule.addAtom(atom);
+
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        Properties prop = new Properties();
+        prop.setProperty("ForceWriteAs2DCoordinates","true");
+        PropertiesListener listener = new PropertiesListener(prop);
+        mdlWriter.addChemObjectIOListener(listener);
+        mdlWriter.customizeJob();
+        mdlWriter.write(molecule);
+        mdlWriter.close();
+        String output = writer.toString();
+        // the current behavior is that if both 2D and 3D coordinates
+        // are available, the 3D is outputed, and the 2D not
+        Assert.assertTrue(output.contains("1.0"));
+        Assert.assertTrue(output.contains("2.0"));
     }
 }

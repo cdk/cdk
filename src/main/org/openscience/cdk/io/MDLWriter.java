@@ -54,6 +54,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -77,6 +79,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
     private final static LoggingTool logger = new LoggingTool(MDLWriter.class);
 
+    private BooleanIOSetting forceWriteAs2DCoords;
+
     private BufferedWriter writer;
     
     /**
@@ -91,6 +95,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
     	} else {
     	    writer = new BufferedWriter(out);
     	}
+        initIOSettings();
     }
 
     /**
@@ -155,6 +160,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      * @see #accepts(Class)
      */
 	public void write(IChemObject object) throws CDKException {
+		customizeJob();
 		try {
 			if (object instanceof IChemFile) {
 				writeChemFile((IChemFile)object);
@@ -238,7 +244,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         for (int f = 0; f < container.getAtomCount(); f++) {
         	IAtom atom = container.getAtom(f);
         	line = "";
-        	if (atom.getPoint3d() != null) {
+            if (atom.getPoint3d() != null && !forceWriteAs2DCoords.isSet()) {
         		line += formatMDLFloat((float) atom.getPoint3d().x);
         		line += formatMDLFloat((float) atom.getPoint3d().y);
         		line += formatMDLFloat((float) atom.getPoint3d().z) + " ";
@@ -413,6 +419,25 @@ public class MDLWriter extends DefaultChemObjectWriter {
         for (int f = 0; f < l; f++)
             s += " ";
         return s;
+    }
+
+    private void initIOSettings() {
+        forceWriteAs2DCoords = new BooleanIOSetting(
+            "ForceWriteAs2DCoordinates",
+            IOSetting.LOW,
+            "Should coordinates always be written as 2D?",
+            "false"
+        );
+    }
+
+    public void customizeJob() {
+        fireIOSettingQuestion(forceWriteAs2DCoords);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[1];
+        settings[0] = forceWriteAs2DCoords;
+        return settings;
     }
 
 }

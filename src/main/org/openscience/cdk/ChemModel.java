@@ -96,8 +96,11 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	 */
 	public void setMoleculeSet(IMoleculeSet setOfMolecules)
 	{
+	    if (this.setOfMolecules != null)
+	        this.setOfMolecules.removeListener(this);
 		this.setOfMolecules = setOfMolecules;
-		this.setOfMolecules.addListener(this);
+		if (this.setOfMolecules != null)
+		    this.setOfMolecules.addListener(this);
 		notifyChanged();
 	}
 
@@ -124,7 +127,11 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	 */
 	public void setRingSet(IRingSet ringSet)
 	{
+	    if (this.ringSet != null)
+	        this.ringSet.removeListener(this);
 		this.ringSet = ringSet;
+		if (this.ringSet != null)
+		    this.ringSet.addListener(this);
 		notifyChanged();
 	}
 
@@ -147,9 +154,12 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * @see      #getCrystal
      */
     public void setCrystal(ICrystal crystal) {
+        if (this.crystal != null)
+            this.crystal.removeListener(this);
         this.crystal = crystal;
-	this.crystal.addListener(this);
-	notifyChanged();
+        if (this.crystal != null)
+            this.crystal.addListener(this);
+        notifyChanged();
     }
 
     /**
@@ -171,9 +181,12 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * @see       #getReactionSet
      */
     public void setReactionSet(IReactionSet sor) {
+        if (this.setOfReactions != null)
+            this.setOfReactions.removeListener(this);
         this.setOfReactions = sor;
-	this.setOfReactions.addListener(this);
-	notifyChanged();
+        if (this.setOfReactions != null)
+            this.setOfReactions.addListener(this);
+        notifyChanged();
     }
     
     /**
