@@ -329,7 +329,7 @@ public class Convertor {
                 );
             } else {
                 cmlList.appendChild(
-                    cdkAtomContainerToCMLMolecule((IMolecule)container, false)
+                    cdkAtomContainerToCMLMolecule(container, false)
                 );
             }
         }

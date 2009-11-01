@@ -11,7 +11,7 @@
         <fileset dir="${lib}">
           <include name="asm-3.1.jar"/>
           <include name="junit-4.4.jar"/>
-          <include name="pmd-4.2.2.jar"/>
+          <include name="pmd-4.2.5.jar"/>
           <include name="jaxen-1.1.1.jar"/>
         </fileset>
     </path>
@@ -41,17 +41,24 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="render"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libiocml"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libiomd"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="builder3d"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="smiles"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="smarts"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="pcore"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="fingerprint"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="forcefield"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="inchi"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="ioformats"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="pdb"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsar"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsaratomic"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsarbond"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsarionpot"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsarmolecular"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsarprotein"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="structgen"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="sdg"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="valencycheck"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="charges"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="diff"/></antcall>

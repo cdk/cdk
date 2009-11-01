@@ -37,7 +37,13 @@ import org.openscience.cdk.tools.LoggingTool;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -163,7 +169,7 @@ public class DescriptorEngine {
         descriptors = instantiateDescriptors(classNames);
         speclist = initializeSpecifications(descriptors);
         logger.debug("Found #descriptors: ", classNames.size());
-
+        
         // get the dictionary for the descriptors
         DictionaryDatabase dictDB = new DictionaryDatabase();
         dict = dictDB.getDictionary("descriptor-algorithms");
@@ -659,6 +665,7 @@ public class DescriptorEngine {
                         if (!(tmp.indexOf(packageName) != -1)) continue;
                         if (tmp.indexOf('$') != -1) continue;
                         if (tmp.indexOf("Test") != -1) continue;
+                        if (tmp.indexOf("ChiIndexUtils") != -1) continue;
                         if (!classlist.contains(tmp)) classlist.add(tmp);
                     }
                 }

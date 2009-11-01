@@ -119,8 +119,10 @@
       <antcall target="doccheck-module"><param name="module" value="standard"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="atomtype"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="io"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="ioformats"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="inchi"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="extra"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="fingerprint"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="formula"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="render"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="reaction"/></antcall>
@@ -129,10 +131,13 @@
       <antcall target="doccheck-module"><param name="module" value="builder3d"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="smiles"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="smarts"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="sdg"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="forcefield"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="pdb"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsar"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsaratomic"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsarbond"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="qsarionpot"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsarmolecular"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsarprotein"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="pcore"/></antcall>

@@ -172,7 +172,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@return                   The 1, 2, .. ionization energies
      *@exception  CDKException  Possible Exceptions
      */
-    @TestMethod(value="testCalculatePlus_IAtomContainer")
+    @TestMethod(value="testIPDescriptor_2,testIPDescriptor_3")
     public DescriptorValue calculatePlus(IAtomContainer container) throws CDKException {
 
         ArrayList<Double> dar = new ArrayList<Double>();

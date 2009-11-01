@@ -75,11 +75,15 @@ public class CDKThreadNonSafeTaglet implements Taglet {
     }
 
     public String toString(Tag tag) {
-        return "<B>Thread Safe:</B> No\n";
+        return tag != null
+            ? "<B>Thread Safe:</B> No\n"
+            : "";
     }
     
     public String toString(Tag[] tags) {
-        return "<B>Thread Safe:</B> No\n";
+        return tags.length != 0
+            ? "<B>Thread Safe:</B> No\n" :
+            "";
     }
 
 }

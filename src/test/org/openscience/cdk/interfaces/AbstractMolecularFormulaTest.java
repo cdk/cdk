@@ -368,6 +368,19 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
         Assert.assertEquals(2.0, mf.getCharge(), 0.001);
     }
     
+    @Test
+    public void testSetCharge_Integer() {
+
+        IMolecularFormula mf = getBuilder().newMolecularFormula();
+        mf.setCharge(1);
+        mf.addIsotope(getBuilder().newAtom("C"));
+        mf.addIsotope(getBuilder().newAtom("F"));
+        mf.addIsotope(getBuilder().newAtom("H"), 3);
+
+        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
+
+    }
+
     /**
 	 * A unit test suite for JUnit.
 	 *
