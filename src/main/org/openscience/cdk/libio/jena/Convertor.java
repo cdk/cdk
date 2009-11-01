@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
 
@@ -72,10 +73,14 @@ public class Convertor {
                 createIdentifier(model, atom)
             );
             cdkToRDFAtomMap.put(atom, rdfAtom);
-            model.add(rdfAtom, RDF.type, CDK.Atom);
-            model.add(rdfAtom, CDK.symbol, atom.getSymbol());
             model.add(subject, CDK.hasAtom, rdfAtom);
-            serializeAtomTypeFields(model, rdfAtom, atom);
+            if (atom instanceof IPseudoAtom) {
+                model.add(rdfAtom, RDF.type, CDK.PseudoAtom);
+                serializePseudoAtomFields(model, rdfAtom, (IPseudoAtom)atom);
+            } else {
+                model.add(rdfAtom, RDF.type, CDK.Atom);
+                serializeAtomFields(model, rdfAtom, atom);
+            }
         }
         for (IBond bond : molecule.bonds()) {
             Resource rdfBond = model.createResource(
@@ -95,6 +100,21 @@ public class Convertor {
             serializeElectronContainerFields(model, rdfBond, bond);
         }
         return model;
+    }
+
+    private static void serializePseudoAtomFields(Model model,
+            Resource rdfAtom, IPseudoAtom atom) {
+        serializeAtomFields(model, rdfAtom, atom);
+        if (atom.getLabel() != CDKConstants.UNSET)
+            model.add(rdfAtom, CDK.hasLabel, atom.getLabel());
+    }
+
+    private static void serializeAtomFields(Model model, Resource rdfAtom,
+            IAtom atom) {
+        serializeAtomTypeFields(model, rdfAtom, atom);
+        model.add(rdfAtom, RDF.type, CDK.Atom);
+        if (atom.getSymbol() != CDKConstants.UNSET)
+            model.add(rdfAtom, CDK.symbol, atom.getSymbol());
     }
 
     private static void serializeElectronContainerFields(Model model,
@@ -318,10 +338,19 @@ public class Convertor {
             StmtIterator atoms = rdfMol.listProperties(CDK.hasAtom);
             while (atoms.hasNext()) {
                 Resource rdfAtom = atoms.nextStatement().getResource();
-                IAtom atom = builder.newAtom();
-                rdfToCDKAtomMap.put(rdfAtom, atom);
+                IAtom atom;
+                if (rdfAtom.hasProperty(RDF.type, CDK.PseudoAtom)) {
+                    atom = builder.newPseudoAtom();
+                    atom.setStereoParity(0);
+                    Statement label = rdfAtom.getProperty(CDK.hasLabel);
+                    if (label != null)
+                        ((IPseudoAtom)atom).setLabel(label.getString());
+                } else {
+                    atom = builder.newAtom();
+                }
                 Statement symbol = rdfAtom.getProperty(CDK.symbol);
                 if (symbol != null) atom.setSymbol(symbol.getString());
+                rdfToCDKAtomMap.put(rdfAtom, atom);
                 deserializeAtomTypeFields(rdfAtom, atom);
                 mol.addAtom(atom);
             }
