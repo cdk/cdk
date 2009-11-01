@@ -20,6 +20,7 @@ package net.sf.cdk.tools.doclets;
 
 import com.sun.tools.doclets.Taglet;
 import com.sun.javadoc.*;
+
 import java.util.Map;
 
 /**
@@ -75,11 +76,15 @@ public class CDKThreadSafeTaglet implements Taglet {
     }
 
     public String toString(Tag tag) {
-        return "<B>Thread Safe:</B> Yes\n";
+        return tag != null
+            ? "<B>Thread Safe:</B> Yes\n"
+            : "";
     }
     
     public String toString(Tag[] tags) {
-        return "<B>Thread Safe:</B> Yes\n";
+        return tags.length != 0
+            ? "<B>Thread Safe:</B> Yes\n" :
+            "";
     }
 
 }
