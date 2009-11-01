@@ -158,6 +158,21 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         Assert.assertTrue(listener.changed);
     }
 
+    @Test public void testStateChanged_EventPropagation_Crystal() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        ICrystal crystal = chemObject.getBuilder().newCrystal();
+        chemObject.setCrystal(crystal);
+        Assert.assertTrue(listener.changed);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.changed);
+        // changing the set should trigger a change event in the IChemModel
+        crystal.add(chemObject.getBuilder().newMolecule());
+        Assert.assertTrue(listener.changed);
+    }
+
     @Test public void testStateChanged_EventPropagation_MoleculeSet() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemModel chemObject = (IChemModel)newChemObject();
@@ -201,6 +216,23 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         // changing the set should trigger a change event in the IChemModel
         ringSet.addAtomContainer(chemObject.getBuilder().newRing());
         Assert.assertTrue(listener.changed);
+    }
+
+    @Test public void testStateChanged_ButNotAfterRemoval_Crystal() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemModel chemObject = (IChemModel)newChemObject();
+        chemObject.addListener(listener);
+
+        ICrystal crystal = chemObject.getBuilder().newCrystal();
+        chemObject.setCrystal(crystal);
+        Assert.assertTrue(listener.changed);
+        // remove the set from the IChemModel
+        chemObject.setCrystal(null);
+        // reset the listener
+        listener.reset(); Assert.assertFalse(listener.changed);
+        // changing the set must *not* trigger a change event in the IChemModel
+        crystal.add(chemObject.getBuilder().newMolecule());
+        Assert.assertFalse(listener.changed);
     }
 
     @Test public void testStateChanged_ButNotAfterRemoval_MoleculeSet() {
