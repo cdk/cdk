@@ -400,6 +400,12 @@
                 </fileset>
             </jar>
 
+        	<jar jarfile="${dist}/jar/cdk-${module}-sources.jar">
+				<fileset dir="${build.src}/${module}">
+					<include name="**/*.java" />
+				</fileset>
+			</jar>
+        	
             <!-- clean up afterwards -->
             <delete dir="${build.src}/${module}"/>
             <delete dir="${build}/${module}"/>
