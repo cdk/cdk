@@ -33,6 +33,6 @@ public interface IGenerator {
 
     public IRenderingElement generate(IAtomContainer ac, RendererModel model);
 
-    public List<IGeneratorParameter> getParameters();
+    public List<IGeneratorParameter<?>> getParameters();
 
 }
