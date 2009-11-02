@@ -170,17 +170,38 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     public void visit(OvalElement oval) {
         this.g.setColor(oval.color);
-        int[] min = 
-            this.transformPoint(oval.x - oval.radius, oval.y - oval.radius);
-        int[] max = 
-            this.transformPoint(oval.x + oval.radius, oval.y + oval.radius);
-        int w = max[0] - min[0];
-        int h = max[1] - min[1];
+        int radius = scaleX(oval.radius);
+        int diameter = scaleX(oval.radius * 2);
+ 
         if (oval.fill) {
-            this.g.fillOval(min[0], min[1], w, h);
-        } else {
-            this.g.drawOval(min[0], min[1], w, h);
+        	this.g.fillOval(transformX(oval.x) - radius,
+                        transformY(oval.y) - radius,
+                        diameter,
+                        diameter );
+        } else { 
+        	this.g.drawOval(transformX(oval.x) - radius,
+                        transformY(oval.y) - radius,
+                        diameter,
+                        diameter );
         }
+    }
+    
+    private int scaleX(double x) {
+        return (int) (x*transform.getScaleX());
+    }
+    
+    private int transformX(double x) {
+        return (int) transform( x, 1 )[0];
+    }
+ 
+    private int transformY(double y) {
+        return (int) transform( 1, y )[1];
+    }
+ 
+    private double[] transform(double x, double y) {
+        double [] result = new double[2];
+        transform.transform( new double[] {x,y}, 0, result, 0, 1 );
+        return result;
     }
 
     public void visit(TextElement textElement) {
