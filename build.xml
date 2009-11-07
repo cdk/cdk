@@ -556,11 +556,9 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
-                    <includesfile name="${metainf}/atomtype.libdepends"/>
                     <includesfile name="${metainf}/builder3d.libdepends"/>
                     <includesfile name="${metainf}/builder3dtools.libdepends"/>
                     <includesfile name="${metainf}/charges.libdepends"/>
-                    <includesfile name="${metainf}/core.libdepends"/>
                     <includesfile name="${metainf}/log4j.libdepends"/>
                     <includesfile name="${metainf}/control.libdepends"/>
                     <includesfile name="${metainf}/datadebug.libdepends"/>
