@@ -41,7 +41,12 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  This class implements a multipurpose structure comparison tool.
@@ -84,6 +89,14 @@ import java.util.*;
  *    screened out by a fingerprint based filtering.
  *    It is possible to add a special treatment for this special query.
  *    Be reminded that this algorithm matches bonds only.
+ * </p>
+ * <p>
+ * <b>Note</b>While most isomorphism queries involve a multi-atom query structure
+ * there may be cases in which the query atom is a single atom. In such a case
+ * a mapping of target bonds to query bonds is not feasible. In such a case, the RMap objects
+ * correspond to atom indices rather than bond indices. In general, this will not affect user
+ * code and the same sequence of method calls for matching multi-atom query structures will
+ * work for single atom query structures as well.
  * </p>
  *
  * @author      Stephane Werner from IXELIS mail@ixelis.net
@@ -218,9 +231,18 @@ public class UniversalIsomorphismTester {
    * Returns all the subgraph 'bond mappings' found for g2 in g1.
    * This is an ArrayList of ArrayLists of RMap objects.
    *
+   * Note that if the query molecule is a single atom, then bond mappings
+   * cannot be defined. In such a case, the RMap object refers directly to
+   * atom - atom mappings. Thus RMap.id1 is the index of the target atom
+   * and RMap.id2 is the index of the matching query atom (in this case,
+   * it will always be 0). Note that in such a case, there is no need
+   * to call makeAtomsMapsofBondsMaps, though if it is called, then the
+   * return value is simply the same as the return value of this method.
+   *
    * @param  g1  first molecule. Must not be an IQueryAtomContainer.
    * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the list of all the 'mappings' found projected of g1
+   * @see #makeAtomsMapsOfBondsMaps(java.util.List, org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IAtomContainer)
    */
   public static List<List<RMap>> getSubgraphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
     return search(g1, g2, new BitSet(), getBitSet(g2), true, true);
@@ -414,6 +436,20 @@ public class UniversalIsomorphismTester {
   public static List<List<RMap>> search(IAtomContainer g1, IAtomContainer g2, BitSet c1,
 		  BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
 
+      // handle single query atom case separately
+      if (g2.getAtomCount() == 1) {
+          List<List<RMap>> matches = new ArrayList<List<RMap>>();
+          IQueryAtom queryAtom = (IQueryAtom) g2.getAtom(0);
+          for (IAtom atom : g1.atoms()) {
+              if (queryAtom.matches(atom)) {
+                  List<RMap> lmap = new ArrayList<RMap>();
+                  lmap.add(new RMap(g1.getAtomNumber(atom), 0));
+                  matches.add(lmap);
+              }
+          }
+          return matches;
+      }
+
 	  // reset result
 	  List<List<RMap>> rMapsList = new ArrayList<List<RMap>>();
 
@@ -602,16 +638,17 @@ public class UniversalIsomorphismTester {
    * @param  g2  The second one (first and second as in getMap). May be an QueryAtomContaienr.
    * @return     A Vector of Vectors of RMap objects of matching Atoms.
    */
-   public static List<List<RMap>> makeAtomsMapsOfBondsMaps(List<List<RMap>> l, IAtomContainer g1, IAtomContainer g2) {
-	   if(l==null) {
-		   return l;
-	   }
-	   List<List<RMap>> result = new ArrayList<List<RMap>>();
+  public static List<List<RMap>> makeAtomsMapsOfBondsMaps(List<List<RMap>> l, IAtomContainer g1, IAtomContainer g2) {
+      if (l == null) {
+          return l;
+      }
+      if (g2.getAtomCount() == 1) return l; // since the RMap is already an atom-atom mapping
+      List<List<RMap>> result = new ArrayList<List<RMap>>();
       for (List<RMap> l2 : l) {
           result.add(makeAtomsMapOfBondsMap(l2, g1, g2));
       }
-	   return result;
-   }
+      return result;
+  }
 
   /**
    *  This makes a map of matching atoms out of a map of matching bonds as produced by the get(Subgraph|Ismorphism)Map methods.
