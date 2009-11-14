@@ -29,10 +29,10 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-
 import java.util.Iterator;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 
 /**
@@ -53,7 +53,7 @@ import java.util.Iterator;
 public class AtomContainerBondPermutor extends AtomContainerPermutor
 {
 
-    public AtomContainerBondPermutor(AtomContainer ac)
+    public AtomContainerBondPermutor(IAtomContainer ac)
     {
         setAtomContainer(ac);
         N = atomContainer.getBondCount();
@@ -71,18 +71,18 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor
         }
     }
 
-    AtomContainer makeResult()
+    IAtomContainer makeResult()
     {
         IBond[] bonds = new IBond[objects.length];
         for (int f = 0; f < objects.length; f++)
         {
             bonds[f] = ((IBond)objects[f]);
         }
-        AtomContainer ac = new AtomContainer(atomContainer);
+        IAtomContainer ac = atomContainer.getBuilder().newAtomContainer(atomContainer);
         ac.setBonds(bonds);
-        AtomContainer clone = null;
+        IAtomContainer clone = null;
         try {
-            clone = (AtomContainer)ac.clone();
+            clone = (IAtomContainer)ac.clone();
         } catch (CloneNotSupportedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

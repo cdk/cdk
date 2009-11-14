@@ -29,8 +29,10 @@
  */
 package org.openscience.cdk.graph;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -51,7 +53,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class AtomContainerAtomPermutor extends AtomContainerPermutor
 {
 	
-	public AtomContainerAtomPermutor(AtomContainer ac)
+	public AtomContainerAtomPermutor(IAtomContainer ac)
 	{
 		setAtomContainer(ac);
 		N = atomContainer.getAtomCount();
@@ -61,7 +63,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 	
 	public void initObjectArray()
 	{
-		java.util.Iterator atoms = atomContainer.atoms().iterator();
+		Iterator<IAtom> atoms = atomContainer.atoms().iterator();
 		objects = new Object[atomContainer.getAtomCount()];
 		int count = -1;
 		while (atoms.hasNext())
@@ -70,7 +72,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 		}
 	}
 	
-	AtomContainer makeResult()
+	IAtomContainer makeResult()
 	{
 		Atom[] atoms = new Atom[objects.length];
 		for (int f = 0; f < objects.length; f++)
@@ -79,9 +81,9 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 		}
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer(atomContainer);
 		ac.setAtoms(atoms);
-		AtomContainer clone = null;
+		IAtomContainer clone = null;
 		try {
-			clone = (AtomContainer)ac.clone();
+			clone = (IAtomContainer)ac.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
