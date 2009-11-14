@@ -745,7 +745,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		
 		String moleculeSmile1 = sg.createChiralSMILES(mol1, new boolean[mol1.getBondCount()]);
 		String moleculeSmile2 = sg.createChiralSMILES(mol2, new boolean[mol2.getBondCount()]);
-		Assert.assertFalse(moleculeSmile1.equals(moleculeSmile2));
+		Assert.assertNotSame(moleculeSmile2, moleculeSmile1);
 	}
 	
   /**
@@ -877,7 +877,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);
         String genSmiles = smilesGenerator.createSMILES(mol);
-        Assert.assertTrue(genSmiles.equals(smiles));
+        Assert.assertEquals(smiles, genSmiles);
     }
 
     /**

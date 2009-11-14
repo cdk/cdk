@@ -332,6 +332,6 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     	IMolecularFormulaSet add = getBuilder().newMolecularFormulaSet();
     	IChemObjectBuilder builder = add.getBuilder();
     	Assert.assertNotNull(builder);
-    	Assert.assertTrue(builder.getClass().getName().equals(getBuilder().getClass().getName()));
+    	Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
     }
 }

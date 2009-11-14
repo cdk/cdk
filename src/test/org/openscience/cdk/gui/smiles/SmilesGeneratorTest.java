@@ -440,7 +440,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 				Assert.fail();
 			}
 		}
-		Assert.assertFalse(smiles1.equals(smiles3));
+		Assert.assertNotSame(smiles3, smiles1);
 	}
 
 
@@ -845,7 +845,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 			SmilesGenerator sg = new SmilesGenerator();
 			String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 			String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-			Assert.assertFalse(smiles1.equals(smiles2));
+			Assert.assertNotSame(smiles2, smiles1);
 		} catch (Exception exc)
 		{
 			System.out.println(exc);
@@ -875,7 +875,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 			SmilesGenerator sg = new SmilesGenerator();
 			String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 			String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-			Assert.assertFalse(smiles1.equals(smiles2));
+			Assert.assertNotSame(smiles2, smiles1);
 		} catch (Exception exc)
 		{
 			System.out.println(exc);

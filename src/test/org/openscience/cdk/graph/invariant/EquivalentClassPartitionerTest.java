@@ -228,7 +228,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		String strEquivalent=new String(arrEquivalent);
 		Assert.assertNotNull(equivalentClass);
 		Assert.assertTrue(equivalentClass[0]==2);//number of Class
-		Assert.assertTrue(strEquivalent.equals("111111222222222222111111"));
+		Assert.assertEquals("111111222222222222111111",strEquivalent);
 	}
 	
 }

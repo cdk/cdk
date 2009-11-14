@@ -102,7 +102,7 @@ public class CycleBasisTest extends CDKTestCase {
 
     @Test
     public void testWeightVector() {
-		Assert.assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3}) );
+		Assert.assertArrayEquals(basis.weightVector(), new int[] {3,3,3,3});
 	}
 
     @Test

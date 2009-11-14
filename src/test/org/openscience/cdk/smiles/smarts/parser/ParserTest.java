@@ -146,7 +146,7 @@ public class ParserTest extends CDKTestCase {
     public void test2LetterSMARTS() throws CDKException {
         QueryAtomContainer query = SMARTSParser.parse("Sc1ccccc1");
         Assert.assertEquals(7, query.getAtomCount());
-        Assert.assertTrue(query.getAtom(0).getSymbol().equals("S"));
+        Assert.assertEquals("S", query.getAtom(0).getSymbol());
     }
 
     @Test public void testPattern1() throws Exception {

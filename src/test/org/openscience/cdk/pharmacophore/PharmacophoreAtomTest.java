@@ -66,8 +66,8 @@ public class PharmacophoreAtomTest {
         PharmacophoreAtom patom4 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0,0,0));
         patom4.setMatchingAtoms(new int[] {1,4,6});
 
-        Assert.assertTrue(patom1.equals(patom2));
-        Assert.assertFalse(patom1.equals(patom3));
-        Assert.assertFalse(patom1.equals(patom4));
+        Assert.assertEquals(patom2, patom1);
+        Assert.assertNotSame(patom3, patom1);
+        Assert.assertNotSame(patom4, patom1);
     }
 }

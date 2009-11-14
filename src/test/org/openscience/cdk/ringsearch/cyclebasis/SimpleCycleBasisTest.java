@@ -103,14 +103,14 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 		
 		basis = new SimpleCycleBasis( g );
 		Assert.assertEquals(g.edgeSet().size() - g.vertexSet().size() + 1, basis.cycles().size());
-		Assert.assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3}) );
+		Assert.assertArrayEquals(basis.weightVector(), new int[] {3,3,3,3,3,3});
 		Assert.assertEquals(10, basis.relevantCycles().size());
 		Assert.assertEquals(0, basis.essentialCycles().size());
 		Assert.assertEquals(1, basis.equivalenceClasses().size());
 	}
 	
 	public void testWeightVector() {
-		Assert.assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3,3,3}) );
+		Assert.assertArrayEquals(basis.weightVector(), new int[] {3,3,3,3,3,3,3,3});
 	}
 	
 	public void testRelevantCycles() {

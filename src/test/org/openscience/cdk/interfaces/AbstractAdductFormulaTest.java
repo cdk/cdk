@@ -481,6 +481,6 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     	IAdductFormula add = getBuilder().newAdductFormula();
     	IChemObjectBuilder builder = add.getBuilder();
     	Assert.assertNotNull(builder);
-    	Assert.assertTrue(builder.getClass().getName().equals(getBuilder().getClass().getName()));
+    	Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
     }
 }

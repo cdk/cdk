@@ -84,7 +84,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
         MDLV2000Reader reader2 = new MDLV2000Reader(ins2, Mode.STRICT);
         Molecule mol2 = (Molecule) reader2.read(new Molecule());
         String code2=new HOSECodeGenerator().getHOSECode(mol2, mol2.getAtom(2), 6);
-        Assert.assertFalse(code1.equals(code2));
+        Assert.assertNotSame(code2, code1);
 	}
 
 

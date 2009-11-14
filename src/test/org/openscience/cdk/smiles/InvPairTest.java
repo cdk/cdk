@@ -53,9 +53,9 @@ public class InvPairTest extends CDKTestCase {
     @Test public void testEquals_Object() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);
-    	Assert.assertTrue(pair.equals(pair));
-    	Assert.assertFalse(pair.equals("NotSame"));
-    	Assert.assertFalse(pair.equals(new InvPair()));
+    	Assert.assertEquals(pair, pair);
+    	Assert.assertNotSame("NotSame", pair);
+    	Assert.assertNotSame(new InvPair(), pair);
     }
     
     @Test public void testToString() {

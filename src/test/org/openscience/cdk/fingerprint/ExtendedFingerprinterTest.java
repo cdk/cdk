@@ -382,7 +382,7 @@ public class ExtendedFingerprinterTest extends AbstractFingerprinterTest {
         }
         
         String diff1 = AtomContainerDiff.diff(mol, clone);
-        Assert.assertTrue(diff1.equals(""));
+        Assert.assertEquals("",diff1);
 
         ExtendedFingerprinter fprinter = new ExtendedFingerprinter();
         BitSet fp = fprinter.getFingerprint(mol);

@@ -1392,9 +1392,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        Assert.assertTrue(b1.equals(acetone.getBond(c1, c2)));        
-        Assert.assertTrue(b2.equals(acetone.getBond(c1, o)));        
-        Assert.assertTrue(b3.equals(acetone.getBond(c1, c3)));
+        Assert.assertEquals(acetone.getBond(c1, c2), b1);
+        Assert.assertEquals(acetone.getBond(c1, o), b2);        
+        Assert.assertEquals(acetone.getBond(c1, c3), b3);
         
         // test the default return value
         Assert.assertNull(acetone.getBond(acetone.getBuilder().newAtom(), acetone.getBuilder().newAtom()));
