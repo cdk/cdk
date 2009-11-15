@@ -229,4 +229,19 @@ public class PeriodicTable {
         if (element == null) return null;
         else return element.getPaulingEneg();
     }
+
+    @TestMethod("testTable")
+    public static String getSymbol(int atomicNumber) {
+        initialize();
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elementsByNumber.get(atomicNumber);
+        if (element == null) return null;
+        else return element.getSymbol();
+    }
+
+    @TestMethod("testTable")
+    public static int getElementCount() {
+        initialize();
+        return elements.size();
+    }
+                        
 }

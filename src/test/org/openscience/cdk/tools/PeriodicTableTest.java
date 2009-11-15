@@ -46,6 +46,9 @@ public class PeriodicTableTest extends CDKTestCase {
         Assert.assertEquals(CDKConstants.UNSET, org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius("Pu"));
         Assert.assertEquals(0.32, PeriodicTable.getCovalentRadius("He"), 0.001);
         Assert.assertEquals(14, PeriodicTable.getGroup("C"),0.01);
+
+        Assert.assertEquals("H", PeriodicTable.getSymbol(1));
+        Assert.assertEquals("C", PeriodicTable.getSymbol(6));        
     }
 
 }
