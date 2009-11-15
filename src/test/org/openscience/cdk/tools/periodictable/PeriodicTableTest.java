@@ -18,16 +18,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.tools.periodictable;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class PeriodicTableTest extends CDKTestCase {
 

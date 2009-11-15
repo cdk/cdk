@@ -49,7 +49,7 @@ import java.util.Map;
  * @cdk.module  standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.PeriodicTableTest")
+@TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableTest")
 public class PeriodicTable {
     
     private static boolean isInitialized = false;

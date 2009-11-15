@@ -96,6 +96,8 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingSetManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingSizeComparatorTest;
+import org.openscience.cdk.tools.periodictable.PeriodicTableElementTest;
+import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
 import org.openscience.cdk.validate.ProblemMarkerTest;
 
 /**
@@ -182,6 +184,9 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     AtomContainerComparatorTest.class,
     CDKHueckelAromaticityDetectorTest.class,
     HOSECodeGeneratorTest.class,
-    LonePairElectronCheckerTest.class
+    LonePairElectronCheckerTest.class ,
+    PeriodicTableElementTest.class,
+    PeriodicTableTest.class
+
 })
 public class MstandardTests {}

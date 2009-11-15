@@ -22,19 +22,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.config;
+package org.openscience.cdk.tools.periodictable;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.periodictable.ElementPTFactory;
-import org.openscience.cdk.tools.periodictable.PeriodicTableElement;
 
 /**
  * Checks the functionality of the ElementPTFactory
  *
- * @cdk.module test-core
+ * @cdk.module test-standard
  */
 public class ElementPTFactoryTest extends CDKTestCase
 {

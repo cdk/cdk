@@ -24,7 +24,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CloneAtomContainerTest;
-import org.openscience.cdk.PeriodicTableElementTest;
 import org.openscience.cdk.coverage.ExtraCoverageTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
@@ -34,7 +33,6 @@ import org.openscience.cdk.iupac.ParserTest;
 import org.openscience.cdk.tools.BremserPredictorTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
-import org.openscience.cdk.tools.PeriodicTableTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -46,8 +44,6 @@ import org.openscience.cdk.tools.PeriodicTableTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     ExtraCoverageTest.class,
-    PeriodicTableElementTest.class,
-    PeriodicTableTest.class,
     CloneAtomContainerTest.class,
     RDFCalculatorTest.class,
     KabschAlignmentTest.class,

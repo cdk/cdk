@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module    standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.PeriodicTableElementTest")
+@TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableElementTest")
 class PeriodicTableElement extends Element
 {
 	

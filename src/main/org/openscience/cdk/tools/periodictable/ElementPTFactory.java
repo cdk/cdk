@@ -47,7 +47,7 @@ import java.util.List;
  * @cdk.module     standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.ElementPTFactoryTest")
+@TestClass("org.openscience.cdk.tools.periodictable.ElementPTFactoryTest")
 class ElementPTFactory
 {
 
