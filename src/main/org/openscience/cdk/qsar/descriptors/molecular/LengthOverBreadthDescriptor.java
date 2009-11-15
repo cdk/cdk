@@ -24,8 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
+import Jama.Matrix;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -40,9 +39,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.PeriodicTable;
 
-import Jama.Matrix;
+import javax.vecmath.Point3d;
 
 /**
  * Evaluates length over breadth descriptors.
@@ -257,7 +255,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
             System.arraycopy(coords[i], 0, coord, 0, coords[0].length);
             if (withRadii) {
                 IAtom atom = atomContainer.getAtom(i);
-                double radius = PeriodicTable.getCovalentRadius(atom.getSymbol());
+                double radius = org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius(atom.getSymbol());
 
                 xmax = Math.max(xmax, coord[0] + radius);
                 ymax = Math.max(ymax, coord[1] + radius);

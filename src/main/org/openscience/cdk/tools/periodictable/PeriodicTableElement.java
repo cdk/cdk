@@ -22,8 +22,10 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.tools.periodictable;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -50,7 +52,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author        Miguel Rojas
  * @cdk.created   May 8, 2005
  * @cdk.keyword   element
- * @cdk.module    extra
+ * @cdk.module    standard
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.PeriodicTableElementTest")

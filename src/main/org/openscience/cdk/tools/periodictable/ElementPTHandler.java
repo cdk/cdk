@@ -21,17 +21,16 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.config.elements;
+package org.openscience.cdk.tools.periodictable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Reads an element list in CML2 format. An example definition is:

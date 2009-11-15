@@ -20,19 +20,6 @@
  */
 package org.openscience.cdk.protein;
 
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,8 +35,20 @@ import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.GridGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.PeriodicTable;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import javax.vecmath.Point3d;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * The detection of pocket and cavities in a bioPolymer is done similar to the program 

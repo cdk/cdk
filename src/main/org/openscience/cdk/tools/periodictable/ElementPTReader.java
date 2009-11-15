@@ -25,19 +25,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.config.elements;
+package org.openscience.cdk.tools.periodictable;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Reader that instantiates an XML parser and customized handler to process
@@ -123,8 +122,8 @@ public class ElementPTReader {
      * @return a Vector of Isotope's. Returns an empty vector is some reading error
      *         occured.
      */
-    public List<PeriodicTableElement> readElements() {
-        List<PeriodicTableElement> elements = new ArrayList<PeriodicTableElement>();
+    public List<org.openscience.cdk.tools.periodictable.PeriodicTableElement> readElements() {
+        List<PeriodicTableElement> elements = new ArrayList<org.openscience.cdk.tools.periodictable.PeriodicTableElement>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
@@ -132,7 +131,7 @@ public class ElementPTReader {
             logger.warn("Cannot deactivate validation: ", exception.getMessage());
             logger.debug(exception);
         }
-        ElementPTHandler handler = new ElementPTHandler();
+        ElementPTHandler handler = new org.openscience.cdk.tools.periodictable.ElementPTHandler();
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));

@@ -21,21 +21,19 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.config;
+package org.openscience.cdk.tools.periodictable;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-
-import org.openscience.cdk.PeriodicTableElement;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.elements.ElementPTReader;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Used to store and return data of a particular chemicalElement. As this class is a
@@ -46,7 +44,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     extra
+ * @cdk.module     standard
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.ElementPTFactoryTest")
@@ -122,7 +120,7 @@ public class ElementPTFactory
      * Get all the elements loaded by the factory.
      *
      * @return  A Vector of PeriodicTableElement objects
-     * @see org.openscience.cdk.PeriodicTableElement
+     * @see org.openscience.cdk.tools.periodictable.PeriodicTableElement
      */
     @TestMethod("testGetElements")
     public List<PeriodicTableElement> getElements() {
@@ -234,7 +232,7 @@ public class ElementPTFactory
 	 */
     @TestMethod("testGetPeriod_PeriodicTableElement")
 	public int getPeriod(PeriodicTableElement element){
-    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+    	org.openscience.cdk.tools.periodictable.PeriodicTableElement elementInt = getElement(element.getSymbol());
 		return elementInt.getPeriod();
 	}
     
@@ -270,7 +268,7 @@ public class ElementPTFactory
 	 */
     @TestMethod("testGetCASid_PeriodicTableElement")
 	public String getCASid(PeriodicTableElement element){
-    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+    	org.openscience.cdk.tools.periodictable.PeriodicTableElement elementInt = getElement(element.getSymbol());
 		return elementInt.getCASid();
 	}
 

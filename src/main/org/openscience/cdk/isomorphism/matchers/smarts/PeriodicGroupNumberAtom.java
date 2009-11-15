@@ -30,7 +30,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.tools.PeriodicTable;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * This matcher checks the periodic group number of an atom.

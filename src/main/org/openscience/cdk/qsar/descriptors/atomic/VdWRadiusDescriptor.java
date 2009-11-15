@@ -33,7 +33,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.tools.PeriodicTable;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.io.IOException;
 

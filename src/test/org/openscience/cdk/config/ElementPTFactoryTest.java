@@ -27,8 +27,9 @@ package org.openscience.cdk.config;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.periodictable.ElementPTFactory;
+import org.openscience.cdk.tools.periodictable.PeriodicTableElement;
 
 /**
  * Checks the functionality of the ElementPTFactory
@@ -66,7 +67,7 @@ public class ElementPTFactoryTest extends CDKTestCase
     @Test
     public void testConfigure_PeriodicTableElement() throws Exception {
 		ElementPTFactory elefac = ElementPTFactory.getInstance();
-		PeriodicTableElement pte = elefac.configure(new PeriodicTableElement("H"));
+		PeriodicTableElement pte = elefac.configure(new org.openscience.cdk.tools.periodictable.PeriodicTableElement("H"));
 		Assert.assertNotNull(pte);
     }
     
@@ -79,12 +80,12 @@ public class ElementPTFactoryTest extends CDKTestCase
     
     @Test public void testGetAtomicNumber_PeriodicTableElement() throws Exception {
 		ElementPTFactory elefac = ElementPTFactory.getInstance();
-        Assert.assertEquals(1.0079760, elefac.getAtomicNumber(new PeriodicTableElement("H")), 0.01);
+        Assert.assertEquals(1.0079760, elefac.getAtomicNumber(new org.openscience.cdk.tools.periodictable.PeriodicTableElement("H")), 0.01);
     }
     
     @Test public void testGetName_PeriodicTableElement() throws Exception {
 		ElementPTFactory elefac = ElementPTFactory.getInstance();
-        Assert.assertEquals("Hydrogen", elefac.getName(new PeriodicTableElement("H")));
+        Assert.assertEquals("Hydrogen", elefac.getName(new org.openscience.cdk.tools.periodictable.PeriodicTableElement("H")));
     }
 
     @Test public void testGetChemicalSerie_PeriodicTableElement() throws Exception {
@@ -93,7 +94,7 @@ public class ElementPTFactoryTest extends CDKTestCase
     }
     
     @Test public void testGetPeriod_PeriodicTableElement() throws Exception {
-		ElementPTFactory elefac = ElementPTFactory.getInstance();
+		org.openscience.cdk.tools.periodictable.ElementPTFactory elefac = ElementPTFactory.getInstance();
         Assert.assertEquals(1, elefac.getPeriod(new PeriodicTableElement("H")), 0.1);
     }
     
@@ -109,7 +110,7 @@ public class ElementPTFactoryTest extends CDKTestCase
     
     @Test public void testGetVdwRadius_PeriodicTableElement() throws Exception {
 		ElementPTFactory elefac = ElementPTFactory.getInstance();
-        Assert.assertEquals(1.2, elefac.getVdwRadius(new PeriodicTableElement("H")), 0.1);
+        Assert.assertEquals(1.2, elefac.getVdwRadius(new org.openscience.cdk.tools.periodictable.PeriodicTableElement("H")), 0.1);
     }
     
     @Test public void testGetCASid_PeriodicTableElement() throws Exception {

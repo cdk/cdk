@@ -25,6 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.diff.ElementDiff;
+import org.openscience.cdk.tools.periodictable.PeriodicTableElement;
 
 /**
  * @cdk.module test-extra
@@ -140,7 +141,7 @@ public class PeriodicTableElementTest extends CDKTestCase {
 
     @Test
     public void testGetSeries() {
-        PeriodicTableElement pte = new PeriodicTableElement("C");
+        PeriodicTableElement pte = new org.openscience.cdk.tools.periodictable.PeriodicTableElement("C");
         Assert.assertNull(pte.getChemicalSerie());
     }
 

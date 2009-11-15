@@ -18,13 +18,11 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.tools.periodictable;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.ElementPTFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +36,7 @@ import java.util.Map;
  * Represents elements of the Periodic Table.
  * <p/>
  * Though individual elements can be obtained from instances
- * of {@link org.openscience.cdk.PeriodicTableElement}, this utility
+ * of {@link org.openscience.cdk.tools.periodictable.PeriodicTableElement}, this utility
  * class is useful when one wants generic properties of elements such
  * as atomic number, VdW radius etc.
  *
@@ -48,15 +46,15 @@ import java.util.Map;
  * @cdk.keyword periodic table
  * @cdk.keyword radius, vanderwaals 
  * @cdk.keyword electronegativity
- * @cdk.module  extra
+ * @cdk.module  standard
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.PeriodicTableTest")
 public class PeriodicTable {
     
     private static boolean isInitialized = false;
-    private static Map<String, PeriodicTableElement> elements;
-    private static Map<Integer, PeriodicTableElement> elementsByNumber;
+    private static Map<String, org.openscience.cdk.tools.periodictable.PeriodicTableElement> elements;
+    private static Map<Integer, org.openscience.cdk.tools.periodictable.PeriodicTableElement> elementsByNumber;
 
     private static void initialize() {
         if (isInitialized) return;
@@ -71,8 +69,8 @@ public class PeriodicTable {
 
         elements = new HashMap<String, PeriodicTableElement>();
         elementsByNumber = new HashMap<Integer, PeriodicTableElement>();
-        List<PeriodicTableElement> tmp = factory.getElements();
-        for (PeriodicTableElement element : tmp) {
+        List<org.openscience.cdk.tools.periodictable.PeriodicTableElement> tmp = factory.getElements();
+        for (org.openscience.cdk.tools.periodictable.PeriodicTableElement element : tmp) {
             elements.put(element.getSymbol(), element);
             elementsByNumber.put(element.getAtomicNumber(), element);
         }
@@ -101,7 +99,7 @@ public class PeriodicTable {
             String[] toks = line.split("\\s");
             int atnum = Integer.parseInt(toks[0]);
             double vdw = Double.parseDouble(toks[1]);
-            PeriodicTableElement e = elementsByNumber.get(atnum);
+            org.openscience.cdk.tools.periodictable.PeriodicTableElement e = elementsByNumber.get(atnum);
             if (e != null) {
                 String symbol = e.getSymbol();
                 if (vdw == 2) elements.get(symbol).setVdwRadius((Double) CDKConstants.UNSET);
@@ -123,7 +121,7 @@ public class PeriodicTable {
             String[] toks = line.split("\\s");
             int atnum = Integer.parseInt(toks[0]);
             double vdw = Double.parseDouble(toks[1]);
-            PeriodicTableElement e = elementsByNumber.get(atnum);
+            org.openscience.cdk.tools.periodictable.PeriodicTableElement e = elementsByNumber.get(atnum);
             if (e != null) {
                 String symbol = e.getSymbol();
                 elements.get(symbol).setCovalentRadius(vdw);
@@ -144,7 +142,7 @@ public class PeriodicTable {
             String[] toks = line.split("\\s");
             int atnum = Integer.parseInt(toks[0]);
             double eneg = Double.parseDouble(toks[1]);
-            PeriodicTableElement e = elementsByNumber.get(atnum);
+            org.openscience.cdk.tools.periodictable.PeriodicTableElement e = elementsByNumber.get(atnum);
             if (e != null) {
                 String symbol = e.getSymbol();
                 elements.get(symbol).setPaulingEneg(eneg);
@@ -155,7 +153,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static Double getVdwRadius(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getVdwRadius();
     }
@@ -163,7 +161,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static Double getCovalentRadius(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getCovalentRadius();
     }
@@ -171,7 +169,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static String getCASId(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getCASid();
     }
@@ -187,7 +185,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static Integer getGroup(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getGroup();
     }
@@ -203,7 +201,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static Integer getPeriod(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getPeriod();
     }
@@ -211,7 +209,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static String getPhase(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getPhase();
     }
@@ -219,7 +217,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static Integer getAtomicNumber(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getAtomicNumber();
     }
@@ -227,7 +225,7 @@ public class PeriodicTable {
     @TestMethod("testTable")
     public static Double getPaulingElectronegativity(String symbol) {
         initialize();
-        PeriodicTableElement element = elements.get(symbol);
+        org.openscience.cdk.tools.periodictable.PeriodicTableElement element = elements.get(symbol);
         if (element == null) return null;
         else return element.getPaulingEneg();
     }

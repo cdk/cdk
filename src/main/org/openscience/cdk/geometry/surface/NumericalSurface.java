@@ -20,18 +20,17 @@
 
 package org.openscience.cdk.geometry.surface;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.PeriodicTable;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import javax.vecmath.Point3d;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A class representing the solvent acessible surface area surface of a molecule.
