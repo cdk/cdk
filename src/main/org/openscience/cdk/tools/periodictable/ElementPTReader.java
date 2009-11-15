@@ -47,10 +47,10 @@ import java.util.List;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     extra
+ * @cdk.module     standard
  * @cdk.githash
  */
-public class ElementPTReader {
+class ElementPTReader {
 
     private XMLReader parser;
     private Reader input;

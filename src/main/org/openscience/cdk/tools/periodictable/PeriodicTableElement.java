@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.PeriodicTableElementTest")
-public class PeriodicTableElement extends Element
+class PeriodicTableElement extends Element
 {
 	
 	/**

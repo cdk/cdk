@@ -48,7 +48,7 @@ import java.util.List;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.ElementPTFactoryTest")
-public class ElementPTFactory
+class ElementPTFactory
 {
 
 	private static ElementPTFactory efac = null;

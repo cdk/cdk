@@ -48,10 +48,10 @@ import java.util.List;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     extra
+ * @cdk.module     standard
  * @cdk.githash
  */
-public class ElementPTHandler extends DefaultHandler 
+class ElementPTHandler extends DefaultHandler 
 {
 	private final int SCALAR_UNSET = 0;
 	private final int LABEL_CAS = 1; 
