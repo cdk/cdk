@@ -32,9 +32,17 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -417,7 +425,7 @@ public class AtomContainerManipulator {
 		int count = ac.getBondCount();
 		for (int i = 0; i < count; i++) {
             for (IAtom atom : ac.getBond(i).atoms()) {
-                if (atom.getSymbol().equals(Symbols.byAtomicNumber[1])) {
+                if (atom.getSymbol().equals("H")) {
                     (h.contains(atom) ? multi_h : h).add(atom);
                 }
             }
@@ -448,7 +456,7 @@ public class AtomContainerManipulator {
 				i++) {
 			// Clone/remove this atom?
 			IAtom atom = ac.getAtom(i);
-			if (!atom.getSymbol().equals(Symbols.byAtomicNumber[1]) || preserve.contains(atom)) {
+			if (!atom.getSymbol().equals("H") || preserve.contains(atom)) {
 				IAtom a = null;
 				try {
 					a = (IAtom) atom.clone();

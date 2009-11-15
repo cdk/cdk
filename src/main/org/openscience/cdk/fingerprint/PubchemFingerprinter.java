@@ -27,7 +27,6 @@ package org.openscience.cdk.fingerprint;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,6 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.util.BitSet;
 
@@ -142,7 +142,7 @@ public class PubchemFingerprinter implements IFingerprinter {
 
         public CountElements(IAtomContainer m) {
             for (int i = 0; i < m.getAtomCount(); i++)
-                ++counts[Symbols.getAtomicNumber(m.getAtom(i).getSymbol())];
+                ++counts[PeriodicTable.getAtomicNumber(m.getAtom(i).getSymbol())];
         }
 
         public int getCount(int atno) {
@@ -150,7 +150,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         }
 
         public int getCount(String symb) {
-            return counts[Symbols.getAtomicNumber(symb)];
+            return counts[PeriodicTable.getAtomicNumber(symb)];
         }
     }
 

@@ -21,10 +21,6 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -35,16 +31,20 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -2656,7 +2656,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         final int testUptoAtomicNumber = 36; // TODO: 92 ?
         int elementsMissingTypes = 0;
     	for (int i=1; i<testUptoAtomicNumber; i++) {
-    		String symbol = Symbols.byAtomicNumber[i];
+    		String symbol = PeriodicTable.getSymbol(i);
     		IAtomType[] expectedTypes = factory.getAtomTypes(symbol);
     		if (expectedTypes.length == 0) {
     			errorMessage += " " + symbol;

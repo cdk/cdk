@@ -24,19 +24,10 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,6 +38,15 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *  Generates a fingerprint for a given AtomContainer. Fingerprints are
@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  The FingerPrinter assumes that hydrogens are explicitly given! Furthermore,
  *  if pseudo atoms or atoms with malformed symbols are present, their atomic 
  *  number is taken as one more than the last element currently supported in 
- *  {@link org.openscience.cdk.config.Symbols}. 
+ *  {@link org.openscience.cdk.tools.periodictable.PeriodicTable}. 
  *
  *  <font color="#FF0000">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long
@@ -227,12 +227,12 @@ public class Fingerprinter implements IFingerprinter {
                     // fail maybe we should use 0 for pseudo atoms and 
                     // malformed symbols?
                     if (x instanceof IPseudoAtom)
-                        sb.append((char) Symbols.byAtomicNumber.length + 1);
+                        sb.append((char) PeriodicTable.getElementCount() + 1);
                     else {
-                        Integer atnum = Symbols.getAtomicNumber(x.getSymbol());
+                        Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
                         if (atnum != null) sb.append((char) atnum.intValue());
                         else sb.append((char) 
-                                       Symbols.byAtomicNumber.length + 1);
+                                       PeriodicTable.getElementCount() + 1);
                     }
 
                     for (int i = 1; i < path.size(); i++) {

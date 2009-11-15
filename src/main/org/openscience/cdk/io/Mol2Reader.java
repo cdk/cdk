@@ -24,21 +24,10 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -54,6 +43,16 @@ import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import javax.vecmath.Point3d;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.StringTokenizer;
 
 /**
  * Reads a molecule from an Mol2 file, such as written by Sybyl.
@@ -333,13 +332,13 @@ public class Mol2Reader extends DefaultChemObjectReader {
         }
         return molecule;
     }
-    
+
     private boolean isElementSymbol(String atomTypeStr) {
-    	for (int i=1; i<Symbols.KNOWN_ELEMENTS; i++) {
-    		if (Symbols.byAtomicNumber[i].equals(atomTypeStr)) return true;
-    	}
-		return false;
-	}
+        for (int i = 1; i < PeriodicTable.getElementCount(); i++) {
+            if (PeriodicTable.getSymbol(i).equals(atomTypeStr)) return true;
+        }
+        return false;
+    }
 
     @TestMethod("testClose")
     public void close() throws IOException {

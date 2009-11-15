@@ -29,8 +29,8 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * This matches an atom using the atomic number.
@@ -55,7 +55,7 @@ public class AtomicNumberAtom extends SMARTSAtom {
     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
     */
     public boolean matches(IAtom atom) {
-        Integer atNum = Symbols.getAtomicNumber(atom.getSymbol());
+        Integer atNum = PeriodicTable.getAtomicNumber(atom.getSymbol());
         return atNum != null && atNum.intValue() == getAtomicNumber().intValue();
     }
 }

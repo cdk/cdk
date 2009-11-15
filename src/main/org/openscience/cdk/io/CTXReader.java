@@ -23,16 +23,9 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -48,6 +41,13 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 /**
  * Reader that extracts information from the IDENT, NAME, ATOMS and BONDS
@@ -190,7 +190,7 @@ public class CTXReader extends DefaultChemObjectReader {
 			int atomicNumber = Integer.parseInt(line.substring(7,10).trim());
 			IAtom atom = container.getBuilder().newAtom();
 			atom.setAtomicNumber(atomicNumber);
-			atom.setSymbol(Symbols.byAtomicNumber[atomicNumber]);
+			atom.setSymbol(PeriodicTable.getSymbol(atomicNumber));
 			container.addAtom(atom);
 		}
 	}

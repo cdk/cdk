@@ -26,7 +26,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest;
-import org.openscience.cdk.config.SymbolsTest;
 import org.openscience.cdk.coverage.StandardCoverageTest;
 import org.openscience.cdk.dict.DictRefTest;
 import org.openscience.cdk.exception.InvalidSmilesExceptionTest;
@@ -142,7 +141,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     GraphOnlyFingerprinterTest.class,
     FingerprinterToolTest.class,
     ProblemMarkerTest.class,
-    SymbolsTest.class,
     BondToolsTest.class,
     UnsupportedChemObjectExceptionTest.class,
     InvalidSmilesExceptionTest.class,
