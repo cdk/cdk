@@ -495,10 +495,10 @@ public class StructureDiagramGenerator
 			/*
 			 * Find mapped substructures
 			 */
-			for (Iterator substructureIterator = mappedSubstructures.atomContainers().iterator(); substructureIterator.hasNext(); ) {
+			for (Iterator<IAtomContainer> substructureIterator = mappedSubstructures.atomContainers().iterator(); substructureIterator.hasNext(); ) {
 				IAtomContainer substructure = (IAtomContainer) substructureIterator.next();
 				boolean substructureMapped = false;
-				for (Iterator ringSetIterator = rs.atomContainers().iterator(); ringSetIterator.hasNext() && !substructureMapped; ) {
+				for (Iterator<IAtomContainer> ringSetIterator = rs.atomContainers().iterator(); ringSetIterator.hasNext() && !substructureMapped; ) {
 					IRing ring = (IRing) ringSetIterator.next();
 					for (Iterator atomIterator = ring.atoms().iterator(); atomIterator.hasNext() && !substructureMapped; ) {
 						IAtom atom = (IAtom) atomIterator.next();
