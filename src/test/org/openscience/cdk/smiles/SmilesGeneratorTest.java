@@ -890,6 +890,25 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String genSmiles = smilesGenerator.createSMILES(mol);
         Assert.assertTrue("Generated SMILES should not have explicit H: "+genSmiles, genSmiles.indexOf("H") == -1);
     }
+
+    /**
+     * @cdk.bug 2898032
+     */
+    @Test
+    public void testCanSmi() throws InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String s1 = "OC(=O)C(Br)(Cl)N";
+        String s2 = "ClC(Br)(N)C(=O)O";
+
+        IMolecule m1 = sp.parseSmiles(s1);
+        IMolecule m2 = sp.parseSmiles(s2);
+
+        SmilesGenerator sg = new SmilesGenerator();
+        String o1 = sg.createSMILES(m1);
+        String o2 = sg.createSMILES(m2);
+
+        Assert.assertTrue("The two canonical SMILES should match",o1.equals(o2));
+    }
     
 }
 
