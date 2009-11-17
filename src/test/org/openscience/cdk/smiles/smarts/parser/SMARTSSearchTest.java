@@ -1592,5 +1592,32 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
     }
+
+
+    /**
+     * @cdk.bug 2898399
+     * @throws Exception
+     */
+    @Test
+    public void testHydrogen() throws Exception {
+        int[] results = match("[H]", "[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+
+    /**
+     * @cdk.bug 2898399
+     * @throws Exception
+     */
+     @Test
+    public void testLeadingHydrogen() throws Exception {
+        int[] results = match
+        ("[H][C@@]1(CCC(C)=CC1=O)C(C)=C","[H][C@@]1(CCC(C)=CC1=O)C(C)=C");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+
 }
 
