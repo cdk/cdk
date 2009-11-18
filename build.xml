@@ -1104,13 +1104,22 @@
     <!-- Regenerate template fingerprints in case the fingerprint code has been updated
 	 so that fingerprint bits are different from a previous version -->
     <target name="makefp3d" id="makefp3d">
+      <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
       <gunzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz"
 	      dest="${src}/main/org/openscience/cdk/modeling/builder3d/data/" />
       <java classname="org.openscience.cdk.modeling.builder3d.TemplateExtractor">
 	<classpath>
-	  <pathelement location="jar/xercesImpl-2.9.0.jar"/>
 	  <pathelement location="jar/jgrapht-0.6.0.jar"/>
-	  <pathelement path="${build}" />
+          <pathelement location="jar/xercesImpl-2.9.0.jar"/>
+          <pathelement location="jar/vecmath1.2-1.14.jar"/>
+          <pathelement path="${dist}/jar/cdk-builder3dtools.jar" />
+          <pathelement path="${dist}/jar/cdk-interfaces.jar" />
+          <pathelement path="${dist}/jar/cdk-nonotify.jar" />
+          <pathelement path="${dist}/jar/cdk-standard.jar" />
+          <pathelement path="${dist}/jar/cdk-core.jar" />
+          <pathelement path="${dist}/jar/cdk-io.jar" />
+          <pathelement path="${dist}/jar/cdk-ioformats.jar" />
+          <pathelement path="${dist}/jar/cdk-data.jar" />
 	</classpath>
 	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf" />
 	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt" />
