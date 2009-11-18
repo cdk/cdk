@@ -20,10 +20,10 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+
+import java.util.List;
 
 /**
  * This matches Hydrogen atoms.
@@ -71,10 +71,13 @@ public class HydrogenAtom extends SMARTSAtom {
 			return true;
 		}
 		
-		//isotopic hydrogen specifications, e.g. deuterium [2H] 
-		if (atom.getMassNumber() != null && atom.getMassNumber() > 1) { 
-			return true;
-		}
+		//isotopic hydrogen specifications, e.g. deuterium [2H] or tritium etc
+        if (atom.getMassNumber() != null) {
+            if (getMassNumber().intValue() == atom.getMassNumber().intValue()) return true;
+        } else {
+            // target atom is [H], so make sure query atom has mass number = 1
+            if (getMassNumber() == 1) return true;
+        }
 		
 		return false;
 	}

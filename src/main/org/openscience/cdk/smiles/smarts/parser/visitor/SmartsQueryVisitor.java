@@ -634,6 +634,15 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		} else if ("H".equals(symbol)) {
 			atom = new HydrogenAtom();
 			atom.setSymbol(symbol.toUpperCase());
+            atom.setMassNumber(1);
+		} else if ("D".equals(symbol)) {
+			atom = new HydrogenAtom();
+			atom.setSymbol(symbol.toUpperCase());
+            atom.setMassNumber(2);
+		} else if ("T".equals(symbol)) {
+			atom = new HydrogenAtom();
+			atom.setSymbol(symbol.toUpperCase());
+            atom.setMassNumber(3);
 		} else {
 			atom = new AliphaticSymbolAtom(symbol);
 		}

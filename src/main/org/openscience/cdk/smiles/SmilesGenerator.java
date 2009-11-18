@@ -77,6 +77,10 @@ import java.util.Vector;
  * IMolecule benzene2; // one of the two kekule structures with explicit double bond orders
  * String smiles2 = sg.createSMILES(benzene2); // C1=CC=CC=C1
  * </pre>
+ * <b>Note</b>Due to the way the initial atom labeling is constructed, ensure
+ * that the input molecule is appropriately configured, especially for the atomic
+ * number. In absence of such configuration it is possible that different forms
+ * of the same molecule will not result in the same canonical SMILES.
  *
  * @author         Oliver Horlacher
  * @author         Stefan Kuhn (chiral smiles)

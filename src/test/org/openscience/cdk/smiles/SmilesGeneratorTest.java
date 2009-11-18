@@ -37,6 +37,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
@@ -59,6 +60,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 
@@ -892,6 +894,48 @@ public class SmilesGeneratorTest extends CDKTestCase {
         smilesGenerator.setUseAromaticityFlag(true);
         String genSmiles = smilesGenerator.createSMILES(mol);
         Assert.assertTrue("Generated SMILES should not have explicit H: "+genSmiles, genSmiles.indexOf("H") == -1);
+    }
+
+    /**
+     * @cdk.bug 2898032
+     */
+    @Test
+    public void testCanSmiWithoutConfiguredAtoms() throws CDKException, IOException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String s1 = "OC(=O)C(Br)(Cl)N";
+        String s2 = "ClC(Br)(N)C(=O)O";
+
+        IMolecule m1 = sp.parseSmiles(s1);
+        IMolecule m2 = sp.parseSmiles(s2);
+
+        SmilesGenerator sg = new SmilesGenerator();
+        String o1 = sg.createSMILES(m1);
+        String o2 = sg.createSMILES(m2);
+
+        Assert.assertFalse("The two canonical SMILES should not match",o1.equals(o2));
+    }
+
+    /**
+     * @cdk.bug 2898032
+     */
+    @Test
+    public void testCanSmiWithConfiguredAtoms() throws CDKException, IOException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String s1 = "OC(=O)C(Br)(Cl)N";
+        String s2 = "ClC(Br)(N)C(=O)O";
+
+        IMolecule m1 = sp.parseSmiles(s1);
+        IMolecule m2 = sp.parseSmiles(s2);
+
+        IsotopeFactory fact = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+        fact.configureAtoms(m1);
+        fact.configureAtoms(m2);
+
+        SmilesGenerator sg = new SmilesGenerator();
+        String o1 = sg.createSMILES(m1);
+        String o2 = sg.createSMILES(m2);
+
+        Assert.assertTrue("The two canonical SMILES should match",o1.equals(o2));
     }
     
 }

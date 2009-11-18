@@ -652,8 +652,8 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     @Test public void testPropertyHAtom2() throws Exception {
         int[] results = match("[H]", "[2H]");
-        Assert.assertEquals(1, results[0]);
-        Assert.assertEquals(1, results[1]);
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
     }
 
     @Test public void testPropertyHAtom3() throws Exception {
@@ -670,8 +670,8 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     @Test public void testPropertyHAtom5() throws Exception {
         int[] results = match("[H]", "[H]C([H])([H])[H]");
-        Assert.assertEquals(0, results[0]);
-        Assert.assertEquals(0, results[1]);
+        Assert.assertEquals(4, results[0]);
+        Assert.assertEquals(4, results[1]);
     }
 
     @Test public void testPropertyHTotal1() throws Exception {
@@ -825,6 +825,13 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results = match("[H]", "CCCC([2H])[H]");
         Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
+    }
+
+    @Test
+    public void testPropertyAtomicMass7() throws Exception {
+        int[] results = match("[3H]", "CCCC([2H])([3H])[3H]");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(2, results[1]);
     }
 
     @Test public void testBondSingle1() throws Exception {
@@ -1594,5 +1601,32 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
     }
+
+
+    /**
+     * @cdk.bug 2898399
+     * @throws Exception
+     */
+    @Test
+    public void testHydrogen() throws Exception {
+        int[] results = match("[H]", "[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+
+    /**
+     * @cdk.bug 2898399
+     * @throws Exception
+     */
+     @Test
+    public void testLeadingHydrogen() throws Exception {
+        int[] results = match
+        ("[H][C@@]1(CCC(C)=CC1=O)C(C)=C","[H][C@@]1(CCC(C)=CC1=O)C(C)=C");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+
 }
 

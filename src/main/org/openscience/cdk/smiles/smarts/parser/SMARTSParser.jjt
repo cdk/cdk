@@ -398,8 +398,8 @@ ASTAtom	 AtomExpression() #Atom :
 	    	<L_BRACKET> { firstToken = getToken(1); secondToken = getToken(2); }
 	    	( AtomicMass() { massNode = (ASTAtomicMass)jjtree.popNode(); }	)?
 	    	LowAndExpression() 
-	    	{ 
-				if (massNode != null) { // insert AtomicMass node into expression
+	    	{
+				if (massNode != null) { // insert AtomicMass node into expression       
 					ASTLowAndExpression topNode = (ASTLowAndExpression)jjtree.popNode();
 					topNode.insertLeafChild(massNode);
 					jjtree.pushNode(topNode);
@@ -418,7 +418,13 @@ ASTAtom	 AtomExpression() #Atom :
 		    		if ( (rightBracket.beginColumn - HToken.endColumn) == 1) {
 		    			jjtree.popNode();
 		    			ASTExplicitAtom explicitAtom = new ASTExplicitAtom(JJTEXPLICITATOM);
-						explicitAtom.setSymbol("H");
+                        if (massNode!= null) {
+						    if (massNode.getMass() == 2) explicitAtom.setSymbol("D");
+						    else if (massNode.getMass() == 3) explicitAtom.setSymbol("T");
+						    else if (massNode.getMass() == 1) explicitAtom.setSymbol("H");
+						    } else {
+						      explicitAtom.setSymbol("H");
+						    }
 						jjtree.pushNode(explicitAtom);
 		    		}
 	    		}
