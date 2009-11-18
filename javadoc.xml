@@ -174,6 +174,68 @@
         </javadoc>
     </target>
 
+    <target name="ojdcheck" depends="compileDocTests">
+      <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="data"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="datadebug"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="nonotify"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="standard"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="atomtype"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="io"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="ioformats"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="inchi"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="extra"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="fingerprint"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="formula"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="render"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="reaction"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="libiocml"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="libiomd"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="builder3d"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="smiles"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="smarts"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="sdg"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="forcefield"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="pdb"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="qsar"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="qsaratomic"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="qsarbond"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="qsarionpot"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="qsarmolecular"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="qsarprotein"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="pcore"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="structgen"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="valencycheck"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="charges"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="diff"/></antcall>
+    </target>
+
+    <target name="ojdcheck-module">
+        <mkdir dir="reports/ojdcheck/"/>
+        <mkdir dir="${build}/src/${module}"/>
+        <copy todir="${build}/src/${module}">
+            <fileset dir="${src}/main">
+                <includesfile name="${build}/${module}.javafiles"/>
+            </fileset>
+        </copy>
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.github.ojdcheck.OpenJavaDocCheck"
+                    path="develjar/ojdcheck.jar:src/main">
+              <param name="-xhtml"/>
+              <param name="-file"
+                    value="reports/ojdcheck/${module}.html"/>
+              <param name="-tests"
+                    value="net.sf.cdk.tools.checkdoctest.MissingGithashTagletTest,net.sf.cdk.tools.checkdoctest.MissingModuleTagletTest,net.sf.cdk.tools.checkdoctest.IncorrectBugNumberTagletTest"/>
+            </doclet>
+            <sourcepath>
+              <pathelement path="${build}/src/${module}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
   <target id="check" name="check">
     <condition property="isMacOsX">
       <and>
@@ -202,7 +264,7 @@
       </classpath>
     </javac>
     <javac srcdir="src/main" destdir="src/main"
-         includes="net/sf/cdk/tools/**/*.java" debug="on" optimize="off">
+         includes="net/sf/cdk/tools/**/*Taglet.java" debug="on" optimize="off">
       <classpath>
         <fileset dir="jar/">
           <include name="xom-1.1.jar" />
@@ -211,6 +273,18 @@
     </javac>
   </target>
 
+  <target name="compileDocTests" id="compileDocTests"
+       depends="check">
+    <javac srcdir="src/main" destdir="src/main"
+           includes="net/sf/cdk/tools/checkdoctest/*Test.java"
+           debug="on" optimize="off">
+      <classpath>
+        <fileset dir="develjar/">
+          <include name="ojdcheck.jar" />
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
 </project>
 
 
