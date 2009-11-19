@@ -105,13 +105,35 @@ public class RingPlacer
 	}
 	
 	public void placeRing(IRing ring, Point2d ringCenter, double bondLength) {
-	    double radius = this.getNativeRingRadius(ring, bondLength);
+ 	      double radius = this.getNativeRingRadius(ring, bondLength);
         double addAngle = 2 * Math.PI / ring.getRingSize();
 
         IAtom startAtom = ring.getFirstAtom();
         Point2d p = new Point2d(ringCenter.x + radius, ringCenter.y);
         startAtom.setPoint2d(p);
         double startAngle = Math.PI*0.5;
+        
+        /* Different ring sizes get different start angles to have
+         * visually correct placement */
+        int ringSize=ring.getRingSize();
+        switch (ringSize) {
+            case 3:
+                    startAngle=Math.PI*(0.1666667);
+                    break;
+            case 4:
+                    startAngle=Math.PI*0.25;
+                    break;
+            case 5:
+                    startAngle=Math.PI*0.3;
+                    break;
+            case 7:
+                    startAngle=Math.PI*0.07;
+                    break;
+            case 8:
+                    startAngle=Math.PI*0.125;
+                    break;
+        }
+        
         List<IBond> bonds = ring.getConnectedBondsList(startAtom);
         /*
          * Store all atoms to draw in consecutive order relative to the
