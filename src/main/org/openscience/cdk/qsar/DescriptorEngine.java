@@ -596,8 +596,8 @@ public class DescriptorEngine {
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
-                    if (jarEntry.toString().indexOf(".class") != -1) {
-                        String className = jarEntry.toString().replace('/', '.').replaceAll(".class", "");
+                    if (jarEntry.toString().indexOf(".class,") != -1) {
+                        String className = jarEntry.toString().replace('/', '.').replaceAll(".class,", "");
                         if (className.indexOf('$') != -1) continue;
 
                         Class klass = null;
@@ -674,8 +674,8 @@ public class DescriptorEngine {
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
-                    if (jarEntry.toString().indexOf(".class") != -1) {
-                        String tmp = jarEntry.toString().replace('/', '.').replaceAll(".class", "");
+                    if (jarEntry.toString().indexOf(".class,") != -1) {
+                        String tmp = jarEntry.toString().replace('/', '.').replaceAll(".class,", "");
                         if (!(tmp.indexOf(packageName) != -1)) continue;
                         if (tmp.indexOf('$') != -1) continue;
                         if (tmp.indexOf("Test") != -1) continue;

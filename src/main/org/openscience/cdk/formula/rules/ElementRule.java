@@ -28,10 +28,10 @@ import java.util.Iterator;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormulaRange;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
@@ -125,7 +125,9 @@ public class ElementRule implements IRule{
     	while(itElem.hasNext()){
     		IElement element = itElem.next();
     		int occur = MolecularFormulaManipulator.getElementCount(formula, element);
-    		IIsotope elemIsotope = formula.getBuilder().newIsotope(element.getSymbol());
+    		IIsotope elemIsotope = formula.getBuilder().newInstance(
+    		    IIsotope.class, element.getSymbol()
+    		);
     		if((occur < mfRange.getIsotopeCountMin(elemIsotope)) 
     			|| ( occur > mfRange.getIsotopeCountMax(elemIsotope)))
     		{
@@ -158,7 +160,7 @@ public class ElementRule implements IRule{
 
     		mfRange = new MolecularFormulaRange();
     		for(int i = 0; i < elements.length ; i++)
-    			mfRange.addIsotope( builder.newIsotope(elements[i]), 0, 50);
+    			mfRange.addIsotope( builder.newInstance(IIsotope.class, elements[i]), 0, 50);
     	}
     }
 }

@@ -22,10 +22,9 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.ringsearch.Path;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
@@ -39,11 +38,11 @@ public class PathTest extends CDKTestCase {
 	@Test
 	public void testJoin() {
 
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
         Path path1 = new Path(atom1, atom2);
 
-        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newAtom("F");
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
         Path path2 = new Path(atom2, atom3);
 
         Path joinedPath = Path.join(path1, path2, atom2);
@@ -55,11 +54,11 @@ public class PathTest extends CDKTestCase {
 
     @Test
     public void testGetIntersectionSize() {
-       IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+       IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
         Path path1 = new Path(atom1, atom2);
 
-        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newAtom("F");
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
         Path path2 = new Path(atom2, atom3);
 
         int intersectSize = path1.getIntersectionSize(path2);

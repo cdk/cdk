@@ -161,7 +161,7 @@ public class SpanningTree {
 
     @TestMethod("testGetSpanningTree")
     public IAtomContainer getSpanningTree() {
-		IAtomContainer ac = molecule.getBuilder().newAtomContainer();
+		IAtomContainer ac = molecule.getBuilder().newInstance(IAtomContainer.class);
 		for (int a=0 ; a < totalVertexCount; a++) ac.addAtom(molecule.getAtom(a));
 		for (int b=0; b < totalEdgeCount; b++ ) if (bondsInTree[b])
 			ac.addBond(molecule.getBond(b));
@@ -170,7 +170,7 @@ public class SpanningTree {
 
     @TestMethod("testGetPath_IAtomContainer_IAtom_IAtom")
     public IAtomContainer getPath(IAtomContainer spt,IAtom a1, IAtom a2) throws NoSuchAtomException {
-		IAtomContainer path = spt.getBuilder().newAtomContainer();
+		IAtomContainer path = spt.getBuilder().newInstance(IAtomContainer.class);
 		PathTools.resetFlags(spt);
 		path.addAtom(a1);
 		PathTools.depthFirstTargetSearch(spt,a1,a2,path);
@@ -179,7 +179,7 @@ public class SpanningTree {
 	}
 
 	private IRing getRing(IAtomContainer spt, IBond bond) {
-		IRing ring = spt.getBuilder().newRing();
+		IRing ring = spt.getBuilder().newInstance(IRing.class);
 		PathTools.resetFlags(spt);
 		ring.addAtom(bond.getAtom(0));		
 		PathTools.depthFirstTargetSearch(spt,bond.getAtom(0),bond.getAtom(1),ring);		
@@ -196,7 +196,7 @@ public class SpanningTree {
 
     @TestMethod("testGetBasicRings")
     public IRingSet getBasicRings() throws NoSuchAtomException {
-		IRingSet ringset = molecule.getBuilder().newRingSet();
+		IRingSet ringset = molecule.getBuilder().newInstance(IRingSet.class);
 		IAtomContainer spt = getSpanningTree();
 		for (int i = 0; i < totalEdgeCount; i++) if (!bondsInTree[i])  
 			ringset.addAtomContainer(getRing(spt,molecule.getBond(i)));
@@ -213,7 +213,7 @@ public class SpanningTree {
 	 */
     @TestMethod("testGetCyclicFragmentsContainer")
     public IAtomContainer getCyclicFragmentsContainer()  {
-        IAtomContainer fragContainer = this.molecule.getBuilder().newAtomContainer();
+        IAtomContainer fragContainer = this.molecule.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer spt = getSpanningTree();
 
         for (int i = 0; i < totalEdgeCount; i++)
@@ -302,7 +302,7 @@ public class SpanningTree {
 			if (c > 1) break;  //at least one common bond
 		}
 		if (c < 2) return null;
-		IRing ring = molecule.getBuilder().newRing();
+		IRing ring = molecule.getBuilder().newInstance(IRing.class);
 		IRing ring1 = (IRing) ringset.getAtomContainer(i);
 		IRing ring2 = (IRing) ringset.getAtomContainer(j);
 		for (int b= 0; b < cb[i].length; b++) {

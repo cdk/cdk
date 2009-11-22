@@ -26,6 +26,8 @@
 package org.openscience.cdk.io.cml;
 
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
@@ -60,11 +62,11 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         if (name.equals("list")) {
             logger.debug("Oke, JMOLANIMATION seems to be kicked in :)");
 //            cdo.startObject("Animation");
-            currentChemSequence = currentChemFile.getBuilder().newChemSequence();
+            currentChemSequence = currentChemFile.getBuilder().newInstance(IChemSequence.class);
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("molecule")) {
 //            cdo.startObject("Frame");
-        	currentChemModel = currentChemFile.getBuilder().newChemModel();
+        	currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
             logger.debug("New frame being parsed.");
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("float")) {

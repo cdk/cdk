@@ -23,7 +23,17 @@
  */
 package org.openscience.cdk.pharmacophore;
 
-import org.junit.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -32,12 +42,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * @cdk.module test-pcore
@@ -58,7 +62,9 @@ public class PharmacophoreMatcherTest {
     public static void loadConformerData() {
         String filename = "data/mdl/pcoretest1.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
         if (reader.hasNext()) conformers = (ConformerContainer) reader.next();
     }
 
@@ -222,7 +228,8 @@ public class PharmacophoreMatcherTest {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
-                DefaultChemObjectBuilder.getInstance());
+            DefaultChemObjectBuilder.getInstance()
+        );
 
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
@@ -252,7 +259,7 @@ public class PharmacophoreMatcherTest {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
-                DefaultChemObjectBuilder.getInstance());
+            DefaultChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
@@ -289,7 +296,7 @@ public class PharmacophoreMatcherTest {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
-                DefaultChemObjectBuilder.getInstance());
+            DefaultChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
@@ -315,7 +322,7 @@ public class PharmacophoreMatcherTest {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
-                DefaultChemObjectBuilder.getInstance());
+            DefaultChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
@@ -413,7 +420,7 @@ public class PharmacophoreMatcherTest {
         String filename = "data/pcore/multismartpcore.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(ins,
-                DefaultChemObjectBuilder.getInstance());
+            DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = (IAtomContainer) reader.next();
         Assert.assertTrue(matcher.matches(mol));

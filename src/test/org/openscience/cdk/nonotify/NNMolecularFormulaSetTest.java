@@ -27,8 +27,9 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.AbstractMolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 
 /**
  * Checks the functionality of the {@link NNMolecularFormulaSet}.
@@ -47,7 +48,7 @@ public class NNMolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
     }
 
     @Test public void testNNMolecularFormulaSet_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new NNMolecularFormulaSet(getBuilder().newMolecularFormula());
+        IMolecularFormulaSet mfS = new NNMolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 

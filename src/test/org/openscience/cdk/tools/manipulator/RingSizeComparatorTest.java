@@ -22,11 +22,11 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.RingSizeComparator;
 
 /**
  * @cdk.module test-standard
@@ -45,10 +45,10 @@ public class RingSizeComparatorTest extends CDKTestCase {
 
     @Test
     public void testCompare() {
-        DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newRing(5, "C");
-		IRing cycloHexane = builder.newRing(6, "C");
-        IRing cycloHexane2 = builder.newRing(6, "C");
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
+		IRing cycloHexane = builder.newInstance(IRing.class,6, "C");
+        IRing cycloHexane2 = builder.newInstance(IRing.class,6, "C");
 
         RingSizeComparator ringSizeComparator = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
         Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == -1);

@@ -24,7 +24,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -44,7 +43,8 @@ abstract public class AbstractSybylAtomTypeTest extends AbstractAtomTypeTest {
 	private final static String ATOMTYPE_LIST = "sybyl-atom-types.owl"; 
 	
 	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
+		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
+		NoNotificationChemObjectBuilder.getInstance()
     );
 
 	public String getAtomTypeListName() {

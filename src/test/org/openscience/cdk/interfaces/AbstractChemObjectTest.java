@@ -205,7 +205,7 @@ public abstract class AbstractChemObjectTest extends CDKTestCase {
     @Test public void testClone_Properties2() throws Exception {
         IChemObject chemObject1 = newChemObject();
         Map<Object,Object> props1 = new Hashtable<Object,Object>();
-        IAtom atom = chemObject1.getBuilder().newAtom("C");
+        IAtom atom = chemObject1.getBuilder().newInstance(IAtom.class,"C");
         props1.put("atom", atom);
         chemObject1.setProperties(props1);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();

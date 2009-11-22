@@ -29,12 +29,10 @@ import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.formula.MolecularFormulaRange;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaRange.
@@ -45,7 +43,7 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class MolecularFormulaRangeTest extends CDKTestCase {
 
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 
 	/**
 	 *  Constructor for the MolecularFormulaRangeTest object.
@@ -89,8 +87,8 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testAddIsotope_IIsotope_int_int() {
     	
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    	mfRange.addIsotope( builder.newIsotope("C"), 0, 10);
-    	mfRange.addIsotope( builder.newIsotope("H"), 0, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"C"), 0, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"H"), 0, 10);
         
         Assert.assertEquals(2, mfRange.getIsotopeCount());
     }
@@ -104,10 +102,10 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     	
 
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    	mfRange.addIsotope( builder.newIsotope("C"), 0, 10);
-    	mfRange.addIsotope( builder.newIsotope("H"), 0, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"C"), 0, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"H"), 0, 10);
         
-    	IIsotope hy = builder.newIsotope("C");
+    	IIsotope hy = builder.newInstance(IIsotope.class,"C");
     	hy.setNaturalAbundance(2.00342342);
     	mfRange.addIsotope( hy, 0, 10);
         
@@ -122,8 +120,8 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testGetIsotopeCountMax_IIsotope() {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	
-    	IIsotope carb = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
+    	IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
     	mfRange.addIsotope( carb, 0, 10);
     	mfRange.addIsotope( h1, 0, 10);
         
@@ -141,9 +139,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testGetIsotopeCountMin_IIsotope() {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	
-    	IIsotope carb = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
-        IIsotope flu = builder.newIsotope("F");
+    	IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
+        IIsotope flu = builder.newInstance(IIsotope.class,"F");
     	mfRange.addIsotope( carb, 0, 10);
     	mfRange.addIsotope( h1, 0, 10);
         
@@ -162,8 +160,8 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testGetIsotopeCountMin_IIsotope2() {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	
-    	IIsotope carb = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
+    	IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
     	mfRange.addIsotope( carb, 0, 10);
     	mfRange.addIsotope( h1, 0, 10);
         
@@ -189,11 +187,11 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testGetIsotopeCountMin_IIsotope3() {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	
-    	IIsotope carb1 = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
+    	IIsotope carb1 = builder.newInstance(IIsotope.class,"C");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
 
-    	IIsotope carb2 = builder.newIsotope("C");
-        IIsotope h2 = builder.newIsotope("H");
+    	IIsotope carb2 = builder.newInstance(IIsotope.class,"C");
+        IIsotope h2 = builder.newInstance(IIsotope.class,"H");
     	
         mfRange.addIsotope( carb1, 0, 10);
     	mfRange.addIsotope( h1, 0, 10);
@@ -221,12 +219,12 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testGetIsotopeCountMin_IIsotope4() {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	
-    	IIsotope carb1 = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
+    	IIsotope carb1 = builder.newInstance(IIsotope.class,"C");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
 
-    	IIsotope carb2 = builder.newIsotope("C");
+    	IIsotope carb2 = builder.newInstance(IIsotope.class,"C");
     	carb2.setNaturalAbundance(13.0876689);
-        IIsotope h2 = builder.newIsotope("H");
+        IIsotope h2 = builder.newInstance(IIsotope.class,"H");
         h2.setNaturalAbundance(2.0968768);
     	
         mfRange.addIsotope( carb1, 0, 10);
@@ -255,8 +253,8 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testIsotopes() {
 
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    	mfRange.addIsotope( builder.newIsotope("C"), 0, 10);
-    	mfRange.addIsotope( builder.newIsotope("F"), 0, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"C"), 0, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"F"), 0, 10);
         
         Iterator<IIsotope> istoIter = mfRange.isotopes().iterator();
         int counter = 0;
@@ -276,9 +274,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testContains_IIsotope() {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
         
-        IIsotope carb = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
-        IIsotope h2 = builder.newIsotope("H");
+        IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
+        IIsotope h2 = builder.newInstance(IIsotope.class,"H");
         h2.setExactMass(2.0004);
         
         mfRange.addIsotope( carb , 0, 10);
@@ -296,9 +294,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     public void testRemoveIsotope_IIsotope() {
     	
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        IIsotope carb = builder.newIsotope("C");
-        IIsotope flu = builder.newIsotope("F");
-        IIsotope h1 = builder.newIsotope("H");
+        IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope flu = builder.newInstance(IIsotope.class,"F");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
         mfRange.addIsotope( carb, 0, 10);
         mfRange.addIsotope( flu, 0, 10);
         mfRange.addIsotope( h1, 0, 10);
@@ -320,9 +318,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     @Test 
     public void testRemoveAllIsotopes() {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        IIsotope carb = builder.newIsotope("C");
-        IIsotope flu = builder.newIsotope("F");
-        IIsotope h1 = builder.newIsotope("H");
+        IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope flu = builder.newInstance(IIsotope.class,"F");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
         mfRange.addIsotope( carb, 0, 10);
         mfRange.addIsotope( flu, 0, 10);
         mfRange.addIsotope( h1, 0, 10);
@@ -358,9 +356,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     @Test 
 	public void testClone_Isotopes() throws Exception {
 		MolecularFormulaRange mfRange = new MolecularFormulaRange();
-        IIsotope carb = builder.newIsotope("C");
-        IIsotope flu = builder.newIsotope("F");
-        IIsotope h1 = builder.newIsotope("H");
+        IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope flu = builder.newInstance(IIsotope.class,"F");
+        IIsotope h1 = builder.newInstance(IIsotope.class,"H");
         mfRange.addIsotope( carb, 0, 5);
         mfRange.addIsotope( flu, 2, 8);
         mfRange.addIsotope( h1, 4, 10);

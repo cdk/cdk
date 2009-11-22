@@ -173,7 +173,7 @@ public class ChemModelManipulator {
     @TestMethod("testCreateNewMolecule_IChemModel")
     public static IAtomContainer createNewMolecule(IChemModel chemModel) {
         // Add a new molecule either the set of molecules
-        IMolecule molecule = chemModel.getBuilder().newMolecule();
+        IMolecule molecule = chemModel.getBuilder().newInstance(IMolecule.class);
         if (chemModel.getMoleculeSet() != null) {
             IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
             for(int i=0;i<moleculeSet.getAtomContainerCount();i++){
@@ -184,7 +184,7 @@ public class ChemModelManipulator {
             }
             moleculeSet.addMolecule(molecule);
         } else {
-            IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
+            IMoleculeSet moleculeSet = chemModel.getBuilder().newInstance(IMoleculeSet.class);
             moleculeSet.addMolecule(molecule);
             chemModel.setMoleculeSet(moleculeSet);
         }
@@ -201,13 +201,13 @@ public class ChemModelManipulator {
      */
     @TestMethod("testNewChemModel_IAtomContainer")
     public static IChemModel newChemModel(IAtomContainer atomContainer) {
-        IChemModel model = atomContainer.getBuilder().newChemModel();
-        IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
+        IChemModel model = atomContainer.getBuilder().newInstance(IChemModel.class);
+        IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
         if (atomContainer instanceof IMolecule) {
             moleculeSet.addAtomContainer(atomContainer);
         } else {
             moleculeSet.addAtomContainer(
-                atomContainer.getBuilder().newMolecule(atomContainer)
+                atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer)
             );
         }
         model.setMoleculeSet(moleculeSet);
@@ -285,7 +285,7 @@ public class ChemModelManipulator {
      */
     @TestMethod("testGetAllAtomContainers_IChemModel")
     public static List<IAtomContainer> getAllAtomContainers(IChemModel chemModel) {
-        IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
+        IMoleculeSet moleculeSet = chemModel.getBuilder().newInstance(IMoleculeSet.class);
         if (chemModel.getMoleculeSet() != null) {
             moleculeSet.add(chemModel.getMoleculeSet());
         }

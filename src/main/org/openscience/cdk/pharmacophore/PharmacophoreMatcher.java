@@ -98,7 +98,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p/>
  * String filename = "/Users/rguha/pcore1.sdf";
  * IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
- *      new FileReader(new File(filename)), DefaultChemObjectBuilder.getInstance());
+ *      new FileReader(new File(filename)), NewDefaultChemObjectBuilder.getInstance());
  * <p/>
  * ConformerContainer conformers;
  * if (reader.hasNext()) conformers = (ConformerContainer) reader.next();
@@ -380,7 +380,7 @@ public class PharmacophoreMatcher {
     private IAtomContainer getPharmacophoreMolecule(IAtomContainer atomContainer) throws CDKException {
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("C");
-        IAtomContainer pharmacophoreMolecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer pharmacophoreMolecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         // lets loop over each pcore query atom
         HashMap<String, String> map = new HashMap<String, String>();

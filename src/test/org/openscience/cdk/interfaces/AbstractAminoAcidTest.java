@@ -39,7 +39,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
 
     @Test public void testAddCTerminus_IAtom() {
         IAminoAcid m = (IAminoAcid)newChemObject();
-        IAtom cTerminus = m.getBuilder().newAtom("C");
+        IAtom cTerminus = m.getBuilder().newInstance(IAtom.class,"C");
         m.addCTerminus(cTerminus);
         Assert.assertEquals(cTerminus, m.getCTerminus());
     }
@@ -50,7 +50,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
 
     @Test public void testAddNTerminus_IAtom() {
         IAminoAcid m = (IAminoAcid)newChemObject();
-        IAtom nTerminus = m.getBuilder().newAtom("N");
+        IAtom nTerminus = m.getBuilder().newInstance(IAtom.class,"N");
         m.addNTerminus(nTerminus);
         Assert.assertEquals(nTerminus, m.getNTerminus());
     }
@@ -64,7 +64,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
      */
     @Test public void testToString() {
         IAminoAcid m = (IAminoAcid)newChemObject();
-        IAtom nTerminus = m.getBuilder().newAtom("N");
+        IAtom nTerminus = m.getBuilder().newInstance(IAtom.class,"N");
         m.addNTerminus(nTerminus);
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
@@ -73,7 +73,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
         }
 
         m = (IAminoAcid)newChemObject();
-        IAtom cTerminus = m.getBuilder().newAtom("C");
+        IAtom cTerminus = m.getBuilder().newInstance(IAtom.class,"C");
         m.addNTerminus(cTerminus);
         description = m.toString();
         for (int i=0; i< description.length(); i++) {
@@ -89,14 +89,14 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
         Assert.assertNotSame(aa, clone);
         
         aa = (IAminoAcid)newChemObject();
-        IAtom nTerminus = aa.getBuilder().newAtom("N");
+        IAtom nTerminus = aa.getBuilder().newInstance(IAtom.class,"N");
         aa.addNTerminus(nTerminus);
         clone = aa.clone();
         Assert.assertTrue(clone instanceof IAminoAcid);
         Assert.assertNotSame(aa, clone);
 
         aa = (IAminoAcid)newChemObject();
-        IAtom cTerminus = aa.getBuilder().newAtom("C");
+        IAtom cTerminus = aa.getBuilder().newInstance(IAtom.class,"C");
         aa.addNTerminus(cTerminus);
         clone = aa.clone();
         Assert.assertTrue(clone instanceof IAminoAcid);

@@ -243,7 +243,7 @@ public class RandomGenerator {
 		{
 			if (b1 == null)
 			{
-				b1 = ac.getBuilder().newBond(
+				b1 = ac.getBuilder().newInstance(IBond.class,
 					ax1, ay1, BondManipulator.createBondOrder(b11)
 				);
 				ac.addBond(b1);
@@ -262,7 +262,7 @@ public class RandomGenerator {
 		{
 			if (b2 == null)
 			{
-				b2 = ac.getBuilder().newBond(
+				b2 = ac.getBuilder().newInstance(IBond.class,
 					ax1, ay2, BondManipulator.createBondOrder(b12)
 				);
 				ac.addBond(b2);
@@ -281,7 +281,7 @@ public class RandomGenerator {
 		{
 			if (b3 == null)
 			{
-				b3 = ac.getBuilder().newBond(
+				b3 = ac.getBuilder().newInstance(IBond.class,
 					ax2, ay1, BondManipulator.createBondOrder(b21)
 				);
 				ac.addBond(b3);
@@ -300,7 +300,7 @@ public class RandomGenerator {
 		{
 			if (b4 == null)
 			{
-				b4 = ac.getBuilder().newBond(
+				b4 = ac.getBuilder().newInstance(IBond.class,
 					ax2, ay2, BondManipulator.createBondOrder(b22)
 				);
 				ac.addBond(b4);

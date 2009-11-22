@@ -27,7 +27,9 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
         String filename = "data/mdl/iterconftest.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         int molCount = 0;
         int[] nconfs = new int[3];
@@ -52,7 +54,9 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
         String filename = "data/mdl/iterconftest.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         reader.hasNext();
         reader.next();

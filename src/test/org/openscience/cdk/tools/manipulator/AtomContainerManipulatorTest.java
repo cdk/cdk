@@ -23,14 +23,32 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -38,10 +56,6 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -323,14 +337,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testRemoveHydrogensBorane() throws Exception
     {
     	IAtomContainer borane = new Molecule();
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("B"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("B"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"B"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"B"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
     	borane.addBond(0,2,CDKConstants.BONDORDER_SINGLE);
     	borane.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
     	borane.addBond(2,3,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
@@ -377,13 +391,13 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     
     @Test public void testGetNaturalExactMass_IAtomContainer() throws Exception {
     	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance(); 
-        IMolecule mol = builder.newMolecule();
+        IMolecule mol = builder.newInstance(IMolecule.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("Cl"));
     	
         double expectedMass = 0.0;
-        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newElement("C"));
-        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newElement("Cl"));
+        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"C"));
+        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"Cl"));
         
     	double totalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
 
@@ -433,14 +447,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test public void testGetIntersection_IAtomContainer_IAtomContainer() {
     	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IAtom c1 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c2 = builder.newAtom("C");
-        IAtom c3 = builder.newAtom("C");
+        IAtom c1 = builder.newInstance(IAtom.class,"C");
+        IAtom o = builder.newInstance(IAtom.class,"O");
+        IAtom c2 = builder.newInstance(IAtom.class,"C");
+        IAtom c3 = builder.newInstance(IAtom.class,"C");
         
-        IBond b1 = builder.newBond(c1, o);
-        IBond b2 = builder.newBond(o, c2);
-        IBond b3 = builder.newBond(c2, c3);
+        IBond b1 = builder.newInstance(IBond.class,c1, o);
+        IBond b2 = builder.newInstance(IBond.class,o, c2);
+        IBond b3 = builder.newInstance(IBond.class,c2, c3);
         
         IAtomContainer container1 = new org.openscience.cdk.AtomContainer();
         container1.addAtom(c1);
@@ -495,10 +509,10 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     public void testClearConfig() throws Exception {
-        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         container.addAtom(atom1);
         container.addAtom(atom2);
         container.addAtom(atom3);
@@ -532,10 +546,10 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetTotalCharge() throws IOException, ClassNotFoundException, CDKException {
-        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setCharge(1.0);
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("N");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
 
         container.addAtom(atom1);
         container.addAtom(atom2);
@@ -548,10 +562,10 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     public void testCountExplicitH() {
-        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setCharge(1.0);
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("N");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
 
         container.addAtom(atom1);
         container.addAtom(atom2);
@@ -561,7 +575,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(0, AtomContainerManipulator.countExplicitHydrogens(container, atom2));
 
         for (int i = 0; i < 3; i++) {
-            IAtom h = DefaultChemObjectBuilder.getInstance().newAtom("H");
+            IAtom h = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
             container.addAtom(h);
             container.addBond(new Bond(atom1, h, CDKConstants.BONDORDER_SINGLE));
         }
@@ -570,10 +584,10 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     public void testCountH() throws Exception {
-        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setCharge(1.0);
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("N");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
 
         container.addAtom(atom1);
         container.addAtom(atom2);
@@ -592,7 +606,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         
         for (int i = 0; i < 3; i++) {
-            IAtom h = DefaultChemObjectBuilder.getInstance().newAtom("H");
+            IAtom h = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
             container.addAtom(h);
             container.addBond(new Bond(atom1, h, CDKConstants.BONDORDER_SINGLE));
         }
@@ -602,28 +616,28 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     public void testReplaceAtom() {
-        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setCharge(1.0);
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("N");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
 
         container.addAtom(atom1);
         container.addAtom(atom2);
         container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
 
-        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newAtom("Br");
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Br");
 
         AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
         Assert.assertEquals(atom3, container.getAtom(1));
     }
 
     @Test public void testGetHeavyAtoms_IAtomContainer() {
-        DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IAtomContainer container = builder.newAtomContainer();
-        container.addAtom(builder.newAtom("C"));
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        container.addAtom(builder.newInstance(IAtom.class,"C"));
         for(int i = 0; i < 4; i++)
-            container.addAtom(builder.newAtom("H"));
-        container.addAtom(builder.newAtom("O"));
+            container.addAtom(builder.newInstance(IAtom.class,"H"));
+        container.addAtom(builder.newInstance(IAtom.class,"O"));
         Assert.assertEquals(2, AtomContainerManipulator.getHeavyAtoms(container).size());
     }
     
@@ -633,14 +647,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test public void testRemoveHydrogensPreserveMultiplyBonded() throws Exception {
     	IAtomContainer borane = new Molecule();
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("B"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("B"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
-    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"B"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"B"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
+    	borane.addAtom(borane.getBuilder().newInstance(IAtom.class,"H"));
     	borane.addBond(0,2,CDKConstants.BONDORDER_SINGLE);
     	borane.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
     	borane.addBond(2,3,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON

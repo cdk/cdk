@@ -33,13 +33,14 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module test-formula
  */
 public class IsotopePatternRuleTest extends FormulaRuleTest {
 	
-	private static DefaultChemObjectBuilder builder;
+	private static IChemObjectBuilder builder;
 	private static IsotopeFactory ifac;
 	
 	/**

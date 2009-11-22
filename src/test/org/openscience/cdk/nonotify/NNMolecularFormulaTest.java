@@ -23,8 +23,8 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.AbstractMolecularFormulaTest;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Checks the functionality of the {@link NNMolecularFormula}.

@@ -38,14 +38,14 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
 
     @Test public void testSetAtom_IAtom() {
         ILonePair lp = (ILonePair)newChemObject();
-        IAtom atom = lp.getBuilder().newAtom("N");
+        IAtom atom = lp.getBuilder().newInstance(IAtom.class,"N");
         lp.setAtom(atom);
         Assert.assertEquals(atom, lp.getAtom());
     }
     
     @Test public void testGetAtom() {
         ILonePair lp = (ILonePair)newChemObject();
-        IAtom atom = lp.getBuilder().newAtom("N");
+        IAtom atom = lp.getBuilder().newInstance(IAtom.class,"N");
         Assert.assertNull(lp.getAtom());
         lp.setAtom(atom);
         Assert.assertEquals(atom, lp.getAtom());
@@ -55,13 +55,13 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
         ILonePair lp = (ILonePair)newChemObject();
         Assert.assertEquals(2, lp.getElectronCount().intValue());
         
-        lp = lp.getBuilder().newLonePair(lp.getBuilder().newAtom("N"));
+        lp = lp.getBuilder().newInstance(ILonePair.class,lp.getBuilder().newInstance(IAtom.class,"N"));
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     
     @Test public void testContains_IAtom() {
         ILonePair lp = (ILonePair)newChemObject();
-        IAtom atom = lp.getBuilder().newAtom("N");
+        IAtom atom = lp.getBuilder().newInstance(IAtom.class,"N");
         lp.setAtom(atom);
         Assert.assertTrue(lp.contains(atom));
     }
@@ -74,7 +74,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
     
     @Test public void testClone_IAtom() throws Exception {
     	ILonePair lp = (ILonePair)newChemObject();
-        IAtom atom = lp.getBuilder().newAtom("N");
+        IAtom atom = lp.getBuilder().newInstance(IAtom.class,"N");
         lp.setAtom(atom);
         
         // test cloning of atom

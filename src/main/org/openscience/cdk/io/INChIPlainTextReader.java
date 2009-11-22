@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -162,7 +163,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
             while ((line = input.readLine())!=null) {
                 if (line.startsWith("INChI=") || line.startsWith("InChI=")) {
                     // ok, the fun starts
-                    cf = cf.getBuilder().newChemFile();
+                    cf = cf.getBuilder().newInstance(IChemFile.class);
                     // ok, we need to parse things like:
                     // INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H
                     final String INChI = line.substring(6);
@@ -174,15 +175,15 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     //final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
                     
                     IAtomContainer parsedContent = inchiTool.processFormula(
-                    		cf.getBuilder().newAtomContainer(), formula
+                    		cf.getBuilder().newInstance(IAtomContainer.class), formula
                     );
                     inchiTool.processConnections(connections, parsedContent, -1);
                     
-                    IMoleculeSet moleculeSet = cf.getBuilder().newMoleculeSet();
-                    moleculeSet.addMolecule(cf.getBuilder().newMolecule(parsedContent));
-                    IChemModel model = cf.getBuilder().newChemModel();
+                    IMoleculeSet moleculeSet = cf.getBuilder().newInstance(IMoleculeSet.class);
+                    moleculeSet.addMolecule(cf.getBuilder().newInstance(IMolecule.class,parsedContent));
+                    IChemModel model = cf.getBuilder().newInstance(IChemModel.class);
                     model.setMoleculeSet(moleculeSet);
-                    IChemSequence sequence = cf.getBuilder().newChemSequence();
+                    IChemSequence sequence = cf.getBuilder().newInstance(IChemSequence.class);
                     sequence.addChemModel(model);
                     cf.addChemSequence(sequence);
                 }

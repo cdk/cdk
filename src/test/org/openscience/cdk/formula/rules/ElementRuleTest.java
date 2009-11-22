@@ -26,18 +26,20 @@ package org.openscience.cdk.formula.rules;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Isotope;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaRange;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module test-formula
  */
 public class ElementRuleTest extends FormulaRuleTest {
 	
-	private static DefaultChemObjectBuilder builder;
+	private static IChemObjectBuilder builder;
 
 	/**
     *  The JUnit setup method
@@ -89,8 +91,8 @@ public class ElementRuleTest extends FormulaRuleTest {
 		Object[] params = new Object[1];
 		
 		MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    	mfRange.addIsotope( builder.newIsotope("C"), 1, 10);
-    	mfRange.addIsotope( builder.newIsotope("H"), 1, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"C"), 1, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"H"), 1, 10);
     	params[0] = mfRange;
 		
     	rule.setParameters(params);
@@ -114,8 +116,8 @@ public class ElementRuleTest extends FormulaRuleTest {
 		IRule rule  = new ElementRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newIsotope("C"),2);
-		formula.addIsotope(builder.newIsotope("H"),200);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),200);
 		
 		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
@@ -130,15 +132,15 @@ public class ElementRuleTest extends FormulaRuleTest {
 		IRule rule  = new ElementRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newIsotope("C"),2);
-		formula.addIsotope(builder.newIsotope("H"),6);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),6);
 		
 		
 		Object[] params = new Object[1];
 		
 		MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    	mfRange.addIsotope( builder.newIsotope("C"), 1, 2);
-    	mfRange.addIsotope( builder.newIsotope("H"), 1, 2);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"C"), 1, 2);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"H"), 1, 2);
     	params[0] = mfRange;
 		
     	rule.setParameters(params);
@@ -156,8 +158,8 @@ public class ElementRuleTest extends FormulaRuleTest {
 		IRule rule  = new ElementRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newIsotope("C"),2);
-		formula.addIsotope(builder.newIsotope("H"),6);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),6);
 
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}

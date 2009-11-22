@@ -35,8 +35,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -81,10 +81,10 @@ public class RandomAccessSDFReader extends RandomAccessReader {
     }
     protected IChemObject processContent() throws CDKException {
         	/*
-            return chemObjectReader.read(builder.newMolecule());
+            return chemObjectReader.read(builder.newInstance(IMolecule.class));
             */
             //read(IMolecule) doesn't read properties ...
-            IChemObject co = chemObjectReader.read(builder.newChemFile());
+            IChemObject co = chemObjectReader.read(builder.newInstance(IChemFile.class));
             if (co instanceof IChemFile) {
                 int c = ((IChemFile) co).getChemSequenceCount();
                 for (int i=0; i <c;i++) {

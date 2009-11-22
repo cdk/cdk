@@ -90,7 +90,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
 
     @Test public void testPseudoAtom_IAtom() {
     	IChemObject object = newChemObject();
-        IAtom atom = object.getBuilder().newAtom("C");
+        IAtom atom = object.getBuilder().newInstance(IAtom.class,"C");
         Point3d fract = new Point3d(0.5, 0.5, 0.5);
         Point3d threeD = new Point3d(0.5, 0.5, 0.5);
         Point2d twoD = new Point2d(0.5, 0.5);
@@ -98,7 +98,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         atom.setPoint3d(threeD);
         atom.setPoint2d(twoD);
         
-        IPseudoAtom a = object.getBuilder().newPseudoAtom(atom);
+        IPseudoAtom a = object.getBuilder().newInstance(IPseudoAtom.class,atom);
         assertEquals(fract, a.getFractionalPoint3d(), 0.0001);
         assertEquals(threeD, a.getPoint3d(), 0.0001);
         assertEquals(twoD, a.getPoint2d(), 0.0001);

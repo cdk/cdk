@@ -100,7 +100,7 @@ public class PolymerTest extends AbstractPolymerTest {
 
         Monomer monomer = new Monomer();
         monomer.setMonomerName("TYR55");
-        IAtom atom = monomer.getBuilder().newAtom("C");
+        IAtom atom = monomer.getBuilder().newInstance(IAtom.class,"C");
         oPolymer.addAtom(atom, monomer);
 
         Polymer clone = (Polymer) oPolymer.clone();

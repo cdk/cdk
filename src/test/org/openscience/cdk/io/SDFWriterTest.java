@@ -34,13 +34,14 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
 
@@ -94,9 +95,9 @@ public class SDFWriterTest extends ChemObjectWriterTest {
      */
     @Test public void testWrite_IAtomContainerSet() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainerSet molSet = builder.newAtomContainerSet();
-        IAtomContainer molecule = builder.newAtomContainer();
-        molecule.addAtom(builder.newAtom("C"));
+        IAtomContainerSet molSet = builder.newInstance(IAtomContainerSet.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
+        molecule.addAtom(builder.newInstance(IAtom.class,"C"));
         molSet.addAtomContainer(molecule);
 
         SDFWriter sdfWriter = new SDFWriter(writer);

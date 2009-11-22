@@ -23,10 +23,10 @@ package org.openscience.cdk.debug;
 import java.util.Map;
 
 import org.openscience.cdk.Element;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -176,8 +176,8 @@ public class DebugElement extends Element
         return clone;
 	}
 
-	public IChemObjectBuilder getBuilder() {
-		return DebugChemObjectBuilder.getInstance();
-	}
+    public IChemObjectBuilder getBuilder() {
+        return DebugChemObjectBuilder.getInstance();
+    }
 
 }

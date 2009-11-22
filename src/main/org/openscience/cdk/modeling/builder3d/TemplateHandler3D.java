@@ -43,9 +43,9 @@ import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -68,7 +68,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class TemplateHandler3D {
 	
-	private static final IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private static final IChemObjectBuilder builder =
+	    NoNotificationChemObjectBuilder.getInstance();
 	private static final ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 	
@@ -81,7 +82,7 @@ public class TemplateHandler3D {
     private static TemplateHandler3D self = null;
     
     private TemplateHandler3D() {
-        templates = builder.newMoleculeSet();
+        templates = builder.newInstance(IMoleculeSet.class);
         fingerprintData = new ArrayList<BitSet>();
     }
 
@@ -179,7 +180,7 @@ public class TemplateHandler3D {
 	}
 
 	private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
-		IAtomContainer resultContainer = ringSet.getBuilder().newAtomContainer();
+		IAtomContainer resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
 		Iterator containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
 		while (containers.hasNext()) {
 			resultContainer.add((IAtomContainer) containers.next());

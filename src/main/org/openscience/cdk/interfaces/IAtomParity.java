@@ -39,7 +39,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public interface IAtomParity extends Cloneable {
+public interface IAtomParity extends ICDKObject {
     
     /**
      * Returns the atom for which this parity is defined.

@@ -3,8 +3,8 @@ package org.openscience.cdk.formula;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
@@ -15,7 +15,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class IsotopePatternSimilarityTest extends CDKTestCase{
 
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 
 	public IsotopePatternSimilarityTest() {
 		super();
@@ -125,7 +125,9 @@ public class IsotopePatternSimilarityTest extends CDKTestCase{
 		spExp.addIsotope(new IsotopeContainer(764.6064, 15432262));
 		spExp.setCharge(1.0);
 
-    	IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C42H85NO8P", NoNotificationChemObjectBuilder.getInstance());
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(
+    	    "C42H85NO8P", NoNotificationChemObjectBuilder.getInstance()
+    	);
 
     	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.01);
 		IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);

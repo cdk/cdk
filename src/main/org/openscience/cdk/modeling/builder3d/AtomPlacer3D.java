@@ -525,7 +525,7 @@ public class AtomPlacer3D {
 	public IAtomContainer getPlacedHeavyAtoms(IAtomContainer molecule, IAtom atom) {
 
 		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
-		IAtomContainer connectedAtoms = molecule.getBuilder().newAtomContainer();
+		IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
 			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);

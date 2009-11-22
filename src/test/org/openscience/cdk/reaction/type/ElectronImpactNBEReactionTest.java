@@ -36,10 +36,11 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -85,14 +86,14 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		/* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC , set the reactive center*/
 		
-		IMolecule reactant = builder.newMolecule();//Smiles("C=CCC(=O)CC")
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("O"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
+		IMolecule reactant = builder.newInstance(IMolecule.class);//Smiles("C=CCC(=O)CC")
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"O"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
 		reactant.addBond(0, 1, IBond.Order.DOUBLE);
 		reactant.addBond(1, 2, IBond.Order.SINGLE);
 		reactant.addBond(2, 3, IBond.Order.SINGLE);
@@ -111,7 +112,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 			}
 		}
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants.addMolecule(reactant);
 		
 		/* initiate */
@@ -144,14 +145,14 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testAutomatic_Set_Active_Atom() throws Exception {
 		/* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC, without setting the reactive center*/
-		IMolecule reactant = builder.newMolecule();//Smiles("C=CCC(=O)CC")
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("O"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
+		IMolecule reactant = builder.newInstance(IMolecule.class);//Smiles("C=CCC(=O)CC")
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"O"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
 		reactant.addBond(0, 1, IBond.Order.DOUBLE);
 		reactant.addBond(1, 2, IBond.Order.SINGLE);
 		reactant.addBond(2, 3, IBond.Order.SINGLE);
@@ -163,7 +164,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	    lpcheck.saturate(reactant);
 		
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants.addMolecule(reactant);
 
 		/* initiate */
@@ -190,15 +191,15 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testNsp3SingleB() throws Exception {
 		//Smiles("CN")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("N"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 2, IBond.Order.SINGLE);
 		molecule.addBond(0, 3, IBond.Order.SINGLE);
 		molecule.addBond(0, 4, IBond.Order.SINGLE);
@@ -209,7 +210,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-       IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+       IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
        setOfReactants.addMolecule(molecule);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction(); 
@@ -228,17 +229,17 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
        // expected products 
        
        //Smiles("C[N*+]")
-       IMolecule expected1 = builder.newMolecule();
-       expected1.addAtom(builder.newAtom("C"));
-       expected1.addAtom(builder.newAtom("N"));
+       IMolecule expected1 = builder.newInstance(IMolecule.class);
+       expected1.addAtom(builder.newInstance(IAtom.class,"C"));
+       expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 	   expected1.getAtom(1).setFormalCharge(+1);
-	   expected1.addSingleElectron(builder.newSingleElectron(expected1.getAtom(1)));
+	   expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
 	   expected1.addBond(0, 1, IBond.Order.SINGLE);
-	   expected1.addAtom(builder.newAtom("H"));
-	   expected1.addAtom(builder.newAtom("H"));
-	   expected1.addAtom(builder.newAtom("H"));
-	   expected1.addAtom(builder.newAtom("H"));
-	   expected1.addAtom(builder.newAtom("H"));
+	   expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+	   expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+	   expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+	   expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+	   expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 	   expected1.addBond(0, 2, IBond.Order.SINGLE);
 	   expected1.addBond(0, 3, IBond.Order.SINGLE);
 	   expected1.addBond(0, 4, IBond.Order.SINGLE);
@@ -262,13 +263,13 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testNsp2SingleB() throws Exception {
 		//Smiles("C=N")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("N"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"N"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 2, IBond.Order.SINGLE);
 		molecule.addBond(1, 3, IBond.Order.SINGLE);
 		molecule.addBond(1, 4, IBond.Order.SINGLE);
@@ -277,7 +278,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-       IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+       IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
        setOfReactants.addMolecule(molecule);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction(); 
@@ -296,15 +297,15 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
        // expected products 
 
        //Smiles("[N*+]=C")
-       IMolecule expected1 = builder.newMolecule();
-       expected1.addAtom(builder.newAtom("N"));
+       IMolecule expected1 = builder.newInstance(IMolecule.class);
+       expected1.addAtom(builder.newInstance(IAtom.class,"N"));
        expected1.getAtom(0).setFormalCharge(1);
-       expected1.addSingleElectron(builder.newSingleElectron(expected1.getAtom(0)));
-       expected1.addAtom(builder.newAtom("C"));
+       expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
+       expected1.addAtom(builder.newInstance(IAtom.class,"C"));
        expected1.addBond(0, 1, IBond.Order.DOUBLE);
-       expected1.addAtom(builder.newAtom("H"));
-       expected1.addAtom(builder.newAtom("H"));
-       expected1.addAtom(builder.newAtom("H"));
+       expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+       expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+       expected1.addAtom(builder.newInstance(IAtom.class,"H"));
        expected1.addBond(0, 2, IBond.Order.SINGLE);
        expected1.addBond(1, 3, IBond.Order.SINGLE);
        expected1.addBond(1, 4, IBond.Order.SINGLE);
@@ -327,13 +328,13 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testFspSingleB() throws Exception {
 		//Smiles("FC")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("F"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"F"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
 		molecule.addBond(1, 3, IBond.Order.SINGLE);
 		molecule.addBond(1, 4, IBond.Order.SINGLE);
@@ -342,7 +343,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-       IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+       IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
        setOfReactants.addMolecule(molecule);
 	
        IReactionProcess type  = new ElectronImpactNBEReaction(); 
@@ -361,15 +362,15 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
        // expected products 
        
        //Smiles("[F*+]C")
-       IMolecule expected1 = builder.newMolecule();
-       expected1.addAtom(builder.newAtom("F"));
+       IMolecule expected1 = builder.newInstance(IMolecule.class);
+       expected1.addAtom(builder.newInstance(IAtom.class,"F"));
        expected1.getAtom(0).setFormalCharge(1);
-       expected1.addSingleElectron(builder.newSingleElectron(expected1.getAtom(0)));
-       expected1.addAtom(builder.newAtom("C"));
+       expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
+       expected1.addAtom(builder.newInstance(IAtom.class,"C"));
        expected1.addBond(0, 1, IBond.Order.SINGLE);
-       expected1.addAtom(builder.newAtom("H"));
-       expected1.addAtom(builder.newAtom("H"));
-       expected1.addAtom(builder.newAtom("H"));
+       expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+       expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+       expected1.addAtom(builder.newInstance(IAtom.class,"H"));
        expected1.addBond(1, 2, IBond.Order.SINGLE);
        expected1.addBond(1, 3, IBond.Order.SINGLE);
        expected1.addBond(1, 4, IBond.Order.SINGLE);
@@ -468,13 +469,13 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		IMolecule molecule = builder.newMolecule();//Smiles("C=O")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+		IMolecule molecule = builder.newInstance(IMolecule.class);//Smiles("C=O")
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 2, IBond.Order.SINGLE);
 		molecule.addBond(0, 3, IBond.Order.SINGLE);
 		
@@ -496,7 +497,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
         setOfProducts.addMolecule(null);
 		return setOfProducts;

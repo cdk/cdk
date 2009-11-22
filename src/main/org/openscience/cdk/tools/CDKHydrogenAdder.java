@@ -44,14 +44,14 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *   IMolecule methane = new Molecule();
  *   IAtom carbon = new Atom("C");
  *   methane.addAtom(carbon);
- *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(methane.getBuilder());
+ *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(methane.getNewBuilder());
  *   Iterator<IAtom> atoms = methane.atoms();
  *   while (atoms.hasNext()) {
  *     IAtom atom = atoms.next();
  *     IAtomType type = matcher.findMatchingAtomType(methane, atom);
  *     AtomTypeManipulator.configure(atom, type);
  *   }
- *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(methane.getBuilder());
+ *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(methane.getNewBuilder());
  *   adder.addImplicitHydrogens(methane);
  * </pre>
  *
@@ -63,10 +63,10 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *   IAtom carbon2 = new Atom("C");
  *   ethane.addAtom(carbon1);
  *   ethane.addAtom(carbon2);
- *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(ethane.getBuilder());
+ *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(ethane.getNewBuilder());
  *   IAtomType type = matcher.findMatchingAtomType(ethane, carbon1);
  *   AtomTypeManipulator.configure(carbon1, type);
- *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(ethane.getBuilder());
+ *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(ethane.getNewBuilder());
  *   adder.addImplicitHydrogens(ethane, carbon1);
  * </pre>
  * 

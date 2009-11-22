@@ -24,10 +24,10 @@ import java.util.Map;
 
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -172,8 +172,8 @@ public class DebugLonePair extends LonePair
         return clone;
 	}
 
-	public IChemObjectBuilder getBuilder() {
-		return DebugChemObjectBuilder.getInstance();
-	}
+    public IChemObjectBuilder getBuilder() {
+        return DebugChemObjectBuilder.getInstance();
+    }
 	
 }

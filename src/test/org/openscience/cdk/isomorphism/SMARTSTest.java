@@ -27,8 +27,8 @@ package org.openscience.cdk.isomorphism;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -82,12 +82,12 @@ public class SMARTSTest extends CDKTestCase {
     private IAtomContainer createEthane() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
         IAtom carbon = new org.openscience.cdk.Atom("C");
-        IAtom carbon2 = carbon.getBuilder().newAtom("C");
+        IAtom carbon2 = carbon.getBuilder().newInstance(IAtom.class,"C");
         carbon.setHydrogenCount(3);
         carbon2.setHydrogenCount(3);
         container.addAtom(carbon);
         container.addAtom(carbon2);
-        container.addBond(carbon.getBuilder().newBond(carbon, carbon2, IBond.Order.SINGLE));
+        container.addBond(carbon.getBuilder().newInstance(IBond.class,carbon, carbon2, IBond.Order.SINGLE));
         return container;
     }
     

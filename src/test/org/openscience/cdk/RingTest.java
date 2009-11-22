@@ -27,10 +27,11 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractRingTest;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.AbstractRingTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -73,8 +74,8 @@ public class RingTest extends AbstractRingTest {
 
     @Test public void testRing_IAtomContainer() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer();
-        container.addAtom(container.getBuilder().newAtom("C"));
-        container.addAtom(container.getBuilder().newAtom("C"));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
         
         IRing ring = new Ring(container);
         Assert.assertNotNull(ring);

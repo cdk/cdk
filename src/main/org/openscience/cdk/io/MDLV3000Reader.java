@@ -45,8 +45,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
@@ -143,12 +143,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
     
     public IMolecule readMolecule(IChemObjectBuilder builder) throws CDKException {
-        return builder.newMolecule(readConnectionTable(builder));
+        return builder.newInstance(IMolecule.class,readConnectionTable(builder));
     }
     
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
     	logger.info("Reading CTAB block");
-        IAtomContainer readData = builder.newAtomContainer();
+        IAtomContainer readData = builder.newInstance(IAtomContainer.class);
         boolean foundEND = false;
         String lastLine = readHeader(readData);
         while (isReady() && !foundEND) {
@@ -227,7 +227,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 foundEND = true;
             } else {
                 logger.debug("Parsing atom from: " + command);
-                IAtom atom = readData.getBuilder().newAtom();
+                IAtom atom = readData.getBuilder().newInstance(IAtom.class);
                 StringTokenizer tokenizer = new StringTokenizer(command);
                 // parse the index
                 try {
@@ -241,17 +241,17 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // parse the element
                 String element = tokenizer.nextToken();
                 if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(readData.getBuilder().newAtom(element));
+                    atom = isotopeFactory.configure(readData.getBuilder().newInstance(IAtom.class,element));
                 } else if ("A".equals(element)) {
-                	atom = readData.getBuilder().newPseudoAtom(element);
+                	atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
                 } else if ("Q".equals(element)) {
-                	atom = readData.getBuilder().newPseudoAtom(element);
+                	atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
                 } else if ("*".equals(element)) {
-                	atom = readData.getBuilder().newPseudoAtom(element);
+                	atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
                 } else if ("LP".equals(element)) {
-                	atom = readData.getBuilder().newPseudoAtom(element);
+                	atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
                 } else if ("L".equals(element)) {
-                	atom = readData.getBuilder().newPseudoAtom(element);
+                	atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
                 } else if (element.length() > 0 && element.charAt(0) == 'R'){
                 	logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     //check if the element is R
@@ -266,12 +266,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     	}
                     	element="R"+Rnumber;
                     }
-                    atom = readData.getBuilder().newPseudoAtom(element);
+                    atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
                 } else {
                 	if (mode == ISimpleChemObjectReader.Mode.STRICT) {
                 		throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
                 	}
-                	atom = readData.getBuilder().newPseudoAtom(element);
+                	atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
                 }
 
                 // parse atom coordinates (in Angstrom)
@@ -342,7 +342,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             } else {
                 logger.debug("Parsing bond from: " + command);
                 StringTokenizer tokenizer = new StringTokenizer(command);
-                IBond bond = readData.getBuilder().newBond();
+                IBond bond = readData.getBuilder().newInstance(IBond.class);
                 // parse the index
                 try {
                     String indexString = tokenizer.nextToken();
@@ -486,7 +486,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         if (atomID != -1 && label.length() > 0) {
                         	IAtom atom = readData.getAtom(atomID-1);
                             if (!(atom instanceof IPseudoAtom)) {
-                                atom = readData.getBuilder().newPseudoAtom(atom);
+                                atom = readData.getBuilder().newInstance(IPseudoAtom.class,atom);
                             }
                             ((IPseudoAtom)atom).setLabel(label);
                             readData.setAtom(atomID-1, atom);

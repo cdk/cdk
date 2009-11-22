@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.nonotify;
 
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.protein.data.PDBAtom;
 
 /**

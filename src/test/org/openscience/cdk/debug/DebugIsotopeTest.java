@@ -54,7 +54,7 @@ public class DebugIsotopeTest extends AbstractIsotopeTest {
     }
     
     @Test public void testDebugIsotope_IElement() {
-    	IElement element = newChemObject().getBuilder().newElement("C");
+    	IElement element = newChemObject().getBuilder().newInstance(IElement.class,"C");
         IIsotope i = new DebugIsotope(element);
         Assert.assertEquals("C", i.getSymbol());
     }

@@ -91,7 +91,7 @@ public class ReactionSetManipulator {
      */
     @TestMethod("testGetAllMolecules_IReactionSet")
     public static IMoleculeSet getAllMolecules(IReactionSet set) {
-    	IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
+    	IMoleculeSet moleculeSet = set.getBuilder().newInstance(IMoleculeSet.class);
         for (IReaction reaction : set.reactions()) {
             IMoleculeSet molecules = ReactionManipulator.getAllMolecules(reaction);
             for (IAtomContainer ac : molecules.molecules()) {
@@ -165,7 +165,7 @@ public class ReactionSetManipulator {
     @TestMethod("testGetRelevantReactions_IReactionSet_IMolecule")
     public static IReactionSet getRelevantReactions(IReactionSet reactSet,
             IAtomContainer molecule) {
-        IReactionSet newReactSet = reactSet.getBuilder().newReactionSet();
+        IReactionSet newReactSet = reactSet.getBuilder().newInstance(IReactionSet.class);
     	IReactionSet reactSetProd = getRelevantReactionsAsProduct(reactSet, molecule);
     	for (IReaction reaction : reactSetProd.reactions())
             	newReactSet.addReaction(reaction);
@@ -185,7 +185,7 @@ public class ReactionSetManipulator {
     @TestMethod("testGetRelevantReactionsAsReactant_IReactionSet_IMolecule")
     public static IReactionSet getRelevantReactionsAsReactant(
             IReactionSet reactSet, IAtomContainer molecule) {
-        IReactionSet newReactSet = reactSet.getBuilder().newReactionSet();
+        IReactionSet newReactSet = reactSet.getBuilder().newInstance(IReactionSet.class);
     	for (IReaction reaction : reactSet.reactions()) {
             for(IAtomContainer atomContainer : reaction.getReactants().molecules())
             	if(atomContainer.equals(molecule))
@@ -204,7 +204,7 @@ public class ReactionSetManipulator {
     @TestMethod("testGetRelevantReactionsAsProduct_IReactionSet_IMolecule")
     public static IReactionSet getRelevantReactionsAsProduct(
             IReactionSet reactSet, IAtomContainer molecule) {
-        IReactionSet newReactSet = reactSet.getBuilder().newReactionSet();
+        IReactionSet newReactSet = reactSet.getBuilder().newInstance(IReactionSet.class);
     	for (IReaction reaction : reactSet.reactions()) {
             for(IAtomContainer atomContainer : reaction.getProducts().molecules())
             	if(atomContainer.equals(molecule))

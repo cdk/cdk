@@ -144,7 +144,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
     	// FIXME: for now I'll cache the original charges, and restore them at the end of this method
     	Double originalCharge = atom.getCharge();
         if (!isCachedAtomContainer(ac)) {
-            IMolecule mol = atom.getBuilder().newMolecule(ac);
+            IMolecule mol = atom.getBuilder().newInstance(IMolecule.class,ac);
             if (maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);

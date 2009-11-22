@@ -66,8 +66,8 @@ public class ConnectivityChecker
         // partitioning needed
         if (atomContainer.getAtomCount() < 2) return true;
 
-		IAtomContainer newContainer = atomContainer.getBuilder().newAtomContainer();
-		IMolecule molecule = atomContainer.getBuilder().newMolecule();
+		IAtomContainer newContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
+		IMolecule molecule = atomContainer.getBuilder().newInstance(IMolecule.class);
 		List<IAtom> sphere = new ArrayList<IAtom>();
         for (IAtom atom : atomContainer.atoms()) {
             atom.setFlag(CDKConstants.VISITED, false);
@@ -98,9 +98,9 @@ public class ConnectivityChecker
 	 */
     @TestMethod("testPartitionIntoMolecules_IAtomContainer,testPartitionIntoMoleculesKeepsAtomIDs,testPartitionIntoMolecules_IsConnected_Consistency")
     public static IMoleculeSet partitionIntoMolecules(IAtomContainer atomContainer) {
-		IAtomContainer newContainer = atomContainer.getBuilder().newAtomContainer();
+		IAtomContainer newContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
 		IMolecule molecule;
-		IMoleculeSet molecules = atomContainer.getBuilder().newMoleculeSet();
+		IMoleculeSet molecules = atomContainer.getBuilder().newInstance(IMoleculeSet.class);
 		List<IAtom> sphere = new ArrayList<IAtom>();
 
         for (IAtom atom : atomContainer.atoms()) {
@@ -120,7 +120,7 @@ public class ConnectivityChecker
 
         while(newContainer.getAtomCount() > 0) {
 			IAtom atom = newContainer.getAtom(0);
-			molecule = atomContainer.getBuilder().newMolecule();
+			molecule = atomContainer.getBuilder().newInstance(IMolecule.class);
 			sphere.clear();
 			sphere.add(atom);
 			atom.setFlag(CDKConstants.VISITED, true);

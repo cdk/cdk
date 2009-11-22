@@ -37,43 +37,43 @@ public abstract class AbstractAtomParityTest {
 
     private static IChemObjectBuilder builder;
 
-    public static IChemObjectBuilder getBuilder() {
+    public static IChemObjectBuilder getNewBuilder() {
         return builder;
     }
 
-    public static void setBuilder( IChemObjectBuilder builder ) {
+    public static void setBuilder(IChemObjectBuilder builder ) {
         AbstractAtomParityTest.builder = builder;
     }
 
     @Test public void testGetAtom() {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
-        IAtomParity parity = getBuilder().newAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        IAtomParity parity = getNewBuilder().newInstance(IAtomParity.class, carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         Assert.assertEquals(carbon, parity.getAtom());
     }
     
     @Test public void testGetSurroundingAtoms() {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
-        IAtomParity parity = getBuilder().newAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        IAtomParity parity = getNewBuilder().newInstance(IAtomParity.class, carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         org.openscience.cdk.interfaces.IAtom[] neighbors = parity.getSurroundingAtoms();
         Assert.assertEquals(4, neighbors.length);
         Assert.assertEquals(carbon1, neighbors[0]);
@@ -83,35 +83,35 @@ public abstract class AbstractAtomParityTest {
     }
     
     @Test public void testGetParity() {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
-        IAtomParity parity = getBuilder().newAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        IAtomParity parity = getNewBuilder().newInstance(IAtomParity.class, carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         Assert.assertEquals(parityInt, parity.getParity());
     }
     
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
-        IAtomParity parity = getBuilder().newAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        IAtomParity parity = getNewBuilder().newInstance(IAtomParity.class, carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         String description = parity.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');

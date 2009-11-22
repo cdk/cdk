@@ -45,7 +45,7 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 	private boolean isExpanded;
 
 	public FragmentAtom() {
-		fragment = this.getBuilder().newAtomContainer();
+		fragment = this.getBuilder().newInstance(IAtomContainer.class);
 		isExpanded = false;
 	}
 	

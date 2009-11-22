@@ -204,7 +204,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		IAtomContainerSet acSet = gRN.getContainers((IMolecule) removingFlagsAromaticity(ac));
 //		IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(removingFlagsAromaticity(ac));
 		
-		IMoleculeSet iSet = ac.getBuilder().newMoleculeSet();
+		IMoleculeSet iSet = ac.getBuilder().newInstance(IMoleculeSet.class);
 		iSet.addAtomContainer(ac);
 		
 		if(acSet != null)
@@ -485,11 +485,11 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 * @throws IOException 
 	 */
 	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac, IAtomContainerSet iSet) throws IOException, ClassNotFoundException, CDKException {
-		IAtomContainerSet set = ac.getBuilder().newAtomContainerSet();
+		IAtomContainerSet set = ac.getBuilder().newInstance(IAtomContainerSet.class);
         IReactionProcess type = new HeterolyticCleavageSBReaction();
         cleanFlagReactiveCenter(ac);
         boolean found = false; /* control obtained containers */
-		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
+		IMoleculeSet setOfReactants = ac.getBuilder().newInstance(IMoleculeSet.class);
 		/* search of reactive center.*/
 		out:
 		for(int i = 0 ; i < ac.getBondCount() ; i++){
@@ -530,7 +530,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         for(int i = 0; i < setOfReactions.getReactionCount(); i++){
         	type = new HyperconjugationReaction();
-    		IMoleculeSet setOfM2 = ac.getBuilder().newMoleculeSet();
+    		IMoleculeSet setOfM2 = ac.getBuilder().newInstance(IMoleculeSet.class);
     		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
     		for(int k = 0; k < mol.getBondCount(); k++){
     			mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER,false);

@@ -110,7 +110,7 @@ public class RebondTool {
       if (atomNear != atom && container.getBond(atom, atomNear) == null) {
         boolean bonded = isBonded(myCovalentRadius,  atomNear.getCovalentRadius(), e.foundDistance2());
         if (bonded) {
-          IBond bond = atom.getBuilder().newBond(atom, atomNear, IBond.Order.SINGLE);
+          IBond bond = atom.getBuilder().newInstance(IBond.class,atom, atomNear, IBond.Order.SINGLE);
           container.addBond(bond);
         }
       }

@@ -24,9 +24,9 @@ import java.util.Map;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -146,9 +146,9 @@ public class DebugChemObject extends ChemObject
         return clone;
 	}
 
-	public IChemObjectBuilder getBuilder() {
-		return DebugChemObjectBuilder.getInstance();
-	}
+    public IChemObjectBuilder getBuilder() {
+        return DebugChemObjectBuilder.getInstance();
+    }
 
 	public void setNotification(boolean bool) {
 		logger.debug("Setting use notification: ", bool);

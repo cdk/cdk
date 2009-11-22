@@ -34,18 +34,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -120,10 +121,10 @@ public class MDLWriterTest extends ChemObjectIOTest {
      */
     @Test public void testBug1778479() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newMolecule();
-        IAtom atom1 = builder.newPseudoAtom();
-        IAtom atom2 = builder.newAtom("C");
-        IBond bond = builder.newBond(atom1, atom2);
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtom atom1 = builder.newInstance(IPseudoAtom.class);
+        IAtom atom2 = builder.newInstance(IAtom.class,"C");
+        IBond bond = builder.newInstance(IBond.class,atom1, atom2);
         molecule.addAtom(atom1);
         molecule.addAtom(atom2);
         molecule.addBond(bond);
@@ -136,8 +137,8 @@ public class MDLWriterTest extends ChemObjectIOTest {
 
     @Test public void testNullFormalCharge() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newMolecule();
-        IAtom atom = builder.newAtom("C");
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFormalCharge(null);
         molecule.addAtom(atom);
 
@@ -153,8 +154,8 @@ public class MDLWriterTest extends ChemObjectIOTest {
 
     @Test public void testPrefer3DCoordinateOutput() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newMolecule();
-        IAtom atom = builder.newAtom("C");
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint2d(new Point2d(1.0, 2.0));
         atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
         molecule.addAtom(atom);
@@ -172,8 +173,8 @@ public class MDLWriterTest extends ChemObjectIOTest {
 
     @Test public void testForce2DCoordinates() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newMolecule();
-        IAtom atom = builder.newAtom("C");
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint2d(new Point2d(1.0, 2.0));
         atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
         molecule.addAtom(atom);
@@ -210,8 +211,8 @@ public class MDLWriterTest extends ChemObjectIOTest {
         mol1.setProperty(CDKConstants.TITLE,"title1");
         IMolecule mol2 = MoleculeFactory.makeAlphaPinene();
         mol2.setProperty(CDKConstants.TITLE,"title2");
-        IChemModel model = mol1.getBuilder().newChemModel();
-        model.setMoleculeSet(mol1.getBuilder().newMoleculeSet());
+        IChemModel model = mol1.getBuilder().newInstance(IChemModel.class);
+        model.setMoleculeSet(mol1.getBuilder().newInstance(IMoleculeSet.class));
         model.getMoleculeSet().addAtomContainer(mol1);
         model.getMoleculeSet().addAtomContainer(mol2);
         StringWriter writer = new StringWriter();
@@ -226,18 +227,18 @@ public class MDLWriterTest extends ChemObjectIOTest {
      */
     @Test public void testRGPLine() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newMolecule();
-        IPseudoAtom atom1 = builder.newPseudoAtom();
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IPseudoAtom atom1 = builder.newInstance(IPseudoAtom.class);
         atom1.setSymbol("R");
         atom1.setLabel("R12");
 
-        IAtom atom2 = builder.newAtom("C");
-        IBond bond = builder.newBond(atom1, atom2);
+        IAtom atom2 = builder.newInstance(IAtom.class, "C");
+        IBond bond = builder.newInstance(IBond.class, atom1, atom2);
 
-        IPseudoAtom atom3 = builder.newPseudoAtom();
+        IPseudoAtom atom3 = builder.newInstance(IPseudoAtom.class);
         atom3.setSymbol("A");
         atom3.setLabel("A");
-        IBond bond2 = builder.newBond(atom3, atom2);
+        IBond bond2 = builder.newInstance(IBond.class, atom3, atom2);
 
         molecule.addAtom(atom1);
         molecule.addAtom(atom2);

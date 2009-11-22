@@ -23,18 +23,18 @@
  */
 package org.openscience.cdk.formula;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Class defining a molecular formula object. It maintains
  * a list of list {@link IIsotope}.
@@ -52,7 +52,7 @@ import java.util.Map;
  * @cdk.keyword molecular formula
  */
 @TestClass("org.openscience.cdk.formula.MolecularFormulaTest")
-public class MolecularFormula implements IMolecularFormula, Cloneable {
+public class MolecularFormula implements IMolecularFormula {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -396,8 +396,8 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 		return exactMass1.doubleValue() == exactMass2;
 	}
 
-	public IChemObjectBuilder getBuilder() {
-	    return DefaultChemObjectBuilder.getInstance();
+    public IChemObjectBuilder getBuilder() {
+        return DefaultChemObjectBuilder.getInstance();
     }
 
 }

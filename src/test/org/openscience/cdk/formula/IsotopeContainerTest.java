@@ -3,8 +3,8 @@ package org.openscience.cdk.formula;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
@@ -40,7 +40,7 @@ public class IsotopeContainerTest extends CDKTestCase{
 	 */
     @Test 
 	public void testIsotopeContainer_IMolecularFormula_double() {
-    	IMolecularFormula formula = builder.newMolecularFormula();
+    	IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
     	double intensity = 130.00; 
     	IsotopeContainer isoC = new IsotopeContainer(formula,intensity);
     	
@@ -71,7 +71,7 @@ public class IsotopeContainerTest extends CDKTestCase{
     @Test 
 	public void testSetFormula_IMolecularFormula() {
     	IsotopeContainer isoC = new IsotopeContainer();
-		IMolecularFormula formula = builder.newMolecularFormula();
+		IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
     	isoC.setFormula(formula);
 		Assert.assertNotNull(isoC);
     }
@@ -105,7 +105,7 @@ public class IsotopeContainerTest extends CDKTestCase{
     @Test 
 	public void testGetFormula() {
        	IsotopeContainer isoC = new IsotopeContainer();
-		IMolecularFormula formula = builder.newMolecularFormula();
+		IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
     	isoC.setFormula(formula);
 		Assert.assertEquals(formula,isoC.getFormula());
     }
@@ -143,7 +143,7 @@ public class IsotopeContainerTest extends CDKTestCase{
     @Test 
 	public void testClone() throws Exception{
     	IsotopeContainer isoC = new IsotopeContainer();
-    	IMolecularFormula formula = builder.newMolecularFormula();
+    	IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
     	isoC.setFormula(formula);
     	double mass = 130.00; 
     	isoC.setMass(mass);

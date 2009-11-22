@@ -49,8 +49,8 @@ public class MoleculeSetTest extends AbstractMoleculeSetTest {
     
     @Test public void testClone() throws CloneNotSupportedException{
         IMoleculeSet moleculeSet = DefaultChemObjectBuilder.getInstance()
-            .newMoleculeSet();
-        IMolecule mol = moleculeSet.getBuilder().newMolecule();
+            .newInstance(IMoleculeSet.class);
+        IMolecule mol = moleculeSet.getBuilder().newInstance(IMolecule.class);
         moleculeSet.addAtomContainer(mol);
         //we test that the molecule added is actually in the moleculeSet
         Assert.assertSame(mol, moleculeSet.getAtomContainer(0));

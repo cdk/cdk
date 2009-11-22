@@ -27,8 +27,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Provides methods for checking whether an atoms lone pair electrons are saturated 
@@ -115,7 +115,7 @@ public class LonePairElectronChecker {
 		int missingLPs = lpCount - ac.getConnectedLonePairsCount(atom);
 		
 		for (int j = 0; j < missingLPs; j++) {
-			ILonePair lp = atom.getBuilder().newLonePair(atom);
+			ILonePair lp = atom.getBuilder().newInstance(ILonePair.class,atom);
 			ac.addLonePair(lp);
 		}
     }

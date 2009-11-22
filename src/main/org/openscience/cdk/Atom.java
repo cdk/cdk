@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IElement;
  * to the constructor are null. Atoms can be configured by using
  * the IsotopeFactory.configure() method:
  * <pre>
- *   IsotopeFactory if = IsotopeFactory.getInstance(a.getBuilder());
+ *   IsotopeFactory if = IsotopeFactory.getInstance(a.getNewBuilder());
  *   if.configure(a);
  * </pre>
  *

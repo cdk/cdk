@@ -22,13 +22,18 @@
  */
 package org.openscience.cdk.aromaticity;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,10 +51,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.Iterator;
 
 /**
  * @author steinbeck
@@ -414,7 +415,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/porphyrin.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -454,7 +455,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug698152.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -497,7 +498,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug716259.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+        molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -529,7 +530,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug1328739.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -567,58 +568,58 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     private IMolecule makeAromaticMolecule() {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom a1 = mol.getBuilder().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(329.99999999999994, 971.0));
         mol.addAtom(a1);
-        IAtom a2 = mol.getBuilder().newAtom("C");
+        IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"C");
         a2.setPoint2d(new Point2d(298.8230854637602, 989.0));
         mol.addAtom(a2);
-        IAtom a3 = mol.getBuilder().newAtom("C");
+        IAtom a3 = mol.getBuilder().newInstance(IAtom.class,"C");
         a3.setPoint2d(new Point2d(298.8230854637602, 1025.0));
         mol.addAtom(a3);
-        IAtom a4 = mol.getBuilder().newAtom("C");
+        IAtom a4 = mol.getBuilder().newInstance(IAtom.class,"C");
         a4.setPoint2d(new Point2d(330.0, 1043.0));
         mol.addAtom(a4);
-        IAtom a5 = mol.getBuilder().newAtom("C");
+        IAtom a5 = mol.getBuilder().newInstance(IAtom.class,"C");
         a5.setPoint2d(new Point2d(361.1769145362398, 1025.0));
         mol.addAtom(a5);
-        IAtom a6 = mol.getBuilder().newAtom("C");
+        IAtom a6 = mol.getBuilder().newInstance(IAtom.class,"C");
         a6.setPoint2d(new Point2d(361.1769145362398, 989.0));
         mol.addAtom(a6);
-        IAtom a7 = mol.getBuilder().newAtom("C");
+        IAtom a7 = mol.getBuilder().newInstance(IAtom.class,"C");
         a7.setPoint2d(new Point2d(392.3538290724796, 971.0));
         mol.addAtom(a7);
-        IAtom a8 = mol.getBuilder().newAtom("C");
+        IAtom a8 = mol.getBuilder().newInstance(IAtom.class,"C");
         a8.setPoint2d(new Point2d(423.5307436087194, 989.0));
         mol.addAtom(a8);
-        IAtom a9 = mol.getBuilder().newAtom("C");
+        IAtom a9 = mol.getBuilder().newInstance(IAtom.class,"C");
         a9.setPoint2d(new Point2d(423.5307436087194, 1025.0));
         mol.addAtom(a9);
-        IAtom a10 = mol.getBuilder().newAtom("C");
+        IAtom a10 = mol.getBuilder().newInstance(IAtom.class,"C");
         a10.setPoint2d(new Point2d(392.3538290724796, 1043.0));
         mol.addAtom(a10);
-        IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.DOUBLE);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a2, a3, IBond.Order.SINGLE);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a3, a4, IBond.Order.DOUBLE);
+        IBond b3 = mol.getBuilder().newInstance(IBond.class,a3, a4, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a4, a5, IBond.Order.SINGLE);
+        IBond b4 = mol.getBuilder().newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a5, a6, IBond.Order.DOUBLE);
+        IBond b5 = mol.getBuilder().newInstance(IBond.class,a5, a6, IBond.Order.DOUBLE);
         mol.addBond(b5);
-        IBond b6 = mol.getBuilder().newBond(a6, a1, IBond.Order.SINGLE);
+        IBond b6 = mol.getBuilder().newInstance(IBond.class,a6, a1, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = mol.getBuilder().newBond(a6, a7, IBond.Order.SINGLE);
+        IBond b7 = mol.getBuilder().newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = mol.getBuilder().newBond(a7, a8, IBond.Order.SINGLE);
+        IBond b8 = mol.getBuilder().newInstance(IBond.class,a7, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
-        IBond b9 = mol.getBuilder().newBond(a8, a9, IBond.Order.SINGLE);
+        IBond b9 = mol.getBuilder().newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
         mol.addBond(b9);
-        IBond b10 = mol.getBuilder().newBond(a9, a10, IBond.Order.SINGLE);
+        IBond b10 = mol.getBuilder().newInstance(IBond.class,a9, a10, IBond.Order.SINGLE);
         mol.addBond(b10);
-        IBond b11 = mol.getBuilder().newBond(a10, a5, IBond.Order.SINGLE);
+        IBond b11 = mol.getBuilder().newInstance(IBond.class,a10, a5, IBond.Order.SINGLE);
 		  mol.addBond(b11);
 		  return mol;
 	}
@@ -630,85 +631,85 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     public void test3Amino2MethylPyridine() throws Exception {
 
         IMolecule mol = new Molecule();
-        IAtom a1 = mol.getBuilder().newAtom("N");
+        IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"N");
         a1.setPoint2d(new Point2d(3.7321, 1.345));
         mol.addAtom(a1);
-        IAtom a2 = mol.getBuilder().newAtom("N");
+        IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"N");
         a2.setPoint2d(new Point2d(4.5981, -1.155));
         mol.addAtom(a2);
-        IAtom a3 = mol.getBuilder().newAtom("C");
+        IAtom a3 = mol.getBuilder().newInstance(IAtom.class,"C");
         a3.setPoint2d(new Point2d(2.866, -0.155));
         mol.addAtom(a3);
-        IAtom a4 = mol.getBuilder().newAtom("C");
+        IAtom a4 = mol.getBuilder().newInstance(IAtom.class,"C");
         a4.setPoint2d(new Point2d(3.7321, 0.345));
         mol.addAtom(a4);
-        IAtom a5 = mol.getBuilder().newAtom("C");
+        IAtom a5 = mol.getBuilder().newInstance(IAtom.class,"C");
         a5.setPoint2d(new Point2d(2.866, -1.155));
         mol.addAtom(a5);
-        IAtom a6 = mol.getBuilder().newAtom("C");
+        IAtom a6 = mol.getBuilder().newInstance(IAtom.class,"C");
         a6.setPoint2d(new Point2d(2.0, 0.345));
         mol.addAtom(a6);
-        IAtom a7 = mol.getBuilder().newAtom("C");
+        IAtom a7 = mol.getBuilder().newInstance(IAtom.class,"C");
         a7.setPoint2d(new Point2d(4.5981, -0.155));
         mol.addAtom(a7);
-        IAtom a8 = mol.getBuilder().newAtom("C");
+        IAtom a8 = mol.getBuilder().newInstance(IAtom.class,"C");
         a8.setPoint2d(new Point2d(3.7321, -1.655));
         mol.addAtom(a8);
-        IAtom a9 = mol.getBuilder().newAtom("H");
+        IAtom a9 = mol.getBuilder().newInstance(IAtom.class,"H");
         a9.setPoint2d(new Point2d(2.3291, -1.465));
         mol.addAtom(a9);
-        IAtom a10 = mol.getBuilder().newAtom("H");
+        IAtom a10 = mol.getBuilder().newInstance(IAtom.class,"H");
         a10.setPoint2d(new Point2d(2.31, 0.8819));
         mol.addAtom(a10);
-        IAtom a11 = mol.getBuilder().newAtom("H");
+        IAtom a11 = mol.getBuilder().newInstance(IAtom.class,"H");
         a11.setPoint2d(new Point2d(1.4631, 0.655));
         mol.addAtom(a11);
-        IAtom a12 = mol.getBuilder().newAtom("H");
+        IAtom a12 = mol.getBuilder().newInstance(IAtom.class,"H");
         a12.setPoint2d(new Point2d(1.69, -0.1919));
         mol.addAtom(a12);
-        IAtom a13 = mol.getBuilder().newAtom("H");
+        IAtom a13 = mol.getBuilder().newInstance(IAtom.class,"H");
         a13.setPoint2d(new Point2d(5.135, 0.155));
         mol.addAtom(a13);
-        IAtom a14 = mol.getBuilder().newAtom("H");
+        IAtom a14 = mol.getBuilder().newInstance(IAtom.class,"H");
         a14.setPoint2d(new Point2d(3.7321, -2.275));
         mol.addAtom(a14);
-        IAtom a15 = mol.getBuilder().newAtom("H");
+        IAtom a15 = mol.getBuilder().newInstance(IAtom.class,"H");
         a15.setPoint2d(new Point2d(4.269, 1.655));
         mol.addAtom(a15);
-        IAtom a16 = mol.getBuilder().newAtom("H");
+        IAtom a16 = mol.getBuilder().newInstance(IAtom.class,"H");
         a16.setPoint2d(new Point2d(3.1951, 1.655));
         mol.addAtom(a16);
-        IBond b1 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a1, a15, IBond.Order.SINGLE);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class,a1, a15, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a1, a16, IBond.Order.SINGLE);
+        IBond b3 = mol.getBuilder().newInstance(IBond.class,a1, a16, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a2, a7, IBond.Order.DOUBLE);
+        IBond b4 = mol.getBuilder().newInstance(IBond.class,a2, a7, IBond.Order.DOUBLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a2, a8, IBond.Order.SINGLE);
+        IBond b5 = mol.getBuilder().newInstance(IBond.class,a2, a8, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = mol.getBuilder().newBond(a3, a4, IBond.Order.DOUBLE);
+        IBond b6 = mol.getBuilder().newInstance(IBond.class,a3, a4, IBond.Order.DOUBLE);
         mol.addBond(b6);
-        IBond b7 = mol.getBuilder().newBond(a3, a5, IBond.Order.SINGLE);
+        IBond b7 = mol.getBuilder().newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = mol.getBuilder().newBond(a3, a6, IBond.Order.SINGLE);
+        IBond b8 = mol.getBuilder().newInstance(IBond.class,a3, a6, IBond.Order.SINGLE);
         mol.addBond(b8);
-        IBond b9 = mol.getBuilder().newBond(a4, a7, IBond.Order.SINGLE);
+        IBond b9 = mol.getBuilder().newInstance(IBond.class,a4, a7, IBond.Order.SINGLE);
         mol.addBond(b9);
-        IBond b10 = mol.getBuilder().newBond(a5, a8, IBond.Order.DOUBLE);
+        IBond b10 = mol.getBuilder().newInstance(IBond.class,a5, a8, IBond.Order.DOUBLE);
         mol.addBond(b10);
-        IBond b11 = mol.getBuilder().newBond(a5, a9, IBond.Order.SINGLE);
+        IBond b11 = mol.getBuilder().newInstance(IBond.class,a5, a9, IBond.Order.SINGLE);
         mol.addBond(b11);
-        IBond b12 = mol.getBuilder().newBond(a6, a10, IBond.Order.SINGLE);
+        IBond b12 = mol.getBuilder().newInstance(IBond.class,a6, a10, IBond.Order.SINGLE);
         mol.addBond(b12);
-        IBond b13 = mol.getBuilder().newBond(a6, a11, IBond.Order.SINGLE);
+        IBond b13 = mol.getBuilder().newInstance(IBond.class,a6, a11, IBond.Order.SINGLE);
         mol.addBond(b13);
-        IBond b14 = mol.getBuilder().newBond(a6, a12, IBond.Order.SINGLE);
+        IBond b14 = mol.getBuilder().newInstance(IBond.class,a6, a12, IBond.Order.SINGLE);
         mol.addBond(b14);
-        IBond b15 = mol.getBuilder().newBond(a7, a13, IBond.Order.SINGLE);
+        IBond b15 = mol.getBuilder().newInstance(IBond.class,a7, a13, IBond.Order.SINGLE);
         mol.addBond(b15);
-        IBond b16 = mol.getBuilder().newBond(a8, a14, IBond.Order.SINGLE);
+        IBond b16 = mol.getBuilder().newInstance(IBond.class,a8, a14, IBond.Order.SINGLE);
         mol.addBond(b16);
 
 

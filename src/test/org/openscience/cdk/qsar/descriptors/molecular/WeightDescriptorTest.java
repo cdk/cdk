@@ -28,9 +28,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -64,8 +65,8 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IAtomContainer mol = builder.newAtomContainer();
-        mol.addAtom(builder.newAtom("C"));
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class,"C"));
         Assert.assertEquals(12.00, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 	
@@ -76,12 +77,12 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IAtomContainer mol = builder.newAtomContainer();
-        mol.addAtom(builder.newAtom("C"));
-        mol.addAtom(builder.newAtom("H"));
-        mol.addAtom(builder.newAtom("H"));
-        mol.addAtom(builder.newAtom("H"));
-        mol.addAtom(builder.newAtom("H"));
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class,"C"));
+        mol.addAtom(builder.newInstance(IAtom.class,"H"));
+        mol.addAtom(builder.newInstance(IAtom.class,"H"));
+        mol.addAtom(builder.newInstance(IAtom.class,"H"));
+        mol.addAtom(builder.newInstance(IAtom.class,"H"));
         mol.addBond(0,1, Order.SINGLE);
         mol.addBond(0,2, Order.SINGLE);
         mol.addBond(0,3, Order.SINGLE);
@@ -96,8 +97,8 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IAtomContainer mol = builder.newAtomContainer();
-        mol.addAtom(builder.newAtom("C"));
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class,"C"));
         mol.getAtom(0).setHydrogenCount(4);
         Assert.assertEquals(16.01, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }

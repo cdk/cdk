@@ -134,11 +134,11 @@ public class Mol2Reader extends DefaultChemObjectReader {
      public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof IChemFile) {
              IChemFile file = (IChemFile)object;
-             IChemSequence sequence = file.getBuilder().newChemSequence();
-             IChemModel model = file.getBuilder().newChemModel();
-             IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
+             IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
+             IChemModel model = file.getBuilder().newInstance(IChemModel.class);
+             IMoleculeSet moleculeSet = file.getBuilder().newInstance(IMoleculeSet.class);
              moleculeSet.addMolecule(readMolecule(
-                 model.getBuilder().newMolecule()
+                 model.getBuilder().newInstance(IMolecule.class)
              ));
              model.setMoleculeSet(moleculeSet);
              sequence.addChemModel(model);
@@ -146,9 +146,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
              return file;
          } else if (object instanceof IChemModel) {
              IChemModel model = (IChemModel)object;
-             IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
+             IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
              moleculeSet.addMolecule(readMolecule(
-                 model.getBuilder().newMolecule()
+                 model.getBuilder().newInstance(IMolecule.class)
              ));
              model.setMoleculeSet(moleculeSet);
              return model;
@@ -243,7 +243,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     	if ("S.o2".equals(atomTypeStr)) atomTypeStr = "S.O2";  
                     	if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
 
-                        IAtom atom = molecule.getBuilder().newAtom("X");
+                        IAtom atom = molecule.getBuilder().newInstance(IAtom.class,"X");
                         IAtomType atomType;
                         try {
                         	atomType = atFactory.getAtomType(atomTypeStr);
@@ -292,7 +292,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             if ("nc".equals(orderStr)) {
                             	// do not connect the atoms
                             } else {
-                        		IBond bond = molecule.getBuilder().newBond(
+                        		IBond bond = molecule.getBuilder().newInstance(IBond.class,
                         			molecule.getAtom(atom1-1),
                         			molecule.getAtom(atom2-1)
                         		);

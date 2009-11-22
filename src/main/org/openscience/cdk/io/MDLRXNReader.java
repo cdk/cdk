@@ -44,9 +44,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -180,9 +181,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
  	 * @return          The IChemFile that was read from the RDF file.
  	 */
      private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
-         IChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
+         IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
          
-         IChemModel chemModel = chemFile.getBuilder().newChemModel();
+         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
          chemSequence.addChemModel(readChemModel(chemModel));
          chemFile.addChemSequence(chemSequence);
  		return chemFile;
@@ -196,7 +197,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
       private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
     	  IReactionSet setOfReactions = chemModel.getReactionSet();
           if (setOfReactions == null) {
-         	 setOfReactions = chemModel.getBuilder().newReactionSet();
+         	 setOfReactions = chemModel.getBuilder().newInstance(IReactionSet.class);
           }
           chemModel.setReactionSet(readReactionSet(setOfReactions));
           return chemModel;
@@ -290,7 +291,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
     	logger.debug("Reading new reaction");
         int linecount = 0;
-    	IReaction reaction = builder.newReaction();
+    	IReaction reaction = builder.newInstance(IReaction.class);
         try {
             input.readLine(); // first line should be $RXN
             input.readLine(); // second line
@@ -342,7 +343,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
                 IMolecule reactant = (IMolecule)reader.read(
-                  builder.newMolecule()
+                  builder.newInstance(IMolecule.class)
                 );
                   
                 // add reactant
@@ -374,7 +375,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                     super.mode
                 );
                 IMolecule product = (IMolecule)reader.read(
-                  builder.newMolecule());
+                  builder.newInstance(IMolecule.class));
                   
                 // add reactant
                 reaction.addProduct(product);
@@ -390,12 +391,12 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         // now try to map things, if wanted
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
-        IAtomContainer reactingSide = builder.newAtomContainer();
+        IAtomContainer reactingSide = builder.newInstance(IAtomContainer.class);
         Iterator molecules = reaction.getReactants().molecules().iterator();
         while (molecules.hasNext()) {
             reactingSide.add((IMolecule)molecules.next());
         }
-        IAtomContainer producedSide = builder.newAtomContainer();
+        IAtomContainer producedSide = builder.newInstance(IAtomContainer.class);
         molecules = reaction.getProducts().molecules().iterator();
         while (molecules.hasNext()) {
             producedSide.add((IMolecule)molecules.next());
@@ -412,7 +413,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 if (eductAtom.getID() != null &&
                 		eductAtom.getID().equals(productAtom.getID())) {
                     reaction.addMapping(
-                        builder.newMapping(eductAtom, productAtom)
+                        builder.newInstance(IMapping.class,eductAtom, productAtom)
                     );
                     mappingCount++;
                     break;

@@ -123,7 +123,7 @@ public class HINWriter extends DefaultChemObjectWriter {
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
             try {
-                IMoleculeSet som = object.getBuilder().newMoleculeSet();
+                IMoleculeSet som = object.getBuilder().newInstance(IMoleculeSet.class);
                 som.addMolecule((IMolecule) object);
                 writeMolecule(som);
             } catch (Exception ex) {

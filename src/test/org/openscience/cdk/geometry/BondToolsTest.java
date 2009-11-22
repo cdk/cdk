@@ -20,22 +20,21 @@
  */
 package org.openscience.cdk.geometry;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
-
-import java.io.InputStream;
-import java.util.Iterator;
 
 /**
  * @cdk.module test-standard

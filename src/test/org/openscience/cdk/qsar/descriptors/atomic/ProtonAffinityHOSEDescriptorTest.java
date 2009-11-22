@@ -24,9 +24,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -41,7 +42,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 	ProtonAffinityHOSEDescriptor descriptor;
 	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder =
+	    NoNotificationChemObjectBuilder.getInstance();
     /**
 	 *  Constructor for the ProtonAffinityHOSEDescriptorTest object
 	 *
@@ -71,20 +73,20 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testAffinityDescriptor1()  throws Exception {
 		
-    	IMolecule mol = builder.newMolecule();
-    	mol.addAtom(builder.newAtom("C"));
-    	mol.addAtom(builder.newAtom("C"));
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(0, 1, IBond.Order.DOUBLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(1, 2, IBond.Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(2, 3, IBond.Order.DOUBLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(3, 4, IBond.Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(4, 5, IBond.Order.DOUBLE);
     	mol.addBond(5, 0, IBond.Order.SINGLE);
-    	mol.addAtom(builder.newAtom("Cl"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"Cl"));
     	mol.addBond(0, 6, IBond.Order.SINGLE);
     	
 		addExplicitHydrogens(mol);
@@ -107,11 +109,11 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testAffinityDescriptor2() throws Exception {
 		
-    	IMolecule mol = builder.newMolecule();
-    	mol.addAtom(builder.newAtom("C"));
-    	mol.addAtom(builder.newAtom("C"));
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(0, 1, IBond.Order.SINGLE);
-    	mol.addAtom(builder.newAtom("Cl"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"Cl"));
     	mol.addBond(1, 2, IBond.Order.SINGLE);
     	
 		addExplicitHydrogens(mol);

@@ -91,8 +91,8 @@ public class HydrogenPlacer {
 		//Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
 		List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
-		IAtomContainer placedAtoms = atomContainer.getBuilder().newAtomContainer();
-		IAtomContainer unplacedAtoms = atomContainer.getBuilder().newAtomContainer();
+		IAtomContainer placedAtoms = atomContainer.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer unplacedAtoms = atomContainer.getBuilder().newInstance(IAtomContainer.class);
 		
 		for (int f = 0; f < connectedAtoms.size(); f++) {
 			IAtom conAtom = (IAtom)connectedAtoms.get(f);

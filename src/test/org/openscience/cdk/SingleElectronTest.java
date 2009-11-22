@@ -59,7 +59,7 @@ public class SingleElectronTest extends AbstractSingleElectronTest {
     }
     
     @Test public void testSingleElectron_IAtom() {
-        IAtom atom = newChemObject().getBuilder().newAtom("N");
+        IAtom atom = newChemObject().getBuilder().newInstance(IAtom.class,"N");
         ISingleElectron radical = new SingleElectron(atom);
         Assert.assertEquals(1, radical.getElectronCount().intValue());
         Assert.assertEquals(atom, radical.getAtom());

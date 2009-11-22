@@ -187,7 +187,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @throws CDKException Description of the Exception
      */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException, IOException {
-        IChemSequence sequence = chemFile.getBuilder().newChemSequence();
+        IChemSequence sequence = chemFile.getBuilder().newInstance(IChemSequence.class);
         IChemModel model = null;
         String line = input.readLine();
         String levelOfTheory;
@@ -199,7 +199,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             if (line.indexOf("Standard orientation:") >= 0) {
 
                 // Found a set of coordinates
-                model = chemFile.getBuilder().newChemModel();
+                model = chemFile.getBuilder().newInstance(IChemModel.class);
                 readCoordinates(model);
                 break;
             }
@@ -226,7 +226,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                         logger.info("Skipping frame, because I was told to do");
                     }
                     fireFrameRead();
-                    model = chemFile.getBuilder().newChemModel();
+                    model = chemFile.getBuilder().newInstance(IChemModel.class);
                     modelCounter++;
                     readCoordinates(model);
                 } else if (line.indexOf("SCF Done:") >= 0) {
@@ -275,8 +275,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @throws CDKException Description of the Exception
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
-        IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
-        IMolecule molecule = model.getBuilder().newMolecule();
+        IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
+        IMolecule molecule = model.getBuilder().newInstance(IMolecule.class);
         String line = input.readLine();
         line = input.readLine();
         line = input.readLine();
@@ -332,7 +332,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             } catch (Exception exception) {
                 throw new CDKException("Could not determine element symbol!", exception);
             }
-            IAtom atom = model.getBuilder().newAtom(symbol);
+            IAtom atom = model.getBuilder().newInstance(IAtom.class,symbol);
             atom.setPoint3d(new Point3d(x, y, z));
             molecule.addAtom(atom);
         }

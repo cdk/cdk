@@ -43,9 +43,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -147,19 +148,19 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
          if (object instanceof IReaction) {
              return (IChemObject) readReaction(object.getBuilder());
          } else if (object instanceof IReactionSet) {
-             IReactionSet reactionSet = object.getBuilder().newReactionSet();
+             IReactionSet reactionSet = object.getBuilder().newInstance(IReactionSet.class);
              reactionSet.addReaction(readReaction(object.getBuilder()));
              return reactionSet;
          } else if (object instanceof IChemModel) {
-             IChemModel model = object.getBuilder().newChemModel();
-             IReactionSet reactionSet = object.getBuilder().newReactionSet();
+             IChemModel model = object.getBuilder().newInstance(IChemModel.class);
+             IReactionSet reactionSet = object.getBuilder().newInstance(IReactionSet.class);
              reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setReactionSet(reactionSet);
              return model;
          } else if (object instanceof IChemFile) {
-             IChemFile chemFile = object.getBuilder().newChemFile();
-             IChemSequence sequence = object.getBuilder().newChemSequence();
-             sequence.addChemModel((IChemModel)read(object.getBuilder().newChemModel()));
+             IChemFile chemFile = object.getBuilder().newInstance(IChemFile.class);
+             IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
+             sequence.addChemModel((IChemModel)read(object.getBuilder().newInstance(IChemModel.class)));
              chemFile.addChemSequence(sequence);
              return chemFile;
          } else {
@@ -190,7 +191,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
      * @return  The Reaction that was read from the MDL file.
      */
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
-        IReaction reaction = builder.newReaction();
+        IReaction reaction = builder.newInstance(IReaction.class);
         try {
             input.readLine(); // first line should be $RXN
             input.readLine(); // second line
@@ -236,7 +237,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                     super.mode
                 );
                 IMolecule reactant = (IMolecule)reader.read(
-                  builder.newMolecule()
+                  builder.newInstance(IMolecule.class)
                 );
                   
                 // add reactant
@@ -266,7 +267,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 MDLV2000Reader reader = new MDLV2000Reader(
                   new StringReader(molFile.toString()));
                 IMolecule product = (IMolecule)reader.read(
-                  builder.newMolecule());
+                  builder.newInstance(IMolecule.class));
                   
                 // add reactant
                 reaction.addProduct(product);
@@ -282,12 +283,12 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         // now try to map things, if wanted
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
-        IAtomContainer reactingSide = builder.newAtomContainer();
+        IAtomContainer reactingSide = builder.newInstance(IAtomContainer.class);
         java.util.Iterator molecules = reaction.getReactants().molecules().iterator();
         while (molecules.hasNext()) {
             reactingSide.add((IMolecule)molecules.next());
         }
-        IAtomContainer producedSide = builder.newAtomContainer();
+        IAtomContainer producedSide = builder.newInstance(IAtomContainer.class);
         molecules = reaction.getProducts().molecules().iterator();
         while (molecules.hasNext()) {
             producedSide.add((IMolecule)molecules.next());
@@ -304,7 +305,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 if (eductAtom.getID() != null &&
                 		eductAtom.getID().equals(productAtom.getID())) {
                     reaction.addMapping(
-                        builder.newMapping(eductAtom, productAtom)
+                        builder.newInstance(IMapping.class,eductAtom, productAtom)
                     );
                     mappingCount++;
                     break;

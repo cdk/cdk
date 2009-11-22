@@ -51,7 +51,8 @@ public class RandomAccessTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         File f = new File(filename);
         //System.out.println(System.getProperty("user.dir"));
-        RandomAccessReader rf = new RandomAccessSDFReader(f,DefaultChemObjectBuilder.getInstance());
+        RandomAccessReader rf = new RandomAccessSDFReader(
+            f,DefaultChemObjectBuilder.getInstance());
         Assert.assertEquals(6,rf.size());
         String[] mdlnumbers = {
         		"MFCD00000387",

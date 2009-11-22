@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>It is processed by the RadicalSiteIonizationMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -123,7 +123,7 @@ public class RadicalChargeSiteInitiationHReaction extends ReactionEngine impleme
 			throw new CDKException("RadicalChargeSiteInitiationHReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = reactants.getBuilder().newReactionSet();
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
@@ -168,7 +168,7 @@ public class RadicalChargeSiteInitiationHReaction extends ReactionEngine impleme
 						            	bondList.add(bondi);
 						            	bondList.add(bondj);
 
-										IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+										IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
 										moleculeSet.addMolecule(reactant);
 										IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 										if(reaction == null)

@@ -28,15 +28,18 @@
  */
 package org.openscience.cdk.isomorphism;
 
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -44,8 +47,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
@@ -58,11 +62,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.InputStream;
 import java.util.BitSet;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * @cdk.module test-standard
  * @cdk.require java1.4+
@@ -94,11 +94,11 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
      * @cdk.bug 1708336
      */
 	@Test public void testSFBug1708336() throws Exception {
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IAtomContainer atomContainer = builder.newAtomContainer();
-        atomContainer.addAtom(builder.newAtom("C"));
-        atomContainer.addAtom(builder.newAtom("C"));
-        atomContainer.addAtom(builder.newAtom("N"));
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer atomContainer = builder.newInstance(IAtomContainer.class);
+        atomContainer.addAtom(builder.newInstance(IAtom.class,"C"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class,"C"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class,"N"));
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(1, 2, IBond.Order.SINGLE);
         IQueryAtomContainer query = new QueryAtomContainer();

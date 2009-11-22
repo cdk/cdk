@@ -158,7 +158,7 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 				if (NumHAtoms > 1)
 					fragment += ("H" + NumHAtoms);
 
-			atomType = atom.getBuilder().newAtomType(fragment, atom.getSymbol());
+			atomType = atom.getBuilder().newInstance(IAtomType.class,fragment, atom.getSymbol());
 			atomType.setFormalCharge(atom.getFormalCharge());
 			if (atom.getFlag(CDKConstants.ISAROMATIC))
 				atomType.setFlag(CDKConstants.ISAROMATIC, true);

@@ -139,7 +139,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     } else {
                     	Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
                     	while (containers.hasNext()) {
-                            writeMolecule(model.getBuilder().newMolecule(
+                            writeMolecule(model.getBuilder().newInstance(IMolecule.class,
                              	(IAtomContainer)containers.next()
                             ));
                     	}
@@ -234,7 +234,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     atom.setPoint3d(cart);
             	}
             }
-           writeMolecule(crystal.getBuilder().newMolecule(crystal));
+           writeMolecule(crystal.getBuilder().newInstance(IMolecule.class,crystal));
        } catch (IOException exception) {
            throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
        }

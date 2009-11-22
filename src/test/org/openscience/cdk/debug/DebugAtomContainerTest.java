@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
@@ -55,8 +56,8 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
         Assert.assertEquals(0, ac.getElectronContainerCount());
 
         // test whether the ElectronContainer is correctly initialized
-        ac.addBond(ac.getBuilder().newBond(ac.getBuilder().newAtom("C"), ac.getBuilder().newAtom("C"), IBond.Order.DOUBLE));
-        ac.addLonePair(ac.getBuilder().newLonePair(ac.getBuilder().newAtom("N")));
+        ac.addBond(ac.getBuilder().newInstance(IBond.class,ac.getBuilder().newInstance(IAtom.class,"C"), ac.getBuilder().newInstance(IAtom.class,"C"), IBond.Order.DOUBLE));
+        ac.addLonePair(ac.getBuilder().newInstance(ILonePair.class,ac.getBuilder().newInstance(IAtom.class,"N")));
     }
 
     @Test public void testDebugAtomContainer() {
@@ -67,24 +68,24 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
         Assert.assertEquals(0, container.getBondCount());
         
         // test whether the ElectronContainer is correctly initialized
-        container.addBond(container.getBuilder().newBond(container.getBuilder().newAtom("C"), container.getBuilder().newAtom("C"), IBond.Order.DOUBLE));
-        container.addLonePair(container.getBuilder().newLonePair(container.getBuilder().newAtom("N")));
+        container.addBond(container.getBuilder().newInstance(IBond.class,container.getBuilder().newInstance(IAtom.class,"C"), container.getBuilder().newInstance(IAtom.class,"C"), IBond.Order.DOUBLE));
+        container.addLonePair(container.getBuilder().newInstance(ILonePair.class,container.getBuilder().newInstance(IAtom.class,"N")));
     }
 
     @Test public void testDebugAtomContainer_IAtomContainer() {
     	IChemObject object = newChemObject();
-        IMolecule acetone = object.getBuilder().newMolecule();
-        IAtom c1 = object.getBuilder().newAtom("C");
-        IAtom c2 = object.getBuilder().newAtom("C");
-        IAtom o = object.getBuilder().newAtom("O");
-        IAtom c3 = object.getBuilder().newAtom("C");
+        IMolecule acetone = object.getBuilder().newInstance(IMolecule.class);
+        IAtom c1 = object.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c2 = object.getBuilder().newInstance(IAtom.class,"C");
+        IAtom o = object.getBuilder().newInstance(IAtom.class,"O");
+        IAtom c3 = object.getBuilder().newInstance(IAtom.class,"C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = object.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
-        IBond b2 = object.getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
-        IBond b3 = object.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        IBond b1 = object.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
+        IBond b2 = object.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
+        IBond b3 = object.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);

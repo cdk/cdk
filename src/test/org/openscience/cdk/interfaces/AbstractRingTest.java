@@ -37,7 +37,7 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
 
     @Test public void testGetBondOrderSum() {
     	IChemObject object = newChemObject();
-        IRing r = object.getBuilder().newRing(5, "C");
+        IRing r = object.getBuilder().newInstance(IRing.class,5, "C");
         Assert.assertEquals(5, r.getBondOrderSum());
 
         BondManipulator.increaseBondOrder(r.getBond(0));
@@ -52,18 +52,18 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
     
     @Test public void testGetRingSize() {
     	IChemObject object = newChemObject();
-        IRing r = object.getBuilder().newRing(5, "C");
+        IRing r = object.getBuilder().newInstance(IRing.class,5, "C");
         Assert.assertEquals(5, r.getRingSize());
     }
     
     @Test public void testGetNextBond_IBond_IAtom() {
         IRing ring = (IRing)newChemObject();
-        IAtom c1 = ring.getBuilder().newAtom("C");
-        IAtom c2 = ring.getBuilder().newAtom("C");
-        IAtom c3 = ring.getBuilder().newAtom("C");
-        IBond b1 = ring.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
-        IBond b2 = ring.getBuilder().newBond(c3, c2, IBond.Order.SINGLE);
-        IBond b3 = ring.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        IAtom c1 = ring.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c2 = ring.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c3 = ring.getBuilder().newInstance(IAtom.class,"C");
+        IBond b1 = ring.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
+        IBond b2 = ring.getBuilder().newInstance(IBond.class,c3, c2, IBond.Order.SINGLE);
+        IBond b3 = ring.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
         ring.addAtom(c1);
         ring.addAtom(c2);
         ring.addAtom(c3);
@@ -81,7 +81,7 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
     
     @Test public void testToString() {
     	IChemObject object = newChemObject();
-        IRing r = object.getBuilder().newRing(5, "C");
+        IRing r = object.getBuilder().newInstance(IRing.class,5, "C");
         String description = r.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');

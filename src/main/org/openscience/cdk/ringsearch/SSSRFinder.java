@@ -180,14 +180,14 @@ public class SSSRFinder {
 	
 	private static IRingSet toRingSet(IAtomContainer container, Collection cycles) {
 		
-		IRingSet ringSet = container.getBuilder().newRingSet();
+		IRingSet ringSet = container.getBuilder().newInstance(IRingSet.class);
 
 		Iterator cycleIterator = cycles.iterator();
 		
 		while (cycleIterator.hasNext()) {
 			SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
 			
-			IRing ring = container.getBuilder().newRing();
+			IRing ring = container.getBuilder().newInstance(IRing.class);
 			
 			List vertices = cycle.vertexList();
 			

@@ -155,9 +155,9 @@ public class HINReader extends DefaultChemObjectReader {
      * @return A ChemFile containing the data parsed from input.
      */
     private IChemFile readChemFile(IChemFile file) {
-        IChemSequence chemSequence = file.getBuilder().newChemSequence();
-        IChemModel chemModel = file.getBuilder().newChemModel();
-        IMoleculeSet setOfMolecules = file.getBuilder().newMoleculeSet();
+        IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
+        IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
+        IMoleculeSet setOfMolecules = file.getBuilder().newInstance(IMoleculeSet.class);
         String info;
 
         StringTokenizer tokenizer;
@@ -185,7 +185,7 @@ public class HINReader extends DefaultChemObjectReader {
                     info = getMolName(line);
                     line = input.readLine();
                 }
-                IMolecule m = file.getBuilder().newMolecule();
+                IMolecule m = file.getBuilder().newInstance(IMolecule.class);
                 m.setProperty(CDKConstants.TITLE ,info);
 
                 // Each element of cons is an ArrayList of length 3 which stores
@@ -215,7 +215,7 @@ public class HINReader extends DefaultChemObjectReader {
                     double z = Double.parseDouble(toks[9]);
                     int nbond = Integer.parseInt(toks[10]);
 
-                    IAtom atom = file.getBuilder().newAtom(sym, new Point3d(x,y,z));
+                    IAtom atom = file.getBuilder().newInstance(IAtom.class,sym, new Point3d(x,y,z));
                     atom.setCharge(charge);
 
                     IBond.Order bo = IBond.Order.SINGLE;
@@ -254,7 +254,7 @@ public class HINReader extends DefaultChemObjectReader {
                     IAtom e = m.getAtom((Integer) ar.get(1));
                     IBond.Order bo = (IBond.Order) ar.get(2);
                     if (!isConnected(m, s, e))
-                        m.addBond(file.getBuilder().newBond(s, e, bo));
+                        m.addBond(file.getBuilder().newInstance(IBond.class,s, e, bo));
                 }
                 setOfMolecules.addMolecule(m);
                 line = input.readLine(); // read in the 'mol N'

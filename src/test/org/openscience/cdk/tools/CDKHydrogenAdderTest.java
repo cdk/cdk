@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -65,8 +66,10 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class CDKHydrogenAdderTest extends CDKTestCase {
 
-	private final static CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
-	private final static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
+	private final static CDKHydrogenAdder adder =
+	    CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
+	private final static CDKAtomTypeMatcher matcher =
+	    CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
 
     @Test
     public void testInstance() {
@@ -226,7 +229,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
 
     	Assert.assertEquals(1, mol.getAtomCount());
     	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(mol);
-    	Assert.assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
+    	Assert.assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newInstance(IElement.class,"H")));
     	Assert.assertEquals(0, mol.getConnectedBondsCount(proton));
     	Assert.assertNotNull(proton.getHydrogenCount());
     	Assert.assertEquals(0, proton.getHydrogenCount().intValue());
@@ -244,7 +247,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
 
     	Assert.assertEquals(1, mol.getAtomCount());
     	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(mol);
-    	Assert.assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
+    	Assert.assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newInstance(IElement.class,"H")));
     	Assert.assertEquals(0, mol.getConnectedBondsCount(proton));
     	Assert.assertNotNull(proton.getHydrogenCount());
     	Assert.assertEquals(1, proton.getHydrogenCount().intValue());
@@ -555,47 +558,47 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     @Test public void testAdenine() throws Exception
     {
     	IMolecule mol = new Molecule(); // Adenine
-    	IAtom a1 = mol.getBuilder().newAtom("C");
+    	IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
     	a1.setPoint2d(new Point2d(21.0223, -17.2946));  mol.addAtom(a1);
-    	IAtom a2 = mol.getBuilder().newAtom("C");
+    	IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"C");
     	a2.setPoint2d(new Point2d(21.0223, -18.8093));  mol.addAtom(a2);
-    	IAtom a3 = mol.getBuilder().newAtom("C");
+    	IAtom a3 = mol.getBuilder().newInstance(IAtom.class,"C");
     	a3.setPoint2d(new Point2d(22.1861, -16.6103));  mol.addAtom(a3);
-    	IAtom a4 = mol.getBuilder().newAtom("N");
+    	IAtom a4 = mol.getBuilder().newInstance(IAtom.class,"N");
     	a4.setPoint2d(new Point2d(19.8294, -16.8677));  mol.addAtom(a4);
-    	IAtom a5 = mol.getBuilder().newAtom("N");
+    	IAtom a5 = mol.getBuilder().newInstance(IAtom.class,"N");
     	a5.setPoint2d(new Point2d(22.2212, -19.5285));  mol.addAtom(a5);
-    	IAtom a6 = mol.getBuilder().newAtom("N");
+    	IAtom a6 = mol.getBuilder().newInstance(IAtom.class,"N");
     	a6.setPoint2d(new Point2d(19.8177, -19.2187));  mol.addAtom(a6);
-    	IAtom a7 = mol.getBuilder().newAtom("N");
+    	IAtom a7 = mol.getBuilder().newInstance(IAtom.class,"N");
     	a7.setPoint2d(new Point2d(23.4669, -17.3531));  mol.addAtom(a7);
-    	IAtom a8 = mol.getBuilder().newAtom("N");
+    	IAtom a8 = mol.getBuilder().newInstance(IAtom.class,"N");
     	a8.setPoint2d(new Point2d(22.1861, -15.2769));  mol.addAtom(a8);
-    	IAtom a9 = mol.getBuilder().newAtom("C");
+    	IAtom a9 = mol.getBuilder().newInstance(IAtom.class,"C");
     	a9.setPoint2d(new Point2d(18.9871, -18.0139));  mol.addAtom(a9);
-    	IAtom a10 = mol.getBuilder().newAtom("C");
+    	IAtom a10 = mol.getBuilder().newInstance(IAtom.class,"C");
     	a10.setPoint2d(new Point2d(23.4609, -18.8267));  mol.addAtom(a10);
-    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.DOUBLE);
+    	IBond b1 = mol.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
     	mol.addBond(b1);
-    	IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE);
+    	IBond b2 = mol.getBuilder().newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
     	mol.addBond(b2);
-    	IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE);
+    	IBond b3 = mol.getBuilder().newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
     	mol.addBond(b3);
-    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE);
+    	IBond b4 = mol.getBuilder().newInstance(IBond.class,a2, a5, IBond.Order.SINGLE);
     	mol.addBond(b4);
-    	IBond b5 = mol.getBuilder().newBond(a2, a6, IBond.Order.SINGLE);
+    	IBond b5 = mol.getBuilder().newInstance(IBond.class,a2, a6, IBond.Order.SINGLE);
     	mol.addBond(b5);
-    	IBond b6 = mol.getBuilder().newBond(a3, a7, IBond.Order.DOUBLE);
+    	IBond b6 = mol.getBuilder().newInstance(IBond.class,a3, a7, IBond.Order.DOUBLE);
     	mol.addBond(b6);
-    	IBond b7 = mol.getBuilder().newBond(a3, a8, IBond.Order.SINGLE);
+    	IBond b7 = mol.getBuilder().newInstance(IBond.class,a3, a8, IBond.Order.SINGLE);
     	mol.addBond(b7);
-    	IBond b8 = mol.getBuilder().newBond(a4, a9, IBond.Order.DOUBLE);
+    	IBond b8 = mol.getBuilder().newInstance(IBond.class,a4, a9, IBond.Order.DOUBLE);
     	mol.addBond(b8);
-    	IBond b9 = mol.getBuilder().newBond(a5, a10, IBond.Order.DOUBLE);
+    	IBond b9 = mol.getBuilder().newInstance(IBond.class,a5, a10, IBond.Order.DOUBLE);
     	mol.addBond(b9);
-    	IBond b10 = mol.getBuilder().newBond(a6, a9, IBond.Order.SINGLE);
+    	IBond b10 = mol.getBuilder().newInstance(IBond.class,a6, a9, IBond.Order.SINGLE);
     	mol.addBond(b10);
-    	IBond b11 = mol.getBuilder().newBond(a7, a10, IBond.Order.SINGLE);
+    	IBond b11 = mol.getBuilder().newInstance(IBond.class,a7, a10, IBond.Order.SINGLE);
     	mol.addBond(b11);
 
     	findAndConfigureAtomTypesForAllAtoms(mol);
@@ -713,9 +716,9 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      */
     @Test public void testBug1627763() throws Exception {
     	IMolecule mol = new Molecule();
-    	mol.addAtom(mol.getBuilder().newAtom("C"));
-    	mol.addAtom(mol.getBuilder().newAtom("O"));
-    	mol.addBond(mol.getBuilder().newBond(
+    	mol.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
+    	mol.addAtom(mol.getBuilder().newInstance(IAtom.class,"O"));
+    	mol.addBond(mol.getBuilder().newInstance(IBond.class,
     		mol.getAtom(0), 
     		mol.getAtom(1),
     		CDKConstants.BONDORDER_SINGLE)
@@ -737,21 +740,21 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     
     @Test public void testMercaptan() throws Exception {
     	IMolecule mol = new Molecule();
-    	mol.addAtom(mol.getBuilder().newAtom("C"));
-    	mol.addAtom(mol.getBuilder().newAtom("C"));
-    	mol.addAtom(mol.getBuilder().newAtom("C"));
-    	mol.addAtom(mol.getBuilder().newAtom("S"));
-    	mol.addBond(mol.getBuilder().newBond(
+    	mol.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
+    	mol.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
+    	mol.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
+    	mol.addAtom(mol.getBuilder().newInstance(IAtom.class,"S"));
+    	mol.addBond(mol.getBuilder().newInstance(IBond.class,
     		mol.getAtom(0), 
     		mol.getAtom(1),
     		CDKConstants.BONDORDER_DOUBLE)
     	);
-    	mol.addBond(mol.getBuilder().newBond(
+    	mol.addBond(mol.getBuilder().newInstance(IBond.class,
         	mol.getAtom(1), 
         	mol.getAtom(2),
        		CDKConstants.BONDORDER_SINGLE)
        	);
-    	mol.addBond(mol.getBuilder().newBond(
+    	mol.addBond(mol.getBuilder().newInstance(IBond.class,
        		mol.getAtom(2), 
        		mol.getAtom(3),
        		CDKConstants.BONDORDER_SINGLE)

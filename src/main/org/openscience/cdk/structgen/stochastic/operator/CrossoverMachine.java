@@ -121,10 +121,10 @@ public class CrossoverMachine
 				}
 			}	
 			/*** dividing over ***/
-			redChild[0] = dad.getBuilder().newAtomContainer(dad); 
-			blueChild[0] = dad.getBuilder().newAtomContainer(dad); 
-			redChild[1] = dad.getBuilder().newAtomContainer(mom); 
-			blueChild[1] = dad.getBuilder().newAtomContainer(mom); 
+			redChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad); 
+			blueChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad); 
+			redChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom); 
+			blueChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom); 
 			
 			List<IAtom> blueAtomsInRedChild0 = new ArrayList<IAtom>();
 			for (int j = 0; j < blueAtoms.size(); j++)
@@ -199,10 +199,10 @@ public class CrossoverMachine
 			if(isok){
 				//combine the fragments crosswise
 				IAtomContainerSet[] newstrucs = new IAtomContainerSet[2];
-				newstrucs[0] = dad.getBuilder().newAtomContainerSet();
+				newstrucs[0] = dad.getBuilder().newInstance(IAtomContainerSet.class);
 				newstrucs[0].add(ConnectivityChecker.partitionIntoMolecules(redChild[0]));
 				newstrucs[0].add(ConnectivityChecker.partitionIntoMolecules(blueChild[1]));
-				newstrucs[1] = dad.getBuilder().newAtomContainerSet();
+				newstrucs[1] = dad.getBuilder().newInstance(IAtomContainerSet.class);
 				newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(redChild[1]));
 				newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(blueChild[0]));
 		

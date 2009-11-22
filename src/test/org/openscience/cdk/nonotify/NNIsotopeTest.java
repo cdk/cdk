@@ -54,7 +54,7 @@ public class NNIsotopeTest extends AbstractIsotopeTest {
     }
     
     @Test public void testNNIsotope_IElement() {
-    	IElement element = newChemObject().getBuilder().newElement("C");
+    	IElement element = newChemObject().getBuilder().newInstance(IElement.class,"C");
         IIsotope i = new NNIsotope(element);
         Assert.assertEquals("C", i.getSymbol());
     }

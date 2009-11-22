@@ -140,10 +140,10 @@ public class SMILESReader extends DefaultChemObjectReader {
             return readMoleculeSet((IMoleculeSet)object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
-            IChemSequence sequence = file.getBuilder().newChemSequence();
-            IChemModel chemModel = file.getBuilder().newChemModel();
+            IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
+            IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
             chemModel.setMoleculeSet(readMoleculeSet(
-            	file.getBuilder().newMoleculeSet()
+            	file.getBuilder().newInstance(IMoleculeSet.class)
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);

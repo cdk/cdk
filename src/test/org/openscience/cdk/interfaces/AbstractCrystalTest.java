@@ -39,18 +39,18 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
     @Test public void testAdd_IAtomContainer() {
         ICrystal crystal = (ICrystal)newChemObject();
 
-        IAtomContainer acetone = crystal.getBuilder().newAtomContainer();
-        IAtom c1 = crystal.getBuilder().newAtom("C");
-        IAtom c2 = crystal.getBuilder().newAtom("C");
-        IAtom o = crystal.getBuilder().newAtom("O");
-        IAtom c3 = crystal.getBuilder().newAtom("C");
+        IAtomContainer acetone = crystal.getBuilder().newInstance(IAtomContainer.class);
+        IAtom c1 = crystal.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c2 = crystal.getBuilder().newInstance(IAtom.class,"C");
+        IAtom o = crystal.getBuilder().newInstance(IAtom.class,"O");
+        IAtom c3 = crystal.getBuilder().newInstance(IAtom.class,"C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = crystal.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
-        IBond b2 = crystal.getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
-        IBond b3 = crystal.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        IBond b1 = crystal.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
+        IBond b2 = crystal.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
+        IBond b3 = crystal.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -62,7 +62,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
     
     @Test public void testAddAtom_IAtom() {
         ICrystal crystal = (ICrystal)newChemObject();
-        IAtom c1 = crystal.getBuilder().newAtom("C");
+        IAtom c1 = crystal.getBuilder().newInstance(IAtom.class,"C");
         crystal.addAtom(c1);
         Assert.assertEquals(1, crystal.getAtomCount());
     }

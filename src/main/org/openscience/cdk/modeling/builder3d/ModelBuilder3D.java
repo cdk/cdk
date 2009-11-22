@@ -303,7 +303,7 @@ public class ModelBuilder3D {
 				setAtomsToUnVisited(molecule);
 				atom = ap3d.getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(molecule);
 				if (atom != null) {
-					ac = atom.getBuilder().newAtomContainer();
+					ac = atom.getBuilder().newInstance(IAtomContainer.class);
 					ac.addAtom(atom);
 					searchAndPlaceBranches(molecule, ac, ap3d, atlp3d, atomPlacer);
 					ac = null;
@@ -408,7 +408,7 @@ public class ModelBuilder3D {
 	 */
 	private void setBranchAtom(IMolecule molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws CDKException {
 		//logger.debug("****** SET Branch Atom ****** >"+molecule.getAtomNumber(unplacedAtom));
-		IAtomContainer noCoords = molecule.getBuilder().newAtomContainer();
+		IAtomContainer noCoords = molecule.getBuilder().newInstance(IAtomContainer.class);
 		noCoords.addAtom(unplacedAtom);
 		Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
 		IAtom atomB = atomNeighbours.getAtom(0);
@@ -465,8 +465,8 @@ public class ModelBuilder3D {
 	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
 		java.util.List atoms = null;
-		IAtomContainer branchAtoms = molecule.getBuilder().newAtomContainer();
-		IAtomContainer connectedAtoms = molecule.getBuilder().newAtomContainer();
+		IAtomContainer branchAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
 		for (int i = 0; i < chain.getAtomCount(); i++) {
 			atoms = molecule.getConnectedAtomsList(chain.getAtom(i));
 			for (int j = 0; j < atoms.size(); j++) {
@@ -502,7 +502,7 @@ public class ModelBuilder3D {
 		//logger.debug("****** PLACE LINEAR CHAINS ******");
 		IAtom dihPlacedAtom = null;
 		IAtom thirdPlacedAtom = null;
-		IAtomContainer longestUnplacedChain = molecule.getBuilder().newAtomContainer();
+		IAtomContainer longestUnplacedChain = molecule.getBuilder().newInstance(IAtomContainer.class);
 		if (startAtoms.getAtomCount() == 0) {
 			//no branch points ->linear chain
 			//logger.debug("------ LINEAR CHAIN - FINISH ------");

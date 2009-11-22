@@ -131,7 +131,7 @@ public class AllRingsFinder
         SpanningTree spanningTree = new SpanningTree(atomContainer);
         IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
         Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules().iterator();
-        IRingSet resultSet = atomContainer.getBuilder().newRingSet();
+        IRingSet resultSet = atomContainer.getBuilder().newInstance(IRingSet.class);
         while (separateRingSystem.hasNext()) {
             resultSet.add(findAllRingsInIsolatedRingSystem((IMolecule)separateRingSystem.next(), maxRingSize));
         }
@@ -167,8 +167,8 @@ public class AllRingsFinder
             startTime = System.currentTimeMillis();
         }
         List<Path> paths = new ArrayList<Path>();
-        IRingSet ringSet = atomContainer.getBuilder().newRingSet();
-        IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+        IRingSet ringSet = atomContainer.getBuilder().newInstance(IRingSet.class);
+        IAtomContainer ac = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         originalAc = atomContainer;
         ac.add(atomContainer);
         doSearch(ac, paths, ringSet, maxRingSize);
@@ -308,7 +308,7 @@ public class AllRingsFinder
                 if(logger!=null)
                     logger.debug("Removing path " + path.toString(originalAc) + " which is a ring.");
                 path.removeElementAt(0);
-                ring = ac.getBuilder().newRing();
+                ring = ac.getBuilder().newInstance(IRing.class);
                 for (int g = 0; g < path.size() - 1; g++) {
                     a1 = (IAtom) path.elementAt(g);
                     a2 = (IAtom) path.elementAt(g + 1);

@@ -58,7 +58,7 @@ public class DebugAtomTest extends AbstractAtomTest {
 
     @Test public void testDebugAtom_IElement() {
     	IChemObject object = newChemObject();
-    	IElement element = object.getBuilder().newElement();
+    	IElement element = object.getBuilder().newInstance(IElement.class);
         IAtom a = new DebugAtom(element);
         Assert.assertNotNull(a);
     }

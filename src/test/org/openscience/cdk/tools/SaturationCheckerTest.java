@@ -26,10 +26,17 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.ISingleElectron;
 
 /**
  * @cdk.module test-valencycheck
@@ -409,33 +416,33 @@ public class SaturationCheckerTest extends CDKTestCase
     }
     
     @Test public void testCalculateNumberOfImplicitHydrogens() throws Exception {
-    	DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
     	
-    	IMolecule proton = builder.newMolecule();
-    	IAtom hplus = builder.newAtom("H");
+    	IMolecule proton = builder.newInstance(IMolecule.class);
+    	IAtom hplus = builder.newInstance(IAtom.class,"H");
     	hplus.setFormalCharge(1);
     	proton.addAtom(hplus);
     	Assert.assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hplus, proton));
     	
-    	IMolecule hydrogenRadical = builder.newMolecule();
-    	IAtom hradical = builder.newAtom("H");
+    	IMolecule hydrogenRadical = builder.newInstance(IMolecule.class);
+    	IAtom hradical = builder.newInstance(IAtom.class,"H");
     	hydrogenRadical.addAtom(hradical);
-    	hydrogenRadical.addSingleElectron(builder.newSingleElectron(hradical));
+    	hydrogenRadical.addSingleElectron(builder.newInstance(ISingleElectron.class,hradical));
     	Assert.assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hradical, hydrogenRadical));
     	
-    	IMolecule hydrogen = builder.newMolecule();
-    	IAtom h = builder.newAtom("H");
+    	IMolecule hydrogen = builder.newInstance(IMolecule.class);
+    	IAtom h = builder.newInstance(IAtom.class,"H");
     	hydrogen.addAtom(h);
     	Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(h, hydrogen));
     	
-    	IMolecule coRad = builder.newMolecule();
-    	IAtom c = builder.newAtom("C");
-    	IAtom o = builder.newAtom("O");
-    	IBond bond = builder.newBond(c, o, IBond.Order.DOUBLE);
+    	IMolecule coRad = builder.newInstance(IMolecule.class);
+    	IAtom c = builder.newInstance(IAtom.class,"C");
+    	IAtom o = builder.newInstance(IAtom.class,"O");
+    	IBond bond = builder.newInstance(IBond.class,c, o, IBond.Order.DOUBLE);
     	coRad.addAtom(c);
     	coRad.addAtom(o);
     	coRad.addBond(bond);
-    	coRad.addSingleElectron(builder.newSingleElectron(c));
+    	coRad.addSingleElectron(builder.newInstance(ISingleElectron.class,c));
     	Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(c, coRad));
     }
     

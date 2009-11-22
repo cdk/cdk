@@ -62,7 +62,7 @@ public class AtomTest extends AbstractAtomTest {
     }
 
     @Test public void testAtom_IElement() {
-        IElement element = newChemObject().getBuilder().newElement();
+        IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IAtom a = new Atom(element);
         Assert.assertNotNull(a);
     }
@@ -112,7 +112,7 @@ public class AtomTest extends AbstractAtomTest {
         if (someAtom instanceof org.openscience.cdk.Atom) {
         	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
         	Assert.assertTrue(atom.compare(atom));
-            IAtom hydrogen = someAtom.getBuilder().newAtom("H");
+            IAtom hydrogen = someAtom.getBuilder().newInstance(IAtom.class,"H");
         	Assert.assertFalse(atom.compare(hydrogen));
         	Assert.assertFalse(atom.compare("C"));
         }

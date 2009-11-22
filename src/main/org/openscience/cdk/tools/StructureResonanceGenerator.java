@@ -231,14 +231,14 @@ public class StructureResonanceGenerator {
     @TestMethod("testGetStructures_IMolecule")
 	public IMoleculeSet getStructures(IMolecule molecule) {
     	int countStructure = 0;
-    	IMoleculeSet setOfMol = molecule.getBuilder().newMoleculeSet();
+    	IMoleculeSet setOfMol = molecule.getBuilder().newInstance(IMoleculeSet.class);
 		setOfMol.addMolecule(molecule);
 		
 		for(int i = 0 ; i < setOfMol.getMoleculeCount() ; i++){
 			IMolecule mol = setOfMol.getMolecule(i);
             for (IReactionProcess aReactionsList : reactionsList) {
                 IReactionProcess reaction = aReactionsList;
-                IMoleculeSet setOfReactants = molecule.getBuilder().newMoleculeSet();
+                IMoleculeSet setOfReactants = molecule.getBuilder().newInstance(IMoleculeSet.class);
                 setOfReactants.addMolecule(mol);
                 try {
                     IReactionSet setOfReactions = reaction.initiate(setOfReactants, null);
@@ -271,7 +271,7 @@ public class StructureResonanceGenerator {
 	 */
     @TestMethod("testGetContainers_IMolecule")
 	public IAtomContainerSet getContainers(IMolecule molecule) {
-    	IAtomContainerSet setOfCont = molecule.getBuilder().newAtomContainerSet();
+    	IAtomContainerSet setOfCont = molecule.getBuilder().newInstance(IAtomContainerSet.class);
 		IMoleculeSet setOfMol = getStructures(molecule);
 		
 		if(setOfMol.getMoleculeCount() == 0)
@@ -344,7 +344,7 @@ public class StructureResonanceGenerator {
     	}
     	/*creating containers according groups*/
     	for(int i = 0 ; i < maxGroup; i ++){
-    		IAtomContainer container = molecule.getBuilder().newAtomContainer();
+    		IAtomContainer container = molecule.getBuilder().newInstance(IAtomContainer.class);
     		for(int j = 0 ; j < bondList.size(); j++){
     			if(flagBelonging[j] != i+1)
     				continue;

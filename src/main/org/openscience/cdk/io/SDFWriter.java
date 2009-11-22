@@ -155,8 +155,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
 				writeChemFile((IChemFile)object);
 				return;
 			} else if (object instanceof IChemModel) {
-				IChemFile file = object.getBuilder().newChemFile();
-				IChemSequence sequence = object.getBuilder().newChemSequence();
+				IChemFile file = object.getBuilder().newInstance(IChemFile.class);
+				IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
 				sequence.addChemModel((IChemModel)object);
 				file.addChemSequence(sequence);
 				writeChemFile((IChemFile)file);

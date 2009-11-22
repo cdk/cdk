@@ -3,8 +3,6 @@ package org.openscience.cdk.formula;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Class testing the IsotopePattern class.
@@ -12,8 +10,6 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  * @cdk.module test-formula
  */
 public class IsotopePatternTest extends CDKTestCase{
-
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 
 	public IsotopePatternTest() {
 		super();

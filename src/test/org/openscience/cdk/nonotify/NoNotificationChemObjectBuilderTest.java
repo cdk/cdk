@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -23,25 +21,26 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AbstractChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.AbstractChemObjectBuilderTest;
 
 /**
- * Checks the functionality of the {@link NoNotificationChemObjectBuilder}.
+ * Checks the functionality of the {@link IChemObjectBuilder}
+ * {@link NoNotificationChemObjectBuilder} implementation.
  *
  * @cdk.module test-nonotify
  */
 public class NoNotificationChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeClass public static void setUp() {
-    	setRootObject(new NNChemObject());
+        setRootObject(new NNChemObject());
     }
 
     @Test public void testGetInstance() {
     	Object builder = NoNotificationChemObjectBuilder.getInstance();
     	Assert.assertNotNull(builder);
     	Assert.assertTrue(builder instanceof IChemObjectBuilder);
-    	Assert.assertTrue(builder instanceof NoNotificationChemObjectBuilder);
+        Assert.assertTrue(builder instanceof NoNotificationChemObjectBuilder);
     }
-    
+
 }

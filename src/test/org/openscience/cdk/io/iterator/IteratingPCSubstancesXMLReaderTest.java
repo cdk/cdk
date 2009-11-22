@@ -55,7 +55,7 @@ public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
         );
 
         int modelCount = 0;
-        IChemSequence set = DefaultChemObjectBuilder.getInstance().newChemSequence();
+        IChemSequence set = DefaultChemObjectBuilder.getInstance().newInstance(IChemSequence.class);
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);

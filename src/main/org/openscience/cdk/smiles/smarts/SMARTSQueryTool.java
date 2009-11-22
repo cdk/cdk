@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * directly. Example usage would be
  * <p/>
  * <pre>
- * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ * SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
  * IAtomContainer atomContainer = sp.parseSmiles(&quot;CC(=O)OC(=O)C&quot;);
  * SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;);
  * boolean status = querytool.matches(atomContainer);

@@ -41,9 +41,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -58,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * at a time are supported. An example:
  * <pre>
  * try {
- *   SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ *   SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
  *   IMolecule m = sp.parseSmiles("c1ccccc1");
  * } catch (InvalidSmilesException ise) {
  * }
@@ -142,7 +143,7 @@ public class SmilesParser {
 			productSmiles = tokenizer.nextToken();
 		}
 
-		IReaction reaction = builder.newReaction();
+		IReaction reaction = builder.newInstance(IReaction.class);
 
 		// add reactants
 		IMolecule reactantContainer = parseSmiles(reactantSmiles);
@@ -222,7 +223,7 @@ public class SmilesParser {
 		boolean bondExists = true;
 		thisRing = -1;
 		currentSymbol = null;
-		molecule = builder.newMolecule();
+		molecule = builder.newInstance(IMolecule.class);
 		position = 0;
 		// we don't want more than 1024 rings
 		rings = new IAtom[1024];
@@ -260,7 +261,7 @@ public class SmilesParser {
 					if (mychar == '*')
 					{
 						currentSymbol = "*";
-						atom = builder.newPseudoAtom("*");
+						atom = builder.newInstance(IPseudoAtom.class, "*");
 					} else
 					{
 						currentSymbol = getSymbolForOrganicSubsetElement(smiles, position);
@@ -271,15 +272,15 @@ public class SmilesParser {
 								if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
 								{
 									currentSymbol = currentSymbol.toUpperCase();
-									atom = builder.newAtom(currentSymbol);
+									atom = builder.newInstance(IAtom.class,currentSymbol);
 									atom.setHybridization(Hybridization.SP2);
 								} else
 								{
-									atom = builder.newAtom(currentSymbol);
+									atom = builder.newInstance(IAtom.class,currentSymbol);
 								}
 							} else
 							{
-								atom = builder.newAtom(currentSymbol);
+								atom = builder.newInstance(IAtom.class,currentSymbol);
 							}
 							logger.debug("Made atom: ", atom);
 						} else
@@ -295,7 +296,7 @@ public class SmilesParser {
 					if ((lastNode != null) && bondExists)
 					{
 						logger.debug("Creating bond between ", atom.getSymbol(), " and ", lastNode.getSymbol());
-						bond = builder.newBond(atom, lastNode, bondStatus);
+						bond = builder.newInstance(IBond.class,atom, lastNode, bondStatus);
 						            if (bondIsAromatic) {
                             bond.setFlag(CDKConstants.ISAROMATIC, true);
                         }
@@ -375,7 +376,7 @@ public class SmilesParser {
 					logger.debug("Added atom: ", atom);
 					if (lastNode != null && bondExists)
 					{
-						bond = builder.newBond(atom, lastNode, bondStatus);
+						bond = builder.newInstance(IBond.class,atom, lastNode, bondStatus);
 						            if (bondIsAromatic) {
                             bond.setFlag(CDKConstants.ISAROMATIC, true);
                         }
@@ -662,7 +663,7 @@ public class SmilesParser {
 							if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
 							{
 								currentSymbol = currentSymbol.toUpperCase();
-								atom = builder.newAtom(currentSymbol);
+								atom = builder.newInstance(IAtom.class,currentSymbol);
 								atom.setHybridization(Hybridization.SP2);
 
                                 Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
@@ -672,11 +673,11 @@ public class SmilesParser {
 								}
 							} else
 							{
-								atom = builder.newAtom(currentSymbol);
+								atom = builder.newInstance(IAtom.class,currentSymbol);
 							}
 						} else
 						{
-							atom = builder.newAtom(currentSymbol);
+							atom = builder.newInstance(IAtom.class,currentSymbol);
 						}
 						logger.debug("Made atom: ", atom);
 					}
@@ -688,7 +689,7 @@ public class SmilesParser {
 				} else if (mychar == '*')
 				{
 					currentSymbol = "*";
-					atom = builder.newPseudoAtom(currentSymbol);
+					atom = builder.newInstance(IPseudoAtom.class, currentSymbol);
 					logger.debug("Made atom: ", atom);
 					position++;
 					break;
@@ -795,7 +796,7 @@ public class SmilesParser {
 		if (thisNode != null)
 		{
 			partner = thisNode;
-			bond = builder.newBond(atom, partner, bondStat);
+			bond = builder.newInstance(IBond.class,atom, partner, bondStat);
 			      if (bondIsAromatic) {
             	
                 bond.setFlag(CDKConstants.ISAROMATIC, true);

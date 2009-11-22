@@ -27,9 +27,9 @@
  *  */
 package org.openscience.cdk.nonotify;
 
-import org.openscience.cdk.protein.data.PDBPolymer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.protein.data.PDBPolymer;
 
 /**
  * @cdk.module  nonotify

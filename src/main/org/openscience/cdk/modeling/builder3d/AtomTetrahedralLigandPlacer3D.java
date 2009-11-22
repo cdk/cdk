@@ -848,7 +848,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	public IAtomContainer getPlacedAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
 
 		java.util.List bonds = ac.getConnectedBondsList(atom);
-		IAtomContainer connectedAtoms = atom.getBuilder().newAtomContainer();
+		IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
 			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
@@ -870,7 +870,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 */
 	public IAtomContainer getUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
 		java.util.List atoms = ac.getConnectedAtomsList(atom);
-		IAtomContainer connectedAtoms = atom.getBuilder().newAtomContainer();
+		IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
 		for (int i = 0; i < atoms.size(); i++) {
 			IAtom curAtom = (IAtom)atoms.get(i);
 			if (!curAtom.getFlag(CDKConstants.ISPLACED)){//&& atoms[i].getPoint3d() == null) {

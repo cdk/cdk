@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RadicalSiteHrAlphaReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -133,7 +133,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 			throw new CDKException("RadicalSiteHrAlphaReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
@@ -180,7 +180,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 				            	ArrayList<IBond> bondList = new ArrayList<IBond>();
 				            	bondList.add(reactant.getBond(atomh, atoml));
 
-								IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+								IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
 								moleculeSet.addMolecule(reactant);
 								IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 								if(reaction == null)

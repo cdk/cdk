@@ -24,8 +24,8 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.ReactionSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /** 
  * @cdk.module nonotify

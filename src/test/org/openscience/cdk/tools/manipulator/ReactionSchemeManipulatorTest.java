@@ -28,9 +28,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -54,11 +54,11 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 
 
     @Test public void testGetAllMolecules_IReactionScheme() {
-		IReactionScheme reactionScheme = builder.newReactionScheme();
-		IReaction reaction1 = builder.newReaction();
-		reaction1.addProduct(builder.newMolecule());
-		IReaction reaction2 = builder.newReaction();
-		reaction2.addProduct(builder.newMolecule());
+		IReactionScheme reactionScheme = builder.newInstance(IReactionScheme.class);
+		IReaction reaction1 = builder.newInstance(IReaction.class);
+		reaction1.addProduct(builder.newInstance(IMolecule.class));
+		IReaction reaction2 = builder.newInstance(IReaction.class);
+		reaction2.addProduct(builder.newInstance(IMolecule.class));
 		reactionScheme.addReaction(reaction1); // 1
 		reactionScheme.addReaction(reaction2); // 2
 		
@@ -67,27 +67,27 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 	}
     
     @Test public void testGetAllMolecules_IReactionScheme_IMoleculeSet() {
-		IReactionScheme reactionScheme = builder.newReactionScheme();
-		IReaction reaction1 = builder.newReaction();
-		reaction1.addProduct(builder.newMolecule());
-		IReaction reaction2 = builder.newReaction();
-		reaction2.addProduct(builder.newMolecule());
+		IReactionScheme reactionScheme = builder.newInstance(IReactionScheme.class);
+		IReaction reaction1 = builder.newInstance(IReaction.class);
+		reaction1.addProduct(builder.newInstance(IMolecule.class));
+		IReaction reaction2 = builder.newInstance(IReaction.class);
+		reaction2.addProduct(builder.newInstance(IMolecule.class));
 		reactionScheme.addReaction(reaction1); // 1
 		reactionScheme.addReaction(reaction2); // 2
 		
-		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme, builder.newMoleculeSet()).getMoleculeCount());
+		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme, builder.newInstance(IMoleculeSet.class)).getMoleculeCount());
 		
 	}
     
     @Test public void testGetAllMolecules_IReactionScheme2() {
-    	IReactionScheme reactionScheme = builder.newReactionScheme();
-		IReaction reaction1 = builder.newReaction();
-		IMolecule molecule = builder.newMolecule();
+    	IReactionScheme reactionScheme = builder.newInstance(IReactionScheme.class);
+		IReaction reaction1 = builder.newInstance(IReaction.class);
+		IMolecule molecule = builder.newInstance(IMolecule.class);
 		reaction1.addProduct(molecule);
-		reaction1.addReactant(builder.newMolecule());
+		reaction1.addReactant(builder.newInstance(IMolecule.class));
 		reactionScheme.addReaction(reaction1);
-		IReaction reaction2 = builder.newReaction();
-		reaction2.addProduct(builder.newMolecule());
+		IReaction reaction2 = builder.newInstance(IReaction.class);
+		reaction2.addProduct(builder.newInstance(IMolecule.class));
 		reaction2.addReactant(molecule);
 		reactionScheme.addReaction(reaction2);
 		
@@ -96,66 +96,66 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 	}
     
     @Test public void testGetAllMolecules_IReactionScheme3() {
-		IReactionScheme scheme1 = builder.newReactionScheme();
+		IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
 
-		IReactionScheme scheme11 = builder.newReactionScheme();
-		IReaction reaction1 = builder.newReaction();
-		IMolecule molecule = builder.newMolecule();
+		IReactionScheme scheme11 = builder.newInstance(IReactionScheme.class);
+		IReaction reaction1 = builder.newInstance(IReaction.class);
+		IMolecule molecule = builder.newInstance(IMolecule.class);
 		reaction1.addProduct(molecule);
-		reaction1.addReactant(builder.newMolecule());
+		reaction1.addReactant(builder.newInstance(IMolecule.class));
 		scheme11.addReaction(reaction1);
-		IReaction reaction2 = builder.newReaction();
-		reaction2.addProduct(builder.newMolecule());
+		IReaction reaction2 = builder.newInstance(IReaction.class);
+		reaction2.addProduct(builder.newInstance(IMolecule.class));
 		reaction2.addReactant(molecule);
 		scheme11.addReaction(reaction2);
 		scheme1.add(scheme11);
 		
-		IReactionScheme scheme12 = builder.newReactionScheme();
-		IReaction reaction3 = builder.newReaction();
-		reaction3.addProduct(builder.newMolecule());
+		IReactionScheme scheme12 = builder.newInstance(IReactionScheme.class);
+		IReaction reaction3 = builder.newInstance(IReaction.class);
+		reaction3.addProduct(builder.newInstance(IMolecule.class));
 		reaction3.addReactant(molecule);
 		scheme12.addReaction(reaction3);
 		scheme1.add(scheme12);
 		
-		IReaction reaction11 = builder.newReaction();
-		reaction11.addProduct(builder.newMolecule());
+		IReaction reaction11 = builder.newInstance(IReaction.class);
+		reaction11.addProduct(builder.newInstance(IMolecule.class));
 		scheme1.addReaction(reaction11);
 		
 		Assert.assertEquals(5, ReactionSchemeManipulator.getAllMolecules(scheme1).getMoleculeCount());
 		
 	}
     @Test public void testGetAllIDs_IReactionScheme() {
-		IReactionScheme scheme1 = builder.newReactionScheme();
+		IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
 		scheme1.setID("scheme1");
 		
-		IReactionScheme scheme11 = builder.newReactionScheme();
+		IReactionScheme scheme11 = builder.newInstance(IReactionScheme.class);
 		scheme11.setID("scheme11");
-		IReaction reaction1 = builder.newReaction();
+		IReaction reaction1 = builder.newInstance(IReaction.class);
 		reaction1.setID("reaction1");
-		IMolecule molecule = builder.newMolecule();
+		IMolecule molecule = builder.newInstance(IMolecule.class);
 		reaction1.setID("molecule");
 		reaction1.addProduct(molecule);
-		reaction1.addReactant(builder.newMolecule());
+		reaction1.addReactant(builder.newInstance(IMolecule.class));
 		scheme11.addReaction(reaction1);
-		IReaction reaction2 = builder.newReaction();
+		IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction1.setID("reaction2");
-		reaction2.addProduct(builder.newMolecule());
+		reaction2.addProduct(builder.newInstance(IMolecule.class));
 		reaction2.addReactant(molecule);
 		scheme11.addReaction(reaction2);
 		scheme1.add(scheme11);
 		
-		IReactionScheme scheme12 = builder.newReactionScheme();
+		IReactionScheme scheme12 = builder.newInstance(IReactionScheme.class);
 		scheme12.setID("scheme12");
-		IReaction reaction3 = builder.newReaction();
+		IReaction reaction3 = builder.newInstance(IReaction.class);
 		reaction3.setID("reaction3");
-		reaction3.addProduct(builder.newMolecule());
+		reaction3.addProduct(builder.newInstance(IMolecule.class));
 		reaction3.addReactant(molecule);
 		scheme12.addReaction(reaction3);
 		scheme1.add(scheme12);
 		
-		IReaction reaction11 = builder.newReaction();
+		IReaction reaction11 = builder.newInstance(IReaction.class);
 		reaction11.setID("reaction11");
-		reaction11.addProduct(builder.newMolecule());
+		reaction11.addProduct(builder.newInstance(IMolecule.class));
 		scheme1.addReaction(reaction11);
 		
 		Assert.assertEquals(6, ReactionSchemeManipulator.getAllIDs(scheme1).size());
@@ -163,37 +163,37 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 	}
 
     @Test public void testCreateReactionScheme_IReactionSet() {
-    	IMolecule molA = builder.newMolecule();
+    	IMolecule molA = builder.newInstance(IMolecule.class);
     	molA.setID("A");
-    	IMolecule molB = builder.newMolecule();
+    	IMolecule molB = builder.newInstance(IMolecule.class);
     	molB.setID("B");
-    	IMolecule molC = builder.newMolecule();
+    	IMolecule molC = builder.newInstance(IMolecule.class);
     	molC.setID("C");
-    	IMolecule molD = builder.newMolecule();
+    	IMolecule molD = builder.newInstance(IMolecule.class);
     	molD.setID("D");
-    	IMolecule molE = builder.newMolecule();
+    	IMolecule molE = builder.newInstance(IMolecule.class);
     	molE.setID("E");
     	
-    	IReactionSet reactionSet = builder.newReactionSet();
-		IReaction reaction1 = builder.newReaction();
+    	IReactionSet reactionSet = builder.newInstance(IReactionSet.class);
+		IReaction reaction1 = builder.newInstance(IReaction.class);
 		reaction1.setID("r1");
 		reaction1.addReactant(molA);
 		reaction1.addProduct(molB);
         reactionSet.addReaction(reaction1);
 		
-		IReaction reaction2 = builder.newReaction();
+		IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction2.setID("r2");
 		reaction2.addReactant(molB);
 		reaction2.addProduct(molC);
         reactionSet.addReaction(reaction2);
 		
-		IReaction reaction3 = builder.newReaction();
+		IReaction reaction3 = builder.newInstance(IReaction.class);
 		reaction3.setID("r3");
 		reaction3.addReactant(molB);
 		reaction3.addProduct(molD);
         reactionSet.addReaction(reaction3);
 		
-		IReaction reaction4 = builder.newReaction();
+		IReaction reaction4 = builder.newInstance(IReaction.class);
 		reaction4.setID("r4");
 		reaction4.addReactant(molC);
 		reaction4.addProduct(molE);
@@ -219,28 +219,28 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		
     }
     @Test public void testGetMoleculeSet_IMolecule_IMolecule_IReactionScheme() {
-    	IReactionScheme scheme1 = builder.newReactionScheme();
+    	IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
 
-		IReactionScheme scheme11 = builder.newReactionScheme();
-		IReaction reaction1 = builder.newReaction();
+		IReactionScheme scheme11 = builder.newInstance(IReactionScheme.class);
+		IReaction reaction1 = builder.newInstance(IReaction.class);
 		reaction1.setID("reaction1");
-		IMolecule startMol = builder.newMolecule();
+		IMolecule startMol = builder.newInstance(IMolecule.class);
 		startMol.setID("startMol");
 		reaction1.addReactant(startMol);
-		IMolecule mitMol = builder.newMolecule();
+		IMolecule mitMol = builder.newInstance(IMolecule.class);
 		mitMol.setID("mitMol");
 		reaction1.addProduct(mitMol);
 		scheme11.addReaction(reaction1);
-		IReaction reaction2 = builder.newReaction();
-		reaction2.addProduct(builder.newMolecule());
-		reaction2.addReactant(builder.newMolecule());
+		IReaction reaction2 = builder.newInstance(IReaction.class);
+		reaction2.addProduct(builder.newInstance(IMolecule.class));
+		reaction2.addReactant(builder.newInstance(IMolecule.class));
 		reaction2.setID("reaction2");
 		scheme11.addReaction(reaction2);
 		scheme1.add(scheme11);
 		
-		IReactionScheme scheme12 = builder.newReactionScheme();
-		IReaction reaction3 = builder.newReaction();
-		IMolecule finalMol = builder.newMolecule();
+		IReactionScheme scheme12 = builder.newInstance(IReactionScheme.class);
+		IReaction reaction3 = builder.newInstance(IReaction.class);
+		IMolecule finalMol = builder.newInstance(IMolecule.class);
 		finalMol.setID("finalMol");
 		reaction3.addProduct(finalMol);
 		reaction3.addReactant(mitMol);
@@ -248,8 +248,8 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		scheme12.addReaction(reaction3);
 		scheme1.add(scheme12);
 		
-		IReaction reaction11 = builder.newReaction();
-		reaction11.addProduct(builder.newMolecule());
+		IReaction reaction11 = builder.newInstance(IReaction.class);
+		reaction11.addProduct(builder.newInstance(IMolecule.class));
 		reaction11.setID("reaction11");
 		scheme1.addReaction(reaction11);
 
@@ -262,34 +262,34 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     }
     
     @Test public void testGetAllReactions_IReactionScheme() {
-    	IReactionScheme scheme1 = builder.newReactionScheme();
+    	IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
 
-		IReactionScheme scheme11 = builder.newReactionScheme();
-		IReaction reaction1 = builder.newReaction();
-		IMolecule startMol = builder.newMolecule();
+		IReactionScheme scheme11 = builder.newInstance(IReactionScheme.class);
+		IReaction reaction1 = builder.newInstance(IReaction.class);
+		IMolecule startMol = builder.newInstance(IMolecule.class);
 		startMol.setID("startMol");
 		reaction1.addReactant(startMol);
-		IMolecule mitMol = builder.newMolecule();
+		IMolecule mitMol = builder.newInstance(IMolecule.class);
 		mitMol.setID("mitMol");
 		reaction1.addProduct(mitMol);
 		scheme11.addReaction(reaction1);
-		IReaction reaction2 = builder.newReaction();
-		reaction2.addProduct(builder.newMolecule());
-		reaction2.addReactant(builder.newMolecule());
+		IReaction reaction2 = builder.newInstance(IReaction.class);
+		reaction2.addProduct(builder.newInstance(IMolecule.class));
+		reaction2.addReactant(builder.newInstance(IMolecule.class));
 		scheme11.addReaction(reaction2);
 		scheme1.add(scheme11);
 		
-		IReactionScheme scheme12 = builder.newReactionScheme();
-		IReaction reaction3 = builder.newReaction();
-		IMolecule finalMol = builder.newMolecule();
+		IReactionScheme scheme12 = builder.newInstance(IReactionScheme.class);
+		IReaction reaction3 = builder.newInstance(IReaction.class);
+		IMolecule finalMol = builder.newInstance(IMolecule.class);
 		finalMol.setID("finalMol");
 		reaction3.addProduct(finalMol);
 		reaction3.addReactant(startMol);
 		scheme12.addReaction(reaction3);
 		scheme1.add(scheme12);
 		
-		IReaction reaction11 = builder.newReaction();
-		reaction11.addProduct(builder.newMolecule());
+		IReaction reaction11 = builder.newInstance(IReaction.class);
+		reaction11.addProduct(builder.newInstance(IMolecule.class));
 		scheme1.addReaction(reaction11);
 		
 		IReactionSet reactionSet = ReactionSchemeManipulator.getAllReactions(scheme1);
@@ -302,31 +302,31 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 
     
     @Test public void testExtractTopReactions_IReactionScheme() {
-    	IReactionScheme scheme1 = builder.newReactionScheme();
-    	IReaction reaction1 = builder.newReaction();
-    	IMolecule molA = builder.newMolecule();
+    	IReactionScheme scheme1 = builder.newInstance(IReactionScheme.class);
+    	IReaction reaction1 = builder.newInstance(IReaction.class);
+    	IMolecule molA = builder.newInstance(IMolecule.class);
 		reaction1.addReactant(molA);
-		IMolecule molB = builder.newMolecule();
+		IMolecule molB = builder.newInstance(IMolecule.class);
 		reaction1.addProduct(molB);
 		scheme1.addReaction(reaction1);
 		
-		IReactionScheme scheme2 = builder.newReactionScheme();
-		IReaction reaction2 = builder.newReaction();
+		IReactionScheme scheme2 = builder.newInstance(IReactionScheme.class);
+		IReaction reaction2 = builder.newInstance(IReaction.class);
     	reaction2.addReactant(molB);
-		IMolecule molC = builder.newMolecule();
+		IMolecule molC = builder.newInstance(IMolecule.class);
 		reaction2.addProduct(molC);
 		scheme2.addReaction(reaction2);
 		
-		IReaction reaction3 = builder.newReaction();
+		IReaction reaction3 = builder.newInstance(IReaction.class);
     	reaction3.addReactant(molB);
-		IMolecule molD = builder.newMolecule();
+		IMolecule molD = builder.newInstance(IMolecule.class);
 		reaction3.addProduct(molD);
 		scheme2.addReaction(reaction3);
 		
-		IReaction reaction4 = builder.newReaction();
-    	IMolecule molE = builder.newMolecule();
+		IReaction reaction4 = builder.newInstance(IReaction.class);
+    	IMolecule molE = builder.newInstance(IMolecule.class);
 		reaction4.addReactant(molE);
-		IMolecule molF = builder.newMolecule();
+		IMolecule molF = builder.newInstance(IMolecule.class);
 		reaction4.addProduct(molF);
 		scheme1.addReaction(reaction4);
 		

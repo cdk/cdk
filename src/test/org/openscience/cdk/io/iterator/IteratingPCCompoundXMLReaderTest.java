@@ -54,7 +54,7 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
         );
 
         int molCount = 0;
-        IMoleculeSet set = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        IMoleculeSet set = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
         while (reader.hasNext()) {
 //        	System.out.println("next molecule found");
             Object object = reader.next();

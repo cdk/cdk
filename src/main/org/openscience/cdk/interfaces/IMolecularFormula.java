@@ -41,7 +41,7 @@ import java.util.Map;
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  */
-public interface IMolecularFormula{
+public interface IMolecularFormula extends ICDKObject {
 
 	/**
 	 * Adds an molecularFormula to this MolecularFormula.
@@ -197,12 +197,4 @@ public interface IMolecularFormula{
 	 */
 	public void setProperties(Map<Object, Object> properties);
 	
-    /**
-     * Returns a ChemObjectBuilder for the data classes that extend
-     * this class.
-     * 
-     * @return The IChemObjectBuilder matching this IChemObject
-     */
-    public IChemObjectBuilder getBuilder();
-    
 }

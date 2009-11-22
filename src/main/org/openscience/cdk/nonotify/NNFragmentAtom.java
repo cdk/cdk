@@ -25,8 +25,8 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.FragmentAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much

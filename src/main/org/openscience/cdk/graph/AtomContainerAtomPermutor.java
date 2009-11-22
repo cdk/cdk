@@ -79,7 +79,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 		{
 			atoms[f] = ((Atom)objects[f]);	
 		}
-		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer(atomContainer);
+		IAtomContainer ac = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
 		ac.setAtoms(atoms);
 		IAtomContainer clone = null;
 		try {

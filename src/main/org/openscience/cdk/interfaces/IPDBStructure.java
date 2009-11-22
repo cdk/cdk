@@ -34,7 +34,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.keyword pdbpolymer
  */
-public interface IPDBStructure{
+public interface IPDBStructure extends ICDKObject {
 	
 	/**
      * get the ending Chain identifier of this structure.

@@ -31,6 +31,7 @@ import java.io.Serializable;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Represents the concept of an atom parity identifying the stereochemistry
@@ -43,7 +44,7 @@ import org.openscience.cdk.interfaces.IAtomParity;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public class AtomParity implements IAtomParity, Serializable, Cloneable  {
+public class AtomParity implements IAtomParity, Serializable  {
     
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -151,6 +152,9 @@ public class AtomParity implements IAtomParity, Serializable, Cloneable  {
         return clone;
     }
     
+    public IChemObjectBuilder getBuilder() {
+        return DefaultChemObjectBuilder.getInstance();
+    }
 }
 
 

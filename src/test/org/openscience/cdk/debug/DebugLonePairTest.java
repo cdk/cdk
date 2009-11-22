@@ -55,7 +55,7 @@ public class DebugLonePairTest extends AbstractLonePairTest {
     }
     
     @Test public void testDebugLonePair_IAtom() {
-        IAtom atom = newChemObject().getBuilder().newAtom("N");
+        IAtom atom = newChemObject().getBuilder().newInstance(IAtom.class,"N");
         ILonePair lp = new DebugLonePair(atom);
         Assert.assertEquals(2, lp.getElectronCount().intValue());
         Assert.assertEquals(atom, lp.getAtom());

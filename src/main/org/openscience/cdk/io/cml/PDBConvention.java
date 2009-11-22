@@ -34,6 +34,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -41,6 +42,8 @@ import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStrand;
 import org.xml.sax.Attributes;
 
 /**
@@ -133,9 +136,9 @@ public class PDBConvention extends CMLCoreModule {
                 }
                 if (atts.getQName(j).equals("convention") && atts.getValue(j).equals("PDB")) {
 //                    cdo.startObject("PDBPolymer");
-                	currentStrand = currentChemFile.getBuilder().newStrand();
+                	currentStrand = currentChemFile.getBuilder().newInstance(IStrand.class);
                 	currentStrand.setStrandName("A");
-                    currentMolecule = currentChemFile.getBuilder().newPDBPolymer();
+                    currentMolecule = currentChemFile.getBuilder().newInstance(IPDBPolymer.class);
                 }else if (atts.getQName(j).equals("dictRef") && atts.getValue(j).equals("pdb:sequence")) {
                     
                     newSequence();
@@ -288,7 +291,7 @@ public class PDBConvention extends CMLCoreModule {
 //                                (new Integer(atom1)).toString());
 //                        cdo.setObjectProperty("Bond", "atom2", 
 //                                (new Integer(atom2)).toString());
-                        currentBond = currentMolecule.getBuilder().newBond(
+                        currentBond = currentMolecule.getBuilder().newInstance(IBond.class,
                         	currentMolecule.getAtom(Integer.parseInt(connect_root) - 1),
                         	currentMolecule.getAtom(Integer.parseInt(atom) - 1),
                         	CDKConstants.BONDORDER_SINGLE
@@ -433,13 +436,13 @@ public class PDBConvention extends CMLCoreModule {
         }
         if(atomCounter > 0){
 //        	cdo.startObject("PDBMonomer");
-        	currentMonomer = currentChemFile.getBuilder().newPDBMonomer();
+        	currentMonomer = currentChemFile.getBuilder().newInstance(IPDBMonomer.class);
         }
 
 		for (int i = 0; i < atomCounter; i++) {
             logger.info("Storing atom: ", i);
 //            cdo.startObject("PDBAtom");
-            currentAtom = currentChemFile.getBuilder().newPDBAtom("H");
+            currentAtom = currentChemFile.getBuilder().newInstance(IPDBAtom.class,"H");
             if (hasID) {
 //                cdo.setObjectProperty("Atom", "id", (String)elid.get(i));
                 currentAtom.setID((String)elid.get(i));
@@ -450,7 +453,7 @@ public class PDBConvention extends CMLCoreModule {
                     if (symbol.equals("Du") || symbol.equals("Dummy")) {
 //                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.get(i));
                         if (!(currentAtom instanceof IPseudoAtom)) {
-                            currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
+                            currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class,currentAtom);
                         }
                         ((IPseudoAtom)currentAtom).setLabel((String)eltitles.get(i));
                     } else {
@@ -473,7 +476,7 @@ public class PDBConvention extends CMLCoreModule {
                 }
 //                cdo.setObjectProperty("Atom", "type", symbol);
                 if (symbol.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
+                    currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class,currentAtom);
                 }
                 currentAtom.setSymbol(symbol);
                 try {
@@ -552,7 +555,7 @@ public class PDBConvention extends CMLCoreModule {
 //                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
             	int unpairedElectrons = Integer.parseInt((String)spinMultiplicities.get(i))-1;
                 for (int sm=0; sm<unpairedElectrons; sm++) {
-                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newSingleElectron(currentAtom));
+                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newInstance(ISingleElectron.class,currentAtom));
                 }
             }
 

@@ -30,6 +30,7 @@ import java.util.StringTokenizer;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.xml.sax.Attributes;
 
@@ -58,7 +59,7 @@ public class PMPConvention extends CMLCoreModule {
     public void startDocument() {
         super.startDocument();
 //        cdo.startObject("Frame");
-        currentChemModel = currentChemFile.getBuilder().newChemModel();
+        currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
     }
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {

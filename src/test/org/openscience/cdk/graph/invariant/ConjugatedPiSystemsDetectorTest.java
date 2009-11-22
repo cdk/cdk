@@ -34,14 +34,15 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
@@ -397,26 +398,26 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
     @Test public void test3Aminomethane_cation() throws Exception
 	{
-    	IMolecule mol = builder.newMolecule();
-    	mol.addAtom(builder.newAtom("N"));
-    	mol.addAtom(builder.newAtom("C"));
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+    	mol.addAtom(builder.newInstance(IAtom.class,"N"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(0, 1, Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(0, 2, Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(0, 3, Order.SINGLE);
     	mol.getAtom(3).setFormalCharge(+1);
-    	mol.addAtom(builder.newAtom("N"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"N"));
     	mol.addBond(3, 4, Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(4, 5, Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(4, 6, Order.SINGLE);
-    	mol.addAtom(builder.newAtom("N"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"N"));
     	mol.addBond(3, 7, Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(7, 8, Order.SINGLE);
-    	mol.addAtom(builder.newAtom("C"));
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(7, 8, Order.SINGLE);
     	
     	addImplicitHydrogens(mol);

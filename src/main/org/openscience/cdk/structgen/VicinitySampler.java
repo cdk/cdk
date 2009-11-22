@@ -207,7 +207,7 @@ public class VicinitySampler {
 			if (b1 == null)
 			{
 				logger.debug("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
-				b1 = ac.getBuilder().newBond(ax1, ay1, BondManipulator.createBondOrder(b11));
+				b1 = ac.getBuilder().newInstance(IBond.class,ax1, ay1, BondManipulator.createBondOrder(b11));
 				ac.addBond(b1);
 			}
 			else
@@ -227,7 +227,7 @@ public class VicinitySampler {
 			if (b2 == null)
 			{
 				logger.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);				
-				b2 = ac.getBuilder().newBond(
+				b2 = ac.getBuilder().newInstance(IBond.class,
 					ax1, ay2, BondManipulator.createBondOrder(b12)
 				);
 				ac.addBond(b2);
@@ -249,7 +249,7 @@ public class VicinitySampler {
 			if (b3 == null)
 			{
 				logger.debug("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
-				b3 = ac.getBuilder().newBond(ax2, ay1, BondManipulator.createBondOrder(b21));
+				b3 = ac.getBuilder().newInstance(IBond.class,ax2, ay1, BondManipulator.createBondOrder(b21));
 				ac.addBond(b3);
 			}
 			else
@@ -269,7 +269,7 @@ public class VicinitySampler {
 			if (b4 == null)
 			{
 				logger.debug("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
-				b4 = ac.getBuilder().newBond(ax2, ay2, BondManipulator.createBondOrder(b22));
+				b4 = ac.getBuilder().newInstance(IBond.class,ax2, ay2, BondManipulator.createBondOrder(b22));
 				ac.addBond(b4);
 			}
 			else

@@ -23,14 +23,18 @@
  */
 package org.openscience.cdk.formula;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.*;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  *  Class defining an adduct object in a MolecularFormula. It maintains

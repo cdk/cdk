@@ -57,7 +57,7 @@ public class NNAtomTest extends AbstractAtomTest {
     }
 
     @Test public void testNNAtom_IElement() {
-    	IElement element = newChemObject().getBuilder().newElement();
+    	IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IAtom a = new NNAtom(element);
         Assert.assertNotNull(a);
     }

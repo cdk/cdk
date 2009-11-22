@@ -26,14 +26,14 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
@@ -47,7 +47,8 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     private final static String ATOMTYPE_LIST = "structgen_atomtypes.owl";
 
     private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-        "org/openscience/cdk/config/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
+        "org/openscience/cdk/config/data/" + ATOMTYPE_LIST,
+        NoNotificationChemObjectBuilder.getInstance()
     );
 
     public String getAtomTypeListName() {
@@ -87,8 +88,8 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom atom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom.setHydrogenCount(4);
         mol.addAtom(atom);
 
@@ -114,14 +115,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
 
     @Test public void testFlourine() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setHydrogenCount(0);
         mol.addAtom(atom1);
         for (int i = 0; i < 4; i++) {
-            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newAtom("F");
+            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
             mol.addAtom(floruineAtom);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(floruineAtom, atom1);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,floruineAtom, atom1);
             mol.addBond(bond);
         }
 
@@ -137,14 +138,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testChlorine() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setHydrogenCount(0);
         mol.addAtom(atom1);
         for (int i = 0; i < 4; i++) {
-            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
             mol.addAtom(floruineAtom);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(floruineAtom, atom1);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,floruineAtom, atom1);
             mol.addBond(bond);
         }
 
@@ -160,14 +161,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testBromine() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setHydrogenCount(0);
         mol.addAtom(atom1);
         for (int i = 0; i < 4; i++) {
-            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newAtom("Br");
+            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Br");
             mol.addAtom(floruineAtom);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(floruineAtom, atom1);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,floruineAtom, atom1);
             mol.addBond(bond);
         }
 
@@ -183,14 +184,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testIodine() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
         atom1.setHydrogenCount(0);
         mol.addAtom(atom1);
         for (int i = 0; i < 4; i++) {
-            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newAtom("I");
+            IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"I");
             mol.addAtom(floruineAtom);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(floruineAtom, atom1);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,floruineAtom, atom1);
             mol.addBond(bond);
         }
 
@@ -206,10 +207,10 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testLithium() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("Li");
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("F");
-        IBond bond = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom2);
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Li");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
+        IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,atom1, atom2);
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addBond(bond);
@@ -226,14 +227,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     Tests As3, Cl1
      */
     @Test public void testArsenic() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("As");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"As");
         atom1.setHydrogenCount(0);
         mol.addAtom(atom1);
         for (int i = 0; i < 3; i++) {
-            IAtom atom = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+            IAtom atom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
             mol.addAtom(atom);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(atom, atom1, IBond.Order.SINGLE);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,atom, atom1, IBond.Order.SINGLE);
             mol.addBond(bond);
         }
 
@@ -252,17 +253,17 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     Tests C4, O2
      */
     @Test public void testOxygen1() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom carbon = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom carbon = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
 
         carbon.setHydrogenCount(1);
         o1.setHydrogenCount(1);
         o2.setHydrogenCount(0);
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o1, IBond.Order.SINGLE);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o2, IBond.Order.DOUBLE);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,carbon, o1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,carbon, o2, IBond.Order.DOUBLE);
 
         mol.addAtom(carbon);
         mol.addAtom(o1);
@@ -288,15 +289,15 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     Tests O2, H1
      */
     @Test public void testOxygen2() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(h1, o1, IBond.Order.SINGLE);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(o1, o2, IBond.Order.SINGLE);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(o2, h2, IBond.Order.SINGLE);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,h1, o1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,o1, o2, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,o2, h2, IBond.Order.SINGLE);
 
         mol.addAtom(o1);
         mol.addAtom(o2);
@@ -327,17 +328,17 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     Tests P4, S2, Cl1
      */
     @Test public void testP4() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom p = DefaultChemObjectBuilder.getInstance().newAtom("P");
-        IAtom cl1 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
-        IAtom cl2 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
-        IAtom cl3 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
-        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom p = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"P");
+        IAtom cl1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
+        IAtom cl2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
+        IAtom cl3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
+        IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(p, cl1, IBond.Order.SINGLE);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(p, cl2, IBond.Order.SINGLE);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(p, cl3, IBond.Order.SINGLE);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(p, s, IBond.Order.DOUBLE);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,p, cl1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,p, cl2, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,p, cl3, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,p, s, IBond.Order.DOUBLE);
 
         mol.addAtom(p);
         mol.addAtom(cl1);
@@ -370,25 +371,25 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     Tests P3, O2, C4
      */
     @Test public void testP3() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom p = DefaultChemObjectBuilder.getInstance().newAtom("P");
-        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o3 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom p = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"P");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
 
         c1.setHydrogenCount(3);
         c2.setHydrogenCount(3);
         c3.setHydrogenCount(3);
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(p, o1, IBond.Order.SINGLE);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(p, o2, IBond.Order.SINGLE);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(p, o3, IBond.Order.SINGLE);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(c1, o1, IBond.Order.SINGLE);
-        IBond bond5 = DefaultChemObjectBuilder.getInstance().newBond(c2, o2, IBond.Order.SINGLE);
-        IBond bond6 = DefaultChemObjectBuilder.getInstance().newBond(c3, o3, IBond.Order.SINGLE);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,p, o1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,p, o2, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,p, o3, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,c1, o1, IBond.Order.SINGLE);
+        IBond bond5 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,c2, o2, IBond.Order.SINGLE);
+        IBond bond6 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,c3, o3, IBond.Order.SINGLE);
 
         mol.addAtom(p);
         mol.addAtom(o1);
@@ -418,10 +419,10 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Test Na1, Cl1 */
     @Test public void testNa1() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom na = DefaultChemObjectBuilder.getInstance().newAtom("Na");
-        IAtom cl = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
-        IBond bond = DefaultChemObjectBuilder.getInstance().newBond(na, cl, IBond.Order.SINGLE);
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom na = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Na");
+        IAtom cl = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
+        IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,na, cl, IBond.Order.SINGLE);
         mol.addAtom(na);
         mol.addAtom(cl);
         mol.addBond(bond);
@@ -438,19 +439,19 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Test Si4, C4, Cl1 */
     @Test public void testSi4() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom si = DefaultChemObjectBuilder.getInstance().newAtom("Si");
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom cl1 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
-        IAtom cl2 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
-        IAtom cl3 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom si = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Si");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom cl1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
+        IAtom cl2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
+        IAtom cl3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
 
         c1.setHydrogenCount(3);
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(si, c1, IBond.Order.SINGLE);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(si, cl1, IBond.Order.SINGLE);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(si, cl2, IBond.Order.SINGLE);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(si, cl3, IBond.Order.SINGLE);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,si, c1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,si, cl1, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,si, cl2, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,si, cl3, IBond.Order.SINGLE);
 
         mol.addAtom(si);
         mol.addAtom(c1);
@@ -480,8 +481,8 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Tests S2, H1 */
     @Test public void testS2() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
         s.setHydrogenCount(2);
 
         mol.addAtom(s);
@@ -492,12 +493,12 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
         assertAtomType(testedAtomTypes, "S2", matched);
 
-        mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        s = DefaultChemObjectBuilder.getInstance().newAtom("S");
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, IBond.Order.SINGLE);
+        mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, h2, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);
@@ -518,13 +519,13 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Tests S3, O2 */
     @Test public void testS3() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
-        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, IBond.Order.DOUBLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, IBond.Order.DOUBLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, o1, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, o2, IBond.Order.DOUBLE);
 
         mol.addAtom(s);
         mol.addAtom(o1);
@@ -552,13 +553,13 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Tests S4, Cl1 */
     @Test public void testS4() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
         mol.addAtom(s);
         for (int i = 0; i < 6; i++) {
-            IAtom f = DefaultChemObjectBuilder.getInstance().newAtom("F");
+            IAtom f = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
             mol.addAtom(f);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(s, f, IBond.Order.SINGLE);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, f, IBond.Order.SINGLE);
             mol.addBond(bond);
         }
 
@@ -577,15 +578,15 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Tests S4, O2 */
     @Test public void testS4oxide() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
-        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o3 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, IBond.Order.DOUBLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, IBond.Order.DOUBLE);
-        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(s, o3, IBond.Order.DOUBLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, o1, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, o2, IBond.Order.DOUBLE);
+        IBond b3 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, o3, IBond.Order.DOUBLE);
 
         mol.addAtom(s);
         mol.addAtom(o1);
@@ -617,14 +618,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Tests N3, O2 */
     @Test public void testN3acid() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom n = DefaultChemObjectBuilder.getInstance().newAtom("N");
-        IAtom o = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom h = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom n = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
+        IAtom o = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom h = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
 
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, o, IBond.Order.DOUBLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(n, h, IBond.Order.SINGLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,n, o, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,n, h, IBond.Order.SINGLE);
 
 
         mol.addAtom(n);
@@ -650,17 +651,17 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testN3cyanide() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom n = DefaultChemObjectBuilder.getInstance().newAtom("N");
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom n = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
 
 
         c1.setHydrogenCount(0);
         c2.setHydrogenCount(3);
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, c1, IBond.Order.TRIPLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,n, c1, IBond.Order.TRIPLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
 
 
         mol.addAtom(n);
@@ -688,17 +689,17 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Tests N5, O2, C4 */
     @Test public void testN5() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom n = DefaultChemObjectBuilder.getInstance().newAtom("N");
-        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IAtom c = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom n = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom c = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
 
         c.setHydrogenCount(3);
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, o1, IBond.Order.DOUBLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(n, o2, IBond.Order.DOUBLE);
-        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(n, c, IBond.Order.SINGLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,n, o1, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,n, o2, IBond.Order.DOUBLE);
+        IBond b3 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,n, c, IBond.Order.SINGLE);
 
         mol.addAtom(n);
         mol.addAtom(o1);
@@ -728,15 +729,15 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     /* Test B3, F1 */
     @Test public void testB3() throws Exception {
-       IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom b = DefaultChemObjectBuilder.getInstance().newAtom("B");
-        IAtom f1 = DefaultChemObjectBuilder.getInstance().newAtom("F");
-        IAtom f2 = DefaultChemObjectBuilder.getInstance().newAtom("F");
-        IAtom f3 = DefaultChemObjectBuilder.getInstance().newAtom("F");
+       IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom b = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"B");
+        IAtom f1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
+        IAtom f2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
+        IAtom f3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"F");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(b, f1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(b, f2, IBond.Order.SINGLE);
-        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(b, f3, IBond.Order.SINGLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,b, f1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,b, f2, IBond.Order.SINGLE);
+        IBond b3 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,b, f3, IBond.Order.SINGLE);
 
         mol.addAtom(b);
         mol.addAtom(f1);
@@ -766,10 +767,10 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
   
     @Test public void testSe2() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
-        IAtom o = DefaultChemObjectBuilder.getInstance().newAtom("O");
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(se, o, IBond.Order.DOUBLE);
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Se");
+        IAtom o = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,se, o, IBond.Order.DOUBLE);
         mol.addAtom(se);
         mol.addAtom(o);
         mol.addBond(b1);

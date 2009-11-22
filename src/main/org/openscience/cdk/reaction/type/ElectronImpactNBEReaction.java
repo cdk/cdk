@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>It is processed by the RemovingSEofNBMechanism class</p>
  * 
  *<pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new ElectronImpactNBEReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -127,7 +127,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 			throw new CDKException("ElectronImpactNBEReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
@@ -144,7 +144,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 				
 				ArrayList<IAtom> atomList = new ArrayList<IAtom>();
 				atomList.add(atom);
-				IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+				IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
 				moleculeSet.addMolecule(reactant);
 				IReaction reaction = mechanism.initiate(moleculeSet, atomList, null);
 				if(reaction == null)

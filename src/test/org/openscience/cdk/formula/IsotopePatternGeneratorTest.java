@@ -26,8 +26,9 @@ package org.openscience.cdk.formula;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
@@ -41,7 +42,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class IsotopePatternGeneratorTest extends CDKTestCase{
 
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder =
+	    NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  Constructor for the IsotopePatternGeneratorTest object
 	 *
@@ -103,8 +105,8 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
     @Test 
 	public void testGetIsotopes1(){
 		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newIsotope("Br"));
-		molFor.addIsotope(builder.newIsotope("Br"));
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
 
 		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
 		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
@@ -124,8 +126,8 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
     	double[] abundResults = {.512,1.00,.487};
     	
 		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newIsotope("Br"));
-		molFor.addIsotope(builder.newIsotope("Br"));
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
 
 		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
 		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
@@ -154,8 +156,8 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
     	double[] abundResults = {1.00,.011};
     	
 		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newIsotope("C"));
-		molFor.addIsotope(builder.newIsotope("I"));
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"C"));
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"I"));
 
 		Assert.assertEquals(2, molFor.getIsotopeCount());
 
@@ -183,7 +185,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
     	double[] abundResults = {1.00,.108,0.005};
     	
 		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newIsotope("C"),10);
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"C"),10);
 
 		
 		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
@@ -213,10 +215,10 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
     	double[] abundResults = {1.00,.006,.054,0.002,0.004,0.001};
     	
 		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newIsotope("C"),5);
-		molFor.addIsotope(builder.newIsotope("H"),13);
-		molFor.addIsotope(builder.newIsotope("N"),2);
-		molFor.addIsotope(builder.newIsotope("O"),2);
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"C"),5);
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"H"),13);
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"N"),2);
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"O"),2);
 
 		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
 		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);

@@ -43,15 +43,15 @@ public class AtomParityTest extends AbstractAtomParityTest {
     }
 
     @Test public void testAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -59,15 +59,15 @@ public class AtomParityTest extends AbstractAtomParityTest {
     }
     
 	@Test public void testClone() throws Exception {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -76,15 +76,15 @@ public class AtomParityTest extends AbstractAtomParityTest {
     }    
 
     @Test public void testClone_SurroundingAtoms() throws Exception {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -103,15 +103,15 @@ public class AtomParityTest extends AbstractAtomParityTest {
     }
     
     @Test public void testClone_IAtom() throws Exception {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);

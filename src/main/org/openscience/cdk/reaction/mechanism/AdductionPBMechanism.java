@@ -97,7 +97,7 @@ public class AdductionPBMechanism implements IReactionMechanism{
 		int posBond1 = moleculeSet.getMolecule(0).getBondNumber(bond1);
 		
     	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
-    	IBond newBond = molecule1.getBuilder().newBond(atom2C, atom3C, IBond.Order.SINGLE);
+    	IBond newBond = molecule1.getBuilder().newInstance(IBond.class,atom2C, atom3C, IBond.Order.SINGLE);
     	reactantCloned.addBond(newBond);
     	
     	int charge = atom1C.getFormalCharge();
@@ -119,16 +119,16 @@ public class AdductionPBMechanism implements IReactionMechanism{
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
 		if (type == null) return null;
 
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
 		reaction.addReactant(molecule1);
 		
 		/* mapping */
 		for(IAtom atom:molecule1.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule1.getAtomNumber(atom)));
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule1.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		for(IAtom atom:molecule2.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule2.getAtomNumber(atom)));
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule2.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
         

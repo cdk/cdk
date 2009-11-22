@@ -97,7 +97,7 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
 		
 
 		reactantCloned.removeBond(reactantCloned.getBond(posBond1));
-		IBond newBond = atom1.getBuilder().newBond(atom1C, 
+		IBond newBond = atom1.getBuilder().newInstance(IBond.class,atom1C, 
 				atom2C, IBond.Order.SINGLE);
 		reactantCloned.addBond(newBond);
 		
@@ -114,12 +114,12 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
 		if (type == null) return null;
 		
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
 		
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		

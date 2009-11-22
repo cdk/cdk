@@ -151,7 +151,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
         IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
 
         int isProtonInAromaticSystem = 0;
-        IMolecule mol = atom.getBuilder().newMolecule(clonedAtomContainer);
+        IMolecule mol = atom.getBuilder().newInstance(IMolecule.class,clonedAtomContainer);
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

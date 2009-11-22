@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,8 +36,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.Iterator;
 
 /**
  * TestSuite that runs all QSAR tests.

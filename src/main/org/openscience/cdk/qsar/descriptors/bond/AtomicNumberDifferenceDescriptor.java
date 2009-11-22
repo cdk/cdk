@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import java.io.IOException;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -33,8 +35,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.io.IOException;
 
 /**
  * Describes the imbalance in atomic number of the IBond.

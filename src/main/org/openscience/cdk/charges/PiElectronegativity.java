@@ -108,11 +108,11 @@ public class PiElectronegativity {
 
         try {
         	if(!ac.equals(acOldP)){
-        		molPi = ac.getBuilder().newMolecule(ac);
+        		molPi = ac.getBuilder().newInstance(IMolecule.class,ac);
         		
                 peoe = new GasteigerMarsiliPartialCharges();
 	    		peoe.assignGasteigerMarsiliSigmaPartialCharges(molPi, true);
-				IAtomContainerSet iSet = ac.getBuilder().newAtomContainerSet();
+				IAtomContainerSet iSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
 	        	iSet.addAtomContainer(molPi);
 	        	iSet.addAtomContainer(molPi);
 	

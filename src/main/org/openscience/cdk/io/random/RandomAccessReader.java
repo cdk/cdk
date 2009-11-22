@@ -35,6 +35,7 @@ import java.io.StringReader;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.IChemObjectReader;
@@ -160,7 +161,7 @@ public abstract class RandomAccessReader
      * @throws CDKException
      */
     protected IChemObject processContent() throws CDKException {
-        return chemObjectReader.read(builder.newChemFile());
+        return chemObjectReader.read(builder.newInstance(IChemFile.class));
     }
 
 

@@ -20,25 +20,19 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.File;
-import java.io.FileInputStream;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.qsar.DescriptorEngine;
-import org.openscience.cdk.qsar.DescriptorSpecification;
-import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -80,17 +74,17 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 	 */
     @Test public void testIPDescriptor0() throws Exception{
         
-    	IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("C"));
-		mol.addAtom(builder.newAtom("C"));
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(1, 2, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(1, 3, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(3, 4, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(3, 5, IBond.Order.SINGLE);
 
 		addExplicitHydrogens(mol);
@@ -254,24 +248,24 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      */
     @Test
     public void testBug_2787332_triclosan() throws Exception {
-    	IMolecule mol = builder.newMolecule();
-    	mol.addAtom(builder.newAtom("C"));//0
-    	mol.addAtom(builder.newAtom("C"));//1
-    	mol.addAtom(builder.newAtom("C"));//2
-    	mol.addAtom(builder.newAtom("C"));//3
-    	mol.addAtom(builder.newAtom("C"));//4
-    	mol.addAtom(builder.newAtom("C"));//5
-    	mol.addAtom(builder.newAtom("O"));//6
-    	mol.addAtom(builder.newAtom("C"));//7
-    	mol.addAtom(builder.newAtom("C"));//8
-    	mol.addAtom(builder.newAtom("C"));//9
-    	mol.addAtom(builder.newAtom("C"));//10
-    	mol.addAtom(builder.newAtom("C"));//11
-    	mol.addAtom(builder.newAtom("C"));//12
-    	mol.addAtom(builder.newAtom("Cl"));//13
-    	mol.addAtom(builder.newAtom("Cl"));//14
-    	mol.addAtom(builder.newAtom("O"));//15
-    	mol.addAtom(builder.newAtom("Cl"));//16
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//0
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//1
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//2
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//3
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//4
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//5
+    	mol.addAtom(builder.newInstance(IAtom.class,"O"));//6
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//7
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//8
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//9
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//10
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//11
+    	mol.addAtom(builder.newInstance(IAtom.class,"C"));//12
+    	mol.addAtom(builder.newInstance(IAtom.class,"Cl"));//13
+    	mol.addAtom(builder.newInstance(IAtom.class,"Cl"));//14
+    	mol.addAtom(builder.newInstance(IAtom.class,"O"));//15
+    	mol.addAtom(builder.newInstance(IAtom.class,"Cl"));//16
     	
     	mol.addBond(0, 1, Order.SINGLE);
     	mol.addBond(1, 2, Order.DOUBLE);

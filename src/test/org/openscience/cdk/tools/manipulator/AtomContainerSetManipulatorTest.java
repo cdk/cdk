@@ -23,15 +23,24 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomContainerSet;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
-
-import java.util.List;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRing;
 
 /**
  * @cdk.module test-standard
@@ -181,17 +190,17 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 	@Test public void testSort_IAtomContainerSet()
 	{
 		// Create some IAtomContainers
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newRing(5, "C");
-		IRing cycloHexane = builder.newRing(6, "C");
-		IAtomContainer hexaneNitrogen = builder.newRing(6, "N");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
+		IRing cycloHexane = builder.newInstance(IRing.class,6, "C");
+		IAtomContainer hexaneNitrogen = builder.newInstance(IRing.class,6, "N");
 		hexaneNitrogen.removeBond(0);
-		IRing cycloHexaneNitrogen = builder.newRing(6, "N");
-		IRing cycloHexeneNitrogen = builder.newRing(6, "N");
+		IRing cycloHexaneNitrogen = builder.newInstance(IRing.class,6, "N");
+		IRing cycloHexeneNitrogen = builder.newInstance(IRing.class,6, "N");
 		cycloHexeneNitrogen.getBond(0).setOrder(CDKConstants.BONDORDER_DOUBLE);
 		
 		// Add them to a IAtomContainerSet
-		IAtomContainerSet atomContainerSet = builder.newAtomContainerSet();
+		IAtomContainerSet atomContainerSet = builder.newInstance(IAtomContainerSet.class);
 		atomContainerSet.addAtomContainer(cycloHexane);
 		atomContainerSet.addAtomContainer(cycloHexeneNitrogen);
 		atomContainerSet.addAtomContainer(cycloPentane);
@@ -210,8 +219,8 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 	}
 	
 	@Test public void testContainsByID_IAtomContainerSet_IAtomContainer(){
-		IAtomContainer relevantAtomContainer = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-		IAtomContainerSet atomContainerSet = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+		IAtomContainer relevantAtomContainer = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		IAtomContainerSet atomContainerSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		atomContainerSet.addAtomContainer(relevantAtomContainer);
 		Assert.assertFalse(AtomContainerSetManipulator.containsByID(atomContainerSet, relevantAtomContainer.getID()));
 		relevantAtomContainer.setID("1");

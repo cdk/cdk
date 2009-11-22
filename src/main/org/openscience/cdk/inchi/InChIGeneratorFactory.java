@@ -21,13 +21,14 @@
  */
 package org.openscience.cdk.inchi;
 
+import java.util.List;
+
 import net.sf.jniinchi.JniInchiWrapper;
 import net.sf.jniinchi.LoadNativeLibraryException;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import java.util.List;
 
 /**
  * <p>Factory providing access to InChIGenerator and InChIToStructure. See those

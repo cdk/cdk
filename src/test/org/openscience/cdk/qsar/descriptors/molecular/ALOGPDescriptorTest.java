@@ -49,12 +49,12 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testChloroButane() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom cl = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom cl = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Cl");
         mol.addAtom(c1);
         mol.addAtom(c2);
         mol.addAtom(c3);

@@ -28,9 +28,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -403,13 +404,13 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testCompareIonized() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule molA = builder.newMolecule();
-		molA.addAtom(builder.newAtom("C"));
-		molA.addAtom(builder.newAtom("C"));
+		IMolecule molA = builder.newInstance(IMolecule.class);
+		molA.addAtom(builder.newInstance(IAtom.class,"C"));
+		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addBond(0, 1, IBond.Order.SINGLE);
-		molA.addAtom(builder.newAtom("C"));
+		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addBond(1, 2, IBond.Order.SINGLE);
-		molA.addAtom(builder.newAtom("Cl"));
+		molA.addAtom(builder.newInstance(IAtom.class,"Cl"));
 		molA.addBond(2, 3, IBond.Order.SINGLE);
 		
 		addExplicitHydrogens(molA);
@@ -418,13 +419,13 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		
         double resultA= ((DoubleResult)descriptor.calculate(molA.getAtom(3),molA).getValue()).doubleValue();
         
-        IMolecule molB = builder.newMolecule();
-		molB.addAtom(builder.newAtom("C"));
-		molB.addAtom(builder.newAtom("C"));
+        IMolecule molB = builder.newInstance(IMolecule.class);
+		molB.addAtom(builder.newInstance(IAtom.class,"C"));
+		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addBond(0, 1, IBond.Order.SINGLE);
-		molB.addAtom(builder.newAtom("C"));
+		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addBond(1, 2, IBond.Order.SINGLE);
-		molB.addAtom(builder.newAtom("Cl"));
+		molB.addAtom(builder.newInstance(IAtom.class,"Cl"));
 		molB.getAtom(3).setFormalCharge(1);
 		molB.addSingleElectron(3);
 		molB.addLonePair(3);

@@ -34,10 +34,10 @@ import org.openscience.cdk.formula.rules.ElementRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.IsotopePatternRule;
 import org.openscience.cdk.formula.rules.ToleranceRangeRule;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class MassToFormulaToolTest extends CDKTestCase {
 
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	private IsotopeFactory ifac;
 	
 	/**
@@ -71,7 +71,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test 
     public void testMassToFormulaTool_IChemObjectBuilder(){
     	
-		Assert.assertNotNull(new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()));
+		Assert.assertNotNull(new MassToFormulaTool(builder));
 	}
     /**
 	 * A unit test suite for JUnit.
@@ -81,7 +81,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test 
     public void testMass_0Null(){
     	
-		Assert.assertNull(new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()).generate(0.0));
+		Assert.assertNull(new MassToFormulaTool(builder).generate(0.0));
 	}
     /**
 	 * A unit test suite for JUnit
@@ -91,7 +91,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test 
 	public void testMass_NegativeNULL(){
     	
-		Assert.assertNull(new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()).generate(-10.0));
+		Assert.assertNull(new MassToFormulaTool(builder).generate(-10.0));
 	}
     /**
 	 * A unit test suite for JUnit
@@ -101,7 +101,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test 
 	public void testGetRestrictions(){
     	
-		Assert.assertNotNull(new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()).getRestrictions());
+		Assert.assertNotNull(new MassToFormulaTool(builder).getRestrictions());
 	}
     /**
 	 * A unit test suite for JUnit.
@@ -110,7 +110,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
     @Test 
 	public void testSetDefaultRestrictions(){
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> rules = mfTool.getRestrictions();
 		Assert.assertNotNull(rules);
@@ -155,7 +155,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test 
 	public void testSetRestrictions_List() throws Exception{
 		
-    	MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+    	MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		List<IRule> rules = mfTool.getRestrictions();
 		Assert.assertNotNull(rules);
 		
@@ -179,7 +179,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
     @Test 
 	public void testSetRestrictionsElements() throws Exception{
 		
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		List<IRule> rules = mfTool.getRestrictions();
 		Assert.assertNotNull(rules);
 		
@@ -190,8 +190,8 @@ public class MassToFormulaToolTest extends CDKTestCase {
 		IRule rule1  = new ElementRule();
 		Object[] params = new Object[1];
 		MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    	mfRange.addIsotope( builder.newIsotope("C"), 1, 10);
-    	mfRange.addIsotope( builder.newIsotope("H"), 1, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"C"), 1, 10);
+    	mfRange.addIsotope( builder.newInstance(IIsotope.class,"H"), 1, 10);
     	params[0] = mfRange;
 		rule1.setParameters(params);
     	myRules.add(rule1);
@@ -226,7 +226,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	@Test 
 	public void testSetRestrictionsCharge() throws Exception{
 		
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -263,7 +263,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	@Test 
 	public void testSetRestrictionsTolerance() throws Exception{
 		
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -303,7 +303,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	@Test 
 	public void testGenerate_double(){
     	
-		Assert.assertNotNull(new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()).generate(44.0032));
+		Assert.assertNotNull(new MassToFormulaTool(builder).generate(44.0032));
 	}
 	
 	/**
@@ -335,7 +335,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 		mf2.addIsotope(nit,2);
 
 		
-		IMolecularFormulaSet mfSet = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()).generate(133.0968);
+		IMolecularFormulaSet mfSet = new MassToFormulaTool(builder).generate(133.0968);
 		
 		Assert.assertEquals(37,mfSet.size());
 		
@@ -372,7 +372,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	
 
 
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		List<IRule> myRules = new ArrayList<IRule>();
 		
 		IRule rule1  = new ElementRule();
@@ -420,7 +420,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	
 
 
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		List<IRule> myRules = new ArrayList<IRule>();
 		
 		IRule rule1  = new ElementRule();
@@ -454,7 +454,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	@Test 
 	public void testMiddleMass() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -506,7 +506,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	@Test 
 	public void testHighMass() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -539,7 +539,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	@Test 
 	public void testFoundMF() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -586,7 +586,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	@Test 
 	public void testFoundMF2() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -629,7 +629,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	@Test 
 	public void testFragment() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -679,7 +679,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	@Test 
 	public void testCompoundWith7Elements() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -738,7 +738,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	@Test 
 	public void testDifferentIsotopes() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -784,7 +784,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	}
 	@Test 
 	public void testFixedFormulaRange() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		
@@ -814,7 +814,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	}
 	@Test 
 	public void testFixedFormulaRange2() throws Exception {
-		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		MassToFormulaTool mfTool = new MassToFormulaTool(builder);
 		
 		List<IRule> myRules = new ArrayList<IRule>();
 		

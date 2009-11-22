@@ -30,10 +30,10 @@ package org.openscience.cdk.tools.manipulator;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.formula.MolecularFormulaRange;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -97,7 +97,7 @@ public class MolecularFormulaRangeManipulator {
 	 */
     @TestMethod("testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder")
 	public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
-		IMolecularFormula formula = builder.newMolecularFormula();
+		IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
         for (IIsotope isotope : mfRange.isotopes()) {
             formula.addIsotope(isotope, mfRange.getIsotopeCountMax(isotope));
@@ -115,7 +115,7 @@ public class MolecularFormulaRangeManipulator {
 	 */
     @TestMethod("testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder")
 	public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
-		IMolecularFormula formula = builder.newMolecularFormula();
+		IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
         for (IIsotope isotope : mfRange.isotopes()) {
             formula.addIsotope(isotope, mfRange.getIsotopeCountMin(isotope));

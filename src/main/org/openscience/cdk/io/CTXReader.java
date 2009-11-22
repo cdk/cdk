@@ -122,10 +122,10 @@ public class CTXReader extends DefaultChemObjectReader {
     }
 
     private IChemFile readChemFile() throws CDKException {
-        IChemSequence seq = file.getBuilder().newChemSequence();
-        IChemModel model = file.getBuilder().newChemModel();
-        IMoleculeSet containerSet = file.getBuilder().newMoleculeSet();
-        IMolecule container = file.getBuilder().newMolecule();
+        IChemSequence seq = file.getBuilder().newInstance(IChemSequence.class);
+        IChemModel model = file.getBuilder().newInstance(IChemModel.class);
+        IMoleculeSet containerSet = file.getBuilder().newInstance(IMoleculeSet.class);
+        IMolecule container = file.getBuilder().newInstance(IMolecule.class);
         
         int lineNumber = 0;
         
@@ -188,7 +188,7 @@ public class CTXReader extends DefaultChemObjectReader {
 		for (int i=0; i<lineCount; i++) {
 			String line = input.readLine();
 			int atomicNumber = Integer.parseInt(line.substring(7,10).trim());
-			IAtom atom = container.getBuilder().newAtom();
+			IAtom atom = container.getBuilder().newInstance(IAtom.class);
 			atom.setAtomicNumber(atomicNumber);
 			atom.setSymbol(PeriodicTable.getSymbol(atomicNumber));
 			container.addAtom(atom);
@@ -201,7 +201,7 @@ public class CTXReader extends DefaultChemObjectReader {
 			int atom1 = Integer.parseInt(line.substring(10,13).trim())-1;
 			int atom2 = Integer.parseInt(line.substring(16,19).trim())-1;
 			if (container.getBond(container.getAtom(atom1), container.getAtom(atom2)) == null) {
-				IBond bond = container.getBuilder().newBond(
+				IBond bond = container.getBuilder().newInstance(IBond.class,
 					container.getAtom(atom1), 
 					container.getAtom(atom2)
 				);

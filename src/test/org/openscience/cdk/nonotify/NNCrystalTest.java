@@ -58,18 +58,18 @@ public class NNCrystalTest extends AbstractCrystalTest {
     }
     
     @Test public void testNNCrystal_IAtomContainer() {
-        IAtomContainer acetone = newChemObject().getBuilder().newAtomContainer();
-        IAtom c1 = acetone.getBuilder().newAtom("C");
-        IAtom c2 = acetone.getBuilder().newAtom("C");
-        IAtom o = acetone.getBuilder().newAtom("O");
-        IAtom c3 = acetone.getBuilder().newAtom("C");
+        IAtomContainer acetone = newChemObject().getBuilder().newInstance(IAtomContainer.class);
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = acetone.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
-        IBond b2 = acetone.getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
-        IBond b3 = acetone.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);

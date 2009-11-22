@@ -194,8 +194,8 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     @Test
     public void testMethane() throws Exception {
         IMolecule methane =
-                NoNotificationChemObjectBuilder.getInstance().newMolecule();
-        IAtom carbon = methane.getBuilder().newAtom(Elements.CARBON);
+             NoNotificationChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom carbon = methane.getBuilder().newInstance(IAtom.class,Elements.CARBON);
         methane.addAtom(carbon);
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("CC");

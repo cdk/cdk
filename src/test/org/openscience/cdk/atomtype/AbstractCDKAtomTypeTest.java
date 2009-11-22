@@ -37,7 +37,8 @@ abstract public class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
 	private final static String ATOMTYPE_LIST = "cdk-atom-types.owl"; 
 	
 	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
+		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
+		NoNotificationChemObjectBuilder.getInstance()
     );
 
 	public String getAtomTypeListName() {

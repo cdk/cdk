@@ -78,7 +78,7 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor
         {
             bonds[f] = ((IBond)objects[f]);
         }
-        IAtomContainer ac = atomContainer.getBuilder().newAtomContainer(atomContainer);
+        IAtomContainer ac = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
         ac.setBonds(bonds);
         IAtomContainer clone = null;
         try {

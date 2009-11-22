@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>It is processed by the HeterolyticCleavageMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new SharingChargeSBReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -130,7 +130,7 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
 			throw new CDKException("SharingChargeSBReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
@@ -159,7 +159,7 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
 			                	ArrayList<IBond> bondList = new ArrayList<IBond>();
 			                	bondList.add(bondi);
 
-								IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+								IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
 								moleculeSet.addMolecule(reactant);
 								IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 								if(reaction == null)

@@ -34,9 +34,9 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Used to store and return data of a particular isotope. As this class is a
  * singleton class, one gets an instance with: 
  * <pre>
- * IsotopeFactory ifac = IsotopFactory.getInstance(new IChemObject().getBuilder());
+ * IsotopeFactory ifac = IsotopFactory.getInstance(new IChemObject().getNewBuilder());
  * </pre>
  *
  * <p>Data about the isotopes are read from the file
@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>The use of this class is exemplified as follows. To get information 
  * about the major isotope of hydrogen, one can use this code:
  * <pre>
- *   IsotopeFactory factory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+ *   IsotopeFactory factory = IsotopeFactory.getInstance(NewDefaultChemObjectBuilder.getInstance());
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre> 
  *

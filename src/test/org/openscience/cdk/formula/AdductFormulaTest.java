@@ -28,8 +28,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.AbstractAdductFormulaTest;
+import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Checks the functionality of the AdductFormula.
@@ -62,7 +63,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
 	 */
     @Test 
     public void testAdductFormula_IMolecularFormula() {
-        IAdductFormula mfS = new AdductFormula(getBuilder().newMolecularFormula());
+        IAdductFormula mfS = new AdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 }

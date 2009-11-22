@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,10 +22,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.AbstractChemObjectBuilderTest;
 
 /**
- * Checks the functionality of the Crystal.
+ * Checks the functionality of the {@link IChemObjectBuilder}
+ * {@link NoNotificationChemObjectBuilder} implementation.
  *
  * @cdk.module test-data
  */
@@ -43,5 +41,5 @@ public class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest 
     	Assert.assertTrue(builder instanceof IChemObjectBuilder);
         Assert.assertTrue(builder instanceof DefaultChemObjectBuilder);
     }
-    
+
 }

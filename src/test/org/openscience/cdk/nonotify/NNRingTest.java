@@ -27,10 +27,11 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractRingTest;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.AbstractRingTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -68,9 +69,9 @@ public class NNRingTest extends AbstractRingTest {
     }
 
     @Test public void testNNRing_IAtomContainer() {
-        IAtomContainer container = newChemObject().getBuilder().newAtomContainer();
-        container.addAtom(container.getBuilder().newAtom("C"));
-        container.addAtom(container.getBuilder().newAtom("C"));
+        IAtomContainer container = newChemObject().getBuilder().newInstance(IAtomContainer.class);
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
         
         IRing ring = new NNRing(container);
         Assert.assertNotNull(ring);

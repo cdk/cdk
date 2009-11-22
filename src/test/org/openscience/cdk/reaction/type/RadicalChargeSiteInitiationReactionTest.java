@@ -34,9 +34,9 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -194,24 +194,24 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(1, 3, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(1, 4, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(2, 5, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(2, 6, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(2, 7, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 8, IBond.Order.SINGLE);
 		
 		IAtom atom =  molecule.getAtom(0);
@@ -227,27 +227,27 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
-		IMolecule molecule1 = builder.newMolecule();
-		molecule1.addAtom(builder.newAtom("O"));
-		molecule1.addAtom(builder.newAtom("C"));
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
+		IMolecule molecule1 = builder.newInstance(IMolecule.class);
+		molecule1.addAtom(builder.newInstance(IAtom.class,"O"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(1, 2, IBond.Order.SINGLE);
-		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(1, 3, IBond.Order.SINGLE);
 		molecule1.getAtom(0).setFormalCharge(1);
-		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(0, 4, IBond.Order.SINGLE);
         setOfProducts.addMolecule(molecule1);
         
-        IMolecule molecule2 = builder.newMolecule();
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addAtom(builder.newAtom("H"));
+        IMolecule molecule2 = builder.newInstance(IMolecule.class);
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule2.addBond(0, 1, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("H"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule2.addBond(0, 2, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("H"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule2.addBond(0, 3, IBond.Order.SINGLE);
         molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
         setOfProducts.addMolecule(molecule2);

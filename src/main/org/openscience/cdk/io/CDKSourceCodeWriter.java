@@ -210,12 +210,12 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     public void writeAtom(IAtom atom) throws Exception {
     	if (atom instanceof IPseudoAtom) {
-    		writer.write("  IPseudoAtom " + atom.getID() + " = mol.getBuilder().newPseudoAtom();");
+    		writer.write("  IPseudoAtom " + atom.getID() + " = mol.getNewBuilder().newInstance(IPseudoAtom.class);");
     		writer.newLine();
     		writer.write("  atom.setLabel(\"" + ((IPseudoAtom)atom).getLabel() + "\");");
     		writer.newLine();
     	} else {
-    		writer.write("  IAtom " + atom.getID() + " = mol.getBuilder().newAtom(\"" + atom.getSymbol() +
+    		writer.write("  IAtom " + atom.getID() + " = mol.getNewBuilder().newInstance(IAtom.class,\"" + atom.getSymbol() +
     		"\");");
     		writer.newLine();
     	}
@@ -240,7 +240,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
     
     public void writeBond(IBond bond) throws Exception {
-        writer.write("  IBond " + bond.getID() + " = mol.getBuilder().newBond(" + 
+        writer.write("  IBond " + bond.getID() + " = mol.getNewBuilder().newInstance(IBond.class," + 
                      bond.getAtom(0).getID() + ", " +
                      bond.getAtom(1).getID() + ", IBond.Order." +
                      bond.getOrder() + ");");

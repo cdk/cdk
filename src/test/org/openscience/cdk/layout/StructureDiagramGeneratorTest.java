@@ -33,13 +33,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -675,8 +674,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 						+ "   134     4   128    1\n"
 						+ "   135   128   129    1\n";
 				Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
-				IChemModel model = (IChemModel)r.read(NoNotificationChemObjectBuilder
-														.getInstance().newChemModel());
+				IChemModel model = (IChemModel)r.read(
+				    NoNotificationChemObjectBuilder
+						.getInstance().newInstance(IChemModel.class));
 				final IMolecule mol = model.getMoleculeSet().getMolecule(0);
 				final IMolecule clone = (IMolecule)mol.clone();
 				new StructureDiagramGenerator(clone).generateCoordinates();
@@ -804,7 +804,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 		
 		// read molecule
-		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
 
 		// rebuild 2D coordinates
 		// repeat this 10 times since the bug does only occur by chance
@@ -836,7 +836,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 		
 		// read molecule
-		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
 		
 		// rebuild 2D coordinates
 		StructureDiagramGenerator structureDiagramGenerator = new StructureDiagramGenerator();

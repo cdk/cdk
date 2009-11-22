@@ -71,7 +71,7 @@ public class INChIContentProcessorTool {
                     }
                     logger.debug("  occurence: ", occurence);
                     for (int i=1; i<=occurence; i++) {
-                        parsedContent.addAtom(parsedContent.getBuilder().newAtom(symbol));
+                        parsedContent.addAtom(parsedContent.getBuilder().newInstance(IAtom.class,symbol));
                     }
                 }
                 remainder = matcher.group(3);
@@ -124,7 +124,7 @@ public class INChIContentProcessorTool {
                     IAtom targetAtom = container.getAtom(target-1);
                     if (source != -1) {
                     	IAtom sourceAtom = container.getAtom(source-1);
-                        bondToAdd = container.getBuilder().newBond(sourceAtom, targetAtom, IBond.Order.SINGLE);
+                        bondToAdd = container.getBuilder().newInstance(IBond.class,sourceAtom, targetAtom, IBond.Order.SINGLE);
                         container.addBond(bondToAdd);
                     }
                     remainder = matcher.group(2);

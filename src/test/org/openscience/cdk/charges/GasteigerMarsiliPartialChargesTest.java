@@ -24,19 +24,19 @@
 package org.openscience.cdk.charges;
 
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.Iterator;
 
 /**
  *  Description of the Class
@@ -62,7 +62,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		
-		IMolecule molecule = builder.newMolecule();
+		IMolecule molecule = builder.newInstance(IMolecule.class);
 		molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -87,7 +87,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		
-		IMolecule molecule = builder.newMolecule();
+		IMolecule molecule = builder.newInstance(IMolecule.class);
 		molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -110,7 +110,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
     public void testAssignGasteigerSigmaMarsiliFactors_IAtomContainer() throws Exception {
     	GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		
-		IMolecule molecule = builder.newMolecule();
+		IMolecule molecule = builder.newInstance(IMolecule.class);
 		molecule.addAtom(new Atom("C"));
 		molecule.getAtom(0).setCharge(0.0);
         molecule.addAtom(new Atom("F"));

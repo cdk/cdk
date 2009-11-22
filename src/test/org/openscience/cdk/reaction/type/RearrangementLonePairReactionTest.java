@@ -31,15 +31,15 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * the negative charge of the atom A, the double bond in position 2 is 
  * displaced.</p>
  * <pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RearrangementLonePairReaction();
  *  HashMap<String,Object> params = new HashMap<String,Object>();
@@ -289,16 +289,16 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("O"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addLonePair(new LonePair(molecule.getAtom(0)));
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 2, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
 		
 		try {
@@ -320,19 +320,19 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 		//[O+]=C-[C-]-C
 
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("O"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.getAtom(0).setFormalCharge(+1);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.getAtom(2).setFormalCharge(-1);
 		molecule.addLonePair(new LonePair(molecule.getAtom(2)));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
 		
 		try {
@@ -375,19 +375,19 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testFluorobenzene() throws Exception {
 
-		 IMolecule molecule = builder.newMolecule();
-		 molecule.addAtom(builder.newAtom("F"));
-		 molecule.addAtom(builder.newAtom("C"));
+		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(2, 3, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(4, 5, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
 		 molecule.addBond(6, 1, IBond.Order.SINGLE);
 		
@@ -398,7 +398,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		
 		IReactionProcess type = new RearrangementLonePairReaction();
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants.addMolecule(molecule);
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -413,21 +413,21 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         
-        IMolecule molecule1 = builder.newMolecule();
-	 	molecule1.addAtom(builder.newAtom("F"));
+        IMolecule molecule1 = builder.newInstance(IMolecule.class);
+	 	molecule1.addAtom(builder.newInstance(IAtom.class,"F"));
 	 	molecule1.getAtom(0).setFormalCharge(1);
-		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 	 	molecule1.getAtom(2).setFormalCharge(-1);
 		molecule1.addBond(1, 2, IBond.Order.SINGLE);
-		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(2, 3, IBond.Order.SINGLE);
-		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(3, 4, IBond.Order.DOUBLE);
-		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(4, 5, IBond.Order.SINGLE);
-		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(5, 6, IBond.Order.DOUBLE);
 		molecule1.addBond(6, 1, IBond.Order.SINGLE);
 		addExplicitHydrogens(molecule1);

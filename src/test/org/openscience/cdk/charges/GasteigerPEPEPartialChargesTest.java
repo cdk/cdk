@@ -24,22 +24,27 @@
 package org.openscience.cdk.charges;
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Description of the Class
@@ -64,7 +69,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-        IMolecule molecule = builder.newMolecule();
+        IMolecule molecule = builder.newInstance(IMolecule.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -153,7 +158,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-        IMolecule molecule = builder.newMolecule();
+        IMolecule molecule = builder.newInstance(IMolecule.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -251,7 +256,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
     public void testAssignrPiMarsilliFactors_IAtomContainerSet() throws Exception {
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-        IMolecule molecule = builder.newMolecule();
+        IMolecule molecule = builder.newInstance(IMolecule.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -262,7 +267,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         for (Iterator<IAtom> it = molecule.atoms().iterator(); it.hasNext();)
             it.next().setCharge(0.0);
 
-        IMoleculeSet set = builder.newMoleculeSet();
+        IMoleculeSet set = builder.newInstance(IMoleculeSet.class);
         set.addAtomContainer(molecule);
         set.addAtomContainer(molecule);
 

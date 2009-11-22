@@ -227,7 +227,7 @@ public class InChIGenerator {
             // Check whether isotopic
             Integer isotopeNumber = atom.getMassNumber();
             if (isotopeNumber != CDKConstants.UNSET && ifact != null) {
-                IAtom isotope = atomContainer.getBuilder().newAtom(el);
+                IAtom isotope = atomContainer.getBuilder().newInstance(IAtom.class,el);
                 ifact.configure(isotope);
                 if (isotope.getMassNumber().intValue() == isotopeNumber.intValue()) {
                     isotopeNumber = 0;

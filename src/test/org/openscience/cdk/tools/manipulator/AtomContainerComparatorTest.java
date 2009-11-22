@@ -29,9 +29,10 @@ import java.util.Comparator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
@@ -45,8 +46,8 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 
     @Test
     public void testCompare_Null_IAtomContainer() {
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newRing(5, "C");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
 
 		// Instantiate the comparator
 		Comparator<IAtomContainer> comparator = new AtomContainerComparator();
@@ -66,8 +67,8 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 
     @Test
     public void testCompare_IAtomContainer_Null() {
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newRing(5, "C");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
 
 		// Instantiate the comparator
 		Comparator<IAtomContainer> comparator = new AtomContainerComparator();
@@ -79,8 +80,8 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     @Test
     public void testCompare_IAtomContainer_Object() {
 		// Create some IAtomContainers
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newRing(5, "C");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
 		
 		// Instantiate the comparator
 		Comparator comparator = new AtomContainerComparator();
@@ -101,8 +102,8 @@ public class AtomContainerComparatorTest extends CDKTestCase {
     @Test
     public void testCompare_Object_IAtomContainer() {
 		// Create some IAtomContainers
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newRing(5, "C");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
 
 		// Instantiate the comparator
 		Comparator comparator = new AtomContainerComparator();
@@ -114,9 +115,9 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 	@Test
     public void testCompare_RingSize() {
 		// Create some IAtomContainers
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newRing(5, "C");
-		IRing cycloHexane = builder.newRing(6, "C");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
+		IRing cycloHexane = builder.newInstance(IRing.class,6, "C");
 
 		// Instantiate the comparator
 		Comparator<IAtomContainer> comparator = new AtomContainerComparator();
@@ -129,9 +130,9 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 	@Test
     public void testCompare_Ring_NonRing() {
 		// Create some IAtomContainers
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloHexane = builder.newRing(6, "C");
-		IAtomContainer hexaneNitrogen = builder.newRing(6, "N");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloHexane = builder.newInstance(IRing.class,6, "C");
+		IAtomContainer hexaneNitrogen = builder.newInstance(IRing.class,6, "N");
 		hexaneNitrogen.removeBond(0);
 
 		// Instantiate the comparator
@@ -145,10 +146,10 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 	@Test
     public void testCompare_Ring_NonRing2() {
 		// Create some IAtomContainers
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IAtomContainer hexaneNitrogen = builder.newRing(6, "N");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IAtomContainer hexaneNitrogen = builder.newInstance(IRing.class,6, "N");
 		hexaneNitrogen.removeBond(0);
-		IRing cycloHexaneNitrogen = builder.newRing(6, "N");
+		IRing cycloHexaneNitrogen = builder.newInstance(IRing.class,6, "N");
 
 		// Instantiate the comparator
 		Comparator<IAtomContainer> comparator = new AtomContainerComparator();
@@ -161,9 +162,9 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 	@Test
     public void testCompare_BondOrder() {
 		// Create some IAtomContainers
-		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloHexaneNitrogen = builder.newRing(6, "N");
-		IRing cycloHexeneNitrogen = builder.newRing(6, "N");
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloHexaneNitrogen = builder.newInstance(IRing.class,6, "N");
+		IRing cycloHexeneNitrogen = builder.newInstance(IRing.class,6, "N");
 		cycloHexeneNitrogen.getBond(0).setOrder(CDKConstants.BONDORDER_DOUBLE);
 
 		// Instantiate the comparator

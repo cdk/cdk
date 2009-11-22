@@ -157,9 +157,9 @@ public class ShelXReader extends DefaultChemObjectReader {
      * @return a ChemFile with the coordinates, charges, vectors, etc.
      */
     private IChemFile readChemFile(IChemFile file) throws IOException {
-        IChemSequence seq = file.getBuilder().newChemSequence();
-        IChemModel model = file.getBuilder().newChemModel();
-        ICrystal crystal = readCrystal(file.getBuilder().newCrystal());
+        IChemSequence seq = file.getBuilder().newInstance(IChemSequence.class);
+        IChemModel model = file.getBuilder().newInstance(IChemModel.class);
+        ICrystal crystal = readCrystal(file.getBuilder().newInstance(ICrystal.class));
         model.setCrystal(crystal);
         seq.addChemModel(model);
         file.addChemSequence(seq);
@@ -355,7 +355,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                     logger.info("Adding atom: " + atype + ", " + frac[0]
                                                         + ", " + frac[1]
                                                         + ", " + frac[2]);
-                    IAtom atom = crystal.getBuilder().newAtom(atype);
+                    IAtom atom = crystal.getBuilder().newInstance(IAtom.class,atype);
                     atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                     crystal.addAtom(atom);
                     logger.debug("Atom added: ", atom);

@@ -103,7 +103,7 @@ public class Electronegativity {
 
         try {
         	if(!ac.equals(acOldS)){
-        		molSigma = ac.getBuilder().newMolecule(ac);
+        		molSigma = ac.getBuilder().newInstance(IMolecule.class,ac);
         		peoe.setMaxGasteigerIters(maxI);
 	    		peoe.assignGasteigerMarsiliSigmaPartialCharges(molSigma, true);
 	    		marsiliFactors = peoe.assignGasteigerSigmaMarsiliFactors(molSigma);

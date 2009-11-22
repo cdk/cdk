@@ -23,6 +23,12 @@
  */
 package org.openscience.cdk.pharmacophore;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,12 +41,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @cdk.module test-pcore
  */
@@ -52,7 +52,9 @@ public class PharmacophoreUtilityTest {
     public static void loadConformerData() {
         String filename = "data/mdl/pcoretest1.sdf";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
         if (reader.hasNext()) PharmacophoreUtilityTest.conformers = (ConformerContainer) reader.next();
     }
 

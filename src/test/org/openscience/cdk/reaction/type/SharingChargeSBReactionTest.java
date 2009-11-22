@@ -36,9 +36,9 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -251,22 +251,22 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.getAtom(1).setFormalCharge(+1);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 3, IBond.Order.SINGLE);
 		molecule.addBond(0, 4, IBond.Order.SINGLE);
 		molecule.addBond(0, 5, IBond.Order.SINGLE);
@@ -290,16 +290,16 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-		IMolecule expected1 = builder.newMolecule();
-        expected1.addAtom(builder.newAtom("C"));
-		expected1.addAtom(builder.newAtom("O"));
+		IMolecule expected1 = builder.newInstance(IMolecule.class);
+        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"O"));
 		expected1.addBond(0, 1, IBond.Order.SINGLE);
-		expected1.addAtom(builder.newAtom("H"));
-		expected1.addAtom(builder.newAtom("H"));
-		expected1.addAtom(builder.newAtom("H"));
-		expected1.addAtom(builder.newAtom("H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 		expected1.addBond(0, 2, IBond.Order.SINGLE);
 		expected1.addBond(0, 3, IBond.Order.SINGLE);
 		expected1.addBond(0, 4, IBond.Order.SINGLE);
@@ -311,12 +311,12 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 		
-		IMolecule expected2 = builder.newMolecule();
-        expected2.addAtom(builder.newAtom("C"));
+		IMolecule expected2 = builder.newInstance(IMolecule.class);
+        expected2.addAtom(builder.newInstance(IAtom.class,"C"));
         expected2.getAtom(0).setFormalCharge(+1);
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
@@ -357,21 +357,21 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testNsp3ChargeSingleB() throws Exception {
 		//Smiles("C[N+]C")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("N"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		molecule.getAtom(1).setFormalCharge(+1);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 3, IBond.Order.SINGLE);
 		molecule.addBond(0, 4, IBond.Order.SINGLE);
 		molecule.addBond(0, 5, IBond.Order.SINGLE);
@@ -387,7 +387,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
         setOfReactants.addMolecule(molecule);
 		
 		IReactionProcess type  = new SharingChargeSBReaction(); 
@@ -405,15 +405,15 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         // expected products 
         
         //Smiles("CN")
-        IMolecule expected1 = builder.newMolecule();
-        expected1.addAtom(builder.newAtom("C"));
-        expected1.addAtom(builder.newAtom("N"));
+        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
+        expected1.addAtom(builder.newInstance(IAtom.class,"N"));
         expected1.addBond(0, 1, IBond.Order.SINGLE);
-        expected1.addAtom(builder.newAtom("H"));
-        expected1.addAtom(builder.newAtom("H"));
-        expected1.addAtom(builder.newAtom("H"));
-        expected1.addAtom(builder.newAtom("H"));
-        expected1.addAtom(builder.newAtom("H"));
+        expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected1.addAtom(builder.newInstance(IAtom.class,"H"));
         expected1.addBond(0, 2, IBond.Order.SINGLE);
         expected1.addBond(0, 3, IBond.Order.SINGLE);
         expected1.addBond(0, 4, IBond.Order.SINGLE);
@@ -427,12 +427,12 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		
 		
         //Smiles("[C+]")
-        IMolecule expected2 = builder.newMolecule();
-        expected2.addAtom(builder.newAtom("C"));
+        IMolecule expected2 = builder.newInstance(IMolecule.class);
+        expected2.addAtom(builder.newInstance(IAtom.class,"C"));
         expected2.getAtom(0).setFormalCharge(+1);
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
@@ -452,19 +452,19 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testNsp2ChargeSingleB() throws Exception {
 		//Smiles("C=[N+]C")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("N"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		molecule.getAtom(1).setFormalCharge(1);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 3, IBond.Order.SINGLE);
 		molecule.addBond(0, 4, IBond.Order.SINGLE);
 		molecule.addBond(1, 5, IBond.Order.SINGLE);
@@ -478,7 +478,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
         setOfReactants.addMolecule(molecule);
 		
 		IReactionProcess type  = new SharingChargeSBReaction(); 
@@ -496,13 +496,13 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         // expected products 
 
         //Smiles("C=N")
-		IMolecule expected1 = builder.newMolecule();
-		expected1.addAtom(builder.newAtom("C"));
-		expected1.addAtom(builder.newAtom("N"));
+		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 		expected1.addBond(0, 1, IBond.Order.DOUBLE);
-		expected1.addAtom(builder.newAtom("H"));
-		expected1.addAtom(builder.newAtom("H"));
-		expected1.addAtom(builder.newAtom("H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 		expected1.addBond(0, 2, IBond.Order.SINGLE);
 		expected1.addBond(0, 3, IBond.Order.SINGLE);
 		expected1.addBond(1, 4, IBond.Order.SINGLE);
@@ -513,12 +513,12 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
         
         //Smiles("[C+]")
-        IMolecule expected2 = builder.newMolecule();
-        expected2.addAtom(builder.newAtom("C"));
+        IMolecule expected2 = builder.newInstance(IMolecule.class);
+        expected2.addAtom(builder.newInstance(IAtom.class,"C"));
         expected2.getAtom(0).setFormalCharge(+1);
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);
@@ -536,15 +536,15 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testFspChargeSingleB() throws Exception {
 		//Smiles("[F+]C")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("F"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		molecule.getAtom(0).setFormalCharge(+1);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 2, IBond.Order.SINGLE);
 		molecule.addBond(1, 3, IBond.Order.SINGLE);
 		molecule.addBond(1, 4, IBond.Order.SINGLE);
@@ -556,7 +556,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
         setOfReactants.addMolecule(molecule);
 		
 		IReactionProcess type  = new SharingChargeSBReaction(); 
@@ -572,9 +572,9 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         
         //Smiles("FH")
-        IMolecule expected1 = builder.newMolecule();
-        expected1.addAtom(builder.newAtom("F"));
-        expected1.addAtom(builder.newAtom("H"));
+        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        expected1.addAtom(builder.newInstance(IAtom.class,"F"));
+        expected1.addAtom(builder.newInstance(IAtom.class,"H"));
         expected1.addBond(0, 1, IBond.Order.SINGLE);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 		lpcheck.saturate(expected1);
@@ -583,12 +583,12 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
         
         //Smiles("[C+]")
-        IMolecule expected2 = builder.newMolecule();
-        expected2.addAtom(builder.newAtom("C"));
+        IMolecule expected2 = builder.newInstance(IMolecule.class);
+        expected2.addAtom(builder.newInstance(IAtom.class,"C"));
         expected2.getAtom(0).setFormalCharge(+1);
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
-        expected2.addAtom(builder.newAtom("H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
         expected2.addBond(0, 1, IBond.Order.SINGLE);
         expected2.addBond(0, 2, IBond.Order.SINGLE);
         expected2.addBond(0, 3, IBond.Order.SINGLE);

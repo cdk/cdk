@@ -34,6 +34,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -140,7 +141,7 @@ public class SingleStructureRandomGenerator {
 							order = Math.min(Math.max(1.0, random.nextInt((int)Math.round(max))), 3.0);
 							logger.debug("Forming bond of order ", order);
 							atomContainer.addBond(
-								atomContainer.getBuilder().newBond(
+								atomContainer.getBuilder().newInstance(IBond.class,
 									atom, partner, BondManipulator.createBondOrder(order)
 								)
 							);
@@ -156,7 +157,7 @@ public class SingleStructureRandomGenerator {
 			}
 		} while (!structureFound && iteration < 20);
 		logger.debug("Structure found after #iterations: ", iteration);	
-		return atomContainer.getBuilder().newMolecule(atomContainer);
+		return atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer);
 	}
 
 	

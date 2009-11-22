@@ -64,7 +64,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 
 	public IRingSet getRings(IBond bond)
 	{
-		IRingSet rings = bond.getBuilder().newRingSet();
+		IRingSet rings = bond.getBuilder().newInstance(IRingSet.class);
 		Ring ring;
 		for (int i = 0; i < getAtomContainerCount(); i++)
 		{
@@ -109,7 +109,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 
 	public IRingSet getConnectedRings(IRing ring)
 	{
-		IRingSet connectedRings = ring.getBuilder().newRingSet();
+		IRingSet connectedRings = ring.getBuilder().newInstance(IRingSet.class);
 		IRing tempRing;
 		IAtom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)

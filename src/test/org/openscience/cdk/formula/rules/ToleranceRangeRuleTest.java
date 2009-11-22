@@ -30,13 +30,14 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module test-formula
  */
 public class ToleranceRangeRuleTest extends FormulaRuleTest {
 	
-	private static DefaultChemObjectBuilder builder;
+	private static IChemObjectBuilder builder;
 	
 	/**
     *  The JUnit setup method
@@ -108,9 +109,9 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
 		IRule rule  = new ToleranceRangeRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		IIsotope carb = builder.newIsotope("C");
+		IIsotope carb = builder.newInstance(IIsotope.class,"C");
     	carb.setExactMass(12.00);
-    	IIsotope cl = builder.newIsotope("Cl");
+    	IIsotope cl = builder.newInstance(IIsotope.class,"Cl");
         cl.setExactMass(34.96885268);
         formula.addIsotope(carb);
         formula.addIsotope(cl);
@@ -128,9 +129,9 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
 		IRule rule  = new ToleranceRangeRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		IIsotope carb = builder.newIsotope("C");
+		IIsotope carb = builder.newInstance(IIsotope.class,"C");
     	carb.setExactMass(12.00);
-    	IIsotope cl = builder.newIsotope("Cl");
+    	IIsotope cl = builder.newInstance(IIsotope.class,"Cl");
         cl.setExactMass(34.96885268);
         formula.addIsotope(carb);
         formula.addIsotope(cl);
@@ -153,9 +154,9 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
 		IRule rule  = new ToleranceRangeRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		IIsotope carb = builder.newIsotope("C");
+		IIsotope carb = builder.newInstance(IIsotope.class,"C");
     	carb.setExactMass(12.00);
-    	IIsotope cl = builder.newIsotope("Cl");
+    	IIsotope cl = builder.newInstance(IIsotope.class,"Cl");
         cl.setExactMass(34.96885268);
         formula.addIsotope(carb);
         formula.addIsotope(cl);

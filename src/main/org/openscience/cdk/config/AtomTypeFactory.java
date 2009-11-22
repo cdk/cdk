@@ -159,7 +159,7 @@ public class AtomTypeFactory {
      * </ul>
      *
      * @param  configFile             String the name of the data file
-     * @param  builder                IChemObjectBuilder used to make IChemObject instances
+     * @param  builder                INewChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      */
     @TestMethod("testGetInstance_String_IChemObjectBuilder")
@@ -177,7 +177,7 @@ public class AtomTypeFactory {
 	 * Read the config from a text file.
 	 *
 	 * @param  fileName  name of the config file
-     * @param  builder     IChemObjectBuilder used to make IChemObject instances
+     * @param  builder     INewChemObjectBuilder used to make IChemObject instances
 	 */
 	private void readConfiguration(String fileName, IChemObjectBuilder builder)
 	{

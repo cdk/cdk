@@ -43,14 +43,14 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
 
     @Test public void testContains_IAtom() {
     	IChemObject object = newChemObject();
-        IAtom atom = object.getBuilder().newAtom("N");
-        ISingleElectron radical = object.getBuilder().newSingleElectron(atom);
+        IAtom atom = object.getBuilder().newInstance(IAtom.class,"N");
+        ISingleElectron radical = object.getBuilder().newInstance(ISingleElectron.class,atom);
         Assert.assertTrue(radical.contains(atom));
     }
     
     @Test public void testSetAtom_IAtom() {
         ISingleElectron radical = (ISingleElectron)newChemObject();
-        IAtom atom = radical.getBuilder().newAtom("N");
+        IAtom atom = radical.getBuilder().newInstance(IAtom.class,"N");
         Assert.assertNull(radical.getAtom());
         radical.setAtom(atom);
         Assert.assertEquals(atom, radical.getAtom());
@@ -58,8 +58,8 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
 
     @Test public void testGetAtom() {
     	IChemObject object = newChemObject();
-    	IAtom atom = object.getBuilder().newAtom("N");
-        ISingleElectron radical = object.getBuilder().newSingleElectron(atom);
+    	IAtom atom = object.getBuilder().newInstance(IAtom.class,"N");
+        ISingleElectron radical = object.getBuilder().newInstance(ISingleElectron.class,atom);
         Assert.assertEquals(atom, radical.getAtom());
     }
     
@@ -72,7 +72,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
     
     @Test public void testClone_IAtom() throws Exception {
         ISingleElectron radical = (ISingleElectron)newChemObject();
-        IAtom atom = radical.getBuilder().newAtom("N");
+        IAtom atom = radical.getBuilder().newInstance(IAtom.class,"N");
         radical.setAtom(atom);
         
         // test cloning of atom

@@ -34,8 +34,8 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
@@ -68,7 +68,7 @@ public class IsotopeReader {
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
      *
      * @param input   InputStream with the XML source
-     * @param builder The IChemObjectBuilder used to create new IIsotope's.
+     * @param builder The {@link IChemObjectBuilder} used to create new IIsotope's.
      */
     public IsotopeReader(InputStream input, IChemObjectBuilder builder) {
         this.init();

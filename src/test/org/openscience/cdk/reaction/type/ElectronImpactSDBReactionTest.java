@@ -36,9 +36,9 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -160,12 +160,12 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		
-		IMolecule reactant = builder.newMolecule();//Smiles("C=CC")
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
+		IMolecule reactant = builder.newInstance(IMolecule.class);//Smiles("C=CC")
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
 		reactant.addBond(0, 1, IBond.Order.DOUBLE);
 		reactant.addBond(1, 2, IBond.Order.SINGLE);
 		try {
@@ -186,7 +186,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
         setOfProducts.addMolecule(null);
 		return setOfProducts;

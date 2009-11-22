@@ -286,7 +286,7 @@ public class PathToolsTest extends CDKTestCase {
             atom.setFlag(CDKConstants.VISITED, false);
         }
 
-        IAtomContainer paths = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer paths = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom root = molecule.getAtom(0);
         IAtom target = null;
 
@@ -314,7 +314,7 @@ public class PathToolsTest extends CDKTestCase {
         start = atomContainer.getAtom(0);
         List<IAtom> sphere = new ArrayList<IAtom>();
         sphere.add(start);
-        IMolecule result = atomContainer.getBuilder().newMolecule();
+        IMolecule result = atomContainer.getBuilder().newInstance(IMolecule.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result);
         Assert.assertEquals(4, result.getAtomCount());
     }
@@ -328,16 +328,16 @@ public class PathToolsTest extends CDKTestCase {
         start = atomContainer.getAtom(0);
         List<IAtom> sphere = new ArrayList<IAtom>();
         sphere.add(start);
-        IMolecule result = atomContainer.getBuilder().newMolecule();
+        IMolecule result = atomContainer.getBuilder().newInstance(IMolecule.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 1);
         Assert.assertEquals(2, result.getAtomCount());
 
-        result = atomContainer.getBuilder().newMolecule();
+        result = atomContainer.getBuilder().newInstance(IMolecule.class);
         PathTools.resetFlags(atomContainer);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 2);
         Assert.assertEquals(3, result.getAtomCount());
 
-        result = atomContainer.getBuilder().newMolecule();
+        result = atomContainer.getBuilder().newInstance(IMolecule.class);
         PathTools.resetFlags(atomContainer);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 3);
         Assert.assertEquals(4, result.getAtomCount());

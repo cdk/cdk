@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,40 +15,32 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.debug;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AbstractChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.AbstractChemObjectBuilderTest;
-import org.openscience.cdk.interfaces.IPDBStructure;
 
 /**
- * Checks the functionality of the {@link DebugChemObjectBuilder}.
+ * Checks the functionality of the {@link IChemObjectBuilder}
+ * {@link DebugChemObjectBuilder} implementation.
  *
  * @cdk.module test-datadebug
  */
 public class DebugChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeClass public static void setUp() {
-    	setRootObject(new DebugChemObject());
+        setRootObject(new DebugChemObject());
     }
 
     @Test public void testGetInstance() {
     	Object builder = DebugChemObjectBuilder.getInstance();
     	Assert.assertNotNull(builder);
     	Assert.assertTrue(builder instanceof IChemObjectBuilder);
-    	Assert.assertTrue(builder instanceof DebugChemObjectBuilder);
+        Assert.assertTrue(builder instanceof DebugChemObjectBuilder);
     }
-    
-    @Test public void testNewStructure() {
-    	IPDBStructure structure = DebugChemObjectBuilder.getInstance().newStructure();
-    	Assert.assertNotNull(structure);
-    	Assert.assertTrue(structure instanceof DebugPDBStructure);
-    }
-    
+
 }

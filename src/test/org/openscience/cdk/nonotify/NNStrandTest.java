@@ -54,17 +54,17 @@ public class NNStrandTest extends AbstractStrandTest {
 		Assert.assertNotNull(oStrand);
 		Assert.assertEquals(oStrand.getMonomerCount(), 0);
 
-		IMonomer oMono1 = oStrand.getBuilder().newMonomer();
+		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oStrand.getBuilder().newMonomer();
+		IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
 		oMono2.setMonomerName(new String("HOH"));
-		IMonomer oMono3 = oStrand.getBuilder().newMonomer();
+		IMonomer oMono3 = oStrand.getBuilder().newInstance(IMonomer.class);
 		oMono3.setMonomerName(new String("GLYA16"));
-		IAtom oAtom1 = oStrand.getBuilder().newAtom("C1");
-		IAtom oAtom2 = oStrand.getBuilder().newAtom("C2");
-		IAtom oAtom3 = oStrand.getBuilder().newAtom("C3");
-		IAtom oAtom4 = oStrand.getBuilder().newAtom("C4");
-		IAtom oAtom5 = oStrand.getBuilder().newAtom("C5");
+		IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class,"C1");
+		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
+		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
+		IAtom oAtom4 = oStrand.getBuilder().newInstance(IAtom.class,"C4");
+		IAtom oAtom5 = oStrand.getBuilder().newInstance(IAtom.class,"C5");
 		
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);

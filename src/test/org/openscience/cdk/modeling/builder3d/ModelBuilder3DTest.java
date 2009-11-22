@@ -41,8 +41,8 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NNMolecule;
@@ -260,21 +260,21 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	IMolecule methanol = new org.openscience.cdk.Molecule();
     	IChemObjectBuilder builder = methanol.getBuilder();
 
-    	IAtom carbon1 = builder.newAtom("C");
+    	IAtom carbon1 = builder.newInstance(IAtom.class,"C");
     	carbon1.setID("carbon1");
     	methanol.addAtom(carbon1);
     	for (int i=0; i<3; i++) {
-    		IAtom hydrogen = builder.newAtom("H");
+    		IAtom hydrogen = builder.newInstance(IAtom.class,"H");
     		methanol.addAtom(hydrogen);
-    		methanol.addBond(builder.newBond(carbon1, hydrogen, IBond.Order.SINGLE));
+    		methanol.addBond(builder.newInstance(IBond.class,carbon1, hydrogen, IBond.Order.SINGLE));
     	}
-    	IAtom oxygen1 = builder.newAtom("O");
+    	IAtom oxygen1 = builder.newInstance(IAtom.class,"O");
     	oxygen1.setID("oxygen1");
     	methanol.addAtom(oxygen1);
-    	methanol.addBond(builder.newBond(carbon1, oxygen1, IBond.Order.SINGLE));
-    	IAtom hydrogen = builder.newAtom("H");
+    	methanol.addBond(builder.newInstance(IBond.class,carbon1, oxygen1, IBond.Order.SINGLE));
+    	IAtom hydrogen = builder.newInstance(IAtom.class,"H");
     	methanol.addAtom(hydrogen);
-    	methanol.addBond(builder.newBond(hydrogen, oxygen1, IBond.Order.SINGLE));
+    	methanol.addBond(builder.newInstance(IBond.class,hydrogen, oxygen1, IBond.Order.SINGLE));
 
     	Assert.assertEquals(6, methanol.getAtomCount());
     	Assert.assertEquals(5, methanol.getBondCount());
@@ -340,7 +340,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
-			IMolecule mol = molecules.getBuilder().newMolecule(molecules);
+			IMolecule mol = molecules.getBuilder().newInstance(IMolecule.class,molecules);
 			mol = mb3d.generate3DCoordinates(mol, false);
 			System.out.println("Calculation done");
 		}

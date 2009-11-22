@@ -1,16 +1,16 @@
 package org.openscience.cdk.io.iterator;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ConformerContainer;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ConformerContainer;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Iterate over conformers of a collection of molecules stored in SDF format.
@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
  * <pre>
  * String filename = "/Users/rguha/conf2.sdf";
  * IteratingMDLConformerReader2 reader = new IteratingMDLConformerReader2(
- *         new FileReader(new File(filename)), DefaultChemObjectBuilder.getInstance());
+ *         new FileReader(new File(filename)), NewDefaultChemObjectBuilder.getInstance());
  * while (reader.hasNext()) {
  *      ConformerContainer2 cc = (ConformerContainer2) reader.next();
  * }

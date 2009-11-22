@@ -21,7 +21,7 @@ public class ShowRandomGenerator {
 		listViewer = new MoleculeListViewer();
         listViewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
-        SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        SmilesParser parser = new SmilesParser(NewNoNotificationChemObjectBuilder.getInstance());
         
         IMolecule mol = parser.parseSmiles("CNC(C(=O)(C)C");
         listViewer.addStructure(mol, true, true, "parent");

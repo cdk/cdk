@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,8 +36,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.util.Iterator;
 
 /**
  * TestSuite that runs all QSAR tests.

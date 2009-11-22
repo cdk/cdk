@@ -28,8 +28,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.AbstractMolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 
 /**
  * Checks the functionality of the MolecularFormulaSet class.
@@ -61,7 +62,7 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 	 */
     @Test 
     public void testMolecularFormulaSet_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newMolecularFormula());
+        IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 }

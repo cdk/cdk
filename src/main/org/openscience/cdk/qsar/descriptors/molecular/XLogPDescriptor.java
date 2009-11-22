@@ -230,7 +230,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
             }
         }
         double xlogP = 0;
-//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
         String symbol = "";
         int bondCount = 0;
         int atomCount = ac.getAtomCount();
@@ -251,7 +251,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
             if (atomRingSet.getAtomContainerCount()>0){
                 if (atomRingSet.getAtomContainerCount()>1){
                 	Iterator containers = RingSetManipulator.getAllAtomContainers(atomRingSet).iterator();
-                	atomRingSet = rs.getBuilder().newRingSet();
+                	atomRingSet = rs.getBuilder().newInstance(IRingSet.class);
                 	while (containers.hasNext()) {
                 		ssrf = new SSSRFinder((IAtomContainer)containers.next());
                 		atomRingSet.add(ssrf.findEssentialRings());
@@ -1497,55 +1497,55 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 
     private IAtomContainer createPaba(IChemObjectBuilder builder) {
         // SMILES CS(=O)(=O)c1ccc(N)cc1
-        IAtomContainer container = builder.newAtomContainer();
-        IAtom atom1 = builder.newAtom("C");
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        IAtom atom1 = builder.newInstance(IAtom.class,"C");
         container.addAtom(atom1);
-        IAtom atom2 = builder.newAtom("S");
+        IAtom atom2 = builder.newInstance(IAtom.class,"S");
         container.addAtom(atom2);
-        IAtom atom3 = builder.newAtom("O");
+        IAtom atom3 = builder.newInstance(IAtom.class,"O");
         container.addAtom(atom3);
-        IAtom atom4 = builder.newAtom("O");
+        IAtom atom4 = builder.newInstance(IAtom.class,"O");
         container.addAtom(atom4);
-        IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(Hybridization.SP2);
+        IAtom atom5 = builder.newInstance(IAtom.class,"C"); atom5.setHybridization(Hybridization.SP2);
         container.addAtom(atom5);
-        IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(Hybridization.SP2);
+        IAtom atom6 = builder.newInstance(IAtom.class,"C"); atom6.setHybridization(Hybridization.SP2);
         container.addAtom(atom6);
-        IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(Hybridization.SP2);
+        IAtom atom7 = builder.newInstance(IAtom.class,"C"); atom7.setHybridization(Hybridization.SP2);
         container.addAtom(atom7);
-        IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(Hybridization.SP2);
+        IAtom atom8 = builder.newInstance(IAtom.class,"C"); atom8.setHybridization(Hybridization.SP2);
         container.addAtom(atom8);
-        IAtom atom9 = builder.newAtom("N");
+        IAtom atom9 = builder.newInstance(IAtom.class,"N");
         container.addAtom(atom9);
-        IAtom atom10 = builder.newAtom("C"); atom10.setHybridization(Hybridization.SP2);
+        IAtom atom10 = builder.newInstance(IAtom.class,"C"); atom10.setHybridization(Hybridization.SP2);
         container.addAtom(atom10);
-        IAtom atom11 = builder.newAtom("C"); atom11.setHybridization(Hybridization.SP2);
+        IAtom atom11 = builder.newInstance(IAtom.class,"C"); atom11.setHybridization(Hybridization.SP2);
         container.addAtom(atom11);
-        IBond bond1 = builder.newBond(atom1, atom2, CDKConstants.BONDORDER_SINGLE);
+        IBond bond1 = builder.newInstance(IBond.class,atom1, atom2, CDKConstants.BONDORDER_SINGLE);
         container.addBond(bond1);
-        IBond bond2 = builder.newBond(atom2, atom3, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond2 = builder.newInstance(IBond.class,atom2, atom3, CDKConstants.BONDORDER_DOUBLE);
         container.addBond(bond2);
-        IBond bond3 = builder.newBond(atom2, atom4, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond3 = builder.newInstance(IBond.class,atom2, atom4, CDKConstants.BONDORDER_DOUBLE);
         container.addBond(bond3);
-        IBond bond4 = builder.newBond(atom2, atom5, CDKConstants.BONDORDER_SINGLE);
+        IBond bond4 = builder.newInstance(IBond.class,atom2, atom5, CDKConstants.BONDORDER_SINGLE);
         container.addBond(bond4);
-        IBond bond5 = builder.newBond(atom5, atom6, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond5 = builder.newInstance(IBond.class,atom5, atom6, CDKConstants.BONDORDER_DOUBLE);
         bond5.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond5);
-        IBond bond6 = builder.newBond(atom6, atom7, CDKConstants.BONDORDER_SINGLE);
+        IBond bond6 = builder.newInstance(IBond.class,atom6, atom7, CDKConstants.BONDORDER_SINGLE);
         bond6.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond6);
-        IBond bond7 = builder.newBond(atom7, atom8, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond7 = builder.newInstance(IBond.class,atom7, atom8, CDKConstants.BONDORDER_DOUBLE);
         bond7.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond7);
-        IBond bond8 = builder.newBond(atom8, atom9, CDKConstants.BONDORDER_SINGLE);
+        IBond bond8 = builder.newInstance(IBond.class,atom8, atom9, CDKConstants.BONDORDER_SINGLE);
         container.addBond(bond8);
-        IBond bond9 = builder.newBond(atom8, atom10, CDKConstants.BONDORDER_SINGLE);
+        IBond bond9 = builder.newInstance(IBond.class,atom8, atom10, CDKConstants.BONDORDER_SINGLE);
         bond9.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond9);
-        IBond bond10 = builder.newBond(atom10, atom11, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond10 = builder.newInstance(IBond.class,atom10, atom11, CDKConstants.BONDORDER_DOUBLE);
         bond10.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond10);
-        IBond bond11 = builder.newBond(atom5, atom11, CDKConstants.BONDORDER_SINGLE);
+        IBond bond11 = builder.newInstance(IBond.class,atom5, atom11, CDKConstants.BONDORDER_SINGLE);
         bond11.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond11);
 
@@ -1554,72 +1554,72 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 
     private IAtomContainer createAminoAcid(IChemObjectBuilder builder) {
         // SMILES NCC(=O)O
-        IAtomContainer container = builder.newAtomContainer();
-        IAtom atom1 = builder.newAtom("N");
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        IAtom atom1 = builder.newInstance(IAtom.class,"N");
         container.addAtom(atom1);
-        IAtom atom2 = builder.newAtom("C");
+        IAtom atom2 = builder.newInstance(IAtom.class,"C");
         container.addAtom(atom2);
-        IAtom atom3 = builder.newAtom("C"); // carbonyl
+        IAtom atom3 = builder.newInstance(IAtom.class,"C"); // carbonyl
         container.addAtom(atom3);
-        IAtom atom4 = builder.newAtom("O"); // carbonyl
+        IAtom atom4 = builder.newInstance(IAtom.class,"O"); // carbonyl
         container.addAtom(atom4);
-        IAtom atom5 = builder.newAtom("O");
+        IAtom atom5 = builder.newInstance(IAtom.class,"O");
         container.addAtom(atom5);
-        container.addBond(builder.newBond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
-        container.addBond(builder.newBond(atom2, atom3, CDKConstants.BONDORDER_SINGLE));
-        container.addBond(builder.newBond(atom3, atom4, CDKConstants.BONDORDER_DOUBLE));
-        container.addBond(builder.newBond(atom3, atom5, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(builder.newInstance(IBond.class,atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(builder.newInstance(IBond.class,atom2, atom3, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(builder.newInstance(IBond.class,atom3, atom4, CDKConstants.BONDORDER_DOUBLE));
+        container.addBond(builder.newInstance(IBond.class,atom3, atom5, CDKConstants.BONDORDER_SINGLE));
         return container;
     }
 
     private IAtomContainer createSalicylicAcid(IChemObjectBuilder builder) {
         // SMILES O=C(O)c1ccccc1O
-        IAtomContainer container = builder.newAtomContainer();
-        IAtom atom1 = builder.newAtom("C");
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        IAtom atom1 = builder.newInstance(IAtom.class,"C");
         container.addAtom(atom1);
-        IAtom atom2 = builder.newAtom("O");
+        IAtom atom2 = builder.newInstance(IAtom.class,"O");
         container.addAtom(atom2);
-        IAtom atom3 = builder.newAtom("O");
+        IAtom atom3 = builder.newInstance(IAtom.class,"O");
         container.addAtom(atom3);
-        IAtom atom4 = builder.newAtom("C"); atom4.setHybridization(Hybridization.SP2);
+        IAtom atom4 = builder.newInstance(IAtom.class,"C"); atom4.setHybridization(Hybridization.SP2);
         container.addAtom(atom4);
-        IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(Hybridization.SP2);
+        IAtom atom5 = builder.newInstance(IAtom.class,"C"); atom5.setHybridization(Hybridization.SP2);
         container.addAtom(atom5);
-        IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(Hybridization.SP2);
+        IAtom atom6 = builder.newInstance(IAtom.class,"C"); atom6.setHybridization(Hybridization.SP2);
         container.addAtom(atom6);
-        IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(Hybridization.SP2);
+        IAtom atom7 = builder.newInstance(IAtom.class,"C"); atom7.setHybridization(Hybridization.SP2);
         container.addAtom(atom7);
-        IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(Hybridization.SP2);
+        IAtom atom8 = builder.newInstance(IAtom.class,"C"); atom8.setHybridization(Hybridization.SP2);
         container.addAtom(atom8);
-        IAtom atom9 = builder.newAtom("C"); atom9.setHybridization(Hybridization.SP2);
+        IAtom atom9 = builder.newInstance(IAtom.class,"C"); atom9.setHybridization(Hybridization.SP2);
         container.addAtom(atom9);
-        IAtom atom10 = builder.newAtom("O");
+        IAtom atom10 = builder.newInstance(IAtom.class,"O");
         container.addAtom(atom10);
-        IBond bond1 = builder.newBond(atom1, atom2, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond1 = builder.newInstance(IBond.class,atom1, atom2, CDKConstants.BONDORDER_DOUBLE);
         container.addBond(bond1);
-        IBond bond2 = builder.newBond(atom1, atom3, CDKConstants.BONDORDER_SINGLE);
+        IBond bond2 = builder.newInstance(IBond.class,atom1, atom3, CDKConstants.BONDORDER_SINGLE);
         container.addBond(bond2);
-        IBond bond3 = builder.newBond(atom1, atom4, CDKConstants.BONDORDER_SINGLE);
+        IBond bond3 = builder.newInstance(IBond.class,atom1, atom4, CDKConstants.BONDORDER_SINGLE);
         container.addBond(bond3);
-        IBond bond4 = builder.newBond(atom4, atom5, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond4 = builder.newInstance(IBond.class,atom4, atom5, CDKConstants.BONDORDER_DOUBLE);
         bond4.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond4);
-        IBond bond5 = builder.newBond(atom5, atom6, CDKConstants.BONDORDER_SINGLE);
+        IBond bond5 = builder.newInstance(IBond.class,atom5, atom6, CDKConstants.BONDORDER_SINGLE);
         bond5.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond5);
-        IBond bond6 = builder.newBond(atom6, atom7, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond6 = builder.newInstance(IBond.class,atom6, atom7, CDKConstants.BONDORDER_DOUBLE);
         bond6.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond6);
-        IBond bond7 = builder.newBond(atom7, atom8, CDKConstants.BONDORDER_SINGLE);
+        IBond bond7 = builder.newInstance(IBond.class,atom7, atom8, CDKConstants.BONDORDER_SINGLE);
         bond7.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond7);
-        IBond bond8 = builder.newBond(atom8, atom9, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond8 = builder.newInstance(IBond.class,atom8, atom9, CDKConstants.BONDORDER_DOUBLE);
         bond8.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond8);
-        IBond bond9 = builder.newBond(atom9, atom4, CDKConstants.BONDORDER_SINGLE);
+        IBond bond9 = builder.newInstance(IBond.class,atom9, atom4, CDKConstants.BONDORDER_SINGLE);
         bond9.setFlag(CDKConstants.ISAROMATIC, true);
         container.addBond(bond9);
-        IBond bond10 = builder.newBond(atom9, atom10, CDKConstants.BONDORDER_SINGLE);
+        IBond bond10 = builder.newInstance(IBond.class,atom9, atom10, CDKConstants.BONDORDER_SINGLE);
         container.addBond(bond10);
 
         return container;

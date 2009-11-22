@@ -26,13 +26,11 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.formula.MolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-import org.openscience.cdk.tools.manipulator.MolecularFormulaSetManipulator;
 
 /**
  * Checks the functionality of the MolecularFormulaSetManipulator.
@@ -41,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaSetManipulator;
  */
 public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	
 	/**
 	 *  Constructor for the MolecularFormulaSetManipulatorTest object.
@@ -60,23 +58,23 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     @Test 
 	public void testGetMaxOccurrenceElements_IMolecularFormulaSet() {
 		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
-		mf1.addIsotope(builder.newIsotope("C"),4);
-		mf1.addIsotope(builder.newIsotope("H"),12);
-		mf1.addIsotope(builder.newIsotope("N"),1);
-		mf1.addIsotope(builder.newIsotope("O"),4);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
 	
 
 		IMolecularFormula mf2 = new MolecularFormula(); /*C7H20N4O2*/
-		mf2.addIsotope(builder.newIsotope("C"),7);
-		mf2.addIsotope(builder.newIsotope("H"),20);
-		mf2.addIsotope(builder.newIsotope("N"),4);
-		mf2.addIsotope(builder.newIsotope("O"),2);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),7);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),20);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),4);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"O"),2);
 		
 
 		IMolecularFormula mf3 = new MolecularFormula(); /*C9H5O7*/
-		mf3.addIsotope(builder.newIsotope("C"),9);
-		mf3.addIsotope(builder.newIsotope("H"),5);
-		mf3.addIsotope(builder.newIsotope("O"),7);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"C"),9);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"H"),5);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"O"),7);
 		
 		IMolecularFormulaSet mfSet = new MolecularFormulaSet();
 		mfSet.addMolecularFormula(mf1);
@@ -89,10 +87,10 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 
 		Assert.assertEquals(40, MolecularFormulaManipulator.getAtomCount(molecularFormula));
 		Assert.assertEquals(4, molecularFormula.getIsotopeCount());
-		Assert.assertEquals(9, molecularFormula.getIsotopeCount(builder.newIsotope("C")));
-		Assert.assertEquals(20, molecularFormula.getIsotopeCount(builder.newIsotope("H")));
-		Assert.assertEquals(4, molecularFormula.getIsotopeCount(builder.newIsotope("N")));
-		Assert.assertEquals(7, molecularFormula.getIsotopeCount(builder.newIsotope("O")));
+		Assert.assertEquals(9, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"C")));
+		Assert.assertEquals(20, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"H")));
+		Assert.assertEquals(4, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"N")));
+		Assert.assertEquals(7, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"O")));
 		
 	}	
 	
@@ -106,23 +104,23 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     @Test 
 	public void testGetMinOccurrenceElements_IMolecularFormulaSet() {
 		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
-		mf1.addIsotope(builder.newIsotope("C"),4);
-		mf1.addIsotope(builder.newIsotope("H"),12);
-		mf1.addIsotope(builder.newIsotope("N"),1);
-		mf1.addIsotope(builder.newIsotope("O"),4);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
 	
 
 		IMolecularFormula mf2 = new MolecularFormula(); /*C7H20N4O2*/
-		mf2.addIsotope(builder.newIsotope("C"),7);
-		mf2.addIsotope(builder.newIsotope("H"),20);
-		mf2.addIsotope(builder.newIsotope("N"),4);
-		mf2.addIsotope(builder.newIsotope("O"),2);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),7);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),20);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),4);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"O"),2);
 		
 
 		IMolecularFormula mf3 = new MolecularFormula(); /*C9H5O7*/
-		mf3.addIsotope(builder.newIsotope("C"),9);
-		mf3.addIsotope(builder.newIsotope("H"),5);
-		mf3.addIsotope(builder.newIsotope("O"),7);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"C"),9);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"H"),5);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"O"),7);
 		
 		IMolecularFormulaSet mfSet = new MolecularFormulaSet();
 		mfSet.addMolecularFormula(mf1);
@@ -135,10 +133,10 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 
 		Assert.assertEquals(12, MolecularFormulaManipulator.getAtomCount(molecularFormula));
 		Assert.assertEquals(4, molecularFormula.getIsotopeCount());
-		Assert.assertEquals(4, molecularFormula.getIsotopeCount(builder.newIsotope("C")));
-		Assert.assertEquals(5, molecularFormula.getIsotopeCount(builder.newIsotope("H")));
-		Assert.assertEquals(1, molecularFormula.getIsotopeCount(builder.newIsotope("N")));
-		Assert.assertEquals(2, molecularFormula.getIsotopeCount(builder.newIsotope("O")));
+		Assert.assertEquals(4, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"C")));
+		Assert.assertEquals(5, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"H")));
+		Assert.assertEquals(1, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"N")));
+		Assert.assertEquals(2, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class,"O")));
 		
 	}	
 
@@ -151,19 +149,19 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	public void testRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula() {
 
 		IMolecularFormula formulaMin = new MolecularFormula();
-		formulaMin.addIsotope(builder.newIsotope("C"),1);
-		formulaMin.addIsotope(builder.newIsotope("H"),1);
-		formulaMin.addIsotope(builder.newIsotope("O"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"H"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"O"),1);
 		
 		IMolecularFormula formulaMax = new MolecularFormula();
-		formulaMax.addIsotope(builder.newIsotope("C"),4);
-		formulaMax.addIsotope(builder.newIsotope("H"),12);
-		formulaMax.addIsotope(builder.newIsotope("N"),2);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"N"),2);
 		
 		IMolecularFormula mf1 = new MolecularFormula();
-		mf1.addIsotope(builder.newIsotope("C"),3);
-		mf1.addIsotope(builder.newIsotope("H"),10);
-		mf1.addIsotope(builder.newIsotope("N"),1);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),3);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),10);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 
 		IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
 		formulaSet.addMolecularFormula(mf1);
@@ -183,34 +181,34 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	public void testRemove_1() {
 
 		IMolecularFormula formulaMin = new MolecularFormula();
-		formulaMin.addIsotope(builder.newIsotope("C"),1);
-		formulaMin.addIsotope(builder.newIsotope("H"),1);
-		formulaMin.addIsotope(builder.newIsotope("N"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"H"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 		
 		IMolecularFormula formulaMax = new MolecularFormula();
-		formulaMax.addIsotope(builder.newIsotope("C"),4);
-		formulaMax.addIsotope(builder.newIsotope("H"),12);
-		formulaMax.addIsotope(builder.newIsotope("N"),2);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"N"),2);
 		
 		IMolecularFormula mf1 = new MolecularFormula();
-		mf1.addIsotope(builder.newIsotope("C"),3);
-		mf1.addIsotope(builder.newIsotope("H"),10);
-		mf1.addIsotope(builder.newIsotope("N"),1);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),3);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),10);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 	
 		IMolecularFormula mf2 = new MolecularFormula(); 
-		mf2.addIsotope(builder.newIsotope("C"),1);
-		mf2.addIsotope(builder.newIsotope("H"),1);
-		mf2.addIsotope(builder.newIsotope("N"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 
 		IMolecularFormula mf3 = new MolecularFormula(); 
-		mf3.addIsotope(builder.newIsotope("C"),4);
-		mf3.addIsotope(builder.newIsotope("H"),12);
-		mf3.addIsotope(builder.newIsotope("N"),2);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"N"),2);
 		
 		IMolecularFormula mf4 = new MolecularFormula(); 
-		mf4.addIsotope(builder.newIsotope("C"),7);
-		mf4.addIsotope(builder.newIsotope("H"),10);
-		mf4.addIsotope(builder.newIsotope("N"),1);
+		mf4.addIsotope(builder.newInstance(IIsotope.class,"C"),7);
+		mf4.addIsotope(builder.newInstance(IIsotope.class,"H"),10);
+		mf4.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 
 		IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
 		formulaSet.addMolecularFormula(mf1);
@@ -238,23 +236,23 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	public void testRemove_2() {
 
 		IMolecularFormula formulaMin = new MolecularFormula();
-		formulaMin.addIsotope(builder.newIsotope("C"),1);
-		formulaMin.addIsotope(builder.newIsotope("H"),1);
-		formulaMin.addIsotope(builder.newIsotope("N"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"H"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 		
 		IMolecularFormula formulaMax = new MolecularFormula();
-		formulaMax.addIsotope(builder.newIsotope("C"),4);
-		formulaMax.addIsotope(builder.newIsotope("H"),12);
-		formulaMax.addIsotope(builder.newIsotope("N"),2);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"N"),2);
 		
 		IMolecularFormula mf1 = new MolecularFormula();
-		mf1.addIsotope(builder.newIsotope("C"),3);
-		mf1.addIsotope(builder.newIsotope("H"),10);
-		mf1.addIsotope(builder.newIsotope("N"),1);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),3);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),10);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 	
 		IMolecularFormula mf2 = new MolecularFormula(); 
-		mf2.addIsotope(builder.newIsotope("C"),1);
-		mf2.addIsotope(builder.newIsotope("H"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),1);
 
 		IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
 		formulaSet.addMolecularFormula(mf1);
@@ -278,24 +276,24 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	public void testRemove_3() {
 
 		IMolecularFormula formulaMin = new MolecularFormula();
-		formulaMin.addIsotope(builder.newIsotope("C"),1);
-		formulaMin.addIsotope(builder.newIsotope("H"),1);
-		formulaMin.addIsotope(builder.newIsotope("N"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"H"),1);
+		formulaMin.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 		
 		IMolecularFormula formulaMax = new MolecularFormula();
-		formulaMax.addIsotope(builder.newIsotope("C"),4);
-		formulaMax.addIsotope(builder.newIsotope("H"),12);
-		formulaMax.addIsotope(builder.newIsotope("N"),2);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		formulaMax.addIsotope(builder.newInstance(IIsotope.class,"N"),2);
 		
 		IMolecularFormula mf1 = new MolecularFormula();
-		mf1.addIsotope(builder.newIsotope("C"),3);
-		mf1.addIsotope(builder.newIsotope("H"),10);
-		mf1.addIsotope(builder.newIsotope("N"),1);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),3);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),10);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 	
 		IMolecularFormula mf2 = new MolecularFormula(); 
-		mf2.addIsotope(builder.newIsotope("C"),1);
-		mf2.addIsotope(builder.newIsotope("H"),1);
-		mf2.addIsotope(builder.newIsotope("O"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"O"),1);
 
 		IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
 		formulaSet.addMolecularFormula(mf1);
@@ -319,18 +317,18 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	public void testRemove_IMolecularFormulaSet_MolecularFormulaRange() {
 
 		MolecularFormulaRange formulaRange = new MolecularFormulaRange();
-		formulaRange.addIsotope(builder.newIsotope("C"),0,4);
-		formulaRange.addIsotope(builder.newIsotope("H"),0,12);
-		formulaRange.addIsotope(builder.newIsotope("N"),0,2);
+		formulaRange.addIsotope(builder.newInstance(IIsotope.class,"C"),0,4);
+		formulaRange.addIsotope(builder.newInstance(IIsotope.class,"H"),0,12);
+		formulaRange.addIsotope(builder.newInstance(IIsotope.class,"N"),0,2);
 		
 		IMolecularFormula mf2 = new MolecularFormula();
-		mf2.addIsotope(builder.newIsotope("C"),1);
-		mf2.addIsotope(builder.newIsotope("H"),11);
-		mf2.addIsotope(builder.newIsotope("N"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),11);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
 		
 		IMolecularFormula mf1 = new MolecularFormula();
-		mf1.addIsotope(builder.newIsotope("C"),3);
-		mf1.addIsotope(builder.newIsotope("H"),10);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),3);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),10);
 	
 
 		IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
@@ -352,33 +350,33 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     @Test 
 	public void testContains_IMolecularFormulaSet_IMolecularFormula() {
 		IMolecularFormula mf1 = new MolecularFormula(); 
-		mf1.addIsotope(builder.newIsotope("C"),4);
-		mf1.addIsotope(builder.newIsotope("H"),12);
-		mf1.addIsotope(builder.newIsotope("N"),1);
-		mf1.addIsotope(builder.newIsotope("O"),4);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
+		mf1.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
 
 		IMolecularFormula mf3 = new MolecularFormula(); 
-		mf3.addIsotope(builder.newIsotope("C"),9);
-		mf3.addIsotope(builder.newIsotope("H"),5);
-		mf3.addIsotope(builder.newIsotope("O"),7);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"C"),9);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"H"),5);
+		mf3.addIsotope(builder.newInstance(IIsotope.class,"O"),7);
 		
 		IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
 		formulaSet.addMolecularFormula(mf1);
 		formulaSet.addMolecularFormula(mf3);
 		
 		IMolecularFormula mf2 = new MolecularFormula(); 
-		mf2.addIsotope(builder.newIsotope("C"),4);
-		mf2.addIsotope(builder.newIsotope("H"),12);
-		mf2.addIsotope(builder.newIsotope("N"),1);
-		mf2.addIsotope(builder.newIsotope("O"),4);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
 		
 		IMolecularFormula mf4 = new MolecularFormula(); 
-		mf4.addIsotope(builder.newIsotope("C"),4);
-		IIsotope hyd = builder.newIsotope("H");
+		mf4.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
+		IIsotope hyd = builder.newInstance(IIsotope.class,"H");
 		hyd.setExactMass(2.0032342);
 		mf4.addIsotope(hyd,12);
-		mf4.addIsotope(builder.newIsotope("N"),1);
-		mf4.addIsotope(builder.newIsotope("O"),4);
+		mf4.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
+		mf4.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
 		
 		Assert.assertTrue(MolecularFormulaSetManipulator.contains(formulaSet, mf2));
 		Assert.assertFalse(MolecularFormulaSetManipulator.contains(formulaSet, mf4));

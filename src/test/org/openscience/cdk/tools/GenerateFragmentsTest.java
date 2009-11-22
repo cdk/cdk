@@ -27,7 +27,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -200,7 +199,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	// The next test creates an invalid SMILES for the fragment
 	/*@Test public void testGenerateMurckoFragments10() throws Exception {
     	//logger.debug("\nMurckoTesting 10");
-    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    	SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
         String smile="Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N";//ZINK19
                       
         IMolecule mol = sp.parseSmiles(smile); 

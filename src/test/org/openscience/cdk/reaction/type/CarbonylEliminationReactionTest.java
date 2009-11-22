@@ -31,15 +31,15 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -202,18 +202,18 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		IMolecule molecule = builder.newMolecule();//Smiles("C-C#[O+]")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("H"));
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+		IMolecule molecule = builder.newInstance(IMolecule.class);//Smiles("C-C#[O+]")
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 3, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 4, IBond.Order.SINGLE);
-		IAtom oxy = builder.newAtom("O");
+		IAtom oxy = builder.newInstance(IAtom.class,"O");
 		oxy.setFormalCharge(1);
 		molecule.addAtom(oxy);
 		molecule.addBond(4, 5, IBond.Order.TRIPLE);
@@ -237,26 +237,26 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-		IMolecule molecule1 = builder.newMolecule();//Smiles("[C+]");
-		IAtom carb = builder.newAtom("C");
+		IMolecule molecule1 = builder.newInstance(IMolecule.class);//Smiles("[C+]");
+		IAtom carb = builder.newInstance(IAtom.class,"C");
 		carb.setFormalCharge(1);
 		molecule1.addAtom(carb);
-		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(0, 1, IBond.Order.SINGLE);
-		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(0, 2, IBond.Order.SINGLE);
-		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(0, 3, IBond.Order.SINGLE);
 		
 		
-        IMolecule molecule2 = builder.newMolecule();//Smiles("[C-]#[O+]");
-		carb = builder.newAtom("C");
+        IMolecule molecule2 = builder.newInstance(IMolecule.class);//Smiles("[C-]#[O+]");
+		carb = builder.newInstance(IAtom.class,"C");
 		carb.setFormalCharge(-1);
 		molecule2.addLonePair(new LonePair(carb));
 		molecule2.addAtom(carb);
-		IAtom oxy = builder.newAtom("O");
+		IAtom oxy = builder.newInstance(IAtom.class,"O");
 		oxy.setFormalCharge(1);
 		molecule2.addAtom(oxy);
 		molecule2.addBond(0, 1, IBond.Order.TRIPLE);

@@ -23,9 +23,9 @@ package org.openscience.cdk.debug;
 import java.util.Iterator;
 
 import org.openscience.cdk.formula.MolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -95,8 +95,8 @@ public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMo
 	    return super.size();
     }
 
-	public IChemObjectBuilder getBuilder() {
-	    return DebugChemObjectBuilder.getInstance();
+    public IChemObjectBuilder getBuilder() {
+        return DebugChemObjectBuilder.getInstance();
     }
 
 }

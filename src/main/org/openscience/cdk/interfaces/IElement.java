@@ -42,7 +42,7 @@ public interface IElement extends IChemObject {
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Element element = new Element("C");
-	 *   IsotopeFactory if = IsotopeFactory.getInstance(element.getBuilder());
+	 *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
 	 *   if.configure(element);
 	 * </pre>
 	 * </p>      

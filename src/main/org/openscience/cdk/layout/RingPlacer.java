@@ -162,10 +162,10 @@ public class RingPlacer
 		IRing ring = null;
 		IAtom atom = null;
 		IRingSet rings = null;
-		IAtomContainer unplacedPartners = rs.getBuilder().newAtomContainer();
-		IAtomContainer sharedAtoms = rs.getBuilder().newAtomContainer();
-		IAtomContainer primaryAtoms = rs.getBuilder().newAtomContainer();
-		IAtomContainer treatedAtoms = rs.getBuilder().newAtomContainer();
+		IAtomContainer unplacedPartners = rs.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer sharedAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer primaryAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer treatedAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
 		Point2d centerOfRingGravity = null;
 		for (int j = 0; j < rs.getAtomContainerCount(); j++)
 		{

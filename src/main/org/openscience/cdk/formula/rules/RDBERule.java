@@ -32,6 +32,7 @@ import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -186,12 +187,12 @@ public class RDBERule implements IRule{
 		List<Integer> nV = new ArrayList<Integer>(); // number of valence changing
 		for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
     		IIsotope isotope = it.next();
-    		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
+    		int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class,isotope.getSymbol()));
     		if(valence.length != 1){
     			for(int i = 0; i < valence.length; i++){
     				nV.add(valence[i]);
     			}
-    			nE += MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement(isotope.getSymbol()));
+    			nE += MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newInstance(IElement.class,isotope.getSymbol()));
     		}
 		}
 		
@@ -199,7 +200,7 @@ public class RDBERule implements IRule{
 		if(nE == 0){
 			for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
 	    		IIsotope isotope = it.next();
-	    		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
+	    		int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class,isotope.getSymbol()));
 	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)/2.0;
 	    		RDBE += value;
 	    	}	
@@ -209,7 +210,7 @@ public class RDBERule implements IRule{
 			double RDBE_1 = 0;
 			for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
 	    		IIsotope isotope = it.next();
-	    		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
+	    		int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class,isotope.getSymbol()));
 	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)*0.5;
 	    		RDBE_1 += value;
 	    	}

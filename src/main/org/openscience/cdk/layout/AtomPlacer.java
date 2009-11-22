@@ -327,7 +327,7 @@ public class AtomPlacer
      */
     public void placeLinearChain(IAtomContainer atomContainer, Vector2d initialBondVector, double bondLength)
     {
-        IMolecule withh = atomContainer.getBuilder().newMolecule(atomContainer);
+        IMolecule withh = atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer);
 
         // BUGFIX - withh does not have cloned cloned atoms, so changes are
         // reflected in our atom container. If we're using implicit hydrogens
@@ -578,7 +578,7 @@ public class AtomPlacer
 
         startAtom = molecule.getAtom(bestStartAtom);
         //endAtom = molecule.getAtomAt(bestEndAtom);
-        IAtomContainer path = molecule.getBuilder().newAtomContainer();
+        IAtomContainer path = molecule.getBuilder().newInstance(IAtomContainer.class);
         path.addAtom(startAtom);
         path = getLongestUnplacedChain(molecule, startAtom);
         //PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
@@ -615,7 +615,7 @@ public class AtomPlacer
         for (int f = 0; f < molecule.getAtomCount(); f++)
         {
             molecule.getAtom(f).setFlag(CDKConstants.VISITED, false);
-            pathes[f] = molecule.getBuilder().newAtomContainer();
+            pathes[f] = molecule.getBuilder().newInstance(IAtomContainer.class);
             pathes[f].addAtom(startAtom);
 
         }
@@ -686,7 +686,7 @@ public class AtomPlacer
                     {
                         nextAtomNr = ac.getAtomNumber(nextAtom);
                         logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-                        pathes[nextAtomNr] = ac.getBuilder().newAtomContainer(pathes[atomNr]);
+                        pathes[nextAtomNr] = ac.getBuilder().newInstance(IAtomContainer.class,pathes[atomNr]);
                         logger.debug("Making copy of path " + (atomNr + 1) + " to form new path " + (nextAtomNr + 1));
                         logger.debug("Old path " + (atomNr + 1) + " looks like: " + listNumbers(molecule, pathes[atomNr]));
                         logger.debug("Copied path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
@@ -842,7 +842,7 @@ public class AtomPlacer
      */
     public IAtomContainer getPlacedAtoms(IAtomContainer ac)
     {
-        IAtomContainer ret = ac.getBuilder().newAtomContainer();
+        IAtomContainer ret = ac.getBuilder().newInstance(IAtomContainer.class);
         for (int f = 0; f < ac.getAtomCount(); f++)
         {
             if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED))

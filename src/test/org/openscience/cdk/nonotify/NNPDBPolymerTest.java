@@ -55,21 +55,21 @@ public class NNPDBPolymerTest extends AbstractPDBPolymerTest {
 		Assert.assertNotNull(pdbPolymer);
 		Assert.assertEquals(pdbPolymer.getMonomerCount(), 0);
 		
-		IStrand oStrand1 = pdbPolymer.getBuilder().newStrand();
+		IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
 		oStrand1.setStrandName("A");
-		IStrand oStrand2 = pdbPolymer.getBuilder().newStrand();
+		IStrand oStrand2 = pdbPolymer.getBuilder().newInstance(IStrand.class);
 		oStrand2.setStrandName("B");
-		IMonomer oMono1 = pdbPolymer.getBuilder().newMonomer();
+		IMonomer oMono1 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = pdbPolymer.getBuilder().newMonomer();
+		IMonomer oMono2 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
 		oMono2.setMonomerName(new String("HOH"));
-		IMonomer oMono3 = pdbPolymer.getBuilder().newMonomer();
+		IMonomer oMono3 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
 		oMono3.setMonomerName(new String("GLYA16"));
-		IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newPDBAtom("C1");
-		IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newPDBAtom("C2");
-		IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newPDBAtom("C3");
-		IPDBAtom oPDBAtom4 = pdbPolymer.getBuilder().newPDBAtom("C4");
-		IPDBAtom oPDBAtom5 = pdbPolymer.getBuilder().newPDBAtom("C5");
+		IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C1");
+		IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C2");
+		IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C3");
+		IPDBAtom oPDBAtom4 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C4");
+		IPDBAtom oPDBAtom5 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C5");
 		
 		pdbPolymer.addAtom(oPDBAtom1);
 		pdbPolymer.addAtom(oPDBAtom2, oStrand1);

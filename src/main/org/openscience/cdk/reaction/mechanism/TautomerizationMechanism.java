@@ -101,7 +101,7 @@ public class TautomerizationMechanism implements IReactionMechanism{
     	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
     	BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond2));		
     	reactantCloned.removeBond(reactantCloned.getBond(posBond3));  
-    	IBond newBond = molecule.getBuilder().newBond(atom1C, atom4C, IBond.Order.SINGLE);
+    	IBond newBond = molecule.getBuilder().newInstance(IBond.class,atom1C, atom4C, IBond.Order.SINGLE);
     	reactantCloned.addBond(newBond);
     	
     	atom1C.setHybridization(null);
@@ -114,12 +114,12 @@ public class TautomerizationMechanism implements IReactionMechanism{
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
 		if (type == null) return null;
 		
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
 		
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		

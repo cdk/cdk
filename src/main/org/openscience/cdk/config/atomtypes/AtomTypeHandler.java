@@ -193,7 +193,7 @@ public class AtomTypeHandler extends DefaultHandler {
         logger.debug("  raw: ", raw);
         
         if ("atomType".equals(local)) {
-            atomType = builder.newAtomType("R");
+            atomType = builder.newInstance(IAtomType.class, "R");
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("id".equals(atts.getQName(i))) {
                     atomType.setAtomTypeName(atts.getValue(i));

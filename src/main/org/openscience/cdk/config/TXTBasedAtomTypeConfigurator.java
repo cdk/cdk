@@ -23,12 +23,7 @@
  */
 package org.openscience.cdk.config;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +31,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * AtomType list configurator that uses the AtomTypes originally
@@ -128,7 +128,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                             "Malformed Number");
                         }
                         
-                        IAtomType atomType = builder.newAtomType(name, rootType);
+                        IAtomType atomType = builder.newInstance(IAtomType.class, name, rootType);
                         atomType.setAtomicNumber(atomicNumber);
                         atomType.setExactMass(mass);
                         atomType.setCovalentRadius(covalent);

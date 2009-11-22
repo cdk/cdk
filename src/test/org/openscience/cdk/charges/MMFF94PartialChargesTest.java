@@ -26,10 +26,10 @@ package org.openscience.cdk.charges;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.

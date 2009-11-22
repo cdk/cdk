@@ -53,7 +53,7 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 		IBond bond2=new Bond(atom1,atom3);
 		IBond bond3=new Bond(atom1,atom4);
 		IBond bond4=new Bond(atom1,atom5);
-		IAtomContainer ac=atom1.getBuilder().newAtomContainer();
+		IAtomContainer ac=atom1.getBuilder().newInstance(IAtomContainer.class);
 		ac.addAtom(atom1);
 		ac.addAtom(atom2);
 		ac.addAtom(atom3);
@@ -91,7 +91,7 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 		IBond bond2=new Bond(atom1,atom3);
 		IBond bond3=new Bond(atom1,atom4);
 		IBond bond4=new Bond(atom1,atom5);
-		IAtomContainer ac=atom1.getBuilder().newAtomContainer();
+		IAtomContainer ac=atom1.getBuilder().newInstance(IAtomContainer.class);
 		ac.addAtom(atom1);
 		ac.addAtom(atom2);
 		ac.addAtom(atom3);

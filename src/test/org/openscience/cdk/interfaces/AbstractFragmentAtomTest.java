@@ -56,9 +56,9 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
     @Test public void testSetFragment_IAtomContainer() {
     	IFragmentAtom a = (IFragmentAtom)newChemObject();
     	Assert.assertNotNull(a);
-    	IAtomContainer container = a.getBuilder().newAtomContainer();
-    	container.addAtom(a.getBuilder().newAtom("N"));
-    	container.addAtom(a.getBuilder().newAtom("C"));
+    	IAtomContainer container = a.getBuilder().newInstance(IAtomContainer.class);
+    	container.addAtom(a.getBuilder().newInstance(IAtom.class,"N"));
+    	container.addAtom(a.getBuilder().newInstance(IAtom.class,"C"));
     	container.addBond(0, 1, IBond.Order.TRIPLE);
     	a.setFragment(container);
     	Assert.assertEquals(container, a.getFragment());
@@ -67,10 +67,10 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
     @Test public void testGetExactMass() {
     	IFragmentAtom a = (IFragmentAtom)newChemObject();
     	Assert.assertNotNull(a);
-    	IAtomContainer container = a.getBuilder().newAtomContainer();
-    	container.addAtom(a.getBuilder().newAtom("N"));
+    	IAtomContainer container = a.getBuilder().newInstance(IAtomContainer.class);
+    	container.addAtom(a.getBuilder().newInstance(IAtom.class,"N"));
     	container.getAtom(0).setExactMass(5.5);
-    	container.addAtom(a.getBuilder().newAtom("C"));
+    	container.addAtom(a.getBuilder().newInstance(IAtom.class,"C"));
     	container.getAtom(1).setExactMass(3.5);
     	container.addBond(0, 1, IBond.Order.TRIPLE);
     	a.setFragment(container);

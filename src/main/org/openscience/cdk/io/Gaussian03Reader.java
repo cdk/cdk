@@ -130,7 +130,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     }
 
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
-        IChemSequence sequence = readChemSequence(chemFile.getBuilder().newChemSequence());
+        IChemSequence sequence = readChemSequence(chemFile.getBuilder().newInstance(IChemSequence.class));
         chemFile.addChemSequence(sequence);
         return chemFile;
     }
@@ -147,7 +147,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 if (line.indexOf("Standard orientation:") >= 0) {
 
                     // Found a set of coordinates
-                    model = sequence.getBuilder().newChemModel();
+                    model = sequence.getBuilder().newInstance(IChemModel.class);
                     try {
                         readCoordinates(model);
                     } catch (IOException exception) {
@@ -166,7 +166,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                         // Add current frame to file and create a new one.
                         sequence.addChemModel(model);
                         fireFrameRead();
-                        model = sequence.getBuilder().newChemModel();
+                        model = sequence.getBuilder().newInstance(IChemModel.class);
                         readCoordinates(model);
                     } else if (line.indexOf("SCF Done:") >= 0) {
                         // Found an energy
@@ -212,7 +212,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      * @throws IOException if an I/O error occurs
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
-        IAtomContainer container = model.getBuilder().newAtomContainer();
+        IAtomContainer container = model.getBuilder().newInstance(IAtomContainer.class);
         String line = input.readLine();
         line = input.readLine();
         line = input.readLine();
@@ -268,12 +268,12 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             } catch (Exception exception) {
                 throw new CDKException("Could not determine element symbol!", exception);
             }
-            IAtom atom = model.getBuilder().newAtom(symbol);
+            IAtom atom = model.getBuilder().newInstance(IAtom.class,symbol);
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }
-        IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
-        moleculeSet.addMolecule(model.getBuilder().newMolecule(container));
+        IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
+        moleculeSet.addMolecule(model.getBuilder().newInstance(IMolecule.class,container));
         model.setMoleculeSet(moleculeSet);
     }
 

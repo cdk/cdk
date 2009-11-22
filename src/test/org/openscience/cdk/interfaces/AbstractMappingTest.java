@@ -55,18 +55,18 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         
 	public void testGetChemObject_int() {
 		IChemObject object = newChemObject();
-        IAtom atom0 = object.getBuilder().newAtom();
-        IAtom atom1 = object.getBuilder().newAtom();
-        IMapping mapping = object.getBuilder().newMapping(atom0, atom1);
+        IAtom atom0 = object.getBuilder().newInstance(IAtom.class);
+        IAtom atom1 = object.getBuilder().newInstance(IAtom.class);
+        IMapping mapping = object.getBuilder().newInstance(IMapping.class, atom0, atom1);
 		Assert.assertEquals(atom0, mapping.getChemObject(0));
 		Assert.assertEquals(atom1, mapping.getChemObject(1));
 	}
 	
     public void testRelatedChemObjects() {
     	IChemObject object = newChemObject();
-        IAtom atom0 = object.getBuilder().newAtom();
-        IAtom atom1 = object.getBuilder().newAtom();
-        IMapping mapping = object.getBuilder().newMapping(atom0, atom1);
+        IAtom atom0 = object.getBuilder().newInstance(IAtom.class);
+        IAtom atom1 = object.getBuilder().newInstance(IAtom.class);
+        IMapping mapping = object.getBuilder().newInstance(IMapping.class, atom0, atom1);
 
 		Iterator<IChemObject> iter = mapping.relatedChemObjects().iterator();
 		Assert.assertTrue(iter.hasNext());

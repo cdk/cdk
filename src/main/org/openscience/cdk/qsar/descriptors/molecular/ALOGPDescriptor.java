@@ -870,7 +870,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
 
         IAtom[] sameringatoms = new IAtom[2];
-        IAtom nonringatom = atomContainer.getBuilder().newAtom();
+        IAtom nonringatom = atomContainer.getBuilder().newInstance(IAtom.class);
 
         int sameringatomscount = 0;
         for (int j = 0; j <= ca.size() - 1; j++) {

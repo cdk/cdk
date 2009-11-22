@@ -31,8 +31,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -171,15 +171,15 @@ public class CanonicalLabelerTest extends CDKTestCase {
      */
     @Test
     public void testBug2944519(){
-        IMolecule ac = DefaultChemObjectBuilder.getInstance().newMolecule();
-        ac.addAtom(ac.getBuilder().newAtom("C"));
-        ac.addAtom(ac.getBuilder().newAtom("O"));
+        IMolecule ac = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        ac.addAtom(ac.getBuilder().newInstance(IAtom.class,"C"));
+        ac.addAtom(ac.getBuilder().newInstance(IAtom.class,"O"));
         ac.addBond(0,1,IBond.Order.SINGLE);
         CanonicalLabeler canLabler = new CanonicalLabeler();
         canLabler.canonLabel(ac);
-        IMolecule ac2 = DefaultChemObjectBuilder.getInstance().newMolecule();
-        ac2.addAtom(ac2.getBuilder().newAtom("O"));
-        ac2.addAtom(ac2.getBuilder().newAtom("C"));
+        IMolecule ac2 = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        ac2.addAtom(ac2.getBuilder().newInstance(IAtom.class,"O"));
+        ac2.addAtom(ac2.getBuilder().newInstance(IAtom.class,"C"));
         ac2.addBond(0,1,IBond.Order.SINGLE);
         canLabler.canonLabel(ac2);
         Assert.assertSame(ac.getAtom(0).getProperty(InvPair.CANONICAL_LABEL),ac2.getAtom(1).getProperty(InvPair.CANONICAL_LABEL));

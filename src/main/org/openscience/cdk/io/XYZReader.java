@@ -144,7 +144,7 @@ public class XYZReader extends DefaultChemObjectReader {
      * @return A ChemFile containing the data parsed from input.
      */
     private IChemFile readChemFile(IChemFile file) {
-        IChemSequence chemSequence = file.getBuilder().newChemSequence();
+        IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
         
         int number_of_atoms = 0;
         StringTokenizer tokenizer;
@@ -159,10 +159,10 @@ public class XYZReader extends DefaultChemObjectReader {
                 number_of_atoms = Integer.parseInt(token);
                 String info = input.readLine();
                 
-                IChemModel chemModel = file.getBuilder().newChemModel();
-                IMoleculeSet setOfMolecules = file.getBuilder().newMoleculeSet();
+                IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
+                IMoleculeSet setOfMolecules = file.getBuilder().newInstance(IMoleculeSet.class);
                 
-                IMolecule m = file.getBuilder().newMolecule();
+                IMolecule m = file.getBuilder().newInstance(IMolecule.class);
                 m.setProperty(CDKConstants.TITLE, info);
 
                 for (int i = 0; i < number_of_atoms; i++) {
@@ -194,7 +194,7 @@ public class XYZReader extends DefaultChemObjectReader {
                             if (fields == 8) 
                                 charge = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            IAtom atom = file.getBuilder().newAtom(atomtype, new Point3d(x,y,z));
+                            IAtom atom = file.getBuilder().newInstance(IAtom.class,atomtype, new Point3d(x,y,z));
                             atom.setCharge(charge);
                             m.addAtom(atom);
                         }

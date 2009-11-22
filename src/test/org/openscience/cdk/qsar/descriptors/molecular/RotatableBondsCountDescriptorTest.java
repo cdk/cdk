@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.nonotify.NNAtomContainer;
@@ -66,16 +67,16 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
 
     private IAtomContainer makeEthane() {
         IAtomContainer container = new NNAtomContainer();
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,Elements.CARBON));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,Elements.CARBON));
         container.addBond(0, 1, IBond.Order.SINGLE);
         return container;
     }
 
     private IAtomContainer makeButane() {
         IAtomContainer container = makeEthane();
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,Elements.CARBON));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class,Elements.CARBON));
         container.addBond(1, 2, IBond.Order.SINGLE);
         container.addBond(2, 3, IBond.Order.SINGLE);
         return container;

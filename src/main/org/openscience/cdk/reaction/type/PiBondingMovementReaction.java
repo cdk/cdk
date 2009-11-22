@@ -28,8 +28,8 @@ package org.openscience.cdk.reaction.type;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  typically from rings without any access or deficiency of charge and have a 
  *  even number of atoms. </p>
  *  <p>The reaction don't care if the product are the same in symmetry.</p>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new PiBondingMovementReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -131,7 +131,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 			throw new CDKException("PiBondingMovementReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
@@ -174,7 +174,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 						continue;
 					
 						
-					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+					IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
 					reaction.addReactant(reactant);
 			        
 					IMolecule reactantCloned;

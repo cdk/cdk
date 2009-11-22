@@ -26,6 +26,7 @@
 package org.openscience.cdk.io.cml;
 
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.xml.sax.Attributes;
 
 /**
@@ -49,7 +50,7 @@ public class MDLMolConvention extends CMLCoreModule {
     public void startDocument() {
         super.startDocument();
 //        cdo.startObject("Frame");
-        currentChemModel = currentChemFile.getBuilder().newChemModel();
+        currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
     }
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {

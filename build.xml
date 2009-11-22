@@ -446,8 +446,8 @@
 			</jar>
         	
             <!-- clean up afterwards -->
-            <delete dir="${build.src}/${module}"/>
-            <delete dir="${build}/${module}"/>
+            <!-- delete dir="${build.src}/${module}"/>
+            <delete dir="${build}/${module}"/ -->
        </target>
 
         <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->

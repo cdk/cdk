@@ -20,20 +20,28 @@
  */
 package org.openscience.cdk.graph;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.io.InputStream;
 
 /**
  * @cdk.module test-core
@@ -61,9 +69,9 @@ public class SpanningTreeTest extends CDKTestCase {
     	if (ethane == null) {
     		// create ethane
     		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-    		IMolecule ethaneMolecule = builder.newMolecule();
-    		ethaneMolecule.addAtom(builder.newAtom("C"));
-    		ethaneMolecule.addAtom(builder.newAtom("C"));
+    		IMolecule ethaneMolecule = builder.newInstance(IMolecule.class);
+    		ethaneMolecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    		ethaneMolecule.addAtom(builder.newInstance(IAtom.class,"C"));
     		ethaneMolecule.addBond(0, 1, IBond.Order.SINGLE);
     		ethane = new SpanningTree(ethaneMolecule);
     	}
@@ -103,10 +111,10 @@ public class SpanningTreeTest extends CDKTestCase {
 		Assert.assertEquals(1, path.getBondCount());
 
     	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-    	IAtomContainer disconnectedStructure = builder.newAtomContainer();
-    	disconnectedStructure.addAtom(builder.newAtom("Na"));
+    	IAtomContainer disconnectedStructure = builder.newInstance(IAtomContainer.class);
+    	disconnectedStructure.addAtom(builder.newInstance(IAtom.class,"Na"));
     	disconnectedStructure.getAtom(0).setFormalCharge(+1);
-    	disconnectedStructure.addAtom(builder.newAtom("Cl"));
+    	disconnectedStructure.addAtom(builder.newInstance(IAtom.class,"Cl"));
     	disconnectedStructure.getAtom(1).setFormalCharge(-1);
     	path = ethane.getPath(
     		disconnectedStructure,
@@ -123,10 +131,10 @@ public class SpanningTreeTest extends CDKTestCase {
     	Assert.assertFalse(azulene.isDisconnected());
     	
     	IChemObjectBuilder builder = azulene.getSpanningTree().getBuilder();
-    	IAtomContainer disconnectedStructure = builder.newAtomContainer();
-    	disconnectedStructure.addAtom(builder.newAtom("Na"));
+    	IAtomContainer disconnectedStructure = builder.newInstance(IAtomContainer.class);
+    	disconnectedStructure.addAtom(builder.newInstance(IAtom.class,"Na"));
     	disconnectedStructure.getAtom(0).setFormalCharge(+1);
-    	disconnectedStructure.addAtom(builder.newAtom("Cl"));
+    	disconnectedStructure.addAtom(builder.newInstance(IAtom.class,"Cl"));
     	disconnectedStructure.getAtom(1).setFormalCharge(-1);
     	SpanningTree stree = new SpanningTree(disconnectedStructure);
     	Assert.assertTrue(stree.isDisconnected());

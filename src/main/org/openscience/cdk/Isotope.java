@@ -51,7 +51,7 @@ import java.io.Serializable;
  * the IsotopeFactory.configure() method:
  * <pre>
  *   Isotope isotope = new Isotope("C", 13);
- *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getBuilder());
+ *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
  *   if.configure(isotope);
  * </pre>
  *
@@ -185,7 +185,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Isotope isotope = new Isotope("C", 13);
-	 *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getBuilder());
+	 *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
 	 *   if.configure(isotope);
 	 * </pre>
 	 * </p>
@@ -206,7 +206,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Isotope isotope = new Isotope("C", 13);
-	 *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getBuilder());
+	 *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
 	 *   if.configure(isotope);
 	 * </pre>
 	 * </p>
@@ -227,7 +227,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Isotope isotope = new Isotope("C", 13);
-	 *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getBuilder());
+	 *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
 	 *   if.configure(isotope);
 	 * </pre>
 	 * </p>

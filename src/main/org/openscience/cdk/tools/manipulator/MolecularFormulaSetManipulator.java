@@ -65,18 +65,23 @@ public class MolecularFormulaSetManipulator {
     @TestMethod("testGetMaxOccurrenceElements_IMolecularFormulaSet")
 	public static IMolecularFormula getMaxOccurrenceElements(IMolecularFormulaSet mfSet){
 		
-		IMolecularFormula molecularFormula = mfSet.getBuilder().newMolecularFormula();
+		IMolecularFormula molecularFormula =
+		    mfSet.getBuilder().newInstance(IMolecularFormula.class);
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
             for (IIsotope isotope : mf.isotopes()) {
-                IElement element = mfSet.getBuilder().newElement(isotope);
+                IElement element = mfSet.getBuilder().newInstance(IElement.class,isotope);
                 int occur_new = MolecularFormulaManipulator.getElementCount(mf, element);
                 if (!MolecularFormulaManipulator.containsElement(molecularFormula, element)) {
-                    molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                    molecularFormula.addIsotope(
+                        mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new
+                    );
                 } else {
                     int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula, element);
                     if (occur_new > occur_old) {
                         MolecularFormulaManipulator.removeElement(molecularFormula, element);
-                        molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                        molecularFormula.addIsotope(
+                            mfSet.getBuilder().newInstance(IIsotope.class,element), occur_new
+                        );
                     }
                 }
             }
@@ -95,18 +100,22 @@ public class MolecularFormulaSetManipulator {
     @TestMethod("testGetMinOccurrenceElements_IMolecularFormulaSet")
 	public static IMolecularFormula getMinOccurrenceElements(IMolecularFormulaSet mfSet){
 		
-		IMolecularFormula molecularFormula = mfSet.getBuilder().newMolecularFormula();
+		IMolecularFormula molecularFormula = mfSet.getBuilder().newInstance(IMolecularFormula.class);
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
             for (IIsotope isotope : mf.isotopes()) {
-                IElement element = mfSet.getBuilder().newElement(isotope);
+                IElement element = mfSet.getBuilder().newInstance(IElement.class,isotope);
                 int occur_new = MolecularFormulaManipulator.getElementCount(mf, element);
                 if (!MolecularFormulaManipulator.containsElement(molecularFormula, element)) {
-                    molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                    molecularFormula.addIsotope(
+                        mfSet.getBuilder().newInstance(IIsotope.class,element), occur_new
+                    );
                 } else {
                     int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula, element);
                     if (occur_new < occur_old) {
                         MolecularFormulaManipulator.removeElement(molecularFormula, element);
-                        molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                        molecularFormula.addIsotope(
+                            mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new
+                        );
                     }
                 }
             }
@@ -135,7 +144,7 @@ public class MolecularFormulaSetManipulator {
 			return null;
 		
 		
-		IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newMolecularFormulaSet();
+		IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
 		
 		for(IMolecularFormula formula: formulaSet.molecularFormulas()){
 			boolean flagPass = true;
@@ -214,7 +223,7 @@ public class MolecularFormulaSetManipulator {
 			MolecularFormulaRange formulaRange){
 		
 		
-		IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newMolecularFormulaSet();
+		IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
 		
 		for(IMolecularFormula formula: formulaSet.molecularFormulas()){
 			

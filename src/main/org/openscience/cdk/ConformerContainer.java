@@ -45,7 +45,7 @@ import java.util.*;
  * <pre>
  * IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
  *          new FileReader(new File(filename)),
- *          DefaultChemObjectBuilder.getInstance());
+ *          NewDefaultChemObjectBuilder.getInstance());
  * while (reader.hasNext()) {
  *     ConformerContainer cc = (ConformerContainer) reader.next();
  *     for (IAtomContainer conformer : cc) {

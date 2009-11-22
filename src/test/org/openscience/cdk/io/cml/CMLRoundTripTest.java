@@ -482,21 +482,21 @@ public class CMLRoundTripTest extends CDKTestCase {
     	logger.debug("********** TEST REACTION **********");
         IReaction reaction = new Reaction();
         reaction.setID("reaction.1");
-        IMolecule reactant = reaction.getBuilder().newMolecule();
+        IMolecule reactant = reaction.getBuilder().newInstance(IMolecule.class);
         reactant.setID("react");
-        IAtom atom = reaction.getBuilder().newAtom("C");
+        IAtom atom = reaction.getBuilder().newInstance(IAtom.class,"C");
         reactant.addAtom(atom);
         reaction.addReactant(reactant);
         
-        IMolecule product = reaction.getBuilder().newMolecule();
+        IMolecule product = reaction.getBuilder().newInstance(IMolecule.class);
         product.setID("product");
-        atom = reaction.getBuilder().newAtom("X");
+        atom = reaction.getBuilder().newInstance(IAtom.class,"X");
         product.addAtom(atom);
         reaction.addProduct(product);
         
-        IMolecule agent = reaction.getBuilder().newMolecule();
+        IMolecule agent = reaction.getBuilder().newInstance(IMolecule.class);
         agent.setID("water");
-        atom = reaction.getBuilder().newAtom("H");
+        atom = reaction.getBuilder().newInstance(IAtom.class,"H");
         agent.addAtom(atom);
         reaction.addAgent(agent);
         

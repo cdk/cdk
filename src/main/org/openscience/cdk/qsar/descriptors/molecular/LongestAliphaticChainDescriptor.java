@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -44,9 +47,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *  Class that returns the number of atoms in the longest aliphatic chain.
@@ -265,7 +265,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     
     
     private IAtomContainer createAtomContainerFromPath(IAtomContainer container, List<IAtom> path){
-    	IAtomContainer aliphaticChain = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer aliphaticChain = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         for (int i=0;i<path.size()-1;i++){
     		if (!aliphaticChain.contains(path.get(i))){
     			aliphaticChain.addAtom(path.get(i));

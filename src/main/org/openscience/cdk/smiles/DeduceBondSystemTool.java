@@ -135,7 +135,7 @@ public class DeduceBondSystemTool {
             }
         }
 
-        IMoleculeSet som = molecule.getBuilder().newMoleculeSet();
+        IMoleculeSet som = molecule.getBuilder().newInstance(IMoleculeSet.class);
 
 //		int number=1; // total number of possibilities
 //		
@@ -805,9 +805,9 @@ public class DeduceBondSystemTool {
      * @param mol      The IMolecule for which to recover the IRingSet.     
      */
     private IRingSet recoverRingSystem(IMolecule mol) {
-    	IRingSet ringSet = mol.getBuilder().newRingSet();
+    	IRingSet ringSet = mol.getBuilder().newInstance(IRingSet.class);
         for (Integer[] bondNumbers : listOfRings) {
-            IRing ring = mol.getBuilder().newRing(bondNumbers.length);
+            IRing ring = mol.getBuilder().newInstance(IRing.class,bondNumbers.length);
             for (int bondNumber : bondNumbers) {
                 IBond bond = mol.getBond(bondNumber);
                 ring.addBond(bond);

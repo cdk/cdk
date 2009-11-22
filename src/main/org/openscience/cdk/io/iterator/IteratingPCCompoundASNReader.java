@@ -36,8 +36,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.PCCompoundASNReader;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
@@ -139,12 +139,12 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
             		PCCompoundASNReader asnReader = new PCCompoundASNReader(
             			new StringReader(buffer.toString())
             		);
-            		IChemFile cFile = (IChemFile)asnReader.read(builder.newChemFile());
+            		IChemFile cFile = (IChemFile)asnReader.read(builder.newInstance(IChemFile.class));
             		IAtomContainer container = ChemFileManipulator.getAllAtomContainers(cFile).get(0);
             		if (container instanceof IMolecule) {
             			nextMolecule = (IMolecule)container;
             		} else {
-            			nextMolecule = builder.newMolecule(container);
+            			nextMolecule = builder.newInstance(IMolecule.class,container);
             		}
             	}
             } catch (Exception exception) {

@@ -30,6 +30,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.cml.CMLHandler;
@@ -74,7 +75,7 @@ public class EventCMLHandler extends CMLHandler {
     */
     public EventCMLHandler(DefaultEventChemObjectReader eventReader,
     		                IChemObjectBuilder builder) {
-    	super(builder.newChemFile());
+    	super(builder.newInstance(IChemFile.class));
         this.eventReader = eventReader;
         this.builder = builder;
         clearData();
@@ -122,10 +123,10 @@ public class EventCMLHandler extends CMLHandler {
     public void startObject(String objectType) {
         logger.debug("START:" + objectType);
         if (objectType.equals("Molecule")) {
-            currentMolecule = builder.newAtomContainer();
+            currentMolecule = builder.newInstance(IAtomContainer.class);
             atomEnumeration = new Hashtable<String,Integer>();
         } else if (objectType.equals("Atom")) {
-            currentAtom = builder.newAtom("H");
+            currentAtom = builder.newInstance(IAtom.class,"H");
             logger.debug("Atom # " + numberOfAtoms);
             numberOfAtoms++;
         } else if (objectType.equals("Bond")) {
@@ -154,7 +155,7 @@ public class EventCMLHandler extends CMLHandler {
             } else {
             	IAtom a1 = currentMolecule.getAtom(bond_a1);
             	IAtom a2 = currentMolecule.getAtom(bond_a2);
-                IBond b = builder.newBond(a1, a2, bond_order);
+                IBond b = builder.newInstance(IBond.class,a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != CDKConstants.UNSET) {
                     b.setStereo(bond_stereo);
@@ -196,14 +197,14 @@ public class EventCMLHandler extends CMLHandler {
         } else if (objectType.equals("PseudoAtom")) {
             if (propertyType.equals("label")) {
                 if (!(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = builder.newPseudoAtom(currentAtom);
+                    currentAtom = builder.newInstance(IPseudoAtom.class,currentAtom);
                 }
                 ((IPseudoAtom)currentAtom).setLabel(propertyValue);
             }
         } else if (objectType.equals("Atom")) {
             if (propertyType.equals("type")) {
                 if (propertyValue.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = builder.newPseudoAtom(currentAtom);
+                    currentAtom = builder.newInstance(IPseudoAtom.class,currentAtom);
                 }
                 currentAtom.setSymbol(propertyValue);
             } else if (propertyType.equals("x2")) {

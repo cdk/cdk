@@ -84,10 +84,10 @@ public class AminoAcidManipulator {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 
-		IAtom acidicOxygen = acid.getBuilder().newAtom("O");
+		IAtom acidicOxygen = acid.getBuilder().newInstance(IAtom.class,"O");
 		acid.addAtom(acidicOxygen);
 		acid.addBond(
-			acid.getBuilder().newBond(acid.getCTerminus(), 
+			acid.getBuilder().newInstance(IBond.class,acid.getCTerminus(), 
 			acidicOxygen,
 			CDKConstants.BONDORDER_SINGLE)
 		);

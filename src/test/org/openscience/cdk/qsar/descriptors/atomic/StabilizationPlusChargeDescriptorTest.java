@@ -26,10 +26,11 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -42,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */ 
 public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
 
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     
 	public  StabilizationPlusChargeDescriptorTest() {
@@ -62,13 +63,13 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testStabilizationPlusChargeDescriptor()  throws Exception  {
 		
-		IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("C"));
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(0).setFormalCharge(-1);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(1).setFormalCharge(1);
 		mol.addBond(0, 1, Order.SINGLE);
-		mol.addAtom(builder.newAtom("F"));
+		mol.addAtom(builder.newInstance(IAtom.class,"F"));
 		mol.addBond(1, 2, Order.SINGLE);
 		
 		addExplicitHydrogens(mol);
@@ -85,12 +86,12 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 	@Test
     public void testNotCharged()  throws Exception {
 		
-		IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("C"));
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(0).setFormalCharge(-1);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, Order.DOUBLE);
-		mol.addAtom(builder.newAtom("F"));
+		mol.addAtom(builder.newInstance(IAtom.class,"F"));
 		mol.addBond(1, 2, Order.SINGLE);
 		
 		addExplicitHydrogens(mol);
@@ -109,13 +110,13 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testStabilizationPlusChargeDescriptor2()  throws Exception  {
 		
-		IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("C"));
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(0).setFormalCharge(-1);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(1).setFormalCharge(1);
 		mol.addBond(0, 1, Order.SINGLE);
-		mol.addAtom(builder.newAtom("F"));
+		mol.addAtom(builder.newInstance(IAtom.class,"F"));
 		mol.addBond(1, 2, Order.SINGLE);
 		
 		addExplicitHydrogens(mol);
@@ -135,38 +136,38 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testStabilizationComparative()  throws Exception  {
 		
-		IMolecule mol1 = builder.newMolecule();
-		mol1.addAtom(builder.newAtom("C"));
-		mol1.addAtom(builder.newAtom("C"));
+		IMolecule mol1 = builder.newInstance(IMolecule.class);
+		mol1.addAtom(builder.newInstance(IAtom.class,"C"));
+		mol1.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol1.getAtom(1).setFormalCharge(1);
 		mol1.addBond(0, 1, Order.SINGLE);
-		mol1.addAtom(builder.newAtom("C"));
+		mol1.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol1.addBond(1, 2, Order.SINGLE);
-		mol1.addAtom(builder.newAtom("O"));
+		mol1.addAtom(builder.newInstance(IAtom.class,"O"));
 		mol1.addBond(1, 3, Order.SINGLE);
 		addExplicitHydrogens(mol1);
 		lpcheck.saturate(mol1);
     	
 		DoubleResult result1 = ((DoubleResult)descriptor.calculate(mol1.getAtom(1),mol1).getValue());
         
-		IMolecule mol2 = builder.newMolecule();
-		mol2.addAtom(builder.newAtom("C"));
-		mol2.addAtom(builder.newAtom("C"));
+		IMolecule mol2 = builder.newInstance(IMolecule.class);
+		mol2.addAtom(builder.newInstance(IAtom.class,"C"));
+		mol2.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol2.getAtom(1).setFormalCharge(1);
 		mol2.addBond(0, 1, Order.SINGLE);
-		mol2.addAtom(builder.newAtom("O"));
+		mol2.addAtom(builder.newInstance(IAtom.class,"O"));
 		mol2.addBond(1, 2, Order.SINGLE);
 		addExplicitHydrogens(mol2);
 		lpcheck.saturate(mol2);
     	
 		DoubleResult result2 = ((DoubleResult)descriptor.calculate(mol2.getAtom(1),mol2).getValue());
         
-		IMolecule mol3 = builder.newMolecule();
-		mol3.addAtom(builder.newAtom("C"));
-		mol3.addAtom(builder.newAtom("C"));
+		IMolecule mol3 = builder.newInstance(IMolecule.class);
+		mol3.addAtom(builder.newInstance(IAtom.class,"C"));
+		mol3.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol3.getAtom(1).setFormalCharge(1);
 		mol3.addBond(0, 1, Order.SINGLE);
-		mol3.addAtom(builder.newAtom("C"));
+		mol3.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol3.addBond(1, 2, Order.SINGLE);
 		addExplicitHydrogens(mol3);
 		lpcheck.saturate(mol3);
@@ -184,13 +185,13 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testCompareIonized() throws Exception{
         
-		IMolecule molA = builder.newMolecule();
-		molA.addAtom(builder.newAtom("C"));
-		molA.addAtom(builder.newAtom("C"));
+		IMolecule molA = builder.newInstance(IMolecule.class);
+		molA.addAtom(builder.newInstance(IAtom.class,"C"));
+		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addBond(0, 1, IBond.Order.SINGLE);
-		molA.addAtom(builder.newAtom("C"));
+		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addBond(1, 2, IBond.Order.SINGLE);
-		molA.addAtom(builder.newAtom("Cl"));
+		molA.addAtom(builder.newInstance(IAtom.class,"Cl"));
 		molA.addBond(2, 3, IBond.Order.SINGLE);
 		
 		addExplicitHydrogens(molA);
@@ -199,13 +200,13 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 
 		double resultA= ((DoubleResult)descriptor.calculate(molA.getAtom(3),molA).getValue()).doubleValue();
         
-        IMolecule molB = builder.newMolecule();
-		molB.addAtom(builder.newAtom("C"));
-		molB.addAtom(builder.newAtom("C"));
+        IMolecule molB = builder.newInstance(IMolecule.class);
+		molB.addAtom(builder.newInstance(IAtom.class,"C"));
+		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addBond(0, 1, IBond.Order.SINGLE);
-		molB.addAtom(builder.newAtom("C"));
+		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addBond(1, 2, IBond.Order.SINGLE);
-		molB.addAtom(builder.newAtom("Cl"));
+		molB.addAtom(builder.newInstance(IAtom.class,"Cl"));
 		molB.getAtom(3).setFormalCharge(1);
 		molB.addSingleElectron(3);
 		molB.addLonePair(3);

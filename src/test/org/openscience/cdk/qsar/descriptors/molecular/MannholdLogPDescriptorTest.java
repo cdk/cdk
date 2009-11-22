@@ -22,9 +22,10 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
@@ -46,9 +47,9 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     public void testMethanol() {
         IChemObjectBuilder builder =
             NoNotificationChemObjectBuilder.getInstance();
-        IMolecule methanol = builder.newMolecule();
-        methanol.addAtom(builder.newAtom("C"));
-        methanol.addAtom(builder.newAtom("O"));
+        IMolecule methanol = builder.newInstance(IMolecule.class);
+        methanol.addAtom(builder.newInstance(IAtom.class,"C"));
+        methanol.addAtom(builder.newInstance(IAtom.class,"O"));
         methanol.addBond(0, 1, IBond.Order.SINGLE);
         IDescriptorResult result = descriptor.calculate(methanol).getValue();
         Assert.assertTrue(result instanceof DoubleResult);
@@ -59,8 +60,8 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     public void testMethane() {
         IChemObjectBuilder builder =
             NoNotificationChemObjectBuilder.getInstance();
-        IMolecule methane = builder.newMolecule();
-        methane.addAtom(builder.newAtom("C"));
+        IMolecule methane = builder.newInstance(IMolecule.class);
+        methane.addAtom(builder.newInstance(IAtom.class,"C"));
         IDescriptorResult result = descriptor.calculate(methane).getValue();
         Assert.assertTrue(result instanceof DoubleResult);
         Assert.assertEquals(1.57, ((DoubleResult)result).doubleValue(), 0.01);
@@ -70,10 +71,10 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     public void testChloroform() {
         IChemObjectBuilder builder =
             NoNotificationChemObjectBuilder.getInstance();
-        IMolecule chloroform = builder.newMolecule();
-        chloroform.addAtom(builder.newAtom("C"));
+        IMolecule chloroform = builder.newInstance(IMolecule.class);
+        chloroform.addAtom(builder.newInstance(IAtom.class,"C"));
         for (int i=0; i<3; i++) {
-            chloroform.addAtom(builder.newAtom("Cl"));
+            chloroform.addAtom(builder.newInstance(IAtom.class,"Cl"));
             chloroform.addBond(0, (i+1), IBond.Order.SINGLE);
         }
         IDescriptorResult result = descriptor.calculate(chloroform).getValue();

@@ -34,8 +34,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -61,7 +61,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/test2.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -80,7 +82,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/test.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         //int molCount = 0;
         Assert.assertTrue(reader.hasNext());
@@ -95,7 +99,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/test.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         //int molCount = 0;
         Assert.assertTrue(reader.hasNext());
@@ -110,7 +116,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
     @Test public void testMultipleEntryFields() throws Exception {
         String filename = "data/mdl/test.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         IMolecule m = (IMolecule)reader.next();
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
@@ -122,7 +130,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/bug682233.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -139,7 +149,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/singleMol.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -156,7 +168,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/emptyStructures.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
@@ -185,7 +199,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         Properties prop = new Properties();
         prop.setProperty("ForceReadAs3DCoordinates","true");
         PropertiesListener listener = new PropertiesListener(prop);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
         reader.addChemObjectIOListener(listener);
         reader.customizeJob();
         int molCount = 0;
@@ -204,7 +220,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/no3dStructures.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
         int molCount = 0;
         IMolecule mol = null; 
         while (reader.hasNext()) {
@@ -222,7 +240,9 @@ public class IteratingMDLReaderTest extends CDKTestCase {
     	// Now test forced 3D coordinates
         logger.info("Testing: " + filename);
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        reader = new IteratingMDLReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
         reader.addChemObjectIOListener(new MyListener());
         reader.customizeJob();
         molCount = 0;

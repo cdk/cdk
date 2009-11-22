@@ -52,7 +52,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
     }
 
     @Test public void testPDBAtom_IElement() {
-    	IElement element = newChemObject().getBuilder().newElement();
+    	IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IAtom a = new PDBAtom(element);
         Assert.assertNotNull(a);
     }
@@ -89,7 +89,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
         if (someAtom instanceof org.openscience.cdk.Atom) {
         	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
         	Assert.assertTrue(atom.compare(atom));
-        	IAtom hydrogen = atom.getBuilder().newAtom("H");
+        	IAtom hydrogen = atom.getBuilder().newInstance(IAtom.class,"H");
         	Assert.assertFalse(atom.compare(hydrogen));
         	Assert.assertFalse(atom.compare("C"));
         }

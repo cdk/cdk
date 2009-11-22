@@ -24,10 +24,10 @@ import java.util.Iterator;
 
 import org.openscience.cdk.formula.AdductFormula;
 import org.openscience.cdk.interfaces.IAdductFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -128,8 +128,8 @@ public class DebugAdductFormula extends AdductFormula implements IAdductFormula 
 	    return super.size();
     }
 
-	public IChemObjectBuilder getBuilder() {
-	    return DebugChemObjectBuilder.getInstance();
+    public IChemObjectBuilder getBuilder() {
+        return DebugChemObjectBuilder.getInstance();
     }
 
 }

@@ -90,7 +90,7 @@ public class Polarizability {
      */
 	@TestMethod("testGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom")
     public double getPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom) {
-        IAtomContainer acH = atomContainer.getBuilder().newAtomContainer(atomContainer);
+        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
         addExplicitHydrogens(acH);
         return getKJPolarizabilityFactor(acH, atom);
     }

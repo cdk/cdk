@@ -444,26 +444,26 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "CC1=CCC2CC1C(C)2C";
 		IMolecule mol = sp.parseSmiles(smiles);
 		
-		IMolecule apinene = mol.getBuilder().newMolecule();
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		IMolecule apinene = mol.getBuilder().newInstance(IMolecule.class);
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 1
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 2
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 3
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 4
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 5
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 6
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 7
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 8
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 9
-		apinene.addAtom(mol.getBuilder().newAtom("C"));
+		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 10
 		
 		apinene.addBond(0, 1, IBond.Order.DOUBLE);
@@ -1749,7 +1749,7 @@ public class SmilesParserTest extends CDKTestCase {
 	@Test public void test1456139() throws Exception{
 		SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
-		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newMolecule(mol);		
+		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, mol);		
 		Assert.assertNotNull(mol2);
 		Assert.assertEquals(22, mol2.getAtomCount());
 	}

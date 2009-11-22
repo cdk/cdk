@@ -167,7 +167,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 		ISimpleChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 		
 		// Read molecule
-		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
 		
 		// Map templates
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());

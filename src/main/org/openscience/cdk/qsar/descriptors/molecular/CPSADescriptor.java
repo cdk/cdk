@@ -248,7 +248,7 @@ public class CPSADescriptor implements IMolecularDescriptor {
 
 //        IsotopeFactory factory = null;
 //        try {
-//            factory = IsotopeFactory.getInstance(container.getBuilder());
+//            factory = IsotopeFactory.getInstance(container.getNewBuilder());
 //        } catch (Exception e) {
 //            logger.debug(e);
 //        }

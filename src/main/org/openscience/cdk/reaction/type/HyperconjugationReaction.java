@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <pre>[C+]-C => C=C + [H+] </pre>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new HyperconjugationReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -126,7 +126,7 @@ public class HyperconjugationReaction extends ReactionEngine implements IReactio
 			throw new CDKException("HyperconjugationReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = reactants.getBuilder().newReactionSet();
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
@@ -171,7 +171,7 @@ public class HyperconjugationReaction extends ReactionEngine implements IReactio
 					                	bondList.add(bondi);
 					                	bondList.add(bondj);
 
-										IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+										IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
 										moleculeSet.addMolecule(reactant);
 										IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 										if(reaction == null)

@@ -125,7 +125,7 @@ public class ReactionManipulator {
      */
     @TestMethod("testGetAllMolecules_IReaction")
     public static IMoleculeSet getAllMolecules(IReaction reaction) {
-        IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
+        IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
 
         moleculeSet.add(getAllReactants(reaction));
         moleculeSet.add(getAllProducts(reaction));
@@ -140,7 +140,7 @@ public class ReactionManipulator {
      */
     @TestMethod("testGetAllProducts_IReaction")
     public static IMoleculeSet getAllProducts(IReaction reaction) {
-        IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
+        IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
         IMoleculeSet products = reaction.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
             moleculeSet.addMolecule(products.getMolecule(i));
@@ -156,7 +156,7 @@ public class ReactionManipulator {
      */
     @TestMethod("testGetAllReactants_IReaction")
     public static IMoleculeSet getAllReactants(IReaction reaction) {
-        IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
+        IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             moleculeSet.addMolecule(reactants.getMolecule(i));
@@ -172,7 +172,7 @@ public class ReactionManipulator {
      */
     @TestMethod("testReverse_IReaction")
     public static IReaction reverse(IReaction reaction) {
-        IReaction reversedReaction = reaction.getBuilder().newReaction();
+        IReaction reversedReaction = reaction.getBuilder().newInstance(IReaction.class);
         if (reaction.getDirection() == IReaction.Direction.BIDIRECTIONAL) {
             reversedReaction.setDirection(IReaction.Direction.BIDIRECTIONAL);
         } else if (reaction.getDirection() == IReaction.Direction.FORWARD) {

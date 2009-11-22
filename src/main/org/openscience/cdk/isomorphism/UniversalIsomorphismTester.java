@@ -70,7 +70,7 @@ import java.util.Map;
  *  which allows one to do SMARTS or MQL like queries.
  *  The first {@link IAtomContainer} must never be an {@link IQueryAtomContainer}.
  *  An example:<pre>
- *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ *  SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
  *  IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
  *  IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
  *  IQueryAtomContainer query = IQueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
@@ -497,7 +497,7 @@ public class UniversalIsomorphismTester {
    * @return           an AtomContainer
    */
   public static IAtomContainer project(List<RMap> rMapList, IAtomContainer g, int id) {
-    IAtomContainer ac = g.getBuilder().newAtomContainer();
+    IAtomContainer ac = g.getBuilder().newInstance(IAtomContainer.class);
 
     Map<IAtom,IAtom> table = new HashMap<IAtom,IAtom>();
     IAtom a1;
@@ -538,7 +538,7 @@ public class UniversalIsomorphismTester {
         ac.addAtom(a2);
         table.put(a, a2);
       }
-      IBond newBond = g.getBuilder().newBond(a1, a2, bond.getOrder());
+      IBond newBond = g.getBuilder().newInstance(IBond.class,a1, a2, bond.getOrder());
       newBond.setFlag(
         CDKConstants.ISAROMATIC,
         bond.getFlag(CDKConstants.ISAROMATIC)

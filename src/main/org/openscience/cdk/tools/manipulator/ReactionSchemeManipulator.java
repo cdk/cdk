@@ -97,7 +97,7 @@ public class ReactionSchemeManipulator {
      */
     @TestMethod("testGetAllMolecules_IReactionScheme")
     public static IMoleculeSet getAllMolecules(IReactionScheme scheme) {
-    	return getAllMolecules(scheme, scheme.getBuilder().newMoleculeSet());
+    	return getAllMolecules(scheme, scheme.getBuilder().newInstance(IMoleculeSet.class));
     }
 
     /**
@@ -128,7 +128,7 @@ public class ReactionSchemeManipulator {
      */
     @TestMethod("testGetAllReactions_IReactionScheme")
     public static IReactionSet getAllReactions(IReactionScheme scheme) {
-    	IReactionSet reactionSet = scheme.getBuilder().newReactionSet();
+    	IReactionSet reactionSet = scheme.getBuilder().newInstance(IReactionSet.class);
     	
     	// A ReactionScheme can contain other IRreactionSet objects
 		if(scheme.getReactionSchemeCount() != 0)
@@ -152,7 +152,8 @@ public class ReactionSchemeManipulator {
      */
     @TestMethod("testCreateReactionScheme_IReactionSet")
 	public static IReactionScheme createReactionScheme(IReactionSet reactionSet) {
-        IReactionScheme reactionScheme = reactionSet.getBuilder().newReactionScheme();
+        IReactionScheme reactionScheme =
+            reactionSet.getBuilder().newInstance(IReactionScheme.class);
         
         // Looking for those reactants which doesn't have any precursor. They are the top.
         ArrayList<IReaction> listTopR = new ArrayList<IReaction>();
@@ -178,7 +179,7 @@ public class ReactionSchemeManipulator {
      */
     @TestMethod("testExtractTopReactions_IReactionScheme")
 	public static IReactionSet extractTopReactions(IReactionScheme reactionScheme) {
-    	IReactionSet reactionSet = reactionScheme.getBuilder().newReactionSet();
+    	IReactionSet reactionSet = reactionScheme.getBuilder().newInstance(IReactionSet.class);
     	
     	IReactionSet allSet = getAllReactions(reactionScheme);
     	for (IReaction reaction : allSet.reactions()) {
@@ -205,7 +206,8 @@ public class ReactionSchemeManipulator {
      * @return               The IReactionScheme
      */
     private static IReactionScheme setScheme(IReaction reaction, IReactionSet reactionSet){
-    	IReactionScheme reactionScheme = reaction.getBuilder().newReactionScheme();
+    	IReactionScheme reactionScheme =
+    	    reaction.getBuilder().newInstance(IReactionScheme.class);
     	
     	IReactionSet reactConSet = extractSubsequentReaction(reaction, reactionSet);
     	if(reactConSet.getReactionCount() != 0){
@@ -228,7 +230,7 @@ public class ReactionSchemeManipulator {
      * @return            A IReactionSet containing the reactions
      */
     private static IReactionSet extractPrecursorReaction(IReaction reaction, IReactionSet reactionSet){
-    	IReactionSet reactConSet = reaction.getBuilder().newReactionSet();
+    	IReactionSet reactConSet = reaction.getBuilder().newInstance(IReactionSet.class);
 		for (IAtomContainer reactant : reaction.getReactants().molecules()) {
         	for (IReaction reactionInt : reactionSet.reactions()) {
     			for (IAtomContainer precursor : reactionInt.getProducts().molecules()) {
@@ -250,7 +252,7 @@ public class ReactionSchemeManipulator {
      * @return            A IReactionSet containing the reactions
      */
     private static IReactionSet extractSubsequentReaction(IReaction reaction, IReactionSet reactionSet){
-    	IReactionSet reactConSet = reaction.getBuilder().newReactionSet();
+    	IReactionSet reactConSet = reaction.getBuilder().newInstance(IReactionSet.class);
 		for (IAtomContainer reactant : reaction.getProducts().molecules()) {
         	for (IReaction reactionInt : reactionSet.reactions()) {
     			for (IAtomContainer precursor : reactionInt.getReactants().molecules()) {
@@ -287,7 +289,7 @@ public class ReactionSchemeManipulator {
         		if(found)
             		break;
             	if(reactant.equals(origenMol)){
-            		IMoleculeSet allSet = reactionSet.getBuilder().newMoleculeSet();
+            		IMoleculeSet allSet = reactionSet.getBuilder().newInstance(IMoleculeSet.class);
     	        	// START
     	        	for (IAtomContainer product : reaction.getProducts().molecules()) {
     	        		if(found)
@@ -320,7 +322,7 @@ public class ReactionSchemeManipulator {
         return listPath;
     }
 	private static IMoleculeSet getReactionPath(IAtomContainer reactant, IMolecule finalMol,IReactionSet reactionSet) {
-		IMoleculeSet allSet = reactionSet.getBuilder().newMoleculeSet();
+		IMoleculeSet allSet = reactionSet.getBuilder().newInstance(IMoleculeSet.class);
     	for (IReaction reaction : reactionSet.reactions()) {
         	for (IAtomContainer reactant2 : reaction.getReactants().molecules()) {
     	        if(reactant2.equals(reactant)){

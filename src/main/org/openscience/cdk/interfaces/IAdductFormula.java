@@ -97,12 +97,4 @@ public interface IAdductFormula extends IMolecularFormulaSet{
 	 */
 	public Object clone() throws CloneNotSupportedException ;
 	
-    /**
-     * Returns a ChemObjectBuilder for the data classes that extend
-     * this class.
-     * 
-     * @return The IChemObjectBuilder matching this IChemObject
-     */
-    public IChemObjectBuilder getBuilder();
-
 }

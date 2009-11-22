@@ -210,9 +210,9 @@ public class GamessReader extends DefaultChemObjectReader {
 	 */
 	//TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)? 
 	private IChemFile readChemFile(IChemFile file) throws IOException {
-		IChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
-		IChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
-		IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
+		IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class); // TODO Answer the question : Is this line needed ?
+		IChemModel model = file.getBuilder().newInstance(IChemModel.class); // TODO Answer the question : Is this line needed ?
+		IMoleculeSet moleculeSet = file.getBuilder().newInstance(IMoleculeSet.class);
 		
 		model.setMoleculeSet(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?
@@ -233,7 +233,7 @@ public class GamessReader extends DefaultChemObjectReader {
 				 */
 				this.input.readLine();
 				moleculeSet.addMolecule(this.readCoordinates(
-					file.getBuilder().newMolecule(), GamessReader.BOHR_UNIT
+					file.getBuilder().newInstance(IMolecule.class), GamessReader.BOHR_UNIT
 			    ));
 				//break; //<- stops when the first set of coordinates is found.
 			} else if (currentReadLine.indexOf(" COORDINATES OF ALL ATOMS ARE (ANGS)") >= 0) {
@@ -245,7 +245,7 @@ public class GamessReader extends DefaultChemObjectReader {
 				this.input.readLine();
 
 				moleculeSet.addMolecule(this.readCoordinates(
-					file.getBuilder().newMolecule(), GamessReader.ANGSTROM_UNIT
+					file.getBuilder().newInstance(IMolecule.class), GamessReader.ANGSTROM_UNIT
 				));
 				//break; //<- stops when the first set of coordinates is found.
 			}
@@ -326,7 +326,7 @@ public class GamessReader extends DefaultChemObjectReader {
 					throw new IOException("Error reading coordinates");
 				}
 			}
-			IAtom atom = molecule.getBuilder().newAtom(atomicSymbol, new Point3d(coordinates[0],coordinates[1],coordinates[2]));
+			IAtom atom = molecule.getBuilder().newInstance(IAtom.class,atomicSymbol, new Point3d(coordinates[0],coordinates[1],coordinates[2]));
 			molecule.addAtom(atom);
 		}
 		return molecule;

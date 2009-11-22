@@ -43,7 +43,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -431,7 +430,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
             + "   135   128   129    1\n";
         Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
         IChemModel model = (IChemModel)r.read(
-        	NoNotificationChemObjectBuilder.getInstance().newChemModel()
+        	NoNotificationChemObjectBuilder.getInstance().newInstance(IChemModel.class)
         );
         Assert.assertNotNull(model);
         List containers = ChemModelManipulator.getAllAtomContainers(model);
@@ -451,7 +450,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     private void checkMol(StringBuilder buf) throws Exception {
         StringReader sr = new StringReader(buf.toString());
         Mol2Reader reader = new Mol2Reader(sr);
-        IChemFile mol = (IChemFile)reader.read(NoNotificationChemObjectBuilder.getInstance().newChemFile());
+        IChemFile mol = (IChemFile)reader.read(
+            NoNotificationChemObjectBuilder.getInstance().newInstance(IChemFile.class)
+        );
         Assert.assertTrue(mol.getChemSequenceCount() > 0);
         Assert.assertTrue(mol.getChemSequence(0).getChemModelCount() > 0);
         Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);

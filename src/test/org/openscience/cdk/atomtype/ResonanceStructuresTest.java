@@ -22,15 +22,14 @@ package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 
 /**
@@ -63,18 +62,18 @@ public class ResonanceStructuresTest extends CDKTestCase {
 		
 		//COMPOUND
 		//O=C([H])C(=[O+])C([H])([H])[H]
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.getAtom(3).setFormalCharge(1);
 		molecule.addSingleElectron(new SingleElectron(molecule.getAtom(3)));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0,1,IBond.Order.DOUBLE);
 		molecule.addBond(0,2,IBond.Order.SINGLE);
 		molecule.addBond(2,3,IBond.Order.DOUBLE);
@@ -104,15 +103,15 @@ public class ResonanceStructuresTest extends CDKTestCase {
 //
 //		//FRAGMENT_1
 //		//
-//		IMolecule expectedStructure = builder.newMolecule();
-//		expectedStructure.addAtom(builder.newAtom("C"));
-//		expectedStructure.addAtom(builder.newAtom("C"));
-//		expectedStructure.addAtom(builder.newAtom("C"));
-//		expectedStructure.addAtom(builder.newAtom("C"));
-//		expectedStructure.addAtom(builder.newAtom("C"));
-//		expectedStructure.addAtom(builder.newAtom("C"));
-//		expectedStructure.addAtom(builder.newAtom("C"));
-//		expectedStructure.addAtom(builder.newAtom("C"));
+//		IMolecule expectedStructure = builder.newInstance(IMolecule.class);
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+//		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
 //		expectedStructure.addBond(0,1,IBond.Order.DOUBLE);
 //		expectedStructure.addBond(1,2,IBond.Order.SINGLE);
 //		expectedStructure.addBond(2,3,IBond.Order.DOUBLE);
@@ -153,15 +152,15 @@ public class ResonanceStructuresTest extends CDKTestCase {
 		
 		//COMPOUND
 		//[H]C1=C([H])C([H])=C(C(=C1([H]))C([H])([H])[H])C([H])([H])[H]
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0,1,IBond.Order.SINGLE);
 		molecule.addBond(1,2,IBond.Order.DOUBLE);
 		molecule.addBond(2,3,IBond.Order.SINGLE);
@@ -193,15 +192,15 @@ public class ResonanceStructuresTest extends CDKTestCase {
 
 		//FRAGMENT_1
 		//[H]C=1C([H])=C([H])C(=C(C=1([H]))C([H])([H])[H])C([H])([H])[H]
-		IMolecule expectedStructure = builder.newMolecule();
-		expectedStructure.addAtom(builder.newAtom("C"));
-		expectedStructure.addAtom(builder.newAtom("C"));
-		expectedStructure.addAtom(builder.newAtom("C"));
-		expectedStructure.addAtom(builder.newAtom("C"));
-		expectedStructure.addAtom(builder.newAtom("C"));
-		expectedStructure.addAtom(builder.newAtom("C"));
-		expectedStructure.addAtom(builder.newAtom("C"));
-		expectedStructure.addAtom(builder.newAtom("C"));
+		IMolecule expectedStructure = builder.newInstance(IMolecule.class);
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
+		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
 		expectedStructure.addBond(0,1,IBond.Order.DOUBLE);
 		expectedStructure.addBond(1,2,IBond.Order.SINGLE);
 		expectedStructure.addBond(2,3,IBond.Order.DOUBLE);

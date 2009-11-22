@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -542,7 +543,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     
 	public void saturateRingSystems(IAtomContainer atomContainer) throws CDKException
 	{
-		IRingSet rs = new SSSRFinder(atomContainer.getBuilder().newMolecule(atomContainer)).findSSSR();
+		IRingSet rs = new SSSRFinder(atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer)).findSSSR();
 		List ringSets = RingPartitioner.partitionRings(rs);
 		IAtomContainer ac = null;
 		IAtom atom = null;

@@ -29,14 +29,16 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module test-formula
  */
 public class ChargeRuleTest extends FormulaRuleTest {
 	
-	private static DefaultChemObjectBuilder builder;
+	private static IChemObjectBuilder builder;
 
 	/**
     *  The JUnit setup method
@@ -105,8 +107,8 @@ public class ChargeRuleTest extends FormulaRuleTest {
 		IRule rule  = new ChargeRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newIsotope("C"),2);
-		formula.addIsotope(builder.newIsotope("H"),200);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),200);
 		formula.setCharge(1);
 		
 		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
@@ -123,8 +125,8 @@ public class ChargeRuleTest extends FormulaRuleTest {
 		
 		Object[] params = new Object[1];
 		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newIsotope("C"),2);
-		formula.addIsotope(builder.newIsotope("H"),200);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),200);
 		formula.setCharge(1);
 		
         params[0] = -1.0;
@@ -143,8 +145,8 @@ public class ChargeRuleTest extends FormulaRuleTest {
 		IRule rule  = new ChargeRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newIsotope("C"),2);
-		formula.addIsotope(builder.newIsotope("H"),6);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),6);
 		formula.setCharge(0);
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);

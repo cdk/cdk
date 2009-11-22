@@ -28,6 +28,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractMappingTest;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
@@ -51,7 +52,8 @@ public class MappingTest extends AbstractMappingTest {
     
     @Test public void testMapping_IChemObject_IChemObject() {
         IChemObject object = newChemObject();
-        IMapping mapping = new Mapping(object.getBuilder().newAtom(), object.getBuilder().newAtom());
+        IMapping mapping = new Mapping(object.getBuilder().newInstance(IAtom.class),
+            object.getBuilder().newInstance(IAtom.class));
         Assert.assertNotNull(mapping);
     }
     

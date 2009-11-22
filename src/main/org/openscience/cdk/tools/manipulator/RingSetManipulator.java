@@ -65,7 +65,7 @@ public class RingSetManipulator {
 	 */
     @TestMethod("testGetAllInOneContainer_IRingSet")
 	public static IAtomContainer getAllInOneContainer(IRingSet ringSet) {
-		IAtomContainer resultContainer = ringSet.getBuilder().newAtomContainer();
+		IAtomContainer resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
 		Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
 		while (containers.hasNext()) {
 			resultContainer.add(containers.next());

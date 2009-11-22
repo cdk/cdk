@@ -27,8 +27,9 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.AbstractMolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 
 /**
  * Checks the functionality of the {@link DebugMolecularFormulaSet}.
@@ -47,7 +48,7 @@ public class DebugMolecularFormulaSetTest extends AbstractMolecularFormulaSetTes
     }
 
     @Test public void testDebugMolecularFormulaSet_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new DebugMolecularFormulaSet(getBuilder().newMolecularFormula());
+        IMolecularFormulaSet mfS = new DebugMolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 }

@@ -54,7 +54,7 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testAtomType_IElement() {
-    	IElement element = newChemObject().getBuilder().newElement("C");
+    	IElement element = newChemObject().getBuilder().newInstance(IElement.class,"C");
         IAtomType at = new AtomType(element);
         Assert.assertEquals("C", at.getSymbol());
     }
@@ -69,7 +69,7 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
         IAtomType at = new AtomType("C4", "C");
         if (at instanceof org.openscience.cdk.AtomType) {
         	org.openscience.cdk.AtomType at1 = (org.openscience.cdk.AtomType)at;
-	        IAtomType at2 = at.getBuilder().newAtomType("C3", "C");
+	        IAtomType at2 = at.getBuilder().newInstance(IAtomType.class,"C3", "C");
 	        Assert.assertFalse(at1.compare("C4"));
 	        Assert.assertFalse(at1.compare(at2));
         }
@@ -80,7 +80,7 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
     	if (someAt instanceof org.openscience.cdk.AtomType) {
     		org.openscience.cdk.AtomType at = (org.openscience.cdk.AtomType)someAt;
 	        Assert.assertTrue(at.compare(at));
-	        IAtomType hydrogen = someAt.getBuilder().newAtomType("H");
+	        IAtomType hydrogen = someAt.getBuilder().newInstance(IAtomType.class,"H");
 	        Assert.assertFalse(at.compare(hydrogen));
 	        Assert.assertFalse(at.compare("Li"));
     	}

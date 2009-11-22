@@ -1393,7 +1393,7 @@ public class AtomContainer extends ChemObject
 	public void addBond(int atom1, int atom2, IBond.Order order,
 			            IBond.Stereo stereo)
 	{
-		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order, stereo);
+		IBond bond = getBuilder().newInstance(IBond.class,getAtom(atom1), getAtom(atom2), order, stereo);
 
 		if (contains(bond))
 		{
@@ -1419,7 +1419,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addBond(int atom1, int atom2, IBond.Order order)
 	{
-		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order);
+		IBond bond = getBuilder().newInstance(IBond.class,getAtom(atom1), getAtom(atom2), order);
 
 		if (bondCount >= bonds.length)
 		{
@@ -1438,7 +1438,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addLonePair(int atomID)
 	{
-		ILonePair lonePair = getBuilder().newLonePair(atoms[atomID]);
+		ILonePair lonePair = getBuilder().newInstance(ILonePair.class,atoms[atomID]);
 		lonePair.addListener(this);
 		addLonePair(lonePair);
 		/* no notifyChanged() here because addElectronContainer() does 
@@ -1452,7 +1452,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addSingleElectron(int atomID)
 	{
-		ISingleElectron singleElectron = getBuilder().newSingleElectron(atoms[atomID]);
+		ISingleElectron singleElectron = getBuilder().newInstance(ISingleElectron.class,atoms[atomID]);
 		singleElectron.addListener(this);
 		addSingleElectron(singleElectron);
 		/* no notifyChanged() here because addSingleElectron() does 

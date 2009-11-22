@@ -28,16 +28,13 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
@@ -282,7 +279,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //    	for(Iterator<String> it = xmlList.iterator(); it.hasNext();){
 //			String xml = it.next();
 //			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
-//	        IChemFile chemFile = (IChemFile)reader.read(builder.newChemFile());
+//	        IChemFile chemFile = (IChemFile)reader.read(builder.newInstance(IChemFile.class));
 //	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 //	        for(Iterator<IAtomContainer> itM = reactionDict.getReactants().molecules().iterator(); itM.hasNext();){
 //	        	IMolecule molecule = (IMolecule) itM.next();
@@ -311,7 +308,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     	for(Iterator<String> it = xmlList.iterator(); it.hasNext();){
 			String xml = it.next();
 			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
-	        IChemFile chemFile = (IChemFile)reader.read(builder.newChemFile());
+	        IChemFile chemFile = (IChemFile)reader.read(builder.newInstance(IChemFile.class));
 	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 	        
 	        IMoleculeSet reactants = reactionDict.getReactants();
@@ -380,10 +377,10 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //			String xml = it.next();
 //			System.out.println(xml);
 //			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
-//	        IChemFile chemFile = (IChemFile)reader.read(builder.newChemFile());
+//	        IChemFile chemFile = (IChemFile)reader.read(builder.newInstance(IChemFile.class));
 //	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 //	        
-//	        IReaction reactionTest = builder.newReaction();
+//	        IReaction reactionTest = builder.newInstance(IReaction.class);
 //	        for(Iterator<IAtomContainer> itM = reactionDict.getReactants().molecules(); itM.hasNext();){
 //	        	reactionTest.addReactant((IMolecule) itM.next());
 //	        }

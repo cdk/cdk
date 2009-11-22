@@ -29,10 +29,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -73,12 +72,14 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
 	@Test public void testGetInstance_IChemObjectBuilder() {
-		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
+		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
+		    NoNotificationChemObjectBuilder.getInstance());
 		Assert.assertNotNull(matcher);
 	}
 	
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
-		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
+		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
+		    NoNotificationChemObjectBuilder.getInstance());
 		Assert.assertNotNull(matcher);
 		Molecule ethane = MoleculeFactory.makeAlkane(2);
 		String[] expectedTypes = {"C.3", "C.3"};
@@ -92,7 +93,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
       IMolecule mol = (IMolecule)reader.read(new Molecule());
 
       // just check consistency; other methods do perception testing
-      SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+      SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
+          DefaultChemObjectBuilder.getInstance());
       IAtomType[] types = matcher.findMatchingAtomType(mol);
       for (int i=0; i<types.length; i++) {
           IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
@@ -476,39 +478,39 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
     @Test public void testSilicon() throws Exception {
     	IMolecule mol = new Molecule();
-    	IAtom a1 = mol.getBuilder().newAtom("Si"); mol.addAtom(a1);
-    	IAtom a2 = mol.getBuilder().newAtom("O"); mol.addAtom(a2);
-    	IAtom a3 = mol.getBuilder().newAtom("O"); mol.addAtom(a3);
-    	IAtom a4 = mol.getBuilder().newAtom("O"); mol.addAtom(a4);
-    	IAtom a5 = mol.getBuilder().newAtom("C"); mol.addAtom(a5);
-    	IAtom a6 = mol.getBuilder().newAtom("C"); mol.addAtom(a6);
-    	IAtom a7 = mol.getBuilder().newAtom("C"); mol.addAtom(a7);
-    	IAtom a8 = mol.getBuilder().newAtom("H"); mol.addAtom(a8);
-    	IAtom a9 = mol.getBuilder().newAtom("H"); mol.addAtom(a9);
-    	IAtom a10 = mol.getBuilder().newAtom("H"); mol.addAtom(a10);
-    	IAtom a11 = mol.getBuilder().newAtom("H"); mol.addAtom(a11);
-    	IAtom a12 = mol.getBuilder().newAtom("H"); mol.addAtom(a12);
-    	IAtom a13 = mol.getBuilder().newAtom("H"); mol.addAtom(a13);
-    	IAtom a14 = mol.getBuilder().newAtom("H"); mol.addAtom(a14);
-    	IAtom a15 = mol.getBuilder().newAtom("H"); mol.addAtom(a15);
-    	IAtom a16 = mol.getBuilder().newAtom("H"); mol.addAtom(a16);
-    	IAtom a17 = mol.getBuilder().newAtom("H"); mol.addAtom(a17);
-    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.SINGLE); mol.addBond(b1);
-    	IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE); mol.addBond(b2);
-    	IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE); mol.addBond(b3);
-    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE); mol.addBond(b4);
-    	IBond b5 = mol.getBuilder().newBond(a3, a6, IBond.Order.SINGLE); mol.addBond(b5);
-    	IBond b6 = mol.getBuilder().newBond(a4, a7, IBond.Order.SINGLE); mol.addBond(b6);
-    	IBond b7 = mol.getBuilder().newBond(a5, a8, IBond.Order.SINGLE); mol.addBond(b7);
-    	IBond b8 = mol.getBuilder().newBond(a5, a9, IBond.Order.SINGLE); mol.addBond(b8);
-    	IBond b9 = mol.getBuilder().newBond(a5, a10, IBond.Order.SINGLE); mol.addBond(b9);
-    	IBond b10 = mol.getBuilder().newBond(a6, a11, IBond.Order.SINGLE); mol.addBond(b10);
-    	IBond b11 = mol.getBuilder().newBond(a6, a12, IBond.Order.SINGLE); mol.addBond(b11);
-    	IBond b12 = mol.getBuilder().newBond(a6, a13, IBond.Order.SINGLE); mol.addBond(b12);
-    	IBond b13 = mol.getBuilder().newBond(a7, a14, IBond.Order.SINGLE); mol.addBond(b13);
-    	IBond b14 = mol.getBuilder().newBond(a7, a15, IBond.Order.SINGLE); mol.addBond(b14);
-    	IBond b15 = mol.getBuilder().newBond(a7, a16, IBond.Order.SINGLE); mol.addBond(b15);
-    	IBond b16 = mol.getBuilder().newBond(a1, a17, IBond.Order.SINGLE); mol.addBond(b16);
+    	IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"Si"); mol.addAtom(a1);
+    	IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"O"); mol.addAtom(a2);
+    	IAtom a3 = mol.getBuilder().newInstance(IAtom.class,"O"); mol.addAtom(a3);
+    	IAtom a4 = mol.getBuilder().newInstance(IAtom.class,"O"); mol.addAtom(a4);
+    	IAtom a5 = mol.getBuilder().newInstance(IAtom.class,"C"); mol.addAtom(a5);
+    	IAtom a6 = mol.getBuilder().newInstance(IAtom.class,"C"); mol.addAtom(a6);
+    	IAtom a7 = mol.getBuilder().newInstance(IAtom.class,"C"); mol.addAtom(a7);
+    	IAtom a8 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a8);
+    	IAtom a9 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a9);
+    	IAtom a10 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a10);
+    	IAtom a11 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a11);
+    	IAtom a12 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a12);
+    	IAtom a13 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a13);
+    	IAtom a14 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a14);
+    	IAtom a15 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a15);
+    	IAtom a16 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a16);
+    	IAtom a17 = mol.getBuilder().newInstance(IAtom.class,"H"); mol.addAtom(a17);
+    	IBond b1 = mol.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE); mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newInstance(IBond.class,a1, a3, IBond.Order.SINGLE); mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newInstance(IBond.class,a1, a4, IBond.Order.SINGLE); mol.addBond(b3);
+    	IBond b4 = mol.getBuilder().newInstance(IBond.class,a2, a5, IBond.Order.SINGLE); mol.addBond(b4);
+    	IBond b5 = mol.getBuilder().newInstance(IBond.class,a3, a6, IBond.Order.SINGLE); mol.addBond(b5);
+    	IBond b6 = mol.getBuilder().newInstance(IBond.class,a4, a7, IBond.Order.SINGLE); mol.addBond(b6);
+    	IBond b7 = mol.getBuilder().newInstance(IBond.class,a5, a8, IBond.Order.SINGLE); mol.addBond(b7);
+    	IBond b8 = mol.getBuilder().newInstance(IBond.class,a5, a9, IBond.Order.SINGLE); mol.addBond(b8);
+    	IBond b9 = mol.getBuilder().newInstance(IBond.class,a5, a10, IBond.Order.SINGLE); mol.addBond(b9);
+    	IBond b10 = mol.getBuilder().newInstance(IBond.class,a6, a11, IBond.Order.SINGLE); mol.addBond(b10);
+    	IBond b11 = mol.getBuilder().newInstance(IBond.class,a6, a12, IBond.Order.SINGLE); mol.addBond(b11);
+    	IBond b12 = mol.getBuilder().newInstance(IBond.class,a6, a13, IBond.Order.SINGLE); mol.addBond(b12);
+    	IBond b13 = mol.getBuilder().newInstance(IBond.class,a7, a14, IBond.Order.SINGLE); mol.addBond(b13);
+    	IBond b14 = mol.getBuilder().newInstance(IBond.class,a7, a15, IBond.Order.SINGLE); mol.addBond(b14);
+    	IBond b15 = mol.getBuilder().newInstance(IBond.class,a7, a16, IBond.Order.SINGLE); mol.addBond(b15);
+    	IBond b16 = mol.getBuilder().newInstance(IBond.class,a1, a17, IBond.Order.SINGLE); mol.addBond(b16);
 
     	String[] expectedTypes = {"Si", "O.3", "O.3", "O.3", "C.3", "C.3", "C.3",
     			"H", "H", "H", "H", "H", "H", "H", "H", "H", "H"}; 
@@ -576,13 +578,13 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testH2S() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, IBond.Order.SINGLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,s, h2, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);
@@ -641,9 +643,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test public void testAniline() throws Exception {
         IMolecule benzene = MoleculeFactory.makeBenzene();
-        IAtom nitrogen = benzene.getBuilder().newAtom("N");
+        IAtom nitrogen = benzene.getBuilder().newInstance(IAtom.class,"N");
         benzene.addAtom(nitrogen);
-        benzene.addBond(benzene.getBuilder().newBond(benzene.getAtom(0), nitrogen, IBond.Order.SINGLE));
+        benzene.addBond(benzene.getBuilder().newInstance(IBond.class,benzene.getAtom(0), nitrogen, IBond.Order.SINGLE));
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
@@ -712,13 +714,13 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
      * @cdk.inchi InChI=1/H2Se/h1H2
      */
     @Test public void testH2Se() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Se");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(se, h1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(se, h2, IBond.Order.SINGLE);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,se, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,se, h2, IBond.Order.SINGLE);
 
         mol.addAtom(se);
         mol.addAtom(h1);

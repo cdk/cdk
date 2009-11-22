@@ -29,8 +29,8 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -46,7 +46,8 @@ public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
         String filename = "data/asn/pubchem/list.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingPCCompoundASNReader reader = new IteratingPCCompoundASNReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingPCCompoundASNReader reader = new IteratingPCCompoundASNReader(
+            ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
         while (reader.hasNext()) {

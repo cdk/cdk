@@ -36,9 +36,9 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -83,14 +83,14 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		/* ionize >C=C< , set the reactive center*/
-		IMolecule reactant = builder.newMolecule();//Smiles("C=CCC(=O)CC")
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("O"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
+		IMolecule reactant = builder.newInstance(IMolecule.class);//Smiles("C=CCC(=O)CC")
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"O"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
 		reactant.addBond(0, 1, IBond.Order.DOUBLE);
 		reactant.addBond(1, 2, IBond.Order.SINGLE);
 		reactant.addBond(2, 3, IBond.Order.SINGLE);
@@ -113,7 +113,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 			}
 		}
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants.addMolecule(reactant);
 
 		/* initiate */
@@ -153,15 +153,15 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testAutomatic_Set_Active_Bond() throws Exception {
 		/* ionize all possible double bonds */
-		IMolecule reactant = builder.newMolecule();//miles("C=CC")
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
+		IMolecule reactant = builder.newInstance(IMolecule.class);//miles("C=CC")
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
 		reactant.addBond(0, 1, IBond.Order.DOUBLE);
 		reactant.addBond(1, 2, IBond.Order.SINGLE);
 		addExplicitHydrogens(reactant);
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants.addMolecule(reactant);
 
 		/* initiate */
@@ -192,14 +192,14 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testAutomatic_Set_Active_Bond2() throws Exception {
 		/* ionize >C=C< , set the reactive center*/
-		IMolecule reactant = builder.newMolecule();//Smiles("C=CCC(=O)CC")
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("O"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
+		IMolecule reactant = builder.newInstance(IMolecule.class);//Smiles("C=CCC(=O)CC")
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"O"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
+		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
 		reactant.addBond(0, 1, IBond.Order.DOUBLE);
 		reactant.addBond(1, 2, IBond.Order.SINGLE);
 		reactant.addBond(2, 3, IBond.Order.SINGLE);
@@ -208,7 +208,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 		reactant.addBond(5, 6, IBond.Order.SINGLE);
 		addExplicitHydrogens(reactant);
 			
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants.addMolecule(reactant);
 
 		/* initiate */
@@ -333,20 +333,20 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 
-		IMolecule molecule = builder.newMolecule();//miles("C=CC")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);//miles("C=CC")
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 3, IBond.Order.SINGLE);
 		molecule.addBond(0, 4, IBond.Order.SINGLE);
 		molecule.addBond(1, 5, IBond.Order.SINGLE);
@@ -371,7 +371,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
         setOfProducts.addMolecule(null);
 		return setOfProducts;

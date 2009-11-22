@@ -127,7 +127,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    * @return A ChemFile containing the data parsed from input.
    */
   private IChemFile readChemFile(IChemFile file) {
-    IChemSequence chemSequence = file.getBuilder().newChemSequence();
+    IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
         
     int number_of_atoms;
     StringTokenizer tokenizer;
@@ -147,10 +147,10 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         number_of_atoms = Integer.parseInt(token);
         String info = input.readLine();
                 
-        IChemModel chemModel = file.getBuilder().newChemModel();
-        IMoleculeSet setOfMolecules = file.getBuilder().newMoleculeSet();
+        IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
+        IMoleculeSet setOfMolecules = file.getBuilder().newInstance(IMoleculeSet.class);
                 
-        IMolecule m = file.getBuilder().newMolecule();
+        IMolecule m = file.getBuilder().newInstance(IMolecule.class);
         m.setProperty(CDKConstants.TITLE ,info);
 
         String[] types = new String[number_of_atoms];
@@ -220,7 +220,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         Point3d[] cartCoords = ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
         
         for (i=0; i<number_of_atoms; i++) {
-              m.addAtom(file.getBuilder().newAtom(types[i], cartCoords[i]));
+              m.addAtom(file.getBuilder().newInstance(IAtom.class,types[i], cartCoords[i]));
         }
 
 //        logger.debug("molecule:"+m);

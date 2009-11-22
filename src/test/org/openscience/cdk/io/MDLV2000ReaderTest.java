@@ -38,8 +38,8 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -469,7 +469,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.addChemObjectIOListener(listener);
         reader.customizeJob();
 
-        IMolecule mol = reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+        IMolecule mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
         Assert.assertNotNull(mol);
         Assert.assertEquals(5, mol.getAtomCount());
 

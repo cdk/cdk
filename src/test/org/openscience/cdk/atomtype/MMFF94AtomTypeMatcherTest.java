@@ -30,15 +30,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -151,13 +151,13 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
 //		logger.debug("**** START ATOMTYPE Methanol TEST ******");
 		//System.out.println("**** START ATOMTYPE Methanol TEST ******");  
-        IMolecule mol = builder.newMolecule();
-		IAtom carbon = builder.newAtom(Elements.CARBON);
-		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
+        IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
+		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
 		// making sure the order matches the test results
 		mol.addAtom(carbon); 
 		mol.addAtom(oxygen);
-		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
+		mol.addBond(builder.newInstance(IBond.class,carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
 		
 		addExplicitHydrogens(mol);
         
@@ -182,13 +182,13 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Methylamine() throws Exception {
 		//System.out.println("**** START ATOMTYPE Methylamine TEST ******");	
-		IMolecule mol = builder.newMolecule();
-		IAtom carbon = builder.newAtom(Elements.CARBON);
-		IAtom nitrogen = builder.newAtom(Elements.NITROGEN);
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
+		IAtom nitrogen = builder.newInstance(IAtom.class,Elements.NITROGEN);
 		// making sure the order matches the test results
 		mol.addAtom(carbon); 
 		mol.addAtom(nitrogen);
-		mol.addBond(builder.newBond(carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
+		mol.addBond(builder.newInstance(IBond.class,carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
 		
 		addExplicitHydrogens(mol);
 
@@ -212,16 +212,16 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Ethoxyethane() throws Exception {
 		//System.out.println("**** START ATOMTYPE Ethoxyethane TEST ******");	   
-		IMolecule mol = builder.newMolecule();
-		IAtom carbon = builder.newAtom(Elements.CARBON);
-		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
-		IAtom carbon2 = builder.newAtom(Elements.CARBON);
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
+		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
+		IAtom carbon2 = builder.newInstance(IAtom.class,Elements.CARBON);
 		// making sure the order matches the test results
 		mol.addAtom(carbon); 
 		mol.addAtom(oxygen);
 		mol.addAtom(carbon2); 
-		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
-		mol.addBond(builder.newBond(carbon2, oxygen, CDKConstants.BONDORDER_SINGLE));
+		mol.addBond(builder.newInstance(IBond.class,carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
+		mol.addBond(builder.newInstance(IBond.class,carbon2, oxygen, CDKConstants.BONDORDER_SINGLE));
 		
 		addExplicitHydrogens(mol);
 		
@@ -245,13 +245,13 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Methanethiol() throws Exception {
 		//System.out.println("**** START ATOMTYPE Methanethiol TEST ******");
-		IMolecule mol = builder.newMolecule();
-		IAtom carbon = builder.newAtom(Elements.CARBON);
-		IAtom sulfur = builder.newAtom(Elements.SULFUR);
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
+		IAtom sulfur = builder.newInstance(IAtom.class,Elements.SULFUR);
 		// making sure the order matches the test results
 		mol.addAtom(carbon); 
 		mol.addAtom(sulfur);
-		mol.addBond(builder.newBond(carbon, sulfur, CDKConstants.BONDORDER_SINGLE));
+		mol.addBond(builder.newInstance(IBond.class,carbon, sulfur, CDKConstants.BONDORDER_SINGLE));
 		
 		addExplicitHydrogens(mol);
 
@@ -275,13 +275,13 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Chloromethane() throws Exception {
 		//System.out.println("**** START ATOMTYPE Chlormethane TEST ******");
-		IMolecule mol = builder.newMolecule();
-		IAtom carbon = builder.newAtom(Elements.CARBON);
-		IAtom chlorine = builder.newAtom(Elements.CHLORINE);
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
+		IAtom chlorine = builder.newInstance(IAtom.class,Elements.CHLORINE);
 		// making sure the order matches the test results
 		mol.addAtom(carbon); 
 		mol.addAtom(chlorine);
-		mol.addBond(builder.newBond(carbon, chlorine, CDKConstants.BONDORDER_SINGLE));
+		mol.addBond(builder.newInstance(IBond.class,carbon, chlorine, CDKConstants.BONDORDER_SINGLE));
 		
 		addExplicitHydrogens(mol);
 		
@@ -305,29 +305,29 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Benzene() throws Exception {
 		//System.out.println("**** START ATOMTYPE Benzene TEST ******");
-		IMolecule mol = builder.newMolecule();
+		IMolecule mol = builder.newInstance(IMolecule.class);
 		for (int i=0; i<6; i++) {
-			IAtom carbon = builder.newAtom(Elements.CARBON);
+			IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 			carbon.setFlag(CDKConstants.ISAROMATIC, true);
 			// making sure the order matches the test results
 			mol.addAtom(carbon);			
 		}
-		IBond ringBond = builder.newBond(mol.getAtom(0), mol.getAtom(1), CDKConstants.BONDORDER_DOUBLE);
+		IBond ringBond = builder.newInstance(IBond.class,mol.getAtom(0), mol.getAtom(1), CDKConstants.BONDORDER_DOUBLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
-		ringBond = builder.newBond(mol.getAtom(1), mol.getAtom(2), CDKConstants.BONDORDER_SINGLE);
+		ringBond = builder.newInstance(IBond.class,mol.getAtom(1), mol.getAtom(2), CDKConstants.BONDORDER_SINGLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
-		ringBond = builder.newBond(mol.getAtom(2), mol.getAtom(3), CDKConstants.BONDORDER_DOUBLE);
+		ringBond = builder.newInstance(IBond.class,mol.getAtom(2), mol.getAtom(3), CDKConstants.BONDORDER_DOUBLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
-		ringBond = builder.newBond(mol.getAtom(3), mol.getAtom(4), CDKConstants.BONDORDER_SINGLE);
+		ringBond = builder.newInstance(IBond.class,mol.getAtom(3), mol.getAtom(4), CDKConstants.BONDORDER_SINGLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
-		ringBond = builder.newBond(mol.getAtom(4), mol.getAtom(5), CDKConstants.BONDORDER_DOUBLE);
+		ringBond = builder.newInstance(IBond.class,mol.getAtom(4), mol.getAtom(5), CDKConstants.BONDORDER_DOUBLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
-		ringBond = builder.newBond(mol.getAtom(5), mol.getAtom(0), CDKConstants.BONDORDER_SINGLE);
+		ringBond = builder.newInstance(IBond.class,mol.getAtom(5), mol.getAtom(0), CDKConstants.BONDORDER_SINGLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
 			
@@ -356,8 +356,8 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Water() throws Exception {
 		//System.out.println("**** START ATOMTYPE Water TEST ******");
-		IMolecule mol = builder.newMolecule();
-		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
 		// making sure the order matches the test results
 		mol.addAtom(oxygen);
 		addExplicitHydrogens(mol);

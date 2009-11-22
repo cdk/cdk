@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * to the constructor are null. PeriodicTableElement can be configured by using
  * the PeriodicTableElement.configure() method:
  * <pre>
- *   ElementPTFactory eptf = ElementPTFactory.getInstance(a.getBuilder());
+ *   ElementPTFactory eptf = ElementPTFactory.getInstance(a.getNewBuilder());
  *   ElementPTFactory.configure(pte);
  * </pre>
  *

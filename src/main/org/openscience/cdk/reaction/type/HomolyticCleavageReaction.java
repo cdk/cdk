@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <pre>A-B => [A*] + [B*]</pre>
  * <p>It is processed by the HomolyticCleavageMechanism class</p>
  * <pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new HomolyticCleavageReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -127,7 +127,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
             throw new CDKException("HomolyticCleavageReaction don't expects agents");
         }
 
-        IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
+        IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
         IMolecule reactant = reactants.getMolecule(0);
 
         /* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
@@ -151,7 +151,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
             	atomList.add(atom2);
             	ArrayList<IBond> bondList = new ArrayList<IBond>();
             	bondList.add(bondi);
-				IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+				IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
 				moleculeSet.addMolecule(reactant);
 				IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 				if(reaction == null)

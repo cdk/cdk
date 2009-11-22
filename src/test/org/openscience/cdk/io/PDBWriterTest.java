@@ -41,9 +41,9 @@ import org.openscience.cdk.Crystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * TestCase for the PDBWriter class.
@@ -66,12 +66,12 @@ public class PDBWriterTest extends ChemObjectIOTest {
     	StringWriter sWriter = new StringWriter();
     	PDBWriter writer = new PDBWriter(sWriter);
     	
-    	ICrystal crystal = builder.newCrystal();
+    	ICrystal crystal = builder.newInstance(ICrystal.class);
     	crystal.setA(new Vector3d(0,1,0));
     	crystal.setB(new Vector3d(1,0,0));
     	crystal.setC(new Vector3d(0,0,2));
     	
-    	IAtom atom = builder.newAtom("C");
+    	IAtom atom = builder.newInstance(IAtom.class,"C");
     	atom.setPoint3d(new Point3d(0.1,0.1,0.3));
     	crystal.addAtom(atom);
 

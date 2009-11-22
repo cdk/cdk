@@ -28,9 +28,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomParity;
+import org.openscience.cdk.interfaces.AbstractAtomParityTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.AbstractAtomParityTest;
 
 /**
  * Checks the functionality of the {@link DebugAtomParity}.
@@ -44,7 +44,14 @@ public class DebugAtomParityTest extends AbstractAtomParityTest {
     }
 
     @Test public void testCorrectInstance() {
-    	IAtomParity parity = getBuilder().newAtomParity(getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), 1); 
+    	IAtomParity parity = getNewBuilder().newInstance(IAtomParity.class,
+    	    getNewBuilder().newInstance(IAtom.class),
+    	    getNewBuilder().newInstance(IAtom.class),
+    	    getNewBuilder().newInstance(IAtom.class),
+    	    getNewBuilder().newInstance(IAtom.class),
+    	    getNewBuilder().newInstance(IAtom.class),
+    	    1
+    	); 
     	Assert.assertTrue(
     		"Object not instance of DebugAtomParity, but: " + parity.getClass().getName(),
     		parity instanceof DebugAtomParity
@@ -52,15 +59,15 @@ public class DebugAtomParityTest extends AbstractAtomParityTest {
     }
 
     @Test public void testDebugAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
-        IAtom carbon = getBuilder().newAtom("C");
+        IAtom carbon = getNewBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
-        IAtom carbon1 = getBuilder().newAtom("C");
+        IAtom carbon1 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon1.setID("c1");
-        IAtom carbon2 = getBuilder().newAtom("C");
+        IAtom carbon2 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon2.setID("c2");
-        IAtom carbon3 = getBuilder().newAtom("C");
+        IAtom carbon3 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon3.setID("c3");
-        IAtom carbon4 = getBuilder().newAtom("C");
+        IAtom carbon4 = getNewBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new DebugAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);

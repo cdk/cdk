@@ -146,7 +146,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     	Double originalCharge1 = bond.getAtom(0).getCharge();
     	Double originalCharge2 = bond.getAtom(1).getCharge();
     	if (!isCachedAtomContainer(ac)) {
-    		IMolecule mol = ac.getBuilder().newMolecule(ac);
+    		IMolecule mol = ac.getBuilder().newInstance(IMolecule.class,ac);
         	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
 	        try {
 				peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);

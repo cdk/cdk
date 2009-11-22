@@ -141,10 +141,10 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     // private procedures
 
     private IChemFile readChemFile(IChemFile file) throws Exception {
-        IChemSequence chemSequence = file.getBuilder().newChemSequence();
-        IChemModel chemModel = file.getBuilder().newChemModel();
-        IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
-        molecule = file.getBuilder().newMolecule();
+        IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
+        IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
+        IMoleculeSet moleculeSet = file.getBuilder().newInstance(IMoleculeSet.class);
+        molecule = file.getBuilder().newInstance(IMolecule.class);
         atomIDs = new HashMap();
         
         String line = input.readLine();
@@ -279,14 +279,14 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 
 	private IAtom getAtom(int i) {
 		if (molecule.getAtomCount() <= i) {
-			molecule.addAtom(molecule.getBuilder().newAtom());
+			molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class));
 		}
 		return molecule.getAtom(i);
 	}
 	
 	private IBond getBond(int i) {
 		if (molecule.getBondCount() <= i) {
-			molecule.addBond(molecule.getBuilder().newBond());
+			molecule.addBond(molecule.getBuilder().newInstance(IBond.class));
 		}
 		return molecule.getBond(i);
 	}

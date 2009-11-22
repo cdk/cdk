@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -36,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class NitrogenRuleTest extends FormulaRuleTest {
 	
-	private static DefaultChemObjectBuilder builder;
+	private static IChemObjectBuilder builder;
 
 	/**
     *  The JUnit setup method

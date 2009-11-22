@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,20 +18,63 @@
  */
 package org.openscience.cdk;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.formula.AdductFormula;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaSet;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ICDKObject;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IFragmentAtom;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBMonomer;
+import org.openscience.cdk.interfaces.IPDBPolymer;
+import org.openscience.cdk.interfaces.IPDBStructure;
+import org.openscience.cdk.interfaces.IPolymer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionScheme;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStructure;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 /**
- * A helper class to instantiate a IChemObject for a specific implementation.
+ * A helper class to instantiate a {@link ICDKObject} for the original CDK
+ * implementation.
  *
  * @author        egonw
  * @cdk.module    data
@@ -44,324 +82,348 @@ import javax.vecmath.Point3d;
  */
 public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 
-	private static DefaultChemObjectBuilder instance = null;
+	private static IChemObjectBuilder instance = null;
 	
 	private DefaultChemObjectBuilder() {}
 
-	public static DefaultChemObjectBuilder getInstance() {
+	public static IChemObjectBuilder getInstance() {
 		if (instance == null) {
 			instance = new DefaultChemObjectBuilder();
 		}
 		return instance;
 	}
 	
-	public IAminoAcid newAminoAcid() {
-		return new AminoAcid();
+	@SuppressWarnings("unchecked")
+    public <T extends ICDKObject>T newInstance(
+	    Class<T> clazz, Object... params)
+	{
+        if (IElement.class.isAssignableFrom(clazz)) {
+            return newElementInstance(clazz, params);
+        } else if (IElectronContainer.class.isAssignableFrom(clazz)) {
+            return newElectronContainerInstance(clazz, params);
+        } else if (IAminoAcid.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new AminoAcid();
+        } else if (IChemFile.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new ChemFile();
+        } else if (IChemModel.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new ChemModel();
+        } else if (IChemSequence.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new ChemSequence();
+        } else if (IPDBMonomer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new PDBMonomer();
+        } else if (IMonomer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new Monomer();
+        } else if (IStrand.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new Strand();
+        } else if (IPDBPolymer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new PDBPolymer();
+        } else if (IBioPolymer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new BioPolymer();
+        } else if (IReaction.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new Reaction();
+        } else if (IReactionScheme.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new ReactionScheme();
+        } else if (IReactionSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new ReactionSet();
+        } else if (IPolymer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new Polymer();
+        } else if (IRingSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new RingSet();
+        } else if (IMoleculeSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new MoleculeSet();
+        } else if (IAtomContainerSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new AtomContainerSet();
+        } else if (IAtomContainer.class.isAssignableFrom(clazz)) {
+            return newAtomContainerInstance(clazz, params);
+        } else if (IMapping.class.isAssignableFrom(clazz)) {
+            if (params.length == 2 &&
+                params[0] instanceof IChemObject &&
+                params[1] instanceof IChemObject) {
+                return (T)new Mapping((IChemObject)params[0], (IChemObject)params[1]);
+            }
+        } else if (IChemObject.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new ChemObject();
+            if (params.length == 1 &&
+                params[0] instanceof IChemObject)
+                return (T)new ChemObject((IChemObject)params[0]);
+        } else if (clazz.isAssignableFrom(IAtomParity.class)) {
+            if (params.length == 6 &&
+                params[0] instanceof IAtom &&
+                params[1] instanceof IAtom &&
+                params[2] instanceof IAtom &&
+                params[3] instanceof IAtom &&
+                params[4] instanceof IAtom &&
+                params[5] instanceof Integer)
+                return (T)new AtomParity(
+                    (IAtom)params[0],
+                    (IAtom)params[1],
+                    (IAtom)params[2],
+                    (IAtom)params[3],
+                    (IAtom)params[4],
+                    (Integer)params[5]
+                );
+        } else if (clazz.isAssignableFrom(IPDBStructure.class)) {
+            if (params.length == 0) return (T)new PDBStructure();
+        } else if (clazz.isAssignableFrom(IMolecularFormula.class)) {
+            if (params.length == 0) return (T)new MolecularFormula();
+        } else if (clazz.isAssignableFrom(IMolecularFormulaSet.class)) {
+            if (params.length == 0) return (T)new MolecularFormulaSet();
+            if (params.length == 1 &&
+                params[0] instanceof IMolecularFormula)
+                return (T)new MolecularFormulaSet((IMolecularFormula)params[0]);
+        } else if (clazz.isAssignableFrom(IAdductFormula.class)) {
+            if (params.length == 0) return (T)new AdductFormula();
+            if (params.length == 1 &&
+                params[0] instanceof IMolecularFormula)
+                return (T)new AdductFormula((IMolecularFormula)params[0]);
+        }
+
+	    throw new IllegalArgumentException(
+	        "No constructor found with the given number of parameters."
+	    );
+	}
+
+    @SuppressWarnings("unchecked")
+    private <T extends ICDKObject>T newAtomContainerInstance(
+            Class<T> clazz, Object... params)
+    {
+        if (ICrystal.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new Crystal();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtomContainer) {
+                return (T)new Crystal((IAtomContainer)params[0]);
+            }
+        } else if (IMolecule.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new Molecule();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtomContainer) {
+                return (T)new Molecule((IAtomContainer)params[0]);
+            } else if (params.length == 4 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof Integer &&
+                    params[2] instanceof Integer &&
+                    params[3] instanceof Integer) {
+                return (T)new Molecule(
+                    (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
+                );
+            }
+        } else if (IRing.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new Ring();
+            } else if (params.length == 1) {
+                if (params[0] instanceof IAtomContainer) {
+                    return (T)new Ring((IAtomContainer)params[0]);
+                } else if (params[0] instanceof Integer) {
+                    return (T)new Ring((Integer)params[0]);
+                } 
+            } else if (params.length == 2 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof String) {
+                return (T)new Ring((Integer)params[0], (String)params[1]);
+            }
+        } else {
+            if (params.length == 0) {
+                return (T)new AtomContainer();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtomContainer) {
+                return (T)new AtomContainer((IAtomContainer)params[0]);
+            } else if (params.length == 4 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof Integer &&
+                    params[2] instanceof Integer &&
+                    params[3] instanceof Integer) {
+                return (T)new AtomContainer(
+                    (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
+                );
+            }
+        }
+
+        throw new IllegalArgumentException(
+            "No constructor found with the given number of parameters."
+        );
+    }
+
+	@SuppressWarnings("unchecked")
+    private <T extends ICDKObject>T newElementInstance(
+	        Class<T> clazz, Object... params)
+	{
+	    if (IFragmentAtom.class.isAssignableFrom(clazz)) {
+	        if (params.length == 0) return (T)new FragmentAtom();
+	    } else if (IPDBAtom.class.isAssignableFrom(clazz)) {
+	        if (params.length == 1) {
+	            if (params[0] instanceof String)   return (T)new PDBAtom((String)params[0]);
+	            if (params[0] instanceof IElement) return (T)new PDBAtom((IElement)params[0]);
+	        } else  if (params.length == 2 &&
+	                params[0] instanceof String &&
+	                params[1] instanceof Point3d) {
+	            return (T)new PDBAtom((String)params[0], (Point3d)params[1]);
+	        }
+	    } else if (IPseudoAtom.class.isAssignableFrom(clazz)) {
+	        if (params.length == 0) return (T)new PseudoAtom();
+	        if (params.length == 1) {
+	            if (params[0] instanceof String)   return (T)new PseudoAtom((String)params[0]);
+	            if (params[0] instanceof IElement) return (T)new PseudoAtom((IElement)params[0]);
+	        } else  if (params.length == 2 && params[0] instanceof String) {
+	            if (params[1] instanceof Point2d)
+	                return (T)new PseudoAtom((String)params[0], (Point2d)params[1]);
+	            if (params[1] instanceof Point3d)
+	                return (T)new PseudoAtom((String)params[0], (Point3d)params[1]);
+	        }
+	    } else if (IAtom.class.isAssignableFrom(clazz)) {
+	        if (params.length == 0) return (T)new Atom();
+	        if (params.length == 1) {
+	            if (params[0] instanceof String)   return (T)new Atom((String)params[0]);
+	            if (params[0] instanceof IElement) return (T)new Atom((IElement)params[0]);
+	        } else  if (params.length == 2 && params[0] instanceof String) {
+	            if (params[1] instanceof Point2d)
+	                return (T)new Atom((String)params[0], (Point2d)params[1]);
+	            if (params[1] instanceof Point3d)
+	                return (T)new Atom((String)params[0], (Point3d)params[1]);
+	        }
+        } else if (IAtomType.class.isAssignableFrom(clazz)) {
+            if (params.length == 1) {
+                if (params[0] instanceof String)
+                    return (T)new AtomType((String)params[0]);
+                if (params[0] instanceof IElement)
+                    return (T)new AtomType((IElement)params[0]);
+            } else if (params.length == 2 &&
+                    params[0] instanceof String &&
+                    params[1] instanceof String) {
+                return (T)new AtomType(
+                    (String)params[0], (String)params[1]
+                );
+            }
+        } else if (IIsotope.class.isAssignableFrom(clazz)) {
+            if (params.length == 1) {
+                if (params[0] instanceof IElement) return (T)new Isotope((IElement)params[0]);
+                if (params[0] instanceof String) return (T)new Isotope((String)params[0]);
+            } else if (params.length == 2 &&
+                    params[0] instanceof String &&
+                    params[1] instanceof Integer) {
+                return (T)new Isotope(
+                    (String)params[0], (Integer)params[1]
+                );
+            } else if (params.length == 4 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof String &&
+                    params[2] instanceof Double &&
+                    params[3] instanceof Double) {
+                return (T)new Isotope(
+                    (Integer)params[0], (String)params[1],
+                    (Double)params[2], (Double)params[3]
+                );
+            } else if (params.length == 5 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof String &&
+                    params[2] instanceof Integer &&
+                    params[3] instanceof Double &&
+                    params[4] instanceof Double) {
+                return (T)new Isotope(
+                    (Integer)params[0], (String)params[1], (Integer)params[2],
+                    (Double)params[3], (Double)params[4]
+                );
+            }
+        } else {
+            if (params.length == 0) {
+                return (T)new Element();
+            } else if (params.length == 1) {
+                if (params[0] instanceof String)
+                    return (T)new Element((String)params[0]);
+                if (params[0] instanceof IElement)
+                    return (T)new Element((IElement)params[0]);
+            } else if (params.length == 2 &&
+                    params[0] instanceof String &&
+                    params[1] instanceof Integer) {
+                return (T)new Element(
+                    (String)params[0], (Integer)params[1]
+                );
+            }
+	    }
+
+	    throw new IllegalArgumentException(
+            "No constructor found with the given number of parameters."
+        );
 	}
 	
-	public IAtom newAtom() {
-		return new Atom();
-	}
-	
-    public IAtom newAtom(String elementSymbol) {
-    	return new Atom(elementSymbol);
-    }
-    
-    public IAtom newAtom(String elementSymbol, javax.vecmath.Point2d point2d) {
-    	return new Atom(elementSymbol, point2d);
-    }
+	@SuppressWarnings("unchecked")
+    private <T extends ICDKObject>T newElectronContainerInstance(
+            Class<T> clazz, Object... params)
+    {
+	    if (IBond.class.isAssignableFrom(clazz)) {
+	        if (params.length == 0) {
+	            return (T)new Bond();
+	        } else if (params.length == 2 &&
+	                params[0] instanceof IAtom &&
+	                params[0] instanceof IAtom) {
+	            return (T)new Bond((IAtom)params[0], (IAtom)params[1]);
+	        } else if (params.length == 3 &&
+	                params[0] instanceof IAtom &&
+	                params[1] instanceof IAtom &&
+	                params[2] instanceof IBond.Order) {
+	            return (T)new Bond(
+	                (IAtom)params[0], (IAtom)params[1], (IBond.Order)params[2]
+	            );
+	        } else if (params.length == 4 &&
+	                params[0] instanceof IAtom &&
+	                params[1] instanceof IAtom &&
+	                params[2] instanceof IBond.Order &&
+	                params[3] instanceof IBond.Stereo) {
+	            return (T)new Bond(
+	                (IAtom)params[0], (IAtom)params[1],
+	                (IBond.Order)params[2], (IBond.Stereo)params[3]
+	            );
+	        } else if (params[params.length-1] instanceof IBond.Order) {
+	            // the IBond(IAtom[], IBond.Order) constructor
+	            boolean allIAtom = true;
+	            int orderIndex = params.length-1;
+	            List<IAtom> atoms = new ArrayList<IAtom>();
+	            for (int i=0; i<(orderIndex-1) && allIAtom; i++) {
+	                if (!(params[i] instanceof IAtom)) {
+	                    allIAtom = false;
+	                    atoms.add((IAtom)params[i]);
+	                }
+	            }
+	            if (allIAtom) {
+	                return (T)new Bond(
+	                    atoms.toArray(new IAtom[atoms.size()]),
+	                    (IBond.Order)params[orderIndex]
+	                );
+	            }
+	        } else {
+	            // the IBond(IAtom[]) constructor
+	            boolean allIAtom = true;
+	            for (int i=0; i<(params.length-1) && allIAtom; i++) {
+	                if (!(params[i] instanceof IAtom)) allIAtom = false;
+	            }
+	            if (allIAtom) {
+	                return (T)new Bond((IAtom[])params);
+	            }
+	        }
+	    } else if (ILonePair.class.isAssignableFrom(clazz)) {
+	        if (params.length == 0) {
+	            return (T)new LonePair();
+	        } else if (params.length == 1 &&
+	                params[0] instanceof IAtom) {
+	            return (T)new LonePair((IAtom)params[0]);
+	        }
+	    } else if (ISingleElectron.class.isAssignableFrom(clazz)) {
+	        if (params.length == 0) {
+	            return (T)new SingleElectron();
+	        } else if (params.length == 1 &&
+	                params[0] instanceof IAtom) {
+	            return (T)new SingleElectron((IAtom)params[0]);
+	        }
+	    } else {
+	        if (params.length == 0) return (T)new ElectronContainer();
+	    }
 
-    public IAtom newAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
-    	return new Atom(elementSymbol, point3d);
-    }
-		
-	public IAtomContainer newAtomContainer() {
-		return new AtomContainer();
-	}
-    
-	public IAtomContainer newAtomContainer(int atomCount, int bondCount, int lonePairCount, int singleElectronCount) {
-		return new AtomContainer(atomCount, bondCount, lonePairCount, singleElectronCount);
-	}
-    
-	public IAtomContainer newAtomContainer(IAtomContainer container) {
-		return new AtomContainer(container);
-	}
-	
-    public IAtomParity newAtomParity(IAtom centralAtom, IAtom first, IAtom second, 
-    		IAtom third, IAtom fourth, int parity) {
-    	return new AtomParity(centralAtom, first, second, third, fourth, parity);
-    }
-
-	public IAtomType newAtomType(String elementSymbol) {
-		return new AtomType(elementSymbol);
-	}
-
-	public IAtomType newAtomType(String identifier, String elementSymbol) {
-		return new AtomType(identifier, elementSymbol);
-	}
-
-	public IBioPolymer newBioPolymer(){
-		return new BioPolymer();
-	}
-
-	public IBond newBond() {
-		return new Bond();
-	}
-	
-	public IBond newBond(IAtom atom1, IAtom atom2) {
-		return new Bond(atom1, atom2);
-	}
-	
-	public IBond newBond(IAtom atom1, IAtom atom2, IBond.Order order) {
-		return new Bond(atom1, atom2, order);
-	}
-	
-	public IBond newBond(IAtom atom1, IAtom atom2, IBond.Order order,
-			             IBond.Stereo stereo) {
-		return new Bond(atom1, atom2, order, stereo);
-	}
-
-    public IBond newBond(IAtom[] atoms) {
-        return new Bond(atoms);
-    }
-
-    public IBond newBond(IAtom[] atoms, IBond.Order order) {
-        return new Bond(atoms, order);
-    }
-
-    public IChemFile newChemFile() {
-		return new ChemFile();
-	}
-
-	public IChemModel newChemModel() {
-		return new ChemModel();
-	}
-	
-	public IChemObject newChemObject() {
-		return new ChemObject();
-	}
-	
-	public IChemSequence newChemSequence() {
-		return new ChemSequence();   
-	}
-	
-    public ICrystal newCrystal() {
-    	return new Crystal();
-    }
-    
-    public ICrystal newCrystal(IAtomContainer container) {
-    	return new Crystal(container);
-    }
-    
-    public IElectronContainer newElectronContainer() {
-    	return new ElectronContainer();
-    }
-    
-    public IElement newElement() {
-    	return new Element();
-    }
-
-    public IElement newElement(String symbol) {
-    	return new Element(symbol);
-    }
-
-    public IElement newElement(String symbol, int atomicNumber) {
-    	return new Element(symbol, atomicNumber);
-    }
-
-	public IIsotope newIsotope(String elementSymbol) {
-		return new Isotope(elementSymbol);
-	}
-	
-	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
-			int massNumber, double exactMass, double abundance) {
-		return new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-	}
-
-	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
-			double exactMass, double abundance) {
-		return new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
-	}
-
-	public IIsotope newIsotope(String elementSymbol, int massNumber) {
-		return new Isotope(elementSymbol, massNumber);
-	}
-
-    public ILonePair newLonePair() {
-    	return new LonePair();
-    }
-
-    public ILonePair newLonePair(IAtom atom) {
-    	return new LonePair(atom);
-    }
-
-    public IMapping newMapping(IChemObject objectOne, IChemObject objectTwo) {
-		return new Mapping(objectOne, objectTwo);
-	}
-    
-	public IMolecule newMolecule() {
-		return new Molecule();
-	}
-
-	public IMolecule newMolecule(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
-		return new Molecule(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
-	}
-
-	public IMolecule newMolecule(IAtomContainer container) {
-		return new Molecule(container);
-	}
-
-	public IMonomer newMonomer () {
-		return new Monomer();
-	}
-	
-	public IPolymer newPolymer() {
-		return new Polymer();
-	}
-	
-	public IPDBAtom newPDBAtom(IElement element){
-		return new PDBAtom(element);
-	}
-	
-	public IPDBAtom newPDBAtom(String symbol){
-		return new PDBAtom(symbol);
-	}
-	
-	public IPDBAtom newPDBAtom(String symbol, Point3d coordinate){
-		return new PDBAtom(symbol, coordinate);
-	}
-
-	public IPDBPolymer newPDBPolymer() {
-		return new PDBPolymer();
-	}
-	
-	public IPDBStructure newPDBStructure() {
-		return new PDBStructure();
-	}
-	
-	public IPDBMonomer newPDBMonomer() {
-		return new PDBMonomer();
-	}
-
-    public IReaction newReaction() {
-    	return new Reaction();	
+        throw new IllegalArgumentException(
+            "No constructor found with the given number of parameters."
+        );
     }
 	
-	public IRing newRing() {
-		return new Ring();
-	}
-	
-	public IRing newRing(IAtomContainer container) {
-		return new Ring(container);
-	}
-	
-	public IRing newRing(int ringSize, String elementSymbol) {
-		return new Ring(ringSize, elementSymbol);
-	}
-	
-	public IRing newRing(int ringSize) {
-		return new Ring(ringSize);
-	}
-
-	public IRingSet newRingSet() {
-		return new RingSet();
-	}
-
-	public IAtomContainerSet newAtomContainerSet() {
-		return new AtomContainerSet();
-	}
-
-	public IMoleculeSet newMoleculeSet() {
-		return new MoleculeSet();
-	}
-
-	public IReactionSet newReactionSet() {
-		return new ReactionSet();
-	}
-
-	public IReactionScheme newReactionScheme() {
-		return new ReactionScheme();
-	}
-	
-    public ISingleElectron newSingleElectron() {
-    	return new SingleElectron();
-    }
-    
-    public ISingleElectron newSingleElectron(IAtom atom) {
-    	return new SingleElectron(atom);   
-    }
-
-	public IStrand newStrand() {
-		return new Strand();
-	}
-
-	public IPseudoAtom newPseudoAtom() {
-		return new PseudoAtom();
-	}
-
-	public IPseudoAtom newPseudoAtom(String label) {
-		return new PseudoAtom(label);
-	}
-
-	public IPseudoAtom newPseudoAtom(IAtom atom) {
-		return new PseudoAtom(atom);
-	}
-
-	public IPseudoAtom newPseudoAtom(String label, Point3d point3d) {
-		return new PseudoAtom(label, point3d);
-	}
-
-	public IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
-		return new PseudoAtom(label, point2d);
-	}
-
-	public IAtom newAtom(IElement element) {
-		return new Atom(element);
-	}
-
-	public IAtomType newAtomType(IElement element) {
-		return new AtomType(element);
-	}
-
-	public IChemObject newChemObject(IChemObject object) {
-		return new ChemObject(object);
-	}
-
-	public IElement newElement(IElement element) {
-		return new Element(element);
-	}
-
-	public IIsotope newIsotope(IElement element) {
-		return new Isotope(element);
-	}
-
-	public IPseudoAtom newPseudoAtom(IElement element) {
-		return new PseudoAtom(element);
-	}
-
-	public IFragmentAtom newFragmentAtom() {
-		return new FragmentAtom();
-	}
-
-	public IAdductFormula newAdductFormula() {
-	    return new AdductFormula();
-    }
-
-	public IMolecularFormula newMolecularFormula() {
-	    return new MolecularFormula();
-    }
-
-	public IMolecularFormulaSet newMolecularFormulaSet() {
-	    return new MolecularFormulaSet();
-    }
-
-	public IAdductFormula newAdductFormula(IMolecularFormula formula) {
-	    return new AdductFormula(formula);
-    }
-
-	public IMolecularFormulaSet newMolecularFormulaSet(IMolecularFormula formula) {
-	    return new MolecularFormulaSet(formula);
-    }
 }
 
 

@@ -20,21 +20,31 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point3d;
 
 /**
  * Tests for molecular descriptors.
@@ -177,18 +187,18 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     @Test
     public void testTakeIntoAccountImplicitHydrogens() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule methane1 = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
+        IMolecule methane1 = builder.newInstance(IMolecule.class);
+        IAtom c1 = builder.newInstance(IAtom.class,"C");
         c1.setHydrogenCount(4);
         methane1.addAtom(c1);
 
-        IMolecule methane2 = builder.newMolecule();
-        IAtom c2 = builder.newAtom("C");
+        IMolecule methane2 = builder.newInstance(IMolecule.class);
+        IAtom c2 = builder.newInstance(IAtom.class,"C");
         methane2.addAtom(c2);
-        IAtom h1 = builder.newAtom("H"); methane2.addAtom(h1);
-        IAtom h2 = builder.newAtom("H"); methane2.addAtom(h2);
-        IAtom h3 = builder.newAtom("H"); methane2.addAtom(h3);
-        IAtom h4 = builder.newAtom("H"); methane2.addAtom(h4);
+        IAtom h1 = builder.newInstance(IAtom.class,"H"); methane2.addAtom(h1);
+        IAtom h2 = builder.newInstance(IAtom.class,"H"); methane2.addAtom(h2);
+        IAtom h3 = builder.newInstance(IAtom.class,"H"); methane2.addAtom(h3);
+        IAtom h4 = builder.newInstance(IAtom.class,"H"); methane2.addAtom(h4);
         methane2.addBond(0, 1, Order.SINGLE);
         methane2.addBond(0, 2, Order.SINGLE);
         methane2.addBond(0, 3, Order.SINGLE);
@@ -222,31 +232,31 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     @Test
     public void testTakeIntoAccountImplicitHydrogensInEthane() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule ethane1 = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
+        IMolecule ethane1 = builder.newInstance(IMolecule.class);
+        IAtom c1 = builder.newInstance(IAtom.class,"C");
+        IAtom c2 = builder.newInstance(IAtom.class,"C");
         c1.setHydrogenCount(3);
         c2.setHydrogenCount(3);
         ethane1.addAtom(c1);
         ethane1.addAtom(c2);
         ethane1.addBond(0,1,IBond.Order.SINGLE);
 
-        IMolecule ethane2 = builder.newMolecule();
-        IAtom c3 = builder.newAtom("C");
-        IAtom c4 = builder.newAtom("C");
+        IMolecule ethane2 = builder.newInstance(IMolecule.class);
+        IAtom c3 = builder.newInstance(IAtom.class,"C");
+        IAtom c4 = builder.newInstance(IAtom.class,"C");
         ethane2.addAtom(c3);
         ethane2.addAtom(c4);
 
-        IAtom h1 = builder.newAtom("H");
+        IAtom h1 = builder.newInstance(IAtom.class,"H");
         ethane2.addAtom(h1);
-        IAtom h2 = builder.newAtom("H");
+        IAtom h2 = builder.newInstance(IAtom.class,"H");
         ethane2.addAtom(h2);
-        IAtom h3 = builder.newAtom("H");
+        IAtom h3 = builder.newInstance(IAtom.class,"H");
         ethane2.addAtom(h3);
 
-        IAtom h4 = builder.newAtom("H");
-        IAtom h5 = builder.newAtom("H");
-        IAtom h6 = builder.newAtom("H");
+        IAtom h4 = builder.newInstance(IAtom.class,"H");
+        IAtom h5 = builder.newInstance(IAtom.class,"H");
+        IAtom h6 = builder.newInstance(IAtom.class,"H");
         ethane2.addAtom(h4);
         ethane2.addAtom(h5);
         ethane2.addAtom(h6);
@@ -288,17 +298,17 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     @Ignore
     @Test public void testTakeIntoAccountBondHybridization() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule ethane1 = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
+        IMolecule ethane1 = builder.newInstance(IMolecule.class);
+        IAtom c1 = builder.newInstance(IAtom.class,"C");
+        IAtom c2 = builder.newInstance(IAtom.class,"C");
         ethane1.addAtom(c1);
         ethane1.addAtom(c2);
         ethane1.addBond(0, 1, IBond.Order.DOUBLE);
 
-        IMolecule ethane2 = builder.newMolecule();
-        IAtom c3 = builder.newAtom("C");
+        IMolecule ethane2 = builder.newInstance(IMolecule.class);
+        IAtom c3 = builder.newInstance(IAtom.class,"C");
         c3.setHybridization(IAtomType.Hybridization.SP2);
-        IAtom c4 = builder.newAtom("C");
+        IAtom c4 = builder.newInstance(IAtom.class,"C");
         c4.setHybridization(IAtomType.Hybridization.SP2);
         ethane2.addAtom(c3);
         ethane2.addAtom(c4);
@@ -330,12 +340,12 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     }
 
     private IMolecule someoneBringMeSomeWater() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
         h1.setPoint3d(new Point3d(1.0, 0.0, 0.0));
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
         h2.setPoint3d(new Point3d(-1.0, 0.0, 0.0));
         mol.addAtom(c1);
         mol.addAtom(h1);

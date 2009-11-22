@@ -1,18 +1,16 @@
 package org.openscience.cdk;
 
+import java.util.Iterator;
+import java.util.Random;
+
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ConformerContainer;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import javax.vecmath.Point3d;
-import java.util.Iterator;
-import java.util.Random;
 
 
 /**
@@ -28,7 +26,7 @@ public class ConformerContainerTest extends CDKTestCase {
     private static Random rnd = new Random();
 
     private static IAtomContainer getBaseAtomContainer(int natom, String title) {
-        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         container.setProperty(CDKConstants.TITLE, title);
         for (int i = 0; i < natom; i++) {
             Point3d coord = new Point3d();
@@ -36,14 +34,14 @@ public class ConformerContainerTest extends CDKTestCase {
             coord.y = rnd.nextDouble();
             coord.z = rnd.nextDouble();
 
-            IAtom atom = DefaultChemObjectBuilder.getInstance().newAtom("C", coord);
+            IAtom atom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C", coord);
             container.addAtom(atom);
         }
 
         for (int i = 0; i < natom - 1; i++) {
             IAtom atom1 = container.getAtom(i);
             IAtom atom2 = container.getAtom(i + 1);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom2, IBond.Order.SINGLE);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,atom1, atom2, IBond.Order.SINGLE);
             container.addBond(bond);
         }
         return container;

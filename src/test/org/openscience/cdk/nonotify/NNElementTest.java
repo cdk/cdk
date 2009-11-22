@@ -54,7 +54,7 @@ public class NNElementTest extends AbstractElementTest {
     
     @Test public void testNNElement_IElement() {
     	IElement element = new NNElement();
-        IElement e = element.getBuilder().newElement(element);
+        IElement e = element.getBuilder().newInstance(IElement.class,element);
         Assert.assertTrue(e instanceof IChemObject);
     }
     

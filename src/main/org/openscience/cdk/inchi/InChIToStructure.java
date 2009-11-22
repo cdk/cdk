@@ -20,7 +20,22 @@
  */
 package org.openscience.cdk.inchi;
 
-import net.sf.jniinchi.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.jniinchi.INCHI_BOND_STEREO;
+import net.sf.jniinchi.INCHI_BOND_TYPE;
+import net.sf.jniinchi.INCHI_PARITY;
+import net.sf.jniinchi.INCHI_RET;
+import net.sf.jniinchi.INCHI_STEREOTYPE;
+import net.sf.jniinchi.JniInchiAtom;
+import net.sf.jniinchi.JniInchiBond;
+import net.sf.jniinchi.JniInchiException;
+import net.sf.jniinchi.JniInchiInputInchi;
+import net.sf.jniinchi.JniInchiOutputStructure;
+import net.sf.jniinchi.JniInchiStereo0D;
+import net.sf.jniinchi.JniInchiWrapper;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -29,10 +44,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>This class generates a CDK IAtomContainer from an InChI string.  It places 
@@ -133,13 +144,13 @@ protected JniInchiInputInchi input;
         }
         
         //molecule = new AtomContainer();
-        molecule = builder.newAtomContainer();
+        molecule = builder.newInstance(IAtomContainer.class);
         
         Map<JniInchiAtom, IAtom> inchiCdkAtomMap = new HashMap<JniInchiAtom, IAtom>();
         
         for (int i = 0; i < output.getNumAtoms(); i ++) {
             JniInchiAtom iAt = output.getAtom(i);
-            IAtom cAt = builder.newAtom();
+            IAtom cAt = builder.newInstance(IAtom.class);
             
             inchiCdkAtomMap.put(iAt, cAt);
             
@@ -166,7 +177,7 @@ protected JniInchiInputInchi input;
         
         for (int i = 0; i < output.getNumBonds(); i ++) {
             JniInchiBond iBo = output.getBond(i);
-            IBond cBo = builder.newBond();
+            IBond cBo = builder.newInstance(IBond.class);
             
             IAtom atO = inchiCdkAtomMap.get(iBo.getOriginAtom());
             IAtom atT = inchiCdkAtomMap.get(iBo.getTargetAtom());
@@ -241,7 +252,7 @@ protected JniInchiInputInchi input;
                     continue;
                 }
                 
-                IAtomParity parity = builder.newAtomParity(atC, at0, at1, at2, at3, sign);
+                IAtomParity parity = builder.newInstance(IAtomParity.class,atC, at0, at1, at2, at3, sign);
                 molecule.addAtomParity(parity);
             } else {
                 // TODO - other types of atom parity - double bond, etc

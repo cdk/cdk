@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -32,10 +30,10 @@ import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -49,6 +47,7 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -62,11 +61,10 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IBond.Stereo;
 
 /**
- * A helper class to instantiate a IChemObject for the debug implementation.
+ * A helper class to instantiate a {@link IChemObject} for the original CDK
+ * implementation.
  *
  * @author        egonw
  * @cdk.module    datadebug
@@ -74,332 +72,285 @@ import org.openscience.cdk.interfaces.IBond.Stereo;
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
-	private static DebugChemObjectBuilder instance = null;
+	private static IChemObjectBuilder instance = null;
 	
 	private DebugChemObjectBuilder() {}
 
-	public static DebugChemObjectBuilder getInstance() {
+	public static IChemObjectBuilder getInstance() {
 		if (instance == null) {
 			instance = new DebugChemObjectBuilder();
 		}
 		return instance;
 	}
 	
-	public IAminoAcid newAminoAcid() {
-		return new DebugAminoAcid();
-	}
-	
-	public IAtom newAtom() {
-		return new DebugAtom();
-	}
-	
-    public IAtom newAtom(String elementSymbol) {
-    	return new DebugAtom(elementSymbol);
-    }
-    
-    public IAtom newAtom(String elementSymbol, javax.vecmath.Point2d point2d) {
-    	return new DebugAtom(elementSymbol, point2d);
-    }
+	@SuppressWarnings("unchecked")
+    public <T extends ICDKObject>T newInstance(
+	    Class<T> clazz, Object... params)
+	{
+        if (IFragmentAtom.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugFragmentAtom();
+        } else if (IPDBAtom.class.isAssignableFrom(clazz)) {
+            if (params.length == 1) {
+                if (params[0] instanceof String)   return (T)new DebugPDBAtom((String)params[0]);
+                if (params[0] instanceof IElement) return (T)new DebugPDBAtom((IElement)params[0]);
+            } else  if (params.length == 2 && params[0] instanceof String) {
+                if (params[1] instanceof Point3d)
+                    return (T)new DebugPDBAtom((String)params[0], (Point3d)params[1]);
+            }
+        } else if (IPseudoAtom.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugPseudoAtom();
+            if (params.length == 1) {
+                if (params[0] instanceof String)   return (T)new DebugPseudoAtom((String)params[0]);
+                if (params[0] instanceof IElement) return (T)new DebugPseudoAtom((IElement)params[0]);
+            } else  if (params.length == 2 && params[0] instanceof String) {
+                if (params[1] instanceof Point2d)
+                    return (T)new DebugPseudoAtom((String)params[0], (Point2d)params[1]);
+                if (params[1] instanceof Point3d)
+                    return (T)new DebugPseudoAtom((String)params[0], (Point3d)params[1]);
+            }
+        } else if (IAtom.class.isAssignableFrom(clazz)) {
+	        if (params.length == 0) return (T)new DebugAtom();
+	        if (params.length == 1) {
+	            if (params[0] instanceof String)   return (T)new DebugAtom((String)params[0]);
+	            if (params[0] instanceof IElement) return (T)new DebugAtom((IElement)params[0]);
+	        } else  if (params.length == 2 && params[0] instanceof String) {
+	            if (params[1] instanceof Point2d)
+	                return (T)new DebugAtom((String)params[0], (Point2d)params[1]);
+                if (params[1] instanceof Point3d)
+                    return (T)new DebugAtom((String)params[0], (Point3d)params[1]);
+            }
+	    } else if (IAminoAcid.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugAminoAcid();
+        } else if (IChemFile.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugChemFile();
+        } else if (IChemModel.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugChemModel();
+        } else if (IChemSequence.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugChemSequence();
+        } else if (IPDBMonomer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugPDBMonomer();
+        } else if (IMonomer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugMonomer();
+        } else if (IStrand.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugStrand();
+        } else if (IPDBPolymer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugPDBPolymer();
+        } else if (IBioPolymer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugBioPolymer();
+        } else if (IReaction.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugReaction();
+        } else if (IReactionScheme.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugReactionScheme();
+        } else if (IReactionSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugReactionSet();
+        } else if (IPolymer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugPolymer();
+        } else if (IRingSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugRingSet();
+        } else if (IMoleculeSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugMoleculeSet();
+        } else if (IAtomContainerSet.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugAtomContainerSet();
+        } else if (ICrystal.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugCrystal();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtomContainer) {
+                return (T)new DebugCrystal((IAtomContainer)params[0]);
+            }
+        } else if (IMolecule.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugMolecule();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtomContainer) {
+                return (T)new DebugMolecule((IAtomContainer)params[0]);
+            } else if (params.length == 4 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof Integer &&
+                    params[2] instanceof Integer &&
+                    params[3] instanceof Integer) {
+                return (T)new DebugMolecule(
+                    (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
+                );
+            }
+        } else if (IRing.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugRing();
+            } else if (params.length == 1) {
+                if (params[0] instanceof IAtomContainer) {
+                    return (T)new DebugRing((IAtomContainer)params[0]);
+                } else if (params[0] instanceof Integer) {
+                    return (T)new DebugRing((Integer)params[0]);
+                } 
+            } else if (params.length == 2 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof String) {
+                return (T)new DebugRing((Integer)params[0], (String)params[1]);
+            }
+        } else if (IAtomContainer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugAtomContainer();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtomContainer) {
+                return (T)new DebugAtomContainer((IAtomContainer)params[0]);
+            } else if (params.length == 4 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof Integer &&
+                    params[2] instanceof Integer &&
+                    params[3] instanceof Integer) {
+                return (T)new DebugAtomContainer(
+                    (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
+                );
+            }
+        } else if (IAtomType.class.isAssignableFrom(clazz)) {
+            if (params.length == 1) {
+                if (params[0] instanceof String)
+                    return (T)new DebugAtomType((String)params[0]);
+                if (params[0] instanceof IElement)
+                    return (T)new DebugAtomType((IElement)params[0]);
+            } else if (params.length == 2 &&
+                    params[0] instanceof String &&
+                    params[1] instanceof String) {
+                return (T)new DebugAtomType(
+                    (String)params[0], (String)params[1]
+                );
+            }
+        } else if (IIsotope.class.isAssignableFrom(clazz)) {
+            if (params.length == 1) {
+                if (params[0] instanceof IElement) return (T)new DebugIsotope((IElement)params[0]);
+                if (params[0] instanceof String) return (T)new DebugIsotope((String)params[0]);
+            } else if (params.length == 2 &&
+                    params[0] instanceof String &&
+                    params[1] instanceof Integer) {
+                return (T)new DebugIsotope(
+                    (String)params[0], (Integer)params[1]
+                );
+            } else if (params.length == 4 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof String &&
+                    params[2] instanceof Double &&
+                    params[3] instanceof Double) {
+                return (T)new DebugIsotope(
+                    (Integer)params[0], (String)params[1],
+                    (Double)params[2], (Double)params[3]
+                );
+            } else if (params.length == 5 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof String &&
+                    params[2] instanceof Integer &&
+                    params[3] instanceof Double &&
+                    params[4] instanceof Double) {
+                return (T)new DebugIsotope(
+                    (Integer)params[0], (String)params[1], (Integer)params[2],
+                    (Double)params[3], (Double)params[4]
+                );
+            }
+        } else if (IElement.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugElement();
+            } else if (params.length == 1) {
+                if (params[0] instanceof String)
+                    return (T)new DebugElement((String)params[0]);
+                if (params[0] instanceof IElement)
+                    return (T)new DebugElement((IElement)params[0]);
+            } else if (params.length == 2 &&
+                    params[0] instanceof String &&
+                    params[1] instanceof Integer) {
+                return (T)new DebugElement(
+                    (String)params[0], (Integer)params[1]
+                );
+            }
+        } else if (IBond.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugBond();
+            } else if (params.length == 2 &&
+                params[0] instanceof IAtom &&
+                params[0] instanceof IAtom) {
+                return (T)new DebugBond((IAtom)params[0], (IAtom)params[1]);
+            } else if (params.length == 2 &&
+                    params[0] instanceof IAtom[] &&
+                    params[1] instanceof IBond.Order) {
+                    return (T)new DebugBond((IAtom[])params[0], (IBond.Order)params[1]);
+            } else if (params.length == 3 &&
+                    params[0] instanceof IAtom &&
+                    params[1] instanceof IAtom &&
+                    params[2] instanceof IBond.Order) {
+                return (T)new DebugBond(
+                    (IAtom)params[0], (IAtom)params[1], (IBond.Order)params[2]
+                );
+            } else if (params.length == 4 &&
+                    params[0] instanceof IAtom &&
+                    params[1] instanceof IAtom &&
+                    params[2] instanceof IBond.Order &&
+                    params[3] instanceof IBond.Stereo) {
+                return (T)new DebugBond(
+                    (IAtom)params[0], (IAtom)params[1],
+                    (IBond.Order)params[2], (IBond.Stereo)params[3]
+                );
+            }
+        } else if (ILonePair.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugLonePair();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtom) {
+                return (T)new DebugLonePair((IAtom)params[0]);
+            }
+        } else if (ISingleElectron.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugSingleElectron();
+            } else if (params.length == 1 &&
+                params[0] instanceof IAtom) {
+                return (T)new DebugSingleElectron((IAtom)params[0]);
+            }
+        } else if (IElectronContainer.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugElectronContainer();
+        } else if (IMapping.class.isAssignableFrom(clazz)) {
+            if (params.length == 2 &&
+                params[0] instanceof IChemObject &&
+                params[1] instanceof IChemObject) {
+                return (T)new DebugMapping((IChemObject)params[0], (IChemObject)params[1]);
+            }
+        } else if (IChemObject.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) return (T)new DebugChemObject();
+            if (params.length == 1 &&
+                params[0] instanceof IChemObject)
+                return (T)new DebugChemObject((IChemObject)params[0]);
+        } else if (clazz.isAssignableFrom(IAtomParity.class)) {
+            if (params.length == 6 &&
+                params[0] instanceof IAtom &&
+                params[1] instanceof IAtom &&
+                params[2] instanceof IAtom &&
+                params[3] instanceof IAtom &&
+                params[4] instanceof IAtom &&
+                params[5] instanceof Integer)
+                return (T)new DebugAtomParity(
+                    (IAtom)params[0],
+                    (IAtom)params[1],
+                    (IAtom)params[2],
+                    (IAtom)params[3],
+                    (IAtom)params[4],
+                    (Integer)params[5]
+                );
+        } else if (clazz.isAssignableFrom(IPDBStructure.class)) {
+            if (params.length == 0) return (T)new DebugPDBStructure();
+        } else if (clazz.isAssignableFrom(IMolecularFormula.class)) {
+            if (params.length == 0) return (T)new DebugMolecularFormula();
+        } else if (clazz.isAssignableFrom(IMolecularFormulaSet.class)) {
+            if (params.length == 0) return (T)new DebugMolecularFormulaSet();
+            if (params.length == 1 &&
+                    params[0] instanceof IMolecularFormula)
+                return (T)new DebugMolecularFormulaSet((IMolecularFormula)params[0]);
+        } else if (clazz.isAssignableFrom(IAdductFormula.class)) {
+            if (params.length == 0) return (T)new DebugAdductFormula();
+            if (params.length == 1 &&
+                    params[0] instanceof IMolecularFormula)
+                return (T)new DebugAdductFormula((IMolecularFormula)params[0]);
+        }
 
-    public IAtom newAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
-    	return new DebugAtom(elementSymbol, point3d);
-    }
-		
-	public IAtomContainer newAtomContainer() {
-		return new DebugAtomContainer();
+	    throw new IllegalArgumentException(
+	        "No constructor found with the given number of parameters."
+	    );
 	}
-    
-	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
-		return new DebugAtomContainer(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
-	}
-    
-	public IAtomContainer newAtomContainer(IAtomContainer container) {
-		return new DebugAtomContainer(container);
-	}
-	
-    public IAtomParity newAtomParity(
-    		IAtom centralAtom, 
-    		IAtom first, 
-    		IAtom second, 
-    		IAtom third, 
-    		IAtom fourth,
-            int parity) {
-    	return new DebugAtomParity(centralAtom, first, second, third, fourth, parity);
-    }
-
-	public IAtomType newAtomType(String elementSymbol) {
-		return new DebugAtomType(elementSymbol);
-	}
-
-	public IAtomType newAtomType(String identifier, String elementSymbol) {
-		return new DebugAtomType(identifier, elementSymbol);
-	}
-
-	public IBioPolymer newBioPolymer(){
-		return new DebugBioPolymer();
-	}
-	
-	public IPDBAtom newPDBAtom(IElement element) {
-    	return new DebugPDBAtom(element);
-    }
-	
-	public IPDBAtom newPDBAtom(String elementSymbol) {
-    	return new DebugPDBAtom(elementSymbol);
-    }
-    
-    public IPDBAtom newPDBAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
-    	return new DebugPDBAtom(elementSymbol, point3d);
-    }
-    
-    public IPDBStructure newPDBStructure() {
-    	return new DebugPDBStructure();
-    }
-    
-	public IPDBPolymer newPDBPolymer(){
-		return new DebugPDBPolymer();
-	}
-	
-	public IPDBMonomer newPDBMonomer(){
-		return new DebugPDBMonomer();
-	}
-	
-	public IPDBStructure newStructure(){
-		return new DebugPDBStructure();
-	}
-
-	public IBond newBond() {
-		return new DebugBond();
-	}
-	
-	public IBond newBond(IAtom atom1, IAtom atom2) {
-		return new DebugBond(atom1, atom2);
-	}
-	
-	public IBond newBond(IAtom atom1, IAtom atom2, Order order) {
-		return new DebugBond(atom1, atom2, order);
-	}
-	
-	public IBond newBond(IAtom atom1, IAtom atom2, Order order, Stereo stereo) {
-		return new DebugBond(atom1, atom2, order, stereo);
-	}
-
-    public IBond newBond(IAtom[] atoms) {
-        return new DebugBond(atoms);
-    }
-
-    public IBond newBond(IAtom[] atoms, Order order) {
-        return new DebugBond(atoms, order);
-    }
-
-    public IChemFile newChemFile() {
-		return new DebugChemFile();
-	}
-
-	public IChemModel newChemModel() {
-		return new DebugChemModel();
-	}
-	
-	public IChemObject newChemObject() {
-		return new DebugChemObject();
-	}
-	
-	public IChemSequence newChemSequence() {
-		return new DebugChemSequence();   
-	}
-	
-    public ICrystal newCrystal() {
-    	return new DebugCrystal();
-    }
-    
-    public ICrystal newCrystal(IAtomContainer container) {
-    	return new DebugCrystal(container);
-    }
-    
-    public IElectronContainer newElectronContainer() {
-    	return new DebugElectronContainer();
-    }
-    
-    public IElement newElement() {
-    	return new DebugElement();
-    }
-
-    public IElement newElement(String symbol) {
-    	return new DebugElement(symbol);
-    }
-
-    public IElement newElement(String symbol, int atomicNumber) {
-    	return new DebugElement(symbol, atomicNumber);
-    }
-
-	public IIsotope newIsotope(String elementSymbol) {
-		return new DebugIsotope(elementSymbol);
-	}
-	
-	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
-			int massNumber, double exactMass, double abundance) {
-		return new DebugIsotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-	}
-
-	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
-			double exactMass, double abundance) {
-		return new DebugIsotope(atomicNumber, elementSymbol, exactMass, abundance);
-	}
-
-	public IIsotope newIsotope(String elementSymbol, int massNumber) {
-		return new DebugIsotope(elementSymbol, massNumber);
-	}
-
-    public ILonePair newLonePair() {
-    	return new DebugLonePair();
-    }
-
-    public ILonePair newLonePair(IAtom atom) {
-    	return new DebugLonePair(atom);
-    }
-
-    public IMapping newMapping(IChemObject objectOne, IChemObject objectTwo) {
-		return new DebugMapping(objectOne, objectTwo);
-	}
-    
-	public IMolecule newMolecule() {
-		return new DebugMolecule();
-	}
-
-	public IMolecule newMolecule(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
-		return new DebugMolecule(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
-	}
-
-	public IMolecule newMolecule(IAtomContainer container) {
-		return new DebugMolecule(container);
-	}
-
-	public IMonomer newMonomer () {
-		return new DebugMonomer();
-	}
-	
-	public IPolymer newPolymer() {
-		return new DebugPolymer();
-	}
-
-    public IReaction newReaction() {
-    	return new DebugReaction();	
-    }
-	
-	public IRing newRing() {
-		return new DebugRing();
-	}
-	
-	public IRing newRing(IAtomContainer container) {
-		return new DebugRing(container);
-	}
-	
-	public IRing newRing(int ringSize, String elementSymbol) {
-		return new DebugRing(ringSize, elementSymbol);
-	}
-	
-	public IRing newRing(int ringSize) {
-		return new DebugRing(ringSize);
-	}
-
-	public IRingSet newRingSet() {
-		return new DebugRingSet();
-	}
-
-	public IAtomContainerSet newAtomContainerSet() {
-		return new DebugAtomContainerSet();
-	}
-
-	public IMoleculeSet newMoleculeSet() {
-		return new DebugMoleculeSet();
-	}
-
-	public IReactionSet newReactionSet() {
-		return new DebugReactionSet();
-	}
-
-	public IReactionScheme newReactionScheme() {
-		return new DebugReactionScheme();
-	}
-	
-    public ISingleElectron newSingleElectron() {
-    	return new DebugSingleElectron();
-    }
-    
-    public ISingleElectron newSingleElectron(IAtom atom) {
-    	return new DebugSingleElectron(atom);   
-    }
-
-	public IStrand newStrand() {
-		return new DebugStrand();
-	}
-
-	public IPseudoAtom newPseudoAtom() {
-		return new DebugPseudoAtom();
-	}
-
-	public IPseudoAtom newPseudoAtom(String label) {
-		return new DebugPseudoAtom(label);
-	}
-
-	public IPseudoAtom newPseudoAtom(IAtom atom) {
-		return new DebugPseudoAtom(atom);
-	}
-
-	public IPseudoAtom newPseudoAtom(String label, Point3d point3d) {
-		return new DebugPseudoAtom(label, point3d);
-	}
-
-	public IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
-		return new DebugPseudoAtom(label, point2d);
-	}
-
-	public IAtom newAtom(IElement element) {
-		return new DebugAtom(element);
-	}
-
-	public IAtomType newAtomType(IElement element) {
-		return new DebugAtomType(element);
-	}
-
-	public IChemObject newChemObject(IChemObject object) {
-		return new DebugChemObject(object);
-	}
-
-	public IElement newElement(IElement element) {
-		return new DebugElement(element);
-	}
-
-	public IIsotope newIsotope(IElement element) {
-		return new DebugIsotope(element);
-	}
-
-	public IPseudoAtom newPseudoAtom(IElement element) {
-		return new DebugPseudoAtom(element);
-	}
-
-	public IFragmentAtom newFragmentAtom() {
-		return new DebugFragmentAtom();
-	}
-
-	public IAdductFormula newAdductFormula() {
-		return new DebugAdductFormula();
-    }
-
-	public IAdductFormula newAdductFormula(IMolecularFormula formula) {
-	    return new DebugAdductFormula(formula);
-    }
-
-	public IMolecularFormula newMolecularFormula() {
-	    return new DebugMolecularFormula();
-    }
-
-	public IMolecularFormulaSet newMolecularFormulaSet() {
-	    return new DebugMolecularFormulaSet();
-    }
-
-	public IMolecularFormulaSet newMolecularFormulaSet(IMolecularFormula formula) {
-	    return new DebugMolecularFormulaSet(formula);
-    }
 }
 
 

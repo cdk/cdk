@@ -484,7 +484,7 @@ public class IonizationPotentialTool {
 			IAtom atom) throws CDKException {
 	    IReactionProcess reactionNBE  = new ElectronImpactNBEReaction();
 
-		IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
+		IMoleculeSet setOfReactants = container.getBuilder().newInstance(IMoleculeSet.class);
         setOfReactants.addMolecule((IMolecule) container);
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER,true);

@@ -32,8 +32,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -159,7 +159,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
-    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	GeometryTools.rotate(ac, new Point2d(0,0),Math.PI/2);
@@ -179,7 +179,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
-    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	double [] minmax=GeometryTools.getMinMax(ac);
@@ -195,7 +195,7 @@ public class GeometryToolsTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(-2,-1));
         Atom atom2=new Atom("C");
         atom2.setPoint2d(new Point2d(-5,-1));
-        IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         double [] minmax=GeometryTools.getMinMax(ac);
@@ -240,7 +240,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
-    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	Point2d p=GeometryTools.get2DCenter(ac);
@@ -255,7 +255,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
     	atom2.setExactMass(12.0);
-    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	Point2d p=GeometryTools.get2DCentreOfMass(ac);
@@ -282,10 +282,10 @@ public class GeometryToolsTest extends CDKTestCase {
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
-    	IRing ac=DefaultChemObjectBuilder.getInstance().newRing();
+    	IRing ac=DefaultChemObjectBuilder.getInstance().newInstance(IRing.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
-    	IRingSet ringset=DefaultChemObjectBuilder.getInstance().newRingSet();
+    	IRingSet ringset=DefaultChemObjectBuilder.getInstance().newInstance(IRingSet.class);
     	ringset.addAtomContainer(ac);
     	Point2d p=GeometryTools.get2DCenter(ac);
     	Assert.assertEquals(p.x,1.0,.1);
@@ -298,7 +298,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
-    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	Point2d p=GeometryTools.get2DCenter(ac.atoms());
@@ -386,7 +386,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	atom1.setPoint2d(new Point2d(-1,-1));
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
-    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	GeometryTools.translateAllPositive(ac);
@@ -402,7 +402,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
     	IBond bond=new Bond(atom1,atom2);
-    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	Assert.assertEquals(GeometryTools.getLength2D(bond),2.23,0.01);

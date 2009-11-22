@@ -27,8 +27,9 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.AbstractAdductFormulaTest;
+import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Checks the functionality of the {@link DebugAdductFormula}.
@@ -48,7 +49,7 @@ public class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
     }
 
     @Test public void testDebugAdductFormula_IMolecularFormula() {
-        IAdductFormula mfS = new DebugAdductFormula(getBuilder().newMolecularFormula());
+        IAdductFormula mfS = new DebugAdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 }

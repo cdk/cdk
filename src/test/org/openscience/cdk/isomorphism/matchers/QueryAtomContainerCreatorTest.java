@@ -26,9 +26,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
@@ -46,15 +47,15 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
 	 */
     @Test public void test12DimethylBenzene() throws Exception {
     	IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-    	IMolecule molecule = builder.newMolecule();
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
+    	IMolecule molecule = builder.newInstance(IMolecule.class);
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addBond(0,1,IBond.Order.SINGLE);
     	molecule.addBond(1,2,IBond.Order.DOUBLE);
     	molecule.addBond(2,3,IBond.Order.SINGLE);
@@ -65,13 +66,13 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
     	molecule.addBond(1,7,IBond.Order.SINGLE);
     	
     	// 2,3-dimethyl-1,3-butadiene matches
-    	IMolecule query1 = builder.newMolecule();
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
+    	IMolecule query1 = builder.newInstance(IMolecule.class);
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addBond(0,1,IBond.Order.SINGLE);
     	molecule.addBond(1,2,IBond.Order.DOUBLE);
     	molecule.addBond(3,0,IBond.Order.DOUBLE);
@@ -81,13 +82,13 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
     	Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(molecule, queryContainer1));
     	
     	// 2,3-dimethyl-2-butene does not match
-    	IMolecule query2 = builder.newMolecule();
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
-    	molecule.addAtom(builder.newAtom("C"));
+    	IMolecule query2 = builder.newInstance(IMolecule.class);
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addBond(0,1,IBond.Order.DOUBLE);
     	molecule.addBond(1,2,IBond.Order.SINGLE);
     	molecule.addBond(3,0,IBond.Order.SINGLE);

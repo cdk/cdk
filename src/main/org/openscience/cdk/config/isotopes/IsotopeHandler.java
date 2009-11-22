@@ -28,8 +28,8 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
@@ -148,7 +148,7 @@ public class IsotopeHandler extends DefaultHandler {
     }
 
     private IIsotope createIsotopeOfElement(String currentElement, Attributes atts) {
-        IIsotope isotope = builder.newIsotope(currentElement);
+        IIsotope isotope = builder.newInstance(IIsotope.class, currentElement);
 
         for (int i = 0; i < atts.getLength(); i++) {            
             try {

@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>Below you have an example how to initiate the mechanism.</p>
  * <p>It is processed by the AdductionLPMechanism class</p>
  * <pre>
- *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new AdductionProtonLPReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -129,7 +129,7 @@ public class AdductionProtonLPReaction extends ReactionEngine implements IReacti
 			throw new CDKException("AdductionProtonLPReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
@@ -148,13 +148,13 @@ public class AdductionProtonLPReaction extends ReactionEngine implements IReacti
 				
 				ArrayList<IAtom> atomList = new ArrayList<IAtom>();
 				atomList.add(atomi);
-				IAtom atomH = reactant.getBuilder().newAtom("H");
+				IAtom atomH = reactant.getBuilder().newInstance(IAtom.class,"H");
 				atomH.setFormalCharge(1);
 				atomList.add(atomH);
 				
-				IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+				IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
 				moleculeSet.addMolecule(reactant);
-				IMolecule adduct = reactant.getBuilder().newMolecule();
+				IMolecule adduct = reactant.getBuilder().newInstance(IMolecule.class);
 				adduct.addAtom(atomH);
 				moleculeSet.addMolecule(adduct);
 				

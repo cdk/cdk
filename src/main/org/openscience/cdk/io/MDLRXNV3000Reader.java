@@ -33,8 +33,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -125,8 +125,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
          if (object instanceof IReaction) {
              return readReaction(object.getBuilder());
          } else if (object instanceof IChemModel) {
-             IChemModel model = object.getBuilder().newChemModel();
-             IReactionSet reactionSet = object.getBuilder().newReactionSet();
+             IChemModel model = object.getBuilder().newInstance(IChemModel.class);
+             IReactionSet reactionSet = object.getBuilder().newInstance(IReactionSet.class);
              reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setReactionSet(reactionSet);
              return model;
@@ -172,7 +172,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
     
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
-        IReaction reaction = builder.newReaction();
+        IReaction reaction = builder.newInstance(IReaction.class);
         readLine(); // first line should be $RXN
         readLine(); // second line
         readLine(); // third line
@@ -224,7 +224,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                     super.mode
                 );
                 IMolecule reactant = (IMolecule)reader.read(
-                  builder.newMolecule());
+                  builder.newInstance(IMolecule.class));
                   
                 // add reactant
                 reaction.addReactant(reactant);
@@ -257,7 +257,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 MDLV3000Reader reader = new MDLV3000Reader(
                   new StringReader(molFile.toString()));
                 IMolecule product = (IMolecule)reader.read(
-                  builder.newMolecule());
+                  builder.newInstance(IMolecule.class));
                   
                 // add product
                 reaction.addProduct(product);

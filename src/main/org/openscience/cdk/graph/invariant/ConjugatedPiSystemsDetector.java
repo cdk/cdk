@@ -73,7 +73,7 @@ public class ConjugatedPiSystemsDetector {
      */
     @TestMethod("testDetectButadiene,test3Aminomethane_cation,testPiSystemWithCarbokation,testCyanoallene")
     public static IAtomContainerSet detect(IAtomContainer ac) {
-        IAtomContainerSet piSystemSet = ac.getBuilder().newAtomContainerSet();
+        IAtomContainerSet piSystemSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
         	IAtom atom = ac.getAtom(i);
@@ -86,7 +86,7 @@ public class ConjugatedPiSystemsDetector {
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
             }
-            IAtomContainer piSystem = ac.getBuilder().newAtomContainer();
+            IAtomContainer piSystem = ac.getBuilder().newInstance(IAtomContainer.class);
             Stack<IAtom> stack = new Stack<IAtom>();
 
             piSystem.addAtom(firstAtom);

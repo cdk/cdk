@@ -28,6 +28,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
@@ -104,7 +105,7 @@ public class INChIHandler extends DefaultHandler {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
                 tautomer = new Molecule(inchiTool.processFormula(
-                	setOfMolecules.getBuilder().newAtomContainer(), currentChars
+                	setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars
                 ));
             } else {
                 logger.warn("Cannot set atom info for empty tautomer");

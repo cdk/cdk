@@ -73,13 +73,13 @@ public class RingPartitioner {
         if (ringSet.getAtomContainerCount() == 0) return ringSets;
         IRing ring = (IRing)ringSet.getAtomContainer(0);
         if (ring == null) return ringSets;
-        IRingSet rs = ring.getBuilder().newRingSet();
+        IRingSet rs = ring.getBuilder().newInstance(IRingSet.class);
         for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
             rs.addAtomContainer(ringSet.getAtomContainer(f));
         }
         do {
             ring = (IRing) rs.getAtomContainer(0);
-            IRingSet newRs = ring.getBuilder().newRingSet();
+            IRingSet newRs = ring.getBuilder().newInstance(IRingSet.class);
             newRs.addAtomContainer(ring);
             ringSets.add(walkRingSystem(rs, ring, newRs));
 
@@ -99,7 +99,7 @@ public class RingPartitioner {
     public static IAtomContainer convertToAtomContainer(IRingSet ringSet) {
     	IRing ring = (IRing) ringSet.getAtomContainer(0);
     	if (ring == null) return null;
-        IAtomContainer ac = ring.getBuilder().newAtomContainer();
+        IAtomContainer ac = ring.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
             ring = (IRing) ringSet.getAtomContainer(i);
             for (int r = 0; r < ring.getBondCount(); r++) {

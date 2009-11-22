@@ -55,16 +55,16 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
     @Test 
     public void testMolecularFormula() {
 
-        IMolecularFormula mf = getBuilder().newMolecularFormula();
+        IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
     	Assert.assertNotNull(mf);
     }
 
     @Test
     public void testIsTheSame_IIsotope_IIsotope() throws IOException {
         MolecularFormula mf = new MolecularFormula();
-        IIsotope carb = getBuilder().newIsotope("C");
-        IIsotope anotherCarb = getBuilder().newIsotope("C");
-        IIsotope h = getBuilder().newIsotope("H");
+        IIsotope carb = getBuilder().newInstance(IIsotope.class,"C");
+        IIsotope anotherCarb = getBuilder().newInstance(IIsotope.class,"C");
+        IIsotope h = getBuilder().newInstance(IIsotope.class,"H");
 
         carb.setExactMass(12.0);
         anotherCarb.setExactMass(12.0);

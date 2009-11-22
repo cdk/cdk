@@ -39,8 +39,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
 
     @Test public void testAdd_IRingSet() {
         IRingSet rs = (IRingSet)newChemObject();
-        IRing r1 = rs.getBuilder().newRing(5, "C");
-        IRing r2 = rs.getBuilder().newRing(3, "C");        
+        IRing r1 = rs.getBuilder().newInstance(IRing.class,5, "C");
+        IRing r2 = rs.getBuilder().newInstance(IRing.class,3, "C");        
         rs.addAtomContainer(r1);
         
         IRingSet rs2 = (IRingSet)newChemObject();
@@ -63,7 +63,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
 
     @Test public void testClone() throws CloneNotSupportedException {
         IRingSet ringset = (IRingSet)newChemObject();
-        IRing ring = ringset.getBuilder().newRing();
+        IRing ring = ringset.getBuilder().newInstance(IRing.class);
         ringset.addAtomContainer(ring);
         
         IRingSet clone = (IRingSet)ringset.clone();
@@ -76,21 +76,21 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     @Test public void testContains_IAtom() {
         IRingSet ringset = (IRingSet)newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newAtom("C"); // rather artificial molecule
-        IAtom ring1Atom2 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom1 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom2 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom1 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom2 = ringset.getBuilder().newAtom("C");
-        IBond ring1Bond1 = ringset.getBuilder().newBond(ring1Atom1, ring1Atom2);
-        IBond ring1Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring1Atom1);
-        IBond ring1Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring1Atom2);
-        IBond sharedBond = ringset.getBuilder().newBond(sharedAtom1, sharedAtom2);
-        IBond ring2Bond1 = ringset.getBuilder().newBond(ring2Atom1, ring2Atom2);
-        IBond ring2Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring2Atom1);
-        IBond ring2Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring2Atom2);
+        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C"); // rather artificial molecule
+        IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IBond ring1Bond1 = ringset.getBuilder().newInstance(IBond.class,ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring1Atom2);
+        IBond sharedBond = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = ringset.getBuilder().newInstance(IBond.class,ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring2Atom2);
 
-        IRing ring1 = ringset.getBuilder().newRing();
+        IRing ring1 = ringset.getBuilder().newInstance(IRing.class);
         ring1.addAtom(ring1Atom1);
         ring1.addAtom(ring1Atom2);
         ring1.addAtom(sharedAtom1);
@@ -99,7 +99,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ring1.addBond(ring1Bond2);
         ring1.addBond(ring1Bond3);
         ring1.addBond(sharedBond);
-        IRing ring2 = ringset.getBuilder().newRing();
+        IRing ring2 = ringset.getBuilder().newInstance(IRing.class);
         ring2.addAtom(ring2Atom1);
         ring2.addAtom(ring2Atom2);
         ring2.addAtom(sharedAtom1);
@@ -123,21 +123,21 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     @Test public void testContains_IAtomContainer() {
         IRingSet ringset = (IRingSet)newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newAtom("C"); // rather artificial molecule
-        IAtom ring1Atom2 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom1 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom2 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom1 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom2 = ringset.getBuilder().newAtom("C");
-        IBond ring1Bond1 = ringset.getBuilder().newBond(ring1Atom1, ring1Atom2);
-        IBond ring1Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring1Atom1);
-        IBond ring1Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring1Atom2);
-        IBond sharedBond = ringset.getBuilder().newBond(sharedAtom1, sharedAtom2);
-        IBond ring2Bond1 = ringset.getBuilder().newBond(ring2Atom1, ring2Atom2);
-        IBond ring2Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring2Atom1);
-        IBond ring2Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring2Atom2);
+        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C"); // rather artificial molecule
+        IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IBond ring1Bond1 = ringset.getBuilder().newInstance(IBond.class,ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring1Atom2);
+        IBond sharedBond = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = ringset.getBuilder().newInstance(IBond.class,ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring2Atom2);
 
-        IRing ring1 = ringset.getBuilder().newRing();
+        IRing ring1 = ringset.getBuilder().newInstance(IRing.class);
         ring1.addAtom(ring1Atom1);
         ring1.addAtom(ring1Atom2);
         ring1.addAtom(sharedAtom1);
@@ -146,7 +146,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ring1.addBond(ring1Bond2);
         ring1.addBond(ring1Bond3);
         ring1.addBond(sharedBond);
-        IRing ring2 = ringset.getBuilder().newRing();
+        IRing ring2 = ringset.getBuilder().newInstance(IRing.class);
         ring2.addAtom(ring2Atom1);
         ring2.addAtom(ring2Atom2);
         ring2.addAtom(sharedAtom1);
@@ -166,21 +166,21 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     @Test public void testGetRings_IBond() {
         IRingSet ringset = (IRingSet)newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newAtom("C"); // rather artificial molecule
-        IAtom ring1Atom2 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom1 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom2 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom1 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom2 = ringset.getBuilder().newAtom("C");
-        IBond ring1Bond1 = ringset.getBuilder().newBond(ring1Atom1, ring1Atom2);
-        IBond ring1Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring1Atom1);
-        IBond ring1Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring1Atom2);
-        IBond sharedBond = ringset.getBuilder().newBond(sharedAtom1, sharedAtom2);
-        IBond ring2Bond1 = ringset.getBuilder().newBond(ring2Atom1, ring2Atom2);
-        IBond ring2Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring2Atom1);
-        IBond ring2Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring2Atom2);
+        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C"); // rather artificial molecule
+        IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IBond ring1Bond1 = ringset.getBuilder().newInstance(IBond.class,ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring1Atom2);
+        IBond sharedBond = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = ringset.getBuilder().newInstance(IBond.class,ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring2Atom2);
 
-        IRing ring1 = ringset.getBuilder().newRing();
+        IRing ring1 = ringset.getBuilder().newInstance(IRing.class);
         ring1.addAtom(ring1Atom1);
         ring1.addAtom(ring1Atom2);
         ring1.addAtom(sharedAtom1);
@@ -189,7 +189,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ring1.addBond(ring1Bond2);
         ring1.addBond(ring1Bond3);
         ring1.addBond(sharedBond);
-        IRing ring2 = ringset.getBuilder().newRing();
+        IRing ring2 = ringset.getBuilder().newInstance(IRing.class);
         ring2.addAtom(ring2Atom1);
         ring2.addAtom(ring2Atom2);
         ring2.addAtom(sharedAtom1);
@@ -214,21 +214,21 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     @Test public void testGetRings_IAtom() {
         IRingSet ringset = (IRingSet)newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newAtom("C"); // rather artificial molecule
-        IAtom ring1Atom2 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom1 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom2 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom1 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom2 = ringset.getBuilder().newAtom("C");
-        IBond ring1Bond1 = ringset.getBuilder().newBond(ring1Atom1, ring1Atom2);
-        IBond ring1Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring1Atom1);
-        IBond ring1Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring1Atom2);
-        IBond sharedBond = ringset.getBuilder().newBond(sharedAtom1, sharedAtom2);
-        IBond ring2Bond1 = ringset.getBuilder().newBond(ring2Atom1, ring2Atom2);
-        IBond ring2Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring2Atom1);
-        IBond ring2Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring2Atom2);
+        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C"); // rather artificial molecule
+        IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IBond ring1Bond1 = ringset.getBuilder().newInstance(IBond.class,ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring1Atom2);
+        IBond sharedBond = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = ringset.getBuilder().newInstance(IBond.class,ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring2Atom2);
 
-        IRing ring1 = ringset.getBuilder().newRing();
+        IRing ring1 = ringset.getBuilder().newInstance(IRing.class);
         ring1.addAtom(ring1Atom1);
         ring1.addAtom(ring1Atom2);
         ring1.addAtom(sharedAtom1);
@@ -237,7 +237,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ring1.addBond(ring1Bond2);
         ring1.addBond(ring1Bond3);
         ring1.addBond(sharedBond);
-        IRing ring2 = ringset.getBuilder().newRing();
+        IRing ring2 = ringset.getBuilder().newInstance(IRing.class);
         ring2.addAtom(ring2Atom1);
         ring2.addAtom(ring2Atom2);
         ring2.addAtom(sharedAtom1);
@@ -261,21 +261,21 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     @Test public void testGetConnectedRings_IRing() {
         IRingSet ringset = (IRingSet)newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newAtom("C"); // rather artificial molecule
-        IAtom ring1Atom2 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom1 = ringset.getBuilder().newAtom("C");
-        IAtom sharedAtom2 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom1 = ringset.getBuilder().newAtom("C");
-        IAtom ring2Atom2 = ringset.getBuilder().newAtom("C");
-        IBond ring1Bond1 = ringset.getBuilder().newBond(ring1Atom1, ring1Atom2);
-        IBond ring1Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring1Atom1);
-        IBond ring1Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring1Atom2);
-        IBond sharedBond = ringset.getBuilder().newBond(sharedAtom1, sharedAtom2);
-        IBond ring2Bond1 = ringset.getBuilder().newBond(ring2Atom1, ring2Atom2);
-        IBond ring2Bond2 = ringset.getBuilder().newBond(sharedAtom1, ring2Atom1);
-        IBond ring2Bond3 = ringset.getBuilder().newBond(sharedAtom2, ring2Atom2);
+        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C"); // rather artificial molecule
+        IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom1 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IAtom ring2Atom2 = ringset.getBuilder().newInstance(IAtom.class,"C");
+        IBond ring1Bond1 = ringset.getBuilder().newInstance(IBond.class,ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring1Atom2);
+        IBond sharedBond = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = ringset.getBuilder().newInstance(IBond.class,ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = ringset.getBuilder().newInstance(IBond.class,sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = ringset.getBuilder().newInstance(IBond.class,sharedAtom2, ring2Atom2);
 
-        IRing ring1 = ringset.getBuilder().newRing();
+        IRing ring1 = ringset.getBuilder().newInstance(IRing.class);
         ring1.addAtom(ring1Atom1);
         ring1.addAtom(ring1Atom2);
         ring1.addAtom(sharedAtom1);
@@ -284,7 +284,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         ring1.addBond(ring1Bond2);
         ring1.addBond(ring1Bond3);
         ring1.addBond(sharedBond);
-        IRing ring2 = ringset.getBuilder().newRing();
+        IRing ring2 = ringset.getBuilder().newInstance(IRing.class);
         ring2.addAtom(ring2Atom1);
         ring2.addAtom(ring2Atom2);
         ring2.addAtom(sharedAtom1);
@@ -313,12 +313,12 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         // Build a bridged and fused norbomane like ring system
         // C1CCC2C(C1)C4CC2C3CCCCC34
     	IRingSet ringSet = (IRingSet)newChemObject();
-        IRing leftCyclohexane = ringSet.getBuilder().newRing(6, "C");
-        IRing rightCyclopentane = ringSet.getBuilder().newRing(5, "C");
+        IRing leftCyclohexane = ringSet.getBuilder().newInstance(IRing.class,6, "C");
+        IRing rightCyclopentane = ringSet.getBuilder().newInstance(IRing.class,5, "C");
         
-        IRing leftCyclopentane = ringSet.getBuilder().newRing();
-        IBond leftCyclohexane0RightCyclopentane4 = ringSet.getBuilder().newBond(leftCyclohexane.getAtom(0), rightCyclopentane.getAtom(4));
-        IBond leftCyclohexane1RightCyclopentane2 = ringSet.getBuilder().newBond(leftCyclohexane.getAtom(1), rightCyclopentane.getAtom(2));
+        IRing leftCyclopentane = ringSet.getBuilder().newInstance(IRing.class);
+        IBond leftCyclohexane0RightCyclopentane4 = ringSet.getBuilder().newInstance(IBond.class,leftCyclohexane.getAtom(0), rightCyclopentane.getAtom(4));
+        IBond leftCyclohexane1RightCyclopentane2 = ringSet.getBuilder().newInstance(IBond.class,leftCyclohexane.getAtom(1), rightCyclopentane.getAtom(2));
         leftCyclopentane.addAtom(leftCyclohexane.getAtom(0));
         leftCyclopentane.addAtom(leftCyclohexane.getAtom(1));
         leftCyclopentane.addAtom(rightCyclopentane.getAtom(2));
@@ -330,16 +330,16 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         leftCyclopentane.addBond(rightCyclopentane.getBond(rightCyclopentane.getAtom(3), rightCyclopentane.getAtom(4)));
         leftCyclopentane.addBond(leftCyclohexane0RightCyclopentane4);
     
-        IRing rightCyclohexane = ringSet.getBuilder().newRing();
-        IAtom rightCyclohexaneAtom0 = ringSet.getBuilder().newAtom("C");
-        IAtom rightCyclohexaneAtom1 = ringSet.getBuilder().newAtom("C");
-        IAtom rightCyclohexaneAtom2 = ringSet.getBuilder().newAtom("C");
-        IAtom rightCyclohexaneAtom5 = ringSet.getBuilder().newAtom("C");
-        IBond rightCyclohexaneAtom0Atom1 = ringSet.getBuilder().newBond(rightCyclohexaneAtom0, rightCyclohexaneAtom1);
-        IBond rightCyclohexaneAtom1Atom2 = ringSet.getBuilder().newBond(rightCyclohexaneAtom1, rightCyclohexaneAtom2);
-        IBond rightCyclohexane2rightCyclopentane1 = ringSet.getBuilder().newBond(rightCyclohexaneAtom2, rightCyclopentane.getAtom(1));
-        IBond rightCyclohexane5rightCyclopentane0 = ringSet.getBuilder().newBond(rightCyclohexaneAtom5, rightCyclopentane.getAtom(0));
-        IBond rightCyclohexaneAtom0Atom5 = ringSet.getBuilder().newBond(rightCyclohexaneAtom0, rightCyclohexaneAtom5);
+        IRing rightCyclohexane = ringSet.getBuilder().newInstance(IRing.class);
+        IAtom rightCyclohexaneAtom0 = ringSet.getBuilder().newInstance(IAtom.class,"C");
+        IAtom rightCyclohexaneAtom1 = ringSet.getBuilder().newInstance(IAtom.class,"C");
+        IAtom rightCyclohexaneAtom2 = ringSet.getBuilder().newInstance(IAtom.class,"C");
+        IAtom rightCyclohexaneAtom5 = ringSet.getBuilder().newInstance(IAtom.class,"C");
+        IBond rightCyclohexaneAtom0Atom1 = ringSet.getBuilder().newInstance(IBond.class,rightCyclohexaneAtom0, rightCyclohexaneAtom1);
+        IBond rightCyclohexaneAtom1Atom2 = ringSet.getBuilder().newInstance(IBond.class,rightCyclohexaneAtom1, rightCyclohexaneAtom2);
+        IBond rightCyclohexane2rightCyclopentane1 = ringSet.getBuilder().newInstance(IBond.class,rightCyclohexaneAtom2, rightCyclopentane.getAtom(1));
+        IBond rightCyclohexane5rightCyclopentane0 = ringSet.getBuilder().newInstance(IBond.class,rightCyclohexaneAtom5, rightCyclopentane.getAtom(0));
+        IBond rightCyclohexaneAtom0Atom5 = ringSet.getBuilder().newInstance(IBond.class,rightCyclohexaneAtom0, rightCyclohexaneAtom5);
         rightCyclohexane.addAtom(rightCyclohexaneAtom0);
         rightCyclohexane.addAtom(rightCyclohexaneAtom1);
         rightCyclohexane.addAtom(rightCyclohexaneAtom2);

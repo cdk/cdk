@@ -29,6 +29,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.xml.sax.Attributes;
 
 /**
@@ -54,14 +56,14 @@ public class CMLReactionModule extends CMLCoreModule {
         if ("reaction".equals(local)) {
 //            cdo.startObject("Reaction");
         	if (currentReactionSet == null)
-        		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
-            currentReaction = currentChemFile.getBuilder().newReaction();
+        		currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
+            currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
             String id = atts.getValue("id");
             if(id != null) currentReaction.setID(id);
 //            	cdo.setObjectProperty("Reaction", "id", id);
         } else if ("reactionList".equals(local)) {
 //            cdo.startObject("ReactionSet");
-            currentReactionSet = currentChemFile.getBuilder().newReactionSet();
+            currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
             String id = atts.getValue("id");
             if(id != null) currentReactionSet.setID(id);
 //            	cdo.setObjectProperty("reactionList", "id", id);
@@ -69,10 +71,10 @@ public class CMLReactionModule extends CMLCoreModule {
 //            cdo.startObject("Reactant");
         	if (currentReaction == null) {
         		if (currentReactionSet == null)
-            		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
-                currentReaction = currentChemFile.getBuilder().newReaction();
+            		currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
+                currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
         	}
-            currentMolecule = currentChemFile.getBuilder().newMolecule();
+            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
             objectType = "Reactant";
             String id = atts.getValue("id");
             if(id != null) currentMolecule.setID(id);
@@ -85,10 +87,10 @@ public class CMLReactionModule extends CMLCoreModule {
 //            cdo.startObject("Product");
         	if (currentReaction == null) {
         		if (currentReactionSet == null)
-            		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
-                currentReaction = currentChemFile.getBuilder().newReaction();
+            		currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
+                currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
         	}
-            currentMolecule = currentChemFile.getBuilder().newMolecule();
+            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
             objectType = "Product";
             String id = atts.getValue("id");
             if(id != null) currentMolecule.setID(id);
@@ -101,10 +103,10 @@ public class CMLReactionModule extends CMLCoreModule {
 //            cdo.startObject("Agent");
         	if (currentReaction == null) {
         		if (currentReactionSet == null)
-            		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
-                currentReaction = currentChemFile.getBuilder().newReaction();
+            		currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
+                currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
         	}
-            currentMolecule = currentChemFile.getBuilder().newMolecule();
+            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
             objectType = "Agent";
             String id = atts.getValue("id");
             if(id != null) currentMolecule.setID(id);

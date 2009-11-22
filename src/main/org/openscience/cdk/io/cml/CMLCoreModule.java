@@ -53,6 +53,7 @@ import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -309,10 +310,10 @@ public class CMLCoreModule implements ICMLModule {
     public void startDocument() {
         logger.info("Start XML Doc");
         // cdo.startDocument();
-        currentChemSequence = currentChemFile.getBuilder().newChemSequence();
-        currentChemModel = currentChemFile.getBuilder().newChemModel();
-        currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
-        currentMolecule = currentChemFile.getBuilder().newMolecule();
+        currentChemSequence = currentChemFile.getBuilder().newInstance(IChemSequence.class);
+        currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
+        currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
+        currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
         atomEnumeration = new HashMap<String, IAtom>();
         moleculeCustomProperty = new ArrayList<String>();
         
@@ -566,9 +567,9 @@ public class CMLCoreModule implements ICMLModule {
             newMolecule();
             BUILTIN = "";
 //            cdo.startObject("Molecule");
-            if (currentChemModel == null) currentChemModel = currentChemFile.getBuilder().newChemModel();
-            if (currentMoleculeSet == null) currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
-            currentMolecule = currentChemFile.getBuilder().newMolecule();
+            if (currentChemModel == null) currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
+            if (currentMoleculeSet == null) currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
+            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("id")) {
 //                    cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
@@ -581,7 +582,7 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("crystal".equals(name)) {
             newCrystalData();
 //            cdo.startObject("Crystal");
-            currentMolecule = currentChemFile.getBuilder().newCrystal(currentMolecule);
+            currentMolecule = currentChemFile.getBuilder().newInstance(ICrystal.class,currentMolecule);
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
                 if (att.equals("z")) {
@@ -615,7 +616,7 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("list".equals(name)) {
 //            cdo.startObject("MoleculeSet");
         	if (DICTREF.equals("cdk:model")) {
-        		currentChemModel = currentChemFile.getBuilder().newChemModel();
+        		currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
         		// see if there is an ID attribute
         		for (int i = 0; i < atts.getLength(); i++) {
         			String att = atts.getQName(i);
@@ -624,7 +625,7 @@ public class CMLCoreModule implements ICMLModule {
         				}
         			}
         	} else if (DICTREF.equals("cdk:moleculeSet")) {
-        		currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+        		currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
         		// see if there is an ID attribute
         		for (int i = 0; i < atts.getLength(); i++) {
         			String att = atts.getQName(i);
@@ -632,10 +633,10 @@ public class CMLCoreModule implements ICMLModule {
         				currentMoleculeSet.setID(atts.getValue(i));
         				}
         			}
-        		currentMolecule = currentChemFile.getBuilder().newMolecule();
+        		currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
         	} else {
         		// the old default
-        		currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+        		currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
         		// see if there is an ID attribute
         		for (int i = 0; i < atts.getLength(); i++) {
         			String att = atts.getQName(i);
@@ -643,7 +644,7 @@ public class CMLCoreModule implements ICMLModule {
         				currentMoleculeSet.setID(atts.getValue(i));
         				}
         			}
-        		currentMolecule = currentChemFile.getBuilder().newMolecule();
+        		currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
         	}
         }else if ("formula".equals(name)){
         	formulaCounter++;
@@ -1303,7 +1304,7 @@ public class CMLCoreModule implements ICMLModule {
         for (int i = 0; i < atomCounter; i++) {
             logger.info("Storing atom: ", i);
 //            cdo.startObject("Atom");
-            currentAtom = currentChemFile.getBuilder().newAtom("H");
+            currentAtom = currentChemFile.getBuilder().newInstance(IAtom.class,"H");
             logger.debug("Atom # " + atomCounter);
             if (hasID) {
 //                cdo.setObjectProperty("Atom", "id", (String)elid.get(i));
@@ -1317,7 +1318,7 @@ public class CMLCoreModule implements ICMLModule {
                     if (symbol.equals("Du") || symbol.equals("Dummy")) {
 //                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.get(i));
                     	if (!(currentAtom instanceof IPseudoAtom)) {
-                            currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
+                            currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class,currentAtom);
                             if (hasID)
                             	atomEnumeration.put((String)elid.get(i), currentAtom);
                         }
@@ -1344,7 +1345,7 @@ public class CMLCoreModule implements ICMLModule {
                 }
 //                cdo.setObjectProperty("Atom", "type", symbol);
                 if (symbol.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
+                    currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class,currentAtom);
                     if (hasID)
                     	atomEnumeration.put((String)elid.get(i), currentAtom);
                 }
@@ -1429,7 +1430,7 @@ public class CMLCoreModule implements ICMLModule {
 //                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
             	int unpairedElectrons = Integer.parseInt((String)spinMultiplicities.get(i))-1;
                 for (int sm=0; sm<unpairedElectrons; sm++) {
-                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newSingleElectron(currentAtom));
+                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newInstance(ISingleElectron.class,currentAtom));
                 }
             }
 
@@ -1502,7 +1503,7 @@ public class CMLCoreModule implements ICMLModule {
 //                                                          (String)bar2s.next())).toString());
                 IAtom a1 = (IAtom)atomEnumeration.get((String)bar1s.next());
             	IAtom a2 = (IAtom)atomEnumeration.get((String)bar2s.next());
-            	currentBond = currentChemFile.getBuilder().newBond(a1, a2);
+            	currentBond = currentChemFile.getBuilder().newInstance(IBond.class,a1, a2);
             	if (ids.hasNext()) {
             		currentBond.setID((String)ids.next());
             	}

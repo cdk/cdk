@@ -112,8 +112,8 @@ public class CrystClustReader extends DefaultChemObjectReader {
     }
 
     private IChemFile readChemFile(IChemFile file) throws CDKException {
-        IChemSequence seq = file.getBuilder().newChemSequence();
-        IChemModel model = file.getBuilder().newChemModel();
+        IChemSequence seq = file.getBuilder().newInstance(IChemSequence.class);
+        IChemModel model = file.getBuilder().newInstance(IChemModel.class);
         ICrystal crystal = null;
         
         int lineNumber = 0;
@@ -125,8 +125,8 @@ public class CrystClustReader extends DefaultChemObjectReader {
                 logger.debug((lineNumber++) + ": ", line);
                 if (line.startsWith("frame:")) {
                     logger.debug("found new frame");
-                    model = file.getBuilder().newChemModel();
-                    crystal = file.getBuilder().newCrystal();
+                    model = file.getBuilder().newInstance(IChemModel.class);
+                    crystal = file.getBuilder().newInstance(ICrystal.class);
                     
                     // assume the file format is correct
                     
@@ -206,7 +206,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         cart.z = Double.parseDouble(line); // z
-                        IAtom atom = file.getBuilder().newAtom(symbol);
+                        IAtom atom = file.getBuilder().newInstance(IAtom.class,symbol);
                         atom.setCharge(charge);
                         // convert cartesian coords to fractional
                         Point3d frac = CrystalGeometryTools.cartesianToFractional(a, b, c, cart);

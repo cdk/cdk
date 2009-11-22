@@ -43,8 +43,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
@@ -104,7 +104,7 @@ public class TemplateHandler
 					CMLReader structureReader = new CMLReader(
 						this.getClass().getClassLoader().getResourceAsStream(line)
 					);
-					IChemFile file = (IChemFile) structureReader.read(builder.newChemFile());
+					IChemFile file = (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
 					List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
 					for (int i = 0; i < files.size(); i++)
 						templates.add(files.get(i));
@@ -128,13 +128,13 @@ public class TemplateHandler
 	}
 	
 	public IAtomContainer removeMolecule(IAtomContainer molecule) throws CDKException {
-		IAtomContainer ac1 = molecule.getBuilder().newAtomContainer(molecule);
+		IAtomContainer ac1 = molecule.getBuilder().newInstance(IAtomContainer.class,molecule);
 		IAtomContainer ac2 = null;
 		IAtomContainer mol2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			mol2 = templates.get(f);
-			ac2 = molecule.getBuilder().newAtomContainer(mol2);
+			ac2 = molecule.getBuilder().newInstance(IAtomContainer.class,mol2);
 			if (UniversalIsomorphismTester.isIsomorph(ac1, ac2)) {
 				templates.remove(f);
 				return mol2;
@@ -165,8 +165,8 @@ public class TemplateHandler
 			if (UniversalIsomorphismTester.isIsomorph(molecule, template))
 			{
 				List<RMap> list = UniversalIsomorphismTester.getIsomorphAtomsMap(
-					molecule.getBuilder().newAtomContainer(molecule), 
-					molecule.getBuilder().newAtomContainer(template)
+					molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
+					molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
 				logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
 				for (int i = 0; i < list.size(); i++)
@@ -207,8 +207,8 @@ public class TemplateHandler
 			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
 			{
 				List listOfLists = UniversalIsomorphismTester.getSubgraphAtomsMaps(
-						molecule.getBuilder().newAtomContainer(molecule), 
-						molecule.getBuilder().newAtomContainer(template)
+						molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
+						molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
 				logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
 				for (Iterator listOfListsIterator = listOfLists.iterator(); listOfListsIterator.hasNext(); ) {
@@ -267,21 +267,22 @@ public class TemplateHandler
 	 */
 	public IAtomContainerSet getMappedSubstructures(IAtomContainer molecule) throws CDKException {
 		logger.debug("Trying get mapped substructures...");
-		IAtomContainerSet matchedSubstructures = molecule.getBuilder().newAtomContainerSet();
+		IAtomContainerSet matchedSubstructures =
+		    molecule.getBuilder().newInstance(IAtomContainerSet.class);
 		for (int f = 0; f < templates.size(); f++)
 		{
 			IAtomContainer template = templates.get(f);
 			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
 			{
 				List listOfLists = UniversalIsomorphismTester.getSubgraphAtomsMaps(
-						molecule.getBuilder().newAtomContainer(molecule), 
-						molecule.getBuilder().newAtomContainer(template)
+						molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
+						molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
 				logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
 				for (Iterator listOfListsIterator = listOfLists.iterator(); listOfListsIterator.hasNext(); ) {
 					List list = (List) listOfListsIterator.next();
 					logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
-					IAtomContainer matchedSubstructure = molecule.getBuilder().newAtomContainer();
+					IAtomContainer matchedSubstructure = molecule.getBuilder().newInstance(IAtomContainer.class);
 					for (Iterator listIterator = list.iterator(); listIterator.hasNext(); )
 					{
 						RMap map = (RMap) listIterator.next();

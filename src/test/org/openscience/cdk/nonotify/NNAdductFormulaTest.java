@@ -27,8 +27,9 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.AbstractAdductFormulaTest;
+import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Checks the functionality of the {@link NNAdductFormula}.
@@ -47,7 +48,7 @@ public class NNAdductFormulaTest extends AbstractAdductFormulaTest {
     }
 
     @Test public void testNNAdductFormula_IMolecularFormula() {
-        IAdductFormula mfS = new NNAdductFormula(getBuilder().newMolecularFormula());
+        IAdductFormula mfS = new NNAdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 

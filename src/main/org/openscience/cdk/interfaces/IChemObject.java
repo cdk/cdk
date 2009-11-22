@@ -34,7 +34,7 @@ import java.util.Map;
  * @cdk.githash
  *@cdk.module    interfaces
  */
-public interface IChemObject extends Cloneable {
+public interface IChemObject extends ICDKObject {
 
 	/**
 	 * Use this to add yourself to this IChemObject as a listener. In order to do
@@ -209,14 +209,7 @@ public interface IChemObject extends Cloneable {
      * @throws CloneNotSupportedException if the IChemObject cannot be cloned
      */
     public Object clone() throws CloneNotSupportedException;
-    
-    /**
-     * Returns a ChemObjectBuilder for the data classes that extend
-     * this class.
-     * 
-     * @return The IChemObjectBuilder matching this IChemObject
-     */
-    public IChemObjectBuilder getBuilder();
+
 }
 
 

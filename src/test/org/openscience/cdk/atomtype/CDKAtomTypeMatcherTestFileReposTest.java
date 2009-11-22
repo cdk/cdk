@@ -29,8 +29,8 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -224,7 +224,8 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
     }
     
     private TestResults testFile(String dir, String filename, ISimpleChemObjectReader reader) throws Exception {    	
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(
+            DefaultChemObjectBuilder.getInstance());
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(dir+filename);
         reader.setReader(ins);
         IMolecule mol = null;

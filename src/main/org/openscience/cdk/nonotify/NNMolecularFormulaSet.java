@@ -25,8 +25,8 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.formula.MolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module  nonotify

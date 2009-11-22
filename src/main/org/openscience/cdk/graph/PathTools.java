@@ -220,7 +220,7 @@ public class PathTools {
      */
     @TestMethod("testFindClosestByBond")
     public static IAtom[] findClosestByBond(IAtomContainer atomContainer, IAtom atom, int max) {
-        IMolecule mol = atomContainer.getBuilder().newMolecule();
+        IMolecule mol = atomContainer.getBuilder().newInstance(IMolecule.class);
         List<IAtom> v = new ArrayList<IAtom>();
         v.add(atom);
         breadthFirstSearch(atomContainer, v, mol, max);

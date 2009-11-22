@@ -45,7 +45,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     @Test 
     public void testGetReactionSchemeCount() {
     	IReactionScheme scheme = (IReactionScheme)newChemObject();
-    	scheme.add(scheme.getBuilder().newReactionScheme());
+    	scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         Assert.assertEquals(1, scheme.getReactionSchemeCount());
     }
     /**
@@ -56,8 +56,8 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     @Test 
     public void testGetReactionCount() {
     	IReactionScheme scheme = (IReactionScheme)newChemObject();
-    	scheme.addReaction(scheme.getBuilder().newReaction());
-    	scheme.addReaction(scheme.getBuilder().newReaction());
+    	scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
+    	scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
         Assert.assertEquals(2, scheme.getReactionCount());
     }
     /**
@@ -68,9 +68,9 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     @Test 
     public void testReactionSchemes() {
         IReactionScheme scheme = (IReactionScheme)newChemObject();
-        scheme.add(scheme.getBuilder().newReactionScheme());
-        scheme.add(scheme.getBuilder().newReactionScheme());
-        scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
         Assert.assertEquals(3, scheme.getReactionSchemeCount());
         int count = 0;
@@ -88,9 +88,9 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     @Test 
     public void testReactions() {
         IReactionScheme scheme = (IReactionScheme)newChemObject();
-        scheme.addReaction(scheme.getBuilder().newReaction());
-        scheme.addReaction(scheme.getBuilder().newReaction());
-        scheme.addReaction(scheme.getBuilder().newReaction());
+        scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
+        scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
+        scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
 
         Assert.assertEquals(3, scheme.getReactionCount());
         int count = 0;
@@ -108,11 +108,11 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     @Test 
     public void testAdd_IReactionScheme() {
     	IReactionScheme scheme = (IReactionScheme)newChemObject();
-        scheme.add(scheme.getBuilder().newReactionScheme());
-        scheme.add(scheme.getBuilder().newReactionScheme());
-        scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
-        IReactionScheme tested = scheme.getBuilder().newReactionScheme();
+        IReactionScheme tested = scheme.getBuilder().newInstance(IReactionScheme.class);
         Assert.assertEquals(0, tested.getReactionSchemeCount());
         tested.add(scheme);
         Assert.assertEquals(1, tested.getReactionSchemeCount());
@@ -126,11 +126,11 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     @Test 
     public void testAdd_IReaction() {
     	IReactionScheme scheme = (IReactionScheme)newChemObject();
-    	scheme.add(scheme.getBuilder().newReactionScheme());
-        scheme.add(scheme.getBuilder().newReactionScheme());
-        scheme.add(scheme.getBuilder().newReactionScheme());
+    	scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
-        IReactionScheme tested = scheme.getBuilder().newReactionScheme();
+        IReactionScheme tested = scheme.getBuilder().newInstance(IReactionScheme.class);
         Assert.assertEquals(0, tested.getReactionSchemeCount());
         tested.add(scheme);
         Assert.assertEquals(1, tested.getReactionSchemeCount());

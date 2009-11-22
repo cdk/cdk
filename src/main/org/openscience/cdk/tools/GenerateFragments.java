@@ -84,7 +84,7 @@ public class GenerateFragments {
 	private boolean sidechainHetatoms=true;
 	private boolean exocyclicDoubleBonds=true;
 	private boolean smilesToUpperCase=false;
-	//private IChemObjectBuilder builder;
+	//private INewChemObjectBuilder builder;
 	
 	/**
 	 * generates ring fragments from SSSR and RingPartitioner method
@@ -136,7 +136,7 @@ public class GenerateFragments {
 				
 		//logger.debug("Number of RingSystems:"+this.ringFragments.size());
 		for (int f = 0; f < this.ringFragments.size(); f++) {
-			firstRingAtomContainer = molecule.getBuilder().newAtomContainer();
+			firstRingAtomContainer = molecule.getBuilder().newInstance(IAtomContainer.class);
 			IRingSet ringSet = (IRingSet)this.ringFragments.get(f);
 			for (int i=0;i<ringSet.getAtomContainerCount();i++) {
 				firstRingAtomContainer.add(ringSet.getAtomContainer(i));
@@ -298,7 +298,7 @@ public class GenerateFragments {
 			if (addAtomContainer.getAtom(i).getFlag(CDKConstants.ISINRING)&& !targetMolecule.contains(addAtomContainer.getAtom(i))){
 				//Find all Ring atoms and add them 
 				for (int j = 0; j < this.ringFragments.size(); j++) {
-					ringAtomContainer = addAtomContainer.getBuilder().newAtomContainer();
+					ringAtomContainer = addAtomContainer.getBuilder().newInstance(IAtomContainer.class);
 					IRingSet ringSet = (IRingSet)this.ringFragments.get(j);
 					for (int k=0; k<ringSet.getAtomContainerCount(); k++) {
 						ringAtomContainer.add(ringSet.getAtomContainer(k));

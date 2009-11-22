@@ -259,7 +259,7 @@ public class StructureDiagramGenerator
 	public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
 		// first make a shallow copy: Atom/Bond references are kept
 		IMolecule original = molecule;
-		IMolecule shallowCopy = molecule.getBuilder().newMolecule(molecule);
+		IMolecule shallowCopy = molecule.getBuilder().newInstance(IMolecule.class,molecule);
 		// ok, delete H's from
 		//IAtom[] atoms = shallowCopy.getAtoms();
 		for (int i = 0; i < shallowCopy.getAtomCount(); i++) {
@@ -694,7 +694,7 @@ public class StructureDiagramGenerator
 			/*
 			 * Get all rings of nextRingSytem as one IAtomContainer
 			 */
-			IAtomContainer ringSystem = tempAc.getBuilder().newAtomContainer();
+			IAtomContainer ringSystem = tempAc.getBuilder().newInstance(IAtomContainer.class);
 			for (Iterator containers = RingSetManipulator.getAllAtomContainers(nextRingSystem).iterator(); containers.hasNext(); )
 				ringSystem.add((IAtomContainer) containers.next());
 
@@ -776,7 +776,7 @@ public class StructureDiagramGenerator
 	 */
 	private IAtomContainer getUnplacedAtoms(IAtom atom)
 	{
-		IAtomContainer unplacedAtoms = atom.getBuilder().newAtomContainer();
+		IAtomContainer unplacedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
 		java.util.List bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom;
 		for (int f = 0; f < bonds.size(); f++)
@@ -801,7 +801,7 @@ public class StructureDiagramGenerator
 	 */
 	private IAtomContainer getPlacedAtoms(IAtom atom)
 	{
-		IAtomContainer placedAtoms = atom.getBuilder().newAtomContainer();
+		IAtomContainer placedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
 		java.util.List bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom;
 		for (int f = 0; f < bonds.size(); f++)
@@ -909,7 +909,7 @@ public class StructureDiagramGenerator
 			 *  ring is somehow connected, or some other system of atoms in an aliphatic chain.
 			 *  In this case, it's the first bond that we layout by hand.
 			 */
-			sharedAtoms = atom.getBuilder().newAtomContainer();
+			sharedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
 			sharedAtoms.addBond(bond);
 			sharedAtoms.addAtom(bond.getAtom(0));
 			sharedAtoms.addAtom(bond.getAtom(1));

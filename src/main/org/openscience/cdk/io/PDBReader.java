@@ -209,15 +209,15 @@ public class PDBReader extends DefaultChemObjectReader {
 	 */
 	private IChemFile readChemFile(IChemFile oFile) 	{
 		// initialize all containers
-		IChemSequence oSeq = oFile.getBuilder().newChemSequence();
-		IChemModel oModel = oFile.getBuilder().newChemModel();
-		IMoleculeSet oSet = oFile.getBuilder().newMoleculeSet();
+		IChemSequence oSeq = oFile.getBuilder().newInstance(IChemSequence.class);
+		IChemModel oModel = oFile.getBuilder().newInstance(IChemModel.class);
+		IMoleculeSet oSet = oFile.getBuilder().newInstance(IMoleculeSet.class);
 		
 		// some variables needed
 		String cCol;
 		PDBAtom oAtom;
 		PDBPolymer oBP = new PDBPolymer();
-		IMolecule molecularStructure = oFile.getBuilder().newMolecule();
+		IMolecule molecularStructure = oFile.getBuilder().newInstance(IMolecule.class);
 		StringBuffer cResidue;
 		String oObj;
 		IMonomer oMonomer;
@@ -355,8 +355,8 @@ public class PDBReader extends DefaultChemObjectReader {
 								oSeq.addChemModel(oModel);
 								// setup a new one
 								oBP = new PDBPolymer();
-								oModel = oFile.getBuilder().newChemModel();
-								oSet = oFile.getBuilder().newMoleculeSet();						
+								oModel = oFile.getBuilder().newInstance(IChemModel.class);
+								oSet = oFile.getBuilder().newInstance(IMoleculeSet.class);						
 							}
 						} else {
 							if (molecularStructure.getAtomCount() > 0) {
@@ -365,9 +365,9 @@ public class PDBReader extends DefaultChemObjectReader {
 								oModel.setMoleculeSet(oSet);
 								oSeq.addChemModel(oModel);
 								// setup a new one
-								molecularStructure = oFile.getBuilder().newMolecule();
-								oModel = oFile.getBuilder().newChemModel();
-								oSet = oFile.getBuilder().newMoleculeSet();		
+								molecularStructure = oFile.getBuilder().newInstance(IMolecule.class);
+								oModel = oFile.getBuilder().newInstance(IChemModel.class);
+								oSet = oFile.getBuilder().newInstance(IMoleculeSet.class);		
 							}
 						}
 					} else if ("REMARK".equalsIgnoreCase(cCol)) {						
@@ -518,7 +518,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		if (secondAtom == null) {
 			logger.error("Could not find bond target atom in map with serial id: ", bondAtomNo);
 		}
-		IBond bond = firstAtom.getBuilder().newBond(
+		IBond bond = firstAtom.getBuilder().newInstance(IBond.class,
 		                firstAtom, secondAtom, IBond.Order.SINGLE);
 		for (int i = 0; i < bondsFromConnectRecords.size(); i++) {
 		    IBond existingBond = 

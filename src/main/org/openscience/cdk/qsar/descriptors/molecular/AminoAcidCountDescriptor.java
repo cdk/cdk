@@ -79,7 +79,7 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
      */
     public AminoAcidCountDescriptor() {
         IAminoAcid[] aas = AminoAcids.createAAs();
-        substructureSet = aas[0].getBuilder().newAtomContainerSet();
+        substructureSet = aas[0].getBuilder().newInstance(IAtomContainerSet.class);
         for (IAminoAcid aa : aas) {
             substructureSet.addAtomContainer(aa);
         }

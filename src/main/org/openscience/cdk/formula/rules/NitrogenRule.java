@@ -24,6 +24,7 @@
 package org.openscience.cdk.formula.rules;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -104,7 +105,7 @@ public class NitrogenRule implements IRule{
     	if(mass == 0)
     		return 0.0;
     	
-    	int numberN = MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement("N"));
+    	int numberN = MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newInstance(IElement.class,"N"));
     	numberN += getOthers(formula);
     	
     	if(formula.getCharge() == null || formula.getCharge() == 0 || !isOdd(Math.abs(formula.getCharge()))){
@@ -134,7 +135,7 @@ public class NitrogenRule implements IRule{
 		int number = 0;
 		String[] elements = {"Co","Hg","Pt","As"};
 		for(int i = 0 ; i < elements.length; i++)
-			number += MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement(elements[i]));
+			number += MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newInstance(IElement.class,elements[i]));
     	
 		return number;
 	}

@@ -36,9 +36,9 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -87,17 +87,17 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 	        IReactionProcess type = new PiBondingMovementReaction();
 			// C1=C(C)-C(C)=C-C=C1
-			IMolecule molecule = builder.newMolecule();
-			molecule.addAtom(builder.newAtom("C"));
-			molecule.addAtom(builder.newAtom("C"));
+			IMolecule molecule = builder.newInstance(IMolecule.class);
+			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(0, 1, IBond.Order.DOUBLE);
-			molecule.addAtom(builder.newAtom("C"));
+			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(1, 2, IBond.Order.SINGLE);
-			molecule.addAtom(builder.newAtom("C"));
+			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(2, 3, IBond.Order.DOUBLE);
-			molecule.addAtom(builder.newAtom("C"));
+			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(3, 4, IBond.Order.SINGLE);
-			molecule.addAtom(builder.newAtom("C"));
+			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(4, 5, IBond.Order.DOUBLE);
 			molecule.addBond(5, 0, IBond.Order.SINGLE);
 			
@@ -105,7 +105,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 			makeSureAtomTypesAreRecognized(molecule);
 	        
-			IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+			IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 			setOfReactants.addMolecule(molecule);
 
 			/* initiate */
@@ -136,21 +136,21 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 	@Test public void testAutomaticSearchCentreActiveExample1() throws Exception {
         IReactionProcess type = new PiBondingMovementReaction();
 		// C1=C(C)-C(C)=C-C=C1
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 3, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(3, 4, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(3, 5, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(5, 6, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(6, 7, IBond.Order.DOUBLE);
 		molecule.addBond(7, 0, IBond.Order.SINGLE);
 		
@@ -158,7 +158,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		makeSureAtomTypesAreRecognized(molecule);
         
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
@@ -175,21 +175,21 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         //C1(C)=C(C)-C=C-C=C1
-        IMolecule molecule2 = builder.newMolecule();
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addAtom(builder.newAtom("C"));
+        IMolecule molecule2 = builder.newInstance(IMolecule.class);
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(0, 1, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(0, 2, IBond.Order.DOUBLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(2, 3, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(2, 4, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(4, 5, IBond.Order.DOUBLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(5, 6, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(6, 7, IBond.Order.DOUBLE);
 		molecule2.addBond(7, 0, IBond.Order.SINGLE);
 		
@@ -236,27 +236,27 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         IMolecule product2 = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         //C1=CC(=CC2=CC=CC=C12)C
-        IMolecule molecule2 = builder.newMolecule();
-		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addAtom(builder.newAtom("C"));
+        IMolecule molecule2 = builder.newInstance(IMolecule.class);
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(0, 1, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(1, 2, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(2, 3, IBond.Order.DOUBLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(3, 4, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(4, 5, IBond.Order.DOUBLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(5, 6, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(6, 7, IBond.Order.DOUBLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(7, 8, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(8, 9, IBond.Order.DOUBLE);
-		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addBond(9, 10, IBond.Order.SINGLE);
 		molecule2.addBond(10, 1, IBond.Order.DOUBLE);
 		molecule2.addBond(9, 4, IBond.Order.SINGLE);
@@ -321,30 +321,30 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		// C{0}1=C{1}C{2}(=C{3}C{4}2=C{5}1C{6}=C{7}C{8}=C{9}2)C{10}
         // C1=CC(=CC2=C1C=CC=C2)C 
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(3, 4, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(5, 6, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(6, 7, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(7, 8, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(8, 9, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(9, 10, IBond.Order.SINGLE);
 		molecule.addBond(10, 1, IBond.Order.DOUBLE);
 		molecule.addBond(9, 4, IBond.Order.DOUBLE);
@@ -367,30 +367,30 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
         //C=1C=CC2=CC(=CC=C2(C=1))C
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 2, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(3, 4, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(5, 6, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(6, 7, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(7, 8, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(8, 9, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(9, 10, IBond.Order.DOUBLE);
 		molecule.addBond(10, 1, IBond.Order.SINGLE);
 		molecule.addBond(9, 4, IBond.Order.SINGLE);

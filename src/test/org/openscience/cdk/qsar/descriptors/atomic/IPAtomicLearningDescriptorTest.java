@@ -25,9 +25,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -74,17 +75,17 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-    	IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("C"));
-		mol.addAtom(builder.newAtom("C"));
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(1, 2, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(1, 3, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(3, 4, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(3, 5, IBond.Order.SINGLE);
 
 		addExplicitHydrogens(mol);
@@ -105,13 +106,13 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor1() throws Exception{
         
-    	IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("C"));
-		mol.addAtom(builder.newAtom("C"));
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(1, 2, IBond.Order.SINGLE);
-		mol.addAtom(builder.newAtom("Cl"));
+		mol.addAtom(builder.newInstance(IAtom.class,"Cl"));
 		mol.addBond(2, 3, IBond.Order.SINGLE);
 
 		addExplicitHydrogens(mol);
@@ -416,7 +417,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //        
-//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
 //		IMolecule mol = sp.parseSmiles("CCCCCC");
 //
 //		addExplicitHydrogens(mol);
@@ -515,7 +516,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 ////    @Test
 //    public void testIDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception{
 ////        
-////		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+////		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
 ////		IMolecule mol = sp.parseSmiles("OC(C#CC)(C)C");
 ////
 ////		addExplicitHydrogens(mol);
@@ -540,19 +541,19 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 	@Test
     public void testFluorobenzene() throws Exception {
 
-		 IMolecule molecule = builder.newMolecule();
-		 molecule.addAtom(builder.newAtom("F"));
-		 molecule.addAtom(builder.newAtom("C"));
+		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(2, 3, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(4, 5, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
 		 molecule.addBond(6, 1, IBond.Order.SINGLE);
 		

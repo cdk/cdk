@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.GhemicalMMFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -118,8 +119,8 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         if (object instanceof IChemModel) {
             return (IChemObject) readChemModel((IChemModel)object);
         } else if (object instanceof IChemFile) {
-        	IChemSequence sequence = object.getBuilder().newChemSequence();
-            sequence.addChemModel((IChemModel)this.readChemModel(object.getBuilder().newChemModel()));
+        	IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
+            sequence.addChemModel((IChemModel)this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));
         	((IChemFile)object).addChemSequence(sequence);
         	return object;
         } else {
@@ -239,10 +240,10 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                 } else if ("!End".equals(command)) {
                     logger.info("Found end of file");
                     // Store atoms
-                    IAtomContainer container = model.getBuilder().newAtomContainer();
+                    IAtomContainer container = model.getBuilder().newInstance(IAtomContainer.class);
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
-                            IAtom atom = model.getBuilder().newAtom(IsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));
+                            IAtom atom = model.getBuilder().newInstance(IAtom.class,IsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));
                             atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);
@@ -259,8 +260,8 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         container.addBond(bondatomid1[i], bondatomid2[i], bondorder[i]);
                     }
                     
-                    IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
-                    moleculeSet.addMolecule(model.getBuilder().newMolecule(container));
+                    IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
+                    moleculeSet.addMolecule(model.getBuilder().newInstance(IMolecule.class,container));
                     model.setMoleculeSet(moleculeSet);
                     
                     return model;

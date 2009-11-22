@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -32,8 +34,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
 import org.openscience.cdk.tools.diff.BondDiff;
-
-import javax.vecmath.Point3d;
 
 /**
  * Tests for bond descriptors.
@@ -148,12 +148,12 @@ public abstract class BondDescriptorTest extends DescriptorTest {
     }
 
     private IMolecule someoneBringMeSomeWater() {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
         h1.setPoint3d(new Point3d(1.0, 0.0, 0.0));
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
         h2.setPoint3d(new Point3d(-1.0, 0.0, 0.0));
         mol.addAtom(c1);
         mol.addAtom(h1);

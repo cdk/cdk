@@ -29,10 +29,11 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -45,7 +46,8 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @cdk.module test-qsaratomic
  */
 public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder =
+	    NoNotificationChemObjectBuilder.getInstance();
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	/**
 	 *  Constructor for the PartialPiChargeDescriptorTest object
@@ -73,7 +75,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		IMolecule molecule = builder.newMolecule();
+		IMolecule molecule = builder.newInstance(IMolecule.class);
         molecule.addAtom(new Atom("F"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -105,11 +107,11 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.0299,0.0,-0.0299,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		IMolecule molecule = builder.newMolecule();
-		 molecule.addAtom(builder.newAtom("F"));
-		 molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
 		 
 		addExplicitHydrogens(molecule);
@@ -139,11 +141,11 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.0221,-0.1193,0.0972,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("O"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 2, IBond.Order.SINGLE);
 		
 		addExplicitHydrogens(molecule);
@@ -172,19 +174,19 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.0262,0.0,-0.0101,0.0,-0.006,0.0,-0.0101,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 		Integer[] params = new Integer[1];
-        IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("F"));
-		molecule.addAtom(builder.newAtom("C"));
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"F"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 2, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(3, 4, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(5, 6, IBond.Order.DOUBLE);
 		molecule.addBond(6, 1, IBond.Order.SINGLE);
 
@@ -218,13 +220,13 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 		Integer[] params = new Integer[1];
 		
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("O"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
 		
 		addExplicitHydrogens(molecule);
@@ -257,17 +259,17 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={-0.0333,0.0,-0.0399,0.0,0.0733,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("O"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(3, 4, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
 		
 		addExplicitHydrogens(molecule);
@@ -337,17 +339,17 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={-0.0822,0.02,0.0,0.0423,0.0,0.02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("N"));
-		mol.addAtom(builder.newAtom("C"));
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"N"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(1, 2, Order.DOUBLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(2, 3, Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(3, 4, Order.DOUBLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(4, 5, Order.SINGLE);
 		mol.addBond(5, 0, Order.DOUBLE);
 
@@ -455,35 +457,35 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
     public void testSousa() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0914,0.0193,-0.1107,0.0,0.0,0.0,-0.0063,0.0,-0.0101,0.0,0.0262,-0.0098,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecule mol = builder.newMolecule();
-		mol.addAtom(builder.newAtom("F"));
-		mol.addAtom(builder.newAtom("C"));
+		IMolecule mol = builder.newInstance(IMolecule.class);
+		mol.addAtom(builder.newInstance(IAtom.class,"F"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0,1,Order.SINGLE);
-		mol.addAtom(builder.newAtom("O"));
+		mol.addAtom(builder.newInstance(IAtom.class,"O"));
 		mol.addBond(1,2,Order.DOUBLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(1,3,Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(3,4,Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));//ring
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));//ring
 		mol.addBond(4,5,Order.SINGLE);
 		//aromatic
-		mol.addAtom(builder.newAtom("C"));//ring
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));//ring
 		mol.addBond(5,6,Order.DOUBLE);
-		mol.addAtom(builder.newAtom("C"));//ring
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));//ring
 		mol.addBond(6,7,Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));//ring
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));//ring
 		mol.addBond(7,8,Order.DOUBLE);
-		mol.addAtom(builder.newAtom("C"));//ring
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));//ring
 		mol.addBond(8,9,Order.SINGLE);
 		//Fluor
-		mol.addAtom(builder.newAtom("F"));
+		mol.addAtom(builder.newInstance(IAtom.class,"F"));
 		mol.addBond(9,10,Order.SINGLE);
-		mol.addAtom(builder.newAtom("C"));//ring
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));//ring
 		mol.addBond(9,11,Order.DOUBLE);
 		mol.addBond(5,11,Order.SINGLE);
 		
-		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(11,12,Order.SINGLE);
 		
 		addExplicitHydrogens(mol);

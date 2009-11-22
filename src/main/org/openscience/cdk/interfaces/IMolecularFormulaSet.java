@@ -39,7 +39,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  */
-public interface IMolecularFormulaSet {
+public interface IMolecularFormulaSet extends ICDKObject {
 	
 	/**
      *  Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
@@ -114,11 +114,4 @@ public interface IMolecularFormulaSet {
 	 */
 	public Object clone() throws CloneNotSupportedException ;
 	
-    /**
-     * Returns a ChemObjectBuilder for the data classes that extend
-     * this class.
-     * 
-     * @return The IChemObjectBuilder matching this IChemObject
-     */
-    public IChemObjectBuilder getBuilder();
 }

@@ -84,7 +84,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
     	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IMolecule ac = new NNMolecule((IAtomContainer)containersList.get(0));
     	addExplicitHydrogens(ac);
-    	IAtomContainer chain=ac.getBuilder().newAtomContainer();
+    	IAtomContainer chain=ac.getBuilder().newInstance(IAtomContainer.class);
     	for(int i=16;i<25;i++){
     		chain.addAtom(ac.getAtom(i));
     	}

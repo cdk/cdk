@@ -53,7 +53,7 @@ public class DebugPDBAtomTest extends AbstractPDBAtomTest {
 
     @Test public void testDebugPDBAtom_IElement() {
     	IElement element = new DebugElement();
-        IAtom a = element.getBuilder().newPDBAtom(element);
+        IAtom a = element.getBuilder().newInstance(IPDBAtom.class,element);
         Assert.assertNotNull(a);
     }
     

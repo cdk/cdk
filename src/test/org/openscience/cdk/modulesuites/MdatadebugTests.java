@@ -38,7 +38,6 @@ import org.openscience.cdk.debug.DebugBioPolymerTest;
 import org.openscience.cdk.debug.DebugBondTest;
 import org.openscience.cdk.debug.DebugChemFileTest;
 import org.openscience.cdk.debug.DebugChemModelTest;
-import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
 import org.openscience.cdk.debug.DebugChemObjectTest;
 import org.openscience.cdk.debug.DebugChemSequenceTest;
 import org.openscience.cdk.debug.DebugCrystalTest;
@@ -62,6 +61,7 @@ import org.openscience.cdk.debug.DebugRingSetTest;
 import org.openscience.cdk.debug.DebugRingTest;
 import org.openscience.cdk.debug.DebugSingleElectronTest;
 import org.openscience.cdk.debug.DebugStrandTest;
+import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
 
 /**
  * TestSuite that runs the datadebug tests.

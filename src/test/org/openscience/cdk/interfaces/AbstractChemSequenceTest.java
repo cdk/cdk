@@ -38,17 +38,17 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
 
     @Test public void testAddChemModel_IChemModel() {
         IChemSequence cs = (IChemSequence)newChemObject();
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         Assert.assertEquals(3, cs.getChemModelCount());
     }
 
     @Test public void testRemoveChemModel_int() {
         IChemSequence cs = (IChemSequence)newChemObject();
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         Assert.assertEquals(3, cs.getChemModelCount());
         cs.removeChemModel(1);
         Assert.assertEquals(2, cs.getChemModelCount());
@@ -56,39 +56,39 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
     
     @Test public void testGrowChemModelArray() {
         IChemSequence cs = (IChemSequence)newChemObject();
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         Assert.assertEquals(3, cs.getChemModelCount());
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel()); // this one should enfore array grow
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class)); // this one should enfore array grow
         Assert.assertEquals(6, cs.getChemModelCount());
     }
 
     @Test public void testGetChemModelCount() {
         IChemSequence cs = (IChemSequence)newChemObject();
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         Assert.assertEquals(3, cs.getChemModelCount());
     }
 
     @Test public void testGetChemModel_int() {
         IChemSequence cs = (IChemSequence)newChemObject();
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        IChemModel second = cs.getBuilder().newChemModel();
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        IChemModel second = cs.getBuilder().newInstance(IChemModel.class);
         cs.addChemModel(second);
-        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         
         Assert.assertEquals(second, cs.getChemModel(1));
     }
 
     @Test public void testChemModels() {
         IChemSequence cs = (IChemSequence)newChemObject();
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
-        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
+        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
 
         Assert.assertEquals(3, cs.getChemModelCount());
         Iterator<IChemModel> models = cs.chemModels().iterator();
@@ -115,7 +115,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         IChemSequence chemObject = (IChemSequence)newChemObject();
         chemObject.addListener(listener);
         
-        chemObject.addChemModel(chemObject.getBuilder().newChemModel());
+        chemObject.addChemModel(chemObject.getBuilder().newInstance(IChemModel.class));
         Assert.assertTrue(listener.changed);
     }
 
@@ -143,10 +143,10 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         
     @Test public void testClone_IChemModel() throws Exception {
 		IChemSequence sequence = (IChemSequence)newChemObject();
-		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 1
-		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 2
-		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 3
-		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 4
+		sequence.addChemModel(sequence.getBuilder().newInstance(IChemModel.class)); // 1
+		sequence.addChemModel(sequence.getBuilder().newInstance(IChemModel.class)); // 2
+		sequence.addChemModel(sequence.getBuilder().newInstance(IChemModel.class)); // 3
+		sequence.addChemModel(sequence.getBuilder().newInstance(IChemModel.class)); // 4
 
 		IChemSequence clone = (IChemSequence)sequence.clone();
 		Assert.assertEquals(sequence.getChemModelCount(), clone.getChemModelCount());

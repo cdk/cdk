@@ -34,9 +34,9 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -108,7 +108,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
         
         // reverse process
-        IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants2.addMolecule(molecule2);
 		
 		IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
@@ -172,7 +172,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         molecule2.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
         molecule2.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
         molecule2.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER,true);
-        IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		setOfReactants2.addMolecule(molecule2);
 		
 		IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
@@ -280,18 +280,18 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * @throws CDKException
 	 */
 	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
 		
-		IMolecule molecule = builder.newMolecule();
-        molecule.addAtom(builder.newAtom("O"));
-        molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+        molecule.addAtom(builder.newInstance(IAtom.class,"O"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule.addBond(0, 1, IBond.Order.DOUBLE);
-        molecule.addAtom(builder.newAtom("C"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule.addBond(1, 2, IBond.Order.SINGLE);
-        molecule.addAtom(builder.newAtom("H"));
-        molecule.addAtom(builder.newAtom("H"));
-        molecule.addAtom(builder.newAtom("H"));
-        molecule.addAtom(builder.newAtom("H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
         molecule.addBond(1, 3, IBond.Order.SINGLE);
         molecule.addBond(2, 4, IBond.Order.SINGLE);
         molecule.addBond(2, 5, IBond.Order.SINGLE);
@@ -312,18 +312,18 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * @return The IMoleculeSet
 	 */
 	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-		IMolecule molecule = builder.newMolecule();
-        molecule.addAtom(builder.newAtom("O"));
-        molecule.addAtom(builder.newAtom("C"));
+		IMolecule molecule = builder.newInstance(IMolecule.class);
+        molecule.addAtom(builder.newInstance(IAtom.class,"O"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
-        molecule.addAtom(builder.newAtom("C"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule.addBond(1, 2, IBond.Order.DOUBLE);
-        molecule.addAtom(builder.newAtom("H"));
-        molecule.addAtom(builder.newAtom("H"));
-        molecule.addAtom(builder.newAtom("H"));
-        molecule.addAtom(builder.newAtom("H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
+        molecule.addAtom(builder.newInstance(IAtom.class,"H"));
         molecule.addBond(1, 3, IBond.Order.SINGLE);
         molecule.addBond(2, 4, IBond.Order.SINGLE);
         molecule.addBond(2, 5, IBond.Order.SINGLE);

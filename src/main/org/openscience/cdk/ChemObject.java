@@ -34,9 +34,9 @@ import java.util.Map;
 
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -443,9 +443,9 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		return copy;
 	}
 	
-	public IChemObjectBuilder getBuilder() {
-		return DefaultChemObjectBuilder.getInstance();
-	}
+    public IChemObjectBuilder getBuilder() {
+        return DefaultChemObjectBuilder.getInstance();
+    }
 
 	private boolean doNotification = true;
 	
