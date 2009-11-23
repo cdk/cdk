@@ -754,4 +754,21 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNull(mol.getAtom(2).getValency());
         Assert.assertEquals(0, mol.getAtom(3).getValency().intValue());
     }
+
+    @Test public void testShortLines() throws Exception {
+        logger.info("Testing short lines Mode.RELAXED");
+        testShortLinesForMode(Mode.RELAXED);
+        logger.info("Testing short lines Mode.STRICT");
+        testShortLinesForMode(Mode.STRICT);
+    }
+    
+    private void testShortLinesForMode (IChemObjectReader.Mode mode) throws Exception {
+        String filename = "data/mdl/glycine-short-lines.mol";
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, mode);
+        Molecule mol = reader.read(new Molecule());
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(mol.getAtomCount(), 5);
+        Assert.assertEquals(mol.getBondCount(), 4);
+    }
 }
