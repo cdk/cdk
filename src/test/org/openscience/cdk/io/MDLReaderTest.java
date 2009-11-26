@@ -193,4 +193,17 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertNull(mol);
     }
     
+    
+    @Test public void testUndefinedStereo() throws Exception {
+        String filename = "data/mdl/ChEBI_26120.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins, Mode.RELAXED);
+        IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(1).getStereo());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(6).getStereo());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(7).getStereo());
+        Assert.assertEquals(IBond.Stereo.UP_OR_DOWN,mol.getBond(11).getStereo());
+    }
+    
 }
