@@ -27,7 +27,6 @@ package org.openscience.cdk.tools.periodictable;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Checks the functionality of the ElementPTFactory
@@ -67,14 +66,7 @@ public class ElementPTFactoryTest extends CDKTestCase
 		ElementPTFactory elefac = ElementPTFactory.getInstance();
 		PeriodicTableElement pte = elefac.configure(new org.openscience.cdk.tools.periodictable.PeriodicTableElement("H"));
 		Assert.assertNotNull(pte);
-    }
-    
-    @Test
-    public void testConfigureE_PeriodicTableElement() throws Exception {
-		ElementPTFactory elefac = ElementPTFactory.getInstance();
-		IElement element = elefac.configureE(new PeriodicTableElement("H"));
-		Assert.assertNotNull(element);
-    }
+    }    
     
     @Test public void testGetAtomicNumber_PeriodicTableElement() throws Exception {
 		ElementPTFactory elefac = ElementPTFactory.getInstance();

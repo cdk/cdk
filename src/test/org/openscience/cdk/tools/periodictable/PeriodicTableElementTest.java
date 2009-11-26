@@ -25,7 +25,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.diff.ElementDiff;
 
 /**
  * @cdk.module test-standard
@@ -40,6 +39,9 @@ public class PeriodicTableElementTest extends CDKTestCase {
     public void testConstructor() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         Assert.assertNotNull(pte);
+
+        pte = new PeriodicTableElement("C", 12);
+        Assert.assertNotNull(pte);
     }
     @Test
     public void testGetName() {
@@ -53,6 +55,32 @@ public class PeriodicTableElementTest extends CDKTestCase {
         pte.setName("carbon");
         Assert.assertEquals("carbon", pte.getName());
     }
+
+    @Test
+    public void testGetSymbol() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNotNull(pte.getSymbol());
+        Assert.assertEquals("C", pte.getSymbol());
+    }
+
+    @Test
+    public void testSetSymbol() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setSymbol("B");
+        Assert.assertEquals("B", pte.getSymbol());
+    }
+
+    @Test
+    public void testGetSetAtomicNumber() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getAtomicNumber());
+        pte.setAtomicNumber(6);
+        Assert.assertEquals(new Integer(6), pte.getAtomicNumber());
+
+        pte = new PeriodicTableElement("N", 7);
+        Assert.assertEquals(new Integer(7), pte.getAtomicNumber());
+    }
+
 
     @Test
     public void testGetCASid() {
@@ -168,9 +196,12 @@ public class PeriodicTableElementTest extends CDKTestCase {
     @Test
     public void testClone() throws CloneNotSupportedException {
         PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setPhase("liquid");
         PeriodicTableElement cloneElement = (PeriodicTableElement) pte.clone();
-        String diff = ElementDiff.diff(pte, cloneElement);
-        Assert.assertEquals("", diff);
+        Assert.assertNotNull(cloneElement);
+
+        Assert.assertEquals(pte.getSymbol(), cloneElement.getSymbol());
+        Assert.assertEquals(pte.getPhase(), cloneElement.getPhase());
     }
 
     @Test

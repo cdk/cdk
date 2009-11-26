@@ -25,7 +25,6 @@
 package org.openscience.cdk.tools.periodictable;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -56,7 +55,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableElementTest")
-class PeriodicTableElement extends Element
+class PeriodicTableElement implements Cloneable
 {
 	
 	/**
@@ -72,7 +71,9 @@ class PeriodicTableElement extends Element
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(PeriodicTableElement.class);
 	
-	/** The name for this element. */
+	/**
+     * The name for this element.
+     */
 	protected String name;
 	
 	/** The chemical series for this element. 
@@ -126,6 +127,16 @@ class PeriodicTableElement extends Element
     protected Double paulingEneg = (Double) CDKConstants.UNSET;
 
     /**
+     * The atomic number of the element.
+     */
+    private Integer atomicNumber = (Integer) CDKConstants.UNSET;
+
+    /**
+     * Symbol for the element.
+     */
+    private String symbol;
+
+    /**
 	 *  Constructor for the PeriodicTableElement object.
 	 *
 	 * @param symbol The symbol of the element
@@ -135,7 +146,39 @@ class PeriodicTableElement extends Element
 	{
 		this.symbol = symbol;
 	}
-	/**
+
+    /**
+	 *  Constructor for the PeriodicTableElement object.
+	 *
+	 * @param symbol The symbol of the element
+	 */
+    @TestMethod("testConstructor")
+    public PeriodicTableElement(String symbol, Integer atomicNumber) {
+        this.symbol = symbol;
+        this.atomicNumber = atomicNumber;
+    }
+
+    /**
+     * Get this elements symbol.
+     *
+     * @return the symbol
+     */
+    @TestMethod("testGetSymbol")
+    public String getSymbol() {
+        return symbol;
+    }
+
+    /**
+     * Set the symbol of the element.
+     *
+     * @param symbol the symbol
+     */
+    @TestMethod("testSetSymbol")
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    /**
 	* Returns the name of this element.
 	*
 	* @return The name of this element. Null if unset.
@@ -159,7 +202,6 @@ class PeriodicTableElement extends Element
     public void setName(String name)
 	{
 		this.name=name;
-		notifyChanged();
 	}
 
 	/**
@@ -186,7 +228,6 @@ class PeriodicTableElement extends Element
     public void setChemicalSerie(String chemicalSerie)
 	{
 		this.chemicalSerie = chemicalSerie;
-		notifyChanged();
 	}
 
 	/**
@@ -213,7 +254,6 @@ class PeriodicTableElement extends Element
     public void setPeriod(Integer period)
 	{
 		this.period = period;
-		notifyChanged();
 	}
 	
 	/**
@@ -241,7 +281,6 @@ class PeriodicTableElement extends Element
     public void setGroup(Integer group) throws CDKException {
         if (group < 1 || group > 18) throw new CDKException("Invalid group number specified. Must be between 1 and 18");
         this.group = group;
-        notifyChanged();
     }
 	
 	/**
@@ -269,7 +308,6 @@ class PeriodicTableElement extends Element
     public void setPhase(String  phase)
 	{
 		this.phase = phase;
-		notifyChanged();
 	}
 	
 	/**
@@ -296,7 +334,6 @@ class PeriodicTableElement extends Element
     public void setCASid(String  casId)
 	{
 		this.casId = casId;
-		notifyChanged();
 	}
 
     /**
@@ -366,15 +403,46 @@ class PeriodicTableElement extends Element
      */
     @TestMethod("testClone")
     public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+        PeriodicTableElement clone = null;
         try {
-            clone = super.clone();
+            clone = (PeriodicTableElement) super.clone();
+            clone.setSymbol(symbol);
+            clone.setAtomicNumber(atomicNumber);
+            clone.setChemicalSerie(chemicalSerie);
+            clone.setCASid(casId);
+            clone.setCovalentRadius(covalentRadius);
+            clone.setGroup(group);
+            clone.setName(name);
+            clone.setPaulingEneg(paulingEneg);
+            clone.setPeriod(period);
+            clone.setPhase(phase);
+            clone.setVdwRadius(vdwRadius);            
         } catch (Exception exception) {
             logger.debug(exception);
         }
         return clone;
 	 }
-    
+
+    /**
+     * Get the atomic number for this element.
+     *
+     * @return the atomic number
+     */
+    @TestMethod("testGetSetAtomicNumber")
+    public Integer getAtomicNumber() {
+        return atomicNumber;
+    }
+
+    /**
+     * Set the atomic number for this element.
+     *
+     * @param atomicNumber the atomic number
+     */
+    @TestMethod("testGetSetAtomicNumber")
+    public void setAtomicNumber(Integer atomicNumber) {
+        this.atomicNumber = atomicNumber;
+    }
+
     /**
      *
      *@return resultString  String

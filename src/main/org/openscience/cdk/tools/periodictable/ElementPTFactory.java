@@ -26,7 +26,6 @@ package org.openscience.cdk.tools.periodictable;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -172,21 +171,7 @@ class ElementPTFactory
 		element.setCASid(elementInt.getCASid());
 		element.setPaulingEneg(elementInt.getPaulingEneg());
 		return element;
-	}
-	/**
-	 *  Configures a IElement given a PeridicTableElement. 
-	 *
-	 *@param  elementPT   The element of the Periodic Table to be configure
-	 *@return element     The configured element
-	 */
-    @TestMethod("testConfigureE_PeriodicTableElement")
-	public IElement configureE(PeriodicTableElement elementPT)
-	{
-		IElement element = elementPT.getBuilder().newElement(elementPT.getSymbol());
-		element.setSymbol(elementPT.getSymbol());
-		element.setAtomicNumber(elementPT.getAtomicNumber());
-		return element;
-	}
+	}	
 	
 	/**
 	 *  Gets the atomic number of this element in the periodic table.
