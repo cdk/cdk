@@ -95,6 +95,7 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingSetManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingSizeComparatorTest;
+import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenterTest;
 import org.openscience.cdk.tools.periodictable.PeriodicTableElementTest;
 import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
 import org.openscience.cdk.validate.ProblemMarkerTest;
@@ -134,6 +135,7 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     RingManipulatorTest.class,
     AtomContainerSetManipulatorTest.class,
     MoleculeSetManipulatorTest.class,
+    AtomContainerComparatorBy2DCenterTest.class,
     RebondToolTest.class,
     CanonicalLabelerTest.class,
     // from cdk.test.fingerprint
