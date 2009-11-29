@@ -102,18 +102,18 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     /**
      * String representing the identifier for this atom type with null as default.
      */
-    private String identifier;
+    private String identifier = (String) CDKConstants.UNSET;
     
     /**
-	 * Constructor for the AtomType object. Defaults to a zero formal charge.
+	 * Constructor for the AtomType object.
+     *
+     * Defaults to a zero formal charge. All
+     * other fields are set to {@link org.openscience.cdk.CDKConstants.UNSET}.
      *
      * @param elementSymbol  Symbol of the atom
 	 */
 	public AtomType(String elementSymbol) {
 		super(elementSymbol);
-		this.identifier = null;
-		this.formalNeighbourCount = 0;
-		this.electronValency = 0;
 		this.formalCharge = 0;
 	}
 
