@@ -171,7 +171,7 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
 
         System.out.println("b1 = " + b1);
         System.out.println("b2 = " + b2);
-        Assert.assertFalse(FingerprinterTool.isSubset(b2, b1));
+        Assert.assertFalse("butane should not be a substructure of propylamine", FingerprinterTool.isSubset(b2, b1));
     }
 
 	public static Molecule makeFragment1()
