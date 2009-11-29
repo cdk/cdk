@@ -21,12 +21,6 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,12 +36,17 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Iterator;
 
 /**
  * Checks the functionality of the CanonicalLabeler.
@@ -79,17 +78,21 @@ public class CanonicalLabelerTest extends CDKTestCase {
     @Test
     public void testCanonLabel_IAtomContainer() throws Exception {
 		IMolecule molecule = parser.parseSmiles("CC(=O)CBr");
+
+
+        
 		labeler.canonLabel(molecule);
 		Iterator atoms = molecule.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atom = (IAtom)atoms.next();
 			Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
 		}
-		Assert.assertEquals(4, ((Long)molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-		Assert.assertEquals(3, ((Long)molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+        
+		Assert.assertEquals(3, ((Long)molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		Assert.assertEquals(2, ((Long)molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
 		Assert.assertEquals(1, ((Long)molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-		Assert.assertEquals(5, ((Long)molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-		Assert.assertEquals(2, ((Long)molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		Assert.assertEquals(4, ((Long)molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		Assert.assertEquals(5, ((Long)molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
 	}
 
 	/**
@@ -107,12 +110,12 @@ public class CanonicalLabelerTest extends CDKTestCase {
 		while (atoms.hasNext()) {
 			IAtom atom = (IAtom)atoms.next();
 			Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
-		}
+		}        
 		Assert.assertEquals(1, ((Long)molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-		Assert.assertEquals(3, ((Long)molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-		Assert.assertEquals(4, ((Long)molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-		Assert.assertEquals(5, ((Long)molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
-		Assert.assertEquals(2, ((Long)molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		Assert.assertEquals(2, ((Long)molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		Assert.assertEquals(3, ((Long)molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		Assert.assertEquals(4, ((Long)molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		Assert.assertEquals(5, ((Long)molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
 	}
 
     /**

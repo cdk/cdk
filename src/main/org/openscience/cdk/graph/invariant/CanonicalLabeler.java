@@ -33,8 +33,13 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.InvPair;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Canonically labels an atom container implementing
@@ -127,8 +132,8 @@ public class CanonicalLabeler {
       inv.append(atomContainer.getConnectedAtomsList(a).size() +
               (a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount())); //Num connections
       inv.append(atomContainer.getConnectedAtomsList(a).size());                        //Num of non H bonds
-      inv.append(a.getAtomicNumber() == CDKConstants.UNSET ? 0 : a.getAtomicNumber());  //Atomic number
-
+      inv.append(PeriodicTable.getAtomicNumber(a.getSymbol()));
+        
       Double charge = a.getCharge();
         if (charge == CDKConstants.UNSET) charge = 0.0;
       if (charge < 0)                                                        //Sign of charge
