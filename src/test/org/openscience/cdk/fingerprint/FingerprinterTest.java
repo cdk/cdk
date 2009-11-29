@@ -24,24 +24,25 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
@@ -155,6 +156,24 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
         Assert.assertNotNull(bs2);
 	}
 
+    /**
+     * @cdk.bug 2819557
+     * @throws org.openscience.cdk.exception.CDKException
+     */
+    @Test
+    public void testBug2819557() throws CDKException {
+        Molecule butane = makeButane();
+        Molecule propylAmine = makePropylAmine();
+
+        Fingerprinter fp = new Fingerprinter();
+        BitSet b1 = fp.getFingerprint(butane);
+        BitSet b2 = fp.getFingerprint(propylAmine);
+
+        System.out.println("b1 = " + b1);
+        System.out.println("b2 = " + b2);
+        Assert.assertFalse(FingerprinterTool.isSubset(b2, b1));
+    }
+
 	public static Molecule makeFragment1()
 	{
 		Molecule mol = new Molecule();
@@ -226,6 +245,34 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
 		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
 		return mol;
 	}
+
+    public static Molecule makeButane() {
+        Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		
+		return mol;
+    }
+
+    public static Molecule makePropylAmine() {
+        Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("N")); // 3
+
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+
+		return mol;
+    }
  
     public static void main(String[] args) throws Exception
 	{
