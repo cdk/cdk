@@ -22,19 +22,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -53,6 +40,18 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Helper class that help setup a template library of CDK's Builder3D.
@@ -384,7 +383,7 @@ public class TemplateExtractor {
 		IteratingMDLReader imdl=null;
 		//QueryAtomContainer query=null;
 		IAtomContainer query = null;
-		List data = new ArrayList();
+		List<BitSet> data = new ArrayList<BitSet>();
 		try {
 			System.out.print("Read data file in ...");
 			imdl = new IteratingMDLReader(fin, NoNotificationChemObjectBuilder
@@ -399,38 +398,21 @@ public class TemplateExtractor {
 		int fingerprintCounter = 0;
 		System.out.print("Generated Fingerprints: " + fingerprintCounter + "    ");
 		while (imdl.hasNext() && (moleculeCounter<limit || limit==-1)) {
-			// query=new QueryAtomContainer();
-			query = builder.newAtomContainer();
 			m = (IMolecule) imdl.next();
 			moleculeCounter++;
-			// System.out.println(m);
-			if (anyAtom && !anyAtomAnyBond) {
-				// System.out.println("AnyAtom + false");
+            if (anyAtom && !anyAtomAnyBond) {
+                query = QueryAtomContainerCreator.createAnyAtomContainer(m, false);
+            } else {
+                query = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(m);
 
-				query = QueryAtomContainerCreator.createAnyAtomContainer(m,
-						false);
-			} 
-			else {
-
-				// try{
-				// HueckelAromaticityDetector.detectAromaticity(m);
-				// }catch(Exception ex1){
-				// System.out.println("Could not find aromaticity due to:"+ex1);
-				// }
-				// query=createAnyAtomAtomContainer(m);
-				// query=(AtomContainer)m.clone();
-				query = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(m);
-
-			}
+            }
 			try {
 				long time = -System.currentTimeMillis();
 				if (anyAtom || anyAtomAnyBond){
-//					System.out.println("Make Fingerprint Query");
-					data.add((BitSet)fingerPrinter.getFingerprint((IAtomContainer) query, allRingsFinder));
+					data.add(fingerPrinter.getFingerprint(query));
 					fingerprintCounter=fingerprintCounter+1;
 				} else {
-					// System.out.println("Make Fingerprint Molecule");
-					data.add((BitSet) fingerPrinter.getFingerprint(query));
+					data.add(fingerPrinter.getFingerprint(query));
 					fingerprintCounter = fingerprintCounter + 1;
 				}
 				time += System.currentTimeMillis();
@@ -442,7 +424,6 @@ public class TemplateExtractor {
 					timings.put(bin, new Integer(1));
 				}
 			}catch(Exception exc1){
-//				exc1.printStackTrace();
 				System.out.println("QueryFingerprintError: from molecule:"
 						+ moleculeCounter + " due to:" + exc1.getMessage());
 				
@@ -464,7 +445,7 @@ public class TemplateExtractor {
 
 			
 			if (fingerprintCounter % 100 == 0)
-				System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b" + "Generated Fingerprints: " + fingerprintCounter + "   ");
+				System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b" + "Generated Fingerprints: " + fingerprintCounter + "   \n");
 
 		}// while 
 		try {
@@ -552,8 +533,7 @@ public class TemplateExtractor {
 		}
 		try {
 			new TemplateExtractor().makeFingerprintFromRingSystems(args[0],
-					args[1], new Boolean(args[2]).booleanValue(), new Boolean(
-							args[3]).booleanValue());
+					args[1], Boolean.valueOf(args[2]), Boolean.valueOf(args[3]));
 		} catch (Exception e) {
 			System.out.println(usage);
 			// TODO Auto-generated catch block

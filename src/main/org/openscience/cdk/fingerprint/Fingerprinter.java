@@ -230,7 +230,7 @@ public class Fingerprinter implements IFingerprinter {
                         sb.append((char) PeriodicTable.getElementCount() + 1);
                     else {
                         Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
-                        if (atnum != null) sb.append((char) atnum.intValue());
+                        if (atnum != null) sb.append(convertSymbol(x.getSymbol()));
                         else sb.append((char) 
                                        PeriodicTable.getElementCount() + 1);
                     }
@@ -263,8 +263,10 @@ public class Fingerprinter implements IFingerprinter {
         // now lets clean stuff up
         Set<String> cleanPath = new HashSet<String>();
         for (StringBuffer s : allPaths) {
-            if (cleanPath.contains( s.toString() )) continue;
-            String s2 = s.reverse().toString();
+            String s1 = s.toString().trim();
+            if (s1.equals("")) continue;
+            if (cleanPath.contains(s1)) continue;
+            String s2 = s.reverse().toString().trim();
             if (cleanPath.contains(s2)) continue;
             cleanPath.add(s2);
         }

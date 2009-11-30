@@ -62,9 +62,9 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
 		IMolecule mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
 		BitSet bs1 = fingerprinter.getFingerprint(mol1);
-		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 45, bs1.cardinality());
+		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33, bs1.cardinality());
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
-		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 16, bs2.cardinality());
+		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
 	}
 
 	@Test public void testGetSize() throws java.lang.Exception {
@@ -130,7 +130,7 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
     Assert.assertNotNull(fingerprinter);
     Molecule mol = MoleculeFactory.makeIndole();
     BitSet bs = fingerprinter.getFingerprint(mol);
-    Assert.assertEquals(991, bs.length()); // highest set bit
+    Assert.assertEquals(994, bs.length()); // highest set bit
     Assert.assertEquals(1024, bs.size()); // actual bit set size
   }
 
@@ -169,8 +169,6 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
         BitSet b1 = fp.getFingerprint(butane);
         BitSet b2 = fp.getFingerprint(propylAmine);
 
-        System.out.println("b1 = " + b1);
-        System.out.println("b2 = " + b2);
         Assert.assertFalse("butane should not be a substructure of propylamine", FingerprinterTool.isSubset(b2, b1));
     }
 

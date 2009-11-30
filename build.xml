@@ -1160,11 +1160,13 @@
           <pathelement path="${dist}/jar/cdk-io.jar" />
           <pathelement path="${dist}/jar/cdk-ioformats.jar" />
           <pathelement path="${dist}/jar/cdk-data.jar" />
+          <pathelement path="${dist}/jar/cdk-isomorphism.jar" />
+          <pathelement path="${dist}/jar/cdk-fingerprint.jar" />
 	</classpath>
 	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf" />
 	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt" />
-	<arg value="anyatom=true" />
-	<arg value="anyBondanyAtom=true" />
+	<arg value="True" />
+	<arg value="True" />
       </java>
       <gzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt"
 	    destfile="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz" />
