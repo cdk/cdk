@@ -41,7 +41,8 @@ import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement.Direction;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -49,7 +50,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class BasicBondGenerator implements IGenerator {
 
-	private LoggingTool logger = new LoggingTool(BasicBondGenerator.class);
+	private ILoggingTool logger =
+	    LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
 
 	protected IRingSet ringSet;
 
