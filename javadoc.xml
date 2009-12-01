@@ -185,21 +185,11 @@
   <target name="compileTaglets" id="compileTaglets" depends="check, compileTaglets.MacOSX, compileTaglets.Other" />
 
   <target name="compileTaglets.MacOSX" id="compileTaglets.MacOSX" if="isMacOsX">
-    <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
-           includes="*Taglet.java" debug="on" optimize="off"/>
     <javac srcdir="src" destdir="src"
            includes="*Taglet.java" debug="on" optimize="off"/>
   </target>
 
   <target name="compileTaglets.Other" id="compileTaglets.Other" unless="isMacOsX">
-    <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
-         includes="*Taglet.java" debug="on" optimize="off">
-      <classpath>
-        <fileset dir="${java.ext.dirs}">
-          <include name="tools.jar" />
-        </fileset>
-      </classpath>
-    </javac>
     <javac srcdir="src/main" destdir="src/main"
          includes="net/sf/cdk/tools/**/*.java" debug="on" optimize="off">
       <classpath>
