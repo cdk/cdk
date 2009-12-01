@@ -28,14 +28,16 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.AtomMassSymbolElement;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module renderextra
  */
 public class AtomMassGenerator extends BasicAtomGenerator {
 
-    private LoggingTool logger = new LoggingTool(AtomMassGenerator.class);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
 
 	public AtomMassGenerator() {}
 
