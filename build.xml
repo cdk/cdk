@@ -830,6 +830,11 @@
                         <exclude name="jumbo-5.4.2-b2.jar"/>
                     </fileset>
             </copy>
+            <copy todir="${sourcedist.dir}/doc/refs">
+                    <fileset dir="doc/refs">
+                        <include name="*.*"/>
+                    </fileset>
+            </copy>
             <copy todir="${sourcedist.dir}/develjar">
                     <fileset dir="develjar">
                         <exclude name="pmd-1.8.jar"/>
@@ -888,6 +893,11 @@
                         <fileset dir="${src}/main/" includes="**/*.jj" />
                         <fileset dir="${src}/main/" includes="**/*.jjt" />
                         <fileset dir="${src}/main/" includes="org/openscience/cdk/io/cml/data/**" />
+                </copy>
+                <copy todir="${sourcedist.dir}/doc/refs">
+                        <fileset dir="doc/refs">
+                            <include name="*.*"/>
+                        </fileset>
                 </copy>
                 <copy todir="${sourcedist.dir}">
                         <fileset dir="." includes="build.props" />
