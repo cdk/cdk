@@ -96,6 +96,30 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
     }
     
+    @Test public void testMultipleDataFields() throws Exception {
+        String filename = "data/mdl/bug1587283.mol";
+        InputStream ins = this.getClass().getClassLoader().
+          getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IChemFile fileContents = (IChemFile)reader.read(new ChemFile());
+        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        IChemSequence sequence = fileContents.getChemSequence(0);
+        Assert.assertNotNull(sequence);
+        Assert.assertEquals(1, sequence.getChemModelCount());
+        IChemModel model = sequence.getChemModel(0);
+        Assert.assertNotNull(model);
+        IMoleculeSet som = model.getMoleculeSet();
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
+        IMolecule m = som.getMolecule(0);
+        Assert.assertNotNull(m);
+        Assert.assertEquals("B02", m.getProperty("id_no"));
+        Assert.assertEquals("2-2", m.getProperty("eductkey"));
+        Assert.assertEquals("1", m.getProperty("Step"));
+        Assert.assertEquals("2", m.getProperty("Pos"));
+        Assert.assertEquals("B02", m.getProperty("Tag"));
+    }
+
     @Test public void testSDFFile4() throws Exception {
         String filename = "data/mdl/test4.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
