@@ -134,8 +134,9 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     }
     
     /**
-     * Test for bug 1974826
-     * @throws Exception
+     * Test for bug 1974826.
+     *
+     * @cdk.bug 1974826
      */
     @Test public void testSDFFile6() throws Exception {
         String filename = "data/mdl/test6.sdf"; // a multi molecule SDF file
