@@ -35,7 +35,9 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 
@@ -162,6 +164,29 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         IMolecule m = som.getMolecule(0);
         Assert.assertNotNull(m);
         Assert.assertEquals("ola11", m.getProperty("STRUCTURE ID"));
+    }
+
+    /**
+     * Tests that data fields starting with a '>' are allowed.
+     *
+     * @cdk.bug 2911300
+     */
+    @Test public void testBug2911300() throws Exception {
+        String filename = "data/mdl/bug2911300.sdf";
+        InputStream ins = this.getClass().getClassLoader().
+            getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IChemFile fileContents = (IChemFile)reader.read(new ChemFile());
+        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        IChemSequence sequence = fileContents.getChemSequence(0);
+        IChemModel model = sequence.getChemModel(0);
+        Assert.assertNotNull(model);
+        IMoleculeSet som = model.getMoleculeSet();
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
+        IMolecule m = som.getMolecule(0);
+        Assert.assertNotNull(m);
+        Assert.assertEquals(">1", m.getProperty("IC50_uM"));
     }
 
 }
