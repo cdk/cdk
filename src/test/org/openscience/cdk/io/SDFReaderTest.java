@@ -35,6 +35,9 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -150,6 +153,15 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         for (int i=0; i<sequence.getChemModelCount(); i++) {
           Assert.assertNotNull(sequence.getChemModel(i));
         }
+
+        IChemModel model = sequence.getChemModel(0);
+        Assert.assertNotNull(model);
+        IMoleculeSet som = model.getMoleculeSet();
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
+        IMolecule m = som.getMolecule(0);
+        Assert.assertNotNull(m);
+        Assert.assertEquals("ola11", m.getProperty("STRUCTURE ID"));
     }
 
 }
