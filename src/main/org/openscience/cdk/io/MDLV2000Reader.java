@@ -257,15 +257,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 							      );
 				}
 			    }
-			    // end skip all other lines
-			    while ((line = input.readLine()) != null && line.startsWith(">")) {
-                    logger.debug("data header line: ", line);
-			    }
 			}
             if (line == null) {
                 throw new CDKException("Expecting data line here, but found null!");
             }
 			StringBuilder data = new StringBuilder();
+			int dataLineCount = 0;
+			boolean lineIsContinued = false;
 			while ((line = input.readLine()) != null &&
 			       line.trim().length() > 0) {
                 if (line.equals("$$$$")) {
@@ -273,10 +271,20 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 	break;
                 }
                 logger.debug("data line: ", line);
-			    data.append(line);
-			    // preserve newlines, unless the line is exactly 80 chars; in that case it
-			    // is assumed to continue on the next line. See MDL documentation.
-			    if (line.length() < 80) data.append(System.getProperty("line.separator"));
+                lineIsContinued = false; // reset property
+                dataLineCount++;
+
+                // preserve newlines, unless the line is exactly 80 chars;
+                // in that case it is assumed to continue on the next line.
+                // See MDL documentation.
+                if (!lineIsContinued && dataLineCount > 1)
+                    data.append(System.getProperty("line.separator"));
+
+                // add the data line
+                data.append(line);
+
+                // check if the line will be continued on the next line
+			    if (line.length() == 80) lineIsContinued = true;
 			}
 			if (fieldName != null) {
 			    logger.info("fieldName, data: ", fieldName, ", ", data);
