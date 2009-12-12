@@ -439,12 +439,25 @@ public class UniversalIsomorphismTester {
       // handle single query atom case separately
       if (g2.getAtomCount() == 1) {
           List<List<RMap>> matches = new ArrayList<List<RMap>>();
-          IQueryAtom queryAtom = (IQueryAtom) g2.getAtom(0);
-          for (IAtom atom : g1.atoms()) {
-              if (queryAtom.matches(atom)) {
-                  List<RMap> lmap = new ArrayList<RMap>();
-                  lmap.add(new RMap(g1.getAtomNumber(atom), 0));
-                  matches.add(lmap);
+          IAtom queryAtom = g2.getAtom(0);
+
+          // we can have a IQueryAtomContainer *or* an IAtomContainer
+          if (queryAtom instanceof IQueryAtom) {
+              IQueryAtom qAtom = (IQueryAtom) queryAtom;
+              for (IAtom atom : g1.atoms()) {
+                  if (qAtom.matches(atom)) {
+                      List<RMap> lmap = new ArrayList<RMap>();
+                      lmap.add(new RMap(g1.getAtomNumber(atom), 0));
+                      matches.add(lmap);
+                  }
+              }
+          } else {
+              for (IAtom atom : g1.atoms()) {
+                  if (queryAtom.getSymbol().equals(atom.getSymbol())) {
+                      List<RMap> lmap = new ArrayList<RMap>();
+                      lmap.add(new RMap(g1.getAtomNumber(atom), 0));
+                      matches.add(lmap);
+                  }
               }
           }
           return matches;

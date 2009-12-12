@@ -38,6 +38,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -398,6 +399,32 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Assert.assertEquals(0, map2.getId2());
 
         List<List<RMap>> atomMappings = UniversalIsomorphismTester.makeAtomsMapsOfBondsMaps(matches, target, query);
+        Assert.assertEquals(matches, atomMappings);
+    }
+
+    /**
+     * @cdk.bug 2912627
+     */
+    @Test
+    public void testSingleAtomMatching3() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer target = sp.parseSmiles("CNC");
+        IAtomContainer queryac = sp.parseSmiles("C");
+
+        List<List<RMap>> matches = UniversalIsomorphismTester.getIsomorphMaps(target, queryac);
+        Assert.assertEquals(2, matches.size());
+        Assert.assertEquals(1, matches.get(0).size());
+        Assert.assertEquals(1, matches.get(1).size());
+        RMap map1 = matches.get(0).get(0);
+        RMap map2 = matches.get(1).get(0);
+
+        Assert.assertEquals(0, map1.getId1());
+        Assert.assertEquals(0, map1.getId2());
+
+        Assert.assertEquals(2, map2.getId1());
+        Assert.assertEquals(0, map2.getId2());
+
+        List<List<RMap>> atomMappings = UniversalIsomorphismTester.makeAtomsMapsOfBondsMaps(matches, target, queryac);
         Assert.assertEquals(matches, atomMappings);
     }
 
