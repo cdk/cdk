@@ -42,6 +42,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -655,4 +656,16 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         	container.getBond(2).getStereo()
         );
     }
+
+    @Test(expected=CDKException.class)
+    public void testQueryBondTypes() throws Exception {
+        String filename = "data/mdl/queryBondTypes.mol";
+        logger.info("Testing: " + filename);
+        
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        reader.read((ChemObject)new ChemFile());
+    }
+
 }

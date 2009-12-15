@@ -595,6 +595,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     a1.setFlag(CDKConstants.ISAROMATIC, true);
                     a2.setFlag(CDKConstants.ISAROMATIC, true);
                 }
+                else {
+                    throw new CDKException 
+                        ("Detected 'query bond type ' (value="+order +")."+
+                         " Could not create regular molecule.");
+                }
+
                 molecule.addBond(newBond);
             }
             
