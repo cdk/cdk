@@ -26,6 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderCoverageTest;
 import org.openscience.cdk.renderer.color.CDKAtomColorsTest;
 import org.openscience.cdk.renderer.color.CPKAtomColorsTest;
+import org.openscience.cdk.renderer.color.RasmolColorsTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>render</code> module.
@@ -38,6 +39,7 @@ import org.openscience.cdk.renderer.color.CPKAtomColorsTest;
 @SuiteClasses(value={
     RenderCoverageTest.class,
     CPKAtomColorsTest.class,
-    CDKAtomColorsTest.class
+    CDKAtomColorsTest.class,
+    RasmolColorsTest.class
 })
 public class MrenderTests {}

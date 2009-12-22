@@ -20,20 +20,23 @@
  */
 package org.openscience.cdk.renderer.color;
 
-/**
- * Atom coloring following RasMol/Chime Color scheme     
- * http://www.umass.edu/microbio/rasmol/rascolor.htm 
- *
- * @cdk.module render
- * @cdk.githash
- * 
-*/
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
+/**
+ * Atom coloring following RasMol/Chime Color scheme
+ * <a href="http://www.umass.edu/microbio/rasmol/rascolor.htm"
+ * >http://www.umass.edu/microbio/rasmol/rascolor.htm</a>.
+ *
+ * @cdk.module render
+ * @cdk.githash
+ */
+@TestClass("org.openscience.cdk.renderer.color.RasmolColorsTest")
 public class RasmolColors implements IAtomColorer, java.io.Serializable {
 
     private static final long serialVersionUID = 2588969984094169759L;
@@ -96,6 +99,7 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
      * @param defaultColor Color returned if this scheme does not define
      *                     a color for the passed IAtom
      */
+    @TestMethod("testGetAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         String symbol = atom.getSymbol();
