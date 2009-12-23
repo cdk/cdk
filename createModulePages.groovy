@@ -37,7 +37,8 @@ files.each { file ->
             }
             a(href:junitURL,"JUnit")
             span(": " + stats)
-          } catch (FileNotFoundException exc) {}
+          } catch (FileNotFoundException exc) {
+          } catch (SocketException exc) {}
         }
       }
       p(){
