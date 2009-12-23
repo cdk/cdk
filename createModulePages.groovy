@@ -11,8 +11,8 @@ def basedir = new File("src/META-INF")
 files = basedir.listFiles().grep(~/.*cdkdepends$/)
 files.add(new File(basedir,"annotation.cdkdepends"))
 files.add(new File(basedir,"interfaces.cdkdepends"))
-files.each {
-  file = it
+files.each { file ->
+  println "Processing $file";
   m = (file =~ ~/\/([-|\w]*)\.cdkdepends/)
   module = m[0][1]
 
