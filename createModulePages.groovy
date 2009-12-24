@@ -83,8 +83,14 @@ files.each { file ->
       p(){
         if (libdepends.exists()) {
           b("Libraries")
-          libdepends.text.eachLine{
-            span(it)
+          ul() {
+            libdepends.text.eachLine{ libdep ->
+              if (libdep.length() > 0) {
+                p() {
+                  span(libdep)
+                }
+              }
+            }
           }
         }
       }
