@@ -29,9 +29,14 @@ ant.delete(dir:"doc/modules")
 ant.mkdir(dir:"doc/modules")
 
 def basedir = new File("src/META-INF")
-files = basedir.listFiles().grep(~/.*cdkdepends$/)
-files.add(new File(basedir,"annotation.cdkdepends"))
-files.add(new File(basedir,"interfaces.cdkdepends"))
+files = new ArrayList();
+if (args[0] != null) {
+  files.add(new File(basedir, args[0] + ".cdkdepends"));
+} else {
+  files = basedir.listFiles().grep(~/.*cdkdepends$/)
+  files.add(new File(basedir,"annotation.cdkdepends"))
+  files.add(new File(basedir,"interfaces.cdkdepends"))
+}
 files.each { file ->
   println "Processing $file";
   m = (file =~ ~/\/([-|\w]*)\.cdkdepends/)
