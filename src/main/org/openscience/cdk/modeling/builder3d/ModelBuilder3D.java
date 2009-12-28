@@ -52,9 +52,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
  *  Its use looks like:
  *  <pre>
- *  ModelBuilder3D mb3d = new ModelBuilder3D();
- *  mb3d.setTemplateHandler();
- *  mb3d.setForceField("mm2");
+ *  ModelBuilder3D mb3d = ModelBuilder3D.getInstance();
  *  IMolecule molecule = mb3d.generate3DCoordinates(molecule, false);
  *  </pre>
  *

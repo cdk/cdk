@@ -1,10 +1,2 @@
-This file lists the licenses for the libraries in this directory.
-
-Apache License (2.0/1.1):
-log4j.jar
-
-Artistic License:
-cmlxom-2.5.b1.jar
-
-Public Domain :
-jama-1.0.2.jar, vecmath1.2-1.14.jar
+The respective Copyright and License information for all the libraries
+in this folder are found in the .meta file matching the jar.
