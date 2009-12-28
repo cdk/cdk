@@ -55,6 +55,8 @@ import org.openscience.cdk.renderer.elements.WedgeLineElement;
 import org.openscience.cdk.renderer.elements.path.Type;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.font.IFontManager;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
+import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 
 /**
@@ -81,6 +83,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         new Hashtable<TextAttribute, Object>();
 	
 	private final Graphics2D g;
+
+    private Color backgroundColor;
 	
 	public AWTDrawVisitor(Graphics2D g) {
 		this.g = g;
@@ -88,6 +92,12 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 		this.rendererModel = null;
 		
         map.put(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB);
+
+        for (IGeneratorParameter<?> param :
+            new BasicSceneGenerator().getParameters()) {
+            if (param instanceof BasicSceneGenerator.BackGroundColor)
+            this.backgroundColor = (Color)param.getDefault();
+        }
 	}
 	
 	public void visitElementGroup(ElementGroup elementGroup) {
@@ -172,8 +182,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         Rectangle2D textBounds =
                 this.getTextBounds(
                         textElement.text, textElement.x, textElement.y, g);
-        
-        this.g.setColor(this.rendererModel.getBackColor());
+        this.g.setColor(backgroundColor);
         this.g.fill(textBounds);
         this.g.setColor(textElement.color);
         this.g.drawString(textElement.text, p.x, p.y);
@@ -249,7 +258,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                     atomSymbol.text, atomSymbol.x, atomSymbol.y, g);
         Rectangle2D textBounds = 
             this.getTextBounds(atomSymbol.text, atomSymbol.x, atomSymbol.y, g);
-        this.g.setColor(this.rendererModel.getBackColor());
+        this.g.setColor(backgroundColor);
         this.g.fill(textBounds);
         this.g.setColor(atomSymbol.color);
         this.g.drawString(atomSymbol.text, p.x, p.y);
@@ -373,7 +382,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                     textGroup.text, textGroup.x, textGroup.y, g);
         Rectangle2D textBounds = 
             this.getTextBounds(textGroup.text, textGroup.x, textGroup.y, g);
-        this.g.setColor(this.rendererModel.getBackColor());
+        this.g.setColor(backgroundColor);
         this.g.fill(textBounds);
         this.g.setColor(textGroup.color);
         this.g.drawString(textGroup.text, p.x, p.y);
