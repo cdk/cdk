@@ -382,26 +382,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the background color
-     *
-     * @return the background color
-     */
-    public Color getBackColor() {
-        return this.parameters.getBackColor();
-    }
-
-    /**
-     * Sets the background color
-     *
-     * @param backColor
-     *            the background color
-     */
-    public void setBackColor(Color backColor) {
-        this.parameters.setBackColor(backColor);
-        fireChange();
-    }
-
-    /**
      * Returns the atom-atom mapping line color
      *
      * @return the atom-atom mapping line color
@@ -593,17 +573,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the background color of the given atom.
-     */
-    public Color getAtomBackgroundColor(IAtom atom) {
-        // logger.debug("Getting atom back color for " + atom.toString());
-        Color atomColor = getBackColor();
-        // logger.debug("  BackColor: " + atomColor.toString());
-        Color hashColor = (Color) this.getColorHash().get(atom);
-        if (hashColor != null) {
-            // logger.debug(
-            // "Background color atom according to hashing (substructure)");
-            atomColor = hashColor;
         }
         // logger.debug("Color: " + atomColor.toString());
         return atomColor;

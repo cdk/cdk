@@ -43,11 +43,6 @@ public class RenderingParameters {
     private int arrowHeadWidth = 10;
 
     /**
-     * The background color of the rendered image
-     */
-    private Color backColor = Color.white;
-
-    /**
      * The gap between double and triple bond lines on the screen
      */
     private double bondDistance = 2;
@@ -289,10 +284,6 @@ public class RenderingParameters {
         this.fontStyle = fontStyle;
     }
 
-    public Color getBackColor() {
-        return backColor;
-    }
-
     public double getBondDistance() {
         return bondDistance;
     }
@@ -393,8 +384,6 @@ public class RenderingParameters {
         return willDrawNumbers;
     }
 
-    public void setBackColor(Color backColor) {
-        this.backColor = backColor;
     }
 
     public void setBondDistance(double bondDistance) {
