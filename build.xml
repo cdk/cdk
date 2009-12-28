@@ -279,6 +279,32 @@
         <target id="compile-init" name="compile-init"
                 depends="init, check, runDoclet"/>
 
+        <target id="qa-module" name="qa-module"
+                depends="check, dist.init, compile-needed-test"
+                unless="module-uptodate">
+          <echo message="Running QA for CDK's ${module} module" />
+
+          <antcall target="test-module">
+              <param name="module" value="${module}"/>
+          </antcall>
+
+          <ant antfile="pmd.xml" target="test-module">
+              <property name="pmd.test" value="custom"/>
+              <property name="module" value="${module}"/>
+              <property name="lib" value="develjar" />
+          </ant>
+          <ant antfile="pmd-unused.xml" target="test-module">
+              <property name="pmd.test" value="custom"/>
+              <property name="module" value="${module}"/>
+              <property name="lib" value="develjar" />
+          </ant>
+          <ant antfile="pmd-migrating.xml" target="test-module">
+              <property name="pmd.test" value="migrating"/>
+              <property name="module" value="${module}"/>
+              <property name="lib" value="develjar" />
+          </ant>
+        </target>
+
         <target id="compile-module" name="compile-module"
                 depends="check, dist.init, compile-needed-test"
                 unless="module-uptodate">
