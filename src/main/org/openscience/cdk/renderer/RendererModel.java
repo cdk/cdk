@@ -573,12 +573,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-        }
-        // logger.debug("Color: " + atomColor.toString());
-        return atomColor;
-    }
-
-    /**
      * Sets the {@link Map} used for coloring substructures
      *
      * @param colorHash
