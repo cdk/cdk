@@ -44,6 +44,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -63,6 +65,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         LoggingToolFactory.createLoggingTool(SMILESWriter.class);
     private BufferedWriter writer;
 
+    private BooleanIOSetting useAromaticityFlag;
+
     /**
      * Contructs a new SMILESWriter that can write a list of SMILES to a Writer
      *
@@ -77,6 +81,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
             }
         } catch (Exception exc) {
         }
+        initIOSettings();
     }
 
     public SMILESWriter(OutputStream output) {
@@ -170,6 +175,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      */
     public void writeMolecule(IMolecule molecule) {
         SmilesGenerator sg = new SmilesGenerator();
+        sg.setUseAromaticityFlag(useAromaticityFlag.isSet());
         String smiles = "";
         try {
             smiles = sg.createSMILES(molecule);
@@ -182,5 +188,24 @@ public class SMILESWriter extends DefaultChemObjectWriter {
             logger.error("Error while writing Molecule: ", exc.getMessage());
             logger.debug(exc);
         }
+    }
+
+    private void initIOSettings() {
+        useAromaticityFlag = new BooleanIOSetting(
+            "UseAromaticity",
+            IOSetting.LOW,
+            "Should aromaticity information be stored in the SMILES?",
+            "false"
+        );
+    }
+
+    public void customizeJob() {
+        fireIOSettingQuestion(useAromaticityFlag);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[1];
+        settings[0] = useAromaticityFlag;
+        return settings;
     }
 }

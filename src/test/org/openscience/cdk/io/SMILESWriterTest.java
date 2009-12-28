@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import java.io.StringWriter;
+import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -30,6 +31,7 @@ import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -60,4 +62,19 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(stringWriter.toString().contains("C=C"));
     }
 
+    @Test public void testWriteAromatic() throws Exception {
+        StringWriter stringWriter = new StringWriter();
+        IMolecule benzene = MoleculeFactory.makeBenzene();
+        SMILESWriter smilesWriter = new SMILESWriter(stringWriter);
+
+        Properties prop = new Properties();
+        prop.setProperty("UseAromaticity","true");
+        PropertiesListener listener = new PropertiesListener(prop);
+        smilesWriter.addChemObjectIOListener(listener);
+        smilesWriter.customizeJob();
+        smilesWriter.write(benzene);
+        smilesWriter.close();
+        Assert.assertFalse(stringWriter.toString().contains("C=C"));
+        Assert.assertTrue(stringWriter.toString().contains("ccc"));
+    }
 }
