@@ -78,11 +78,6 @@ public class RenderingParameters {
     private Color boundsColor = Color.LIGHT_GRAY;
 
     /**
-     * Determines whether atoms are colored by type
-     */
-    private boolean colorAtomsByType = true;
-
-    /**
      * If true, atoms are displayed in a compact notation,
      * as a colored square or circle, rather than as text
      */
@@ -363,10 +358,6 @@ public class RenderingParameters {
         return selectedPartColor;
     }
 
-    public boolean isColorAtomsByType() {
-        return colorAtomsByType;
-    }
-
     public boolean isCompact() {
         return compact;
     }
@@ -439,10 +430,6 @@ public class RenderingParameters {
         this.mappingLineWidth = mappingLineWidth;
     }
     
-    public void setColorAtomsByType(boolean colorAtomsByType) {
-        this.colorAtomsByType = colorAtomsByType;
-    }
-
     public void setCompact(boolean compact) {
         this.compact = compact;
     }

@@ -81,8 +81,6 @@ public class RendererModel implements Serializable, Cloneable {
 
     private Map<IAtom, String> toolTipTextMap = new HashMap<IAtom, String>();
 
-    private IAtomColorer colorer = new CDK2DAtomColors();
-
     private IAtom highlightedAtom = null;
 
     private IBond highlightedBond = null;
@@ -443,15 +441,6 @@ public class RendererModel implements Serializable, Cloneable {
         fireChange();
     }
 
-    public boolean getColorAtomsByType() {
-        return this.parameters.isColorAtomsByType();
-    }
-
-    public void setColorAtomsByType(boolean bool) {
-        this.parameters.setColorAtomsByType(bool);
-        fireChange();
-    }
-
     public boolean getShowEndCarbons() {
         return this.parameters.isShowEndCarbons();
     }
@@ -624,27 +613,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the drawing color of the given atom. An atom is colored as
-     * highlighted if highlighted. The atom is color marked if in a
-     * substructure. If not, the color from the CDK2DAtomColor is used (if
-     * selected). Otherwise, the atom is colored black.
-     */
-    public Color getAtomColor(IAtom atom, Color defaultColor) {
-        // logger.debug("Getting atom front color for " + atom.toString());
-        if (atom == null) {
-            return defaultColor;
-        }
-
-        Color atomColor = defaultColor;
-        if (this.parameters.isColorAtomsByType()) {
-            // logger.debug("Coloring atom by type");
-            atomColor = colorer.getAtomColor(atom);
-        }
-        // logger.debug("Color: " + atomColor.toString());
-        return atomColor;
-    }
-
-    /**
      * Returns the background color of the given atom.
      */
     public Color getAtomBackgroundColor(IAtom atom) {
@@ -659,25 +627,6 @@ public class RendererModel implements Serializable, Cloneable {
         }
         // logger.debug("Color: " + atomColor.toString());
         return atomColor;
-    }
-
-    /**
-     * Returns the current atom colorer.
-     *
-     * @return The AtomColorer.
-     */
-    public IAtomColorer getAtomColorer() {
-        return colorer;
-    }
-
-    /**
-     * Sets the atom colorer.
-     *
-     * @param atomColorer
-     *            the new colorer.
-     */
-    public void setAtomColorer(final IAtomColorer atomColorer) {
-        colorer = atomColorer;
     }
 
     /**
