@@ -61,7 +61,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
                 text = atom.getSymbol();
             }
             Point2d p = atom.getPoint2d();
-            Color c = getColorForAtom(atom, model);
+            Color c = getAtomColor(atom);
             TextGroupElement textGroup = new TextGroupElement(p.x, p.y, text, c);
             decorate(textGroup, ac, atom, model);
             return textGroup;

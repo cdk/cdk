@@ -51,7 +51,7 @@ public class AtomMassGenerator extends BasicAtomGenerator {
 				atom.getHydrogenCount(), 
 				alignment, 
 				atom.getMassNumber(),
-				super.getColorForAtom(atom, model));
+				super.getAtomColor(atom));
 	}
 
 	public boolean showCarbon(
