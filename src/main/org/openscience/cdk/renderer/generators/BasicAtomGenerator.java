@@ -32,17 +32,44 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.RenderingParameters.AtomShape;
+import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  * @cdk.module renderbasic
  */
 public class BasicAtomGenerator implements IGenerator {
+
+    public static class AtomColor extends
+        AbstractGeneratorParameter<Color> {
+        public Color getDefault() {
+            return Color.BLACK;
+        }
+    }
+    private IGeneratorParameter<Color> atomColor = new AtomColor();
+
+    public static class AtomColorer extends
+        AbstractGeneratorParameter<IAtomColorer> {
+        public IAtomColorer getDefault() {
+            return new CDK2DAtomColors();
+        }
+    }
+    private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
+
+    public static class ColorByType extends
+        AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.TRUE;
+        }
+    }
+    private IGeneratorParameter<Boolean> colorByType = new ColorByType();
 
 	public BasicAtomGenerator() {}
 
@@ -86,10 +113,6 @@ public class BasicAtomGenerator implements IGenerator {
 	    return true;
 	}
 
-	protected Color getColorForAtom(IAtom atom, RendererModel model) {
-		return model.getAtomColor(atom, Color.BLACK);
-	}
-
 	public IRenderingElement generate(
 	        IAtomContainer ac, IAtom atom, RendererModel model) {
 	    if (!canDraw(atom, ac, model)) {
@@ -115,10 +138,10 @@ public class BasicAtomGenerator implements IGenerator {
 	    double d = 2 * r;
 	    if (model.getCompactShape() == AtomShape.SQUARE) {
     	    return new RectangleElement(
-    	            p.x - r, p.y - r, d, d, true, getColorForAtom(atom, model));
+    	            p.x - r, p.y - r, d, d, true, getAtomColor(atom));
 	    } else {
 	        return new OvalElement(
-	                p.x, p.y, r, true, getColorForAtom(atom, model));
+	                p.x, p.y, r, true, getAtomColor(atom));
 	    }
 	}
 
@@ -136,7 +159,7 @@ public class BasicAtomGenerator implements IGenerator {
 				text,
 				atom.getFormalCharge(),
 				atom.getHydrogenCount(),
-				alignment, getColorForAtom(atom, model));
+				alignment, getAtomColor(atom));
 	}
 
 	public boolean isHydrogen(IAtom atom) {
@@ -170,6 +193,19 @@ public class BasicAtomGenerator implements IGenerator {
 			return true;
 
 		return false;
+	}
+
+	/* Returns the drawing color of the given atom. An atom is colored as
+	 * highlighted if highlighted. The atom is color marked if in a
+	 * substructure. If not, the color from the CDK2DAtomColor is used (if
+	 * selected). Otherwise, the atom is colored black.
+	 */
+	protected Color getAtomColor(IAtom atom) {
+	    Color atomColor = this.atomColor.getValue();
+	    if (colorByType.getValue()) {
+	        atomColor = this.atomColorer.getValue().getAtomColor(atom);
+	    }
+	    return atomColor;
 	}
 
     public List<IGeneratorParameter<?>> getParameters() {
