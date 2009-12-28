@@ -53,6 +53,7 @@ import org.openscience.cdk.io.PMPReaderTest;
 import org.openscience.cdk.io.ReaderFactoryTest;
 import org.openscience.cdk.io.SDFReaderTest;
 import org.openscience.cdk.io.SDFWriterTest;
+import org.openscience.cdk.io.SMILESWriterTest;
 import org.openscience.cdk.io.ShelXReaderTest;
 import org.openscience.cdk.io.WriterFactoryTest;
 import org.openscience.cdk.io.XYZReaderTest;
@@ -98,6 +99,7 @@ import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
     PDBWriterTest.class,
     PMPReaderTest.class,
     ShelXReaderTest.class,
+    SMILESWriterTest.class,
     XYZReaderTest.class,
     XYZWriterTest.class,
 
