@@ -53,18 +53,30 @@ files.each { file ->
       if (!module.contains("test")) {
         h2("QA Reports")
         p(){
-          junitURL = nightly+"test/result-"+module
-          stats = "";
-          try {
-            junitURL.toURL().eachLine {
+          localReport = new File("reports/result-"+module + ".txt")
+          if (localReport.exists()) {
+            // use local
+            localReport.eachLine {
               if (it =~ ~/Tests\srun/) {
                 stats = it
               }
             }
-            a(href:junitURL,"JUnit")
-            span(": " + stats)
-          } catch (FileNotFoundException exc) {
-          } catch (SocketException exc) {}
+            span("JUnit: " + stats)
+          } else {
+            // use remote
+            junitURL = nightly+"test/result-"+module
+            stats = "";
+            try {
+              junitURL.toURL().eachLine {
+                if (it =~ ~/Tests\srun/) {
+                  stats = it
+                }
+              }
+              a(href:junitURL,"JUnit")
+              span(": " + stats)
+            } catch (FileNotFoundException exc) {
+            } catch (SocketException exc) {}
+          }
         }
       }
       p(){
@@ -72,9 +84,36 @@ files.each { file ->
       }
       p(){
         span("PDM: ")
-        a(href:nightly+"pmd-unused/"+module+".html", "unused")
-        a(href:nightly+"pmd-migrating/"+module+".html", "migration")
-        a(href:nightly+"pmd/"+module+".html", "all")
+        localReport = new File("reports/pmd/"+module + ".xml")
+        if (localReport.exists()) {
+          def pmd = null
+          try {
+            pmd = new XmlParser().parseText(localReport.text)
+            span("Violations=" + pmd.file.violation.size())
+          } catch (Exception exception) {}
+        } else {
+          a(href:nightly+"pmd/"+module+".html", "all")
+        }
+        localReport = new File("reports/pmd-unused/"+module + ".xml")
+        if (localReport.exists()) {
+          def pmd = null
+          try {
+            pmd = new XmlParser().parseText(localReport.text)
+            span("Violations=" + pmd.file.violation.size())
+          } catch (Exception exception) {}
+        } else {
+          a(href:nightly+"pmd-unused/"+module+".html", "unused")
+        }
+        localReport = new File("reports/pmd-migrating/"+module + ".xml")
+        if (localReport.exists()) {
+          def pmd = null
+          try {
+            pmd = new XmlParser().parseText(localReport.text)
+            span("Violations=" + pmd.file.violation.size())
+          } catch (Exception exception) {}
+        } else {
+          a(href:nightly+"pmd-migrating/"+module+".html", "migration")
+        }
       }
       h2("Depends")
       p(){
