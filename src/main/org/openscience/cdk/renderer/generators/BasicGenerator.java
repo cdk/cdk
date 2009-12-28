@@ -31,16 +31,19 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  */
 public class BasicGenerator {
 	
+    private BasicSceneGenerator sceneGenerator;
 	private BasicAtomGenerator atomGenerator;
 	private BasicBondGenerator bondGenerator;
 	
 	public BasicGenerator() {
 		this.atomGenerator = new BasicAtomGenerator();
 		this.bondGenerator = new BasicBondGenerator();
+        this.sceneGenerator = new BasicSceneGenerator();
 	}
 	
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup diagram = new ElementGroup();
+        diagram.add(this.sceneGenerator.generate(ac, model));
 		diagram.add(this.bondGenerator.generate(ac, model));
 		diagram.add(this.atomGenerator.generate(ac, model));
 		return diagram;
