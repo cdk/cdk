@@ -18,6 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 def nightly = "http://pele.farmbio.uu.se/nightly-1.2.x/"
 
@@ -87,7 +89,28 @@ files.each { file ->
             libdepends.text.eachLine{ libdep ->
               if (libdep.length() > 0) {
                 p() {
-                  span(libdep)
+                  span(libdep + ": ")
+                  configFile = new File("jar/" + libdep + ".meta")
+                  if (configFile.exists()) {
+                    config = readProperties(configFile);
+                    ul() {
+                      config.keySet().each { section ->
+                        libProps = config.get(section);
+                        p() {
+                          span(libProps.get("Library"))
+                          if (libProps.containsKey("Version")) {
+                            span(" " + libProps.get("Version"))
+                          }
+                          br()
+                          if (libProps.containsKey("Copyright")) {
+                            span(libProps.get("Copyright"))
+                            br()
+                          }
+                          span(libProps.get("License"))
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -107,3 +130,25 @@ files.each { file ->
   new File("doc/modules/" + module + ".html").write(writer.toString())
 }
 
+public Map readProperties(File file) {
+  Map props = new HashMap();
+  Map sectionProps = null;
+  file.text.eachLine { line ->
+    line.trim();
+    if (line.startsWith("#")) {
+      // skip line
+    } else if (line.startsWith("[") && line.endsWith("]")) {
+      section = line.substring(line.indexOf("[")+1, line.indexOf("]"));
+      sectionProps = new HashMap();
+      props.put(section, sectionProps);
+    } else if (line.contains("=")) {
+      def keyValue = line.split("=")
+      if (sectionProps == null) {
+        print "ERROR: property without required section header";
+        System.exit(-1);
+      }
+      sectionProps.put(keyValue[0], keyValue[1]);
+    }
+  }
+  return props;
+}
