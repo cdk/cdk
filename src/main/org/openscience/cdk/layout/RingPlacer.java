@@ -26,7 +26,9 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -67,6 +69,30 @@ public class RingPlacer
 	static int BRIDGED = 1;		
 	static int SPIRO = 2;
 
+        /**
+         * Default ring start angles. Map contains pairs: ring size with start angle. 
+         */
+		public static final Map<Integer,Double> defaultAngles = new HashMap<Integer,Double>();
+        static {
+            defaultAngles.put(3,Math.PI*(0.1666667));
+            defaultAngles.put(4,Math.PI*(0.25));
+            defaultAngles.put(5,Math.PI*(0.3));
+            defaultAngles.put(7,Math.PI*(0.07));
+            defaultAngles.put(8,Math.PI*(0.125));
+        }
+
+        /**
+         * Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
+         */
+        public static final Map<Integer,Double> jcpAngles = new HashMap<Integer,Double>();
+        static {
+            jcpAngles.put(3,Math.PI*(0.5));
+            jcpAngles.put(4,Math.PI*(0.25));
+            jcpAngles.put(5,Math.PI*(0.5));
+            jcpAngles.put(7,Math.PI*(0.07));
+            jcpAngles.put(8,Math.PI*(0.125));
+        }
+
 	/**
 	 * The empty constructor.
 	 */
@@ -101,10 +127,27 @@ public class RingPlacer
 		{
 			placeSpiroRing(ring, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
 		}
-
 	}
-	
-	public void placeRing(IRing ring, Point2d ringCenter, double bondLength) {
+
+    /**
+     * Place ring with default start angles, using {@link #defaultAngles}.
+     * @param ring the ring to place.
+     * @param ringCenter center coordinates of the ring. 
+     * @param bondLength given bond length.
+     */
+    public void placeRing(IRing ring, Point2d ringCenter, double bondLength) {
+            placeRing(ring, ringCenter, bondLength, defaultAngles);
+    }
+
+    /**
+     * Place ring with user provided angles.  
+     * 
+     * @param ring the ring to place.
+     * @param ringCenter center coordinates of the ring. 
+     * @param bondLength given bond length.
+     * @param startAngles a map with start angles when drawing the ring. 
+     */
+	public void placeRing(IRing ring, Point2d ringCenter, double bondLength, Map<Integer,Double> startAngles ) {
  	      double radius = this.getNativeRingRadius(ring, bondLength);
         double addAngle = 2 * Math.PI / ring.getRingSize();
 
@@ -116,23 +159,8 @@ public class RingPlacer
         /* Different ring sizes get different start angles to have
          * visually correct placement */
         int ringSize=ring.getRingSize();
-        switch (ringSize) {
-            case 3:
-                    startAngle=Math.PI*(0.1666667);
-                    break;
-            case 4:
-                    startAngle=Math.PI*0.25;
-                    break;
-            case 5:
-                    startAngle=Math.PI*0.3;
-                    break;
-            case 7:
-                    startAngle=Math.PI*0.07;
-                    break;
-            case 8:
-                    startAngle=Math.PI*0.125;
-                    break;
-        }
+        if (startAngles.get(ringSize) != null)
+          startAngle = startAngles.get(ringSize);
         
         List<IBond> bonds = ring.getConnectedBondsList(startAtom);
         /*
