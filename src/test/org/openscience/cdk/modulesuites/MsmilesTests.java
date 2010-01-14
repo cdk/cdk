@@ -32,7 +32,7 @@ import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
 import org.openscience.cdk.smiles.DeduceBondSystemToolTest;
 import org.openscience.cdk.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.smiles.SmilesParserTest;
-import org.openscience.cdk.tools.NormalizerTest;
+import org.openscience.cdk.normalize.NormalizerTest;
 
 /**
  * TestSuite that runs all the sample tests for the SMILES functionality.
