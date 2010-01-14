@@ -47,7 +47,10 @@ public abstract class AbstractGeneratorParameter<T>
      * @param value the new parameter value
      */
     public T getValue() {
-        return this.parameterSetting;
+        if (this.parameterSetting == null)
+            return getDefault();
+        else
+            return this.parameterSetting;
     }
 
 }
