@@ -36,6 +36,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -89,6 +90,15 @@ public class GeometryToolsTest extends CDKTestCase {
     	Assert.assertFalse(GeometryTools.has2DCoordinates((IAtomContainer)null));
     }
 
+    @Test public void testHas2DCoordinates_With000() throws CDKException {
+        String filenameMol = "data/mdl/with000coordinate.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
+        Molecule molOne=null;
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        molOne = (Molecule)reader.read(new Molecule());
+        Assert.assertEquals(2,GeometryTools.has2DCoordinatesNew(molOne));
+    }
+    
     @Test public void testTranslateAllPositive_IAtomContainer() {
 		IAtomContainer container = new NNAtomContainer();
 		IAtom atom = new NNAtom(Elements.CARBON);
