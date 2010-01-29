@@ -573,8 +573,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // convert to 2D, if totalZ == 0
             if (totalX == 0.0 && totalY == 0.0 && totalZ == 0.0) {
                 logger.info("All coordinates are 0.0");
-                for (IAtom atomToUpdate : molecule.atoms()) {
-                    atomToUpdate.setPoint3d(null);
+                if (molecule.getAtomCount()==1){
+                    molecule.getAtom(0).setPoint2d(new Point2d(x,y));
+                }else{
+                    for (IAtom atomToUpdate : molecule.atoms()) {
+                        atomToUpdate.setPoint3d(null);
+                    }
                 }
             } else if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");

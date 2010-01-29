@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -220,5 +221,15 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1, ((Integer)mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
         Assert.assertEquals(15, ((Integer)mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
         Assert.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+    }
+
+    @Test(expected=AssertionError.class)
+    public void testHas2DCoordinates_With000() throws CDKException {
+        String filenameMol = "data/mdl/with000coordinate.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
+        Molecule molOne=null;
+        MDLReader reader = new MDLReader(ins, Mode.RELAXED);
+        molOne = (Molecule)reader.read(new Molecule());
+        Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
     }
 }
