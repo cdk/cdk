@@ -71,6 +71,14 @@ public class BasicAtomGenerator implements IGenerator {
     }
     private IGeneratorParameter<Boolean> colorByType = new ColorByType();
 
+    public static class AtomRadius extends
+        AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 8.0;
+        }
+    }
+    private IGeneratorParameter<Double> atomRadius = new AtomRadius();
+
 	public BasicAtomGenerator() {}
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
@@ -134,7 +142,7 @@ public class BasicAtomGenerator implements IGenerator {
 	public IRenderingElement generateCompactElement(
 	        IAtom atom, RendererModel model) {
 	    Point2d p = atom.getPoint2d();
-	    double r = model.getAtomRadius() / model.getScale();
+	    double r = atomRadius.getValue() / model.getScale();
 	    double d = 2 * r;
 	    if (model.getCompactShape() == AtomShape.SQUARE) {
     	    return new RectangleElement(
