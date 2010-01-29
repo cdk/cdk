@@ -43,6 +43,8 @@ import org.openscience.cdk.renderer.RenderingParameters.AtomShape;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.font.IFontManager;
+import org.openscience.cdk.renderer.generators.IGenerator;
+import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 
 /**
@@ -932,5 +934,49 @@ public class RendererModel implements Serializable, Cloneable {
 	public void setSelectionRadius(double selectionRadius) {
 		this.parameters.setSelectionRadius(selectionRadius);
 	}
+
+	private Map<String,IGeneratorParameter<?>> renderingParameters =
+	        new HashMap<String,IGeneratorParameter<?>>();
+
+	/**
+	 * Returns the {@link IGeneratorParameter} for the active {@link IRenderer}.
+	 * It returns a new instance of it was unregistered.
+	 *
+	 * @param param {@link IGeneratorParameter} to get the value of.
+	 * @return the {@link IGeneratorParameter} instance with the active value.
+	 */
+	public IGeneratorParameter<?> getRenderingParameter(
+	    Class<? extends IGeneratorParameter<?>> param) {
+	    if (renderingParameters.containsKey(param.getClass().getName()))
+	        return renderingParameters.get(param.getClass().getName());
+	    try {
+            return param.newInstance();
+        } catch (InstantiationException exception) {
+            throw new RuntimeException(
+                "Could not instantiate a default " +
+                param.getClass().getName(), exception
+            );
+        } catch (IllegalAccessException exception) {
+            throw new RuntimeException(
+                "Could not instantiate a default " +
+                param.getClass().getName(), exception
+            );
+        }
+	}
+
+	/**
+	 * Registers rendering parameters from {@link IGenerator}s with this
+	 * model.
+	 *
+	 * @param generator
+	 */
+    public void registerParameters(IGenerator generator) {
+        for (IGeneratorParameter<?> param : generator.getParameters()) {
+            renderingParameters.put(
+                param.getClass().getName(),
+                param
+            );
+        }
+    };
 
 }
