@@ -21,7 +21,7 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -217,6 +217,13 @@ public class BasicAtomGenerator implements IGenerator {
 	}
 
     public List<IGeneratorParameter<?>> getParameters() {
-        return Collections.emptyList();
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+                atomColor,
+                atomColorer,
+                atomRadius,
+                colorByType
+            }
+        );
     }
 }
