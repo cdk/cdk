@@ -34,6 +34,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.AtomRadius;
 
 /**
  * Generate the symbols for radicals.
@@ -54,7 +55,9 @@ public class RadicalGenerator implements IGenerator {
         final Color RADICAL_COLOR = Color.BLACK;
         
         // XXX : is this the best option?
-        final double ATOM_RADIUS = model.getAtomRadius() / model.getScale();
+        final double ATOM_RADIUS =
+            ((AtomRadius)model.getRenderingParameter(AtomRadius.class)).
+            getValue();
         
         double modelRadius = SCREEN_RADIUS / model.getScale(); 
         for (ISingleElectron e : ac.singleElectrons()) {
