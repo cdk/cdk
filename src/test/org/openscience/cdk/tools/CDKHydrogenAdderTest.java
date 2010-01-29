@@ -35,9 +35,9 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -651,6 +651,14 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Assert.assertEquals(1, molecule.getAtom(1).getHydrogenCount().intValue());
         Assert.assertEquals(1, molecule.getAtom(2).getHydrogenCount().intValue());
         Assert.assertEquals(1, molecule.getAtom(3).getHydrogenCount().intValue());
+    }
+
+    @Test
+    public void testPseudoAtom() throws Exception {
+        IMolecule molecule = new Molecule();
+        molecule.addAtom(new PseudoAtom("Waterium"));
+        findAndConfigureAtomTypesForAllAtoms(molecule);
+        Assert.assertNull(molecule.getAtom(0).getHydrogenCount());
     }
 
     @Test public void testNaCl() throws Exception {
