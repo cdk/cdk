@@ -137,7 +137,9 @@ public class AtomContainerRenderer {
 	public AtomContainerRenderer(List<IGenerator> generators, IFontManager fontManager) {
 	    this.generators = generators;
         this.fontManager = fontManager;
-	}
+        for (IGenerator generator : generators)
+            rendererModel.registerParameters(generator);
+    }
 	
 	/**
 	 * Setup the transformations necessary to draw this Atom Container.
