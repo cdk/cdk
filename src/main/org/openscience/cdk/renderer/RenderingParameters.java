@@ -31,11 +31,6 @@ import org.openscience.cdk.renderer.font.IFontManager;
 public class RenderingParameters {
 
     /**
-     * The size on screen of a compact mode shape
-     */
-    private double atomRadius = 8;
-
-    /**
      * When atoms are selected or in compact mode, they will
      * be covered by a shape determined by this enumeration
      */
@@ -298,10 +293,6 @@ public class RenderingParameters {
         this.fontStyle = fontStyle;
     }
 
-    public double getAtomRadius() {
-        return atomRadius;
-    }
-
     public Color getBackColor() {
         return backColor;
     }
@@ -408,10 +399,6 @@ public class RenderingParameters {
 
     public boolean isWillDrawNumbers() {
         return willDrawNumbers;
-    }
-
-    public void setAtomRadius(double atomRadius) {
-        this.atomRadius = atomRadius;
     }
 
     public void setBackColor(Color backColor) {

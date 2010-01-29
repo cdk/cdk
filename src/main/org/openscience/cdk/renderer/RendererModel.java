@@ -40,8 +40,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.RenderingParameters.AtomShape;
-import org.openscience.cdk.renderer.color.CDK2DAtomColors;
-import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
@@ -538,24 +536,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void setShowAtomAtomMapping(boolean value) {
         this.parameters.setShowAtomAtomMapping(value);
-        fireChange();
-    }
-
-    /**
-     * This is used for the size of the compact atom element.
-     */
-    public double getAtomRadius() {
-        return this.parameters.getAtomRadius();
-    }
-
-    /**
-     * Set the radius of the compact atom representation.
-     *
-     * @param atomRadius the size of the compact atom symbol.
-     *
-     */
-    public void setAtomRadius(double atomRadius) {
-        this.parameters.setAtomRadius(atomRadius);
         fireChange();
     }
 
