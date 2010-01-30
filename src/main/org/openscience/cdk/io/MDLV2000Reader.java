@@ -1,6 +1,5 @@
-/*  $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sourceforge.net>
+/* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sourceforge.net>
+ *                    2010  Egon Willighagen <egonw@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -386,14 +385,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                 }
             }
-            
-            if (mode == Mode.STRICT) {
-            	if (line.contains("V3000") || line.contains("v3000")) {
-            		throw new CDKException("This file must be read with the MDLV3000Reader.");
-            	} else if (!line.contains("V2000") && !line.contains("v2000")) {
-            		throw new CDKException("This file must be read with the MDLReader.");
-            	}
-            }            
+
+            // check the CT block version
+            if (line.contains("V3000") || line.contains("v3000")) {
+                handleError("This file must be read with the MDLV3000Reader.");
+            } else if (!line.contains("V2000") && !line.contains("v2000")) {
+                handleError("This file must be read with the MDLReader.");
+            }
+
             atoms = Integer.parseInt(line.substring(0, 3).trim());
             logger.debug("Atomcount: " + atoms);
             bonds = Integer.parseInt(line.substring(3, 6).trim());
@@ -442,9 +441,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     atom = molecule.getBuilder().newPseudoAtom(element);
                 } else {
-                	if (mode == ISimpleChemObjectReader.Mode.STRICT) {
-                		throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
-                	}
+                    handleError(
+                        "Invalid element type. Must be an existing " +
+                        "element, or one in: A, Q, L, LP, *.",
+                        linecount, 32, 35
+                    );
                 	atom = molecule.getBuilder().newPseudoAtom(element);
                 }
 
@@ -462,7 +463,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             atom.setMassNumber(major.getMassNumber() + massDiff);
                         }
                     } catch (Exception exception) {
-                        logger.error("Could not parse mass difference field");
+                        handleError(
+                            "Could not parse mass difference field.",
+                            linecount, 35, 37,
+                            exception
+                        );
                     }
                 } else {
                     logger.error("Cannot set mass difference for a non-element!");
@@ -572,7 +577,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         stereo = (IBond.Stereo)CDKConstants.UNSET;
                     }
                 } else {
-                	logger.warn("Missing expected stereo field at line: " + line);
+                	handleError(
+                	    "Missing expected stereo field at line: ",
+                	    linecount, 10, 12
+                	);
                 }
                 if (logger.isDebugEnabled()) {
                     logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
@@ -609,7 +617,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             while (true) {
                 line = input.readLine(); linecount++;
                 if (line == null) {
-                    throw new CDKException("The expected property block is missing!");
+                    handleError(
+                        "The expected property block is missing!",
+                        linecount, 0, 0
+                    );
                 }
 		if (line.startsWith("M  END")) break;
                 
@@ -678,7 +689,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         String error = "Error (" + exception.getMessage() + ") while parsing line "
                                        + linecount + ": " + line + " in property block.";
                         logger.error(error);
-                        throw new CDKException("NumberFormatException in isotope information on line: " + line, exception);
+                        handleError(
+                            "NumberFormatException in isotope information.",
+                            linecount, 7, 11,
+                            exception
+                        );
                     }
                 } else if (line.startsWith("M  RAD")) {
                     try {
@@ -701,7 +716,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         String error = "Error (" + exception.getMessage() + ") while parsing line "
                                        + linecount + ": " + line + " in property block.";
                         logger.error(error);
-                        throw new CDKException("NumberFormatException in radical information on line: " + line, exception);
+                        handleError(
+                            "NumberFormatException in radical information",
+                            linecount, 7, 10,
+                            exception
+                        );
                     }
                 } else if (line.startsWith("G  ")) {
                     try {
@@ -725,7 +744,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         String error = "Error (" + exception.toString() + ") while parsing line "
                         + linecount + ": " + line + " in property block.";
                         logger.error(error);
-                        throw new CDKException("NumberFormatException in group information on line: " + line, exception);
+                        handleError(
+                            "NumberFormatException in group information",
+                            linecount, 4, 7,
+                            exception
+                        );
                     }
                 }
                 if (!lineRead) {
@@ -742,7 +765,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error, exception);
+            handleError(
+                "Error while parsing line: " + line,
+                linecount, 0, 0,
+                exception
+            );
 		}
 		if (interpretHydrogenIsotopes.isSet()) {
 			fixHydrogenIsotopes(molecule);
