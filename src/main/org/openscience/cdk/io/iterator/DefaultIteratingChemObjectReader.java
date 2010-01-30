@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2003-2007  The Jmol Development Team
+/* Copyright (C) 2003-2007  The Jmol Development Team
+ *                    2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,8 +22,11 @@ package org.openscience.cdk.io.iterator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
@@ -41,6 +40,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 public abstract class DefaultIteratingChemObjectReader implements IIteratingChemObjectReader {
 
     protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
+    protected IChemObjectReaderErrorHandler errorHandler = null;
 	
     /**
      * Holder of reader event listeners.
@@ -83,4 +83,41 @@ public abstract class DefaultIteratingChemObjectReader implements IIteratingChem
     	this.mode = mode;
     }
 
+    /** {@inheritDoc} */
+    public void setErrorHandler(IChemObjectReaderErrorHandler handler) {
+        this.errorHandler = handler;
+    }
+
+    /** {@inheritDoc} */
+    public void handleError(String message) throws CDKException {
+        if (this.errorHandler != null) this.errorHandler.handleError(message);
+        if (this.mode == Mode.STRICT) throw new CDKException(message);
+    }
+
+    /** {@inheritDoc} */
+    public void handleError(String message, Exception exception)
+    throws CDKException {
+        if (this.errorHandler != null)
+            this.errorHandler.handleError(message, exception);
+        if (this.mode == Mode.STRICT) {
+            throw new CDKException(message, exception);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public void handleError(String message, int row, int colStart, int colEnd) throws CDKException {
+        if (this.errorHandler != null)
+            this.errorHandler.handleError(message, row, colStart, colEnd);
+        if (this.mode == Mode.STRICT) throw new CDKException(message);
+    }
+
+    /** {@inheritDoc} */
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception)
+    throws CDKException {
+        if (this.errorHandler != null)
+            this.errorHandler.handleError(message, row, colStart, colEnd, exception);
+        if (this.mode == Mode.STRICT) {
+            throw new CDKException(message, exception);
+        }
+    }
 }
