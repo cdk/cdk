@@ -1,9 +1,9 @@
-[jama-1.0.2.jar]
-Library=JAMA
+[javacc.jar]
+Library=JavaCC
 #Version=1.0.2
 #Copyright=
-License=Public Domain
+License=BSD
 #LicenseURL=
 #Download=
 #SourceCode=
-Homepage=http://math.nist.gov/javanumerics/jama/
+Homepage=https://javacc.dev.java.net/
