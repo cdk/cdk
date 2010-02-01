@@ -25,7 +25,7 @@ package org.openscience.cdk.interfaces;
 
 
 /**
- * Represents a set of Molecules.
+ * Represents a mapping of two atoms.
  * 
  * @cdk.module  interfaces
  * @cdk.githash
