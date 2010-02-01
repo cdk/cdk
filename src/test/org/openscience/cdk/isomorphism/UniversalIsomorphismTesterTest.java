@@ -43,6 +43,7 @@ import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -235,6 +236,23 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
         Assert.assertEquals(1, list.size());
         Assert.assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
+    }
+
+    /**
+     * @cdk.bug 2944080
+     */
+    @Test public void testBug2944080()  throws Exception {
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IMolecule mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
+
+        List<IAtomContainer> list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
+        Assert.assertEquals(1, list.size());
+        Assert.assertEquals(9, list.get(0).getAtomCount());
+
+        list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
+        Assert.assertEquals(1, list.size());
+        Assert.assertEquals(9, list.get(0).getAtomCount());
     }
 
     /**
