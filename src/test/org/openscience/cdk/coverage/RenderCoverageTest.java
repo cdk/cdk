@@ -1,6 +1,4 @@
-/* $Revision: 10775 $ $Author: egonw $ $Date: 2008-05-03 08:57:44 +0200 (Sat, 03 May 2008) $
- * 
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,6 +18,7 @@
  */
 package org.openscience.cdk.coverage;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,12 +29,12 @@ public class RenderCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "render.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass protected void setUp() throws Exception {
         loadClassList(CLASS_LIST, RenderCoverageTest.class.getClassLoader());
     }
 
     @Test public void testCoverage() {
-        super.runCoverageTest();
+        Assert.assertTrue(super.runCoverageTest());
     }
 
 }

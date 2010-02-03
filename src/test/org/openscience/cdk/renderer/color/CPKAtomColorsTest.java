@@ -40,7 +40,7 @@ public class CPKAtomColorsTest extends CDKTestCase {
 		CPKAtomColors colors = new CPKAtomColors();
 		Assert.assertNotNull(colors);
 		Assert.assertEquals(Color.WHITE, colors.getAtomColor(new Atom("H")));
-		Assert.assertEquals(new Color(0xFFC0CB), colors.getAtomColor(new Atom("He")));
+		Assert.assertEquals(Color.PINK, colors.getAtomColor(new Atom("He")));
 	}
 
 }
