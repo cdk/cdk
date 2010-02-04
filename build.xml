@@ -162,8 +162,12 @@
 
             <!-- test Ant version -->
             <condition property="hasAnt17">
+              <or>
               <contains string="${ant.version}" substring="1.7.1"/>
+              <contains string="${ant.version}" substring="1.8"/>
+              </or>
             </condition>
+
 
             <!-- test Java version -->
             <condition property="isJava13">
