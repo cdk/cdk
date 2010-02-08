@@ -288,6 +288,14 @@ public class CDKConstants {
       */
     public static final String ISOTROPIC_SHIELDING = "cdk:IsotropicShielding";
 
+    /**
+     * A property to indicate RestH being true or false. RestH is a term
+     * used in RGroup queries: "if this property is applied ('on'), sites labeled 
+     * with Rgroup rrr may only be substituted with a member of the Rgroup or with H"
+     */
+    public static final String REST_H = "cdk:RestH";
+
+
     /****************************************
     * Some predefined property names for    *
     * AtomTypes                             *

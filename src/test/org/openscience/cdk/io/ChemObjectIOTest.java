@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
 import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.nonotify.NNAtomContainerSet;
 import org.openscience.cdk.nonotify.NNChemFile;
@@ -107,7 +108,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     protected static IChemObject[] acceptableChemObjects = {
         new ChemFile(), new ChemModel(), new Molecule(),
-        new Reaction()
+        new Reaction(), new RGroupQuery()
     };
 
     @Test public void testAcceptsAtLeastOneChemObject() {
