@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
-import org.openscience.cdk.renderer.RenderingParameters.AtomShape;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
@@ -79,7 +78,54 @@ public class BasicAtomGenerator implements IGenerator {
     }
     private IGeneratorParameter<Double> atomRadius = new AtomRadius();
 
-	public BasicAtomGenerator() {}
+    public static class CompactAtom extends
+    AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private IGeneratorParameter<Boolean> isCompact = new CompactAtom();
+
+    /**
+     * Determines whether structures should be drawn as Kekule structures, thus
+     * giving each carbon element explicitly, instead of not displaying the
+     * element symbol. Example C-C-C instead of /\.
+     */
+    public static class KekuleStructure extends
+    AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private IGeneratorParameter<Boolean> isKekule = new KekuleStructure();
+    
+    /**
+     * When atoms are selected or in compact mode, they will
+     * be covered by a shape determined by this enumeration
+     */
+    public enum Shape { OVAL, SQUARE };
+
+    public static class CompactShape extends
+    AbstractGeneratorParameter<Shape> {
+        public Shape getDefault() {
+            return Shape.SQUARE;
+        }
+    }
+    private IGeneratorParameter<Shape> compactShape = new CompactShape();
+
+    /**
+     * Determines whether methyl carbons' symbols should be drawn explicit for
+     * methyl carbons. Example C/\C instead of /\.
+     */
+    public static class ShowEndCarbons extends
+    AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private IGeneratorParameter<Boolean> showEndCarbons = new ShowEndCarbons();
+
+    public BasicAtomGenerator() {}
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup elementGroup = new ElementGroup();
@@ -125,7 +171,7 @@ public class BasicAtomGenerator implements IGenerator {
 	        IAtomContainer ac, IAtom atom, RendererModel model) {
 	    if (!canDraw(atom, ac, model)) {
 	        return null;
-	    } else if (model.getIsCompact()) {
+	    } else if (isCompact.getValue()) {
 		    return this.generateCompactElement(atom, model);
 		} else {
     		int alignment = 0;
@@ -144,7 +190,7 @@ public class BasicAtomGenerator implements IGenerator {
 	    Point2d p = atom.getPoint2d();
 	    double r = atomRadius.getValue() / model.getScale();
 	    double d = 2 * r;
-	    if (model.getCompactShape() == AtomShape.SQUARE) {
+	    if (compactShape.getValue() == Shape.SQUARE) {
     	    return new RectangleElement(
     	            p.x - r, p.y - r, d, d, true, getAtomColor(atom));
 	    } else {
@@ -181,7 +227,7 @@ public class BasicAtomGenerator implements IGenerator {
 	public boolean showCarbon(
 	        IAtom atom, IAtomContainer ac, RendererModel model) {
 
-		if (model.getKekuleStructure())
+		if (isKekule.getValue())
 			return true;
 
 		if (atom.getFormalCharge() != 0)
@@ -190,7 +236,7 @@ public class BasicAtomGenerator implements IGenerator {
 		if (ac.getConnectedBondsList(atom).size() < 1)
 			return true;
 
-		if (model.getShowEndCarbons()
+		if (showEndCarbons.getValue()
 		        && ac.getConnectedBondsList(atom).size() == 1)
 			return true;
 
@@ -222,7 +268,11 @@ public class BasicAtomGenerator implements IGenerator {
                 atomColor,
                 atomColorer,
                 atomRadius,
-                colorByType
+                colorByType,
+                compactShape,
+                isCompact,
+                isKekule,
+                showEndCarbons
             }
         );
     }
