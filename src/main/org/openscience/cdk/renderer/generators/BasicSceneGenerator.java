@@ -43,7 +43,18 @@ public class BasicSceneGenerator implements IGenerator {
     }
     private IGeneratorParameter<Color> backgroundColor = new BackGroundColor();
 
-	public BasicSceneGenerator() {}
+    /**
+     * Area on each of the four margins to keep white.
+     */
+    public static class Margin extends
+    AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 10.0;
+        }
+    }
+    private IGeneratorParameter<Double> margin = new Margin();
+
+    public BasicSceneGenerator() {}
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		return new ElementGroup();
@@ -52,7 +63,8 @@ public class BasicSceneGenerator implements IGenerator {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
-                backgroundColor
+                backgroundColor,
+                margin
             }
         );
     }
