@@ -53,11 +53,6 @@ public class RenderingParameters {
     private double bondLength = 40.0;
 
     /**
-     * The width on screen of a bond
-     */
-    private double bondWidth = 1.0;
-
-    /**
      * The width on screen of an atom-atom mapping line
      */
     private double mappingLineWidth = 1.0;
@@ -72,11 +67,6 @@ public class RenderingParameters {
      * The shape of the compact mode atom.
      */
 //    private AtomShape compactShape = AtomShape.SQUARE;
-
-    /**
-     * The color to draw bonds if not other color is given.
-     */
-    private Color defaultBondColor = Color.BLACK;
 
     private String fontName = "Arial";
 
@@ -218,14 +208,6 @@ public class RenderingParameters {
         this.highlightDistance = highlightDistance;
     }
 
-    public Color getDefaultBondColor() {
-        return defaultBondColor;
-    }
-
-    public void setDefaultBondColor(Color defaultBondColor) {
-        this.defaultBondColor = defaultBondColor;
-    }
-
 	public String getFontName() {
         return this.fontName;
     }
@@ -252,10 +234,6 @@ public class RenderingParameters {
 
     public void setBondLength(double bondLength) {
         this.bondLength = bondLength;
-    }
-
-    public double getBondWidth() {
-        return bondWidth;
     }
 
     public double getMappingLineWidth() {
@@ -332,10 +310,6 @@ public class RenderingParameters {
 
     public void setBondDistance(double bondDistance) {
         this.bondDistance = bondDistance;
-    }
-
-    public void setBondWidth(double bondWidth) {
-        this.bondWidth = bondWidth;
     }
 
     public void setMappingLineWidth(double mappingLineWidth) {

@@ -269,26 +269,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the thickness of a bond line.
-     *
-     * @return the thickness of a bond line
-     */
-    public double getBondWidth() {
-        return this.parameters.getBondWidth();
-    }
-
-    /**
-     * Sets the thickness of a bond line.
-     *
-     * @param bondWidth
-     *            the thickness of a bond line
-     */
-    public void setBondWidth(double bondWidth) {
-        this.parameters.setBondWidth(bondWidth);
-        fireChange();
-    }
-
-    /**
      * Returns the thickness of an atom atom mapping line.
      *
      * @return the thickness of an atom atom mapping line
@@ -429,14 +409,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public boolean getDrawNumbers() {
         return this.parameters.isWillDrawNumbers();
-    }
-
-    public Color getDefaultBondColor() {
-        return this.parameters.getDefaultBondColor();
-    }
-
-    public void setDefaultBondColor(Color defaultBondColor) {
-        this.parameters.setDefaultBondColor(defaultBondColor);
     }
 
     /**
