@@ -36,13 +36,34 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
  * @cdk.module renderbasic
  */
 public class RingGenerator extends BasicBondGenerator {
 
-	private Collection<IRing> painted_rings;
+    /**
+     * Determines whether rings should be drawn with a circle if they are
+     * aromatic.
+     */
+    public static class ShowAromaticity extends
+    AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.TRUE;
+        }
+    }
+    private IGeneratorParameter<Boolean> showAromaticity = new ShowAromaticity();
+
+    public static class CDKStyleAromaticity extends
+    AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private IGeneratorParameter<Boolean> cdkStyleAromaticity = new CDKStyleAromaticity();
+
+    private Collection<IRing> painted_rings;
 
 	public RingGenerator() {
 		this.painted_rings = new HashSet<IRing>();
@@ -51,9 +72,9 @@ public class RingGenerator extends BasicBondGenerator {
 	@Override
 	public IRenderingElement generateRingElements(
 	        IBond bond, IRing ring, RendererModel model) {
-		if (ringIsAromatic(ring) && model.getShowAromaticity()) {
+		if (ringIsAromatic(ring) && showAromaticity.getValue()) {
 			ElementGroup pair = new ElementGroup();
-			if (model.getShowAromaticityCDKStyle()) {
+			if (cdkStyleAromaticity.getValue()) {
 			    pair.add(generateBondElement(bond, IBond.Order.SINGLE, model));
 			    super.setOverrideColor(Color.LIGHT_GRAY);
 			    pair.add(generateInnerElement(bond, ring, model));
