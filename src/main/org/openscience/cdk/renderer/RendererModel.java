@@ -837,14 +837,6 @@ public class RendererModel implements Serializable, Cloneable {
         this.parameters.setShowAtomTypeNames(showAtomTypeNames);
     }
 
-    public double getMargin() {
-        return this.parameters.getMargin();
-    }
-
-    public void setMargin(double margin) {
-        this.parameters.setMargin(margin);
-    }
-
     public Color getBoundsColor() {
         return this.parameters.getBoundsColor();
     }

@@ -119,11 +119,6 @@ public class RenderingParameters {
     private Color mappingColor = Color.gray;
 
     /**
-     * Area on each of the four margins to keep white.
-     */
-    private double margin = 10;
-
-    /**
      * The proportion of a ring bounds to use to draw the ring.
      */
     private double ringProportion = 0.35;
@@ -341,10 +336,6 @@ public class RenderingParameters {
         return mappingColor;
     }
 
-    public double getMargin() {
-        return margin;
-    }
-
     public Color getSelectedPartColor() {
         return selectedPartColor;
     }
@@ -439,10 +430,6 @@ public class RenderingParameters {
 
     public void setMappingColor(Color mappingColor) {
         this.mappingColor = mappingColor;
-    }
-
-    public void setMargin(double margin) {
-        this.margin = margin;
     }
 
     public void setSelectedPartColor(Color selectedPartColor) {
