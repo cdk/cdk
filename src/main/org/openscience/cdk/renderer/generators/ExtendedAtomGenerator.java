@@ -49,7 +49,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
              || invisibleHydrogen(atom, model) 
              || (invisibleCarbon(atom, ac, model) && !model.getDrawNumbers())) {
             return null;
-        } else if (model.getIsCompact()) {
+        } else if (model.getRenderingParameter(CompactAtom.class).getValue()) {
             return this.generateCompactElement(atom, model);
         } else {
             String text;
@@ -69,7 +69,8 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     }
     
     public boolean hideAtomSymbol(IAtom atom, RendererModel model) {
-        return atom.getSymbol().equals("C") && !model.getKekuleStructure();
+        return atom.getSymbol().equals("C") &&
+               !model.getRenderingParameter(KekuleStructure.class).getValue();
     }
     
     public void decorate(TextGroupElement textGroup, 
