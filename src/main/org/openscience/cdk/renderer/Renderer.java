@@ -41,6 +41,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IReactionGenerator;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
@@ -759,7 +760,8 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
                              double diagramWidth,
                              double diagramHeight) {
 
-        double m = this.rendererModel.getMargin();
+        double m = this.rendererModel
+            .getRenderingParameter(Margin.class).getValue();
 
         // determine the zoom needed to fit the diagram to the screen
         double widthRatio  = drawWidth  / (diagramWidth  + (2 * m));
@@ -896,7 +898,8 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
             return new Rectangle((int)mc.x, (int)mc.y, 0, 0);
         }
 
-        double margin = this.rendererModel.getMargin();
+        double margin = this.rendererModel
+            .getRenderingParameter(Margin.class).getValue();
         int w = (int) ((scale * zoom * mw) + (2 * margin));
         int h = (int) ((scale * zoom * mh) + (2 * margin));
         int x = (int) (mc.x - w / 2);
