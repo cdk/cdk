@@ -114,15 +114,6 @@ public class RendererModel implements Serializable, Cloneable {
         this.parameters.setHighlightShapeFilled(highlightShapeFilled);
     }
 
-    public boolean getShowAromaticityCDKStyle() {
-        return this.parameters.isShowAromaticityInCDKStyle();
-    }
-
-    public void setShowAromaticityCDKStyle(boolean showIt) {
-        this.parameters.setShowAromaticityInCDKStyle(showIt);
-        fireChange();
-    }
-
     public double getWedgeWidth() {
         return this.parameters.getWedgeWidth();
     }
@@ -380,15 +371,6 @@ public class RendererModel implements Serializable, Cloneable {
 
     public void setShowExplicitHydrogens(boolean showThem) {
         this.parameters.setShowExplicitHydrogens(showThem);
-        fireChange();
-    }
-
-    public boolean getShowAromaticity() {
-        return this.parameters.isShowAromaticity();
-    }
-
-    public void setShowAromaticity(boolean showIt) {
-        this.parameters.setShowAromaticity(showIt);
         fireChange();
     }
 
