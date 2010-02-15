@@ -23,8 +23,10 @@ package org.openscience.cdk.renderer.generators;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
@@ -63,6 +65,17 @@ public class RingGenerator extends BasicBondGenerator {
     }
     private IGeneratorParameter<Boolean> cdkStyleAromaticity = new CDKStyleAromaticity();
 
+    /**
+     * The proportion of a ring bounds to use to draw the ring.
+     */
+    public static class RingProportion extends
+    AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 0.35;
+        }
+    }
+    private IGeneratorParameter<Double> ringProportion = new RingProportion();
+
     private Collection<IRing> painted_rings;
 
 	public RingGenerator() {
@@ -99,7 +112,7 @@ public class RingGenerator extends BasicBondGenerator {
 		double[] minmax = GeometryTools.getMinMax(ring);
 		double width  = minmax[2] - minmax[0];
 		double height = minmax[3] - minmax[1];
-		double radius = Math.min(width, height) * model.getRingProportion();
+		double radius = Math.min(width, height) * ringProportion.getValue();
 
 		return new OvalElement(
 		        c.x, c.y, radius, false, getColorForBond(bond, model));
@@ -123,4 +136,14 @@ public class RingGenerator extends BasicBondGenerator {
 		}
 		return isAromatic;
 	}
+
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+                cdkStyleAromaticity,
+                showAromaticity,
+                ringProportion
+            }
+        );
+    }
 }
