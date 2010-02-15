@@ -21,8 +21,7 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -43,10 +42,10 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement.Direction;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
 import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -54,6 +53,29 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module renderbasic
  */
 public class BasicBondGenerator implements IGenerator {
+
+    // FIXME: bond width should be defined in world, not screen coordinates
+    /**
+     * The width on screen of a bond.
+     */
+    public static class BondWidth extends
+    AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 1.0;
+        }
+    }
+    private IGeneratorParameter<Double> bondWidth = new BondWidth();
+
+    /**
+     * The color to draw bonds if not other color is given.
+     */
+    public static class DefaultBondColor extends
+    AbstractGeneratorParameter<Color> {
+        public Color getDefault() {
+            return Color.BLACK;
+        }
+    }
+    private IGeneratorParameter<Color> defaultBondColor = new DefaultBondColor();
 
 	private ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
@@ -116,7 +138,7 @@ public class BasicBondGenerator implements IGenerator {
 
 	    Color color = model.getColorHash().get(bond);
 	    if (color == null) {
-	        return model.getDefaultBondColor();
+	        return model.getRenderingParameter(DefaultBondColor.class).getValue();
 	    } else {
 	        return color;
 	    }
@@ -136,7 +158,9 @@ public class BasicBondGenerator implements IGenerator {
 		if (this.overrideBondWidth != -1) {
 			return this.overrideBondWidth / scale;
 		} else {
-			return model.getBondWidth() / scale;
+			return
+			    model.getRenderingParameter(BondWidth.class).getValue()
+			    / scale;
 		}
 	}
 
@@ -348,7 +372,11 @@ public class BasicBondGenerator implements IGenerator {
 	}
 
     public List<IGeneratorParameter<?>> getParameters() {
-        return Collections.emptyList();
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+                bondWidth
+            }
+        );
     }
 
 }
