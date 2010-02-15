@@ -23,9 +23,10 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.vecmath.Vector2d;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,6 +35,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.TextElement;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
  * @author maclean
@@ -41,25 +43,53 @@ import org.openscience.cdk.renderer.elements.TextElement;
  */
 public class AtomNumberGenerator implements IGenerator {
 
-	public AtomNumberGenerator() {}
+    public static class AtomNumberTextColor extends
+        AbstractGeneratorParameter<Color> {
+        public Color getDefault() {
+            return Color.BLACK;
+        }
+    }
+
+    private IGeneratorParameter<Color> textColor = new AtomNumberTextColor();
+
+    Vector2d offset;
+
+	public AtomNumberGenerator() {
+	    offset = new Vector2d();
+	}
+
+	/**
+	 * Allows for drawing the atom number offset from the atom position.
+	 * @param offset vector in screen space.
+	 */
+	public AtomNumberGenerator(Vector2d offset) {
+	    this.offset = new Vector2d(offset);
+	}
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup numbers = new ElementGroup();
 		if (!model.drawNumbers()) return numbers;
 
+		Vector2d offset = new Vector2d(this.offset.x,-this.offset.y);
+		offset.scale( 1/model.getScale() );
+
 		int number = 1;
 		for (IAtom atom : ac.atoms()) {
-			Point2d p = atom.getPoint2d();
+			Point2d p = new Point2d(atom.getPoint2d());
+			p.add( offset );
 			numbers.add(
 					new TextElement(
-							p.x, p.y, String.valueOf(number), Color.BLACK));
+						p.x, p.y, String.valueOf(number),
+						textColor.getValue()
+				    )
+			);
 			number++;
 		}
 		return numbers;
 	}
 
     public List<IGeneratorParameter<?>> getParameters() {
-        return Collections.emptyList();
+        return Arrays.asList( new IGeneratorParameter<?>[] {textColor} );
     }
 
 
