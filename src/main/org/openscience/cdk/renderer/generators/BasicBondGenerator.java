@@ -374,7 +374,8 @@ public class BasicBondGenerator implements IGenerator {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
-                bondWidth
+                bondWidth,
+                defaultBondColor
             }
         );
     }
