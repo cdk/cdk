@@ -35,7 +35,7 @@ public class RenderingParameters {
      * When atoms are selected or in compact mode, they will
      * be covered by a shape determined by this enumeration
      */
-    public enum AtomShape { OVAL, SQUARE };
+//    public enum AtomShape { OVAL, SQUARE };
     
     /**
      * The width of an arrow head
@@ -69,15 +69,9 @@ public class RenderingParameters {
     private Color boundsColor = Color.LIGHT_GRAY;
 
     /**
-     * If true, atoms are displayed in a compact notation,
-     * as a colored square or circle, rather than as text
-     */
-    private boolean compact = false;
-
-    /**
      * The shape of the compact mode atom.
      */
-    private AtomShape compactShape = AtomShape.SQUARE;
+//    private AtomShape compactShape = AtomShape.SQUARE;
 
     /**
      * The color to draw bonds if not other color is given.
@@ -95,14 +89,6 @@ public class RenderingParameters {
     private Color foreColor = Color.black;
 
     private Color hoverOverColor = Color.lightGray;
-
-    /**
-     * Determines whether structures should be drawn as Kekule structures, thus
-     * giving each carbon element explicitly, instead of not displaying the
-     * element symbol. Example C-C-C instead of /\.
-     */
-    private boolean kekuleStructure = false;
-
 
     /**
      * The maximum distance on the screen the mouse pointer has to be to
@@ -129,7 +115,7 @@ public class RenderingParameters {
     /**
      * The shape to display over selected atoms
      */
-    private AtomShape selectionShape = AtomShape.SQUARE;
+//    private AtomShape selectionShape = AtomShape.SQUARE;
 
     /**
      * The radius on screen of the selection shape
@@ -147,12 +133,6 @@ public class RenderingParameters {
     private boolean showAtomAtomMapping = true;
 
     private boolean showAtomTypeNames = false;
-
-    /**
-     * Determines whether methyl carbons' symbols should be drawn explicit for
-     * methyl carbons. Example C/\C instead of /\.
-     */
-    private boolean showEndCarbons = false;
 
     /** Determines whether explicit hydrogens should be drawn. */
     private boolean showExplicitHydrogens = true;
@@ -217,20 +197,6 @@ public class RenderingParameters {
     }
 
     /**
-     * @return the shape to draw the atoms when in compact mode
-     */
-    public AtomShape getCompactShape() {
-        return compactShape;
-    }
-
-    /**
-     * @param compactShape the shape to draw the atoms when in compact mode
-     */
-    public void setCompactShape(AtomShape compactShape) {
-        this.compactShape = compactShape;
-    }
-
-    /**
      * The scale is the factor to multiply model coordinates by to convert to
      * coordinates in screen space.
      *
@@ -258,14 +224,6 @@ public class RenderingParameters {
 
     public void setDefaultBondColor(Color defaultBondColor) {
         this.defaultBondColor = defaultBondColor;
-    }
-
-    public AtomShape getSelectionShape() {
-        return this.selectionShape;
-    }
-
-    public void setSelectionShape(AtomShape selectionShape) {
-        this.selectionShape = selectionShape;
     }
 
 	public String getFontName() {
@@ -332,14 +290,6 @@ public class RenderingParameters {
         return selectedPartColor;
     }
 
-    public boolean isCompact() {
-        return compact;
-    }
-
-    public boolean isKekuleStructure() {
-        return kekuleStructure;
-    }
-
     public boolean isShowAromaticity() {
         return showAromaticity;
     }
@@ -350,10 +300,6 @@ public class RenderingParameters {
 
     public boolean isShowAtomTypeNames() {
         return showAtomTypeNames;
-    }
-
-    public boolean isShowEndCarbons() {
-        return showEndCarbons;
     }
 
     public boolean isShowExplicitHydrogens() {
@@ -396,10 +342,6 @@ public class RenderingParameters {
         this.mappingLineWidth = mappingLineWidth;
     }
     
-    public void setCompact(boolean compact) {
-        this.compact = compact;
-    }
-
     public void setExternalHighlightColor(Color externalHighlightColor) {
         this.externalHighlightColor = externalHighlightColor;
     }
@@ -410,10 +352,6 @@ public class RenderingParameters {
 
     public void setHoverOverColor(Color hoverOverColor) {
         this.hoverOverColor = hoverOverColor;
-    }
-
-    public void setKekuleStructure(boolean kekuleStructure) {
-        this.kekuleStructure = kekuleStructure;
     }
 
     public void setMappingColor(Color mappingColor) {
@@ -434,10 +372,6 @@ public class RenderingParameters {
 
     public void setShowAtomTypeNames(boolean showAtomTypeNames) {
         this.showAtomTypeNames = showAtomTypeNames;
-    }
-
-    public void setShowEndCarbons(boolean showEndCarbons) {
-        this.showEndCarbons = showEndCarbons;
     }
 
     public void setShowExplicitHydrogens(boolean showExplicitHydrogens) {

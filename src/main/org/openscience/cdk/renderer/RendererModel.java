@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.renderer.RenderingParameters.AtomShape;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
@@ -140,14 +139,6 @@ public class RendererModel implements Serializable, Cloneable {
         this.parameters.setRingProportion(ringProportion);
     }
 
-    public AtomShape getCompactShape() {
-        return this.parameters.getCompactShape();
-    }
-
-    public void setCompactShape(AtomShape compactShape) {
-        this.parameters.setCompactShape(compactShape);
-    }
-
     public double getScale() {
         return this.parameters.getScale();
     }
@@ -162,14 +153,6 @@ public class RendererModel implements Serializable, Cloneable {
 
     public IChemObjectSelection getSelection() {
         return this.selection;
-    }
-
-    public RenderingParameters.AtomShape getSelectionShape() {
-        return this.parameters.getSelectionShape();
-    }
-
-    public void setSelectionShape(RenderingParameters.AtomShape selectionShape) {
-        this.parameters.setSelectionShape(selectionShape);
     }
 
 	/**
@@ -217,14 +200,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void setFontManager(IFontManager.FontStyle fontStyle) {
         this.parameters.setFontStyle(fontStyle);
-    }
-
-    public boolean getIsCompact() {
-        return this.parameters.isCompact();
-    }
-
-    public void setIsCompact(boolean compact) {
-        this.parameters.setCompact(compact);
     }
 
     public boolean getUseAntiAliasing() {
@@ -408,24 +383,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public boolean drawNumbers() {
         return this.parameters.isWillDrawNumbers();
-    }
-
-    public boolean getKekuleStructure() {
-        return this.parameters.isKekuleStructure();
-    }
-
-    public void setKekuleStructure(boolean kekule) {
-        this.parameters.setKekuleStructure(kekule);
-        fireChange();
-    }
-
-    public boolean getShowEndCarbons() {
-        return this.parameters.isShowEndCarbons();
-    }
-
-    public void setShowEndCarbons(boolean showThem) {
-        this.parameters.setShowEndCarbons(showThem);
-        fireChange();
     }
 
     public boolean getShowImplicitHydrogens() {
