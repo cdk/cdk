@@ -122,14 +122,6 @@ public class RendererModel implements Serializable, Cloneable {
         this.parameters.setWedgeWidth(wedgeWidth);
     }
 
-    public double getRingProportion() {
-        return this.parameters.getRingProportion();
-    }
-
-    public void setRingProportion(double ringProportion) {
-        this.parameters.setRingProportion(ringProportion);
-    }
-
     public double getScale() {
         return this.parameters.getScale();
     }

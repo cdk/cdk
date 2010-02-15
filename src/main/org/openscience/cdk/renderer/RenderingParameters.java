@@ -91,11 +91,6 @@ public class RenderingParameters {
     private Color mappingColor = Color.gray;
 
     /**
-     * The proportion of a ring bounds to use to draw the ring.
-     */
-    private double ringProportion = 0.35;
-
-    /**
      * The factor to convert from model space to screen space.
      */
     private double scale = 1.0;
@@ -160,14 +155,6 @@ public class RenderingParameters {
 
     public void setWedgeWidth(double wedgeWidth) {
         this.wedgeWidth = wedgeWidth;
-    }
-
-    public double getRingProportion() {
-        return ringProportion;
-    }
-
-    public void setRingProportion(double ringProportion) {
-        this.ringProportion = ringProportion;
     }
 
     /**
