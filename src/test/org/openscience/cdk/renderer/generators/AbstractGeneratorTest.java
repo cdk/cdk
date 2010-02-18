@@ -1,3 +1,24 @@
+/* Copyright (C) 2010  Gilleain Torrance <gilleain.torrance@gmail.com>
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version. All we ask is that proper credit is given for our work,
+ * which includes - but is not limited to - adding the above copyright notice to
+ * the beginning of your source code files, and to any copyright notice that you
+ * may distribute with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Rectangle;
@@ -100,10 +121,25 @@ public abstract class AbstractGeneratorTest {
 			AbstractGeneratorTest.distance(line.x1, line.y1, line.x2, line.y2);
 	}
 	
+	/**
+	 * The distance between two coordinates.
+	 * 
+	 * @param x1 the first x coordinate 
+	 * @param y1 the first y coordinate
+	 * @param x2 the second x coordinate
+	 * @param y2 the second y coordinate
+	 * @return the distance
+	 */
 	public static double distance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 	}
 	
+	/**
+	 * Find the center of a list of elements.
+	 * 
+	 * @param elements
+	 * @return
+	 */
 	public static Point2d center(List<IRenderingElement> elements) {
 		double centerX = 0.0;
 		double centerY = 0.0;
