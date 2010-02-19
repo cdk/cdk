@@ -40,8 +40,10 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.listener.PropertiesListener;
@@ -202,5 +204,20 @@ public class MDLWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.indexOf("2  3  1  3  0  0  0")>-1);
     }
 
+    @Test public void testTwoFragmentsWithTitle() throws CDKException{
+        IMolecule mol1 = MoleculeFactory.makeAlphaPinene();
+        mol1.setProperty(CDKConstants.TITLE,"title1");
+        IMolecule mol2 = MoleculeFactory.makeAlphaPinene();
+        mol2.setProperty(CDKConstants.TITLE,"title2");
+        IChemModel model = mol1.getBuilder().newChemModel();
+        model.setMoleculeSet(mol1.getBuilder().newMoleculeSet());
+        model.getMoleculeSet().addAtomContainer(mol1);
+        model.getMoleculeSet().addAtomContainer(mol2);
+        StringWriter writer = new StringWriter();
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(model);
+        String output = writer.toString();
+        Assert.assertTrue(output.contains("title1; title2"));
+    }
 
 }
