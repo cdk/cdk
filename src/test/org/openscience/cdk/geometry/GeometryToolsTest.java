@@ -520,6 +520,40 @@ public class GeometryToolsTest extends CDKTestCase {
         );
     }
 
+    /**
+     * Tests if the bond length average is calculated based on all
+     * {@link IAtomContainer}s in the IReaction.
+     */
+    @Test public void testGetBondLengthAverage_MultiReaction() {
+        IReaction reaction = new Reaction();
+
+        // mol 1
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule acont = new Molecule();
+        reaction.addReactant(acont);
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addBond(0,1, IBond.Order.SINGLE);
+
+        // mol 2
+        atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(3,0));
+        acont = new Molecule();
+        reaction.addProduct(acont);
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addBond(0,1, IBond.Order.SINGLE);
+
+        Assert.assertEquals(
+            2.0, GeometryTools.getBondLengthAverage(reaction), 0.0
+        );
+    }
+
     @Test public void
     testShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_double()
     throws Exception {
