@@ -22,6 +22,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderbasicCoverageTest;
+import org.openscience.cdk.renderer.AtomContainerRendererTest;
+import org.openscience.cdk.renderer.generators.BasicAtomGeneratorTest;
+import org.openscience.cdk.renderer.generators.BasicBondGeneratorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>renderbasic</code>
@@ -31,6 +34,9 @@ import org.openscience.cdk.coverage.RenderbasicCoverageTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	RenderbasicCoverageTest.class
+	RenderbasicCoverageTest.class,
+	AtomContainerRendererTest.class,
+	BasicAtomGeneratorTest.class,
+	BasicBondGeneratorTest.class
 })
 public class MrenderbasicTests {}
