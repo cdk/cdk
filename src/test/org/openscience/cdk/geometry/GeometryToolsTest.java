@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2004-2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2004-2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -411,6 +409,22 @@ public class GeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom1));
         Assert.assertEquals(atom1, GeometryTools.getClosestAtom(acont, atom2));
         Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom3));
+    }
+
+    @Test public void testGetClosestAtom_Double_Double_IAtomContainer_IAtom() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(1,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(5,0));
+        IAtomContainer acont = new AtomContainer();
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        Assert.assertEquals(
+            atom2, GeometryTools.getClosestAtom(1.0, 0.0, acont, atom1)
+        );
+        Assert.assertEquals(
+            atom1, GeometryTools.getClosestAtom(1.0, 0.0, acont, null)
+        );
     }
 
     /**
