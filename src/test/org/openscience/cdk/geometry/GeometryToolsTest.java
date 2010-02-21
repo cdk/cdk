@@ -397,6 +397,25 @@ public class GeometryToolsTest extends CDKTestCase {
     	Assert.assertEquals(GeometryTools.getLength2D(bond),2.23,0.01);
     }
     
+    @Test public void testGetClosestAtom_Multiatom() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(-1,-1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IAtom atom3 = new Atom("C");
+        atom3.setPoint2d(new Point2d(5,0));
+        IAtomContainer acont = new AtomContainer();
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addAtom(atom3);
+        Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom1));
+        Assert.assertEquals(atom1, GeometryTools.getClosestAtom(acont, atom2));
+        Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom3));
+    }
+
+    /**
+     * Tests if not the central atom is returned as closest atom.
+     */
     @Test public void testGetClosestAtom_IAtomContainer_IAtom() {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(-1,-1));
