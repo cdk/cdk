@@ -48,7 +48,7 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowEndCarbons
  * @author maclean
  *
  */
-public class RendererTest {
+public class AtomContainerRendererTest {
 	
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	
