@@ -45,8 +45,8 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.Shape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowEndCarbons;
 
 /**
- * @author maclean
- *
+ * @author     maclean
+ * @cdk.module test-renderbasic
  */
 public class AtomContainerRendererTest {
 	

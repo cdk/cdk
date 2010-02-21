@@ -15,10 +15,10 @@ import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator;
 
 /**
- * Test the BasicBondGenerator.
+ * Test the {@link BasicBondGenerator}.
  * 
- * @author maclean
- *
+ * @author     maclean
+ * @cdk.module test-renderbasic
  */
 public class BasicBondGeneratorTest extends AbstractGeneratorTest {
 	

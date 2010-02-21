@@ -37,8 +37,8 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 /**
  * Utility class for testing.
  * 
- * @author maclean
- *
+ * @author     maclean
+ * @cdk.module test-renderbasic
  */
 public class ElementUtility implements IDrawVisitor {
 	

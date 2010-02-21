@@ -38,10 +38,10 @@ import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 
 /**
- * Base class for test classes that test IGenerators.  
+ * Base class for test classes that test {@link IGenerator}s.  
  * 
- * @author maclean
- *
+ * @author     maclean
+ * @cdk.module test-renderbasic
  */
 public abstract class AbstractGeneratorTest {
 	

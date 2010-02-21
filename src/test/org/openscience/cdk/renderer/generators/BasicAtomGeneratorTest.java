@@ -35,6 +35,9 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.Shape;
 
+/**
+ * @cdk.module test-renderbasic
+ */
 public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 	
 	private BasicAtomGenerator generator;
