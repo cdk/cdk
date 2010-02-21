@@ -733,8 +733,10 @@ public class GeometryTools {
 	public static IAtom getClosestAtom(double xPosition, double yPosition, IAtomContainer atomCon, IAtom toignore) {
 		IAtom closestAtom = null;
 		IAtom currentAtom;
-		double smallestMouseDistance = -1;
-		double mouseDistance;
+		// we compare squared distances, allowing us to do one sqrt()
+		// calculation less
+		double smallestSquaredMouseDistance = -1;
+		double mouseSquaredDistance;
 		double atomX;
 		double atomY;
 		for (int i = 0; i < atomCon.getAtomCount(); i++) {
@@ -742,9 +744,10 @@ public class GeometryTools {
 			if(currentAtom!=toignore){
 				atomX = currentAtom.getPoint2d().x;
 				atomY = currentAtom.getPoint2d().y;
-				mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
-				if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
-					smallestMouseDistance = mouseDistance;
+				mouseSquaredDistance = Math.pow(atomX - xPosition, 2) +
+				                       Math.pow(atomY - yPosition, 2);
+				if (mouseSquaredDistance < smallestSquaredMouseDistance || smallestSquaredMouseDistance == -1) {
+					smallestSquaredMouseDistance = mouseSquaredDistance;
 					closestAtom = currentAtom;
 				}
 			}
