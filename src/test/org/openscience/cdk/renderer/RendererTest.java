@@ -25,14 +25,14 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.renderer.Renderer;
-import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
@@ -87,26 +87,20 @@ public class RendererTest {
 		BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
 		generators.add(atomGenerator);
 		
-		Renderer renderer = new Renderer(generators, new AWTFontManager());
+		AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new AWTFontManager());
 		RendererModel model = renderer.getRenderer2DModel();
 		model.getRenderingParameter(CompactShape.class).setValue(Shape.OVAL);
 		model.getRenderingParameter(CompactAtom.class).setValue(true);
 		model.getRenderingParameter(KekuleStructure.class).setValue(true);
 		model.getRenderingParameter(ShowEndCarbons.class).setValue(true);
-		
-		// nasty hacks
-//		((IGeneratorParameter<Shape>)atomGenerator.getParameters().get(4)).setValue(Shape.OVAL);
-//		((IGeneratorParameter<Boolean>)atomGenerator.getParameters().get(5)).setValue(true);
-//		((IGeneratorParameter<Boolean>)atomGenerator.getParameters().get(6)).setValue(true);
-//		((IGeneratorParameter<Boolean>)atomGenerator.getParameters().get(7)).setValue(true);
-		
+
 		ElementUtility visitor = new ElementUtility();
 		Rectangle screen = new Rectangle(0, 0, 100, 100);
 		renderer.setup(square, screen);
 		renderer.paint(square, visitor);
 		
 		for (IRenderingElement element : visitor.getElements()) {
-			System.out.println(visitor.toString(element));
+			Assert.assertTrue(visitor.toString(element).contains("Line"));
 		}
 	}
 
