@@ -272,11 +272,12 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   * Returns all subgraph 'atom mappings' found for g2 in g1.
+   * Returns all subgraph 'atom mappings' found for g2 in g1, where g2 must be a substructure
+   * of g1. If it is not a substructure, null will be returned.
    * This is an {@link List} of {@link List}s of {@link RMap} objects.
    *
    * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-   * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+   * @param  g2  substructure to be mapped. May be an {@link IQueryAtomContainer}.
    * @return     all subgraph atom mappings found projected on g1. This is a
    *             {@link List} of {@link RMap} objects containing Ids of matching atoms.
    */
@@ -296,10 +297,11 @@ public class UniversalIsomorphismTester {
   }
 
   /**
-   * Returns the first subgraph 'atom mapping' found for g2 in g1.
+   * Returns the first subgraph 'atom mapping' found for g2 in g1, where g2 must be a substructure
+   * of g1. If it is not a substructure, null will be returned.
    *
    * @param  g1 first molecule. Must not be an {@link IQueryAtomContainer}.
-   * @param  g2 second molecule. May be an {@link IQueryAtomContainer}.
+   * @param  g2 substructure to be mapped. May be an {@link IQueryAtomContainer}.
    * @return    the first subgraph atom mapping found projected on g1.
    *            This is a {@link List} of {@link RMap} objects containing Ids of matching atoms.
    */
