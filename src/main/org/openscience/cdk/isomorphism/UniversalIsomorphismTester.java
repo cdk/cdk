@@ -369,7 +369,7 @@ public class UniversalIsomorphismTester {
       List<List<RMap>> rMapsList = search(g1, g2, new BitSet(), new BitSet(), true, false);
 
       // projection on G1
-      ArrayList<IAtomContainer> graphList = projectList(rMapsList, g1, ID1);
+      List<IAtomContainer> graphList = projectList(rMapsList, g1, ID1);
 
       // reduction of set of solution (isomorphism and substructure
       // with different 'mappings'
@@ -556,8 +556,8 @@ public class UniversalIsomorphismTester {
    * @param  id         the id in the RMap of the molecule g
    * @return            a list of AtomContainer
    */
-  public static ArrayList<IAtomContainer> projectList(List<List<RMap>> rMapsList, IAtomContainer g, int id) {
-    ArrayList<IAtomContainer> graphList = new ArrayList<IAtomContainer>();
+  public static List<IAtomContainer> projectList(List<List<RMap>> rMapsList, IAtomContainer g, int id) {
+    List<IAtomContainer> graphList = new ArrayList<IAtomContainer>();
 
       for (List<RMap> rMapList : rMapsList) {
           IAtomContainer ac = project(rMapList, g, id);
@@ -573,8 +573,9 @@ public class UniversalIsomorphismTester {
    * @return            the list cleaned
    * @throws CDKException if there is a problem in obtaining subgraphs
    */
-  private static List<IAtomContainer> getMaximum(ArrayList<IAtomContainer> graphList) throws CDKException {
-    List<IAtomContainer> reducedGraphList = (List<IAtomContainer>) graphList.clone();
+  private static List<IAtomContainer> getMaximum(List<IAtomContainer> graphList) throws CDKException {
+    List<IAtomContainer> reducedGraphList = new ArrayList<IAtomContainer>();
+    reducedGraphList.addAll(graphList);
 
     for (int i = 0; i < graphList.size(); i++) {
       IAtomContainer gi = graphList.get(i);
