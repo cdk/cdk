@@ -90,12 +90,15 @@ public class GeometryToolsTest extends CDKTestCase {
     	Assert.assertFalse(GeometryTools.has2DCoordinates((IAtomContainer)null));
     }
 
+    /**
+     * @cdk.bug 2936440
+     */
     @Test public void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "data/mdl/with000coordinate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
-        Molecule molOne=null;
+        IMolecule molOne=null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molOne = (Molecule)reader.read(new Molecule());
+        molOne = (IMolecule)reader.read(new Molecule());
         Assert.assertEquals(2,GeometryTools.has2DCoordinatesNew(molOne));
     }
     
