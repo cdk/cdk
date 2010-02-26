@@ -280,13 +280,6 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 //		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
 		Iterator<IAtom> atoms = mol1.atoms().iterator();
 		int i= 1;
-		while (atoms.hasNext()) {
-			IAtom nextAtom = atoms.next();
-			System.out.println(i + ": " + nextAtom.getSymbol() +
-				" T:" + nextAtom.getAtomTypeName() +
-				" A:" + nextAtom.getFlag(CDKConstants.ISAROMATIC));
-			i++;
-		}
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 		Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol2));
         list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
