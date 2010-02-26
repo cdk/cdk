@@ -39,8 +39,10 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -228,6 +230,52 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(3, reactionSet.getReaction(1).getReactants().getMolecule(0).getAtomCount());
         Assert.assertEquals(1, reactionSet.getReaction(1).getProductCount());
         Assert.assertEquals(2, reactionSet.getReaction(1).getProducts().getMolecule(0).getAtomCount());
+    }
+       
         
+    /**
+     * This test checks of different numbering for the same mapping gives the same result. 
+     */
+    @Test public void testAsadExamples() throws CDKException{
+        String filename = "data/mdl/output.rxn";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLRXNReader reader = new MDLRXNReader(ins);
+        IReactionSet reactionSet = (IReactionSet)reader.read(new NNReactionSet());
+        filename = "data/mdl/output_Cleaned.rxn";
+        logger.info("Testing: " + filename);
+        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        reader = new MDLRXNReader(ins);
+        IReactionSet reactionSet2 = (IReactionSet)reader.read(new NNReactionSet());
+        Assert.assertEquals(reactionSet.getReaction(0).getMappingCount(),reactionSet2.getReaction(0).getMappingCount());
+        for(int i=0;i<reactionSet.getReaction(0).getMappingCount();i++){
+            Assert.assertEquals(getAtomNumber(reactionSet,reactionSet.getReaction(0).getMapping(i).getChemObject(0)),getAtomNumber(reactionSet2,reactionSet2.getReaction(0).getMapping(i).getChemObject(0)));
+            Assert.assertEquals(getAtomNumber(reactionSet,reactionSet.getReaction(0).getMapping(i).getChemObject(1)),getAtomNumber(reactionSet2,reactionSet2.getReaction(0).getMapping(i).getChemObject(1)));
+        }
+    }
+
+    /**
+     * Tells the position of an atom in a reaction. Format is "reaction/product:numberofreaction/product_atomnumber".
+     * 
+     * @param reactionSet The reactionSet in which to search.
+     * @param chemObject  The atom to search for.
+     * @return The position in the said format.
+     * @throws CDKException Atom not found in reactionSet.
+     */
+    private String getAtomNumber(IReactionSet reactionSet,
+            IChemObject chemObject) throws CDKException {
+        for(int i=0;i<reactionSet.getReaction(0).getReactantCount();i++){
+            for(int k=0;k<reactionSet.getReaction(0).getReactants().getAtomContainer(i).getAtomCount();k++){
+                if(reactionSet.getReaction(0).getReactants().getAtomContainer(i).getAtom(k)==chemObject)
+                    return "reactant:"+i+"_"+k;
+            }
+        }
+        for(int i=0;i<reactionSet.getReaction(0).getProductCount();i++){
+            for(int k=0;k<reactionSet.getReaction(0).getProducts().getAtomContainer(i).getAtomCount();k++){
+                if(reactionSet.getReaction(0).getProducts().getAtomContainer(i).getAtom(k)==chemObject)
+                    return "product:"+i+"_"+k;
+            }
+        }
+        throw new CDKException("not found");
     }
 }
