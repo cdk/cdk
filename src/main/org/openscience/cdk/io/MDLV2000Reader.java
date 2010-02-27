@@ -173,13 +173,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 	 *@return                                     The IChemObject read
 	 *@exception  CDKException
 	 */
-	public IChemObject read(IChemObject object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
 		if (object instanceof IChemFile) {
-			return readChemFile((IChemFile)object);
+			return (T)readChemFile((IChemFile)object);
         } else if (object instanceof IChemModel) {
-            return readChemModel((IChemModel)object);
+            return (T)readChemModel((IChemModel)object);
 		} else if (object instanceof IMolecule) {
-			return readMolecule((IMolecule)object);
+			return (T)readMolecule((IMolecule)object);
 		} else {
 			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}
