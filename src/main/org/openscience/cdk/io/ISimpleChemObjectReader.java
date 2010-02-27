@@ -61,7 +61,7 @@ public interface ISimpleChemObjectReader extends IChemObjectReader {
      *            the type of information is not available from 
      *            the input
      **/
-    public IChemObject read(IChemObject object) throws CDKException;
+    public <T extends IChemObject> T read(T object) throws CDKException;
 
 }
 
