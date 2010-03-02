@@ -938,5 +938,18 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Assert.assertTrue("The two canonical SMILES should match",o1.equals(o2));
     }
     
+    @Test public void testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity() throws CDKException{
+        IMolecule benzene = MoleculeFactory.makeBenzene();
+        SmilesGenerator sg = new SmilesGenerator(false);
+        String smileswithoutaromaticity = sg.createSMILESWithoutCheckForMultipleMolecules(benzene, false, new boolean[benzene.getBondCount()]);
+        Assert.assertEquals("C=1C=CC=CC=1", smileswithoutaromaticity);
+    }
+
+    @Test public void testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity() throws CDKException{
+        IMolecule benzene = MoleculeFactory.makeBenzene();
+        SmilesGenerator sg = new SmilesGenerator(true);
+        String smileswitharomaticity = sg.createSMILESWithoutCheckForMultipleMolecules(benzene, false, new boolean[benzene.getBondCount()]);
+        Assert.assertEquals("c1ccccc1", smileswitharomaticity);
+    }
 }
 

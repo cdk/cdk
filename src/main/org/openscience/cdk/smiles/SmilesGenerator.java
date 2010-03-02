@@ -273,7 +273,12 @@ public class SmilesGenerator
 	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
 	 *  assign the SAR.
 	 *
-	 * @param  molecule                 The molecule to evaluate
+	 * @param  molecule                 The molecule to evaluate.
+     * @param  doubleBondConfiguration  Should E/Z configurations be read at these positions? If the flag at position X is set to true, 
+     *                                  an E/Z configuration will be written from coordinates around bond X, if false, it will be ignored. 
+     *                                  If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
+     *                                  ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
+     *                                  possible, but note the coordinates might be arbitrary).
 	 * @exception  CDKException         At least one atom has no Point2D;
 	 *      coordinates are needed for creating the chiral smiles.
 	 * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
@@ -295,15 +300,20 @@ public class SmilesGenerator
      *  SmilesGenerator in order to avoid recomputing it. Use setRings() to
      *  assign the SAR.
      *
-     *@param  molecule                 The molecule to evaluate
-     *@param  chiral                   true=SMILES will be chiral, false=SMILES
+     * @param  molecule                 The molecule to evaluate.
+     * @param  chiral                   true=SMILES will be chiral, false=SMILES.
      *      will not be chiral.
-     *@exception CDKException         At least one atom has no Point2D;
+     * @param  doubleBondConfiguration  Should E/Z configurations be read at these positions? If the flag at position X is set to true, 
+     *                                  an E/Z configuration will be written from coordinates around bond X, if false, it will be ignored. 
+     *                                  If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
+     *                                  ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
+     *                                  possible, but note the coordinates might be arbitrary).
+     * @exception CDKException          At least one atom has no Point2D;
      *      coordinates are needed for crating the chiral smiles. This excpetion
      *      can only be thrown if chiral smiles is created, ignore it if you want a
      *      non-chiral smiles (createSMILES(AtomContainer) does not throw an
      *      exception).
-     *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
+     * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
      * @return the SMILES representation of the molecule
      */
 	public synchronized String createSMILES(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
@@ -315,7 +325,8 @@ public class SmilesGenerator
 			for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++)
 			{
 				IMolecule molPart = moleculeSet.getMolecule(i);
-				fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, chiral, doubleBondConfiguration));
+				fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(
+				        molPart, chiral, doubleBondConfiguration));
 				if (i < (moleculeSet.getAtomContainerCount() - 1))
 				{
 					// are there more molecules?
@@ -325,7 +336,8 @@ public class SmilesGenerator
 			return fullSMILES.toString();
 		} else
 		{
-			return (createSMILESWithoutCheckForMultipleMolecules(molecule, chiral, doubleBondConfiguration));
+			return (createSMILESWithoutCheckForMultipleMolecules(molecule, 
+			        chiral, doubleBondConfiguration));
 		}
 	}
 
@@ -338,10 +350,18 @@ public class SmilesGenerator
 	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
 	 *  assign the SAR.
 	 *
-	 *@param  molecule                 The molecule to evaluate
-	 *@param  chiral                   true=SMILES will be chiral, false=SMILES
+	 * @param  molecule                 The molecule to evaluate.
+	 * @param  chiral                   true=SMILES will be chiral, false=SMILES
 	 *      will not be chiral.
-	 *@exception  CDKException         At least one atom has no Point2D;
+     * @param  doubleBondConfiguration  Should E/Z configurations be read at these positions? If the flag at position X is set to true, 
+     *                                  an E/Z configuration will be written from coordinates around bond X, if false, it will be ignored. 
+     *                                  If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
+     *                                  ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
+     *                                  possible, but note the coordinates might be arbitrary).
+	 * @param  detectAromaticity        true=an aromaticity detection will be done
+	 *                                  (using setRings avoids ring search for that),
+	 *                                  false=no aromaticity detection will be done
+	 * @exception  CDKException         At least one atom has no Point2D;
 	 *      coordinates are needed for creating the chiral smiles. This excpetion
 	 *      can only be thrown if chiral smiles is created, ignore it if you want a
 	 *      non-chiral smiles (createSMILES(AtomContainer) does not throw an
@@ -349,7 +369,8 @@ public class SmilesGenerator
 	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
      * @return the SMILES representation of the molecule
 	 */
-	private synchronized String createSMILESWithoutCheckForMultipleMolecules(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
+	@TestMethod("testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity,testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity")
+	public synchronized String createSMILESWithoutCheckForMultipleMolecules(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
 		if (molecule.getAtomCount() == 0)
 		{
@@ -375,16 +396,17 @@ public class SmilesGenerator
 		}
 
 		//detect aromaticity
-		if(rings == null)
-		{
-			if (ringFinder == null)
-			{
-				ringFinder = new AllRingsFinder();
-			}
-			rings = ringFinder.findAllRings(molecule);
+		if(useAromaticityFlag || chiral){
+		    if(rings == null){
+    			if (ringFinder == null)
+    			{
+    				ringFinder = new AllRingsFinder();
+    			}
+    			rings = ringFinder.findAllRings(molecule);
+		    }
+		    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		    CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		}
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		if (chiral && rings.getAtomContainerCount() > 0)
 		{
 			List v = RingPartitioner.partitionRings(rings);
@@ -716,6 +738,11 @@ public class SmilesGenerator
 	 *      appended to.
 	 *@param  chiral                   true=SMILES will be chiral, false=SMILES
 	 *      will not be chiral.
+     *@param  doubleBondConfiguration  Should E/Z configurations be read at these positions? If the flag at position X is set to true, 
+     *                                 an E/Z configuration will be written from coordinates around bond X, if false, it will be ignored. 
+     *                                 If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
+     *                                 ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
+     *                                 possible, but note the coordinates might be arbitrary).
 	 *@param  atomContainer            the AtomContainer that the SMILES string is
 	 *      generated for.
 	 *@param useAromaticity				true=aromaticity or sp2 will trigger lower case letters, wrong=only sp2
@@ -747,7 +774,7 @@ public class SmilesGenerator
 	private void createDFSTree(IAtom a, List tree, IAtom parent, IAtomContainer container)
 	{
 		tree.add(a);
-		List neighbours = getCanNeigh(a, container);
+		List neighbours = new ArrayList(getCanNeigh(a, container));
 		neighbours.remove(parent);
 		IAtom next;
 		a.setFlag(CDKConstants.VISITED, true);
@@ -1582,12 +1609,14 @@ public class SmilesGenerator
 		String symbol = a.getSymbol();
         if (a instanceof PseudoAtom) symbol = "*";
         
-		boolean stereo = BondTools.isStereo(container, a);
+		boolean stereo = false;
+		if(chiral)
+		    stereo = BondTools.isStereo(container, a);
 		boolean brackets = symbol.equals("B") || symbol.equals("C") || symbol.equals("N") || symbol.equals("O") || symbol.equals("P") || symbol.equals("S") || symbol.equals("F") || symbol.equals("Br") || symbol.equals("I") || symbol.equals("Cl");
 		brackets = !brackets;
 		//logger.debug("in parseAtom()");
 		//Deal with the start of a double bond configuration
-		if (isStartOfDoubleBond(container, a, parent, doubleBondConfiguration))
+		if (chiral && isStartOfDoubleBond(container, a, parent, doubleBondConfiguration))
 		{
 			buffer.append('/');
 		}
@@ -1649,7 +1678,7 @@ public class SmilesGenerator
 
 		//logger.debug("in parseAtom() after dealing with Pseudoatom or not");
 		//Deal with the end of a double bond configuration
-		if (isEndOfDoubleBond(container, a, parent, doubleBondConfiguration))
+		if (chiral && isEndOfDoubleBond(container, a, parent, doubleBondConfiguration))
 		{
 			IAtom viewFrom = null;
 			for (int i = 0; i < currentChain.size(); i++)
