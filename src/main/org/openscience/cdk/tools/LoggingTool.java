@@ -126,7 +126,7 @@ public class LoggingTool implements ILoggingTool {
      * @param classInst Class from which the log messages originate
      */
     public LoggingTool(Class<?> classInst) {
-        this.logger = this;
+        LoggingTool.logger = this;
         stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
         try {
@@ -253,105 +253,20 @@ public class LoggingTool implements ILoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
-     */
-    @TestMethod("testDebug_Object_Object")
-    public void debug(Object object, Object object2) {
-        if (doDebug) {
-            debugString("" + object + object2);
-        }
-    }
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
+     * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testDebug_Object_int")
-    public void debug(Object object, int number) {
+    public void debug(Object object, Object... objects) {
         if (doDebug) {
-            debugString("" + object + number);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            debugString(result.toString());
         }
     }
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
-     */
-    @TestMethod("testDebug_Object_double")
-    public void debug(Object object, double number) {
-        if (doDebug) {
-            debugString("" + object + number);
-        }
-    }
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    @TestMethod("testDebug_Object_boolean")
-    public void debug(Object object, boolean bool) {
-        if (doDebug) {
-            debugString("" + object + bool);
-        }
-    }
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    @TestMethod("testDebug_Object_Object_Object")
-    public void debug(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            debugString("" + obj + obj2 + obj3);
-        }
-    }
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-    @TestMethod("testDebug_Object_Object_Object_Object")
-    public void debug(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            debugString("" + obj + obj2 + obj3 + obj4);
-        }
-    }
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    @TestMethod("testDebug_Object_Object_Object_Object_Object")
-    public void debug(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            debugString("" + obj + obj2 + obj3 + obj4 + obj5);
-        }
-    }
-    
+
     private void debugThrowable(Throwable problem) {
         if (problem != null) {
             if (problem instanceof Error) {
@@ -404,40 +319,17 @@ public class LoggingTool implements ILoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
+     * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testError_Object_int")
-    public void error(Object object, int number) {
+    public void error(Object object, Object... objects) {
         if (doDebug) {
-            errorString("" + object + number);
-        }
-    }
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number double to concatenate to object
-     */
-    @TestMethod("testError_Object_double")
-    public void error(Object object, double number) {
-        if (doDebug) {
-            errorString("" + object + number);
-        }
-    }
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    @TestMethod("testError_Object_boolean")
-    public void error(Object object, boolean bool) {
-        if (doDebug) {
-            errorString("" + object + bool);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            errorString(result.toString());
         }
     }
     
@@ -446,68 +338,6 @@ public class LoggingTool implements ILoggingTool {
             printToSTDOUT("ERROR", string);
         } else {
             log4jLogger.error(string);
-        }
-    }
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
-     */
-    @TestMethod("testError_Object_Object")
-    public void error(Object object, Object object2) {
-        if (doDebug) {
-            errorString("" + object + object2);
-        }
-    }
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    @TestMethod("testError_Object_Object_Object")
-    public void error(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            errorString("" + obj + obj2 + obj3);
-        }
-    }
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-    @TestMethod("testError_Object_Object_Object_Object")
-    public void error(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            errorString("" + obj + obj2 + obj3 + obj4);
-        }
-    }
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    @TestMethod("testError_Object_Object_Object_Object_Object")
-    public void error(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            errorString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
     
@@ -544,40 +374,17 @@ public class LoggingTool implements ILoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
+     * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testInfo_Object_int")
-    public void info(Object object, int number) {
+    public void info(Object object, Object... objects) {
         if (doDebug) {
-            infoString("" + object + number);
-        }
-    }
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number double to concatenate to object
-     */
-    @TestMethod("testInfo_Object_double")
-    public void info(Object object, double number) {
-        if (doDebug) {
-            infoString("" + object + number);
-        }
-    }
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    @TestMethod("testInfo_Object_boolean")
-    public void info(Object object, boolean bool) {
-        if (doDebug) {
-            infoString("" + object + bool);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            infoString(result.toString());
         }
     }
     
@@ -589,68 +396,6 @@ public class LoggingTool implements ILoggingTool {
         }
     }
     
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
-     */
-    @TestMethod("testInfo_Object_Object")
-    public void info(Object object, Object object2) {
-        if (doDebug) {
-            infoString("" + object + object2);
-        }
-    }
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    @TestMethod("testInfo_Object_Object_Object")
-    public void info(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            infoString("" + obj + obj2 + obj3);
-        }
-    }
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-     @TestMethod("testInfo_Object_Object_Object_Object")
-    public void info(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            infoString("" + obj + obj2 + obj3 + obj4);
-        }
-    }
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    @TestMethod("testInfo_Object_Object_Object_Object_Object")
-    public void info(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            infoString("" + obj + obj2 + obj3 + obj4 + obj5);
-        }
-    }
-
     /**
      * Shows WARN output for the Object. It uses the toString() method.
      *
@@ -676,105 +421,19 @@ public class LoggingTool implements ILoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
+     * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testWarn_Object_int")
-    public void warn(Object object, int number) {
+    public void warn(Object object, Object... objects) {
         if (doDebug) {
-            warnString("" + object + number);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            warnString(result.toString());
         }
     }
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    @TestMethod("testWarn_Object_boolean")
-    public void warn(Object object, boolean bool) {
-        if (doDebug) {
-            warnString("" + object + bool);
-        }
-    }
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number double to concatenate to object
-     */
-    @TestMethod("testWarn_Object_number")
-    public void warn(Object object, double number) {
-        if (doDebug) {
-            warnString("" + object + number);
-        }
-    }
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
-     */
-    @TestMethod("testWarn_Object_Object")
-    public void warn(Object object, Object object2) {
-        if (doDebug) {
-            warnString("" + object + object2);
-        }
-    }
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    @TestMethod("testWarn_Object_Object_Object")
-    public void warn(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            warnString("" + obj + obj2 + obj3);
-        }
-    }
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-    @TestMethod("testWarn_Object_Object_Object_Object")
-    public void warn(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            warnString("" + obj + obj2 + obj3 + obj4);
-        }
-    }
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    @TestMethod("testWarn_Object_Object_Object_Object_Object")
-    public void warn(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            warnString("" + obj + obj2 + obj3 + obj4 + obj5);
-        }
-    }
-
     /**
      * Use this method for computational demanding debug info.
      * For example:

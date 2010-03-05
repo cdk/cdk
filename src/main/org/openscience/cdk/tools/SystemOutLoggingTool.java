@@ -102,60 +102,17 @@ public class SystemOutLoggingTool implements ILoggingTool {
     
     /** {@inheritDoc} */
     @TestMethod("testDebug_Object_Object")
-    public void debug(Object object, Object object2) {
+    public void debug(Object object, Object... objects) {
         if (doDebug) {
-            debugString("" + object + object2);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @TestMethod("testDebug_Object_int")
-    public void debug(Object object, int number) {
-        if (doDebug) {
-            debugString("" + object + number);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @TestMethod("testDebug_Object_double")
-    public void debug(Object object, double number) {
-        if (doDebug) {
-            debugString("" + object + number);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @TestMethod("testDebug_Object_boolean")
-    public void debug(Object object, boolean bool) {
-        if (doDebug) {
-            debugString("" + object + bool);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @TestMethod("testDebug_Object_Object_Object")
-    public void debug(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            debugString("" + obj + obj2 + obj3);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @TestMethod("testDebug_Object_Object_Object_Object")
-    public void debug(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            debugString("" + obj + obj2 + obj3 + obj4);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            debugString(result.toString());
         }
     }
 
-    /** {@inheritDoc} */
-    @TestMethod("testDebug_Object_Object_Object_Object_Object")
-    public void debug(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            debugString("" + obj + obj2 + obj3 + obj4 + obj5);
-        }
-    }
-    
     private void debugThrowable(Throwable problem) {
         if (problem != null) {
             if (problem instanceof Error) {
@@ -203,62 +160,19 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testError_Object_int")
-    public void error(Object object, int number) {
+    public void error(Object object, Object... objects) {
         if (doDebug) {
-            errorString("" + object + number);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            errorString(result.toString());
         }
     }
 
-    /** {@inheritDoc} */
-    @TestMethod("testError_Object_double")
-    public void error(Object object, double number) {
-        if (doDebug) {
-            errorString("" + object + number);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testError_Object_boolean")
-    public void error(Object object, boolean bool) {
-        if (doDebug) {
-            errorString("" + object + bool);
-        }
-    }
-    
     private void errorString(String string) {
         printToSTDOUT("ERROR", string);
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testError_Object_Object")
-    public void error(Object object, Object object2) {
-        if (doDebug) {
-            errorString("" + object + object2);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testError_Object_Object_Object")
-    public void error(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            errorString("" + obj + obj2 + obj3);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testError_Object_Object_Object_Object")
-    public void error(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            errorString("" + obj + obj2 + obj3 + obj4);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testError_Object_Object_Object_Object_Object")
-    public void error(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            errorString("" + obj + obj2 + obj3 + obj4 + obj5);
-        }
     }
 
     /** {@inheritDoc} */
@@ -279,62 +193,19 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testInfo_Object_int")
-    public void info(Object object, int number) {
+    public void info(Object object, Object... objects) {
         if (doDebug) {
-            infoString("" + object + number);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            infoString(result.toString());
         }
     }
 
-    /** {@inheritDoc} */
-    @TestMethod("testInfo_Object_double")
-    public void info(Object object, double number) {
-        if (doDebug) {
-            infoString("" + object + number);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testInfo_Object_boolean")
-    public void info(Object object, boolean bool) {
-        if (doDebug) {
-            infoString("" + object + bool);
-        }
-    }
-    
     private void infoString(String string) {
         printToSTDOUT("INFO", string);
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testInfo_Object_Object")
-    public void info(Object object, Object object2) {
-        if (doDebug) {
-            infoString("" + object + object2);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testInfo_Object_Object_Object")
-    public void info(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            infoString("" + obj + obj2 + obj3);
-        }
-    }
-
-    /** {@inheritDoc} */
-     @TestMethod("testInfo_Object_Object_Object_Object")
-    public void info(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            infoString("" + obj + obj2 + obj3 + obj4);
-        }
-    }
-
-     /** {@inheritDoc} */
-    @TestMethod("testInfo_Object_Object_Object_Object_Object")
-    public void info(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            infoString("" + obj + obj2 + obj3 + obj4 + obj5);
-        }
     }
 
     /** {@inheritDoc} */
@@ -351,57 +222,14 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testWarn_Object_int")
-    public void warn(Object object, int number) {
+    public void warn(Object object, Object... objects) {
         if (doDebug) {
-            warnString("" + object + number);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testWarn_Object_boolean")
-    public void warn(Object object, boolean bool) {
-        if (doDebug) {
-            warnString("" + object + bool);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testWarn_Object_number")
-    public void warn(Object object, double number) {
-        if (doDebug) {
-            warnString("" + object + number);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testWarn_Object_Object")
-    public void warn(Object object, Object object2) {
-        if (doDebug) {
-            warnString("" + object + object2);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testWarn_Object_Object_Object")
-    public void warn(Object obj, Object obj2, Object obj3) {
-        if (doDebug) {
-            warnString("" + obj + obj2 + obj3);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testWarn_Object_Object_Object_Object")
-    public void warn(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (doDebug) {
-            warnString("" + obj + obj2 + obj3 + obj4);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @TestMethod("testWarn_Object_Object_Object_Object_Object")
-    public void warn(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (doDebug) {
-            warnString("" + obj + obj2 + obj3 + obj4 + obj5);
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            warnString(result.toString());
         }
     }
 
