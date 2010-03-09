@@ -1177,7 +1177,21 @@
     <at:hasElement rdf:resource="&elem;Pt"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
-    </at:AtomType>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Pt.4">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Pt"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Pt.6">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Pt"/>
+    <at:formalNeighbourCount>6</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="Co.2plus">
     <at:formalCharge>2</at:formalCharge>
