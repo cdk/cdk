@@ -24,6 +24,18 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="Cahn1966">
+    <bibtex:article>
+      <bibtex:author>Cahn, R.S. and Ingold, C. and Prelog, V.</bibtex:author>
+      <bibtex:title>Specification of Molecular Chirality</bibtex:title>
+      <bibtex:journal>Angew. Chem. Int. Ed.</bibtex:journal>
+      <bibtex:year>1966</bibtex:year>
+      <bibtex:volume>5</bibtex:volume>
+      <bibtex:number>4</bibtex:number>
+      <bibtex:pages>385-415</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Moreau1980">
     <bibtex:article>
       <bibtex:author>Moreau G. and Broto P.</bibtex:author>
