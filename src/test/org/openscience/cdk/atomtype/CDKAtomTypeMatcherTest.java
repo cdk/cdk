@@ -3169,6 +3169,42 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * Testing a nitrogen as found in this SMILES input: c1c2cc[nH]cc2nc1.
+     */
+    @Test public void testAnotherNitrogen() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("C")); mol.getAtom(0).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); mol.getAtom(1).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); mol.getAtom(2).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); mol.getAtom(3).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("N"));
+        mol.getAtom(4).setHybridization(Hybridization.PLANAR3);
+        mol.getAtom(4).setHydrogenCount(1);
+        mol.addAtom(new Atom("C")); mol.getAtom(5).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); mol.getAtom(6).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("N")); mol.getAtom(7).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); mol.getAtom(8).setHybridization(Hybridization.SP2);
+
+        mol.addBond(0,1, IBond.Order.SINGLE);
+        mol.addBond(0,8, IBond.Order.SINGLE);
+        mol.addBond(1,2, IBond.Order.SINGLE);
+        mol.addBond(1,6, IBond.Order.SINGLE);
+        mol.addBond(2,3, IBond.Order.SINGLE);
+        mol.addBond(3,4, IBond.Order.SINGLE);
+        mol.addBond(4,5, IBond.Order.SINGLE);
+        mol.addBond(5,6, IBond.Order.SINGLE);
+        mol.addBond(6,7, IBond.Order.SINGLE);
+        mol.addBond(7,8, IBond.Order.SINGLE);
+
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            "N.planar3", "C.sp2", "C.sp2", "N.sp2",
+            "C.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
