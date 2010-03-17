@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -83,14 +83,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
 		
-		/*[O*+]-C-C*/
-		IMolecule molecule = getMolecule();
-		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
-
-		/* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
 		
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -106,7 +99,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         /*[O+]=CC*/
-        IMolecule molecule1 = getMolecule1();
+        IMolecule molecule1 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
@@ -114,10 +107,8 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
         /*[H*]*/
-		IMolecule molecule2 = builder.newMolecule();
-		molecule2.addAtom(new Atom("H"));
-        molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
-
+		IMolecule molecule2 = getExpectedProducts().getMolecule(1);
+		
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
        
@@ -131,14 +122,9 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	 */
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
-
-		/*[O*+]-C-C*/
-		IMolecule molecule = getMolecule();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
-
-		/* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -159,19 +145,14 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        /*[O+]=CC*/
-        IMolecule molecule1 = getMolecule1();
+        IMolecule molecule1 = getExpectedProducts().getMolecule(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
 		
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+		IMolecule molecule2 = getExpectedProducts().getMolecule(1);
 		
-        /*[H*]*/
-		IMolecule molecule2 = builder.newMolecule();
-		molecule2.addAtom(new Atom("H"));
-        molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
-
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
        
@@ -184,13 +165,8 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
 
-		/*[O*+]-C-C*/
-		IMolecule molecule = getMolecule();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
-
-		/* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -225,14 +201,11 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
-
-		/*[O*+]-C-C*/
-		IMolecule molecule = getMolecule();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
 
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -251,13 +224,10 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 
-        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(9,setOfReactions.getReaction(0).getMappingCount());
         
-		Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
 		IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
 		Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-        Assert.assertEquals(mappedProductB1, product.getBond(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA2, product.getAtom(1));
         IAtom mappedProductA3 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(3));
@@ -267,9 +237,10 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	/**
 	 * Get the Molecule 
 	 * 
-	 * @return The IMolecule
+	 * @return The IMoleculeSetSet
 	 */
-	private IMolecule getMolecule() {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("O"));
 		molecule.addAtom(builder.newAtom("C"));
@@ -292,14 +263,25 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 		IAtom atom =  molecule.getAtom(0);
 		atom.setFormalCharge(1);
         molecule.addSingleElectron(new SingleElectron(atom));
-        return molecule;
+
+		try {
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
 	/**
-	 * Get the Molecule 1
-	 * @return The IMolecule
+	 * Get the expected set of molecules.
+	 * 
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule1() {
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
 
+        /*[O+]=CC*/
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("O"));
 		molecule.addAtom(builder.newAtom("C"));
@@ -317,7 +299,15 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 		molecule.addAtom(builder.newAtom("H"));
 		molecule.addBond(0, 7, IBond.Order.SINGLE);
 		molecule.getAtom(0).setFormalCharge(1);
-		return molecule;
+        setOfProducts.addMolecule(molecule);
+        
+        /*[H*]*/
+		IMolecule molecule2 = builder.newMolecule();
+		molecule2.addAtom(new Atom("H"));
+        molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
+        setOfProducts.addMolecule(molecule2);
+
+		return setOfProducts;
 	}
 	
 	/**
@@ -326,7 +316,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());

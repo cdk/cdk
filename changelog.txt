@@ -281,3 +281,123 @@ This changelog is automatically generated from the:
 * Fix for junior job id: [ 1837692 ] Test methods should throw only one Exception. (Paul Turner <paulturner@users.sourceforge.net>)
 * Fixed missing imports and wrapped to 80 chars (Egon Willighagen <egonw@users.sourceforge.net>)
 * Better excpetion handling in builder3d: (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+
+1.3.2
+-----------
+* Use the new error reporting IO API
+* Added a new IO API for reporting file format errors.
+* A new test for canonicalLabeler. I first tried in an older checkout, where it failed, but it works in master. I think we can still put the test in, more tests are better.
+* Unit test for bug #2944080
+* Added the atom-atom mapping for all atom containing the reactant molecules
+* Removed the bond mapping from the reaction. It will only contain atom-atom mapping functionality
+* Initiating only one time the function LonePairElectronChecker
+* Added getExampleReactants and getExpectedProducts method for all reaction.type test.
+* The IMapping interface had a class comment which probably was a copy&paste artefact. Changed this.
+* Fixed license info .meta file for JavaCC
+* Removed bit which explain how to apply the LGPL to source (fixes #2926775)
+* CDKHydrogenAdder should not attempt addImplicitHydrogen for pseudo atoms in an atom container
+* Added unit test for adding hydrogens to IPseudoAtom, which current causes a NPE
+* MDLV2000Reader throws exception for query bond types
+* MDL reading and writing and stereo bond types
+* Added a helper method GeometryTools.getRectangle2D() to get the space occupied by an IAtomContainer
+* Reimplemented shiftContainer(IAtomContainer, Rectangle2D, Rectange2D, double) originally implemented as jchempaint-primary patch 9200bdc4d68dc8f70373a62eaec51357b680d5e6 by Stefan Kuhn: fixing the detection of overlap, and added missing unit tests
+* Added IO option to allow saving aromatic SMILES
+* Added missing unit testing for the SMILESWriter
+* Moved Normalizer into a separate package, in reply to discussion around patch #2905749, making space for a uniform platform for structure normalization: cdk.normalize
+* Attached are some more license files.
+* The log4j.jar is version 1.2.15.
+* More completed files attached.
+* They were incomplete, as many other files still are.
+* Fixed conflict in LICENSE file due to merge from cdk-1.2.x branch
+* Added a QA target
+* Use local PMD and JUnit reports if available
+* Added option to run it on just one module
+* Added info for dependencies
+* Created a list, to be able to add license information
+* Added missing copyright/license header
+* Catch a SocketException when there is no internet
+* Output where it is working on
+* Removed empty lines
+* Added initial license information, based on the information sent by Stefan
+* [PATCH] SSSR Test
+* Bucky ball test molecule
+* Patch from Ulrich Bauer regarding ringsearch bauer@math.uni-goettingen.de
+* Update code example in JavaDoc reflecting the current API (fixes #2914791)
+* Minor fixes for the RasmolColors class.
+* New classes for Rasmol color scheme
+* Updated UIT matching for the single atom case so that it correctly handles queries that are plain atom containers
+* Updated fingerprinter to fix bug 2819557. Updated JUnit tests to take into account new fingerprints. Also cleaned up the template extractor code and regenerated fingerprints for builder3d. Also updated the build file to properly include dependency jars for the makefp3d target
+* Added a datafile entry for the standard module to store the VDW radii etc for the periodic table
+* Fixed reading of SD file properties
+* Added unit test for a MDL SD file with mutliple data fields
+* Added unit test for data fields to allow to start with '>' (bug #2911300).
+* Added testing that properties are read from test6.sdf
+* Updated license info of third party libraries
+* Fixed JavaDoc: added missing period at end of first sentence, removed useless @throws clause, added missing @cdk.bug tag
+* Package fixing release: fixed building JavaDoc from source dist
+* Added missing references file to the source dist (full and pure)
+* Removed source folders of Doclets, which are not part of the release, and should not be compiled for JavaDoc generation anyway
+* Removed java pkg removed by the periodic table patch from the Eclipse project classpath
+* Made the unit test more informative
+* Added test case for bug 2819557
+* The AtomType(String) constructor is updated so that only formal charge is set to 0 as indicated in the Javadocs. All other fields are set ot UNSET. Javadocs were updated to make this explicit
+* Updated canonical labeler to make use of the PeriodicTable class so that even if an input molecule was not configured we can still get a valid atomic number. This makes SMILES generation a little more robust (cf bug 2898032)
+* Added OpenJavaDocCheck library (new BSD licensed) and written a custom JavaDoc checks.
+* Additional constant
+* added a constant for untyped atoms
+* Updated to avoid use of deprecated StringBufferInputStream
+* added a test for single-line inchi with several branches
+* the inchi reader was written in such a way that it 1) needed a further line after the inchi=, which was not read, but needed to avoid npes 2) It could only process one branch on a level 3) it required the inchi line to start with INChI, newer versions require InChI= All this has been fixed
+* Start angles should be different for different size rings
+* Sorting of containers in a AtomContainerSet
+* Added new test class to the module suite
+* New comparators for AtomContainer
+* Refactored periodic table element to be a standalone class, so independent of the data module. This is OK, since the class is really just a struct to hold PT data for a given element. As opposed to being a basis of an elemental representation. Also, this class is entirely private to this package, so it doesn't really matter what it is. Updated associated unit tests
+* Some minor code clean up
+* Updated to remove Symbols and all associated tests and usages. Replaced with PeriodicTable
+* Moved PT related tests to their own package. Updated test suites
+* Added method (and test) to get symbol from atomic number and also get element counts
+* Updated module membership. Also made everything bu tmain PT class package private
+* Moved PT related classes into their own package
+* Added a test to MoleculeSetTest, which tests that the clone() does not change the MoleculeSEt
+* Added some extra lines, hopefully fixing the conflicts all the time
+
+1.3.3
+---------
+* Updated JavaDoc to explicitly state that g2 must be a substructure of g1 (Egon Willighagen <egonw@users.sourceforge.net>)
+* More unit tests for the MCSS problem in bug report 2944080. (Egon Willighagen <egon.willighagen@gmail.com>)
+* Simplified the code using the new 'T read(T)' API used in MDLV2000Reader as defined by the ISimpleChemObjectReader (Egon Willighagen <egonw@users.sourceforge.net>)
+* Updated for the new generics 'T read(T)' API in ISimpleChemObjectReader. (Egon Willighagen <egonw@users.sourceforge.net>)
+* Introduced generics allowing the return type to be identical to the passed argument. It does require implementing classes to be updated with the new API too. (Egon Willighagen <egonw@users.sourceforge.net>)
+* Added missing dependency, fixing the unit test reading a file from data/ (Egon Willighagen <egonw@users.sourceforge.net>)
+* added working implementations for PartialFilledStructureMerger and CrossoverMachine (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+* added working implementations for PartialFilledStructureMerger and CrossoverMachine (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+* tests for crossover machine and PartialFilledStructureMerger (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+* tests for crossover machine and PartialFilledStructureMerger (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+* added dependency (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+* Fixed use of global isRef variable, to make it threading-safe (Egon Willighagen <egonw@users.sourceforge.net>)
+* Added control 'isref' creating a CML with reaction and listmolecules (Miguel Rojas Cherto <miguelrojasch@gmail.com>)
+* Removed unused import (Egon Willighagen <egonw@users.sourceforge.net>)
+* Removed last bits of implementation details from the API: now uses List<> instead of ArrayList<> (Egon Willighagen <egonw@users.sourceforge.net>)
+* Removed output to STDOUT (Egon Willighagen <egonw@users.sourceforge.net>)
+* Fixed some spelling errors and added JavaDoc links (Egon Willighagen <egonw@users.sourceforge.net>)
+* Synchronized behavior with the MDLV2000Reader (addressing bug #2942196) (Egon Willighagen <egonw@users.sourceforge.net>)
+* Added missing @cdk.bug tag and used interfaces where possible (Egon Willighagen <egonw@users.sourceforge.net>)
+* Added a test case for GeometryTools.has2DCoordinatesNew where a mol file has a single atom with 0,0,0 as coordinate. This is not considered a 2d coordinate right now, but in a way it is one. (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+* added a method to make cyclopentane to MoleculeFactory (Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>)
+* Added missing unit test for getClosestAtom(double, double, IAtomContainer, IAtom) (Egon Willighagen <egon.willighagen@gmail.com>)
+* Improve performance: to find the closest atom, we do can simply use the squared distances. The smaller than relation is equivalent in normal and squared distance space. (Egon Willighagen <egon.willighagen@gmail.com>)
+* Added a unit test to see of the calculated bond length average includes bonds in all IAtomContainer's (Egon Willighagen <egon.willighagen@gmail.com>)
+* Added second test for getClosestAtom(), now with more than two atoms (Egon Willighagen <egon.willighagen@gmail.com>)
+* Added E and Z as allowed configurations (Egon Willighagen <egon.willighagen@gmail.com>)
+* Added UP_OR_DOWN_INVERTED, which is the equivalent of UP_OR_DOWN but with a different stereocenter (Egon Willighagen <egon.willighagen@gmail.com>)
+* Extended JavaDoc, explaining how these IBond.Stereo types define the stereocenter, and indicating for each type explicitly which atom is the stereocenter (Egon Willighagen <egon.willighagen@gmail.com>)
+* Added convenience method to find the closest atom to a given point. (shk3 <shk3@eb4e18e3-b210-0410-a6ab-dec725e4b171>)
+* unified the layout at cleanup and loading of molecules (Stefan Kuhn <shk3@users.sf.net>)
+* Reimplemented shiftReactionVertical(IReaction, Rectangle2D, Rectange2D, double) originally implemented as jchempaint-primary patch 1cab8c3c9350ada9b1d054712189720c865e502a by Stefan Kuhn: now reuses other methods (fixing the movement of the reaction agents), and added missing unit tests (Egon Willighagen <egon.willighagen@gmail.com>)
+* Added a getBondLengthAverage(IReaction reaction) method, a rewritten version of 1cab8c3c9350ada9b1d054712189720c865e502a by Stefan Kuhn, and the matching unit test (Egon Willighagen <egon.willighagen@gmail.com>)
+* Add a GeometryTools method to get atoms near another atom (Gilleain). Added unit test for the new method (Egon). (gilleain <gilleain@eb4e18e3-b210-0410-a6ab-dec725e4b171>)
+* Moved IAtomColorer and ICDKChangeListener from the standard module to the interfaces module (egonw <egonw@eb4e18e3-b210-0410-a6ab-dec725e4b171>)
+* Updated to include the float and binary information found in PubChem (Brian Gilman <gilmanb@gmail.com>)
+* Ant has a release 1.8 that should be accepted in build.xml (Mark Rynbeek <markr@localhost.localdomain>)
+* Master is open for patches... (Egon Willighagen <egonw@users.sourceforge.net>)

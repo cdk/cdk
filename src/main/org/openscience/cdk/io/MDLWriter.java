@@ -192,6 +192,24 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		for (IAtomContainer container :
 		     ChemFileManipulator.getAllAtomContainers(file)) {
 		    bigPile.add(container);
+		    if(container.getProperty(CDKConstants.TITLE)!=null){
+		        if(bigPile.getProperty(CDKConstants.TITLE)!=null)
+		            bigPile.setProperty(CDKConstants.TITLE, 
+		                    bigPile.getProperty(CDKConstants.TITLE)+"; "
+		                    +container.getProperty(CDKConstants.TITLE));
+		        else
+		            bigPile.setProperty(CDKConstants.TITLE, 
+		                    container.getProperty(CDKConstants.TITLE));
+		    }
+            if(container.getProperty(CDKConstants.REMARK)!=null){
+                if(bigPile.getProperty(CDKConstants.REMARK)!=null)
+                    bigPile.setProperty(CDKConstants.REMARK, 
+                            bigPile.getProperty(CDKConstants.REMARK)+"; "
+                            +container.getProperty(CDKConstants.REMARK));
+                else
+                    bigPile.setProperty(CDKConstants.REMARK, 
+                            container.getProperty(CDKConstants.REMARK));
+            }
 		}
 		writeMolecule(bigPile);
 	}
@@ -307,7 +325,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
         		case DOWN_INVERTED:
         			line += "6";
         			break;
-        		default:
+        		case UP_OR_DOWN:
+        			line += "4";
+        			break;
+           		case E_OR_Z:
+          			line += "3";
+          			break;
+          		default:
         			line += "0";
         		}
         		line += "  0  0  0 ";

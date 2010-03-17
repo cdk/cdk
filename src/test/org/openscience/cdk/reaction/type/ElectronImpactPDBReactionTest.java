@@ -141,7 +141,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
         Assert.assertEquals(1, molecule.getSingleElectronCount());
 
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(17,setOfReactions.getReaction(0).getMappingCount());
 		
 	}
 	/**
@@ -233,7 +233,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
         
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(17,setOfReactions.getReaction(0).getMappingCount());
 		
 	}
 	/**
@@ -246,30 +246,8 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new ElectronImpactPDBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-
-		IMolecule molecule = builder.newMolecule();//miles("C=CC")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 3, IBond.Order.SINGLE);
-		molecule.addBond(0, 4, IBond.Order.SINGLE);
-		molecule.addBond(1, 5, IBond.Order.SINGLE);
-		molecule.addBond(2, 6, IBond.Order.SINGLE);
-		molecule.addBond(2, 7, IBond.Order.SINGLE);
-		molecule.addBond(2, 8, IBond.Order.SINGLE);
-		
-	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -309,8 +287,54 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type  = new ElectronImpactPDBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
+		/*automatic search of the center active*/
+        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.FALSE);
+        paramList.add(param);
+        type.setParameterList(paramList);
+        
+        /* initiate */
+		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+
+        Assert.assertEquals(9,setOfReactions.getReaction(0).getMappingCount());
+        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        Assert.assertEquals(mappedProductA1, product.getAtom(0));
+        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        Assert.assertEquals(mappedProductA2, product.getAtom(1));
+ 	}
+	/**
+	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * 
+	 * @param molecule          The IMolecule to analyze
+	 * @throws CDKException
+	 */
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		while (atoms.hasNext()) {
+				IAtom nextAtom = atoms.next();
+				Assert.assertNotNull(
+					"Missing atom type for: " + nextAtom, 
+					matcher.findMatchingAtomType(molecule, nextAtom)
+				);
+		}
+	}
+
+	/**
+	 * Get the example set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+
 		IMolecule molecule = builder.newMolecule();//miles("C=CC")
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.addAtom(builder.newAtom("C"));
@@ -330,48 +354,26 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 		molecule.addBond(2, 7, IBond.Order.SINGLE);
 		molecule.addBond(2, 8, IBond.Order.SINGLE);
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
+	    try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			lpcheck.saturate(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
 		setOfReactants.addMolecule(molecule);
 		
-		/*automatic search of the center active*/
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
-	    IParameterReact param = new SetReactionCenter();
-        param.setParameter(Boolean.FALSE);
-        paramList.add(param);
-        type.setParameterList(paramList);
-        
-        /* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
-		
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
-        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
-        Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
-        Assert.assertEquals(mappedProductA2, product.getAtom(1));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-        Assert.assertEquals(mappedProductB1, product.getBond(0));     
+		return setOfReactants;
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Get the expected set of molecules.
+	 * TODO:reaction. Set the products
 	 * 
-	 * @param molecule          The IMolecule to analyze
-	 * @throws CDKException
+	 * @return The IMoleculeSet
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
 
-		Iterator<IAtom> atoms = molecule.atoms().iterator();
-		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-		while (atoms.hasNext()) {
-				IAtom nextAtom = atoms.next();
-				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom, 
-					matcher.findMatchingAtomType(molecule, nextAtom)
-				);
-		}
+        setOfProducts.addMolecule(null);
+		return setOfProducts;
 	}
 }

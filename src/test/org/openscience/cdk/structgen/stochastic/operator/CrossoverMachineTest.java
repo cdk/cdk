@@ -1,6 +1,6 @@
 /* $Revision: 7691 $ $Author: egonw $ $Date: 2007-01-11 12:47:48 +0100 (Thu, 11 Jan 2007) $
  * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2009  Stefan Kuhn <shk3@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,7 +20,20 @@
  */
 package org.openscience.cdk.structgen.stochastic.operator;
 
+import java.io.InputStream;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.SMILESReader;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
  * @cdk.module test-structgen
@@ -28,6 +41,74 @@ import org.openscience.cdk.CDKTestCase;
 public class CrossoverMachineTest extends CDKTestCase {
     
 
+    @Test public void testdoCrossover_IAtomContainer() throws Exception {
+        String filename = "data/smiles/c10h16isomers.smi";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        SMILESReader reader = new SMILESReader(ins);
+        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        Assert.assertEquals("We must have read 99 structures", 99, 
+        	som.getMoleculeCount());
+		CrossoverMachine cm = new CrossoverMachine();
+		String correctFormula="C10";
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(som.getBuilder());
+        for(int i=0;i<som.getAtomContainerCount();i++){
+            hAdder.addImplicitHydrogens(som.getAtomContainer(i));
+        }
+        int errorcount=0;
+        for(int i=0;i<som.getAtomContainerCount();i++){
+			int[] hydrogencount1=new int[4];
+			for(IAtom atom : som.getAtomContainer(i).atoms()){
+				hydrogencount1[atom.getHydrogenCount()]++;
+			}
+        	for(int k=i+1;k<som.getAtomContainerCount();k++){
+        		try{
+	        		List<IAtomContainer> result = cm
+	        			.doCrossover(som.getAtomContainer(i), 
+	        			som.getAtomContainer(k));
+	    			int[] hydrogencount2=new int[4];
+	    			for(IAtom atom : som.getAtomContainer(k).atoms()){
+	    				hydrogencount2[atom.getHydrogenCount()]++;
+	    			}
+	        		Assert.assertEquals("Result size must be 2",2, result.size());
+	        		for(int l=0;l<2;l++){
+	        			IAtomContainer ac = result.get(l);
+	        			Assert.assertTrue("Result must be connected", 
+	        					ConnectivityChecker.isConnected(ac));
+	        			Assert.assertEquals("Molecular formula must be the same as" +
+	        					"of the input", MolecularFormulaManipulator.getString(
+	        					MolecularFormulaManipulator.getMolecularFormula(ac)),
+	        					correctFormula);
+	        			int[] hydrogencountresult=new int[4];
+	        			int hcounttotal=0;
+	        			for(IAtom atom : result.get(l).atoms()){
+	        				hydrogencountresult[atom.getHydrogenCount()]++;
+	        				hcounttotal+=atom.getHydrogenCount();
+	        			}
+	        			if(hydrogencount1[0]==hydrogencount2[0])
+	        				Assert.assertEquals("Hydrogen count of the result must" +
+	        						" be same as of input", hydrogencount1[0],
+	        						hydrogencountresult[0]);
+	        			if(hydrogencount1[1]==hydrogencount2[1])
+	        				Assert.assertEquals("Hydrogen count of the result must" +
+	        						" be same as of input", hydrogencount1[1],
+	        						hydrogencountresult[1]);
+	        			if(hydrogencount1[2]==hydrogencount2[2])
+	        				Assert.assertEquals("Hydrogen count of the result must" +
+	        						" be same as of input", hydrogencount1[2],
+	        						hydrogencountresult[2]);
+	        			if(hydrogencount1[3]==hydrogencount2[3])
+	        				Assert.assertEquals("Hydrogen count of the result must" +
+	        						" be same as of input", hydrogencount1[3],
+	        						hydrogencountresult[3]);
+	        			Assert.assertEquals(16,hcounttotal);
+	        		}
+        		}catch(CDKException ex){
+        			errorcount++;
+        		}
+        	}
+        }
+		Assert.assertTrue("We tolerate up to 300 errors",errorcount<300);
+    }
 }
 
 

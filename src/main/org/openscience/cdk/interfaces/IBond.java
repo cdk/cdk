@@ -49,27 +49,45 @@ public interface IBond extends IElectronContainer {
 	}
 	
 	/**
-	 * Enumeration of possible stereo types of bonds.
+	 * Enumeration of possible stereo types of two-atom bonds. The
+	 * Stereo type defines not just define the stereochemistry, but also the
+	 * which atom is the stereo center for which the Stereo is defined.
+	 * The first atom in the IBond (index = 0) is the <i>start</i> atom, while
+	 * the second atom (index = 1) is the <i>end</i> atom.
 	 */
 	public enum Stereo {
-	    /** A bonds for which there is no stereochemistry. */
+	    /** A bond for which there is no stereochemistry. */
 		NONE,
-		/** A bonds pointing up of which end is above the drawing plane. */
+		/** A bond pointing up of which the start atom is the stereocenter and
+		 * the end atom is above the drawing plane. */
 		UP,
-		/** A bonds pointing up of which start is above the drawing plane. */
+		/** A bond pointing up of which the end atom is the stereocenter and
+		 * the start atom is above the drawing plane. */
 		UP_INVERTED,
-		/** A bonds pointing down of which start is above the drawing plane. */
+		/** A bond pointing down of which the start atom is the stereocenter
+		 * and the end atom is below the drawing plane. */
 		DOWN,
-		/** A bonds pointing down of which end is above the drawing plane. */
+		/** A bond pointing down of which the end atom is the stereocenter and
+		 * the start atom is below the drawing plane. */
 		DOWN_INVERTED,
-		/** A bond for which there is stereochemistry, we just don't know
-		 *  which one.
+		/** A bond for which there is stereochemistry, we just do not know
+		 *  if it is UP or DOWN. The start atom is the stereocenter.
 		 */
 		UP_OR_DOWN,
+        /** A bond for which there is stereochemistry, we just do not know
+         *  if it is UP or DOWN. The end atom is the stereocenter.
+         */
+        UP_OR_DOWN_INVERTED,
 		/** Indication that this double bond has a fixed, but unknown E/Z
 		 * configuration.
 		 */
 		E_OR_Z,
+        /** Indication that this double bond has a E configuration.
+         */
+        E,
+        /** Indication that this double bond has a Z configuration.
+         */
+        Z,
 		/** Indication that this double bond has a fixed configuration, defined
 		 * by the 2D and/or 3D coordinates.
 		 */

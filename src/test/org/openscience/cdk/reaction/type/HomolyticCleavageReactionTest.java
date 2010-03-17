@@ -31,6 +31,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -1367,20 +1368,10 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 			IReactionProcess type  = new HomolyticCleavageReaction();
-			IMoleculeSet setOfReactants = builder.newMoleculeSet();
-
-			/*C=O*/
-			IMolecule molecule = builder.newMolecule();//Smiles("C=O")
-			molecule.addAtom(builder.newAtom("C"));
-			molecule.addAtom(builder.newAtom("O"));
-			molecule.addBond(0, 1, IBond.Order.DOUBLE);
-			addExplicitHydrogens(molecule);
-			
-		    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-			lpcheck.saturate(molecule);
-			setOfReactants.addMolecule(molecule);
-			
-			/*manually put the reactive center*/
+			IMoleculeSet setOfReactants = getExampleReactants();
+	        IMolecule molecule = setOfReactants.getMolecule(0);
+	        
+	        /*manually put the reactive center*/
 			molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 			molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 			molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -1392,9 +1383,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		    type.setParameterList(paramList);
 	        
 	        /* initiate */
-			makeSureAtomTypesAreRecognized(molecule);
-			
-	        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+			IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
 	        Assert.assertEquals(1, setOfReactions.getReactionCount());
 	        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
@@ -1415,19 +1404,9 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testMapping() throws Exception {
 			IReactionProcess type  = new HomolyticCleavageReaction();
-			IMoleculeSet setOfReactants = builder.newMoleculeSet();
-			
-			/*C=O*/
-			IMolecule molecule = builder.newMolecule();//Smiles("C=O")
-			molecule.addAtom(builder.newAtom("C"));
-			molecule.addAtom(builder.newAtom("O"));
-			molecule.addBond(0, 1, IBond.Order.DOUBLE);
-			addExplicitHydrogens(molecule);
-			
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-			lpcheck.saturate(molecule);
-			setOfReactants.addMolecule(molecule);
-			
+			IMoleculeSet setOfReactants = getExampleReactants();
+	        IMolecule molecule = setOfReactants.getMolecule(0);
+	        
 			/*automatic search of the center active*/
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 		    IParameterReact param = new SetReactionCenter();
@@ -1442,13 +1421,11 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        
 	        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-	        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+	        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
 	        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
 	        Assert.assertEquals(mappedProductA1, product.getAtom(0));
 	        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
 	        Assert.assertEquals(mappedProductA2, product.getAtom(1));
-	        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-	        Assert.assertEquals(mappedProductB1, product.getBond(0));        
 		}
 	/**
 	 * A unit test suite for JUnit. Reaction: Ethylbenzaldehyde.
@@ -1672,7 +1649,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
         IMolecule product11 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule product12 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
-		Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
+		Assert.assertEquals(20,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product11.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
@@ -1681,7 +1658,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		IMolecule product21 = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         IMolecule product22 = setOfReactions.getReaction(1).getProducts().getMolecule(1);
 				
-		Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
+		Assert.assertEquals(20,setOfReactions.getReaction(0).getMappingCount());
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(1), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product21.getAtom(1));
         mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(1), molecule.getAtom(2));
@@ -1705,5 +1682,44 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 					matcher.findMatchingAtomType(molecule, nextAtom)
 				);
 		}
+	}
+
+	/**
+	 * Get the example set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+
+		IMolecule molecule = builder.newMolecule();//Smiles("C=O")
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		try {
+			addExplicitHydrogens(molecule);
+			
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			lpcheck.saturate(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		setOfReactants.addMolecule(molecule);
+		
+		return setOfReactants;
+	}
+	/**
+	 * Get the expected set of molecules.
+	 * TODO:reaction. Set the products
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+
+        setOfProducts.addMolecule(null);
+		return setOfProducts;
 	}
 }

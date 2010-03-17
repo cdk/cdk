@@ -133,70 +133,9 @@ public interface ILoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
+     * @param objects Object... to apply toString() too and output
      */
-    public void debug(Object object, Object object2);
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
-     */
-    public void debug(Object object, int number);
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
-     */
-    public void debug(Object object, double number);
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    public void debug(Object object, boolean bool);
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    public void debug(Object obj, Object obj2, Object obj3);
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-    public void debug(Object obj, Object obj2, Object obj3, Object obj4);
-    
-    /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    public void debug(Object obj, Object obj2, Object obj3,
-                      Object obj4, Object obj5);
+    public void debug(Object object, Object... objects);
     
     /**
      * Shows ERROR output for the Object. It uses the toString() method.
@@ -209,72 +148,11 @@ public interface ILoggingTool {
      * Shows ERROR output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
-     */
-    public void error(Object object, int number);
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number double to concatenate to object
-     */
-    public void error(Object object, double number);
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    public void error(Object object, boolean bool);
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
      * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
+     * @param objects Object... to apply toString() too and output
      */
-    public void error(Object object, Object object2);
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    public void error(Object obj, Object obj2, Object obj3);
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-    public void error(Object obj, Object obj2, Object obj3, Object obj4);
-    
-    /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    public void error(Object obj, Object obj2, Object obj3,
-                      Object obj4, Object obj5);
-    
+    public void error(Object object, Object... objects);
+
     /**
      * Shows FATAL output for the Object. It uses the toString() method.
      *
@@ -293,72 +171,11 @@ public interface ILoggingTool {
      * Shows INFO output for the given Object's. It uses the
      * toString() method to concatenate the objects.
      *
-     * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
-     */
-    public void info(Object object, int number);
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number double to concatenate to object
-     */
-    public void info(Object object, double number);
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    public void info(Object object, boolean bool);
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
      * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
+     * @param objects Object... to apply toString() too and output
      */
-    public void info(Object object, Object object2);
+    public void info(Object object, Object... objects);
     
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    public void info(Object obj, Object obj2, Object obj3);
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-    public void info(Object obj, Object obj2, Object obj3, Object obj4);
-    
-    /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    public void info(Object obj, Object obj2, Object obj3,
-                     Object obj4, Object obj5);
-
     /**
      * Shows WARN output for the Object. It uses the toString() method.
      *
@@ -371,71 +188,10 @@ public interface ILoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object Object to apply toString() too and output
-     * @param number int to concatenate to object
+     * @param objects Object... to apply toString() too and output
      */
-    public void warn(Object object, int number);
+    public void warn(Object object, Object... objects);
     
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param bool   boolean to concatenate to object
-     */
-    public void warn(Object object, boolean bool);
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object Object to apply toString() too and output
-     * @param number double to concatenate to object
-     */
-    public void warn(Object object, double number);
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param object  Object to apply toString() too and output
-     * @param object2 Object to apply toString() too and output
-     */
-    public void warn(Object object, Object object2);
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     */
-    public void warn(Object obj, Object obj2, Object obj3);
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     */
-    public void warn(Object obj, Object obj2, Object obj3, Object obj4);
-    
-    /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
-     *
-     * @param obj  Object to apply toString() too and output
-     * @param obj2 Object to apply toString() too and output
-     * @param obj3 Object to apply toString() too and output
-     * @param obj4 Object to apply toString() too and output
-     * @param obj5 Object to apply toString() too and output
-     */
-    public void warn(Object obj, Object obj2, Object obj3,
-                     Object obj4, Object obj5);
-
     /**
      * Use this method for computational demanding debug info.
      * For example:

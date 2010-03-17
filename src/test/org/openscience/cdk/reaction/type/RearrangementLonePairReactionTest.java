@@ -91,7 +91,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  */
  
 public class RearrangementLonePairReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -118,10 +119,8 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RearrangementLonePairReaction();
 		
-		IMolecule molecule = getMolecule1();
-		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		/* initiate */
 		
@@ -139,7 +138,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         Assert.assertEquals(-1, product.getAtom(2).getFormalCharge().intValue());
         Assert.assertEquals(0, product.getConnectedLonePairsCount(molecule.getAtom(1)));
         
-        IMolecule molecule2 = getMolecule2();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -157,10 +156,8 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new RearrangementLonePairReaction();
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		/*[C-]-C=C-C */
-		IMolecule molecule = getMolecule1();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the center active*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -187,7 +184,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         
         /*C=C-[C-]-C*/
-        IMolecule molecule2 = getMolecule2();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -201,9 +198,9 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new RearrangementLonePairReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
-
-		IMolecule molecule = getMolecule1();
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -212,7 +209,6 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -243,11 +239,9 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new RearrangementLonePairReaction();
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		/*[C-]-C=C-C*/
-		IMolecule molecule = getMolecule1();
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		molecule.addLonePair(new LonePair(molecule.getAtom(0)));
-		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -261,7 +255,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(10,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
@@ -274,7 +268,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 * Test to recognize if this IMolecule_1 matches correctly into the CDKAtomTypes.
 	 */
 	@Test public void testAtomTypesMolecule1() throws Exception{
-		IMolecule moleculeTest = getMolecule1();
+		IMolecule moleculeTest = getExampleReactants().getMolecule(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
 	}
@@ -283,7 +277,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 * Test to recognize if this IMolecule_2 matches correctly into the CDKAtomTypes.
 	 */
 	@Test public void testAtomTypesMolecule2() throws Exception{
-		IMolecule moleculeTest = getMolecule2();
+		IMolecule moleculeTest = getExpectedProducts().getMolecule(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
 	}
@@ -292,9 +286,11 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 * 
 	 * @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
 	 * 
-	 * @return The IMolecule
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule1()throws Exception {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("O"));
 		molecule.addLonePair(new LonePair(molecule.getAtom(0)));
@@ -305,20 +301,28 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
 		
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		try {
+			addExplicitHydrogens(molecule);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.saturate(molecule);
-        
-		return molecule;
+	    
+	        lpcheck.saturate(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
 	/**
-	 * get the molecule 2: [O+]=C-[C-]-C
+	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMolecule
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule2()throws Exception {
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		//[O+]=C-[C-]-C
+
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("O"));
 		molecule.getAtom(0).setFormalCharge(+1);
@@ -331,13 +335,18 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
 		
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		try {
+			addExplicitHydrogens(molecule);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.saturate(molecule);
-        
-        return molecule;
+	    
+	        lpcheck.saturate(molecule);
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        setOfProducts.addMolecule(molecule);
+		return setOfProducts;
 	}
 	/**
 	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
@@ -384,7 +393,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		
 		addExplicitHydrogens(molecule);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    
         lpcheck.saturate(molecule);
 		
 		IReactionProcess type = new RearrangementLonePairReaction();

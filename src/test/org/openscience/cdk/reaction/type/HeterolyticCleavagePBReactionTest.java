@@ -587,18 +587,9 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type  = new HeterolyticCleavagePBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		
-		/*C=O*/
-		IMolecule molecule = builder.newMolecule();//Smiles("C=O")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		addExplicitHydrogens(molecule);
-		
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
+
 		
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -608,20 +599,16 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         
         /* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
-		
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA2, product.getAtom(1));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-        Assert.assertEquals(mappedProductB1, product.getBond(0));        
-	}
+ 	}
 	/**
 	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 
@@ -650,24 +637,9 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws Exception {
 		IReactionProcess type  = new HeterolyticCleavagePBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		
-		//Smiles("C(H)(H)=O")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		addExplicitHydrogens(molecule);
-        
-		Assert.assertEquals(4, molecule.getAtomCount());
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		Assert.assertEquals(2, molecule.getLonePairCount());
-		Assert.assertEquals(molecule.getAtom(1), molecule.getLonePair(0).getAtom());
-		Assert.assertEquals(molecule.getAtom(1), molecule.getLonePair(1).getAtom());
-		setOfReactants.addMolecule(molecule);
-		
 		/*automatic search of the reactive atoms and bonds */
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -685,21 +657,56 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        //Smiles("[C+](H)(H)-[O-]");
-        IMolecule molecule11 = builder.newMolecule();
+        
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(getExpectedProducts().getMolecule(0),product));
+		
+	}
+
+	/**
+	 * Get the example set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		try {
+			addExplicitHydrogens(molecule);
+	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			lpcheck.saturate(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
+	}
+	/**
+	 * Get the expected set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		//Smiles("[C+](H)(H)-[O-]");
+        IMolecule molecule = builder.newMolecule();
         IAtom carbon = builder.newAtom("C");
         carbon.setFormalCharge(1);
-        molecule11.addAtom(carbon);
+        molecule.addAtom(carbon);
         IAtom oxyg = builder.newAtom("O");
         oxyg.setFormalCharge(-1);
-        molecule11.addAtom(oxyg);
-        molecule11.addBond(0, 1, IBond.Order.SINGLE);
-        molecule11.addAtom(new Atom("H"));
-        molecule11.addAtom(new Atom("H"));
-        molecule11.addBond(0, 2, IBond.Order.SINGLE);
-        molecule11.addBond(0, 3, IBond.Order.SINGLE);
+        molecule.addAtom(oxyg);
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
+        molecule.addAtom(new Atom("H"));
+        molecule.addAtom(new Atom("H"));
+        molecule.addBond(0, 2, IBond.Order.SINGLE);
+        molecule.addBond(0, 3, IBond.Order.SINGLE);
 	    
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule11,product));
-		
+        setOfProducts.addMolecule(molecule);
+		return setOfProducts;
 	}
 }

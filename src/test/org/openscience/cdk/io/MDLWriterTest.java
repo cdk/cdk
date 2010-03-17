@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *                    2010  Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>
  * 
  * Contact: cdk-devel@slists.sourceforge.net
  * 
@@ -40,11 +39,15 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -188,4 +191,33 @@ public class MDLWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.contains("1.0"));
         Assert.assertTrue(output.contains("2.0"));
     }
+
+    @Test public void testUndefinedStereo() throws Exception {
+      IMolecule mol = MoleculeFactory.makeAlphaPinene();
+      mol.getBond(0).setStereo(IBond.Stereo.UP_OR_DOWN);
+      mol.getBond(1).setStereo(IBond.Stereo.E_OR_Z);
+      StringWriter writer = new StringWriter();
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(mol);
+        String output = writer.toString();
+        Assert.assertTrue(output.indexOf("1  2  2  4  0  0  0")>-1);
+        Assert.assertTrue(output.indexOf("2  3  1  3  0  0  0")>-1);
+    }
+
+    @Test public void testTwoFragmentsWithTitle() throws CDKException{
+        IMolecule mol1 = MoleculeFactory.makeAlphaPinene();
+        mol1.setProperty(CDKConstants.TITLE,"title1");
+        IMolecule mol2 = MoleculeFactory.makeAlphaPinene();
+        mol2.setProperty(CDKConstants.TITLE,"title2");
+        IChemModel model = mol1.getBuilder().newChemModel();
+        model.setMoleculeSet(mol1.getBuilder().newMoleculeSet());
+        model.getMoleculeSet().addAtomContainer(mol1);
+        model.getMoleculeSet().addAtomContainer(mol2);
+        StringWriter writer = new StringWriter();
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(model);
+        String output = writer.toString();
+        Assert.assertTrue(output.contains("title1; title2"));
+    }
+
 }

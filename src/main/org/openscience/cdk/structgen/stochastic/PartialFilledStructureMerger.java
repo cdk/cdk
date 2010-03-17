@@ -1,6 +1,6 @@
 /*  $Revision$ $Author$ $Date$    
  *
- *  Copyright (C) 1997-2007  The CDK project
+ *  Copyright (C) 1997-2009  Christoph Steinbeck, Stefan Kuhn <shk3@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,37 +25,21 @@
 package org.openscience.cdk.structgen.stochastic;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * Randomly generates a single, connected, correctly bonded structure for 
- * a given molecular formula.
- * To see it working run the graphical 
- * test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
- * and add more structures to the panel using the "More" button. 
- * In order to use this class, use MFAnalyser to get an AtomContainer from 
- * a molecular formula string.
- * 
+ * Randomly generates a single, connected, correctly bonded structure from
+ * a number of fragments.
  * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
  * in the atom pool but should be assigned implicitly to the heavy atoms in 
  * order to reduce computational cost.
- * 
- * <p>Assign this AtomContainer to the  
- * PartialFilledStructureMerger and retrieve a randomly generated, but correctly bonded
- * structure by using the generate() method. You can then repeatedly call
- * the generate() method in order to retrieve further structures. 
- * 
- * <p>Agenda:
- * <ul>
- *   <li>add a method for randomly adding hydrogens to the atoms
- *   <li>add a seed for random generator for reproducability
- * </ul>
  *
  * @author     steinbeck
  * @cdk.created    2001-09-04
@@ -67,110 +51,111 @@ public class PartialFilledStructureMerger {
 	private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(PartialFilledStructureMerger.class);
 	
-	IAtomContainer atomContainer;
 	SaturationChecker satCheck;
 
 	/**
 	 * Constructor for the PartialFilledStructureMerger object.
 	 */
-	public PartialFilledStructureMerger() throws java.lang.Exception
+	public PartialFilledStructureMerger()
 	{
 		satCheck = new SaturationChecker();
 	}
 
 
 	/**
-	 *  Sets the AtomContainer attribute of the PartialFilledStructureMerger object
-	 *
-	 * @param  gc  The new AtomContainer value
+	 * Randomly generates a single, connected, correctly bonded structure from
+	 * a number of fragments.  IMPORTANT: The AtomContainers in the set must be 
+	 * connected. If an AtomContainer is disconnected, no valid result will 
+	 * be formed 
+	 * @param atomContainers The fragments to generate for.
+	 * @return The newly formed structure.
+	 * @throws CDKException No valid result could be formed.
 	 */
-	public void setAtomContainer(IAtomContainer gc)
+	public IAtomContainer generate(IAtomContainerSet atomContainers) throws CDKException
 	{
-		this.atomContainer = gc;
-	}
-
-	public IAtomContainer getAtomContainer()
-	{
-		return this.atomContainer;
-	}
-
-	public IAtomContainer generate() throws CDKException
-	{
-		boolean structureFound = false;
-		boolean bondFormed;
-		double order;
-		double max, cmax1, cmax2;
 		int iteration = 0;
-		IAtom partner;
-		IAtom atom;
-		IAtomContainer backup = atomContainer.getBuilder().newAtomContainer(atomContainer);
+		boolean structureFound = false;
 		do
 		{
 			iteration++;
-
-			atomContainer = backup;
-			do
-			{
-				bondFormed = false;
-				for (int f = 0; f < atomContainer.getAtomCount(); f++)
-				{
-					atom = atomContainer.getAtom(f);
-
-					if (!satCheck.isSaturated(atom, atomContainer))
-					{
-						partner = getAnotherUnsaturatedNode(atom);
-						if (partner != null)
+			boolean bondFormed;
+			do{
+				bondFormed=false;
+				for(IAtomContainer ac : atomContainers.atomContainers()){
+					for(IAtom atom : ac.atoms()){
+						if (!satCheck.isSaturated(atom, ac))
 						{
-							cmax1 = satCheck.getCurrentMaxBondOrder(atom, atomContainer);
-							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
-							max = Math.min(cmax1, cmax2);
-							order = Math.min(Math.max(1.0, (double)Math.round(Math.random() * max)), 3.0);
-							logger.debug("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
-
-							atomContainer.addBond(
-								atomContainer.getBuilder().newBond(
-									atom, partner, BondManipulator.createBondOrder(order)
-								)
-							);
-							bondFormed = true;
-						}
-                                     					}
+							IAtom partner = getAnotherUnsaturatedNode(atom, atomContainers);
+							if (partner != null)
+							{
+								IAtomContainer toadd = AtomContainerSetManipulator.getRelevantAtomContainer(atomContainers, partner);
+								double cmax1 = satCheck.getCurrentMaxBondOrder(atom, ac);
+								double cmax2 = satCheck.getCurrentMaxBondOrder(partner, toadd);
+								double max = Math.min(cmax1, cmax2);
+								double order = Math.min(Math.max(1.0, max), 3.0);//(double)Math.round(Math.random() * max)
+								logger.debug("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
+								if(toadd!=ac){
+									atomContainers.removeAtomContainer(toadd);
+									ac.add(toadd);
+								}
+								ac.addBond(
+									ac.getBuilder().newBond(
+										atom, partner, BondManipulator.createBondOrder(order)
+									)
+								);
+								bondFormed = true;
+							}
+						}				
+					}
 				}
-			} while (bondFormed);
-			if (ConnectivityChecker.isConnected(atomContainer) && satCheck.allSaturated(atomContainer))
+			}while(bondFormed);
+			if (atomContainers.getAtomContainerCount()==1 && satCheck.allSaturated(atomContainers.getAtomContainer(0)))
 			{
 				structureFound = true;
 			}
-		} while (!structureFound && iteration < 300);
-		System.out.println("Structure found after " + iteration + " iterations.");	
-		return atomContainer;
+		} while (!structureFound && iteration < 5);
+		if (atomContainers.getAtomContainerCount()==1 && satCheck.allSaturated(atomContainers.getAtomContainer(0)))
+		{
+			structureFound = true;
+		}
+		if(!structureFound)
+			throw new CDKException("Could not combine the fragments to combine a valid, satured structure");
+		return atomContainers.getAtomContainer(0);
 	}
 
 	
 	/**
-	 *  Gets the AnotherUnsaturatedNode attribute of the PartialFilledStructureMerger object
+	 *  Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
+	 *  container than exclusionAtom.
 	 *
-	 * @return                The AnotherUnsaturatedNode value
+	 * @return  The unsaturated atom.
 	 */
-	private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom) throws CDKException
+	private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom, IAtomContainerSet atomContainers) throws CDKException
 	{
 		IAtom atom;
-		int next = (int) (Math.random() * atomContainer.getAtomCount());
 
-		for (int f = next; f < atomContainer.getAtomCount(); f++)
-		{
-			atom = atomContainer.getAtom(f);
-			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
-			{
-				return atom;
+		for(IAtomContainer ac : atomContainers.atomContainers()){
+			if(!ac.contains(exclusionAtom)){
+				int next = 0;//(int) (Math.random() * ac.getAtomCount());
+				for (int f = next; f < ac.getAtomCount(); f++)
+				{
+					atom = ac.getAtom(f);
+					if (!satCheck.isSaturated(atom, ac) && exclusionAtom != atom && !ac.getConnectedAtomsList(exclusionAtom).contains(atom))
+					{
+						return atom;
+					}
+				}
 			}
 		}
-		for (int f = 0; f < next; f++)
-		{
-			atom = atomContainer.getAtom(f);
-			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
+		for(IAtomContainer ac : atomContainers.atomContainers()){
+			int next = ac.getAtomCount();//(int) (Math.random() * ac.getAtomCount());
+			for (int f = 0; f < next; f++)
 			{
-				return atom;
+				atom = ac.getAtom(f);
+				if (!satCheck.isSaturated(atom, ac) && exclusionAtom != atom && !ac.getConnectedAtomsList(exclusionAtom).contains(atom))
+				{
+					return atom;
+				}
 			}
 		}
 		return null;

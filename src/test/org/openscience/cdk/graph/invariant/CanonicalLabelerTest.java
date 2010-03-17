@@ -21,6 +21,11 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,21 +37,17 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.Iterator;
 
 /**
  * Checks the functionality of the CanonicalLabeler.
@@ -164,4 +165,24 @@ public class CanonicalLabelerTest extends CDKTestCase {
         hAdder.addImplicitHydrogens(container);
     }
 
+    
+    /**
+     * @cdk.bug 2944519 
+     */
+    @Test
+    public void testBug2944519(){
+        IMolecule ac = DefaultChemObjectBuilder.getInstance().newMolecule();
+        ac.addAtom(ac.getBuilder().newAtom("C"));
+        ac.addAtom(ac.getBuilder().newAtom("O"));
+        ac.addBond(0,1,IBond.Order.SINGLE);
+        CanonicalLabeler canLabler = new CanonicalLabeler();
+        canLabler.canonLabel(ac);
+        IMolecule ac2 = DefaultChemObjectBuilder.getInstance().newMolecule();
+        ac2.addAtom(ac2.getBuilder().newAtom("O"));
+        ac2.addAtom(ac2.getBuilder().newAtom("C"));
+        ac2.addBond(0,1,IBond.Order.SINGLE);
+        canLabler.canonLabel(ac2);
+        Assert.assertSame(ac.getAtom(0).getProperty(InvPair.CANONICAL_LABEL),ac2.getAtom(1).getProperty(InvPair.CANONICAL_LABEL));
+        Assert.assertSame(ac.getAtom(1).getProperty(InvPair.CANONICAL_LABEL),ac2.getAtom(0).getProperty(InvPair.CANONICAL_LABEL));
+    }
 }

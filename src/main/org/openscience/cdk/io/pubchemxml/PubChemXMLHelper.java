@@ -1,6 +1,7 @@
 /* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+ *               2010  Brian Gilman <gilmanb@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -107,6 +108,8 @@ public class PubChemXMLHelper {
   public final static String EL_PROPS_URNLABEL = "PC-Urn_label";
   public final static String EL_PROPS_URNNAME = "PC-Urn_name";
   public final static String EL_PROPS_SVAL = "PC-InfoData_value_sval";
+  public final static String EL_PROPS_FVAL = "PC-InfoData_value_fval";
+  public final static String EL_PROPS_BVAL = "PC-InfoData_value_binary";
 
     public IMoleculeSet parseCompoundsBlock(XmlPullParser parser) throws Exception {
     	IMoleculeSet set = builder.newMoleculeSet();
@@ -244,6 +247,10 @@ public class PubChemXMLHelper {
                 } else if (EL_PROPS_URNLABEL.equals(parser.getName())) {
                     urn_label = parser.nextText();
                 } else if (EL_PROPS_SVAL.equals(parser.getName())) {
+                    sval = parser.nextText();
+                } else if(EL_PROPS_FVAL.equals(parser.getName())){
+                    sval = parser.nextText();
+                } else if(EL_PROPS_BVAL.equals(parser.getName())){
                     sval = parser.nextText();
                 }
             }

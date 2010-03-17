@@ -104,8 +104,6 @@ public class Convertor {
     private static Map<String, ICMLCustomizer> customizers = null;
 
     private boolean useCMLIDs;
-    /** specify if the IMolecule object need to put identify or reference definition*/
-    private boolean isRef = false;
     private String prefix;
 
     /**
@@ -246,17 +244,16 @@ public class Convertor {
     public CMLCml cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(IReactionScheme cdkScheme){
     	CMLCml cml = new CMLCml();
     	cml.appendChild(cdkMoleculeSetToCMLList(ReactionSchemeManipulator.getAllMolecules(cdkScheme)));
-    	isRef = true;
-    	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true));
-    	isRef = false;
+    	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true, true));
     	return cml;
     }
     
 	public CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(IReactionScheme cdkScheme){
-    	return cdkReactionSchemeToCMLReactionScheme(cdkScheme, true);
+    	return cdkReactionSchemeToCMLReactionScheme(cdkScheme, true, false);
     }
     
-    private CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(IReactionScheme cdkScheme, boolean setIDs){
+    private CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(
+        IReactionScheme cdkScheme, boolean setIDs, boolean isRef) {
     	CMLReactionScheme reactionScheme = new CMLReactionScheme();
     	
     	if (useCMLIDs && setIDs) {
@@ -330,7 +327,7 @@ public class Convertor {
                 );
             } else {
                 cmlList.appendChild(
-                    cdkAtomContainerToCMLMolecule(container, false)
+                    cdkAtomContainerToCMLMolecule(container, false, false)
                 );
             }
         }
@@ -409,7 +406,7 @@ public class Convertor {
     }
 
     private CMLMolecule cdkCrystalToCMLMolecule(ICrystal crystal, boolean setIDs) {
-        CMLMolecule molecule = cdkAtomContainerToCMLMolecule(crystal, false);
+        CMLMolecule molecule = cdkAtomContainerToCMLMolecule(crystal, false, false);
         CMLCrystal cmlCrystal = new CMLCrystal();
 
         if (useCMLIDs && setIDs) {
@@ -483,14 +480,15 @@ public class Convertor {
     }
 
     private CMLMolecule cdkMoleculeToCMLMolecule(IMolecule structure, boolean setIDs) {
-        return cdkAtomContainerToCMLMolecule(structure, setIDs);
+        return cdkAtomContainerToCMLMolecule(structure, setIDs, false);
     }
 
     public CMLMolecule cdkAtomContainerToCMLMolecule(IAtomContainer structure) {
-        return cdkAtomContainerToCMLMolecule(structure, true);
+        return cdkAtomContainerToCMLMolecule(structure, true, false);
     }
 
-    private CMLMolecule cdkAtomContainerToCMLMolecule(IAtomContainer structure, boolean setIDs) {
+    private CMLMolecule cdkAtomContainerToCMLMolecule(
+        IAtomContainer structure, boolean setIDs, boolean isRef) {
         CMLMolecule cmlMolecule = new CMLMolecule();
 
         if (useCMLIDs && setIDs) {
@@ -511,17 +509,19 @@ public class Convertor {
         	ident.setCMLValue(structure.getProperty(CDKConstants.INCHI).toString());
           cmlMolecule.appendChild(ident);
         }
-        for (int i = 0; i < structure.getAtomCount(); i++) {
-            IAtom cdkAtom = structure.getAtom(i);
-            CMLAtom cmlAtom = cdkAtomToCMLAtom(structure, cdkAtom);
-            if (structure.getConnectedSingleElectronsCount(cdkAtom) > 0) {
-                cmlAtom.setSpinMultiplicity(structure.getConnectedSingleElectronsCount(cdkAtom) + 1);
-            }
-            cmlMolecule.addAtom(cmlAtom);
-        }
-        for (int i = 0; i < structure.getBondCount(); i++) {
-            CMLBond cmlBond = cdkBondToCMLBond(structure.getBond(i));
-            cmlMolecule.addBond(cmlBond);
+        if(!isRef){
+	        for (int i = 0; i < structure.getAtomCount(); i++) {
+	            IAtom cdkAtom = structure.getAtom(i);
+	            CMLAtom cmlAtom = cdkAtomToCMLAtom(structure, cdkAtom);
+	            if (structure.getConnectedSingleElectronsCount(cdkAtom) > 0) {
+	                cmlAtom.setSpinMultiplicity(structure.getConnectedSingleElectronsCount(cdkAtom) + 1);
+	            }
+	            cmlMolecule.addAtom(cmlAtom);
+	        }
+	        for (int i = 0; i < structure.getBondCount(); i++) {
+	            CMLBond cmlBond = cdkBondToCMLBond(structure.getBond(i));
+	            cmlMolecule.addBond(cmlBond);
+	        }
         }
         
         // ok, output molecular properties, but not TITLE, INCHI, or DictRef's

@@ -48,6 +48,7 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
@@ -57,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class HyperconjugationReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -158,10 +159,9 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new HyperconjugationReaction();
-		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		IMolecule molecule = getMolecule1();
-		setOfReactants.addMolecule(molecule);
+
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the center active*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -186,7 +186,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         
-        IMolecule molecule2 = getMolecule2();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -200,11 +200,9 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testWithNegativeCharge() throws Exception {
 		IReactionProcess type = new HyperconjugationReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		
-		IMolecule molecule = getMolecule1();
-		setOfReactants.addMolecule(molecule);
-		
+
+		IMoleculeSet setOfReactants = getExampleReactants();
+        
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -213,8 +211,6 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         
 		/* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
-		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(3, setOfReactions.getReactionCount());
@@ -222,7 +218,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-		IMolecule molecule2 = getMolecule2();
+		IMolecule molecule2 = getExpectedProducts().getMolecule(0);
 		
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product,queryAtom));
@@ -244,9 +240,9 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new HyperconjugationReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
 
-		IMolecule molecule = getMolecule1();
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -255,7 +251,6 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -285,10 +280,9 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new HyperconjugationReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		
-		IMolecule molecule = getMolecule1();
-		setOfReactants.addMolecule(molecule);
+
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -298,8 +292,6 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         
 		/* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
-		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
@@ -310,8 +302,6 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product1.getAtom(1));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(1));
-        Assert.assertEquals(mappedProductB1, product1.getBond(3));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA1, product1.getAtom(4));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(6));
@@ -320,9 +310,11 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	/**
 	 * get the molecule 1: [C-]-[C+] - C
 	 * 
-	 * @return The IMolecule
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule1()throws Exception {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.getAtom(0).setFormalCharge(-1);
@@ -331,26 +323,41 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		addExplicitHydrogens(molecule);
-		
-        return molecule;
+		try {
+			addExplicitHydrogens(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
 	/**
-	 * get the molecule 2: [C-]-C = C
+	 * Get the expected set of molecules. [C-]-C = C
 	 * 
-	 * @return The IMolecule
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule2()throws Exception {
-		 IMolecule molecule = builder.newMolecule();
-		 molecule.addAtom(builder.newAtom("C"));
-		 molecule.getAtom(0).setFormalCharge(-1);
-		 molecule.addAtom(builder.newAtom("C"));
-		 molecule.addBond(0, 1, IBond.Order.SINGLE);
-		 molecule.addAtom(builder.newAtom("C"));
-		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
-	     addExplicitHydrogens(molecule);
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.getAtom(0).setFormalCharge(-1);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 2, IBond.Order.DOUBLE);
+	    
+		try {
+			addExplicitHydrogens(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	     
-        return molecule;
+        setOfProducts.addMolecule(molecule);
+		return setOfProducts;
 	}
 	
 }

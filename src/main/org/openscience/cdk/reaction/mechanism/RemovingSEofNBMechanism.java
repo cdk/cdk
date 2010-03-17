@@ -103,9 +103,10 @@ public class RemovingSEofNBMechanism implements IReactionMechanism{
 		reaction.addReactant(molecule);
 		
 		/* mapping */
-		IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomList.get(0), reactantCloned.getAtom(posAtom));
-        reaction.addMapping(mapping);
-		
+		for(IAtom atom:molecule.atoms()){
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			reaction.addMapping(mapping);
+	    }
 		reaction.addProduct(reactantCloned);
 		
 		return reaction;

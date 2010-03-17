@@ -77,7 +77,9 @@ public class AdductionPBMechanism implements IReactionMechanism{
 		if (bondList.size() != 1) {
 			throw new CDKException("AdductionPBMechanism don't expect bonds in the ArrayList");
 		}
-		IMolecule molecule = moleculeSet.getMolecule(0);
+		IMolecule molecule1 = moleculeSet.getMolecule(0);
+		IMolecule molecule2 = moleculeSet.getMolecule(1);
+		
 		IMolecule reactantCloned;
 		try {
 			reactantCloned = (IMolecule) moleculeSet.getMolecule(0).clone();
@@ -86,16 +88,16 @@ public class AdductionPBMechanism implements IReactionMechanism{
 			throw new CDKException("Could not clone IMolecule!", e);
 		}
 		IAtom atom1 = atomList.get(0);// Atom 1: to be deficient in charge 
-		IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+		IAtom atom1C = reactantCloned.getAtom(molecule1.getAtomNumber(atom1));
 		IAtom atom2 = atomList.get(1);// Atom 2: receive the adduct
-		IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
+		IAtom atom2C = reactantCloned.getAtom(molecule1.getAtomNumber(atom2));
 		IAtom atom3 = atomList.get(2);// Atom 2: deficient in charge
-		IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3)+moleculeSet.getMolecule(0).getAtomCount()+1);
+		IAtom atom3C = reactantCloned.getAtom(molecule1.getAtomCount() + molecule2.getAtomNumber(atom3));
 		IBond bond1 = bondList.get(0);
 		int posBond1 = moleculeSet.getMolecule(0).getBondNumber(bond1);
 		
     	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
-    	IBond newBond = molecule.getBuilder().newBond(atom2C, atom3C, IBond.Order.SINGLE);
+    	IBond newBond = molecule1.getBuilder().newBond(atom2C, atom3C, IBond.Order.SINGLE);
     	reactantCloned.addBond(newBond);
     	
     	int charge = atom1C.getFormalCharge();
@@ -118,15 +120,17 @@ public class AdductionPBMechanism implements IReactionMechanism{
 		if (type == null) return null;
 
 		IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-		reaction.addReactant(molecule);
+		reaction.addReactant(molecule1);
 		
 		/* mapping */
-		IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, atom1C);
-        reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom2, atom2C);
-        reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, reactantCloned.getBond(posBond1));
-        reaction.addMapping(mapping);
+		for(IAtom atom:molecule1.atoms()){
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule1.getAtomNumber(atom)));
+			reaction.addMapping(mapping);
+	    }
+		for(IAtom atom:molecule2.atoms()){
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule2.getAtomNumber(atom)));
+			reaction.addMapping(mapping);
+	    }
         
     	reaction.addProduct(reactantCloned);
     	

@@ -392,23 +392,10 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new ElectronImpactNBEReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-
-		/*C=O*/
-		IMolecule molecule = builder.newMolecule();//Smiles("C=O")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 2, IBond.Order.SINGLE);
-		molecule.addBond(0, 3, IBond.Order.SINGLE);
 		
-	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		setOfReactants.addMolecule(molecule);
-		
-		/*manually put the reactive center*/
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
+        /*manually put the reactive center*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -418,8 +405,6 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         
         /* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
-		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         Assert.assertEquals(1, setOfReactions.getReactionCount());
@@ -440,18 +425,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type  = new ElectronImpactNBEReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		
-		/*C=O*/
-		IMolecule molecule = builder.newMolecule();//Smiles("C=O")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		addExplicitHydrogens(molecule);
-		
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*automatic search of the center active*/
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -460,14 +435,11 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         paramList.add(param);
         type.setParameterList(paramList);
         
-        /* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
-		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(1,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product.getAtom(1));
 	}
@@ -477,7 +449,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
@@ -488,5 +460,45 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 					matcher.findMatchingAtomType(molecule, nextAtom)
 				);
 		}
+	}
+
+	/**
+	 * Get the example set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMolecule molecule = builder.newMolecule();//Smiles("C=O")
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(0, 2, IBond.Order.SINGLE);
+		molecule.addBond(0, 3, IBond.Order.SINGLE);
+		
+	    try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			lpcheck.saturate(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
+	}
+	/**
+	 * Get the expected set of molecules.
+	 * TODO:reaction. Set the products
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+
+        setOfProducts.addMolecule(null);
+		return setOfProducts;
 	}
 }

@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2004-2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2004-2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,6 +18,7 @@
  */
 package org.openscience.cdk.geometry;
 
+import java.awt.geom.Rectangle2D;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +31,17 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -46,6 +49,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -86,6 +90,18 @@ public class GeometryToolsTest extends CDKTestCase {
     	Assert.assertFalse(GeometryTools.has2DCoordinates((IAtomContainer)null));
     }
 
+    /**
+     * @cdk.bug 2936440
+     */
+    @Test public void testHas2DCoordinates_With000() throws CDKException {
+        String filenameMol = "data/mdl/with000coordinate.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
+        IMolecule molOne=null;
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        molOne = (IMolecule)reader.read(new Molecule());
+        Assert.assertEquals(2,GeometryTools.has2DCoordinatesNew(molOne));
+    }
+    
     @Test public void testTranslateAllPositive_IAtomContainer() {
 		IAtomContainer container = new NNAtomContainer();
 		IAtom atom = new NNAtom(Elements.CARBON);
@@ -187,6 +203,21 @@ public class GeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(-1, minmax[1],.1);
         Assert.assertEquals(-2, minmax[2],.1);
         Assert.assertEquals(-1, minmax[3],.1);
+    }
+      
+    @Test public void testGetRectangle2D_IAtomContainer(){
+        Atom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(2,2));
+        Atom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(5,1));
+        IAtomContainer container = new AtomContainer();
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        Rectangle2D rectangle = GeometryTools.getRectangle2D(container);
+        Assert.assertEquals(2.0, rectangle.getMinX(), 0.0);
+        Assert.assertEquals(3.0, rectangle.getWidth(), 0.0);
+        Assert.assertEquals(1.0, rectangle.getMinY(), 0.0);
+        Assert.assertEquals(1.0, rectangle.getHeight(), 0.0);
     }
       
     @Test public void testRotate_IAtom_Point3d_Point3d_double(){
@@ -376,6 +407,266 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom2);
     	Assert.assertEquals(GeometryTools.getLength2D(bond),2.23,0.01);
     }
+    
+    @Test public void testGetClosestAtom_Multiatom() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(-1,-1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IAtom atom3 = new Atom("C");
+        atom3.setPoint2d(new Point2d(5,0));
+        IAtomContainer acont = new AtomContainer();
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addAtom(atom3);
+        Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom1));
+        Assert.assertEquals(atom1, GeometryTools.getClosestAtom(acont, atom2));
+        Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom3));
+    }
 
+    @Test public void testGetClosestAtom_Double_Double_IAtomContainer_IAtom() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(1,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(5,0));
+        IAtomContainer acont = new AtomContainer();
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        Assert.assertEquals(
+            atom2, GeometryTools.getClosestAtom(1.0, 0.0, acont, atom1)
+        );
+        Assert.assertEquals(
+            atom1, GeometryTools.getClosestAtom(1.0, 0.0, acont, null)
+        );
+    }
+
+    /**
+     * Tests if not the central atom is returned as closest atom.
+     */
+    @Test public void testGetClosestAtom_IAtomContainer_IAtom() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(-1,-1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IAtomContainer acont = new AtomContainer();
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        Assert.assertEquals(atom2, GeometryTools.getClosestAtom(acont, atom1));
+        Assert.assertEquals(atom1, GeometryTools.getClosestAtom(acont, atom2));
+    }
+
+    @Test public void
+    testShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_double()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule react1 = new Molecule();
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        IMolecule react2 = (IMolecule)react1.clone();
+
+        // shift the second molecule right
+        GeometryTools.shiftContainer(
+            react2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second molecule moved right
+        AtomContainerDiff.diff(react1, react2);
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, y coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().y, atom2.getPoint2d().y, 0.0
+            );
+            // but, x coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().x < atom2.getPoint2d().x
+            );
+        }
+    }
+
+    /**
+     * Unit tests that tests the situation where two vertical two-atom
+     * molecules are with the same x coordinates.
+     *
+     * @throws Exception Thrown when the cloning failed.
+     */
+    @Test
+    public void testShiftContainerHorizontal_Two_vertical_molecules()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(0,1));
+        IMolecule react1 = new Molecule();
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        IMolecule react2 = (IMolecule)react1.clone();
+
+        // shift the second molecule right
+        GeometryTools.shiftContainer(
+            react2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second molecule moved right
+        AtomContainerDiff.diff(react1, react2);
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, y coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().y, atom2.getPoint2d().y, 0.0
+            );
+            // but, x coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().x < atom2.getPoint2d().x
+            );
+        }
+    }
+
+    @Test public void testGetBondLengthAverage_IReaction() {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule acont = new Molecule();
+        IReaction reaction = new Reaction();
+        reaction.addReactant(acont);
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addBond(0,1, IBond.Order.SINGLE);
+        Assert.assertEquals(
+            1.0, GeometryTools.getBondLengthAverage(reaction), 0.0
+        );
+    }
+
+    /**
+     * Tests if the bond length average is calculated based on all
+     * {@link IAtomContainer}s in the IReaction.
+     */
+    @Test public void testGetBondLengthAverage_MultiReaction() {
+        IReaction reaction = new Reaction();
+
+        // mol 1
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule acont = new Molecule();
+        reaction.addReactant(acont);
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addBond(0,1, IBond.Order.SINGLE);
+
+        // mol 2
+        atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(3,0));
+        acont = new Molecule();
+        reaction.addProduct(acont);
+        acont.addAtom(atom1);
+        acont.addAtom(atom2);
+        acont.addBond(0,1, IBond.Order.SINGLE);
+
+        Assert.assertEquals(
+            2.0, GeometryTools.getBondLengthAverage(reaction), 0.0
+        );
+    }
+
+    @Test public void
+    testShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_double()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,1));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule react1 = new Molecule();
+        IReaction reaction = new Reaction();
+        reaction.addReactant(react1);
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        react1.addBond(0,1, IBond.Order.SINGLE);
+        IReaction reaction2 = (IReaction)reaction.clone();
+        IMolecule react2 = reaction2.getReactants().getMolecule(0);
+
+        // shift the second reaction up
+        GeometryTools.shiftReactionVertical(
+            reaction2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second reaction moved up
+        AtomContainerDiff.diff(react1, react2);
+        System.out.println("R1: " + GeometryTools.getRectangle2D(react1));
+        System.out.println("R2: " + GeometryTools.getRectangle2D(react2));
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, x coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().x, atom2.getPoint2d().x, 0.0
+            );
+            // but, y coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().y < atom2.getPoint2d().y
+            );
+        }
+    }
+
+    /**
+     * Unit tests that tests the situation where two horizontal two-atom
+     * molecules are with the same y coordinates.
+     *
+     * @throws Exception Thrown when the cloning failed.
+     */
+    @Test
+    public void testShiftReactionVertical_Two_horizontal_molecules()
+    throws Exception {
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(0,0));
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint2d(new Point2d(1,0));
+        IMolecule react1 = new Molecule();
+        IReaction reaction = new Reaction();
+        reaction.addReactant(react1);
+        react1.addAtom(atom1);
+        react1.addAtom(atom2);
+        react1.addBond(0,1, IBond.Order.SINGLE);
+        IReaction reaction2 = (IReaction)reaction.clone();
+        IMolecule react2 = reaction2.getReactants().getMolecule(0);
+
+        // shift the second reaction up
+        GeometryTools.shiftReactionVertical(
+            reaction2,
+            GeometryTools.getRectangle2D(react2),
+            GeometryTools.getRectangle2D(react1),
+            1.0
+        );
+        // assert all coordinates of the second reaction moved up
+        AtomContainerDiff.diff(react1, react2);
+        System.out.println("R1: " + GeometryTools.getRectangle2D(react1));
+        System.out.println("R2: " + GeometryTools.getRectangle2D(react2));
+        for (int i=0; i<2; i++) {
+            atom1 = react1.getAtom(0);
+            atom2 = react2.getAtom(0);
+            // so, x coordinates should be the same
+            Assert.assertEquals(
+                atom1.getPoint2d().x, atom2.getPoint2d().x, 0.0
+            );
+            // but, y coordinates should not
+            Assert.assertTrue(
+                atom1.getPoint2d().y < atom2.getPoint2d().y
+            );
+        }
+    }
 }
 

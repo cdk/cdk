@@ -58,7 +58,8 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class CarbonylEliminationReactionTest extends ReactionProcessTest {
-	
+
+	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -84,28 +85,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         
 		IReactionProcess type  = new CarbonylEliminationReaction();
 		/*[C*]-C-C*/
-		IMolecule molecule = builder.newMolecule();//Smiles("C-C#[O+]")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 3, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addBond(0, 4, IBond.Order.SINGLE);
-		IAtom oxy = builder.newAtom("O");
-		oxy.setFormalCharge(1);
-		molecule.addAtom(oxy);
-		molecule.addBond(4, 5, IBond.Order.TRIPLE);
-		
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.saturate(molecule);
-		makeSureAtomTypesAreRecognized(molecule);
-        
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
 		
 		/* initiate */
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -117,40 +97,13 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
-
         
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-      
-        //Smiles("[C+]");
-        IMolecule molecule2 = builder.newMolecule();//Smiles("[C+]");
-		IAtom carb = builder.newAtom("C");
-		carb.setFormalCharge(1);
-		molecule2.addAtom(carb);
-		molecule2.addAtom(builder.newAtom("H"));
-		molecule2.addBond(0, 1, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("H"));
-		molecule2.addBond(0, 2, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("H"));
-		molecule2.addBond(0, 3, IBond.Order.SINGLE);
-		
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product1));
+        IMolecule molecule1 = getExpectedProducts().getMolecule(0);//Smiles("[C+]");
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,product1));
 		
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
-		
-        /*[C*]*/
-		molecule2 = builder.newMolecule();//Smiles("[C-]#[O+]");
-		carb = builder.newAtom("C");
-		carb.setFormalCharge(-1);
-		molecule2.addLonePair(new LonePair(carb));
-		molecule2.addAtom(carb);
-		oxy = builder.newAtom("O");
-		oxy.setFormalCharge(1);
-		molecule2.addAtom(oxy);
-		molecule2.addBond(0, 1, IBond.Order.TRIPLE);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
-		lpcheck.saturate(molecule2);
-		makeSureAtomTypesAreRecognized(molecule2);
-		
+		IMolecule molecule2 = getExpectedProducts().getMolecule(1);//Smiles("[C-]#[O+]");
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product2));
        
 	}
@@ -163,29 +116,9 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	@Test public void testManuallyPCentreActiveExample1() throws Exception {
         
 		IReactionProcess type  = new CarbonylEliminationReaction();
-		/*[C*]-C-C*/
-		IMolecule molecule = builder.newMolecule();//Smiles("C-C#[O+]")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 3, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addBond(0, 4, IBond.Order.SINGLE);
-		IAtom oxy = builder.newAtom("O");
-		oxy.setFormalCharge(1);
-		molecule.addAtom(oxy);
-		molecule.addBond(4, 5, IBond.Order.TRIPLE);
-		
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.saturate(molecule);
-		makeSureAtomTypesAreRecognized(molecule);
-        
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/* initiate */
 		/*manually put the reactive center*/
@@ -204,37 +137,13 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
-
         
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-      
-        //Smiles("[C+]");
-        IMolecule molecule2 = builder.newMolecule();//Smiles("[C+]");
-		IAtom carb = builder.newAtom("C");
-		carb.setFormalCharge(1);
-		molecule2.addAtom(carb);
-		molecule2.addAtom(builder.newAtom("H"));
-		molecule2.addBond(0, 1, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("H"));
-		molecule2.addBond(0, 2, IBond.Order.SINGLE);
-		molecule2.addAtom(builder.newAtom("H"));
-		molecule2.addBond(0, 3, IBond.Order.SINGLE);
-		
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product1));
+        IMolecule molecule1 = getExpectedProducts().getMolecule(0);//Smiles("[C+]");
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,product1));
 		
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
-		
-        /*[C*]*/
-		molecule2 = builder.newMolecule();//Smiles("[C-]#[O+]");
-		carb = builder.newAtom("C");
-		carb.setFormalCharge(-1);
-		molecule2.addLonePair(new LonePair(carb));
-		molecule2.addAtom(carb);
-		oxy = builder.newAtom("O");
-		oxy.setFormalCharge(1);
-		molecule2.addAtom(oxy);
-		molecule2.addBond(0, 1, IBond.Order.TRIPLE);
-		
+		IMolecule molecule2 = getExpectedProducts().getMolecule(1);//Smiles("[C-]#[O+]");
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product2));
        
 	}
@@ -247,7 +156,53 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	@Test public void testMappingExample1() throws Exception {
         
 		IReactionProcess type  = new CarbonylEliminationReaction();
-		/*[C*]-C-C*/
+
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
+		
+		/* initiate */
+        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.FALSE);
+        paramList.add(param);
+        type.setParameterList(paramList);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+
+		Assert.assertEquals(6,setOfReactions.getReaction(0).getMappingCount());
+		IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+		Assert.assertEquals(mappedProductA1, product1.getAtom(0));
+        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(4));
+        Assert.assertEquals(mappedProductA2, product2.getAtom(0));
+        
+	}
+	/**
+	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * 
+	 * @param molecule          The IMolecule to analyze
+	 * @throws CDKException
+	 */
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
+
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		while (atoms.hasNext()) {
+				IAtom nextAtom = atoms.next();
+				Assert.assertNotNull(
+					"Missing atom type for: " + nextAtom, 
+					matcher.findMatchingAtomType(molecule, nextAtom)
+				);
+		}
+	}
+	/**
+	 * Get the example set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		IMolecule molecule = builder.newMolecule();//Smiles("C-C#[O+]")
 		molecule.addAtom(builder.newAtom("C"));
 		molecule.addAtom(builder.newAtom("H"));
@@ -263,48 +218,51 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 		molecule.addAtom(oxy);
 		molecule.addBond(4, 5, IBond.Order.TRIPLE);
 		
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.saturate(molecule);
-		makeSureAtomTypesAreRecognized(molecule);
-        
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
-		
-		/* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
-	    IParameterReact param = new SetReactionCenter();
-        param.setParameter(Boolean.FALSE);
-        paramList.add(param);
-        type.setParameterList(paramList);
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
-        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+		try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-		Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
-		IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
-		Assert.assertEquals(mappedProductA1, product1.getAtom(0));
-        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(4));
-        Assert.assertEquals(mappedProductA2, product2.getAtom(0));
-        
+	    
+	        lpcheck.saturate(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Get the expected set of molecules.
 	 * 
-	 * @param molecule          The IMolecule to analyze
-	 * @throws CDKException
+	 * @return The IMoleculeSet
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
 
-		Iterator<IAtom> atoms = molecule.atoms().iterator();
-		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-		while (atoms.hasNext()) {
-				IAtom nextAtom = atoms.next();
-				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom, 
-					matcher.findMatchingAtomType(molecule, nextAtom)
-				);
-		}
+		IMolecule molecule1 = builder.newMolecule();//Smiles("[C+]");
+		IAtom carb = builder.newAtom("C");
+		carb.setFormalCharge(1);
+		molecule1.addAtom(carb);
+		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addBond(0, 1, IBond.Order.SINGLE);
+		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addBond(0, 2, IBond.Order.SINGLE);
+		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addBond(0, 3, IBond.Order.SINGLE);
+		
+		
+        IMolecule molecule2 = builder.newMolecule();//Smiles("[C-]#[O+]");
+		carb = builder.newAtom("C");
+		carb.setFormalCharge(-1);
+		molecule2.addLonePair(new LonePair(carb));
+		molecule2.addAtom(carb);
+		IAtom oxy = builder.newAtom("O");
+		oxy.setFormalCharge(1);
+		molecule2.addAtom(oxy);
+		molecule2.addBond(0, 1, IBond.Order.TRIPLE);
+
+        setOfProducts.addMolecule(molecule1);
+        setOfProducts.addMolecule(molecule2);
+		return setOfProducts;
 	}
 }

@@ -3,9 +3,9 @@ Library=CMLXOM
 Version=2.5 beta1
 #Copyright=
 License=Artistic License 2.0
-#LicenseURL=
+#LicenseURL=http://www.opensource.org/licenses/artistic-license-2.0.php
 #Download=
-#SourceCode=
+SourceCode=https://sourceforge.net/scm/?type=svn&group_id=51361
 Homepage=https://sourceforge.net/projects/cml/develop
 
 [cmlxom-2.5-b1.jar/org/xmlcml/cml/base/schema.xsd]

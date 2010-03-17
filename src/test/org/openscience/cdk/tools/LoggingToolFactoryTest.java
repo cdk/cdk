@@ -75,45 +75,17 @@ public class LoggingToolFactoryTest {
         }
         
         public void debug(Object object) {}
-        public void debug(Object object, Object object2) {}
-        public void debug(Object object, int number) {}
-        public void debug(Object object, double number) {}
-        public void debug(Object object, boolean bool) {}
-        public void debug(Object obj, Object obj2, Object obj3) {}
-        public void debug(Object obj, Object obj2, Object obj3, Object obj4) {}
-        public void debug(Object obj, Object obj2, Object obj3, Object obj4,
-                Object obj5) {}
+        public void debug(Object object, Object... objects) {}
         public void dumpClasspath() {}
         public void dumpSystemProperties() {}
         public void error(Object object) {}
-        public void error(Object object, int number) {}
-        public void error(Object object, double number) {}
-        public void error(Object object, boolean bool) {}
-        public void error(Object object, Object object2) {}
-        public void error(Object obj, Object obj2, Object obj3) {}
-        public void error(Object obj, Object obj2, Object obj3, Object obj4) {}
-        public void error(Object obj, Object obj2, Object obj3, Object obj4,
-                Object obj5) {}
+        public void error(Object object, Object... objects) {}
         public void fatal(Object object) {}
         public void info(Object object) {}
-        public void info(Object object, int number) {}
-        public void info(Object object, double number) {}
-        public void info(Object object, boolean bool) {}
-        public void info(Object object, Object object2) {}
-        public void info(Object obj, Object obj2, Object obj3) {}
-        public void info(Object obj, Object obj2, Object obj3, Object obj4) {}
-        public void info(Object obj, Object obj2, Object obj3, Object obj4,
-                Object obj5) {}
+        public void info(Object object, Object... objects) {}
         public boolean isDebugEnabled() { return true; }
         public void setStackLength(int length) {}
         public void warn(Object object) {}
-        public void warn(Object object, int number) {}
-        public void warn(Object object, boolean bool) {}
-        public void warn(Object object, double number) {}
-        public void warn(Object object, Object object2) {}
-        public void warn(Object obj, Object obj2, Object obj3) {}
-        public void warn(Object obj, Object obj2, Object obj3, Object obj4) {}
-        public void warn(Object obj, Object obj2, Object obj3, Object obj4,
-                Object obj5) {}
+        public void warn(Object object, Object... objects) {}
     }
 }

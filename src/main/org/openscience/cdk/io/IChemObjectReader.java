@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2000-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2000-2007,2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -66,5 +64,55 @@ public interface IChemObjectReader extends IChemObjectIO {
      * @param mode
      */
     public void setReaderMode(Mode mode);
+
+    /**
+     * Sets an error handler that is sent events when file format issues occur.
+     *
+     * @param handler {@link IChemObjectReaderErrorHandler} to send error
+     *                messages to.
+     */
+    public void setErrorHandler(IChemObjectReaderErrorHandler handler);
+
+    /**
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
+     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     *
+     * @param message the error message.
+     */
+    public void handleError(String message) throws CDKException;
+
+    /**
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
+     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     *
+     * @param message  the error message.
+     * @param exception the corresponding {@link Exception}.
+     */
+    public void handleError(String message, Exception exception)
+    throws CDKException;
+
+    /**
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
+     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     *
+     * @param message  the error message.
+     * @param row      Row in the file where the error is found.
+     * @param colStart Start column in the file where the error is found.
+     * @param colEnd   End column in the file where the error is found.
+     */
+    public void handleError(String message, int row, int colStart, int colEnd) throws CDKException;
+
+    /**
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
+     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     *
+     * @param message  the error message.
+     * @param exception the corresponding {@link Exception}.
+     * @param row       Row in the file where the error is found.
+     * @param colStart Start column in the file where the error is found.
+     * @param colEnd   End column in the file where the error is found.
+     */
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception)
+    throws CDKException;
 }
 

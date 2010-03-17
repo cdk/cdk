@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-reaction
  */
 public class PiBondingMovementReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -214,10 +214,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 	@Test public void testDoubleRingConjugated() throws Exception {
         IReactionProcess type = new PiBondingMovementReaction();
         // C1=CC(=CC2=C1C=CC=C2)C 
-        IMolecule molecule = getmethyilnaphthalene1();
-		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
 
 		/* initiate */
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -230,7 +227,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        IMolecule molecule1 = getmethyilnaphthalene2();
+        IMolecule molecule1 = getExpectedProducts().getMolecule(0);
 
 		IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
@@ -286,7 +283,10 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 	@Test public void testDoubleRingConjugated2() throws Exception {
         IReactionProcess type = new PiBondingMovementReaction();
         // C1=CC(=CC2=C1C=CC=C2)C 
-        IMolecule molecule = getmethyilnaphthalene1();
+
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
+        
 		/*manually putting the reaction center*/
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -294,9 +294,6 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		molecule.getBond(9).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(10).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(11).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -311,7 +308,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         
-        IMolecule molecule2 = getmethyilnaphthalene2();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -321,10 +318,10 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 	 * Create one of the resonance for 2-methylnaphthalene.
 	 * C1=CC(=CC2=C1C=CC=C2)C 
 	 * 
-	 * @return The IMolecule
-	 * @throws Exception
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getmethyilnaphthalene1() throws Exception {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		// C{0}1=C{1}C{2}(=C{3}C{4}2=C{5}1C{6}=C{7}C{8}=C{9}2)C{10}
         // C1=CC(=CC2=C1C=CC=C2)C 
 		IMolecule molecule = builder.newMolecule();
@@ -352,20 +349,25 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		molecule.addBond(10, 1, IBond.Order.DOUBLE);
 		molecule.addBond(9, 4, IBond.Order.DOUBLE);
 		
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		makeSureAtomTypesAreRecognized(molecule);
-		return molecule;
+		try {
+			addExplicitHydrogens(molecule);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
-	
 	/**
-	 * Create one of the resonance for 2-methylnaphthalene.
+	 * Get the expected set of molecules. 2-methylnaphthalene.
 	 * C=1C=CC2=CC(=CC=C2(C=1))C
 	 * 
-	 * @return The IMolecule
-	 * @throws Exception
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getmethyilnaphthalene2() throws Exception {
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
 
         //C=1C=CC2=CC(=CC=C2(C=1))C
 		IMolecule molecule = builder.newMolecule();
@@ -393,10 +395,16 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		molecule.addBond(10, 1, IBond.Order.SINGLE);
 		molecule.addBond(9, 4, IBond.Order.SINGLE);
 		
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		makeSureAtomTypesAreRecognized(molecule);
-		return molecule;
+		try {
+			addExplicitHydrogens(molecule);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+        setOfProducts.addMolecule(molecule);
+		return setOfProducts;
 	}
 	/**
 	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.

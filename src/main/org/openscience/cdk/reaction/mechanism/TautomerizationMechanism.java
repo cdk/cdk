@@ -118,21 +118,11 @@ public class TautomerizationMechanism implements IReactionMechanism{
 		reaction.addReactant(molecule);
 		
 		/* mapping */
-		IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, atom1C);
-        reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom2, atom2C);
-        reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom3, atom3C);
-        reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom4, atom4C);
-        reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, reactantCloned.getBond(posBond1));
-    	reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond2, reactantCloned.getBond(posBond2));
-    	reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond3, newBond);
-    	reaction.addMapping(mapping);
-    	
+		for(IAtom atom:molecule.atoms()){
+			IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			reaction.addMapping(mapping);
+	    }
+		
     	reaction.addProduct(reactantCloned);
     	
 		return reaction;

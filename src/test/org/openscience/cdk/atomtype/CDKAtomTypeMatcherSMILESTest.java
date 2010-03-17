@@ -69,4 +69,29 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         }
     }
 
+    @Test public void testNitrogen() throws Exception {
+        String smiles1 = "c1c2cc[NH]cc2nc1";
+        
+        IMolecule mol1 = smilesParser.parseSmiles(smiles1);
+        
+        Assert.assertEquals(9, mol1.getAtomCount());
+
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        for (IAtomType type : types1) {
+            Assert.assertNotNull(type.getAtomTypeName());
+        }
+    }
+
+    @Test public void testNitrogen_SP2() throws Exception {
+        String smiles1 = "c1c2cc[nH]cc2nc1";
+        
+        IMolecule mol1 = smilesParser.parseSmiles(smiles1);
+        
+        Assert.assertEquals(9, mol1.getAtomCount());
+
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        for (IAtomType type : types1) {
+            Assert.assertNotNull(type.getAtomTypeName());
+        }
+    }
 }

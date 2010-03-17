@@ -43,6 +43,7 @@ import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -58,6 +59,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.InputStream;
+import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -176,10 +178,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
 
-		List list = UniversalIsomorphismTester.getSubgraphAtomsMaps(mol, frag1);
-		List first = (List)list.get(0);
+		List<List<RMap>> list = UniversalIsomorphismTester.getSubgraphAtomsMaps(mol, frag1);
+		List<RMap> first = list.get(0);
 		for (int i = 0; i < first.size(); i++) {
-			RMap rmap = (RMap)first.get(i);
+			RMap rmap = first.get(i);
 			Assert.assertEquals(rmap.getId1(), result1[i]);
 			Assert.assertEquals(rmap.getId2(), result2[i]);
 		}
@@ -238,6 +240,141 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     }
 
     /**
+     * @cdk.bug 2944080
+     */
+    @Test public void testBug2944080()  throws Exception {
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IMolecule mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
+
+        List<IAtomContainer> list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
+        Assert.assertEquals(1, list.size());
+        Assert.assertEquals(9, list.get(0).getAtomCount());
+
+        list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
+        Assert.assertEquals(1, list.size());
+        Assert.assertEquals(9, list.get(0).getAtomCount());
+    }
+
+    /**
+     * @cdk.bug 2944080
+     */
+    @Test public void testGetSubgraphAtomsMap_2944080()  throws Exception {
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+
+        //Test for atom mapping between the mols
+        List<RMap> maplist = UniversalIsomorphismTester.getSubgraphAtomsMap(mol1, mol2);
+        Assert.assertNotNull(maplist);
+        Assert.assertEquals(9, maplist.size());
+    }
+
+    /**
+     * @cdk.bug 2944080
+     */
+    @Test public void testGetSubgraphMap_2944080()  throws Exception {
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+
+        //Test for atom mapping between the mols
+        List<RMap> maplist = UniversalIsomorphismTester.getSubgraphMap(mol1, mol2);
+        Assert.assertNotNull(maplist);
+        Assert.assertEquals(8, maplist.size());
+    }
+
+    /**
+     * @cdk.bug 2944080
+     */
+    @Test public void testSearchNoConditions_2944080()  throws Exception {
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+
+        //Test for atom mapping between the mols
+        List<List<RMap>> maplist = UniversalIsomorphismTester.search(
+            mol1, mol2, new BitSet(),
+            UniversalIsomorphismTester.getBitSet(mol2), 
+            false, false
+        );
+        Assert.assertNotNull(maplist);
+        Assert.assertEquals(1, maplist.size());
+    }
+
+    /**
+     * @cdk.bug 2944080
+     */
+    @Test public void testSearch_2944080()  throws Exception {
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IMolecule mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
+
+        //Test for atom mapping between the mols
+        List<List<RMap>> list = UniversalIsomorphismTester.
+            search(mol1, mol2, new BitSet(), new BitSet(), true, true);
+        Assert.assertEquals(3, list.size());
+        for (int i=0; i<list.size(); i++) {
+            List<RMap> first = list.get(i);
+            Assert.assertNotSame(0, first.size());
+        }
+
+        list = UniversalIsomorphismTester.
+            search(mol1, mol2, new BitSet(), new BitSet(), false, false);
+        Assert.assertEquals(1, list.size());
+        for (int i=0; i<list.size(); i++) {
+            List<RMap> first = list.get(i);
+            Assert.assertNotSame(0, first.size());
+        }
+    }
+
+    /**
+     * @cdk.bug 2944080
+     */
+    @Test public void testGetSubgraphAtomsMaps_2944080() throws Exception {
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+
+        List<List<RMap>> list = UniversalIsomorphismTester.getSubgraphAtomsMaps(mol1, mol2);
+        Assert.assertNotNull(list);
+        Assert.assertNotSame(0, list.size());
+        for (int i=0; i<list.size(); i++) {
+            List<RMap> first = list.get(i);
+            Assert.assertNotNull(first);
+            Assert.assertNotSame(0, first.size());
+        }
+    }
+
+    @Test public void testGetSubgraphAtomsMap_Butane() throws Exception {
+        IMolecule mol1 = MoleculeFactory.makeAlkane(4);
+        IMolecule mol2 = MoleculeFactory.makeAlkane(4);
+
+        // Test for atom mapping between the mols
+        List<RMap> maplist = UniversalIsomorphismTester.getSubgraphAtomsMap(mol2, mol1);
+        Assert.assertNotNull(maplist);
+        Assert.assertEquals(4, maplist.size());
+
+        maplist = UniversalIsomorphismTester.getSubgraphAtomsMap(mol1, mol2);
+        Assert.assertNotNull(maplist);
+        Assert.assertEquals(4, maplist.size());
+    }
+
+    @Test public void testGetSubgraphAtomsMaps_Butane() throws Exception {
+        IMolecule mol1 = MoleculeFactory.makeAlkane(4);
+        IMolecule mol2 = MoleculeFactory.makeAlkane(4);
+
+        List<List<RMap>> list = UniversalIsomorphismTester.getSubgraphAtomsMaps(mol1, mol2);
+        Assert.assertNotNull(list);
+        Assert.assertEquals(2, list.size());
+        for (int i=0; i<list.size(); i++) {
+            List<RMap> first = list.get(i);
+            Assert.assertNotNull(first);
+            Assert.assertEquals(4, first.size());
+        }
+    }
+
+    /**
      * @cdk.bug 1208740
      */
     @Test public void testSFBug1208740() throws Exception {
@@ -262,13 +399,6 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 //		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
 		Iterator<IAtom> atoms = mol1.atoms().iterator();
 		int i= 1;
-		while (atoms.hasNext()) {
-			IAtom nextAtom = atoms.next();
-			System.out.println(i + ": " + nextAtom.getSymbol() +
-				" T:" + nextAtom.getAtomTypeName() +
-				" A:" + nextAtom.getFlag(CDKConstants.ISAROMATIC));
-			i++;
-		}
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 		Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol2));
         list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);

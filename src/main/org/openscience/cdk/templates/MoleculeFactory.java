@@ -178,7 +178,30 @@ public class MoleculeFactory {
 		return mol;
 	}
 
-	/**
+    /**
+     * Returns cyclopentane without explicit hydrogens.
+     * 
+     * @cdk.inchi InChI=1/C5H10/c1-2-4-5-3-1/h1-5H2
+     */
+    public static Molecule makeCyclopentane()
+    {
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("C")); // 3
+        mol.addAtom(new Atom("C")); // 4
+        mol.addAtom(new Atom("C")); // 5
+
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+        mol.addBond(4, 0, IBond.Order.SINGLE); // 5
+        return mol;
+    }
+
+    
+    /**
 	 * Returns cyclobutane without explicit hydrogens.
 	 * 
 	 * @cdk.inchi InChI=1/C4H8/c1-2-4-3-1/h1-4H2

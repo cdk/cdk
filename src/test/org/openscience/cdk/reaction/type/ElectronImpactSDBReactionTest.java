@@ -53,7 +53,7 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  */
  
 public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -79,14 +79,9 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		/* ionize(>C-C<): C=CCC -> C=C* + C+ , set the reactive center*/
 		
-		IMolecule reactant = builder.newMolecule();//Smiles("C=CC")
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addAtom(builder.newAtom("C"));
-		reactant.addBond(0, 1, IBond.Order.DOUBLE);
-		reactant.addBond(1, 2, IBond.Order.SINGLE);
-		addExplicitHydrogens(reactant);
-        		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule reactant = setOfReactants.getMolecule(0);
+
 		Iterator<IBond> bonds = reactant.bonds().iterator();
 		while (bonds.hasNext()){
 			IBond bond = (IBond)bonds.next();
@@ -103,12 +98,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 		
 		Assert.assertEquals(0, reactant.getSingleElectronCount());
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(reactant);
-
 		/* initiate */
-		makeSureAtomTypesAreRecognized(reactant);
-		
 		IReactionProcess type  = new ElectronImpactSDBReaction();
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -162,5 +152,43 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 					matcher.findMatchingAtomType(molecule, nextAtom)
 				);
 		}
+	}
+
+	/**
+	 * Get the example set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
+		IMolecule reactant = builder.newMolecule();//Smiles("C=CC")
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addBond(0, 1, IBond.Order.DOUBLE);
+		reactant.addBond(1, 2, IBond.Order.SINGLE);
+		try {
+			addExplicitHydrogens(reactant);
+			makeSureAtomTypesAreRecognized(reactant);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+		
+		setOfReactants.addMolecule(reactant);
+		return setOfReactants;
+	}
+	/**
+	 * Get the expected set of molecules.
+	 * TODO:reaction. Set the products
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+
+        setOfProducts.addMolecule(null);
+		return setOfProducts;
 	}
 }

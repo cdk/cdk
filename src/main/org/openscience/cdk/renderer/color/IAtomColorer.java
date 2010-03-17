@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+/* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,9 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-
 package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
@@ -32,7 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * Interface to a class for coloring atoms.
  *
- * @cdk.module standard
+ * @cdk.module  interfaces
  * @cdk.githash
  */
 public interface IAtomColorer {

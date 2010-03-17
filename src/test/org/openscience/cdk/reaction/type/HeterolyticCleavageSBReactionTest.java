@@ -738,19 +738,9 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new HeterolyticCleavageSBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
-		/*CO*/
-		IMolecule molecule = builder.newMolecule();//Smiles("CO")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		addExplicitHydrogens(molecule);
-		
-	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		setOfReactants.addMolecule(molecule);
-		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -763,9 +753,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         type.setParameterList(paramList);
         
         /* initiate */
-		makeSureAtomTypesAreRecognized(molecule);
-		
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
@@ -789,19 +777,9 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type  = new HeterolyticCleavageSBReaction();
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		
-		/*C=O*/
-		IMolecule molecule = builder.newMolecule();//Smiles("C=O")
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		addExplicitHydrogens(molecule);
-		
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		setOfReactants.addMolecule(molecule);
-		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
+
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -817,7 +795,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 
-        Assert.assertEquals(2,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(6,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product1.getAtom(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
@@ -841,5 +819,41 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 					matcher.findMatchingAtomType(molecule, nextAtom)
 				);
 		}
+	}
+
+	/**
+	 * Get the example set of molecules.
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMolecule molecule = builder.newMolecule();//Smiles("CO")
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		try {
+			addExplicitHydrogens(molecule);
+		    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+			lpcheck.saturate(molecule);
+			makeSureAtomTypesAreRecognized(molecule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
+	}
+	/**
+	 * Get the expected set of molecules.
+	 * TODO:reaction. Set the products
+	 * 
+	 * @return The IMoleculeSet
+	 */
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+
+        setOfProducts.addMolecule(null);
+		return setOfProducts;
 	}
 }

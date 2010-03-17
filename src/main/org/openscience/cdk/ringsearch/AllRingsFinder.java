@@ -70,8 +70,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.ringsearch.AllRingsFinderTest")
 public class AllRingsFinder
 {
-	private final ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(AllRingsFinder.class);
+	private ILoggingTool logger=null;
 	
 	public boolean debug = false;
 	private long timeout = 5000;
@@ -86,8 +85,25 @@ public class AllRingsFinder
 	List<Path> potentialRings = new ArrayList<Path>();
 	List<Path> removePaths = new ArrayList<Path>();
 
-
 	/**
+	 * Constructor for the AllRingsFinder.
+	 * 
+	 * @param logging true=logging will be done (slower), false = no logging.
+	 */
+	public AllRingsFinder(boolean logging){
+	    if(logging)
+	        logger =
+	            LoggingToolFactory.createLoggingTool(AllRingsFinder.class);
+	}
+
+    /**
+     * Constructor for the AllRingsFinder with logging.
+     */
+    public AllRingsFinder(){
+        this(true);
+    }
+
+    /**
 	 *  Returns a ringset containing all rings in the given AtomContainer
 	 *  Calls {@link #findAllRings(IAtomContainer, Integer)} with max ring size argument set to null (=unlimited ring sizes)
    *  
@@ -174,8 +190,10 @@ public class AllRingsFinder
 		 *  creating a set of two membered paths from all the bonds in the molecule
 		 */
 		initPathGraph(ac, paths);
-		logger.debug("BondCount: ", ac.getBondCount());
-		logger.debug("PathCount: ", paths.size());
+		if(logger!=null){
+    		logger.debug("BondCount: ", ac.getBondCount());
+    		logger.debug("PathCount: ", paths.size());
+		}
 		do
 		{
 			atom = selectAtom(ac);
@@ -184,8 +202,10 @@ public class AllRingsFinder
 				remove(atom, ac, paths, ringSet, maxPathLen);
 			}
 		} while (paths.size() > 0 && atom != null);
-		logger.debug("paths.size(): ", paths.size());
-		logger.debug("ringSet.size(): ", ringSet.getAtomContainerCount());
+		if(logger!=null){
+    		logger.debug("paths.size(): ", paths.size());
+    		logger.debug("ringSet.size(): ", ringSet.getAtomContainerCount());
+		}
 	}
 
 
@@ -210,7 +230,8 @@ public class AllRingsFinder
 		newPaths.clear();
 		removePaths.clear();
 		potentialRings.clear();
-		logger.debug("*** Removing atom " + originalAc.getAtomNumber(atom) + " ***");
+		if(logger!=null)
+		    logger.debug("*** Removing atom " + originalAc.getAtomNumber(atom) + " ***");
 
 		for (int i = 0; i < paths.size(); i++)
 		{
@@ -226,7 +247,9 @@ public class AllRingsFinder
 						intersectionSize = path1.getIntersectionSize(path2);
 						if (intersectionSize < 3)
 						{
-							logger.debug("Joining " + path1.toString(originalAc) + " and " + path2.toString(originalAc));
+						    if(logger!=null){
+						        logger.debug("Joining " + path1.toString(originalAc) + " and " + path2.toString(originalAc));
+						    }
 							union = Path.join(path1, path2, atom);
 							if (intersectionSize == 1)
 							{
@@ -238,7 +261,9 @@ public class AllRingsFinder
                 }
 							}
 							//logger.debug("Intersection Size: " + intersectionSize);
-							logger.debug("Union: ", union.toString(originalAc));
+							if(logger!=null){
+							    logger.debug("Union: ", union.toString(originalAc));
+							}
 							/*
 							 *  Now we know that path1 and
 							 *  path2 share the Atom atom.
@@ -261,7 +286,8 @@ public class AllRingsFinder
         }
 		detectRings(potentialRings, rings, originalAc);
 		ac.removeAtomAndConnectedElectronContainers(atom);
-		logger.debug("\n" + paths.size() + " paths and " + ac.getAtomCount() + " atoms left.");
+		if(logger!=null)
+		    logger.debug("\n" + paths.size() + " paths and " + ac.getAtomCount() + " atoms left.");
 	}
 
 
@@ -279,7 +305,8 @@ public class AllRingsFinder
 		IAtom a1, a2 = null;
         for (Path path : paths) {
             if (path.size() > 3 && path.lastElement() == path.firstElement()) {
-                logger.debug("Removing path " + path.toString(originalAc) + " which is a ring.");
+                if(logger!=null)
+                    logger.debug("Removing path " + path.toString(originalAc) + " which is a ring.");
                 path.removeElementAt(0);
                 ring = ac.getBuilder().newRing();
                 for (int g = 0; g < path.size() - 1; g++) {
@@ -333,7 +360,8 @@ public class AllRingsFinder
             IBond bond = (IBond) bonds.next();                    
 			path = new Path(bond.getAtom(0), bond.getAtom(1));
 			paths.add(path);
-			logger.debug("initPathGraph: " + path.toString(originalAc));
+			if(logger!=null)
+			    logger.debug("initPathGraph: " + path.toString(originalAc));
 		}
 	}
 

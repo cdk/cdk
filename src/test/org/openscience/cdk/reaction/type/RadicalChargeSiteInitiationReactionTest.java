@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module test-reaction
  */
 public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest {
-	
+
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
@@ -80,10 +80,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationReaction();
 		
-        IMolecule molecule = getMolecule();
-        
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		setOfReactants.addMolecule(molecule);
+		IMoleculeSet setOfReactants = getExampleReactants();
 
 		/* initiate */
 		
@@ -100,14 +97,14 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
-        IMolecule molecule1 = getMolecule1();
+        IMolecule molecule1 = getExpectedProducts().getMolecule(0);
         
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 		
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
-        IMolecule molecule2 = getMolecule2();
+        IMolecule molecule2 = getExpectedProducts().getMolecule(1);
 
 
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
@@ -121,9 +118,9 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new RadicalChargeSiteInitiationReaction();
-		IMoleculeSet setOfReactants = builder.newMoleculeSet();
-
-		IMolecule molecule = getMolecule();
+		
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -132,7 +129,6 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
@@ -162,9 +158,8 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new RadicalChargeSiteInitiationReaction();
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		
-		IMolecule molecule = getMolecule();
+		IMoleculeSet setOfReactants = getExampleReactants();
+        IMolecule molecule = setOfReactants.getMolecule(0);
 
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -172,7 +167,6 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 		IParameterReact param = new SetReactionCenter();
 	    param.setParameter(Boolean.TRUE);
@@ -185,11 +179,9 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 
-        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(9,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
 		Assert.assertEquals(mappedProductA1, product1.getAtom(1));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
-        Assert.assertEquals(mappedProductB1, product1.getBond(0));
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA2, product2.getAtom(0));
         IAtom mappedProductA3 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
@@ -199,10 +191,10 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	/**
 	 * Get the IMolecule
 	 * 
-	 * @return The IMolecule
-	 * @throws Exception
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule() throws Exception {
+	private IMoleculeSet getExampleReactants() {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("O"));
 		molecule.addAtom(builder.newAtom("C"));
@@ -225,45 +217,41 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		IAtom atom =  molecule.getAtom(0);
 		atom.setFormalCharge(1);
         molecule.addSingleElectron(new SingleElectron(atom));
-        return molecule;
+        
+        setOfReactants.addMolecule(molecule);
+		return setOfReactants;
 	}
-
 	/**
-	 * Get the Molecule 1
-	 * @return The IMolecule
+	 * Get the expected set of molecules.
+	 * 
+	 * @return The IMoleculeSet
 	 */
-	private IMolecule getMolecule1() {
-
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("O"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addBond(0, 1, IBond.Order.DOUBLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(1, 3, IBond.Order.SINGLE);
-		molecule.getAtom(0).setFormalCharge(1);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 4, IBond.Order.SINGLE);
-		return molecule;
-	}
-
-	/**
-	 * Get the Molecule 1
-	 * @return The IMolecule
-	 */
-	private IMolecule getMolecule2() {
-
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 1, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 2, IBond.Order.SINGLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 3, IBond.Order.SINGLE);
-        molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
-		
-		return molecule;
+	private IMoleculeSet getExpectedProducts() {
+		IMoleculeSet setOfProducts = builder.newMoleculeSet();
+		IMolecule molecule1 = builder.newMolecule();
+		molecule1.addAtom(builder.newAtom("O"));
+		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addBond(1, 2, IBond.Order.SINGLE);
+		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addBond(1, 3, IBond.Order.SINGLE);
+		molecule1.getAtom(0).setFormalCharge(1);
+		molecule1.addAtom(builder.newAtom("H"));
+		molecule1.addBond(0, 4, IBond.Order.SINGLE);
+        setOfProducts.addMolecule(molecule1);
+        
+        IMolecule molecule2 = builder.newMolecule();
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newAtom("H"));
+		molecule2.addBond(0, 1, IBond.Order.SINGLE);
+		molecule2.addAtom(builder.newAtom("H"));
+		molecule2.addBond(0, 2, IBond.Order.SINGLE);
+		molecule2.addAtom(builder.newAtom("H"));
+		molecule2.addBond(0, 3, IBond.Order.SINGLE);
+        molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
+        setOfProducts.addMolecule(molecule2);
+        
+        return setOfProducts;
 	}
 }
