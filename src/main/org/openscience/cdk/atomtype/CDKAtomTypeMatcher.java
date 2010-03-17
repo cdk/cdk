@@ -578,7 +578,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             			} else if (neighborCount == 2) {
             				IBond.Order maxOrder = atomContainer.getMaximumBondOrder(atom);
             				if (maxOrder == IBond.Order.SINGLE) {
-            					if (isHueckelNumber(ringSize + 1) && atom.getHydrogenCount() != CDKConstants.UNSET && atom.getHydrogenCount() == 1) {
+            				    if (atom.getHydrogenCount() != CDKConstants.UNSET && atom.getHydrogenCount() == 1) {
             						IAtomType type = getAtomType("N.planar3");
             						if (isAcceptable(atom, atomContainer, type)) return type;
             					} else {
