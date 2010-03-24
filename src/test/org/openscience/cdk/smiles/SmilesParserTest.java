@@ -1816,5 +1816,27 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         p.parseSmiles("NC1=CC=C(N)C=C");
     }
+
+    @Test
+    public void testPyrolle() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("c1c[nH]cc1");
+        for(int i=0;i<5;i++){
+            Assert.assertTrue(mol.getAtom(i).getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
+
+    /**
+     * @cdk.bug 2976054
+     * @throws InvalidSmilesException
+     */
+    @Test
+    public void testAromaticity() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("O=Cc1c(OC)nc2s[cH][cH]n12");
+        for(int i=0;i<5;i++){
+            Assert.assertTrue(mol.getAtom(i).getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
 }
 
