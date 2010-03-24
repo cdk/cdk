@@ -220,6 +220,19 @@ public abstract class AbstractChemObjectTest extends CDKTestCase {
         Assert.assertEquals(atom, chemObject2.getProperties().get("atom"));
     }
     
+    @Test public void testClone_PropertyNul() throws Exception {
+    	IChemObject chemObject = newChemObject();
+    	final String key = "NullProperty";
+    	chemObject.setProperty( key, null);
+    	try {
+    		IChemObject chemObject_clone = (IChemObject) chemObject.clone();
+    		Assert.assertFalse(chemObject_clone.getProperties().containsKey(key));
+    		Assert.assertNull(chemObject_clone.getProperty(null));
+    	} catch (NullPointerException e) {
+			Assert.fail();
+		}
+    }
+
     @Test public void testClone_ChemObjectListeners() throws Exception {
         IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
