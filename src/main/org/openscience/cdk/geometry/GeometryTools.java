@@ -1523,7 +1523,7 @@ public class GeometryTools {
         double gap) {
         // determine if the containers are overlapping
         if (last.getMaxX() + gap >= bounds.getMinX()) {
-            double xShift = bounds.getWidth() + last.getWidth() + gap;
+            double xShift = last.getMaxX() + gap - bounds.getMinX();
             Vector2d shift = new Vector2d(xShift, 0.0);
             GeometryTools.translate2D(container, shift);
             return new Rectangle2D.Double(bounds.getX() + xShift,
