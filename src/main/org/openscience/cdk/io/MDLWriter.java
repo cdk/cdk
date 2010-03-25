@@ -2,6 +2,7 @@
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *                    2009  Egon Willighagen <egonw@users.sf.net>
+ *                    2010  Mark Rijnbeek <mark_rynbeek@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -33,9 +34,12 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
@@ -221,6 +225,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 */
     public void writeMolecule(IAtomContainer container) throws Exception {
         String line = "";
+        List<Integer> rgroupList=null;
         // write header block
         // lines get shortened to 80 chars, that's in the spec
         String title = (String)container.getProperty(CDKConstants.TITLE);
@@ -240,10 +245,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
          * if input through MDL form.
          * A blank line can be substituted for line 2.
          */
-        writer.write("  CDK    ");
-        writer.write(new SimpleDateFormat("M/d/y,H:m",Locale.US).format(
-        		     Calendar.getInstance(TimeZone.getDefault()).getTime())
-        );
+        writer.write("  CDK     ");
+        writer.write(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
         writer.newLine();
         
         String comment = (String)container.getProperty(CDKConstants.REMARK);
@@ -254,7 +257,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.newLine();
         
         // write Counts line
-        line += formatMDLInt(container.getAtomCount(), 3);
+		line += formatMDLInt(container.getAtomCount(), 3);
         line += formatMDLInt(container.getBondCount(), 3);
         line += "  0  0  0  0  0  0  0  0999 V2000";
         writer.write(line);
@@ -281,8 +284,17 @@ public class MDLWriter extends DefaultChemObjectWriter {
         	}
         	if(container.getAtom(f) instanceof IPseudoAtom){
         		//according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
-        		if(((IPseudoAtom) container.getAtom(f)).getLabel().equals("R"))
-        			line += "R#";
+        		IPseudoAtom pseudoAtom = (IPseudoAtom) container.getAtom(f);
+        		if (pseudoAtom.getSymbol().equals("R") && pseudoAtom.getLabel().length()>1) {
+        			line += "R# ";
+        			if (rgroupList==null) {
+        				rgroupList = new ArrayList<Integer>();
+        			}
+        			Integer rGroupNumber = new Integer(pseudoAtom.getLabel().substring(1)); 
+        			rgroupList.add(f+1); 
+        			rgroupList.add(rGroupNumber);
+        			
+        		}
         		else
         			line += formatMDLString(((IPseudoAtom) container.getAtom(f)).getLabel(), 3);
         	}else{
@@ -370,6 +382,27 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 }
             }
         }
+
+        //write RGP line (max occurrence is 16 data points per line)
+        if (rgroupList!=null) {
+        	StringBuffer rgpLine=new StringBuffer();
+        	int cnt=0;
+        	for (int i=1; i<= rgroupList.size(); i++) {
+        		
+        		rgpLine.append(formatMDLInt((rgroupList.get(i-1)), 4));
+        		i++;
+        		rgpLine.append(formatMDLInt((rgroupList.get(i-1)), 4));
+        		
+        		cnt++;
+        		if (i==rgroupList.size() || i==16 ) { 
+                	rgpLine.insert(0, "M  RGP"+formatMDLInt(cnt, 3));
+                	writer.write(rgpLine.toString());
+            		writer.newLine();
+            		rgpLine=new StringBuffer();
+            		cnt=0;
+        		}
+        	}
+        }
         
         // close molecule
         writer.write("M  END");
@@ -385,7 +418,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 * @param   l  Length of the String
 	 * @return     The String to be written into the connectiontable
 	 */
-    private String formatMDLInt(int i, int l) {
+    protected static String formatMDLInt(int i, int l) {
         String s = "", fs = "";
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setParseIntegerOnly(true);
@@ -410,7 +443,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 * @param   fl  The float to be formated
 	 * @return      The String to be written into the connectiontable
 	 */
-    private String formatMDLFloat(float fl) {
+    protected static String formatMDLFloat(float fl) {
         String s = "", fs = "";
         int l;
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
@@ -436,7 +469,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 * @param   le   The length of the String
 	 * @return       The String to be written in the connectiontable
 	 */
-    private String formatMDLString(String s, int le) {
+    protected static String formatMDLString(String s, int le) {
         s = s.trim();
         if (s.length() > le)
             return s.substring(0, le);

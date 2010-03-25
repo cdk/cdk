@@ -29,8 +29,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
@@ -100,6 +104,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     private BooleanIOSetting forceReadAs3DCoords;
     private BooleanIOSetting interpretHydrogenIsotopes;
+
+    //Keep track of atoms and the lines they were on in the atom block.
+    private List<IAtom> atomsByLinePosition;
     
     public MDLV2000Reader() {
         this(new StringReader(""));
@@ -341,6 +348,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         //String help;
         IAtom atom;
         String line = "";
+        //A map to keep track of R# atoms so that RGP line can be parsed
+        Map<Integer,IPseudoAtom> rAtoms = new HashMap<Integer,IPseudoAtom>();
         
         try {
         	IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(molecule.getBuilder());
@@ -400,8 +409,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             
             // read ATOM block
             logger.info("Reading atom block");
+      	    atomsByLinePosition = new ArrayList<IAtom>();
+		        atomsByLinePosition.add(null); // 0 is not a valid position
+            int atomBlockLineNumber=0;
             for (int f = 0; f < atoms; f++) {
-                line = input.readLine(); linecount++;
+                line = input.readLine(); linecount++; atomBlockLineNumber++;
                 x = Double.parseDouble(line.substring(0, 10).trim());
                 y = Double.parseDouble(line.substring(10, 20).trim());
                 z = Double.parseDouble(line.substring(20, 30).trim());
@@ -425,21 +437,29 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 	atom = molecule.getBuilder().newPseudoAtom(element);
                 } else if ("L".equals(element)) {
                 	atom = molecule.getBuilder().newPseudoAtom(element);
-                } else if (element.length() > 0 && element.charAt(0) == 'R'){
-                	logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+                } else if ( element.equals("R") || 
+                           (element.length() > 0 && element.charAt(0) == 'R')){
+                 	  logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     //check if the element is R
                     rGroup=element.split("^R");
+                    atom=null;
                     if (rGroup.length >1){
                     	try{
                     		Rnumber= Integer.valueOf(rGroup[(rGroup.length - 1)]);
                     		RGroupCounter=Rnumber;
+                  	    element="R"+Rnumber;
+                   	    atom = molecule.getBuilder().newPseudoAtom(element);
+
                     	}catch(Exception ex){
-                    		Rnumber=RGroupCounter;
-                    		RGroupCounter++;
+                        // This happens for atoms labeled "R#".
+                        // The Rnumber may be set later on, using RGP line
+                        atom = molecule.getBuilder().newPseudoAtom("R");
+                   	    rAtoms.put(atomBlockLineNumber,(IPseudoAtom)atom);
                     	}
-                    	element="R"+Rnumber;
                     }
-                    atom = molecule.getBuilder().newPseudoAtom(element);
+                    else {
+                        atom = molecule.getBuilder().newPseudoAtom("R");
+                    }
                 } else {
                     handleError(
                         "Invalid element type. Must be an existing " +
@@ -472,7 +492,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 } else {
                     logger.error("Cannot set mass difference for a non-element!");
                 }
-                
+               
                 
                 String chargeCodeString = line.substring(36,39).trim();
                 logger.debug("Atom charge code: ", chargeCodeString);
@@ -523,6 +543,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
                 
                 molecule.addAtom(atom);
+                atomsByLinePosition.add(atom);
             }
             
             // convert to 2D, if totalZ == 0
@@ -750,6 +771,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             exception
                         );
                     }
+                } else if (line.startsWith("M  RGP")) {
+                    StringTokenizer st = new StringTokenizer(line);
+                    //Ignore first 3 tokens (overhead).
+                    st.nextToken(); st.nextToken(); st.nextToken();
+                    //Process the R group numbers as defined in RGP line.
+                    while (st.hasMoreTokens()) {
+                        Integer position = new Integer(st.nextToken());
+                        Rnumber = new Integer(st.nextToken());
+                        IPseudoAtom pseudoAtom = rAtoms.get(position);
+                        if (pseudoAtom!=null)  {
+                            pseudoAtom.setLabel("R"+Rnumber);
+                        }
+                    }
                 }
                 if (!lineRead) {
                     logger.warn("Skipping line in property block: ", line);
@@ -823,6 +857,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         settings[0] = forceReadAs3DCoords;
         settings[1] = interpretHydrogenIsotopes;
         return settings;
+    }
+
+    public List<IAtom> getAtomsByLinePosition() {
+        return atomsByLinePosition;
     }
 }
 

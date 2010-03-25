@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -219,5 +220,38 @@ public class MDLWriterTest extends ChemObjectIOTest {
         String output = writer.toString();
         Assert.assertTrue(output.contains("title1; title2"));
     }
+    
+    /**
+     * Test correct output of R-groups, using the hash (#) and a separate RGP line.
+     */
+    @Test public void testRGPLine() throws Exception {
+        StringWriter writer = new StringWriter();
+        IMolecule molecule = builder.newMolecule();
+        IPseudoAtom atom1 = builder.newPseudoAtom();
+        atom1.setSymbol("R");
+        atom1.setLabel("R12");
+
+        IAtom atom2 = builder.newAtom("C");
+        IBond bond = builder.newBond(atom1, atom2);
+
+        IPseudoAtom atom3 = builder.newPseudoAtom();
+        atom3.setSymbol("A");
+        atom3.setLabel("A");
+        IBond bond2 = builder.newBond(atom3, atom2);
+
+        molecule.addAtom(atom1);
+        molecule.addAtom(atom2);
+        molecule.addAtom(atom3);
+        molecule.addBond(bond);
+        molecule.addBond(bond2);
+            
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
+        String output = writer.toString();
+        
+        Assert.assertTrue("Test for R#", -1 != output.indexOf("R#"));
+        Assert.assertTrue("Test for RGP line", -1 != output.indexOf("M  RGP  1   1  12"));
+    }
+
 
 }

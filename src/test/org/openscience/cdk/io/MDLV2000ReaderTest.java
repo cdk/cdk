@@ -666,4 +666,79 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.read(new ChemFile());
     }
 
+    /**
+     * Tests numbering of R# elements according to RGP line.
+     * @throws Exception
+     */
+    @Test public void testRGroupHashNumbering() throws Exception {
+        String filename = "data/mdl/rgroups.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        Molecule mol = (Molecule)reader.read(new Molecule());
+        for(IBond bond: mol.bonds() ) {
+            PseudoAtom rGroup = null;
+            IAtom partner=null;
+            if (bond.getAtom(0) instanceof PseudoAtom )  {
+                rGroup = (PseudoAtom)bond.getAtom(0);
+                partner = bond.getAtom(1);
+            }
+            else {
+                partner = bond.getAtom(0);
+                rGroup = (PseudoAtom)bond.getAtom(1);
+            }
+            if (partner.getSymbol().equals("N"))  {
+                Assert.assertEquals(rGroup.getLabel(),"R4");
+            }
+            else
+            if (partner.getSymbol().equals("P"))  {
+                Assert.assertEquals(rGroup.getLabel(),"R1");
+            }
+            else
+            if (partner.getSymbol().equals("As"))  {
+                Assert.assertEquals(rGroup.getLabel(),"R4");
+            }
+            else
+            if (partner.getSymbol().equals("Si"))  {
+                Assert.assertEquals(rGroup.getLabel(),"R");
+            }
+        }
+    }
+
+
+    /**
+     * Test for hard coded R-group numbers in the Atom block. 
+     * Hard coding is accepted but should not be done really, instead use 
+     * a hash (#) conform the CTFile spec.
+     * @throws Exception
+     */
+    @Test public void testRGroupHardcodedNumbering() throws Exception {
+        String filename = "data/mdl/rgroupsNumbered.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        Molecule mol = (Molecule)reader.read(new Molecule());
+        for(IBond bond: mol.bonds() ) {
+            PseudoAtom rGroup = null;
+            if (bond.getAtom(0) instanceof PseudoAtom )  
+                rGroup = (PseudoAtom)bond.getAtom(0);
+            else 
+                rGroup = (PseudoAtom)bond.getAtom(1);
+
+            if (bond.getOrder()== IBond.Order.DOUBLE)  {
+                Assert.assertEquals(rGroup.getLabel(),"R32");
+            }
+            else
+            if (bond.getStereo()==IBond.Stereo.DOWN)  {
+                Assert.assertEquals(rGroup.getLabel(),"R2");
+            }
+            else
+                if (bond.getStereo()==IBond.Stereo.UP)  {
+                Assert.assertEquals(rGroup.getLabel(),"R20");
+            }
+            else
+                Assert.assertEquals(rGroup.getLabel(),"R5");
+        }
+    }
+
 }
