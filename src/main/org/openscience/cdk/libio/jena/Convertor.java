@@ -135,8 +135,8 @@ public class Convertor {
 
     private static void deserializeChemObjectFields(
             Resource rdfObject, IChemObject object) {
-        Statement id = rdfObject.getProperty(CDK.IDENTIFIER);
-        if (id != null) object.setID(id.getString());
+        Statement identifier = rdfObject.getProperty(CDK.IDENTIFIER);
+        if (identifier != null) object.setID(identifier.getString());
     }
 
     private static void serializeElementFields(Model model,
@@ -222,7 +222,7 @@ public class Convertor {
         }
     }
 
-    private final static Map<Resource, Hybridization> resourceHybridMap = new HashMap<Resource, Hybridization>(10) {
+    private final static Map<Resource, Hybridization> RESOURCE_TO_HYBRID = new HashMap<Resource, Hybridization>(10) {
         private static final long serialVersionUID = -351285511820100853L;
     {
         put(CDK.HYBRID_S, Hybridization.S);
@@ -243,8 +243,8 @@ public class Convertor {
         Statement hybrid = rdfObject.getProperty(CDK.HASHYBRIDIZATION);
         if (hybrid != null) {
             Resource rdfHybrid = (Resource)hybrid.getObject();
-            if (resourceHybridMap.containsKey(rdfHybrid)) {
-                element.setHybridization(resourceHybridMap.get(rdfHybrid));
+            if (RESOURCE_TO_HYBRID.containsKey(rdfHybrid)) {
+                element.setHybridization(RESOURCE_TO_HYBRID.get(rdfHybrid));
             }
         }
         Statement name = rdfObject.getProperty(CDK.HASATOMTYPENAME);
