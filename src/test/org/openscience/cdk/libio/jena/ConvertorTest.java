@@ -129,7 +129,6 @@ public class ConvertorTest extends CDKTestCase {
         IPseudoAtom object = new PseudoAtom("FunnyAtom");
         mol.addAtom(object);
         Model model = Convertor.molecule2Model(mol);
-        model.write(System.out, "N3");
         IMolecule rtMol = Convertor.model2Molecule(model, builder);
         String diff = AtomContainerDiff.diff(mol, rtMol);
         Assert.assertEquals("Unexpected diff: " + diff, 0, diff.length());
