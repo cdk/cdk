@@ -61,6 +61,12 @@ import com.hp.hpl.jena.vocabulary.RDF;
  */
 public class Convertor {
 
+    /**
+     * Converts a {@link IMolecule} into a {@link Model} representation using the CDK OWL.
+     *
+     * @param molecule {@link IMolecule} to serialize into a RDF graph.
+     * @return the RDF graph representing the {@link IMolecule}.
+     */
     public static Model molecule2Model(IMolecule molecule) {
         Model model = createCDKModel();
         Resource subject = model.createResource(
@@ -276,6 +282,12 @@ public class Convertor {
             isotope.setNaturalAbundance(naturalAbundance.getDouble());
     }
 
+    /**
+     * Converts a {@link Resource} object into the matching {@link Order}.
+     *
+     * @param rdfOrder Resource for which the matching {@link Order} should be given.
+     * @return the matching {@link Order}.
+     */
     public static Order resource2Order(Resource rdfOrder) {
         if (rdfOrder.equals(CDK.SINGLEBOND)) {
             return Order.SINGLE;
@@ -289,6 +301,12 @@ public class Convertor {
         return null;
     }
 
+    /**
+     * Create the {@link Resource} matching the given {@link Order}.
+     *
+     * @param order bond order to return the matching {@link Resource} for.
+     * @return the matching {@link Resource}.
+     */
     public static Resource order2Resource(Order order) {
         if (order == Order.SINGLE) {
             return CDK.SINGLEBOND;
@@ -319,6 +337,13 @@ public class Convertor {
             bond.setElectronCount(count.getInt());
     }
 
+    /**
+     * Converts a {@link Model} into an {@link IMolecule} using the given {@link IChemObjectBuilder}.
+     *
+     * @param model RDF graph to deserialize into an {@link IMolecule}.
+     * @param builder {@link IChemObjectBuilder} used to create new {@link IChemObject}s.
+     * @return a {@link IMolecule} deserialized from the RDF graph.
+     */
     public static IMolecule model2Molecule(Model model,
         IChemObjectBuilder builder) {
         ResIterator mols =

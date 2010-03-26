@@ -48,14 +48,27 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 
     private Reader input;
 
+    /**
+     * Creates a new CDKOWLReader sending output to the given Writer.
+     *
+     * @param input {@link Reader} from which is OWL input is taken.
+     */
     public CDKOWLReader(Reader input) {
         this.input = input;
     }
     
+    /**
+     * Creates a new CDKOWLReader with an undefined input.
+     */
     public CDKOWLReader() {
         this.input = null;
     }
     
+    /**
+     * Returns the {@link IResourceFormat} for this reader.
+     *
+     * @return returns a {@link CDKOWLFormat}.
+     */
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CDKOWLFormat.getInstance();
@@ -64,17 +77,22 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     /**
      * This method must not be used; XML reading requires the use of an
      * {@link InputStream}. Use {@link #setReader(InputStream)} instead.
+     *
+     * @param reader reader to which should be written.
+     * @deprecated 
      */
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         this.input = reader;
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         this.input = new InputStreamReader(input);
     }
 
+    /** {@inheritDoc} */
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
@@ -86,6 +104,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 	        return false;
 	}
 
+    /** {@inheritDoc} */
     public IChemObject read(IChemObject object) throws CDKException {
       if (object instanceof IMolecule) {
         return readMolecule((IMolecule)object);
@@ -102,6 +121,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
         return mol;
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();

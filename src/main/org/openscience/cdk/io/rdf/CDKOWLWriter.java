@@ -61,7 +61,9 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Returns the {@link IResourceFormat} for this writer: {@link CDKOWLFormat}.
+     * Returns the {@link IResourceFormat} for this writer.
+     *
+     * @return returns a {@link CDKOWLFormat}.
      */
     public IResourceFormat getFormat() {
         return CDKOWLFormat.getInstance();
