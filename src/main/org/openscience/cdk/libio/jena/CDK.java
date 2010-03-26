@@ -57,16 +57,16 @@ public class CDK {
     public static final Resource QUADRUPLEBOND = resource("QuadrupleBond");
 
     // IAtomType.Hybridization
-    public static final Resource S = resource("S");
-    public static final Resource SP1 = resource("SP1");
-    public static final Resource SP2 = resource("SP2");
-    public static final Resource SP3 = resource("SP3");
-    public static final Resource PLANAR3 = resource("PLANAR3");
-    public static final Resource SP3D1 = resource("SP3D1");
-    public static final Resource SP3D2 = resource("SP3D2");
-    public static final Resource SP3D3 = resource("SP3D3");
-    public static final Resource SP3D4 = resource("SP3D4");
-    public static final Resource SP3D5 = resource("SP3D5");
+    public static final Resource HYBRID_S = resource("S");
+    public static final Resource HYBRID_SP1 = resource("SP1");
+    public static final Resource HYBRID_SP2 = resource("SP2");
+    public static final Resource HYBRID_SP3 = resource("SP3");
+    public static final Resource HYBRID_PLANAR3 = resource("PLANAR3");
+    public static final Resource HYBRID_SP3D1 = resource("SP3D1");
+    public static final Resource HYBRID_SP3D2 = resource("SP3D2");
+    public static final Resource HYBRID_SP3D3 = resource("SP3D3");
+    public static final Resource HYBRID_SP3D4 = resource("SP3D4");
+    public static final Resource HYBRID_SP3D5 = resource("SP3D5");
     
     public static final Property HASATOM = property("hasAtom");
     public static final Property HASBOND = property("hasBond");

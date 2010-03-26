@@ -165,25 +165,25 @@ public class Convertor {
         if (type.getHybridization() != null) {
             Hybridization hybrid = type.getHybridization(); 
             if (hybrid == Hybridization.S) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.S);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_S);
             } else if (hybrid == Hybridization.SP1) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP1);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP1);
             } else if (hybrid == Hybridization.SP2) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP2);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP2);
             } else if (hybrid == Hybridization.SP3) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3);
             } else if (hybrid == Hybridization.PLANAR3) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.PLANAR3);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_PLANAR3);
             } else if (hybrid == Hybridization.SP3D1) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D1);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D1);
             } else if (hybrid == Hybridization.SP3D2) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D2);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D2);
             } else if (hybrid == Hybridization.SP3D3) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D3);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D3);
             } else if (hybrid == Hybridization.SP3D4) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D4);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D4);
             } else if (hybrid == Hybridization.SP3D5) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D5);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D5);
             }
         }
         if (type.getAtomTypeName() != null) {
@@ -232,25 +232,25 @@ public class Convertor {
         Statement hybrid = rdfObject.getProperty(CDK.HASHYBRIDIZATION);
         if (hybrid != null) {
             Resource rdfHybrid = (Resource)hybrid.getObject();
-            if (rdfHybrid.equals(CDK.S)) {
+            if (rdfHybrid.equals(CDK.HYBRID_S)) {
                 element.setHybridization(Hybridization.S);
-            } else if (rdfHybrid.equals(CDK.SP1)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP1)) {
                 element.setHybridization(Hybridization.SP1);
-            } else if (rdfHybrid.equals(CDK.SP2)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP2)) {
                 element.setHybridization(Hybridization.SP2);
-            } else if (rdfHybrid.equals(CDK.SP3)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP3)) {
                 element.setHybridization(Hybridization.SP3);
-            } else if (rdfHybrid.equals(CDK.PLANAR3)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_PLANAR3)) {
                 element.setHybridization(Hybridization.PLANAR3);
-            } else if (rdfHybrid.equals(CDK.SP3D1)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D1)) {
                 element.setHybridization(Hybridization.SP3D1);
-            } else if (rdfHybrid.equals(CDK.SP3D2)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D2)) {
                 element.setHybridization(Hybridization.SP3D2);
-            } else if (rdfHybrid.equals(CDK.SP3D3)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D3)) {
                 element.setHybridization(Hybridization.SP3D3);
-            } else if (rdfHybrid.equals(CDK.SP3D4)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D4)) {
                 element.setHybridization(Hybridization.SP3D4);
-            } else if (rdfHybrid.equals(CDK.SP3D5)) {
+            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D5)) {
                 element.setHybridization(Hybridization.SP3D5);
             }
         }
