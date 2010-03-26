@@ -41,20 +41,20 @@ public class CDK {
         return ResourceFactory.createProperty(URI, local);
     }
 
-    public static final Resource Molecule = resource("Molecule");
-    public static final Resource Atom = resource("Atom");
-    public static final Resource PseudoAtom = resource("PseudoAtom");
-    public static final Resource Bond = resource("Bond");
-    public static final Resource ChemObject = resource("ChemObject");
-    public static final Resource Element = resource("Element");
-    public static final Resource AtomType = resource("AtomType");
-    public static final Resource Isotope = resource("Isotope");
+    public static final Resource MOLECULE = resource("Molecule");
+    public static final Resource ATOM = resource("Atom");
+    public static final Resource PSEUDOATOM = resource("PseudoAtom");
+    public static final Resource BOND = resource("Bond");
+    public static final Resource CHEMOBJECT = resource("ChemObject");
+    public static final Resource ELEMENT = resource("Element");
+    public static final Resource ATOMTYPE = resource("AtomType");
+    public static final Resource ISOTOPE = resource("Isotope");
     
     // IBond.Order
-    public static final Resource SingleBond = resource("SingleBond");
-    public static final Resource DoubleBond = resource("DoubleBond");
-    public static final Resource TripleBond = resource("TripleBond");
-    public static final Resource QuadrupleBond = resource("QuadrupleBond");
+    public static final Resource SINGLEBOND = resource("SingleBond");
+    public static final Resource DOUBLEBOND = resource("DoubleBond");
+    public static final Resource TRIPLEBOND = resource("TripleBond");
+    public static final Resource QUADRUPLEBOND = resource("QuadrupleBond");
 
     // IAtomType.Hybridization
     public static final Resource S = resource("S");
@@ -68,23 +68,23 @@ public class CDK {
     public static final Resource SP3D4 = resource("SP3D4");
     public static final Resource SP3D5 = resource("SP3D5");
     
-    public static final Property hasAtom = property("hasAtom");
-    public static final Property hasBond = property("hasBond");
-    public static final Property bindsAtom = property("bindsAtom");
-    public static final Property hasOrder = property("hasOrder");
-    public static final Property symbol = property("symbol");
-    public static final Property hasLabel = property("hasLabel");
-    public static final Property identfier = property("identifier");
-    public static final Property hasAtomicNumber = property("hasAtomicNumber");
-    public static final Property hasHybridization = property("hasHybridization");
-    public static final Property hasAtomTypeName = property("hasAtomTypeName");
-    public static final Property hasMaxBondOrder = property("hasMaxBondOrder");
-    public static final Property hasFormalCharge = property("hasFormalCharge");
-    public static final Property hasMassNumber = property("hasMassNumber");
-    public static final Property hasExactMass = property("hasExactMass");
-    public static final Property hasNaturalAbundance =
+    public static final Property HASATOM = property("hasAtom");
+    public static final Property HASBOND = property("hasBond");
+    public static final Property BINDSATOM = property("bindsAtom");
+    public static final Property HASORDER = property("hasOrder");
+    public static final Property SYMBOL = property("symbol");
+    public static final Property HASLABEL = property("hasLabel");
+    public static final Property IDENTIFIER = property("identifier");
+    public static final Property HASATOMICNUMBER = property("hasAtomicNumber");
+    public static final Property HASHYBRIDIZATION = property("hasHybridization");
+    public static final Property HASATOMTYPENAME = property("hasAtomTypeName");
+    public static final Property HASMAXBONDORDER = property("hasMaxBondOrder");
+    public static final Property HASFORMALCHARGE = property("hasFormalCharge");
+    public static final Property HASMASSNUMBER = property("hasMassNumber");
+    public static final Property HASEXACTMASS = property("hasExactMass");
+    public static final Property HASNATURALABUNDANCE =
         property("hasNaturalAbundance");
-    public static final Property hasElectronCount =
+    public static final Property HASELECTRONCOUNT =
         property("hasElectronCount");
 
 }

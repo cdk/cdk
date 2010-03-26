@@ -66,19 +66,19 @@ public class Convertor {
         Resource subject = model.createResource(
             createIdentifier(model, molecule)
         );
-        model.add(subject, RDF.type, CDK.Molecule);
+        model.add(subject, RDF.type, CDK.MOLECULE);
         Map<IAtom,Resource> cdkToRDFAtomMap = new HashMap<IAtom, Resource>();
         for (IAtom atom : molecule.atoms()) {
             Resource rdfAtom = model.createResource(
                 createIdentifier(model, atom)
             );
             cdkToRDFAtomMap.put(atom, rdfAtom);
-            model.add(subject, CDK.hasAtom, rdfAtom);
+            model.add(subject, CDK.HASATOM, rdfAtom);
             if (atom instanceof IPseudoAtom) {
-                model.add(rdfAtom, RDF.type, CDK.PseudoAtom);
+                model.add(rdfAtom, RDF.type, CDK.PSEUDOATOM);
                 serializePseudoAtomFields(model, rdfAtom, (IPseudoAtom)atom);
             } else {
-                model.add(rdfAtom, RDF.type, CDK.Atom);
+                model.add(rdfAtom, RDF.type, CDK.ATOM);
                 serializeAtomFields(model, rdfAtom, atom);
             }
         }
@@ -86,17 +86,17 @@ public class Convertor {
             Resource rdfBond = model.createResource(
                 createIdentifier(model, bond)
             );
-            model.add(rdfBond, RDF.type, CDK.Bond);
+            model.add(rdfBond, RDF.type, CDK.BOND);
             for (IAtom atom : bond.atoms()) {
-                model.add(rdfBond, CDK.bindsAtom, cdkToRDFAtomMap.get(atom));
+                model.add(rdfBond, CDK.BINDSATOM, cdkToRDFAtomMap.get(atom));
             }
             if (bond.getOrder() != null) {
                 model.add(
-                    rdfBond, CDK.hasOrder,
+                    rdfBond, CDK.HASORDER,
                     order2Resource(bond.getOrder())
                 );
             }
-            model.add(subject, CDK.hasBond, rdfBond);
+            model.add(subject, CDK.HASBOND, rdfBond);
             serializeElectronContainerFields(model, rdfBond, bond);
         }
         return model;
@@ -106,15 +106,15 @@ public class Convertor {
             Resource rdfAtom, IPseudoAtom atom) {
         serializeAtomFields(model, rdfAtom, atom);
         if (atom.getLabel() != CDKConstants.UNSET)
-            model.add(rdfAtom, CDK.hasLabel, atom.getLabel());
+            model.add(rdfAtom, CDK.HASLABEL, atom.getLabel());
     }
 
     private static void serializeAtomFields(Model model, Resource rdfAtom,
             IAtom atom) {
         serializeAtomTypeFields(model, rdfAtom, atom);
-        model.add(rdfAtom, RDF.type, CDK.Atom);
+        model.add(rdfAtom, RDF.type, CDK.ATOM);
         if (atom.getSymbol() != CDKConstants.UNSET)
-            model.add(rdfAtom, CDK.symbol, atom.getSymbol());
+            model.add(rdfAtom, CDK.SYMBOL, atom.getSymbol());
     }
 
     private static void serializeElectronContainerFields(Model model,
@@ -122,7 +122,7 @@ public class Convertor {
         serializeChemObjectFields(model, rdfBond, bond);
         if (bond.getElectronCount() != null)
             model.add(
-                rdfBond, CDK.hasElectronCount,
+                rdfBond, CDK.HASELECTRONCOUNT,
                 bond.getElectronCount().toString()
             );
     }
@@ -130,12 +130,12 @@ public class Convertor {
     private static void serializeChemObjectFields(Model model,
             Resource rdfObject, IChemObject object) {
         if (object.getID() != null)
-            model.add(rdfObject, CDK.identfier, object.getID());
+            model.add(rdfObject, CDK.IDENTIFIER, object.getID());
     }
 
     private static void deserializeChemObjectFields(
             Resource rdfObject, IChemObject object) {
-        Statement id = rdfObject.getProperty(CDK.identfier);
+        Statement id = rdfObject.getProperty(CDK.IDENTIFIER);
         if (id != null) object.setID(id.getString());
     }
 
@@ -143,18 +143,18 @@ public class Convertor {
             Resource rdfObject, IElement element) {
         serializeChemObjectFields(model, rdfObject, element);
         if (element.getSymbol() != null)
-            model.add(rdfObject, CDK.symbol, element.getSymbol());
+            model.add(rdfObject, CDK.SYMBOL, element.getSymbol());
         if (element.getAtomicNumber() != null)
-            model.add(rdfObject, CDK.hasAtomicNumber,
+            model.add(rdfObject, CDK.HASATOMICNUMBER,
                 element.getAtomicNumber().toString());
     }
 
     private static void deserializeElementFields(
             Resource rdfObject, IElement element) {
         deserializeChemObjectFields(rdfObject, element);
-        Statement symbol = rdfObject.getProperty(CDK.symbol);
+        Statement symbol = rdfObject.getProperty(CDK.SYMBOL);
         if (symbol != null) element.setSymbol(symbol.getString());
-        Statement atomicNumber = rdfObject.getProperty(CDK.hasAtomicNumber);
+        Statement atomicNumber = rdfObject.getProperty(CDK.HASATOMICNUMBER);
         if (atomicNumber != null)
             element.setAtomicNumber(atomicNumber.getInt());
     }
@@ -165,39 +165,39 @@ public class Convertor {
         if (type.getHybridization() != null) {
             Hybridization hybrid = type.getHybridization(); 
             if (hybrid == Hybridization.S) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.S);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.S);
             } else if (hybrid == Hybridization.SP1) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP1);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP1);
             } else if (hybrid == Hybridization.SP2) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP2);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP2);
             } else if (hybrid == Hybridization.SP3) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP3);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3);
             } else if (hybrid == Hybridization.PLANAR3) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.PLANAR3);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.PLANAR3);
             } else if (hybrid == Hybridization.SP3D1) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D1);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D1);
             } else if (hybrid == Hybridization.SP3D2) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D2);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D2);
             } else if (hybrid == Hybridization.SP3D3) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D3);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D3);
             } else if (hybrid == Hybridization.SP3D4) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D4);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D4);
             } else if (hybrid == Hybridization.SP3D5) {
-                model.add(rdfObject, CDK.hasHybridization, CDK.SP3D5);
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.SP3D5);
             }
         }
         if (type.getAtomTypeName() != null) {
-            model.add(rdfObject, CDK.hasAtomTypeName, type.getAtomTypeName());
+            model.add(rdfObject, CDK.HASATOMTYPENAME, type.getAtomTypeName());
         }
         if (type.getFormalCharge() != null) {
             model.add(
-                rdfObject, CDK.hasFormalCharge,
+                rdfObject, CDK.HASFORMALCHARGE,
                 type.getFormalCharge().toString()
             );
         }
         if (type.getMaxBondOrder() != null) {
             model.add(
-                rdfObject, CDK.hasMaxBondOrder,
+                rdfObject, CDK.HASMAXBONDORDER,
                 order2Resource(type.getMaxBondOrder())
             );
         }
@@ -208,19 +208,19 @@ public class Convertor {
         serializeElementFields(model, rdfObject, isotope);
         if (isotope.getMassNumber() != CDKConstants.UNSET) {
             model.add(
-                 rdfObject, CDK.hasMassNumber,
+                 rdfObject, CDK.HASMASSNUMBER,
                  isotope.getMassNumber().toString()
             );
         }
         if (isotope.getExactMass() != CDKConstants.UNSET) {
             model.add(
-                 rdfObject, CDK.hasExactMass,
+                 rdfObject, CDK.HASEXACTMASS,
                  isotope.getExactMass().toString()
             );
         }
         if (isotope.getNaturalAbundance() != CDKConstants.UNSET) {
             model.add(
-                 rdfObject, CDK.hasNaturalAbundance,
+                 rdfObject, CDK.HASNATURALABUNDANCE,
                  isotope.getNaturalAbundance().toString()
             );
         }
@@ -229,7 +229,7 @@ public class Convertor {
     private static void deserializeAtomTypeFields(
             Resource rdfObject, IAtomType element) {
         deserializeIsotopeFields(rdfObject, element);
-        Statement hybrid = rdfObject.getProperty(CDK.hasHybridization);
+        Statement hybrid = rdfObject.getProperty(CDK.HASHYBRIDIZATION);
         if (hybrid != null) {
             Resource rdfHybrid = (Resource)hybrid.getObject();
             if (rdfHybrid.equals(CDK.S)) {
@@ -254,16 +254,16 @@ public class Convertor {
                 element.setHybridization(Hybridization.SP3D5);
             }
         }
-        Statement name = rdfObject.getProperty(CDK.hasAtomTypeName);
+        Statement name = rdfObject.getProperty(CDK.HASATOMTYPENAME);
         if (name != null) {
             element.setAtomTypeName(name.getString());
         }
-        Statement order = rdfObject.getProperty(CDK.hasMaxBondOrder);
+        Statement order = rdfObject.getProperty(CDK.HASMAXBONDORDER);
         if (order != null) {
             Resource maxOrder = (Resource)order.getResource();
             element.setMaxBondOrder(resource2Order(maxOrder));
         }
-        Statement formalCharge = rdfObject.getProperty(CDK.hasFormalCharge);
+        Statement formalCharge = rdfObject.getProperty(CDK.HASFORMALCHARGE);
         if (formalCharge != null)
             element.setFormalCharge(formalCharge.getInt());
     }
@@ -271,26 +271,26 @@ public class Convertor {
     private static void deserializeIsotopeFields(Resource rdfObject,
             IIsotope isotope) {
         deserializeElementFields(rdfObject, isotope);
-        Statement massNumber = rdfObject.getProperty(CDK.hasMassNumber);
+        Statement massNumber = rdfObject.getProperty(CDK.HASMASSNUMBER);
         if (massNumber != null)
             isotope.setMassNumber(massNumber.getInt());
-        Statement exactMass = rdfObject.getProperty(CDK.hasExactMass);
+        Statement exactMass = rdfObject.getProperty(CDK.HASEXACTMASS);
         if (exactMass != null)
             isotope.setExactMass(exactMass.getDouble());
         Statement naturalAbundance =
-            rdfObject.getProperty(CDK.hasNaturalAbundance);
+            rdfObject.getProperty(CDK.HASNATURALABUNDANCE);
         if (naturalAbundance != null)
             isotope.setNaturalAbundance(naturalAbundance.getDouble());
     }
 
     public static Order resource2Order(Resource rdfOrder) {
-        if (rdfOrder.equals(CDK.SingleBond)) {
+        if (rdfOrder.equals(CDK.SINGLEBOND)) {
             return Order.SINGLE;
-        } else if (rdfOrder.equals(CDK.DoubleBond)) {
+        } else if (rdfOrder.equals(CDK.DOUBLEBOND)) {
             return Order.DOUBLE;
-        } else if (rdfOrder.equals(CDK.TripleBond)) {
+        } else if (rdfOrder.equals(CDK.TRIPLEBOND)) {
             return Order.TRIPLE;
-        } else if (rdfOrder.equals(CDK.QuadrupleBond)) {
+        } else if (rdfOrder.equals(CDK.QUADRUPLEBOND)) {
             return Order.QUADRUPLE;
         }
         return null;
@@ -298,13 +298,13 @@ public class Convertor {
 
     public static Resource order2Resource(Order order) {
         if (order == Order.SINGLE) {
-            return CDK.SingleBond;
+            return CDK.SINGLEBOND;
         } else if (order == Order.DOUBLE) {
-            return CDK.DoubleBond;
+            return CDK.DOUBLEBOND;
         } else if (order == Order.TRIPLE) {
-            return CDK.TripleBond;
+            return CDK.TRIPLEBOND;
         } else if (order == Order.QUADRUPLE) {
-            return CDK.QuadrupleBond;
+            return CDK.QUADRUPLEBOND;
         }
         return null;
     }
@@ -321,7 +321,7 @@ public class Convertor {
     private static void deserializeElectronContainerFields(
             Resource rdfObject, IElectronContainer bond) {
         deserializeChemObjectFields(rdfObject, bond);
-        Statement count = rdfObject.getProperty(CDK.hasElectronCount);
+        Statement count = rdfObject.getProperty(CDK.HASELECTRONCOUNT);
         if (count != null)
             bond.setElectronCount(count.getInt());
     }
@@ -329,36 +329,36 @@ public class Convertor {
     public static IMolecule model2Molecule(Model model,
         IChemObjectBuilder builder) {
         ResIterator mols =
-            model.listSubjectsWithProperty(RDF.type, CDK.Molecule);
+            model.listSubjectsWithProperty(RDF.type, CDK.MOLECULE);
         IMolecule mol = null;
         if (mols.hasNext()) {
             Resource rdfMol = mols.next();
             mol = builder.newMolecule();
             Map<Resource,IAtom> rdfToCDKAtomMap = new HashMap<Resource,IAtom>();
-            StmtIterator atoms = rdfMol.listProperties(CDK.hasAtom);
+            StmtIterator atoms = rdfMol.listProperties(CDK.HASATOM);
             while (atoms.hasNext()) {
                 Resource rdfAtom = atoms.nextStatement().getResource();
                 IAtom atom;
-                if (rdfAtom.hasProperty(RDF.type, CDK.PseudoAtom)) {
+                if (rdfAtom.hasProperty(RDF.type, CDK.PSEUDOATOM)) {
                     atom = builder.newPseudoAtom();
                     atom.setStereoParity(0);
-                    Statement label = rdfAtom.getProperty(CDK.hasLabel);
+                    Statement label = rdfAtom.getProperty(CDK.HASLABEL);
                     if (label != null)
                         ((IPseudoAtom)atom).setLabel(label.getString());
                 } else {
                     atom = builder.newAtom();
                 }
-                Statement symbol = rdfAtom.getProperty(CDK.symbol);
+                Statement symbol = rdfAtom.getProperty(CDK.SYMBOL);
                 if (symbol != null) atom.setSymbol(symbol.getString());
                 rdfToCDKAtomMap.put(rdfAtom, atom);
                 deserializeAtomTypeFields(rdfAtom, atom);
                 mol.addAtom(atom);
             }
-            StmtIterator bonds = rdfMol.listProperties(CDK.hasBond);
+            StmtIterator bonds = rdfMol.listProperties(CDK.HASBOND);
             while (bonds.hasNext()) {
                 Resource rdfBond = bonds.nextStatement().getResource();
                 IBond bond = builder.newBond();
-                StmtIterator bondAtoms = rdfBond.listProperties(CDK.bindsAtom);
+                StmtIterator bondAtoms = rdfBond.listProperties(CDK.BINDSATOM);
                 int atomCounter = 0;
                 while (bondAtoms.hasNext()) {
                     Statement rdfAtom = bondAtoms.nextStatement();
@@ -367,7 +367,7 @@ public class Convertor {
                     atomCounter++;
                 }
                 Resource order = rdfBond.
-                    getProperty(CDK.hasOrder).getResource();
+                    getProperty(CDK.HASORDER).getResource();
                 bond.setOrder(resource2Order(order));
                 mol.addBond(bond);
                 deserializeElectronContainerFields(rdfBond, bond);
