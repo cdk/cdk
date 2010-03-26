@@ -37,8 +37,8 @@ import org.openscience.cdk.io.setting.IOSetting;
  * Programs need only care about this interface for any kind of IO.
  * Currently, database IO and file IO is supported.
  *
- * <p>The easiest way to implement a new ChemObjectReader is to
- * subclass the DefaultChemObjectReader.
+ * <p>The easiest way to implement a new {@link IChemObjectReader} is to
+ * subclass the {@link DefaultChemObjectReader}.
  *
  * @cdk.module  io
  * @cdk.githash
@@ -50,37 +50,44 @@ import org.openscience.cdk.io.setting.IOSetting;
 public interface IChemObjectIO {
 
     /**
-     * Returns the ChemFormat class for this IO class.
+     * Returns the {@link IResourceFormat} class for this IO class.
      */
     public IResourceFormat getFormat();
 
     /**
-     * Returns whether the given IChemObject can be read or not.
+     * Returns whether the given {@link IChemObject} can be read or written.
+     *
+     * @param classObject {@link IChemObject} of which is tested if it can be handled.
+     * @return true, if the {@link IChemObject} can be handled.
      */
     public boolean accepts(Class<? extends IChemObject> classObject);
     
     /**
-     * Closes the Reader's resources.
+     * Closes this IChemObjectIO's resources.
+     *
+     * @throws throws an {@link IOException} when the wrapper IO class cannot be closed.
      */
     @TestMethod("testClose")
     public void close() throws IOException;
 
     /**
-     * Returns an Array of IOSettings defined by this reader.
+     * Returns an array of {@link IOSetting}s defined by this IChemObjectIO class.
+     *
+     * @return the {@link IOSetting}s for this class.
      */
     public IOSetting[] getIOSettings();
     
     /**
-     * Adds a ChemObjectIOListener to this ChemObjectReader.
+     * Adds a {@link IChemObjectIOListener} to this IChemObjectIO.
      *
      * @param listener the reader listener to add.
      */
     public void addChemObjectIOListener(IChemObjectIOListener listener);
 
     /**
-     * Removes a ChemObjectIOListener from this ChemObjectReader.
+     * Removes a {@link IChemObjectIOListener} from this IChemObjectIO.
      *
-     * @param listener the reader listener to remove.
+     * @param listener the listener to be removed.
      */
     public void removeChemObjectIOListener(IChemObjectIOListener listener);
     
