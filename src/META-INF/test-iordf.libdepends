@@ -1,5 +1,6 @@
 vecmath1.2-1.14.jar
 log4j.jar
+xercesImpl-2.9.0.jar
 jena/commons-logging-1.1.1.jar
 jena/icu4j_3_4.jar
 jena/iri.jar
