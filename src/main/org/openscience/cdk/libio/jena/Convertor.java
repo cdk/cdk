@@ -159,32 +159,28 @@ public class Convertor {
             element.setAtomicNumber(atomicNumber.getInt());
     }
 
+    private final static Map<Hybridization,Resource> HYBRID_TO_RESOURCE = new HashMap<Hybridization, Resource>(10) {
+        private static final long serialVersionUID = 1027415392461000485L;
+    {
+        put(Hybridization.S, CDK.HYBRID_S);
+        put(Hybridization.SP1, CDK.HYBRID_SP1);
+        put(Hybridization.SP2, CDK.HYBRID_SP2);
+        put(Hybridization.SP3, CDK.HYBRID_SP3);
+        put(Hybridization.PLANAR3, CDK.HYBRID_PLANAR3);
+        put(Hybridization.SP3D1, CDK.HYBRID_SP3D1);
+        put(Hybridization.SP3D2, CDK.HYBRID_SP3D2);
+        put(Hybridization.SP3D3, CDK.HYBRID_SP3D3);
+        put(Hybridization.SP3D4, CDK.HYBRID_SP3D4);
+        put(Hybridization.SP3D5, CDK.HYBRID_SP3D5);
+    }};
+
     private static void serializeAtomTypeFields(Model model,
             Resource rdfObject, IAtomType type) {
         serializeIsotopeFields(model, rdfObject, type);
         if (type.getHybridization() != null) {
-            Hybridization hybrid = type.getHybridization(); 
-            if (hybrid == Hybridization.S) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_S);
-            } else if (hybrid == Hybridization.SP1) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP1);
-            } else if (hybrid == Hybridization.SP2) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP2);
-            } else if (hybrid == Hybridization.SP3) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3);
-            } else if (hybrid == Hybridization.PLANAR3) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_PLANAR3);
-            } else if (hybrid == Hybridization.SP3D1) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D1);
-            } else if (hybrid == Hybridization.SP3D2) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D2);
-            } else if (hybrid == Hybridization.SP3D3) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D3);
-            } else if (hybrid == Hybridization.SP3D4) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D4);
-            } else if (hybrid == Hybridization.SP3D5) {
-                model.add(rdfObject, CDK.HASHYBRIDIZATION, CDK.HYBRID_SP3D5);
-            }
+            Hybridization hybrid = type.getHybridization();
+            if (HYBRID_TO_RESOURCE.containsKey(hybrid)) 
+                model.add(rdfObject, CDK.HASHYBRIDIZATION, HYBRID_TO_RESOURCE.get(hybrid));
         }
         if (type.getAtomTypeName() != null) {
             model.add(rdfObject, CDK.HASATOMTYPENAME, type.getAtomTypeName());
@@ -226,32 +222,29 @@ public class Convertor {
         }
     }
 
+    private final static Map<Resource, Hybridization> resourceHybridMap = new HashMap<Resource, Hybridization>(10) {
+        private static final long serialVersionUID = -351285511820100853L;
+    {
+        put(CDK.HYBRID_S, Hybridization.S);
+        put(CDK.HYBRID_SP1, Hybridization.SP1);
+        put(CDK.HYBRID_SP2, Hybridization.SP2);
+        put(CDK.HYBRID_SP3, Hybridization.SP3);
+        put(CDK.HYBRID_PLANAR3, Hybridization.PLANAR3);
+        put(CDK.HYBRID_SP3D1, Hybridization.SP3D1);
+        put(CDK.HYBRID_SP3D2, Hybridization.SP3D2);
+        put(CDK.HYBRID_SP3D3, Hybridization.SP3D3);
+        put(CDK.HYBRID_SP3D4, Hybridization.SP3D4);
+        put(CDK.HYBRID_SP3D5, Hybridization.SP3D5);
+    }};
+
     private static void deserializeAtomTypeFields(
             Resource rdfObject, IAtomType element) {
         deserializeIsotopeFields(rdfObject, element);
         Statement hybrid = rdfObject.getProperty(CDK.HASHYBRIDIZATION);
         if (hybrid != null) {
             Resource rdfHybrid = (Resource)hybrid.getObject();
-            if (rdfHybrid.equals(CDK.HYBRID_S)) {
-                element.setHybridization(Hybridization.S);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP1)) {
-                element.setHybridization(Hybridization.SP1);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP2)) {
-                element.setHybridization(Hybridization.SP2);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP3)) {
-                element.setHybridization(Hybridization.SP3);
-            } else if (rdfHybrid.equals(CDK.HYBRID_PLANAR3)) {
-                element.setHybridization(Hybridization.PLANAR3);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D1)) {
-                element.setHybridization(Hybridization.SP3D1);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D2)) {
-                element.setHybridization(Hybridization.SP3D2);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D3)) {
-                element.setHybridization(Hybridization.SP3D3);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D4)) {
-                element.setHybridization(Hybridization.SP3D4);
-            } else if (rdfHybrid.equals(CDK.HYBRID_SP3D5)) {
-                element.setHybridization(Hybridization.SP3D5);
+            if (resourceHybridMap.containsKey(rdfHybrid)) {
+                element.setHybridization(resourceHybridMap.get(rdfHybrid));
             }
         }
         Statement name = rdfObject.getProperty(CDK.HASATOMTYPENAME);
