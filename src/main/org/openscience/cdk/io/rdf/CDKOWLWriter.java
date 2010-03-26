@@ -44,30 +44,45 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
 
     private Writer output;
 
+    /**
+     * Creates a new CDKOWLWriter sending output to the given Writer.
+     *
+     * @param output {@link Writer} to which is OWL output is routed.
+     */
     public CDKOWLWriter(Writer output) {
         this.output = output;
     }
 
+    /**
+     * Creates a new CDKOWLWriter with an undefined output.
+     */
     public CDKOWLWriter() {
         this.output = null;
     }
 
+    /**
+     * Returns the {@link IResourceFormat} for this writer: {@link CDKOWLFormat}.
+     */
     public IResourceFormat getFormat() {
         return CDKOWLFormat.getInstance();
     }
 
+    /** {@inheritDoc} */
     public void setWriter(Writer out) throws CDKException {
         this.output = out;
     }
 
+    /** {@inheritDoc} */
     public void setWriter(OutputStream output) throws CDKException {
         this.output = new OutputStreamWriter(output);
     }
 
+    /** {@inheritDoc} */
     public void close() throws IOException {
         if (output != null) output.close();
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
         Class[] interfaces = classObject.getInterfaces();
@@ -79,6 +94,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
             return false;
     }
 
+    /** {@inheritDoc} */
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
             try {
