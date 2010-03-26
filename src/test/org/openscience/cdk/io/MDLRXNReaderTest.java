@@ -249,8 +249,14 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         IReactionSet reactionSet2 = (IReactionSet)reader.read(new NNReactionSet());
         Assert.assertEquals(reactionSet.getReaction(0).getMappingCount(),reactionSet2.getReaction(0).getMappingCount());
         for(int i=0;i<reactionSet.getReaction(0).getMappingCount();i++){
-            Assert.assertEquals(getAtomNumber(reactionSet,reactionSet.getReaction(0).getMapping(i).getChemObject(0)),getAtomNumber(reactionSet2,reactionSet2.getReaction(0).getMapping(i).getChemObject(0)));
-            Assert.assertEquals(getAtomNumber(reactionSet,reactionSet.getReaction(0).getMapping(i).getChemObject(1)),getAtomNumber(reactionSet2,reactionSet2.getReaction(0).getMapping(i).getChemObject(1)));
+            Assert.assertEquals(
+                getAtomNumber(reactionSet,reactionSet.getReaction(0).getMapping(i).getChemObject(0)),
+                getAtomNumber(reactionSet2,reactionSet2.getReaction(0).getMapping(i).getChemObject(0))
+            );
+            Assert.assertEquals(
+                getAtomNumber(reactionSet,reactionSet.getReaction(0).getMapping(i).getChemObject(1)),
+                getAtomNumber(reactionSet2,reactionSet2.getReaction(0).getMapping(i).getChemObject(1))
+            );
         }
     }
 
