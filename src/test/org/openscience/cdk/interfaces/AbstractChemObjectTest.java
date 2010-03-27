@@ -224,13 +224,9 @@ public abstract class AbstractChemObjectTest extends CDKTestCase {
     	IChemObject chemObject = newChemObject();
     	final String key = "NullProperty";
     	chemObject.setProperty( key, null);
-    	try {
-    		IChemObject chemObject_clone = (IChemObject) chemObject.clone();
-    		Assert.assertFalse(chemObject_clone.getProperties().containsKey(key));
-    		Assert.assertNull(chemObject_clone.getProperty(null));
-    	} catch (NullPointerException e) {
-			Assert.fail();
-		}
+        IChemObject chemObject_clone = (IChemObject) chemObject.clone();
+        Assert.assertFalse(chemObject_clone.getProperties().containsKey(key));
+        Assert.assertNull(chemObject_clone.getProperty(null));
     }
 
     @Test public void testClone_ChemObjectListeners() throws Exception {
