@@ -763,6 +763,8 @@ public class SmilesParserTest extends CDKTestCase {
 	 * 
 	 * @cdk.bug   956929
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
+	 *
+	 * @see #testPyrolle()
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testPyrole() throws Exception {
@@ -1817,6 +1819,11 @@ public class SmilesParserTest extends CDKTestCase {
         p.parseSmiles("NC1=CC=C(N)C=C");
     }
 
+    /**
+     * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
+     *
+     * @see #testPyrole()
+     */
     @Test
     public void testPyrolle() throws InvalidSmilesException{
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
