@@ -740,6 +740,17 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(isAromatic);
     }
 
+    /**
+     * @cdk.bug 2976054
+     */
+    @Test public void testAnotherNitrogen_SP2() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("c1cnc2s[cH][cH]n12");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms())
+            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+    }
 
 }
 
