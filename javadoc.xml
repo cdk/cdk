@@ -118,6 +118,7 @@
       <antcall target="ojdcheck-module"><param name="module" value="atomtype"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="io"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="ioformats"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="iordf"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="inchi"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="extra"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="fingerprint"/></antcall>
