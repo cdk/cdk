@@ -386,7 +386,7 @@ public class PDBReader extends DefaultChemObjectReader {
                         oFile.setProperty(CDKConstants.TITLE, title);
 					} 
 					
-					/*************************************************************
+					/* ***********************************************************
 					 * Read connectivity information from CONECT records.
 					 * Only covalent bonds are dealt with. Perhaps salt bridges
 					 * should be dealt with in the same way..?
@@ -447,7 +447,7 @@ public class PDBReader extends DefaultChemObjectReader {
 							}
 						}
 					}
-					/*************************************************************/
+					/* ***********************************************************/
 					
 					else if ("HELIX ".equalsIgnoreCase(cCol)) {
 //						HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
@@ -639,7 +639,7 @@ public class PDBReader extends DefaultChemObjectReader {
             }
 		}
 		
-		/*************************************************************************************
+		/* ***********************************************************************************
 		 * It sets a flag in the property content of an atom,
 		 * which is used when bonds are created to check if the atom is an OXT-record => needs
 		 * special treatment.
@@ -652,7 +652,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		else	{
 			oAtom.setOxt(false);
 		}
-		/*************************************************************************************/
+		/* ***********************************************************************************/
 		
 		return oAtom;
 	}

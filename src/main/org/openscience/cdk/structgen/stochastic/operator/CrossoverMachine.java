@@ -84,7 +84,7 @@ public class CrossoverMachine
 			List<Integer> redAtoms = new ArrayList<Integer>();
 			List<Integer> blueAtoms = new ArrayList<Integer>();		
 	
-			/***randomly divide atoms into two parts: redAtoms and blueAtoms.***/
+			/* *randomly divide atoms into two parts: redAtoms and blueAtoms.***/
 			if (splitMode==SPLIT_MODE_RADNDOM)
 			{
 				/*better way to randomly divide atoms into two parts: redAtoms and blueAtoms.*/
@@ -120,7 +120,7 @@ public class CrossoverMachine
 					}	
 				}
 			}	
-			/*** dividing over ***/
+			/* * dividing over ***/
 			redChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad); 
 			blueChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad); 
 			redChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom); 

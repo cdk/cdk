@@ -141,7 +141,7 @@ public class LoggingTool implements ILoggingTool {
             toSTDOUT = true;
             logger.debug("Unknown error occured: ", e.getMessage());
         }
-        /****************************************************************
+        /* **************************************************************
          * but some JVMs (i.e. MSFT) won't pass the SecurityException to
          * this exception handler. So we are going to check the JVM
          * version first

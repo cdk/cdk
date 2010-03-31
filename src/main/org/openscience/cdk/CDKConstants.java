@@ -126,7 +126,7 @@ public class CDKConstants {
     public final static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
 
 
-    /****************************************
+    /* **************************************
      * Some predefined flags - keep the     *
      * numbers below 50 free for other      *
      * purposes                             *
@@ -185,7 +185,7 @@ public class CDKConstants {
      */
     public final static int MAX_POINTER_INDEX = 1;
     
-    /****************************************
+    /* **************************************
      * Some predefined property names for    *
      * ChemObjects                           *
      ****************************************/
@@ -209,7 +209,7 @@ public class CDKConstants {
     public static final String DESCRIPTION = "cdk:Description";
 
 
-    /****************************************
+    /* **************************************
     * Some predefined property names for    *
     * Molecules                             *
     ****************************************/
@@ -251,7 +251,7 @@ public class CDKConstants {
     public static final String RELEVANT_RINGS = "cdk:RelevantRings";
 
     
-    /****************************************
+    /* **************************************
     * Some predefined property names for    *
     * Atoms                                 *
     ****************************************/
@@ -296,7 +296,7 @@ public class CDKConstants {
     public static final String REST_H = "cdk:RestH";
 
 
-    /****************************************
+    /* **************************************
     * Some predefined property names for    *
     * AtomTypes                             *
     ****************************************/
