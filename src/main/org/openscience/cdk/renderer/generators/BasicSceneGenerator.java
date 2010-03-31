@@ -43,6 +43,15 @@ public class BasicSceneGenerator implements IGenerator {
     }
     private IGeneratorParameter<Color> backgroundColor = new BackGroundColor();
 
+    public static class UseAntiAliasing extends
+    AbstractGeneratorParameter<Boolean> {
+    	public Boolean getDefault() {
+    		return Boolean.TRUE;
+    	}
+    }
+    private IGeneratorParameter<Boolean> useAntiAliasing =
+    	new UseAntiAliasing();
+
     /**
      * Area on each of the four margins to keep white.
      */
@@ -64,7 +73,8 @@ public class BasicSceneGenerator implements IGenerator {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
                 backgroundColor,
-                margin
+                margin,
+                useAntiAliasing
             }
         );
     }
