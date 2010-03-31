@@ -29,7 +29,7 @@ public class RenderCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "render.javafiles";
 
-    @BeforeClass protected void setUp() throws Exception {
+    @BeforeClass public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, RenderCoverageTest.class.getClassLoader());
     }
 
