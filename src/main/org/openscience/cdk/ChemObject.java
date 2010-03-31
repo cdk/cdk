@@ -28,7 +28,6 @@ package org.openscience.cdk;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -305,7 +304,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
         System.arraycopy(flags, 0, clone.flags, 0, flags.length);
         // clone the properties
 		if (properties != null) {
-			Map<Object, Object> clonedHashtable = new Hashtable<Object, Object>();
+			Map<Object, Object> clonedHashtable = new HashMap<Object, Object>();
 			Iterator<Object> keys = properties.keySet().iterator();
 			while (keys.hasNext()) {
 				Object key = keys.next();

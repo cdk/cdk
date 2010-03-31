@@ -1244,6 +1244,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == +2)) {
     			IAtomType type = getAtomType("Pt.2plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+                    atom.getFormalCharge() == 0)) {
+                int neighbors = atomContainer.getConnectedAtomsCount(atom);
+                if (neighbors == 4) {
+                    IAtomType type = getAtomType("Pt.4");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else if (neighbors == 6) {
+                    IAtomType type = getAtomType("Pt.6");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
     		}
     	} else if ("Ni".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {

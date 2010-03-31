@@ -763,6 +763,8 @@ public class SmilesParserTest extends CDKTestCase {
 	 * 
 	 * @cdk.bug   956929
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
+	 *
+	 * @see #testPyrolle()
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testPyrole() throws Exception {
@@ -1815,6 +1817,33 @@ public class SmilesParserTest extends CDKTestCase {
     public void testBadRingClosure2() throws InvalidSmilesException {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         p.parseSmiles("NC1=CC=C(N)C=C");
+    }
+
+    /**
+     * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
+     *
+     * @see #testPyrole()
+     */
+    @Test
+    public void testPyrolle() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("c1c[nH]cc1");
+        for (IAtom atom : mol.atoms()) {
+            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
+
+    /**
+     * @cdk.bug 2976054
+     * @throws InvalidSmilesException
+     */
+    @Test
+    public void testAromaticity() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("c1cnc2s[cH][cH]n12");
+        for (IAtom atom : mol.atoms()) {
+            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        }
     }
 }
 

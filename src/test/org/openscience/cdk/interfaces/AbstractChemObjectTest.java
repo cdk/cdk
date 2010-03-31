@@ -219,7 +219,17 @@ public abstract class AbstractChemObjectTest extends CDKTestCase {
         // ok, copied hashtable item, but this item should be cloned
         Assert.assertEquals(atom, chemObject2.getProperties().get("atom"));
     }
-    
+
+    /**
+     * @cdk.bug 2975800
+     */
+    @Test public void testClone_PropertyNull() throws Exception {
+    	IChemObject chemObject = newChemObject();
+    	final String key = "NullProperty";
+    	chemObject.setProperty( key, null);
+        chemObject.clone();
+    }
+
     @Test public void testClone_ChemObjectListeners() throws Exception {
         IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();

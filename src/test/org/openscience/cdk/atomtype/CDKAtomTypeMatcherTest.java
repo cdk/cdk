@@ -3151,6 +3151,32 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testPlatinumFourCoordinate() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("Pt"));
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,1,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,2,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,3,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,4,IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"Pt.4", "Cl", "Cl", "Cl", "Cl"}; 
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testPlatinumSixCoordinate() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("Pt"));
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,1,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,2,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,3,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,4,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("O")); mol.addBond(0,5,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("O")); mol.addBond(0,6,IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"Pt.6", "Cl", "Cl", "Cl", "Cl", "O.sp3", "O.sp3"}; 
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     /**
      * @cdk.bug 2424511
      */
