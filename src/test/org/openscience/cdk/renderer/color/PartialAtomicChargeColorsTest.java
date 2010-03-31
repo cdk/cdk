@@ -38,9 +38,9 @@ public class PartialAtomicChargeColorsTest extends CDKTestCase {
 		PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
 		Assert.assertNotNull(colors);
 		IAtom hydrogen = new Atom("H"); hydrogen.setAtomicNumber(1);
-		Assert.assertEquals(Color.black, colors.getAtomColor(hydrogen));
+		Assert.assertEquals(Color.white, colors.getAtomColor(hydrogen));
 		IAtom helium = new Atom("He"); helium.setAtomicNumber(2);
-		Assert.assertEquals(Color.black, colors.getAtomColor(helium));
+		Assert.assertEquals(Color.white, colors.getAtomColor(helium));
 	}
 
 }
