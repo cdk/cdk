@@ -123,8 +123,6 @@ public class RenderingParameters {
 
     private boolean showTooltip = false;
 
-    private boolean useAntiAliasing = true;
-
     private boolean willDrawNumbers = false;
 
     /**
@@ -267,10 +265,6 @@ public class RenderingParameters {
         return showTooltip;
     }
 
-    public boolean isUseAntiAliasing() {
-        return useAntiAliasing;
-    }
-
     public boolean isWillDrawNumbers() {
         return willDrawNumbers;
     }
@@ -329,10 +323,6 @@ public class RenderingParameters {
 
     public void setShowTooltip(boolean showTooltip) {
         this.showTooltip = showTooltip;
-    }
-
-    public void setUseAntiAliasing(boolean useAntiAliasing) {
-        this.useAntiAliasing = useAntiAliasing;
     }
 
     public void setWillDrawNumbers(boolean willDrawNumbers) {

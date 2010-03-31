@@ -185,15 +185,6 @@ public class RendererModel implements Serializable, Cloneable {
         this.parameters.setFontStyle(fontStyle);
     }
 
-    public boolean getUseAntiAliasing() {
-        return this.parameters.isUseAntiAliasing();
-    }
-
-    public void setUseAntiAliasing(boolean bool) {
-        this.parameters.setUseAntiAliasing(bool);
-        fireChange();
-    }
-
     public boolean getShowReactionBoxes() {
         return this.parameters.isShowReactionBoxes();
     }
