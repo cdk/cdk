@@ -61,6 +61,7 @@ public class PartialAtomicChargeColors implements IAtomColorer {
      */
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
+        if (atom.getCharge() == null) return defaultColor;
         double charge = atom.getCharge();
         if (charge > 0.0) {
             if (charge < 1.0) {
