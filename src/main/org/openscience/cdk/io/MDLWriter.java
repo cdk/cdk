@@ -308,7 +308,15 @@ public class MDLWriter extends DefaultChemObjectWriter {
         		line += formatMDLInt(15, 3);
         	else
         		line += formatMDLInt(atom.getValency(), 3);
-        	line += "  0  0  0  0  0  0";
+        	line += "  0  0  0";
+        	
+        	if (container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null) {
+        	    int value = ((Integer)container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue();
+        	    line += formatMDLInt(value, 3);
+       	    } else {
+        	    line += formatMDLInt(0, 3);
+        	}
+      	    line += "  0  0";
         	writer.write(line);
         	writer.newLine();
         }

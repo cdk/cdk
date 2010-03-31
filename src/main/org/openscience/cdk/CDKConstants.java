@@ -291,6 +291,8 @@ public class CDKConstants {
      */
     public static final String REST_H = "cdk:RestH";
 
+    public static final String ATOM_ATOM_MAPPING = "cdk:AtomAtomMapping";
+
 
     /* **************************************
     * Some predefined property names for    *

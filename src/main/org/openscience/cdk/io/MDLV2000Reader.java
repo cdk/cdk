@@ -545,7 +545,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     try {
                         int reactionAtomID = Integer.parseInt(reactionAtomIDString);
                         if (reactionAtomID != 0) {
-                            atom.setID(reactionAtomIDString);
+                            atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, reactionAtomID);
                         }
                     } catch (Exception exception) {
                         logger.error("Mapping number ", reactionAtomIDString, " is not an integer.");

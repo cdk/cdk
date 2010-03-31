@@ -772,4 +772,16 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(mol.getAtomCount(), 5);
         Assert.assertEquals(mol.getBondCount(), 4);
     }
+
+    @Test public void testReadAtomAtomMapping() throws Exception {
+        String filename = "data/mdl/a-pinene-with-atom-atom-mapping.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IMolecule mol = reader.read(new Molecule());
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(1, ((Integer)mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assert.assertEquals(15, ((Integer)mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assert.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+    }
 }
