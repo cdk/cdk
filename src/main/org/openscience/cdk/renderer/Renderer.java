@@ -41,7 +41,9 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IReactionGenerator;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.FontName;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UsedFontStyle;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
@@ -791,8 +793,13 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
 	    // cache the diagram for quick-redraw
 	    this.cachedDiagram = diagram;
 
-	    this.fontManager.setFontName(this.rendererModel.getFontName());
-	    this.fontManager.setFontStyle(this.rendererModel.getFontStyle());
+	    this.fontManager.setFontName(
+		    this.rendererModel.getRenderingParameter(FontName.class).getValue()
+	    );
+	    this.fontManager.setFontStyle(
+	    	this.rendererModel.getRenderingParameter(UsedFontStyle.class)
+	    		.getValue()
+	    );
 
 	    drawVisitor.setFontManager(this.fontManager);
 	    drawVisitor.setTransform(this.transform);
