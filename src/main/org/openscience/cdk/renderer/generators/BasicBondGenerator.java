@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.RendererModel.ColorHash;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
@@ -147,7 +148,8 @@ public class BasicBondGenerator implements IGenerator {
 	        return overrideColor;
 	    }
 
-	    Color color = model.getColorHash().get(bond);
+	    Color color = model.getRenderingParameter(ColorHash.class)
+	    	.getValue().get(bond);
 	    if (color == null) {
 	        return model.getRenderingParameter(DefaultBondColor.class).getValue();
 	    } else {
