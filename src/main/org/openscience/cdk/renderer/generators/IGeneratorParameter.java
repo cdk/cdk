@@ -25,6 +25,7 @@ package org.openscience.cdk.renderer.generators;
  * etc.
  *
  * @cdk.module  render
+ * @cdk.githash
  */
 public interface IGeneratorParameter<T> {
 

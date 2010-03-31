@@ -28,6 +28,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
  * @cdk.module  render
+ * @cdk.githash
  */
 public interface IGenerator {
 

@@ -33,6 +33,7 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
  * with the associated {@link RendererModel}.
  *
  * @cdk.module render
+ * @cdk.githash
  */
 public interface IRenderer {
 

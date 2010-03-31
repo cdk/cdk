@@ -24,6 +24,7 @@ import org.openscience.cdk.renderer.font.IFontManager;
 
 /**
  * @cdk.module render
+ * @cdk.githash
  */
 public interface IDrawVisitor extends IRenderingVisitor {
     

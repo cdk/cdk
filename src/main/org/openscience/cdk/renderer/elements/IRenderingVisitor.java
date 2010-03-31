@@ -24,6 +24,7 @@ import java.awt.geom.AffineTransform;
 
 /**
  * @cdk.module  render
+ * @cdk.githash
  */
 public interface IRenderingVisitor {
     

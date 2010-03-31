@@ -24,6 +24,7 @@ import java.awt.Color;
 
 /**
  * @cdk.module render
+ * @cdk.githash
  */
 public class TextElement implements IRenderingElement {
 

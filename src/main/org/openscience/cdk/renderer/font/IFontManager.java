@@ -23,6 +23,7 @@ package org.openscience.cdk.renderer.font;
  * 
  * @author maclean
  * @cdk.module render
+ * @cdk.githash
  */
 public interface IFontManager {
     

@@ -22,6 +22,7 @@ package org.openscience.cdk.renderer.elements;
 
 /**
  * @cdk.module render
+ * @cdk.githash
  */
 public interface IRenderingElement {
 	

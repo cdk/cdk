@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @author maclean
  * @cdk.module render
+ * @cdk.githash
  */
 public interface IChemObjectSelection {
 
