@@ -300,7 +300,15 @@ public class MDLWriter extends DefaultChemObjectWriter {
         	}else{
         		line += formatMDLString(container.getAtom(f).getSymbol(), 3);
         	}
-        	line += " 0  0  0  0  0  0  0  0  0  0  0  0";
+        	line += " 0  0  0  0  0";
+        	//valence 0 is defined as 15 in mol files
+        	if(atom.getValency()==(Integer)CDKConstants.UNSET)
+        		line += formatMDLInt(0, 3);
+        	else if(atom.getValency()==0)
+        		line += formatMDLInt(15, 3);
+        	else
+        		line += formatMDLInt(atom.getValency(), 3);
+        	line += "  0  0  0  0  0  0";
         	writer.write(line);
         	writer.newLine();
         }

@@ -108,6 +108,18 @@ public class MDLWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.indexOf("M  ISO  1   1  14") != -1);
     }
     
+    @Test public void testWriteValence() throws Exception {
+    	StringWriter writer = new StringWriter();
+        Molecule molecule = MoleculeFactory.makeAlphaPinene();
+        molecule.getAtom(0).setValency(1);
+        molecule.getAtom(1).setValency(0);
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
+        String output = writer.toString();
+        Assert.assertTrue(output.indexOf("0  0  0  0  0  1  0  0  0  0  0  0") != -1);
+        Assert.assertTrue(output.indexOf("0  0  0  0  0 15  0  0  0  0  0  0") != -1);
+    }
+    
     /**
      * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
      * When a molecule contains an IPseudoAtom without specifying the atom label

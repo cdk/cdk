@@ -492,7 +492,31 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 } else {
                     logger.error("Cannot set mass difference for a non-element!");
                 }
-               
+
+                if (line.length() >= 51) {
+                    String valenceString = removeNonDigits(line.substring(48,51));
+                    logger.debug("Valence: ", valenceString);
+                    if (!(atom instanceof IPseudoAtom)) {
+                        try {
+                            int valence = Integer.parseInt(valenceString);
+                            if (valence != 0) {
+                                //15 is defined as 0 in mol files
+                                if(valence==15)
+                                    atom.setValency(0);
+                                else
+                                    atom.setValency(valence);
+                            }
+                        } catch (Exception exception) {
+                            handleError(
+                                "Could not parse valence information field",
+                                linecount, 49, 52,
+                                exception
+                            );
+                        }
+                    } else {
+                        logger.error("Cannot set valence information for a non-element!");
+                    }
+                }
                 
                 String chargeCodeString = line.substring(36,39).trim();
                 logger.debug("Atom charge code: ", chargeCodeString);
@@ -861,6 +885,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     public List<IAtom> getAtomsByLinePosition() {
         return atomsByLinePosition;
+    }
+
+    private String removeNonDigits(String input) {
+        StringBuffer buffer = new StringBuffer();
+        for (int i=0; i<input.length(); i++) {
+            char inputChar = input.charAt(i);
+            if (Character.isDigit(inputChar))
+                buffer.append(inputChar);
+        }
+        return buffer.toString();
     }
 }
 

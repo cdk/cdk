@@ -741,4 +741,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    @Test public void testReadValence() throws Exception {
+        String filename = "data/mdl/a-pinene-with-valence.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+     
+        IMolecule mol = reader.read(new Molecule());
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(2, mol.getAtom(0).getValency().intValue());
+        Assert.assertEquals(3, mol.getAtom(1).getValency().intValue());
+        Assert.assertNull(mol.getAtom(2).getValency());
+        Assert.assertEquals(0, mol.getAtom(3).getValency().intValue());
+    }
 }
