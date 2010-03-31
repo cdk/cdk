@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
@@ -148,42 +147,6 @@ public class RendererModel implements Serializable, Cloneable {
 	public Map<IAtom, IAtom> getMerge() {
 		return merge;
 	}
-
-    /**
-     * Get the name of the font family (Arial, etc).
-     *
-     * @return the name of the font family as a String.
-     */
-    public String getFontName() {
-        return this.parameters.getFontName();
-    }
-
-    /**
-     * Set the name of the font family (Arial, etc).
-     */
-    public void setFontName(String fontName) {
-        this.parameters.setFontName(fontName);
-        fireChange();
-    }
-
-    /**
-     * Get the style of the font (Normal, Bold).
-     *
-     * @return the style of the font as a member of the IFontManager.FontStyle
-     *         enum
-     */
-    public IFontManager.FontStyle getFontStyle() {
-        return this.parameters.getFontStyle();
-    }
-
-    /**
-     * Set the style of font to use (Normal, Bold).
-     *
-     * @param fontStyle a member of the enum in {@link IFontManager}
-     */
-    public void setFontManager(IFontManager.FontStyle fontStyle) {
-        this.parameters.setFontStyle(fontStyle);
-    }
 
     public boolean getShowReactionBoxes() {
         return this.parameters.isShowReactionBoxes();

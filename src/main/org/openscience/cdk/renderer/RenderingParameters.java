@@ -23,8 +23,6 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Color;
 
-import org.openscience.cdk.renderer.font.IFontManager;
-
 /**
  * @cdk.module render
  * @cdk.githash
@@ -67,10 +65,6 @@ public class RenderingParameters {
      * The shape of the compact mode atom.
      */
 //    private AtomShape compactShape = AtomShape.SQUARE;
-
-    private String fontName = "Arial";
-
-    private IFontManager.FontStyle fontStyle = IFontManager.FontStyle.NORMAL;
 
     private Color externalHighlightColor = Color.orange;
 
@@ -175,22 +169,6 @@ public class RenderingParameters {
 
     public void setHighlightDistance(double highlightDistance) {
         this.highlightDistance = highlightDistance;
-    }
-
-	public String getFontName() {
-        return this.fontName;
-    }
-
-    public void setFontName(String fontName) {
-        this.fontName = fontName;
-    }
-
-    public IFontManager.FontStyle getFontStyle() {
-        return this.fontStyle;
-    }
-
-    public void setFontStyle(IFontManager.FontStyle fontStyle) {
-        this.fontStyle = fontStyle;
     }
 
     public double getBondDistance() {
