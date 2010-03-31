@@ -186,26 +186,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the distance between two lines in a double or triple bond
-     *
-     * @return the distance between two lines in a double or triple bond
-     */
-    public double getBondDistance() {
-        return this.parameters.getBondDistance();
-    }
-
-    /**
-     * Sets the distance between two lines in a double or triple bond
-     *
-     * @param bondDistance
-     *            the distance between two lines in a double or triple bond
-     */
-    public void setBondDistance(double bondDistance) {
-        this.parameters.setBondDistance(bondDistance);
-        fireChange();
-    }
-
-    /**
      * Returns the thickness of an atom atom mapping line.
      *
      * @return the thickness of an atom atom mapping line

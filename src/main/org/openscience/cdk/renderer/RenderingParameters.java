@@ -41,11 +41,6 @@ public class RenderingParameters {
     private int arrowHeadWidth = 10;
 
     /**
-     * The gap between double and triple bond lines on the screen
-     */
-    private double bondDistance = 2;
-
-    /**
      * The length on screen of a typical bond
      */
     private double bondLength = 40.0;
@@ -171,10 +166,6 @@ public class RenderingParameters {
         this.highlightDistance = highlightDistance;
     }
 
-    public double getBondDistance() {
-        return bondDistance;
-    }
-
     public double getBondLength() {
         return bondLength;
     }
@@ -245,10 +236,6 @@ public class RenderingParameters {
 
     public boolean isWillDrawNumbers() {
         return willDrawNumbers;
-    }
-
-    public void setBondDistance(double bondDistance) {
-        this.bondDistance = bondDistance;
     }
 
     public void setMappingLineWidth(double mappingLineWidth) {
