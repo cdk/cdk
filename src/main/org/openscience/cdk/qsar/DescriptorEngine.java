@@ -654,7 +654,6 @@ public class DescriptorEngine {
 
         for (String jar : jars) {
             logger.debug("Looking in " + jar);
-            if (jar.indexOf("bond") != -1) System.out.println("jar = " + jar);
             JarFile jarFile;
             try {
                 jarFile = new JarFile(jar);
@@ -663,7 +662,6 @@ public class DescriptorEngine {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
                     if (jarEntry.toString().endsWith(".class")) {
                         String tmp = jarEntry.toString().replace('/', '.').replaceAll("\\.class", "");
-                        if (tmp.indexOf("qsar") != -1) System.out.println("tmp = " + tmp);
                         if (!(tmp.indexOf(packageName) != -1)) continue;
                         if (tmp.indexOf('$') != -1) continue;
                         if (tmp.indexOf("Test") != -1) continue;
