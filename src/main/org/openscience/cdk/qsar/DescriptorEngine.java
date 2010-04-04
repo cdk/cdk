@@ -20,23 +20,9 @@
  */
 package org.openscience.cdk.qsar;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.dict.Dictionary;
@@ -48,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -210,7 +197,7 @@ public class DescriptorEngine {
 
 
         for (int i = 0; i < descriptors.size(); i++) {
-            IDescriptor descriptor = (IDescriptor) descriptors.get(i);
+            IDescriptor descriptor = descriptors.get(i);
             if (descriptor instanceof IMolecularDescriptor) {
                 DescriptorValue value = ((IMolecularDescriptor) descriptor).calculate(molecule);
                 if (value.getException() == null) molecule.setProperty(speclist.get(i), value);
@@ -539,8 +526,7 @@ public class DescriptorEngine {
     @TestMethod(value="testAvailableClass")
     public String[] getAvailableDictionaryClasses() {
         List<String> classList = new ArrayList<String>();
-        for (Iterator iter = speclist.iterator(); iter.hasNext();) {
-            DescriptorSpecification spec = (DescriptorSpecification) iter.next();
+        for (DescriptorSpecification spec : speclist) {
             String[] tmp = getDictionaryClass(spec);
             if (tmp != null) classList.addAll(Arrays.asList(tmp));
         }
@@ -619,8 +605,8 @@ public class DescriptorEngine {
 
                         // get the interfaces implemented and see if one matches the one we're looking for
                         Class[] interfaces = klass.getInterfaces();
-                        for (int k = 0; k < interfaces.length; k++) {
-                            if (interfaces[k].getName().equals(interfaceName)) {
+                        for (Class anInterface : interfaces) {
+                            if (anInterface.getName().equals(interfaceName)) {
                                 classlist.add(className);
                                 break;
                             }
@@ -725,9 +711,9 @@ public class DescriptorEngine {
         String specRef = null;
         // see if we got a descriptors java class name
         for (int i = 0; i < classNames.size(); i++) {
-            String className = (String) classNames.get(i);
+            String className = classNames.get(i);
             if (className.equals(identifier)) {
-                IDescriptor descriptor = (IDescriptor) descriptors.get(i);
+                IDescriptor descriptor = descriptors.get(i);
                 DescriptorSpecification descSpecification = descriptor.getSpecification();
                 String[] tmp = descSpecification.getSpecificationReference().split("#");
                 if (tmp.length != 2) {
