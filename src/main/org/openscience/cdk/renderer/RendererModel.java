@@ -173,24 +173,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-    public boolean getShowImplicitHydrogens() {
-        return this.parameters.isShowImplicitHydrogens();
-    }
-
-    public void setShowImplicitHydrogens(boolean showThem) {
-        this.parameters.setShowImplicitHydrogens(showThem);
-        fireChange();
-    }
-
-    public boolean getShowExplicitHydrogens() {
-        return this.parameters.isShowExplicitHydrogens();
-    }
-
-    public void setShowExplicitHydrogens(boolean showThem) {
-        this.parameters.setShowExplicitHydrogens(showThem);
-        fireChange();
-    }
-
         fireChange();
     }
 
