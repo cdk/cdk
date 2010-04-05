@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.renderer.generators;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import org.openscience.cdk.interfaces.IReaction;
@@ -45,17 +46,22 @@ public class ReactionBoxGenerator implements IReactionGenerator {
         if (totalBounds == null) return null;
         
         ElementGroup diagram = new ElementGroup();
-        diagram.add(new RectangleElement(totalBounds.getMinX()-d,
-                                    totalBounds.getMinY()-d,
-                                    totalBounds.getMaxX()+d,
-                                    totalBounds.getMaxY()+d,
-                                    model.getForeColor()));
+        Color foregroundColor = model.getRenderingParameter(
+            BasicSceneGenerator.ForegroundColor.class).getValue();
+        diagram.add(new RectangleElement(
+        	totalBounds.getMinX()-d,
+            totalBounds.getMinY()-d,
+            totalBounds.getMaxX()+d,
+            totalBounds.getMaxY()+d,
+            foregroundColor
+        ));
         if (reaction.getID() != null) {
-        	diagram.add(new TextElement((totalBounds.getMinX()
-        	                            +totalBounds.getMaxX())/2, 
-        	                            totalBounds.getMinY()-d, 
-        	                            reaction.getID(), 
-        	                            model.getForeColor()));
+        	diagram.add(new TextElement(
+        		(totalBounds.getMinX()+totalBounds.getMaxX())/2, 
+        		totalBounds.getMinY()-d, 
+        		reaction.getID(), 
+        		foregroundColor
+        	));
         }
         return diagram;
 	}
