@@ -21,6 +21,8 @@ package org.openscience.cdk.renderer.generators;
 
 
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -77,4 +79,10 @@ public class BoundsGenerator implements IReactionGenerator {
                                     model.getBoundsColor());
     }
 
+	public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+            }
+        );
+    }
 }

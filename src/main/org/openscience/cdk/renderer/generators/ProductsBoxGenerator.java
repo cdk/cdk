@@ -22,6 +22,8 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
@@ -79,4 +81,10 @@ public class ProductsBoxGenerator implements IReactionGenerator {
         return diagram;
 	}
 
+	public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+            }
+        );
+    }
 }

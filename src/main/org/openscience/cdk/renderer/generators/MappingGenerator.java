@@ -20,6 +20,8 @@
 package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
@@ -69,4 +71,11 @@ public class MappingGenerator implements IReactionGenerator {
 		double scale = model.getScale();
 		return model.getMappingLineWidth() / scale;
 	}
+	
+	public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+            }
+        );
+    }
 }
