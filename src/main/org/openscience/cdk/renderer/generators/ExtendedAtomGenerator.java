@@ -32,6 +32,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.TextGroupElement;
 import org.openscience.cdk.renderer.elements.TextGroupElement.Position;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
  * A generator for atoms with mass, charge, etc.
@@ -41,7 +42,16 @@ import org.openscience.cdk.renderer.elements.TextGroupElement.Position;
  *
  */
 public class ExtendedAtomGenerator extends BasicAtomGenerator {
-    
+
+    public static class ShowImplicitHydrogens extends
+    AbstractGeneratorParameter<Boolean> {
+    	public Boolean getDefault() {
+    		return Boolean.TRUE;
+    	}
+    }
+    private IGeneratorParameter<Boolean> showImplicitHydrogens =
+    	new ShowImplicitHydrogens();
+
     public IRenderingElement generate(
             IAtomContainer ac, IAtom atom, RendererModel model) {
         
@@ -85,7 +95,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             textGroup.addChild(number, position);
         }
         
-        if (model.getShowImplicitHydrogens()) {
+        if (showImplicitHydrogens.getValue()) {
         	if(atom.getHydrogenCount()!=null){
 	            int nH = atom.getHydrogenCount();
 	            if (nH > 0) {
