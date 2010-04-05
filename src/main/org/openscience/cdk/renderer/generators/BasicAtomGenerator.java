@@ -70,6 +70,15 @@ public class BasicAtomGenerator implements IGenerator {
     }
     private IGeneratorParameter<Boolean> colorByType = new ColorByType();
 
+    public static class ShowExplicitHydrogens extends
+    AbstractGeneratorParameter<Boolean> {
+    	public Boolean getDefault() {
+    		return Boolean.TRUE;
+    	}
+    }
+    private IGeneratorParameter<Boolean> showExplicitHydrogens =
+    	new ShowExplicitHydrogens();
+
     public static class AtomRadius extends
         AbstractGeneratorParameter<Double> {
         public Double getDefault() {
@@ -140,7 +149,7 @@ public class BasicAtomGenerator implements IGenerator {
 	}
 	
 	public boolean invisibleHydrogen(IAtom atom, RendererModel model) {
-	    return isHydrogen(atom) && !model.getShowExplicitHydrogens();
+	    return isHydrogen(atom) && !showExplicitHydrogens.getValue();
 	}
 	
 	public boolean invisibleCarbon(
