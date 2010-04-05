@@ -153,26 +153,6 @@ public class RendererModel implements Serializable, Cloneable {
         fireChange();
     }
 
-     * Returns the foreground color for the drawing.
-     *
-     * @return the foreground color for the drawing
-     */
-    public Color getForeColor() {
-        return this.parameters.getForeColor();
-    }
-
-    /**
-     * Sets the foreground color with which bonds and atoms are drawn
-     *
-     * @param foreColor
-     *            the foreground color with which bonds and atoms are drawn
-     */
-    public void setForeColor(Color foreColor) {
-        this.parameters.setForeColor(foreColor);
-        fireChange();
-    }
-
-    /**
         fireChange();
     }
 
