@@ -860,6 +860,19 @@ public class RendererModel implements Serializable, Cloneable {
 	        new HashMap<String,IGeneratorParameter<?>>();
 
 	/**
+	 * Returns all {@link IGeneratorParameter}s for the current
+	 * {@link RendererModel}.
+	 *
+	 * @return a new List with {@link IGeneratorParameter}s
+	 */
+	public List<IGeneratorParameter<?>> getRenderingParameters() {
+		List<IGeneratorParameter<?>> parameters =
+			new ArrayList<IGeneratorParameter<?>>();
+		parameters.addAll(renderingParameters.values());
+		return parameters;
+	}
+
+	/**
 	 * Returns the {@link IGeneratorParameter} for the active {@link IRenderer}.
 	 * It returns a new instance of it was unregistered.
 	 *
