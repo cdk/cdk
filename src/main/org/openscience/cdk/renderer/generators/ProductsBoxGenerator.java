@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.renderer.generators;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -60,12 +61,21 @@ public class ProductsBoxGenerator implements IReactionGenerator {
         if (totalBounds == null) return null;
         
         ElementGroup diagram = new ElementGroup();
-        diagram.add(new RectangleElement(totalBounds.getMinX()-DISTANCE,
-                                    totalBounds.getMinY()-DISTANCE,
-                                    totalBounds.getMaxX()+DISTANCE,
-                                    totalBounds.getMaxY()+DISTANCE,
-                                    model.getForeColor()));
-        diagram.add(new TextElement((totalBounds.getMinX()+totalBounds.getMaxX())/2, totalBounds.getMinY()-DISTANCE, "Products", model.getForeColor()));
+        Color foregroundColor = model.getRenderingParameter(
+        	BasicSceneGenerator.ForegroundColor.class).getValue();
+        diagram.add(new RectangleElement(
+        	totalBounds.getMinX()-DISTANCE,
+            totalBounds.getMinY()-DISTANCE,
+            totalBounds.getMaxX()+DISTANCE,
+            totalBounds.getMaxY()+DISTANCE,
+            foregroundColor
+        ));
+        diagram.add(new TextElement(
+        	(totalBounds.getMinX()+totalBounds.getMaxX())/2,
+        	totalBounds.getMinY()-DISTANCE,
+        	"Products",
+        	foregroundColor
+        ));
         return diagram;
 	}
 

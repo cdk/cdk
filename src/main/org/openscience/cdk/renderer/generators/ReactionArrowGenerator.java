@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.renderer.generators;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import org.openscience.cdk.interfaces.IReaction;
@@ -45,10 +46,15 @@ public class ReactionArrowGenerator implements IReactionGenerator {
         	return null;
         
         double d = model.getBondLength() / model.getScale();
-        return new ArrowElement(totalBoundsReactants.getMaxX() + d,
-                                totalBoundsReactants.getCenterY(), 
-                                totalBoundsProducts.getMinX() - d, 
-                                totalBoundsReactants.getCenterY(),
-                                1 / model.getScale(),true,model.getForeColor());
+        Color foregroundColor = model.getRenderingParameter(
+            BasicSceneGenerator.ForegroundColor.class).getValue();
+        return new ArrowElement(
+        	totalBoundsReactants.getMaxX() + d,
+            totalBoundsReactants.getCenterY(), 
+            totalBoundsProducts.getMinX() - d, 
+            totalBoundsReactants.getCenterY(),
+            1 / model.getScale(), true,
+            foregroundColor
+        );
 	}
 }

@@ -52,11 +52,14 @@ public class ReactantsBoxGenerator implements IReactionGenerator {
         double minY = totalBounds.getMinY();
         double maxX = totalBounds.getMaxX();
         double maxY = totalBounds.getMaxY();
-        Color c = model.getForeColor();
+        Color foregroundColor = model.getRenderingParameter(
+            BasicSceneGenerator.ForegroundColor.class).getValue();
         diagram.add(new RectangleElement(
-                        minX - d, minY - d, maxX + d, maxY + d, c));
+            minX - d, minY - d, maxX + d, maxY + d, foregroundColor
+        ));
         diagram.add(new TextElement(
-                        (minX+maxX)/2, minY-d, "Reactants", c));
+            (minX+maxX)/2, minY-d, "Reactants", foregroundColor
+        ));
         return diagram;
 	}
 
