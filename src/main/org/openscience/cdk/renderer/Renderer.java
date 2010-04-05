@@ -131,9 +131,8 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
 	                List<IReactionGenerator> reactionGenerators, 
 	                IFontManager fontManager) {
 	    this(generators, fontManager);
-//	    FIXME: register the IReactionGenerators too
-//        for (IGenerator generator : reactionGenerators)
-//            rendererModel.registerParameters(generator);
+        for (IReactionGenerator generator : reactionGenerators)
+            rendererModel.registerParameters(generator);
         this.reactionGenerators = reactionGenerators;
         this.setup();
 	}

@@ -20,6 +20,8 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.Renderer;
@@ -63,4 +65,10 @@ public class ReactantsBoxGenerator implements IReactionGenerator {
         return diagram;
 	}
 
+	public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+            }
+        );
+    }
 }

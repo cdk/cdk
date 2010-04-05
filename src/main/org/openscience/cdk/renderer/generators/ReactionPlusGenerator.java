@@ -21,6 +21,8 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
@@ -75,4 +77,11 @@ public class ReactionPlusGenerator implements IReactionGenerator {
 	    double x = (a.getCenterX() + b.getCenterX()) / 2;
 	    return new TextElement(x, axis, "+", color);
 	}
+
+	public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+            }
+        );
+    }
 }
