@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
@@ -687,7 +688,7 @@ public class RendererModel implements Serializable, Cloneable {
 	}
 
 	/**
-	 * Registers rendering parameters from {@link IGenerator}s with this
+	 * Registers rendering parameters from {@link IAtomContainerGenerator}s with this
 	 * model.
 	 *
 	 * @param generator

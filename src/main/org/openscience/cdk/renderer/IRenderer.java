@@ -24,12 +24,12 @@ package org.openscience.cdk.renderer;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.renderer.generators.IGenerator;
+import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 /**
  * Interface that all 2D renderers implement. The constructor is responsible
- * for registering the {@link IGenerator}s' {@link IGeneratorParameter}s with
+ * for registering the {@link IAtomContainerGenerator}s' {@link IGeneratorParameter}s with
  * with the associated {@link RendererModel}.
  *
  * @cdk.module render
