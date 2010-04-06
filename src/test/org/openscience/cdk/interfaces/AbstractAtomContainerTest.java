@@ -87,6 +87,51 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(atom, molecule.getAtom(0));
     }
 
+    @Test public void testCloneButKeepOriginalsIntact_IBond() throws Exception {
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
+        molecule.addAtom(molecule.getBuilder().newAtom());
+        molecule.addAtom(molecule.getBuilder().newAtom());
+        IBond bond = molecule.getBuilder().newBond(
+            molecule.getAtom(0),
+            molecule.getAtom(1),
+            IBond.Order.SINGLE
+        );
+        molecule.addBond(bond);
+        Assert.assertEquals(bond, molecule.getBond(0));
+        Object clone = molecule.clone();
+        Assert.assertNotSame(molecule, clone);
+        // after the cloning the IBond on the original IMolecule should be unchanged
+        Assert.assertEquals(bond, molecule.getBond(0));
+    }
+
+    @Test public void testCloneButKeepOriginalsIntact_ILonePair() throws Exception {
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
+        molecule.addAtom(molecule.getBuilder().newAtom());
+        ILonePair lonePair = molecule.getBuilder().newLonePair(
+            molecule.getAtom(0)
+        );
+        molecule.addLonePair(lonePair);
+        Assert.assertEquals(lonePair, molecule.getLonePair(0));
+        Object clone = molecule.clone();
+        Assert.assertNotSame(molecule, clone);
+        // after the cloning the ILonePair on the original IMolecule should be unchanged
+        Assert.assertEquals(lonePair, molecule.getLonePair(0));
+    }
+
+    @Test public void testCloneButKeepOriginalsIntact_ISingleElectron() throws Exception {
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
+        molecule.addAtom(molecule.getBuilder().newAtom());
+        ISingleElectron singleElectron = molecule.getBuilder().newSingleElectron(
+            molecule.getAtom(0)
+        );
+        molecule.addSingleElectron(singleElectron);
+        Assert.assertEquals(singleElectron, molecule.getSingleElectron(0));
+        Object clone = molecule.clone();
+        Assert.assertNotSame(molecule, clone);
+        // after the cloning the ISingleElectron on the original IMolecule should be unchanged
+        Assert.assertEquals(singleElectron, molecule.getSingleElectron(0));
+    }
+
 	@Test public void testClone_IAtom2() throws Exception {
 		IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom carbon = molecule.getBuilder().newAtom("C");
