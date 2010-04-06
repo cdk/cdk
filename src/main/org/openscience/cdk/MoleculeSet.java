@@ -171,11 +171,7 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
 	 *@return    the cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		MoleculeSet clone = (MoleculeSet)super.clone();
-    for (int i = 0; i < atomContainerCount; i++) {
-        clone.replaceAtomContainer(i, (IAtomContainer)atomContainers[i].clone());
-		}
-		return (Object) clone;
+		return (MoleculeSet)super.clone();
 	}
     
     public String toString() {
