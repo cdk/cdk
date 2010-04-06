@@ -41,6 +41,7 @@ public class NNBond extends Bond {
 
 	public NNBond() {
 		this(null, null, null, CDKConstants.STEREO_BOND_NONE);
+		this.atomCount = 0;
 	}
 
 	public NNBond(IAtom atom1, IAtom atom2) {
