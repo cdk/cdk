@@ -53,7 +53,7 @@ public class BondTest extends AbstractBondTest {
     @Test
     public void testBond() {
         IBond bond = new Bond();
-        Assert.assertEquals(2, bond.getAtomCount());
+        Assert.assertEquals(0, bond.getAtomCount());
         Assert.assertNull(bond.getAtom(0));
         Assert.assertNull(bond.getAtom(1));
         Assert.assertNull(bond.getOrder());
