@@ -24,7 +24,6 @@ package org.openscience.cdk.renderer;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 /**
