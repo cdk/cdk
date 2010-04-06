@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
-import org.openscience.cdk.renderer.generators.IGenerator;
+import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.IReactionGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.FontName;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
@@ -123,11 +123,11 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public Renderer(List<IGenerator> generators, IFontManager fontManager) {
+	public Renderer(List<IAtomContainerGenerator> generators, IFontManager fontManager) {
         super(generators, fontManager);
     }
 	
-	public Renderer(List<IGenerator> generators, 
+	public Renderer(List<IAtomContainerGenerator> generators, 
 	                List<IReactionGenerator> reactionGenerators, 
 	                IFontManager fontManager) {
 	    this(generators, fontManager);
@@ -958,14 +958,14 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
 	    ElementGroup diagram = new ElementGroup();
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
             IAtomContainer ac = moleculeSet.getAtomContainer(i);
-            for (IGenerator generator : this.generators) {
+            for (IAtomContainerGenerator generator : this.generators) {
                 diagram.add(generator.generate(ac, this.rendererModel));
             }
         }
         return diagram;
 	}
 
-	public List<IGenerator> getGenerators(){
-	    return new ArrayList<IGenerator>(generators);
+	public List<IReactionGenerator> getReactionGenerators(){
+	    return new ArrayList<IReactionGenerator>(reactionGenerators);
 	}
 }
