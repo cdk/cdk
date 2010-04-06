@@ -75,7 +75,18 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 			}
 		}        
     }
-    
+
+    @Test public void testCloneButKeepOriginalsIntact() throws Exception {
+        IMolecule molecule = (IMolecule)newChemObject();
+        IAtom atom = molecule.getBuilder().newAtom();
+        molecule.addAtom(atom);
+        Assert.assertEquals(atom, molecule.getAtom(0));
+        Object clone = molecule.clone();
+        Assert.assertNotSame(molecule, clone);
+        // after the cloning the IAtom on the original IMolecule should be unchanged
+        Assert.assertEquals(atom, molecule.getAtom(0));
+    }
+
 	@Test public void testClone_IAtom2() throws Exception {
 		IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom carbon = molecule.getBuilder().newAtom("C");
