@@ -196,6 +196,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtom(1)));
 	}
 
+    @Test public void testClone_AtomlessIBond() throws Exception {
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
+        IBond bond = molecule.getBuilder().newBond();
+        molecule.addBond(bond);
+        Assert.assertEquals(bond, molecule.getBond(0));
+        IAtomContainer clone = (IAtomContainer)molecule.clone();
+        Assert.assertEquals(0, clone.getBond(0).getAtomCount());
+    }
+
     @Test public void testClone_ILonePair() throws Exception {
 		IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom atom1 = molecule.getBuilder().newAtom("C");
