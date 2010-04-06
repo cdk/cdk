@@ -33,6 +33,7 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.elements.TextElement;
+import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReactionBoxes;
 
 /**
  * Generate the symbols for radicals.
@@ -46,7 +47,7 @@ public class ProductsBoxGenerator implements IReactionGenerator {
 	private static double DISTANCE;
 
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
-		if(!model.getShowReactionBoxes())
+		if(!model.getRenderingParameter(ShowReactionBoxes.class).getValue())
 			return null;
 	    if (reaction.getProductCount() == 0) 
 	    	return new ElementGroup();
