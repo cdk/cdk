@@ -144,30 +144,9 @@ public class RendererModel implements Serializable, Cloneable {
 		return merge;
 	}
 
-    public boolean getShowReactionBoxes() {
-        return this.parameters.isShowReactionBoxes();
-    }
-
-    public void setShowReactionBoxes(boolean bool) {
-        this.parameters.setShowReactionBoxes(bool);
         fireChange();
     }
 
-        fireChange();
-    }
-
-    /**
-     * Returns whether Atom-Atom mapping must be shown.
-     */
-    public boolean getShowAtomAtomMapping() {
-        return this.parameters.isShowAtomAtomMapping();
-    }
-
-    /**
-     * Sets whether Atom-Atom mapping must be shown.
-     */
-    public void setShowAtomAtomMapping(boolean value) {
-        this.parameters.setShowAtomAtomMapping(value);
     /**
      * Returns the atom currently highlighted.
      *
