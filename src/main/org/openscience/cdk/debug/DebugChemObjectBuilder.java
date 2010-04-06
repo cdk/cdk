@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.debug;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -34,6 +37,7 @@ import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -47,7 +51,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -267,10 +270,6 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
                 params[0] instanceof IAtom &&
                 params[0] instanceof IAtom) {
                 return (T)new DebugBond((IAtom)params[0], (IAtom)params[1]);
-            } else if (params.length == 2 &&
-                    params[0] instanceof IAtom[] &&
-                    params[1] instanceof IBond.Order) {
-                    return (T)new DebugBond((IAtom[])params[0], (IBond.Order)params[1]);
             } else if (params.length == 3 &&
                     params[0] instanceof IAtom &&
                     params[1] instanceof IAtom &&
@@ -287,6 +286,32 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
                     (IAtom)params[0], (IAtom)params[1],
                     (IBond.Order)params[2], (IBond.Stereo)params[3]
                 );
+            } else if (params[params.length-1] instanceof IBond.Order) {
+                // the IBond(IAtom[], IBond.Order) constructor
+                boolean allIAtom = true;
+                int orderIndex = params.length-1;
+                List<IAtom> atoms = new ArrayList<IAtom>();
+                for (int i=0; i<(orderIndex-1) && allIAtom; i++) {
+                    if (!(params[i] instanceof IAtom)) {
+                        allIAtom = false;
+                        atoms.add((IAtom)params[i]);
+                    }
+                }
+                if (allIAtom) {
+                    return (T)new DebugBond(
+                        atoms.toArray(new IAtom[atoms.size()]),
+                        (IBond.Order)params[orderIndex]
+                    );
+                }
+            } else {
+                // the IBond(IAtom[]) constructor
+                boolean allIAtom = true;
+                for (int i=0; i<(params.length-1) && allIAtom; i++) {
+                    if (!(params[i] instanceof IAtom)) allIAtom = false;
+                }
+                if (allIAtom) {
+                    return (T)new DebugBond((IAtom[])params);
+                }
             }
         } else if (ILonePair.class.isAssignableFrom(clazz)) {
             if (params.length == 0) {

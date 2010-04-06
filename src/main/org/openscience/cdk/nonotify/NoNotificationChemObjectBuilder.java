@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.nonotify;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -34,6 +37,7 @@ import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -47,7 +51,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -61,44 +64,6 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.nonotify.NNAdductFormula;
-import org.openscience.cdk.nonotify.NNAminoAcid;
-import org.openscience.cdk.nonotify.NNAtom;
-import org.openscience.cdk.nonotify.NNAtomContainer;
-import org.openscience.cdk.nonotify.NNAtomContainerSet;
-import org.openscience.cdk.nonotify.NNAtomParity;
-import org.openscience.cdk.nonotify.NNAtomType;
-import org.openscience.cdk.nonotify.NNBioPolymer;
-import org.openscience.cdk.nonotify.NNBond;
-import org.openscience.cdk.nonotify.NNChemFile;
-import org.openscience.cdk.nonotify.NNChemModel;
-import org.openscience.cdk.nonotify.NNChemObject;
-import org.openscience.cdk.nonotify.NNChemSequence;
-import org.openscience.cdk.nonotify.NNCrystal;
-import org.openscience.cdk.nonotify.NNElectronContainer;
-import org.openscience.cdk.nonotify.NNElement;
-import org.openscience.cdk.nonotify.NNFragmentAtom;
-import org.openscience.cdk.nonotify.NNIsotope;
-import org.openscience.cdk.nonotify.NNLonePair;
-import org.openscience.cdk.nonotify.NNMapping;
-import org.openscience.cdk.nonotify.NNMolecularFormula;
-import org.openscience.cdk.nonotify.NNMolecularFormulaSet;
-import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.nonotify.NNMoleculeSet;
-import org.openscience.cdk.nonotify.NNMonomer;
-import org.openscience.cdk.nonotify.NNPDBAtom;
-import org.openscience.cdk.nonotify.NNPDBMonomer;
-import org.openscience.cdk.nonotify.NNPDBPolymer;
-import org.openscience.cdk.nonotify.NNPDBStructure;
-import org.openscience.cdk.nonotify.NNPolymer;
-import org.openscience.cdk.nonotify.NNPseudoAtom;
-import org.openscience.cdk.nonotify.NNReaction;
-import org.openscience.cdk.nonotify.NNReactionScheme;
-import org.openscience.cdk.nonotify.NNReactionSet;
-import org.openscience.cdk.nonotify.NNRing;
-import org.openscience.cdk.nonotify.NNRingSet;
-import org.openscience.cdk.nonotify.NNSingleElectron;
-import org.openscience.cdk.nonotify.NNStrand;
 
 /**
  * A helper class to instantiate a {@link IChemObject} for the original CDK
@@ -325,6 +290,32 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
                     (IAtom)params[0], (IAtom)params[1],
                     (IBond.Order)params[2], (IBond.Stereo)params[3]
                 );
+            } else if (params[params.length-1] instanceof IBond.Order) {
+                // the IBond(IAtom[], IBond.Order) constructor
+                boolean allIAtom = true;
+                int orderIndex = params.length-1;
+                List<IAtom> atoms = new ArrayList<IAtom>();
+                for (int i=0; i<(orderIndex-1) && allIAtom; i++) {
+                    if (!(params[i] instanceof IAtom)) {
+                        allIAtom = false;
+                        atoms.add((IAtom)params[i]);
+                    }
+                }
+                if (allIAtom) {
+                    return (T)new NNBond(
+                        atoms.toArray(new IAtom[atoms.size()]),
+                        (IBond.Order)params[orderIndex]
+                    );
+                }
+            } else {
+                // the IBond(IAtom[]) constructor
+                boolean allIAtom = true;
+                for (int i=0; i<(params.length-1) && allIAtom; i++) {
+                    if (!(params[i] instanceof IAtom)) allIAtom = false;
+                }
+                if (allIAtom) {
+                    return (T)new NNBond((IAtom[])params);
+                }
             }
         } else if (ILonePair.class.isAssignableFrom(clazz)) {
             if (params.length == 0) {
