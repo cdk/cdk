@@ -185,6 +185,18 @@ public class Polymer extends Molecule implements java.io.Serializable, IPolymer
             clone.addLonePair(newLp);
         }
 
+        // put back single electrons
+        ISingleElectron singleElectron;
+        ISingleElectron newSingleElectron;
+        for (int i = 0; i < getSingleElectronCount(); ++i) {
+            singleElectron = getSingleElectron(i);
+            newSingleElectron = (ISingleElectron) singleElectron.clone();
+            if (singleElectron.getAtom() != null) {
+                newSingleElectron.setAtom(clone.getAtom(getAtomNumber(singleElectron.getAtom())));
+            }
+            clone.addSingleElectron(newSingleElectron);
+        }
+
         return clone;
     }
 
