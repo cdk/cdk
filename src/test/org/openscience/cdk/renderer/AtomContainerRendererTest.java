@@ -37,7 +37,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator;
-import org.openscience.cdk.renderer.generators.IGenerator;
+import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactShape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.KekuleStructure;
@@ -82,7 +82,7 @@ public class AtomContainerRendererTest {
 	public void testSquareMolecule() {
 		IMolecule square = makeSquare();
 		
-		List<IGenerator> generators = new ArrayList<IGenerator>();
+		List<IAtomContainerGenerator> generators = new ArrayList<IAtomContainerGenerator>();
 		generators.add(new BasicBondGenerator());
 		BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
 		generators.add(atomGenerator);

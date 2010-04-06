@@ -38,7 +38,7 @@ import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 
 /**
- * Base class for test classes that test {@link IGenerator}s.  
+ * Base class for test classes that test {@link IAtomContainerGenerator}s.  
  * 
  * @author     maclean
  * @cdk.module test-renderbasic

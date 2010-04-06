@@ -34,7 +34,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 /**
  * @cdk.module renderbasic
  */
-public class BasicSceneGenerator implements IGenerator {
+public class BasicSceneGenerator implements IAtomContainerGenerator {
 
     public static class BackGroundColor extends
         AbstractGeneratorParameter<Color> {
