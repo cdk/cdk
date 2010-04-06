@@ -26,24 +26,32 @@ import java.util.List;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
  * @cdk.module renderextra
  */
 public class MappingGenerator implements IReactionGenerator {
 
+    public static class ShowAtomAtomMapping extends
+    AbstractGeneratorParameter<Boolean> {
+    	public Boolean getDefault() {
+    		return Boolean.TRUE;
+    	}
+    }
+    private IGeneratorParameter<Boolean> showAtomAtomMapping =
+    	new ShowAtomAtomMapping();
+	
     public MappingGenerator() {}
 
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
-		if(!model.getShowAtomAtomMapping())
-			return null;
+		if(!showAtomAtomMapping.getValue()) return null;
         ElementGroup elementGroup = new ElementGroup();
         Color mappingColor = model.getAtomAtomMappingLineColor();
         for (IMapping mapping : reaction.mappings()) {
