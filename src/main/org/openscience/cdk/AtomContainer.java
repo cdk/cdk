@@ -1612,7 +1612,9 @@ public class AtomContainer extends ChemObject
 		for (int i = 0; i < getLonePairCount(); ++i) {
 			lp = getLonePair(i);
 			newLp = (ILonePair)lp.clone();
-			newLp.setAtom(clone.getAtom(getAtomNumber(lp.getAtom())));
+			if (lp.getAtom() != null) {
+			    newLp.setAtom(clone.getAtom(getAtomNumber(lp.getAtom())));
+			}
 			clone.addLonePair(newLp);
 		}
 		ISingleElectron se;
