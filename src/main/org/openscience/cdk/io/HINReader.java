@@ -167,7 +167,7 @@ public class HINReader extends DefaultChemObjectReader {
             // read in header info
             while (true) {
                 line = input.readLine();
-                if (line.indexOf("mol ") == 0) {
+                if (line.startsWith("mol")) {
                     info = getMolName(line);
                     break;
                 }
@@ -178,9 +178,9 @@ public class HINReader extends DefaultChemObjectReader {
             line = input.readLine();
             while(true) {
                 if (line == null) break; // end of file
-                if (line.indexOf(';') == 0) continue; // comment line
+                if (line.startsWith(";")) continue; // comment line
 
-                if (line.indexOf("mol ") == 0) {
+                if (line.startsWith("mol")) {
                     info = getMolName(line);
                     line = input.readLine();
                 }
@@ -196,10 +196,10 @@ public class HINReader extends DefaultChemObjectReader {
                 // read data for current molecule
                 int atomSerial = 0;
                 while (true) {
-                    if (line == null || line.indexOf("endmol ") >= 0) {
+                    if (line == null || line.contains("endmol")) {
                         break;
                     }
-                    if (line.indexOf(';') == 0) continue; // comment line
+                    if (line.startsWith(";")) continue; // comment line
 
                     tokenizer = new StringTokenizer(line, " ");
 
@@ -263,7 +263,7 @@ public class HINReader extends DefaultChemObjectReader {
                 // block
                 while (true) {
                     line = input.readLine();
-                    if (line == null || line.indexOf("mol ") == 0) break;
+                    if (line == null || line.startsWith("mol")) break;
                 }
             }
 
