@@ -20,18 +20,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -47,6 +35,17 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+
+import javax.vecmath.Point3d;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Reads an object from HIN formated input.
@@ -197,7 +196,7 @@ public class HINReader extends DefaultChemObjectReader {
                 // read data for current molecule
                 int atomSerial = 0;
                 while (true) {
-                    if (line.indexOf("endmol ") >= 0) {
+                    if (line == null || line.indexOf("endmol ") >= 0) {
                         break;
                     }
                     if (line.indexOf(';') == 0) continue; // comment line
@@ -257,7 +256,15 @@ public class HINReader extends DefaultChemObjectReader {
                         m.addBond(file.getBuilder().newBond(s, e, bo));
                 }
                 setOfMolecules.addMolecule(m);
-                line = input.readLine(); // read in the 'mol N'
+
+                // we may not get a 'mol N' immediately since
+                // the aromaticring keyword might be present
+                // and doesn't seem to be located within the molecule
+                // block
+                while (true) {
+                    line = input.readLine();
+                    if (line == null || line.indexOf("mol ") == 0) break;
+                }
             }
 
             // got all the molecule in the HIN file (hopefully!)
