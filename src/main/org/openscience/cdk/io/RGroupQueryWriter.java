@@ -125,7 +125,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 		String ctab =  strWriter.toString();
 		//strip of the individual header, as we have one super header instead.
 		for (int line=1; line <=3; line++ ){ 
-			ctab = ctab.substring(ctab.indexOf(LSEP)+1);
+			ctab = ctab.substring(ctab.indexOf(LSEP)+(LSEP.length()));
 		}
 		return ctab;
 	}
@@ -175,17 +175,17 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 			StringBuffer rootBlock=new StringBuffer();
 			String header = 
 				"$MDL  REV  1   "+now+LSEP+
-				"$MOL\n" +
-				"$HDR\n" +
-				"  Rgroup query file (RGFile)\n"+
-				"  CDK    "+now+"2D\n\n"+
-				"$END HDR\n"+
+				"$MOL"+LSEP+
+				"$HDR"+LSEP+
+				"  Rgroup query file (RGFile)"+LSEP+
+				"  CDK    "+now+"2D"+LSEP+LSEP+
+				"$END HDR"+LSEP+
 				"$CTAB";
 			rootBlock.append(header).append(LSEP);
 
 			//Construct the root structure, the scaffold
 			String rootCTAB = getCTAB(rootAtc);
-			rootCTAB = rootCTAB.replaceAll("\nM  END\n","");
+			rootCTAB = rootCTAB.replaceAll(LSEP+"M  END"+LSEP,"");
 			rootBlock.append(rootCTAB).append(LSEP);
 
 			//Write the root's LOG lines
@@ -315,7 +315,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new CDKException("Unexpected excpetion when writing RGFile.\n"+e.getMessage());
+			throw new CDKException("Unexpected exception when writing RGFile"+LSEP+e.getMessage());
 		}
 
 	}
