@@ -210,14 +210,18 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(5,true);
         
         Assert.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(4, ac.getAtomCount());
-        Assert.assertTrue(ac.getFlag(5));
         Assert.assertNotNull(ac.getAtom(0).getHydrogenCount());
         Assert.assertNotNull(ac.getAtom(1).getHydrogenCount());
+        Assert.assertNotNull(ac.getAtom(2).getHydrogenCount());
+        Assert.assertNotNull(ac.getAtom(3).getHydrogenCount());
+        Assert.assertEquals(0, ac.getAtom(0).getHydrogenCount().intValue());
+        Assert.assertEquals(2, ac.getAtom(1).getHydrogenCount().intValue());
+        Assert.assertEquals(0, ac.getAtom(2).getHydrogenCount().intValue());
+        Assert.assertEquals(0, ac.getAtom(3).getHydrogenCount().intValue());
     }
     
     @Test public void testGetAllIDs_IAtomContainer() {
