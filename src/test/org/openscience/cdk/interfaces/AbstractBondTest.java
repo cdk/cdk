@@ -349,7 +349,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
     }
 
     @Test
-    public void testMltiCenterContains() {
+    public void testMultiCenterContains() {
     	IChemObject object = newChemObject(); 
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
