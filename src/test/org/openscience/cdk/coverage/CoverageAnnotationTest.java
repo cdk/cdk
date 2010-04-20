@@ -105,7 +105,7 @@ abstract public class CoverageAnnotationTest {
             	// skip this test
             } else if (testMethodAnnotation == null) {
                 // if a method does not have the annotation, it's missing a test
-                System.out.println(className + "#" + method.getName() + " does not have a test method");
+                System.out.println(className + "#" + toString(method) + " does not have a test method");
                 missingTestCount++;
             } else methodAnnotations.put(method.getName(), testMethodAnnotation);
         }
@@ -172,6 +172,18 @@ abstract public class CoverageAnnotationTest {
         return missingTestCount;
     }
 
+    private String toString(Method method) {
+        StringBuffer methodString = new StringBuffer();
+        methodString.append(method.getName()).append('(');
+        Class[] classes = method.getParameterTypes();
+        for (int i=0;i<classes.length; i++) {
+            Class clazz = classes[i];
+            methodString.append(clazz.getName().substring(clazz.getName().lastIndexOf('.')+1));
+            if ((i+1)<classes.length) methodString.append(',');
+        }
+        methodString.append(')');
+        return methodString.toString();
+    }
 
     private Class loadClass(String className) {
         Class loadedClass = null;
