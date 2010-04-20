@@ -401,6 +401,10 @@ public class AtomContainerManipulator {
                 );
             }
         }
+        for(IAtom atom : mol.atoms()){
+            if(atom.getHydrogenCount()==null)
+                atom.setHydrogenCount(0);
+        }
         mol.setProperties(atomContainer.getProperties());
         mol.setFlags(atomContainer.getFlags());
 

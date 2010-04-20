@@ -197,6 +197,29 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertTrue(ac.getFlag(5));
     }
 
+    @Test public void testRemoveHydrogensZeroHydrogenCounts() throws IOException, ClassNotFoundException, CDKException{
+        Molecule mol = new Molecule(); // ethene
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("Br"));
+        mol.addAtom(new Atom("Br"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.DOUBLE);
+        mol.addBond(1, 5, IBond.Order.DOUBLE);
+        mol.setFlag(5,true);
+        
+        Assert.assertEquals(6, mol.getAtomCount());
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
+        Assert.assertEquals(4, ac.getAtomCount());
+        Assert.assertTrue(ac.getFlag(5));
+        Assert.assertNotNull(ac.getAtom(0).getHydrogenCount());
+        Assert.assertNotNull(ac.getAtom(1).getHydrogenCount());
+    }
+    
     @Test public void testGetAllIDs_IAtomContainer() {
         Molecule mol = new Molecule(); // ethene
         mol.addAtom(new Atom("C")); mol.getAtom(0).setID("a1");
