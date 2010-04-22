@@ -170,7 +170,18 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertTrue(clone instanceof IMoleculeSet);
 	Assert.assertNotSame(som, clone);
     }
-    
+
+    @Test public void testCloneButKeepOriginalIntact() throws CloneNotSupportedException{
+        IMoleculeSet moleculeSet = (IMoleculeSet)newChemObject();
+        IMolecule mol = moleculeSet.getBuilder().newInstance(IMolecule.class);
+        moleculeSet.addAtomContainer(mol);
+        //we test that the molecule added is actually in the moleculeSet
+        Assert.assertSame(mol, moleculeSet.getAtomContainer(0));
+        moleculeSet.clone();
+        //after the clone, the molecule added should still be in the moleculeSet
+        Assert.assertSame(mol, moleculeSet.getAtomContainer(0));
+    }
+
     @Test public void testCloneDuplication() throws Exception {
         IMoleculeSet moleculeSet = (IMoleculeSet)newChemObject();
         moleculeSet.addMolecule(moleculeSet.getBuilder().newInstance(IMolecule.class));

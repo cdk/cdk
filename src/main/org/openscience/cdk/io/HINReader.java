@@ -20,18 +20,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -47,6 +35,17 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+
+import javax.vecmath.Point3d;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Reads an object from HIN formated input.
@@ -168,7 +167,7 @@ public class HINReader extends DefaultChemObjectReader {
             // read in header info
             while (true) {
                 line = input.readLine();
-                if (line.indexOf("mol ") == 0) {
+                if (line.startsWith("mol")) {
                     info = getMolName(line);
                     break;
                 }
@@ -179,9 +178,9 @@ public class HINReader extends DefaultChemObjectReader {
             line = input.readLine();
             while(true) {
                 if (line == null) break; // end of file
-                if (line.indexOf(';') == 0) continue; // comment line
+                if (line.startsWith(";")) continue; // comment line
 
-                if (line.indexOf("mol ") == 0) {
+                if (line.startsWith("mol")) {
                     info = getMolName(line);
                     line = input.readLine();
                 }
@@ -197,10 +196,10 @@ public class HINReader extends DefaultChemObjectReader {
                 // read data for current molecule
                 int atomSerial = 0;
                 while (true) {
-                    if (line.indexOf("endmol ") >= 0) {
+                    if (line == null || line.contains("endmol")) {
                         break;
                     }
-                    if (line.indexOf(';') == 0) continue; // comment line
+                    if (line.startsWith(";")) continue; // comment line
 
                     tokenizer = new StringTokenizer(line, " ");
 
@@ -257,7 +256,15 @@ public class HINReader extends DefaultChemObjectReader {
                         m.addBond(file.getBuilder().newInstance(IBond.class,s, e, bo));
                 }
                 setOfMolecules.addMolecule(m);
-                line = input.readLine(); // read in the 'mol N'
+
+                // we may not get a 'mol N' immediately since
+                // the aromaticring keyword might be present
+                // and doesn't seem to be located within the molecule
+                // block
+                while (true) {
+                    line = input.readLine();
+                    if (line == null || line.startsWith("mol")) break;
+                }
             }
 
             // got all the molecule in the HIN file (hopefully!)

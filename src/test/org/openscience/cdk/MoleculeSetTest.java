@@ -20,14 +20,9 @@
  */
 package org.openscience.cdk;
 
-import junit.framework.Assert;
-
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractMoleculeSetTest;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -46,16 +41,5 @@ public class MoleculeSetTest extends AbstractMoleculeSetTest {
             }
         });
     }
-    
-    @Test public void testClone() throws CloneNotSupportedException{
-        IMoleculeSet moleculeSet = DefaultChemObjectBuilder.getInstance()
-            .newInstance(IMoleculeSet.class);
-        IMolecule mol = moleculeSet.getBuilder().newInstance(IMolecule.class);
-        moleculeSet.addAtomContainer(mol);
-        //we test that the molecule added is actually in the moleculeSet
-        Assert.assertSame(mol, moleculeSet.getAtomContainer(0));
-        moleculeSet.clone();
-        //after the clone, the molecule added should still be in the moleculeSet
-        Assert.assertSame(mol, moleculeSet.getAtomContainer(0));
-    }
+
 }

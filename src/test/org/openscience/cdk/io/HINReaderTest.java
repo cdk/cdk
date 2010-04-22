@@ -27,20 +27,19 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestCase for the reading HIN mol files using one test file.
@@ -139,5 +138,19 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer ac = cList.get(0);
         Assert.assertEquals(57, ac.getAtomCount());
         Assert.assertEquals(59, ac.getBondCount());
+    }
+
+    /**
+     * @cdk.bug 2984581
+     * @throws Exception
+     */
+    @Test public void testAromaticRingsLine() throws Exception {
+        String filename = "data/hin/bug2984581.hin";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new HINReader(ins);
+        IChemFile content = (IChemFile) reader.read(new ChemFile());
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        Assert.assertEquals(1, cList.size());
+        IAtomContainer ac = cList.get(0);        
     }
 }

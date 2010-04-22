@@ -94,6 +94,20 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
             Assert.assertNotNull(type.getAtomTypeName());
         }
     }
+
+    /**
+     * @cdk.bug 2976054
+     */
+    @Test public void testAnotherNitrogen_SP2() throws Exception {
+        String smiles1 = "c1cnc2s[cH][cH]n12";
+        IMolecule mol1 = smilesParser.parseSmiles(smiles1);
+
+        Assert.assertEquals(8, mol1.getAtomCount());
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        for (IAtomType type : types1) {
+            Assert.assertNotNull(type.getAtomTypeName());
+        }
+    }
     
     @Test public void testPlatinum4() throws Exception {
         String smiles1 = "Cl[Pt]1(Cl)(Cl)(Cl)NC2CCCCC2N1";
