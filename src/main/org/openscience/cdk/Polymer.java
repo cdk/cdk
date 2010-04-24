@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
+import org.openscience.cdk.interfaces.ISingleElectron;
 
 import java.util.Collection;
 import java.util.Hashtable;
@@ -181,8 +182,22 @@ public class Polymer extends Molecule implements java.io.Serializable, IPolymer
         for (int i = 0; i < getLonePairCount(); ++i) {
             lp = getLonePair(i);
             newLp = (ILonePair) lp.clone();
-            newLp.setAtom(clone.getAtom(getAtomNumber(lp.getAtom())));
+            if (lp.getAtom() != null) {
+                newLp.setAtom(clone.getAtom(getAtomNumber(lp.getAtom())));
+            }
             clone.addLonePair(newLp);
+        }
+
+        // put back single electrons
+        ISingleElectron singleElectron;
+        ISingleElectron newSingleElectron;
+        for (int i = 0; i < getSingleElectronCount(); ++i) {
+            singleElectron = getSingleElectron(i);
+            newSingleElectron = (ISingleElectron) singleElectron.clone();
+            if (singleElectron.getAtom() != null) {
+                newSingleElectron.setAtom(clone.getAtom(getAtomNumber(singleElectron.getAtom())));
+            }
+            clone.addSingleElectron(newSingleElectron);
         }
 
         return clone;
