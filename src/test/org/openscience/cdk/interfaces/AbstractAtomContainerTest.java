@@ -76,7 +76,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     }
 
     @Test public void testCloneButKeepOriginalsIntact() throws Exception {
-        IMolecule molecule = (IMolecule)newChemObject();
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom atom = molecule.getBuilder().newInstance(IAtom.class);
         molecule.addAtom(atom);
         Assert.assertEquals(atom, molecule.getAtom(0));
