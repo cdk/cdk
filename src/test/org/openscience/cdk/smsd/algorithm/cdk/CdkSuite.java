@@ -39,6 +39,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     org.openscience.cdk.smsd.algorithm.cdk.CDKMCSHandlerTest.class,
+    org.openscience.cdk.smsd.algorithm.cdk.CDKRMapHandlerTest.class,
     org.openscience.cdk.smsd.algorithm.cdk.CDKRMapTest.class,
     org.openscience.cdk.smsd.algorithm.cdk.CDKRGraphTest.class,
     org.openscience.cdk.smsd.algorithm.cdk.CDKRNodeTest.class,
