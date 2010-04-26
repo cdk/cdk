@@ -990,4 +990,16 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
 
+    <bibtex:entry id="SMSD2009">
+        <bibtex:article>
+            <bibtex:author>Rahman, S.A. and Bashton, M. and Holliday, G.L. and Schrader, R. and Thornton, J.M. </bibtex:author>
+            <bibtex:title>Small Molecule Subgraph Detector (SMSD) Toolkit</bibtex:title>
+            <bibtex:journal>Journal of Cheminformatics</bibtex:journal>
+            <bibtex:year>2009</bibtex:year>
+            <bibtex:volume>1</bibtex:volume>
+            <bibtex:pages>12</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+
+
 </bibtex:file>

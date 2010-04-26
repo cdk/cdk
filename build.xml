@@ -259,7 +259,7 @@
             <mkdir dir="${build}" />
         	<javac includes="net/sf/cdk/tools/MakeJavafilesFiles.java"
         	    srcdir="${src}/main/" destdir="${build}" optimize="${optimization}"
-        	    debug="${debug}" deprecation="${deprecation}" source="1.5"/>
+        	    debug="${debug}" deprecation="${deprecation}" source="1.6"/>
         	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
                   <arg value="${src}/META-INF"/>
                   <arg value="${src}/main"/>
@@ -372,7 +372,7 @@
 
             <!-- ok, now that we have a copy, compile this copy -->
             <javac srcdir="${build.src}/${module}" destdir="${build}/${module}" optimize="${optimization}"
-                    debug="${debug}" deprecation="${deprecation}" target="1.5" source="1.5">
+                    debug="${debug}" deprecation="${deprecation}" target="1.6" source="1.6">
                 <classpath>
                     <fileset dir="${lib}" >
                         <exclude name="**/*" unless="module.libdepends.present" />
@@ -531,7 +531,7 @@
             list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="control,extra,reaction,pdbcml,libiomd"/>
+            list="control,extra,reaction,pdbcml,libiomd,smsd"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="charges,smarts"/>
@@ -573,7 +573,7 @@
         	      test-nonotify"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-qsarprotein,test-qsarionpot"/>
+            list="test-qsarprotein,test-qsarionpot,test-smsd"/>
     </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
@@ -1044,7 +1044,7 @@
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
-                      ioformats,log4j"/>
+                      ioformats,log4j,smsd"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

@@ -30,7 +30,6 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.CDKTestCase;
 
 /**

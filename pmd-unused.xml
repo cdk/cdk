@@ -56,6 +56,7 @@
       <antcall target="test-module"><param name="module" value="charges"/></antcall>
       <antcall target="test-module"><param name="module" value="diff"/></antcall>
       <antcall target="test-module"><param name="module" value="qm"/></antcall>
+      <antcall target="test-module"><param name="module" value="smsd"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="module" value="test-core"/></antcall>
       <antcall target="test-module"><param name="module" value="test-interfaces"/></antcall>
@@ -79,6 +80,7 @@
       <antcall target="test-module"><param name="module" value="test-qsarprotein"/></antcall>
       <antcall target="test-module"><param name="module" value="test-diff"/></antcall>
       <antcall target="test-module"><param name="module" value="test-qm"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-smsd"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"
