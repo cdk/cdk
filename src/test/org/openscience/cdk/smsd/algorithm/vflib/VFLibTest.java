@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -68,6 +69,7 @@ public class VFLibTest extends CDKTestCase {
         benzeneQuery = TemplateCompiler.compile(benzene);
     }
 
+    @Test
     public void testItShouldFindAllMatchCandidatesInTheRootState() {
         IState state = new VFState(benzeneQuery, benzene);
         int count = 0;
@@ -79,6 +81,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertEquals(benzene.getAtomCount() * benzene.getAtomCount(), count);
     }
 
+    @Test
     public void testItShoudFindAllMatchCandidatesInThePrimaryState() {
         IState state = new VFState(benzeneQuery, benzene);
         VFMatch match = new VFMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
@@ -92,6 +95,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertEquals(4, candidates.size());
     }
 
+    @Test
     public void testItShouldFindAllMatchCandidatesInTheSecondaryState() {
         IState state0 = new VFState(benzeneQuery, benzene);
         VFMatch match0 = new VFMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
@@ -107,6 +111,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertEquals(1, candidates.size());
     }
 
+    @Test
     public void testItShouldMapAllAtomsInTheSecondaryState() {
         IState state0 = new VFState(benzeneQuery, benzene);
         VFMatch match0 = new VFMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
@@ -121,6 +126,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertEquals(benzene.getAtom(1), map.get(benzeneQuery.getNode(1)));
     }
 
+    @Test
     public void testItShouldFindAllMatchCandidatesFromTheTeriaryState() {
         IState state0 = new VFState(benzeneQuery, benzene);
         VFMatch match0 = new VFMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
@@ -138,6 +144,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertEquals(1, candidates.size());
     }
 
+    @Test
     public void testItShouldMapAllAtomsInTheTertiaryState() {
         IState state0 = new VFState(benzeneQuery, benzene);
         VFMatch match0 = new VFMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
@@ -154,6 +161,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertEquals(benzene.getAtom(2), map.get(benzeneQuery.getNode(2)));
     }
 
+    @Test
     public void testItShouldReachGoalWhenAllAtomsAreMapped() {
         IState state0 = new VFState(benzeneQuery, benzene);
         VFMatch match0 = new VFMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
@@ -175,6 +183,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertTrue(state6.isGoal());
     }
 
+    @Test
     public void testItShouldHaveANextCandidateInTheSecondaryState() {
         IState state = new VFState(benzeneQuery, benzene);
         VFMatch match = new VFMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
@@ -182,6 +191,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertTrue(nextState.hasNextCandidate());
     }
 
+    @Test
     public void testItShouldMatchHexaneToHexane() {
         IMapper mapper = new VFMapper(hexaneQuery);
         Assert.assertTrue(mapper.hasMap(hexane));
@@ -190,11 +200,13 @@ public class VFLibTest extends CDKTestCase {
     /**
      * 
      */
+    @Test
     public void testItShouldMatchHexaneToHexaneWhenUsingMolecule() {
         IMapper mapper = new VFMapper(hexane);
         Assert.assertTrue(mapper.hasMap(hexane));
     }
 
+    @Test
     public void testItShouldFindTwoMapsFromHexaneToHexane() {
         IMapper mapper = new VFMapper(hexaneQuery);
         List<Map<INode, IAtom>> maps = mapper.getMaps(hexane);
@@ -203,17 +215,17 @@ public class VFLibTest extends CDKTestCase {
 
     public static IMolecule createHexane() throws CDKException {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c2.setID("2");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c3.setID("3");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("4");
-        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("5");
-        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("6");
 
         result.addAtom(c1);
@@ -244,17 +256,17 @@ public class VFLibTest extends CDKTestCase {
     public static IMolecule createBenzene() throws CDKException {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
 
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c2.setID("2");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c3.setID("3");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("4");
-        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("5");
-        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("6");
 
         result.addAtom(c1);
