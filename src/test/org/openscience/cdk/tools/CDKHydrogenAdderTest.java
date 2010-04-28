@@ -33,7 +33,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -615,7 +614,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         String filename = "data/mdl/carbocations.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        molecule = (Molecule)reader.read((ChemObject)new Molecule());
+        molecule = reader.read(new Molecule());
     	findAndConfigureAtomTypesForAllAtoms(molecule);
         adder.addImplicitHydrogens(molecule);
         Assert.assertEquals(2,molecule.getAtom(0).getHydrogenCount().intValue());
@@ -631,7 +630,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         String filename = "data/mdl/furan.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule)reader.read((ChemObject)new Molecule());
+        IMolecule molecule = reader.read(new Molecule());
     	findAndConfigureAtomTypesForAllAtoms(molecule);
         adder.addImplicitHydrogens(molecule);
         Assert.assertEquals(1,molecule.getAtom(0).getHydrogenCount().intValue());
@@ -645,7 +644,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         String filename = "data/mdl/furan.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read((ChemObject) new Molecule());
+        IMolecule molecule = reader.read(new Molecule());
         findAndConfigureAtomTypesForAllAtoms(molecule);
         for (IAtom atom : molecule.atoms()) {
             adder.addImplicitHydrogens(molecule, atom);

@@ -28,7 +28,6 @@ import java.util.BitSet;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -103,7 +102,7 @@ public class AbstractFingerprinterTest extends CDKTestCase {
         filename = "data/mdl/bug934819-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule superstructure = (Molecule) reader.read((ChemObject) new Molecule());
+        IMolecule superstructure = reader.read(new Molecule());
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(superstructure);

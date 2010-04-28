@@ -20,18 +20,16 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-
-import java.io.InputStream;
 
 /**
  * @cdk.module test-qsarmolecular
@@ -53,7 +51,7 @@ public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
 				filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
+		IMolecule container = reader.read(new Molecule());
 		DescriptorValue count = new AutocorrelationDescriptorMass().calculate(container);
 		Assert.assertEquals(5, count.getValue().length());
 		Assert.assertTrue(count.getValue() instanceof DoubleArrayResult);

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -33,7 +32,7 @@ public class AutocorrelationDescriptorChargeTest extends MolecularDescriptorTest
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
 				filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
+		IMolecule container = reader.read(new Molecule());
 		DescriptorValue count = descriptor.calculate(container);
 		Assert.assertEquals(5, count.getValue().length());
 		Assert.assertTrue(count.getValue() instanceof DoubleArrayResult);

@@ -37,7 +37,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -181,7 +180,7 @@ public class ReaderFactoryTest extends CDKTestCase {
             reader.getClass().getName()
         );
         // now try reading something from it
-        ChemObject[] objects = { 
+        IChemObject[] objects = { 
         		new ChemFile(), new ChemModel(), new Molecule(),
         		new Reaction()
         };
