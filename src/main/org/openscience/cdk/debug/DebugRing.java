@@ -27,15 +27,15 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -79,15 +79,15 @@ public class DebugRing extends Ring
 		super(container);
 	}
 
-	public void addAtomParity(IAtomParity parity) {
-		logger.debug("Adding atom parity: ", parity);
-		super.addAtomParity(parity);
-	}
+    public void addStereoElement(IStereoElement parity) {
+        logger.debug("Adding stereo element: ", parity);
+        super.addStereoElement(parity);
+    }
 
-	public IAtomParity getAtomParity(IAtom atom) {
-		logger.debug("Getting atom parity: ", atom);
-		return super.getAtomParity(atom);
-	}
+    public Iterable<IStereoElement> stereoElements() {
+        logger.debug("Getting stereo elements.");
+        return super.stereoElements();
+    }
 
 	public void setAtoms(IAtom[] atoms) {
 		logger.debug("Setting atoms: ", atoms.length);

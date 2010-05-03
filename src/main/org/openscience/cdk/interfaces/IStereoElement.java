@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -23,42 +23,18 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Represents the concept of an atom parity identifying the stereochemistry
- * around an atom, given four neighbouring atoms.
+ * Represents the concept of a stereo element in the molecule. Stereo elements can be
+ * that of quadrivalent atoms, cis/trans isomerism around double bonds, but also include
+ * axial and helical stereochemistry.
  *
  * @cdk.module interfaces
  * @cdk.githash
  *
  * @author      egonw
- * @cdk.created 2005-08-24
- * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public interface IAtomParity extends IStereoElement {
-    
-    /**
-     * Returns the atom for which this parity is defined.
-     *
-     * @return The atom for which this parity is defined
-     */
-    public IAtom getAtom();
-    
-    /**
-     * Returns the four atoms that define the stereochemistry for
-     * this parity.
-     *
-     * @return The four atoms that define the stereochemistry for
-     *         this parity
-     */
-    public IAtom[] getSurroundingAtoms();
-    
-    /**
-     * Returns the parity value.
-     *
-     * @return The parity value
-     */
-    public int getParity();
-    
+public interface IStereoElement extends ICDKObject {
+
 }
 
 

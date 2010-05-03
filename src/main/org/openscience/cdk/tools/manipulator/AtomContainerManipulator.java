@@ -41,6 +41,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -49,6 +50,7 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -831,5 +833,24 @@ public class AtomContainerManipulator {
 		}
 		return count;
 	}
+
+    /**
+     * Helper methods that works through the stereo elements of the given atom container
+     * and returns if the atom parity for the given atom, if one is defined.
+     *
+     * @param container {@link IAtomContainer} to search the {@link IAtomParity} for.
+     * @param atom      {@link IAtom} for which the {@link IAtomParity} must be defined.
+     * @return          the {@link IAtomParity} or null if none is define for the given atom.
+     */
+    @TestMethod("testGetAtomParity")
+    public static IAtomParity getAtomParity(IAtomContainer container, IAtom atom) {
+        for (IStereoElement element : container.stereoElements()) {
+            if (element instanceof IAtomParity) {
+                IAtomParity parity = (IAtomParity)element;
+                if (parity.getAtom() == atom) return parity;
+            }
+        }
+        return null;
+    }
 }
 

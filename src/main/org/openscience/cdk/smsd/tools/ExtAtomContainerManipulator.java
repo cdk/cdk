@@ -512,9 +512,9 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     }
 
     private static void setAtomParity(IAtomContainer container, int index, IAtomContainer newAtomContainer) {
-        if (container.getAtomParity(container.getAtom(index)) != null) {
-            IAtomParity atomParity = container.getAtomParity(container.getAtom(index));
-            newAtomContainer.addAtomParity(atomParity);
+        IAtomParity parity = AtomContainerManipulator.getAtomParity(container, container.getAtom(index));
+        if (parity != null) {
+            newAtomContainer.addStereoElement(parity);
         }
     }
 }
