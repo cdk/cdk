@@ -68,6 +68,7 @@ import org.openscience.cdk.protein.data.PDBAtomTest;
 import org.openscience.cdk.protein.data.PDBMonomerTest;
 import org.openscience.cdk.protein.data.PDBPolymerTest;
 import org.openscience.cdk.protein.data.PDBStructureTest;
+import org.openscience.cdk.stereo.LigancyFourChiralityTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -116,6 +117,8 @@ import org.openscience.cdk.protein.data.PDBStructureTest;
     AdductFormulaTest.class,
     MolecularFormulaSetTest.class,
     MolecularFormulaTest.class,
+    
+    LigancyFourChiralityTest.class,
 
     // test from test.event
     ChemObjectChangeEventTest.class,
