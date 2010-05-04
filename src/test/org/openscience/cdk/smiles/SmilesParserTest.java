@@ -39,10 +39,13 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILigancyFourChirality;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ILigancyFourChirality.Stereo;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -1844,6 +1847,203 @@ public class SmilesParserTest extends CDKTestCase {
         for (IAtom atom : mol.atoms()) {
             Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
+    }
+
+    /**
+     * Tests reading stereochemistry from a SMILES with one of the four groups being an implicit hydrogen.
+     * Per SMILES specification, this hydrogen is the atom towards the viewer, and will therefore end up
+     * as first atom in the array.
+     */
+    @Test public void testAtAt() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("Br[C@@H](Cl)I");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("Br", ligands[0].getSymbol());
+        Assert.assertEquals("H", ligands[1].getSymbol());
+        Assert.assertEquals("Cl", ligands[2].getSymbol());
+        Assert.assertEquals("I", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    /**
+     * Tests reading stereochemistry from a SMILES with one of the four groups being an implicit hydrogen.
+     * Per SMILES specification, this hydrogen is the atom towards the viewer, and will therefore end up
+     * as first atom in the array.
+     */
+    @Test public void testAt() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("Br[C@H](Cl)I");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("Br", ligands[0].getSymbol());
+        Assert.assertEquals("H", ligands[1].getSymbol());
+        Assert.assertEquals("Cl", ligands[2].getSymbol());
+        Assert.assertEquals("I", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testAtAt_ExplicitHydrogen() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("Br[C@@]([H])(Cl)I");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("Br", ligands[0].getSymbol());
+        Assert.assertEquals("H", ligands[1].getSymbol());
+        Assert.assertEquals("Cl", ligands[2].getSymbol());
+        Assert.assertEquals("I", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testAt_ExplicitHydrogen() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("Br[C@]([H])(Cl)I");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("Br", ligands[0].getSymbol());
+        Assert.assertEquals("H", ligands[1].getSymbol());
+        Assert.assertEquals("Cl", ligands[2].getSymbol());
+        Assert.assertEquals("I", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testRingClosure_At() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("[C@]12(OC1)NCN2");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("C", ligands[0].getSymbol());
+        Assert.assertEquals("N", ligands[1].getSymbol());
+        Assert.assertEquals("O", ligands[2].getSymbol());
+        Assert.assertEquals("N", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testNeighboringChirality() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C[C@H](O)[C@H](O)C");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        // first chiral center
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("C", ligands[0].getSymbol());
+        Assert.assertEquals("H", ligands[1].getSymbol());
+        Assert.assertEquals("O", ligands[2].getSymbol());
+        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+        // second chiral center
+        Assert.assertTrue(stereoElements.hasNext());
+        stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("C", ligands[0].getSymbol());
+        Assert.assertEquals("H", ligands[1].getSymbol());
+        Assert.assertEquals("O", ligands[2].getSymbol());
+        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testChiralityInBranch() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("NC([C@H](O)C)Cl");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        // first chiral center
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("C", ligands[0].getSymbol());
+        Assert.assertEquals("H", ligands[1].getSymbol());
+        Assert.assertEquals("O", ligands[2].getSymbol());
+        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testChiralityWithTonsOfDots() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("I1.Cl2.Br3.[C@]123CCC");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("I", ligands[0].getSymbol());
+        Assert.assertEquals("Cl", ligands[1].getSymbol());
+        Assert.assertEquals("Br", ligands[2].getSymbol());
+        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testChiralAtomWithDisconnectedLastAtom() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("Br1.[C@]1(Cl)(OC)CCC");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereoElement = stereoElements.next();
+        Assert.assertNotNull(stereoElement);
+        Assert.assertTrue(stereoElement instanceof ILigancyFourChirality);
+        ILigancyFourChirality l4Chiral = (ILigancyFourChirality)stereoElement;
+        Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
+        IAtom[] ligands = l4Chiral.getLigands();
+        for (IAtom atom : ligands) Assert.assertNotNull(atom);
+        Assert.assertEquals("Br", ligands[0].getSymbol());
+        Assert.assertEquals("Cl", ligands[1].getSymbol());
+        Assert.assertEquals("O", ligands[2].getSymbol());
+        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
     }
 }
 
