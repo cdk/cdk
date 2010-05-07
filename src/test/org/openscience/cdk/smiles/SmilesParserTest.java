@@ -946,6 +946,19 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals(3, mol1.getAtomCount());
 	}
 
+	@Test
+	public void testConnectedByRingClosure_TwoAtom() throws Exception {
+        String methanol = "C1.O1";
+        IMolecule mol = sp.parseSmiles(methanol);
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
+        
+        IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(mol);
+        int fragmentCount = fragments.getMoleculeCount();
+        Assert.assertEquals(1, fragmentCount);
+        IMolecule mol1 = fragments.getMolecule(0);
+        Assert.assertEquals(2, mol1.getAtomCount());
+    }
 
 	/**
 	 *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
@@ -1933,6 +1946,18 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("Cl", ligands[2].getSymbol());
         Assert.assertEquals("I", ligands[3].getSymbol());
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+    }
+
+    @Test public void testRingClosure() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C12(OC1)CCC2");
+        Assert.assertEquals(6, mol.getAtomCount());
+        Assert.assertEquals("C", mol.getAtom(0).getSymbol());
+        Assert.assertEquals("O", mol.getAtom(1).getSymbol());
+        Assert.assertEquals("C", mol.getAtom(2).getSymbol());
+        Assert.assertEquals(4, mol.getConnectedAtomsCount(mol.getAtom(0)));
+        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(1)));
+        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(2)));
     }
 
     @Test public void testRingClosure_At() throws Exception {
