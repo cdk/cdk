@@ -813,6 +813,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         }
                     }
                 }
+                if (line.startsWith("V  ")) {
+                    Integer atomNumber = new Integer(line.substring(3,6).trim());
+                    IAtom atomWithComment = molecule.getAtom(atomNumber - 1);
+                    atomWithComment.setProperty(CDKConstants.COMMENT, line.substring(7));
+                }
+                
                 if (!lineRead) {
                     logger.warn("Skipping line in property block: ", line);
                 }

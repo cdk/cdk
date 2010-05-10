@@ -371,6 +371,20 @@ public class MDLWriter extends DefaultChemObjectWriter {
         		writer.newLine();
         	}
         }
+        
+        // Write Atom Value
+        for (int i = 0; i < container.getAtomCount(); i++) {
+        	IAtom atom = container.getAtom(i);
+        	if(atom.getProperty(CDKConstants.COMMENT)!=null 
+        	&& atom.getProperty(CDKConstants.COMMENT) instanceof String
+        	&& !((String)atom.getProperty(CDKConstants.COMMENT)).trim().equals("") ) {
+                writer.write("V  ");
+                writer.write(formatMDLInt(i+1,3));
+                writer.write(" ");
+                writer.write((String)atom.getProperty(CDKConstants.COMMENT));
+                writer.newLine();
+        	}
+        }
 
         // write formal atomic charges
         for (int i = 0; i < container.getAtomCount(); i++) {

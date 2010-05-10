@@ -796,4 +796,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(molOne.getAtom(0).getPoint3d());
     }
 
+    @Test public void testAtomValueLines() throws Exception {
+    	String filename = "data/mdl/atomValueLines.mol";
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins);
+    	Molecule testMolecule = new Molecule();
+    	Molecule result = reader.read(testMolecule);
+    	IAtom oxygen = result.getAtom(0);
+    	Assert.assertTrue(oxygen.getSymbol().equals("O"));
+    	Assert.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");
+    }
+    
 }

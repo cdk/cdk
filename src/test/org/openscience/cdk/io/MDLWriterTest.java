@@ -279,4 +279,29 @@ public class MDLWriterTest extends ChemObjectIOTest {
     }
 
 
+    /**
+     * Test writing of comments made on individual atoms into an Atom Value lines. 
+     */
+    @Test public void testAtomValueLine() throws Exception {
+        IAtom carbon = builder.newInstance(IAtom.class, "C");
+        carbon.setProperty(CDKConstants.COMMENT, "Carbon comment");
+        IAtom oxygen = builder.newInstance(IAtom.class, "O");
+        oxygen.setProperty(CDKConstants.COMMENT, "Oxygen comment");
+        IBond bond = builder.newInstance(IBond.class,carbon, oxygen, CDKConstants.BONDORDER_DOUBLE);
+
+        Molecule molecule = new Molecule();
+        molecule.addAtom(oxygen);
+        molecule.addAtom(carbon);
+        molecule.addBond(bond);
+        
+        StringWriter writer = new StringWriter();
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
+        System.out.println(writer.toString());
+        
+        Assert.assertTrue(writer.toString().indexOf("V    1 Oxygen comment") != -1);
+        Assert.assertTrue(writer.toString().indexOf("V    2 Carbon comment") != -1);
+        
+    }
+
 }
