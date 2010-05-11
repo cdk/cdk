@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007,2010  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -21,7 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.modulesuites;
 
 import org.junit.runner.RunWith;
@@ -29,9 +23,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsarCoverageTest;
 import org.openscience.cdk.qsar.DescriptorExceptionTest;
-import org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest;
-import org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest;
-import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -43,9 +34,6 @@ import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     QsarCoverageTest.class,
-    DescriptorExceptionTest.class,
-    LinearRegressionModelTest.class,
-    CNNRegressionModelTest.class,
-    RJavaEnvironmentTest.class
+    DescriptorExceptionTest.class
 })
 public class MqsarTests {}
