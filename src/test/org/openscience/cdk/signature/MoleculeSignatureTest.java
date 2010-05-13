@@ -31,7 +31,6 @@ import junit.framework.Assert;
 
 import org.junit.Assume;
 import org.junit.Test;
-import org.junit.runner.notification.RunListener;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;

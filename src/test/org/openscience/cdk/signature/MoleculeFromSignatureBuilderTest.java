@@ -22,11 +22,106 @@
 */
 package org.openscience.cdk.signature;
 
+import junit.framework.Assert;
+
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+
+import signature.AbstractVertexSignature;
+import signature.ColoredTree;
+
 /**
  * @cdk.module test-signature
  * @author maclean
  *
  */
-public class MoleculeFromSignatureBuilderTest {
+public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
+    
+    public String signatureForAtom(IAtomContainer atomContainer, int atomIndex) {
+        MoleculeSignature molSig = new MoleculeSignature(atomContainer);
+        return molSig.signatureStringForVertex(atomIndex);
+    }
+    
+    public String canonicalSignature(IAtomContainer atomContainer) {
+        MoleculeSignature molSig = new MoleculeSignature(atomContainer);
+        return molSig.toCanonicalString();
+    }
+    
+    public IAtomContainer reconstruct(String signature) {
+        ColoredTree tree = AbstractVertexSignature.parse(signature);
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder();
+        builder.makeFromColoredTree(tree);
+        return builder.getAtomContainer();
+    }
+    
+    public void ccBondTest(IBond.Order order) {
+        IAtomContainer cc = builder.newInstance(IAtomContainer.class);
+        cc.addAtom(builder.newInstance(IAtom.class, "C"));
+        cc.addAtom(builder.newInstance(IAtom.class, "C"));
+        cc.addBond(0, 1, order);
+        String signature = signatureForAtom(cc, 0);
+        IAtomContainer reconstructed = reconstruct(signature);
+        Assert.assertEquals(2, reconstructed.getAtomCount());
+        Assert.assertEquals(1, reconstructed.getBondCount());
+        Assert.assertEquals(order, reconstructed.getBond(0).getOrder());
+    }
+    
+    public IAtomContainer makeRing(int ringSize) {
+        IAtomContainer ring = builder.newInstance(IAtomContainer.class);
+        for (int i = 0; i < ringSize; i++) {
+            ring.addAtom(builder.newInstance(IAtom.class, "C"));
+            if (i > 0) {
+                ring.addBond(i - 1, i, IBond.Order.SINGLE);
+            }
+        }
+        ring.addBond(0, ringSize - 1, IBond.Order.SINGLE);
+        return ring;
+    }
+    
+    public void ringTest(int ringSize) {
+        IAtomContainer ring = makeRing(ringSize);
+        String signature = canonicalSignature(ring);
+        IAtomContainer reconstructedRing = reconstruct(signature);
+        Assert.assertEquals(ringSize, reconstructedRing.getAtomCount());
+    }
+    
+    @Test
+    public void singleCCBondTest() {
+        ccBondTest(IBond.Order.SINGLE);
+    }
+    
+    @Test
+    public void doubleCCBondTest() {
+        ccBondTest(IBond.Order.DOUBLE);
+    }
+    
+    @Test
+    public void tripleCCBondTest() {
+        ccBondTest(IBond.Order.TRIPLE);
+    }
+    
+    @Test
+    public void triangleRingTest() {
+        ringTest(3);
+    }
+    
+    @Test
+    public void squareRingTest() {
+        ringTest(4);
+    }
+    
+    @Test
+    public void pentagonRingTest() {
+        ringTest(5);
+    }
+    
+    @Test
+    public void hexagonRingTest() {
+        ringTest(5);
+    }
+
 
 }
