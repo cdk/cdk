@@ -29,7 +29,10 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
+import org.junit.Assume;
 import org.junit.Test;
+import org.junit.runner.notification.RunListener;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -50,7 +53,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @author maclean
  *
  */
-public class MoleculeSignatureTest {
+public class MoleculeSignatureTest extends CDKTestCase {
     
     private SmilesParser parser;
     
@@ -365,20 +368,20 @@ public class MoleculeSignatureTest {
     
     // XXX commented out this test for now, as it takes a long time - this
     // is a known weakness of the current implementation
-//    @Test
-//    public void testPolyPhenylMolecule() throws Exception {
-//        String smiles = "C1=CC=C(C=C1)P(C2=CC=CC=C2)(C3=CC=CC=C3)[RhH]" +
-//        		"(P(C4=CC=CC=C4)(C5=CC=CC=C5)C6=CC=CC=C6)(P(C7=CC=CC=C7)" +
-//        		"(C8=CC=CC=C8)C9=CC=CC=C9)P(C%10=CC=CC=C%10)" +
-//        		"(C%11=CC=CC=C%11)C%12=CC=CC=C%12";
-////        testSmiles(smiles);
-//        IMolecule mol = parser.parseSmiles(smiles);
-//        int rhIndex = findFirstAtomIndexForSymbol(mol, "Rh");
+    @Test
+    public void testPolyPhenylMolecule() throws Exception {
+        Assume.assumeTrue(runSlowTests());
+        String smiles = "C1=CC=C(C=C1)P(C2=CC=CC=C2)(C3=CC=CC=C3)[RhH]" +
+        		"(P(C4=CC=CC=C4)(C5=CC=CC=C5)C6=CC=CC=C6)(P(C7=CC=CC=C7)" +
+        		"(C8=CC=CC=C8)C9=CC=CC=C9)P(C%10=CC=CC=C%10)" +
+        		"(C%11=CC=CC=C%11)C%12=CC=CC=C%12";
+        IMolecule mol = parser.parseSmiles(smiles);
+        int rhIndex = findFirstAtomIndexForSymbol(mol, "Rh");
         
-//        MoleculeSignature molSig = new MoleculeSignature(mol);
-//        String signatureForRh = molSig.signatureStringForVertex(rhIndex);
-//        System.out.println(signatureForRh);
-//    }
+        MoleculeSignature molSig = new MoleculeSignature(mol);
+        String signatureForRh = molSig.signatureStringForVertex(rhIndex);
+        System.out.println(signatureForRh);
+    }
     
     @Test
     public void methylFerroceneTest() throws Exception {
