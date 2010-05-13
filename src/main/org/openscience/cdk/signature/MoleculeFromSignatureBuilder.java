@@ -1,0 +1,110 @@
+/* Copyright (C) 2009-2010 maclean {gilleain.torrance@gmail.com}
+*
+* Contact: cdk-devel@lists.sourceforge.net
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public License
+* as published by the Free Software Foundation; either version 2.1
+* of the License, or (at your option) any later version.
+* All we ask is that proper credit is given for our work, which includes
+* - but is not limited to - adding the above copyright notice to the beginning
+* of your source code files, and to any copyright notice that you may distribute
+* with programs based on this work.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+package org.openscience.cdk.signature;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+
+import signature.AbstractGraphBuilder;
+
+/**
+ * Builds a molecule from a signature.
+ * 
+ * @cdk.module signature
+ * @author maclean
+ * 
+ */
+@TestClass("org.openscience.cdk.signature.MoleculeFromSignatureBuilderTest")
+public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
+    
+    /**
+     * The chem object builder
+     */
+    private IChemObjectBuilder builder;
+    
+    /**
+     * The container that is being constructed
+     */
+    private IAtomContainer container;
+    
+    /**
+     * This default constructor uses a {@link NoNotificationChemObjectBuilder}
+     */
+    public MoleculeFromSignatureBuilder() {
+        this.builder = NoNotificationChemObjectBuilder.getInstance();
+    }
+    
+    /**
+     * Uses the chem object builder for making molecules.
+     * 
+     * @param builder a builder for CDK molecules.
+     */
+    public MoleculeFromSignatureBuilder(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
+
+    /* (non-Javadoc)
+     * @see signature.AbstractGraphBuilder#makeEdge(int, int, java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public void makeEdge(int vertexIndex1, int vertexIndex2,
+            String vertexSymbol1, String vertexSymbol2, String edgeLabel) {
+        if (edgeLabel.equals("")) {
+            container.addBond(vertexIndex1, vertexIndex2, IBond.Order.SINGLE);
+        } else if (edgeLabel.equals("=")) {
+            container.addBond(vertexIndex1, vertexIndex2, IBond.Order.DOUBLE);
+        } else if (edgeLabel.equals("#")) {
+            container.addBond(vertexIndex1, vertexIndex2, IBond.Order.TRIPLE);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see signature.AbstractGraphBuilder#makeGraph()
+     */
+    @Override
+    public void makeGraph() {
+        this.container = this.builder.newInstance(IAtomContainer.class);
+    }
+
+    /* (non-Javadoc)
+     * @see signature.AbstractGraphBuilder#makeVertex(java.lang.String)
+     */
+    @Override
+    public void makeVertex(String label) {
+        this.container.addAtom(this.builder.newInstance(IAtom.class, label));
+    }
+    
+    /**
+     * Gets the atom container.
+     * 
+     * @return the constructed atom container
+     */
+    public IAtomContainer getAtomContainer() {
+        return this.container;
+    }
+
+}

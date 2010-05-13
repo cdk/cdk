@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/test"/>
@@ -18,7 +17,8 @@
 	<classpathentry exported="true" kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar" sourcepath="org.openscience.cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="develjar/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="jar/cmlxom-2.5-b1.jar"/>
-	<classpathentry kind="lib" path="develjar/doccheck.jar"/>
 	<classpathentry kind="lib" path="develjar/ojdcheck.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="jar/signatures-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
