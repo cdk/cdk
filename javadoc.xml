@@ -143,6 +143,7 @@
       <antcall target="ojdcheck-module"><param name="module" value="charges"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="diff"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="smsd"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="signature"/></antcall>
     </target>
 
     <target name="ojdcheck-module">
