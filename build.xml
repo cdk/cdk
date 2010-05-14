@@ -549,6 +549,9 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="builder3d,builder3dtools"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="signature"/>
     </target>
 
     <target id="test-dist-all" name="test-dist-all" description="test-dist-all">
@@ -576,6 +579,9 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-qsarprotein,test-qsarionpot,test-smsd"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-signature"/>
     </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
@@ -626,6 +632,7 @@
                     <includesfile name="${metainf}/formula.libdepends"/>
                     <includesfile name="${metainf}/isomorphism.libdepends"/>
                     <includesfile name="${metainf}/qm.libdepends"/>
+                    <includesfile name="${metainf}/signature.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-annotation.jar"/>
@@ -672,6 +679,7 @@
                     <include name="cdk-isomorphism.jar"/>
                     <include name="cdk-ionpot.jar"/>
                     <include name="cdk-smsd.jar"/>
+                    <include name="cdk-signature.jar"/>
                     <include name="cdk-qm.jar"/>
                 </fileset>
             </unjar>
@@ -741,6 +749,7 @@
                     <include name="cdk-pcore.jar"/>
                     <include name="cdk-formula.jar"/>
 		    <include name="cdk-atomtype.jar"/>
+                    <include name="cdk-signature.jar"/>
                 </fileset>
             </unjar>
 
@@ -798,6 +807,7 @@
                     <includesfile name="${metainf}/test-formula.libdepends"/>
                     <includesfile name="${metainf}/test-render.libdepends"/>
                     <includesfile name="${metainf}/test-log4j.libdepends"/>
+                    <includesfile name="${metainf}/test-signature.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-test-annotation.jar"/>
@@ -831,6 +841,7 @@
                     <include name="cdk-test-formula.jar"/>
                     <include name="cdk-test-render.jar"/>
                     <include name="cdk-test-log4j.jar"/>
+                    <include name="cdk-test-signature.jar"/>
                 </fileset>
             </unjar>
 
@@ -1041,7 +1052,7 @@
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
-                      ioformats,log4j,smsd"/>
+                      ioformats,log4j,smsd,signature"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
