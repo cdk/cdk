@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 import signature.AbstractVertexSignature;
 import signature.ColoredTree;
@@ -52,7 +53,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public IAtomContainer reconstruct(String signature) {
         ColoredTree tree = AbstractVertexSignature.parse(signature);
         MoleculeFromSignatureBuilder builder = 
-            new MoleculeFromSignatureBuilder();
+            new MoleculeFromSignatureBuilder(NoNotificationChemObjectBuilder.getInstance());
         builder.makeFromColoredTree(tree);
         return builder.getAtomContainer();
     }

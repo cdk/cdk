@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 import signature.AbstractGraphBuilder;
 
@@ -50,13 +49,6 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
      * The container that is being constructed
      */
     private IAtomContainer container;
-    
-    /**
-     * This default constructor uses a {@link NoNotificationChemObjectBuilder}
-     */
-    public MoleculeFromSignatureBuilder() {
-        this.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
     
     /**
      * Uses the chem object builder for making molecules.

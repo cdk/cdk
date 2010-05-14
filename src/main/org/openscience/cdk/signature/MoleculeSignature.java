@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 
 import signature.AbstractGraphSignature;
@@ -121,12 +122,14 @@ public class MoleculeSignature extends AbstractGraphSignature {
      * strings.
      * 
      * @param signatureString the signature string to use
+     * @param coBuilder {@link IChemObjectBuilder} to build the returned atom container from
      * @return an atom container
      */
-    public static IAtomContainer fromSignatureString(String signatureString) {
+    public static IAtomContainer fromSignatureString(String signatureString,
+            IChemObjectBuilder coBuilder) {
         ColoredTree tree = AtomSignature.parse(signatureString);
         MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder();
+            new MoleculeFromSignatureBuilder(coBuilder);
         builder.makeFromColoredTree(tree);
         return builder.getAtomContainer();
     }
