@@ -36,6 +36,7 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -410,8 +411,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             for (int j=0; j<producedSide.getAtomCount(); j++) {
             	IAtom eductAtom = reactingSide.getAtom(i);
             	IAtom productAtom = producedSide.getAtom(j);
-                if (eductAtom.getID() != null &&
-                		eductAtom.getID().equals(productAtom.getID())) {
+                if (eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null &&
+                		eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING).equals(productAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING))) {
                     reaction.addMapping(
                         builder.newInstance(IMapping.class,eductAtom, productAtom)
                     );

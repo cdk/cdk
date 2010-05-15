@@ -35,6 +35,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.nonotify.NNReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -113,4 +114,18 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         
     }
 
+    @Test public void testReadMapping() throws Exception {
+        String filename2 = "data/mdl/mappingTest.rxn";
+        logger.info("Testing: " + filename2);
+        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
+        MDLRXNV2000Reader reader2 = new MDLRXNV2000Reader(ins2);
+        IReaction reaction2 = new NNReaction();
+        reaction2 = (IReaction)reader2.read(reaction2);
+        reader2.close();
+
+        Assert.assertNotNull(reaction2);
+        java.util.Iterator maps = reaction2.mappings().iterator();
+        maps.next();
+        Assert.assertTrue(maps.hasNext());
+    }
 }

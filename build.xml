@@ -293,14 +293,16 @@
                 depends="init, check, runDoclet"/>
 
         <target id="qa-module" name="qa-module"
-                depends="check, dist.init, compile-needed-test"
-                unless="module-uptodate">
+                depends="check, dist.init">
           <echo message="Running QA for CDK's ${module} module" />
 
           <antcall target="test-module">
               <param name="module" value="${module}"/>
           </antcall>
 
+          <ant antfile="javadoc.xml" target="ojdcheck-module">
+              <property name="module" value="${module}"/>
+          </ant>
           <ant antfile="pmd.xml" target="test-module">
               <property name="pmd.test" value="custom"/>
               <property name="module" value="${module}"/>
