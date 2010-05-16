@@ -32,7 +32,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.ILigancyFourChirality.Stereo;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 /**
  * @cdk.module test-data
@@ -64,7 +64,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
 
     @Test
     public void testLigancyFourChirality_IAtom_arrayIAtom_ILigancyFourChirality_STEREO() {
-        LigancyFourChirality chirality = new LigancyFourChirality(
+        TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
         Assert.assertNotNull(chirality);
@@ -72,7 +72,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
 
     @Test
     public void testGetBuilder() {
-        LigancyFourChirality chirality = new LigancyFourChirality(
+        TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
         Assert.assertEquals(
@@ -83,7 +83,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
 
     @Test
     public void testGetChiralAtom() {
-        LigancyFourChirality chirality = new LigancyFourChirality(
+        TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
         Assert.assertNotNull(chirality);
@@ -92,7 +92,7 @@ public class LigancyFourChiralityTest extends CDKTestCase {
 
     @Test
     public void testGetStereo() {
-        LigancyFourChirality chirality = new LigancyFourChirality(
+        TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
         Assert.assertNotNull(chirality);
@@ -100,12 +100,12 @@ public class LigancyFourChiralityTest extends CDKTestCase {
         for (int i=0; i<ligands.length; i++) {
             Assert.assertEquals(ligands[i], chirality.getLigands()[i]);
         }
-        Assert.assertEquals(LigancyFourChirality.Stereo.CLOCKWISE, chirality.getStereo());
+        Assert.assertEquals(TetrahedralChirality.Stereo.CLOCKWISE, chirality.getStereo());
     }
 
     @Test
     public void testGetLigandAtoms() {
-        LigancyFourChirality chirality = new LigancyFourChirality(
+        TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
         Assert.assertNotNull(chirality);

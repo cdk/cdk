@@ -44,15 +44,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.ILigancyFourChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.ILigancyFourChirality.Stereo;
-import org.openscience.cdk.stereo.LigancyFourChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -233,7 +233,7 @@ public class SmilesParser {
 		    TemporaryChiralityStorage chirality = chiralityInfo.get(atom);
 		    logger.debug("Chiral atom found: ", atom);
 		    IAtom[] atoms = chirality.atoms;
-		    ILigancyFourChirality l4Chiral = new LigancyFourChirality(
+		    ITetrahedralChirality l4Chiral = new TetrahedralChirality(
 		        atom,
 		        new IAtom[]{
 		            atoms[0], atoms[1], atoms[2], atoms[3]
