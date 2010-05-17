@@ -146,6 +146,9 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
             case VFLibMCS:
                 vfLibMCSAlgorithm(rBondCount, pBondCount);
                 break;
+            case TURBOMCS:
+                vfLibTurboMCSAlgorithm(rBondCount, pBondCount);
+                break;
         }
     }
 
@@ -212,6 +215,20 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     private void vfLibMCS() {
+        VFlibMCSHandler mcs = null;
+        mcs = new VFlibMCSHandler();
+        mcs.set(rMol, pMol);
+        mcs.searchMCS();
+
+        clearMaps();
+        firstSolution.putAll(mcs.getFirstMapping());
+        allMCS.addAll(mcs.getAllMapping());
+
+        firstAtomMCS.putAll(mcs.getFirstAtomMapping());
+        allAtomMCS.addAll(mcs.getAllAtomMapping());
+    }
+
+    private void vfLibTurboMCS() {
         VFlibMCSHandler mcs = null;
         mcs = new VFlibMCSHandler();
         mcs.set(rMol, pMol);
@@ -307,6 +324,14 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
         }
     }
 
+    private void vfLibTurboMCSAlgorithm(int rBondCount, int pBondCount) {
+        if (rBondCount >= 6 && pBondCount >= 6) {
+            vfLibTurboMCS();
+        } else {
+            mcsPlusAlgorithm();
+        }
+    }
+
     private void setTime(boolean bondTypeFlag) {
         if (bondTypeFlag) {
             TimeOut tmo = TimeOut.getInstance();
@@ -377,6 +402,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
         this.pMol = new MolHandler(Product, false, removeHydrogen);
         init(rMol, pMol, removeHydrogen);
     }
+
     /**
      * Initialize the query and target mol via mol files
      * @param sourceMolFileName
