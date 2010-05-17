@@ -202,7 +202,6 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
         VFlibTurboHandler subGraphTurboSearch = null;
         subGraphTurboSearch = new VFlibTurboHandler();
         subGraphTurboSearch.set(rMol, pMol);
-
         clearMaps();
         if (subGraphTurboSearch.isSubgraph()) {
             firstSolution.putAll(subGraphTurboSearch.getFirstMapping());
@@ -293,7 +292,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     private void subStructureAlgorithm(int rBondCount, int pBondCount) {
-        if (rBondCount > 1 && pBondCount > 1) {
+        if (rBondCount > 0 && pBondCount > 0) {
             vfTurboHandler();
         } else {
             singleMapping();
@@ -358,7 +357,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      */
     @Override
     @TestMethod("testInit_3args_1")
-    public synchronized void init(IMolecule Reactant, IMolecule Product, boolean removeHydrogen) {
+    public void init(IMolecule Reactant, IMolecule Product, boolean removeHydrogen) {
         this.removeHydrogen = removeHydrogen;
         this.rMol = new MolHandler(Reactant, false, removeHydrogen);
         this.pMol = new MolHandler(Product, false, removeHydrogen);
@@ -372,7 +371,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      */
     @Override
     @TestMethod("testInit_3args_2")
-    public synchronized void init(IAtomContainer Reactant, IAtomContainer Product, boolean removeHydrogen) {
+    public void init(IAtomContainer Reactant, IAtomContainer Product, boolean removeHydrogen) {
         this.removeHydrogen = removeHydrogen;
         this.rMol = new MolHandler(Reactant, false, removeHydrogen);
         this.pMol = new MolHandler(Product, false, removeHydrogen);

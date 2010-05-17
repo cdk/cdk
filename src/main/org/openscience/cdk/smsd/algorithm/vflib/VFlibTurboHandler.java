@@ -34,13 +34,13 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
-import org.openscience.cdk.smsd.algorithm.vflib.map.VFMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.query.TemplateCompiler;
 import org.openscience.cdk.smsd.helper.MolHandler;
 import org.openscience.cdk.smsd.interfaces.AbstractSubGraph;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 
 /**
@@ -90,13 +90,9 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     public boolean isSubgraph() {
 
         IQuery query = TemplateCompiler.compile(source);
-
-        IMapper mapper = new VFMapper(query);
-
+        IMapper mapper = new VFMCSMapper(query);
         Map<INode, IAtom> vfLibSolution = mapper.getFirstMap(target);
-
-//        System.out.println("Size of the Mapping: " + vfLibSolution.size());
-
+        
         Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
         TreeMap<Integer, Integer> indexindexMapping = new TreeMap<Integer, Integer>();
 
@@ -120,27 +116,56 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
             atomsMCS.putAll(allAtomMCS.get(0));
             firstMCS.putAll(allMCS.get(0));
         }
-
-        return (!firstMCS.isEmpty() && firstMCS.size() == source.getAtomCount()) ? true : false;
+        return !vfLibSolution.isEmpty() ? true : false;
     }
 
     /** {@inheritDoc}
      *
-     * @param source
-     * @param target
+     * @param reactant
+     * @param product
      */
     @Override
     @TestMethod("testSet_IAtomContainer_IAtomContainer")
-    public void set(IAtomContainer source, IAtomContainer target) {
+    public void set(IAtomContainer reactant, IAtomContainer product) {
 
-        IAtomContainer mol1 = source;
-        IAtomContainer mol2 = target;
+        IAtomContainer mol1 = reactant;
+        IAtomContainer mol2 = product;
 
         MolHandler Reactant = new MolHandler(mol1, false);
         MolHandler Product = new MolHandler(mol2, false);
+        this.set(Reactant, Product);
 
-        set(Reactant, Product);
+    }
 
+    /** {@inheritDoc}
+     *
+     *
+     * @param Reactant
+     * @param Product
+     */
+    @Override
+    @TestMethod("testSet_MolHandler_MolHandler")
+    public void set(MolHandler Reactant, MolHandler Product) {
+        source = Reactant.getMolecule();
+        target = Product.getMolecule();
+    }
+
+    /** {@inheritDoc}
+     *
+     * Creates atoms new instance of SearchCliques
+     * @param ReactantMolFileName
+     * @param ProductMolFileName
+     */
+    @Override
+    @TestMethod("testSet_String_String")
+    public void set(String ReactantMolFileName, String ProductMolFileName) {
+
+        String mol1 = ReactantMolFileName;
+        String mol2 = ProductMolFileName;
+
+        MolHandler Reactant = new MolHandler(mol1, false);
+        MolHandler Product = new MolHandler(mol2, false);
+        this.set(Reactant, Product);
     }
 
     /** {@inheritDoc}
@@ -150,43 +175,9 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
      */
     @TestMethod("testSet_IMolecule_IMolecule")
     public void set(IMolecule source, IMolecule target) throws CDKException {
-
-        IMolecule mol1 = source;
-        IMolecule mol2 = target;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-
-        set(Reactant, Product);
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param sourceMolFileName
-     * @param targetMolFileName
-     */
-    @Override
-    @TestMethod("testSet_String_String")
-    public void set(String sourceMolFileName, String targetMolFileName) {
-
-        String mol1 = sourceMolFileName;
-        String mol2 = targetMolFileName;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-        set(Reactant, Product);
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param source
-     * @param target
-     */
-    @Override
-    @TestMethod("testSet_MolHandler_MolHandler")
-    public void set(MolHandler source, MolHandler target) {
-        this.source = source.getMolecule();
-        this.target = target.getMolecule();
+        MolHandler Reactant = new MolHandler(source, false);
+        MolHandler Product = new MolHandler(target, false);
+        this.set(Reactant, Product);
     }
 
     /** {@inheritDoc}
