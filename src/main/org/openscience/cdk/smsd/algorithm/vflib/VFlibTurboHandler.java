@@ -40,7 +40,7 @@ import org.openscience.cdk.smsd.interfaces.AbstractSubGraph;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper;
+import org.openscience.cdk.smsd.algorithm.vflib.map.VFMapper;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 
 /**
@@ -90,7 +90,7 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     public boolean isSubgraph() {
 
         IQuery query = TemplateCompiler.compile(source);
-        IMapper mapper = new VFMCSMapper(query);
+        IMapper mapper = new VFMapper(query);
         Map<INode, IAtom> vfLibSolution = mapper.getFirstMap(target);
         
         Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
