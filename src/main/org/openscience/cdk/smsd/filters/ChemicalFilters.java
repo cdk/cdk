@@ -50,6 +50,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -437,8 +439,8 @@ public class ChemicalFilters {
 //      System.out.println("Mol Size Eorg: " + sourceMol.getMolecule().getAtomCount() + " , Mol Size Porg: " +
 //        targetMol.getMolecule().getAtomCount());
 
-        IAtomContainer Educt = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class,rMol.getMolecule());
-        IAtomContainer Product = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class,pMol.getMolecule());
+        IAtomContainer Educt = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, rMol.getMolecule());
+        IAtomContainer Product = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, pMol.getMolecule());
 
 
         if (MCSAtomSolution != null) {
@@ -460,8 +462,8 @@ public class ChemicalFilters {
 //        System.out.println("\nSort By Energies");
         double totalBondEnergy = -9999.0;
 
-        IAtomContainer Educt = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class,rMol.getMolecule());
-        IAtomContainer Product = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class,pMol.getMolecule());
+        IAtomContainer Educt = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, rMol.getMolecule());
+        IAtomContainer Product = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, pMol.getMolecule());
 
         for (IAtom eAtom : Educt.atoms()) {
             eAtom.setFlag(0, false);
@@ -630,10 +632,8 @@ public class ChemicalFilters {
             IBond RBond = matchedBonds.getKey();
             IBond PBond = matchedBonds.getValue();
 
-
             score += getBondFormalChargeMatches(RBond, PBond);
             score += getBondTypeMatches(RBond, PBond);
-
         }
         return score;
     }
@@ -768,27 +768,63 @@ public class ChemicalFilters {
         return stereoMatchFlag;
     }
 
-    private double getBondTypeMatches(IBond RBond, IBond PBond) {
+    private double getBondTypeMatches(IBond queryBond, IBond targetBond) {
         double score = 0;
-        int RBondType = RBond.getOrder().ordinal();
-        int PBondType = PBond.getOrder().ordinal();
+
+        if (targetBond instanceof IQueryBond && queryBond instanceof IBond) {
+            IQueryBond bond = (IQueryBond) targetBond;
+            IQueryAtom atom1 = (IQueryAtom) (targetBond.getAtom(0));
+            IQueryAtom atom2 = (IQueryAtom) (targetBond.getAtom(1));
+            if (bond.matches(queryBond)) {
+                // ok, bonds match
+                if (atom1.matches(queryBond.getAtom(0)) && atom2.matches(queryBond.getAtom(1))
+                        || atom1.matches(queryBond.getAtom(1)) && atom2.matches(queryBond.getAtom(0))) {
+                    // ok, atoms match in either order
+                    score += 4;
+                }
+            } else {
+                score -= 2;
+            }
+        } else if (queryBond instanceof IQueryBond && targetBond instanceof IBond) {
+            IQueryBond bond = (IQueryBond) queryBond;
+            IQueryAtom atom1 = (IQueryAtom) (queryBond.getAtom(0));
+            IQueryAtom atom2 = (IQueryAtom) (queryBond.getAtom(1));
+            if (bond.matches(targetBond)) {
+                // ok, bonds match
+                if (atom1.matches(targetBond.getAtom(0)) && atom2.matches(targetBond.getAtom(1))
+                        || atom1.matches(targetBond.getAtom(1)) && atom2.matches(targetBond.getAtom(0))) {
+                    // ok, atoms match in either order
+                    score += 4;
+                }
+            } else {
+                score -= 2;
+            }
+        } else {
+
+            int ReactantBondType = queryBond.getOrder().ordinal();
+            int ProductBondType = targetBond.getOrder().ordinal();
 
 
-        if (RBond.getFlag(CDKConstants.ISAROMATIC) == PBond.getFlag(CDKConstants.ISAROMATIC) && RBondType == PBondType) {
-            score += 2;
-        } else if (RBond.getFlag(CDKConstants.ISAROMATIC) && PBond.getFlag(CDKConstants.ISAROMATIC)) {
-            score += 4;
+            if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
+                    && (ReactantBondType == ProductBondType)) {
+                score += 2;
+            }
+
+            if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
+                score += 4;
+            }
+            if (queryBond.getStereo() != targetBond.getStereo()) {
+                score -= 2;
+            } else {
+                score += 2;
+            }
+            if (queryBond != targetBond) {
+                score -= Math.abs(ReactantBondType - ProductBondType);
+            } else {
+                score += Math.abs(ReactantBondType - ProductBondType);
+            }
         }
-        if (RBond.getStereo() != PBond.getStereo()) {
-            score -= 2;
-        } else {
-            score += 2;
-        }
-        if (RBondType != PBondType) {
-            score -= Math.abs(RBondType - PBondType);
-        } else {
-            score += Math.abs(RBondType - PBondType);
-        }
+
         return score;
     }
 

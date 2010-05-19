@@ -31,6 +31,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.global.BondType;
 import org.openscience.cdk.smsd.helper.BinaryTree;
 
@@ -40,7 +42,6 @@ import org.openscience.cdk.smsd.helper.BinaryTree;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.McGregorChecksTest")
 public class McGregorChecks {
 
@@ -118,33 +119,61 @@ public class McGregorChecks {
      */
     protected static boolean matches(IBond ReactantBond, IBond ProductBond) {
         if (bondTypeFlag) {
-            return isBondTypeMatch(ReactantBond, ProductBond);
+            return bondMatch(ReactantBond, ProductBond);
         } else if (ReactantBond != null && ProductBond != null) {
             return true;
         }
         return false;
     }
-
+    
     /**
      *
-     * @param ReactantBond
+     * @param queryBond
      * @param targetBond
      * @return
      */
-    private static boolean isBondTypeMatch(IBond ReactantBond, IBond ProductBond) {
-        int ReactantBondType = ReactantBond.getOrder().ordinal();
-        int ProductBondType = ProductBond.getOrder().ordinal();
+    private static boolean bondMatch(IBond queryBond, IBond targetBond) {
+
+        if (targetBond instanceof IQueryBond && queryBond instanceof IBond) {
+            IQueryBond bond = (IQueryBond) targetBond;
+            IQueryAtom atom1 = (IQueryAtom) (targetBond.getAtom(0));
+            IQueryAtom atom2 = (IQueryAtom) (targetBond.getAtom(1));
+            if (bond.matches(queryBond)) {
+                // ok, bonds match
+                if (atom1.matches(queryBond.getAtom(0)) && atom2.matches(queryBond.getAtom(1))
+                        || atom1.matches(queryBond.getAtom(1)) && atom2.matches(queryBond.getAtom(0))) {
+                    // ok, atoms match in either order
+                    return true;
+                }
+            }
+        } else if (queryBond instanceof IQueryBond && targetBond instanceof IBond) {
+            IQueryBond bond = (IQueryBond) queryBond;
+            IQueryAtom atom1 = (IQueryAtom) (queryBond.getAtom(0));
+            IQueryAtom atom2 = (IQueryAtom) (queryBond.getAtom(1));
+            if (bond.matches(targetBond)) {
+                // ok, bonds match
+                if (atom1.matches(targetBond.getAtom(0)) && atom2.matches(targetBond.getAtom(1))
+                        || atom1.matches(targetBond.getAtom(1)) && atom2.matches(targetBond.getAtom(0))) {
+                    // ok, atoms match in either order
+                    return true;
+                }
+            }
+        } else {
+
+            int ReactantBondType = queryBond.getOrder().ordinal();
+            int ProductBondType = targetBond.getOrder().ordinal();
 
 
-        if ((ReactantBond.getFlag(CDKConstants.ISAROMATIC) == ProductBond.getFlag(CDKConstants.ISAROMATIC))
-                && (ReactantBondType == ProductBondType)) {
-            return true;
+            if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
+                    && (ReactantBondType == ProductBondType)) {
+                return true;
+            }
+
+            if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
+                return true;
+            }
+
         }
-
-        if (ReactantBond.getFlag(CDKConstants.ISAROMATIC) && ProductBond.getFlag(CDKConstants.ISAROMATIC)) {
-            return true;
-        }
-
         return false;
     }
 

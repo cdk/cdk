@@ -544,7 +544,7 @@ public class CDKMCS {
                 atomContainer.addAtom(atom2);
                 table.put(atom, atom2);
             }
-            IBond newBond = graph.getBuilder().newInstance(IBond.class,atom1, atom2, bond.getOrder());
+            IBond newBond = graph.getBuilder().newInstance(IBond.class, atom1, atom2, bond.getOrder());
             newBond.setFlag(
                     CDKConstants.ISAROMATIC,
                     bond.getFlag(CDKConstants.ISAROMATIC));

@@ -33,6 +33,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.global.BondType;
 import org.openscience.cdk.smsd.helper.LabelContainer;
 
@@ -43,7 +45,6 @@ import org.openscience.cdk.smsd.helper.LabelContainer;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public final class GenerateCompatibilityGraph {
 
@@ -53,7 +54,6 @@ public final class GenerateCompatibilityGraph {
     protected static boolean isBondTypeFlag() {
         return BondType.getInstance().isBondSensitive();
     }
-
     private List<Integer> compGraphNodes = null;
     private List<Integer> compGraphNodesCZero = null;
     private List<Integer> cEdges = null;
@@ -347,27 +347,54 @@ public final class GenerateCompatibilityGraph {
     /**
      *
      * @param ReactantBond
-     * @param ProductBond
+     * @param targetBond
      * @return
      */
-    private boolean bondMatch(IBond ReactantBond, IBond ProductBond) {
-        int ReactantBondType = ReactantBond.getOrder().ordinal();
-        int ProductBondType = ProductBond.getOrder().ordinal();
-
+    private boolean bondMatch(IBond queryBond, IBond targetBond) {
         if (isBondTypeFlag()) {
-            if ((ReactantBond.getFlag(CDKConstants.ISAROMATIC) == ProductBond.getFlag(CDKConstants.ISAROMATIC))
-                    && (ReactantBondType == ProductBondType)) {
-                return true;
-            }
+            if (targetBond instanceof IQueryBond && queryBond instanceof IBond) {
+                IQueryBond bond = (IQueryBond) targetBond;
+                IQueryAtom atom1 = (IQueryAtom) (targetBond.getAtom(0));
+                IQueryAtom atom2 = (IQueryAtom) (targetBond.getAtom(1));
+                if (bond.matches(queryBond)) {
+                    // ok, bonds match
+                    if (atom1.matches(queryBond.getAtom(0)) && atom2.matches(queryBond.getAtom(1))
+                            || atom1.matches(queryBond.getAtom(1)) && atom2.matches(queryBond.getAtom(0))) {
+                        // ok, atoms match in either order
+                        return true;
+                    }
+                }
+            } else if (queryBond instanceof IQueryBond && targetBond instanceof IBond) {
+                IQueryBond bond = (IQueryBond) queryBond;
+                IQueryAtom atom1 = (IQueryAtom) (queryBond.getAtom(0));
+                IQueryAtom atom2 = (IQueryAtom) (queryBond.getAtom(1));
+                if (bond.matches(targetBond)) {
+                    // ok, bonds match
+                    if (atom1.matches(targetBond.getAtom(0)) && atom2.matches(targetBond.getAtom(1))
+                            || atom1.matches(targetBond.getAtom(1)) && atom2.matches(targetBond.getAtom(0))) {
+                        // ok, atoms match in either order
+                        return true;
+                    }
+                }
+            } else {
 
-            if (ReactantBond.getFlag(CDKConstants.ISAROMATIC) && ProductBond.getFlag(CDKConstants.ISAROMATIC)) {
-                return true;
-            }
+                int ReactantBondType = queryBond.getOrder().ordinal();
+                int ProductBondType = targetBond.getOrder().ordinal();
 
+
+                if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
+                        && (ReactantBondType == ProductBondType)) {
+                    return true;
+                }
+
+                if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
+                    return true;
+                }
+
+            }
             return false;
         }
         return true;
-
     }
 
     protected List<Integer> getCEgdes() {

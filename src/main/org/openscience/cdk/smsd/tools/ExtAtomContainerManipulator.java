@@ -99,13 +99,13 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         for (int index = 0; index < container.getLonePairCount(); index++) {
 
             if (container.getAtom(index).getSymbol().equalsIgnoreCase("R")) {
-                lonePairs[index] = DefaultChemObjectBuilder.getInstance().newInstance(ILonePair.class,container.getAtom(index));
+                lonePairs[index] = DefaultChemObjectBuilder.getInstance().newInstance(ILonePair.class, container.getAtom(index));
             }
             newAtomContainer.addLonePair(lonePairs[index]);
         }
 
         for (int index = 0; index < container.getSingleElectronCount(); index++) {
-            singleElectrons[index] = DefaultChemObjectBuilder.getInstance().newInstance(ISingleElectron.class,container.getAtom(index));
+            singleElectrons[index] = DefaultChemObjectBuilder.getInstance().newInstance(ISingleElectron.class, container.getAtom(index));
             newAtomContainer.addSingleElectron(singleElectrons[index]);
 
         }
@@ -272,7 +272,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             mol = reComputeHydrogens(mol, atomContainer, remove, map);
 
         } else {
-            mol = atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer);
+            mol = atomContainer.getBuilder().newInstance(IMolecule.class, atomContainer);
             mol.setProperties(atomContainer.getProperties());
             mol.setFlags(atomContainer.getFlags());
             if (atomContainer.getID() != null) {
@@ -297,7 +297,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      */
     @TestMethod("testConvertExplicitToImplicitHydrogens")
     public static IAtomContainer convertExplicitToImplicitHydrogens(IAtomContainer atomContainer) {
-        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
+        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
         convertImplicitToExplicitHydrogens(mol);
         if (mol.getAtomCount() > 1) {
             mol = removeHydrogens(mol);
