@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.algorithm.cdk.CDKMCSHandler;
 import org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandler;
 import org.openscience.cdk.smsd.algorithm.single.SingleMappingHandler;
@@ -362,10 +361,6 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      *
      */
     private void init(MolHandler Reactant, MolHandler Product, boolean removeHydrogen) throws CDKException {
-        if (Product instanceof IQueryAtomContainer) {
-            throw new CDKException(
-                    "The first IAtomContainer must not be an IQueryAtomContainer");
-        }
         this.removeHydrogen = removeHydrogen;
         this.rMol = new MolHandler(Reactant.getMolecule(), false, removeHydrogen);
         this.pMol = new MolHandler(Product.getMolecule(), false, removeHydrogen);
@@ -388,10 +383,6 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     @Override
     @TestMethod("testInit_3args_1")
     public void init(IMolecule Reactant, IMolecule Product, boolean removeHydrogen) throws CDKException {
-        if (Product instanceof IQueryAtomContainer) {
-            throw new CDKException(
-                    "The first IAtomContainer must not be an IQueryAtomContainer");
-        }
         this.removeHydrogen = removeHydrogen;
         this.rMol = new MolHandler(Reactant, false, removeHydrogen);
         this.pMol = new MolHandler(Product, false, removeHydrogen);
@@ -406,10 +397,6 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     @Override
     @TestMethod("testInit_3args_2")
     public void init(IAtomContainer Reactant, IAtomContainer Product, boolean removeHydrogen) throws CDKException {
-        if (Product instanceof IQueryAtomContainer) {
-            throw new CDKException(
-                    "The first IAtomContainer must not be an IQueryAtomContainer");
-        }
         this.removeHydrogen = removeHydrogen;
         this.rMol = new MolHandler(Reactant, false, removeHydrogen);
         this.pMol = new MolHandler(Product, false, removeHydrogen);
