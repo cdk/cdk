@@ -109,18 +109,18 @@ public class VFBondMatcher extends Bond implements IQueryBond {
 //        }
 //
 //        return false;
-    private boolean isAtomSymbolsMatch(IBond targetBond) {
-        IAtom qAtom1 = queryBond.getAtom(0);
-        IAtom qAtom2 = queryBond.getAtom(1);
-        IAtom tAtom1 = targetBond.getAtom(0);
-        IAtom tAtom2 = targetBond.getAtom(1);
-        if (qAtom1.getSymbol().equals(tAtom1.getSymbol()) && qAtom2.getSymbol().equals(tAtom2.getSymbol())) {
-            return true;
-        } else if (qAtom1.getSymbol().equals(tAtom2.getSymbol()) && qAtom2.getSymbol().equals(tAtom1.getSymbol())) {
-            return true;
-        }
-        return false;
-    }
+//    private boolean isAtomSymbolsMatch(IBond targetBond) {
+//        IAtom qAtom1 = queryBond.getAtom(0);
+//        IAtom qAtom2 = queryBond.getAtom(1);
+//        IAtom tAtom1 = targetBond.getAtom(0);
+//        IAtom tAtom2 = targetBond.getAtom(1);
+//        if (qAtom1.getSymbol().equals(tAtom1.getSymbol()) && qAtom2.getSymbol().equals(tAtom2.getSymbol())) {
+//            return true;
+//        } else if (qAtom1.getSymbol().equals(tAtom2.getSymbol()) && qAtom2.getSymbol().equals(tAtom1.getSymbol())) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     /**
      *
