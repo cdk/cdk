@@ -362,7 +362,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      *
      */
     private void init(MolHandler Reactant, MolHandler Product, boolean removeHydrogen) throws CDKException {
-        if (Reactant instanceof IQueryAtomContainer) {
+        if (Product instanceof IQueryAtomContainer) {
             throw new CDKException(
                     "The first IAtomContainer must not be an IQueryAtomContainer");
         }
@@ -388,7 +388,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     @Override
     @TestMethod("testInit_3args_1")
     public void init(IMolecule Reactant, IMolecule Product, boolean removeHydrogen) throws CDKException {
-        if (Reactant instanceof IQueryAtomContainer) {
+        if (Product instanceof IQueryAtomContainer) {
             throw new CDKException(
                     "The first IAtomContainer must not be an IQueryAtomContainer");
         }
@@ -406,7 +406,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     @Override
     @TestMethod("testInit_3args_2")
     public void init(IAtomContainer Reactant, IAtomContainer Product, boolean removeHydrogen) throws CDKException {
-        if (Reactant instanceof IQueryAtomContainer) {
+        if (Product instanceof IQueryAtomContainer) {
             throw new CDKException(
                     "The first IAtomContainer must not be an IQueryAtomContainer");
         }

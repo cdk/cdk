@@ -31,6 +31,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -89,10 +90,11 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of sortResultsByFragments method, of class ChemicalFilters.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
+     * @throws CDKException
      */
     @Test
-    public void testSortResultsByFragments() throws InvalidSmilesException {
+    public void testSortResultsByFragments() throws InvalidSmilesException, CDKException {
         System.out.println("sortResultsByFragments");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -176,10 +178,11 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of getSortedEnergy method, of class ChemicalFilters.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
+     * @throws CDKException 
      */
     @Test
-    public void testGetSortedEnergy() throws InvalidSmilesException {
+    public void testGetSortedEnergy() throws InvalidSmilesException, CDKException {
         System.out.println("getSortedEnergy");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -195,9 +198,10 @@ public class ChemicalFiltersTest {
     /**
      * Test of getSortedFragment method, of class ChemicalFilters.
      * @throws InvalidSmilesException
+     * @throws CDKException 
      */
     @Test
-    public void testGetSortedFragment() throws InvalidSmilesException {
+    public void testGetSortedFragment() throws InvalidSmilesException, CDKException {
         System.out.println("getSortedFragment");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -212,10 +216,11 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of getStereoMatches method, of class ChemicalFilters.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
+     * @throws CDKException
      */
     @Test
-    public void testGetStereoMatches() throws InvalidSmilesException {
+    public void testGetStereoMatches() throws InvalidSmilesException, CDKException {
         System.out.println("getStereoMatches");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
