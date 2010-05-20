@@ -23,13 +23,11 @@
  */
 package org.openscience.cdk.smsd;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,17 +35,21 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import static org.junit.Assert.*;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandlerTest;
 import org.openscience.cdk.smsd.helper.MolHandler;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
@@ -503,8 +505,8 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer query2 = SMARTSParser.parse("CC");
-        smsd.init(query2, target, false);
+        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        smsd.init(queryContainer, target, false);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
@@ -520,8 +522,8 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer query2 = SMARTSParser.parse("CC");
-        smsd.init(query2, target, false);
+        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        smsd.init(queryContainer, target, false);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
@@ -537,8 +539,8 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer query2 = SMARTSParser.parse("CC");
-        smsd.init(query2, target, false);
+        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        smsd.init(queryContainer, target, false);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
@@ -554,8 +556,8 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer query2 = SMARTSParser.parse("CC");
-        smsd.init(query2, target, false);
+        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        smsd.init(queryContainer, target, false);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
