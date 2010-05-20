@@ -203,11 +203,9 @@ public class VFMapper implements IMapper {
             if (state.isMatchFeasible(candidate)) {
                 IState nextState = state.nextState(candidate);
                 found = mapFirst(nextState);
-
                 nextState.backTrack();
             }
         }
-
         return found;
     }
 

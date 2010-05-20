@@ -274,7 +274,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             vfLibSolutions = new ArrayList<Map<INode, IAtom>>(mapper.getMaps(ac1));
             RONP = false;
         }
-
         setVFMCSMappings(RONP, query);
         this.vfMCSSize = allMCSCopy.isEmpty() ? 0 : allMCSCopy.get(0).size();
     }

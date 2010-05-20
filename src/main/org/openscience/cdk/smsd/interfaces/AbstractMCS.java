@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IMolecule;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.interfaces.AbstractMCSTest")
 public abstract class AbstractMCS {
 
@@ -179,4 +178,24 @@ public abstract class AbstractMCS {
      * @return Best Mapping Index
      */
     public abstract Map<Integer, Integer> getFirstMapping();
+
+    /**
+     * @return the bondSensitive TimeOut
+     */
+    public abstract double getBondSensitiveTimeOut();
+
+    /**
+     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.15 min)
+     */
+    public abstract void setBondSensitiveTimeOut(double bondSensitiveTimeOut);
+
+    /**
+     * @return the bondInSensitive TimeOut
+     */
+    public abstract double getBondInSensitiveTimeOut();
+
+    /**
+     * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
+     */
+    public abstract void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut);
 }

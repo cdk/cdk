@@ -86,6 +86,8 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     private boolean removeHydrogen = false;
     private final static ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(SubStructureSearchAlgorithms.class);
+    private double bondSensitiveTimeOut = 0.10;//mins
+    private double bondInSensitiveTimeOut = 0.15;//mins
 
     /**
      * This is the algorithm factory and entry port for all the MCS algorithm in the SMSD
@@ -144,11 +146,14 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
                 subStructureAlgorithm(rBondCount, pBondCount);
                 break;
             case VFLibMCS:
-                vfLibMCSAlgorithm(rBondCount, pBondCount);
+                vfLibMCSAlgorithm();
                 break;
             case TURBOMCS:
-                vfLibTurboMCSAlgorithm(rBondCount, pBondCount);
-                break;
+                try {
+                    throw new CDKException("This mode is no longer supported");
+                } catch (CDKException ex) {
+                    logger.error(Level.SEVERE, null, ex);
+                }
         }
     }
 
@@ -215,20 +220,6 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     private void vfLibMCS() {
-        VFlibMCSHandler mcs = null;
-        mcs = new VFlibMCSHandler();
-        mcs.set(rMol, pMol);
-        mcs.searchMCS();
-
-        clearMaps();
-        firstSolution.putAll(mcs.getFirstMapping());
-        allMCS.addAll(mcs.getAllMapping());
-
-        firstAtomMCS.putAll(mcs.getFirstAtomMapping());
-        allAtomMCS.addAll(mcs.getAllAtomMapping());
-    }
-
-    private void vfLibTurboMCS() {
         VFlibMCSHandler mcs = null;
         mcs = new VFlibMCSHandler();
         mcs.set(rMol, pMol);
@@ -316,29 +307,17 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
         }
     }
 
-    private void vfLibMCSAlgorithm(int rBondCount, int pBondCount) {
-        if (rBondCount >= 6 && pBondCount >= 6) {
-            vfLibMCS();
-        } else {
-            mcsPlusAlgorithm();
-        }
-    }
-
-    private void vfLibTurboMCSAlgorithm(int rBondCount, int pBondCount) {
-        if (rBondCount >= 6 && pBondCount >= 6) {
-            vfLibTurboMCS();
-        } else {
-            mcsPlusAlgorithm();
-        }
+    private void vfLibMCSAlgorithm() {
+        vfLibMCS();
     }
 
     private void setTime(boolean bondTypeFlag) {
         if (bondTypeFlag) {
             TimeOut tmo = TimeOut.getInstance();
-            tmo.setTimeOut(0.10);
+            tmo.setTimeOut(getBondSensitiveTimeOut());
         } else {
             TimeOut tmo = TimeOut.getInstance();
-            tmo.setTimeOut(0.15);
+            tmo.setTimeOut(getBondInSensitiveTimeOut());
         }
     }
 
@@ -639,13 +618,39 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
             target = pMol.getMolecule().getAtomCount() - getHCount(pMol.getMolecule());
         }
         double common = getFirstMapping().size();
-
         double euclidean = Math.sqrt(source + target - 2 * common);
 
         BigDecimal dist = new BigDecimal(euclidean);
-
         dist = dist.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
         euclidean = dist.doubleValue();
         return euclidean;
+    }
+
+    /**
+     * @return the bondSensitiveTimeOut
+     */
+    public double getBondSensitiveTimeOut() {
+        return bondSensitiveTimeOut;
+    }
+
+    /**
+     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.15 min)
+     */
+    public void setBondSensitiveTimeOut(double bondSensitiveTimeOut) {
+        this.bondSensitiveTimeOut = bondSensitiveTimeOut;
+    }
+
+    /**
+     * @return the bondInSensitiveTimeOut
+     */
+    public double getBondInSensitiveTimeOut() {
+        return bondInSensitiveTimeOut;
+    }
+
+    /**
+     * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
+     */
+    public void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut) {
+        this.bondInSensitiveTimeOut = bondInSensitiveTimeOut;
     }
 }

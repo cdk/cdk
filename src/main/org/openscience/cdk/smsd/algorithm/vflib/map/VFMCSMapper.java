@@ -115,8 +115,8 @@ public class VFMCSMapper implements IMapper {
     private void addMapping(IState state, boolean isGoal) {
 
         Map<INode, IAtom> map = state.getMap();
-        if ((isGoal && !hasMap(map) && isMCS(map))
-                || (!isGoal && !map.isEmpty() && !hasMap(map) && isMCS(map))) {
+        if ((isGoal && isMCS(map))
+                || (!isGoal && !map.isEmpty() && isMCS(map))) {
             maps.add(map);
         }
     }
@@ -140,7 +140,6 @@ public class VFMCSMapper implements IMapper {
                 IState nextState = state.nextState(candidate);
                 mapAll(nextState);
                 nextState.backTrack();
-
             }
         }
     }
@@ -168,7 +167,6 @@ public class VFMCSMapper implements IMapper {
 
             }
         }
-
         return found;
     }
 
@@ -179,7 +177,6 @@ public class VFMCSMapper implements IMapper {
         int mapSize = map.size();
 
         if (!maps.isEmpty() && currentMCSSize > mapSize) {
-
             flag = false;
         }
         //Comment this if to get all the subgraphs
@@ -187,7 +184,6 @@ public class VFMCSMapper implements IMapper {
             currentMCSSize = mapSize;
             maps.clear();
         }
-
         return flag;
     }
 
@@ -197,7 +193,6 @@ public class VFMCSMapper implements IMapper {
                 return true;
             }
         }
-
         return false;
     }
 }
