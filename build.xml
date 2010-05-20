@@ -625,6 +625,7 @@
                     <includesfile name="${metainf}/pcore.libdepends"/>
                     <includesfile name="${metainf}/formula.libdepends"/>
                     <includesfile name="${metainf}/isomorphism.libdepends"/>
+                    <includesfile name="${metainf}/qm.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-annotation.jar"/>
@@ -671,6 +672,7 @@
                     <include name="cdk-isomorphism.jar"/>
                     <include name="cdk-ionpot.jar"/>
                     <include name="cdk-smsd.jar"/>
+                    <include name="cdk-qm.jar"/>
                 </fileset>
             </unjar>
 
