@@ -1666,7 +1666,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(1, acetone.getConnectedBondsCount(3));
     }
     
-    @Test public void testGetAtomParity_IAtom() {
+    @Test public void testStereoElements() {
         IAtomContainer container = (IAtomContainer)newChemObject();
         IAtom carbon = container.getBuilder().newInstance(IAtom.class,"C");
         carbon.setID("central");
@@ -1682,10 +1682,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IAtomParity parity = container.getBuilder().newInstance(
             IAtomParity.class, carbon, carbon1, carbon2, carbon3, carbon4, parityInt
         );
-        container.addAtomParity(parity);
-        org.openscience.cdk.interfaces.IAtomParity copy = container.getAtomParity(carbon);
-        Assert.assertNotNull(copy);
-        Assert.assertEquals(parity, copy);
+        container.addStereoElement(parity);
+        
+        Iterator<IStereoElement> stereoElements = container.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement element = stereoElements.next();
+        Assert.assertNotNull(element);
+        Assert.assertTrue(element instanceof IAtomParity);
+        Assert.assertEquals(carbon, ((IAtomParity)element).getAtom());
+        Assert.assertFalse(stereoElements.hasNext());
     }
 
     /** Test for RFC #9 */
@@ -1727,9 +1732,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
             changed = false;
         }
     }
-    
-    @Test public void testAddAtomParity_IAtomParity() {
-        testGetAtomParity_IAtom();
+
+    @Test public void testAddStereoElement_IStereoElement() {
+        testStereoElements();
     }
     
     @Test public void testGetConnectedSingleElectronsCount_IAtom() {

@@ -31,10 +31,13 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -193,4 +196,40 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertNull(mol);
     }
     
+    
+    @Test public void testUndefinedStereo() throws Exception {
+        String filename = "data/mdl/ChEBI_26120.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins, Mode.RELAXED);
+        IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(1).getStereo());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(6).getStereo());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(7).getStereo());
+        Assert.assertEquals(IBond.Stereo.UP_OR_DOWN,mol.getBond(11).getStereo());
+    }
+
+    
+    @Test public void testReadAtomAtomMapping() throws Exception {
+        String filename = "data/mdl/a-pinene-with-atom-atom-mapping.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+     
+        IMolecule mol = reader.read(new Molecule()); 
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(1, ((Integer)mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assert.assertEquals(15, ((Integer)mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assert.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+    }
+
+    @Test(expected=AssertionError.class)
+    public void testHas2DCoordinates_With000() throws CDKException {
+        String filenameMol = "data/mdl/with000coordinate.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
+        Molecule molOne=null;
+        MDLReader reader = new MDLReader(ins, Mode.RELAXED);
+        molOne = (Molecule)reader.read(new Molecule());
+        Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
+    }
 }

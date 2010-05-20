@@ -545,7 +545,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     try {
                         int reactionAtomID = Integer.parseInt(reactionAtomIDString);
                         if (reactionAtomID != 0) {
-                            atom.setID(reactionAtomIDString);
+                            atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, reactionAtomID);
                         }
                     } catch (Exception exception) {
                         logger.error("Mapping number ", reactionAtomIDString, " is not an integer.");
@@ -573,8 +573,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // convert to 2D, if totalZ == 0
             if (totalX == 0.0 && totalY == 0.0 && totalZ == 0.0) {
                 logger.info("All coordinates are 0.0");
-                for (IAtom atomToUpdate : molecule.atoms()) {
-                    atomToUpdate.setPoint3d(null);
+                if (molecule.getAtomCount()==1){
+                    molecule.getAtom(0).setPoint2d(new Point2d(x,y));
+                }else{
+                    for (IAtom atomToUpdate : molecule.atoms()) {
+                        atomToUpdate.setPoint3d(null);
+                    }
                 }
             } else if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
@@ -619,7 +623,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         stereo = IBond.Stereo.E_OR_Z;
                     } else if (mdlStereo == 4) {
                         //MDL bond undefined
-                        stereo = (IBond.Stereo)CDKConstants.UNSET;
+                        stereo = IBond.Stereo.UP_OR_DOWN;
                     }
                 } else {
                 	handleError(

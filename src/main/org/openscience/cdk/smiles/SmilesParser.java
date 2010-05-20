@@ -26,7 +26,9 @@
 package org.openscience.cdk.smiles;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -41,12 +43,16 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.ILigancyFourChirality;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.ILigancyFourChirality.Stereo;
+import org.openscience.cdk.stereo.LigancyFourChirality;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -93,6 +99,11 @@ public class SmilesParser {
 	private int status = 0;
 	protected IChemObjectBuilder builder;
 
+	private enum Chirality {
+	    ANTI_CLOCKWISE, // aka @
+	    CLOCKWISE // aka @@
+	}
+
 	/**
 	 * Constructor for the SmilesParser object.
 	 * 
@@ -116,11 +127,40 @@ public class SmilesParser {
 	IBond.Order bondStatus = null;
 	IBond.Order bondStatusForRingClosure = IBond.Order.SINGLE;
     boolean bondIsAromatic = false;
+    // array of atoms that initiated a ring closure
 	IAtom[] rings = null;
+    // array of atoms that complete a ring closure
+    IAtom[] ringOtherAtoms = null;
 	IBond.Order[] ringbonds = null;
 	int thisRing = -1;
 	IMolecule molecule = null;
 	String currentSymbol = null;
+	Map<IAtom,TemporaryChiralityStorage> chiralityInfo = null;
+	
+	/**
+	 * Internal storage for temporary stereochemistry info. In particular, the atoms
+	 * involved are generally not known until the full SMILES is processed.
+	 */
+	class TemporaryChiralityStorage {
+        Chirality chiralityValue;
+        IAtom[] atoms;
+        int counter;
+	    public TemporaryChiralityStorage() {
+	        chiralityValue = null;
+	        atoms = new IAtom[4];
+	        counter = 0;
+	    }
+        public TemporaryChiralityStorage(IAtom atom) {
+            chiralityValue = null;
+            atoms = new IAtom[4];
+            atoms[0] = atom;
+            counter = 1;
+        }
+        public void addAtom(IAtom atom) {
+            atoms[counter] = atom;
+            counter++;
+        }
+	}
 
     /**
      * Parse a reaction SMILES.
@@ -188,6 +228,22 @@ public class SmilesParser {
     public IMolecule parseSmiles(String smiles) throws InvalidSmilesException {
 		IMolecule molecule = this.parseString(smiles);
 		
+		// analyze the chirality info
+		for (IAtom atom : chiralityInfo.keySet()) {
+		    TemporaryChiralityStorage chirality = chiralityInfo.get(atom);
+		    logger.debug("Chiral atom found: ", atom);
+		    IAtom[] atoms = chirality.atoms;
+		    ILigancyFourChirality l4Chiral = new LigancyFourChirality(
+		        atom,
+		        new IAtom[]{
+		            atoms[0], atoms[1], atoms[2], atoms[3]
+		        },
+		        chirality.chiralityValue == Chirality.CLOCKWISE
+		          ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE
+		    );
+		    molecule.addStereoElement(l4Chiral);
+		}
+
 		// perceive atom types
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		int i = 0;
@@ -225,12 +281,15 @@ public class SmilesParser {
 		currentSymbol = null;
 		molecule = builder.newInstance(IMolecule.class);
 		position = 0;
+		chiralityInfo = new HashMap<IAtom,TemporaryChiralityStorage>();
 		// we don't want more than 1024 rings
-		rings = new IAtom[1024];
-		ringbonds = new IBond.Order[1024];
-		for (int f = 0; f < 1024; f++)
-		{
+		final int MAX_RING_COUNT = 1024;
+		rings = new IAtom[MAX_RING_COUNT];
+        ringOtherAtoms = new IAtom[MAX_RING_COUNT];
+		ringbonds = new IBond.Order[MAX_RING_COUNT];
+		for (int f = 0; f < MAX_RING_COUNT; f++) {
 			rings[f] = null;
+            ringOtherAtoms[f] = null;
 			ringbonds[f] = null;
 		}
 
@@ -290,7 +349,7 @@ public class SmilesParser {
 									"use [" + mychar + "].");
 						}
 					}
-
+					addAtomToActiveChiralities(lastNode, atom);
 					molecule.addAtom(atom);
 					logger.debug("Adding atom ", atom.hashCode());
 					if ((lastNode != null) && bondExists)
@@ -371,7 +430,8 @@ public class SmilesParser {
 				} else if (mychar == '[')
 				{
 					currentSymbol = getAtomString(smiles, position);
-					atom = assembleAtom(currentSymbol);
+					atom = assembleAtom(currentSymbol, lastNode, bondExists);
+					addAtomToActiveChiralities(lastNode, atom);
 					molecule.addAtom(atom);
 					logger.debug("Added atom: ", atom);
 					if (lastNode != null && bondExists)
@@ -414,11 +474,34 @@ public class SmilesParser {
 					position++;
 				} else if (mychar == '@')
 				{
+				    TemporaryChiralityStorage chirality = null;
+				    if (lastNode != null) {
+				        chirality = new TemporaryChiralityStorage(lastNode);
+				    } else {
+				        chirality = new TemporaryChiralityStorage();
+				    }
+				    // @ or @@
 					if (position < smiles.length() - 1 && smiles.charAt(position + 1) == '@')
 					{
+	                    chirality.chiralityValue = Chirality.CLOCKWISE;
 						position++;
+					} else {
+	                    chirality.chiralityValue = Chirality.ANTI_CLOCKWISE;
 					}
-					logger.warn("Ignoring stereo information for atom");
+					// @H or @@H ?
+					if (position < smiles.length() - 1 && smiles.charAt(position + 1) == 'H') {
+                        // because the current data model requires a ligancy four chirality to
+					    // have 4 IAtoms, we add an explicit hydrogen
+					    IAtom hydrogen = builder.newInstance(IAtom.class, "H");
+					    IBond newBond = builder.newInstance(IBond.class,
+					        atom, hydrogen, Order.SINGLE
+					    );
+					    molecule.addAtom(hydrogen);
+					    molecule.addBond(newBond);
+					    chirality.addAtom(hydrogen);
+                        position++;
+                    }
+                    chiralityInfo.put(lastNode, chirality);
 					position++;
 				} else
 				{
@@ -578,6 +661,18 @@ public class SmilesParser {
 		return getSymbolForOrganicSubsetElement(s, pos);
 	}
 
+	private void addAtomToActiveChiralities(IAtom chiAtom, IAtom atom) {
+	    for (IAtom chiralAtom : chiralityInfo.keySet()) {
+	        if (chiralAtom == atom)
+	            // but not if the new atom is the chiral atom itself
+	            continue;
+	        if (chiAtom != chiralAtom)
+	            // ok, the atom does not belong to this chirality
+	            continue;
+	        TemporaryChiralityStorage chirality = chiralityInfo.get(chiralAtom);
+	        if (chirality.counter < 4) chirality.addAtom(atom);
+	    }
+	}
 
 	/**
 	 *  Gets the ElementSymbol for an element in the 'organic subset' for which
@@ -631,7 +726,7 @@ public class SmilesParser {
 		return retString;
 	}
 
-	private IAtom assembleAtom(String s) throws InvalidSmilesException
+	private IAtom assembleAtom(String s, IAtom lastNode, boolean bondExists) throws InvalidSmilesException
 	{
 		logger.debug("assembleAtom(): Assembling atom from: ", s);
 		IAtom atom = null;
@@ -754,12 +849,34 @@ public class SmilesParser {
 					atom.setFormalCharge(charge);
 				} else if (mychar == '@')
 				{
-					if (position < s.length() - 1 && s.charAt(position + 1) == '@')
-					{
-						position++;
-					}
-					logger.warn("Ignoring stereo information for atom");
-					position++;
+                    TemporaryChiralityStorage chirality = null;
+                    if (lastNode != null && bondExists) {
+                        chirality = new TemporaryChiralityStorage(lastNode);
+                    } else {
+                        chirality = new TemporaryChiralityStorage();
+                    }
+                    if (position < s.length() - 1 && s.charAt(position + 1) == '@')
+                    {
+                        chirality.chiralityValue = Chirality.CLOCKWISE;
+                        position++;
+                    } else {
+                        chirality.chiralityValue = Chirality.ANTI_CLOCKWISE;
+                    }
+                    // @H or @@H ?
+                    if (position < s.length() - 1 && s.charAt(position + 1) == 'H') {
+                        // because the current data model requires a ligancy four chirality to
+                        // have 4 IAtoms, we add an explicit hydrogen
+                        IAtom hydrogen = builder.newInstance(IAtom.class, "H");
+                        IBond newBond = builder.newInstance(IBond.class,
+                            atom, hydrogen, Order.SINGLE
+                        );
+                        molecule.addAtom(hydrogen);
+                        molecule.addBond(newBond);
+                        chirality.addAtom(hydrogen);
+                        position++;
+                    }
+                    chiralityInfo.put(atom, chirality);
+                    position++;
 				} else
 				{
 					throw new InvalidSmilesException("Found unexpected char: " + mychar);
@@ -792,20 +909,23 @@ public class SmilesParser {
 		IBond bond = null;
 		IAtom partner = null;
 		IAtom thisNode = rings[thisRing];
+		IAtom templateAtom = ringOtherAtoms[thisRing];
 		// lookup
 		if (thisNode != null)
 		{
 			partner = thisNode;
+			replaceTemplateAtomInStereos(templateAtom, atom);
+			if (chiralityInfo.containsKey(atom))
+			    addAtomToActiveChiralities(atom, partner);
 			bond = builder.newInstance(IBond.class,atom, partner, bondStat);
-			      if (bondIsAromatic) {
-            	
+			if (bondIsAromatic) {
                 bond.setFlag(CDKConstants.ISAROMATIC, true);
             }
 			molecule.addBond(bond);
             bondIsAromatic = false;
 			rings[thisRing] = null;
 			ringbonds[thisRing] = null;
-
+			ringOtherAtoms[thisRing] = null;
 		} else
 		{
 			/*
@@ -813,12 +933,29 @@ public class SmilesParser {
 			 *  - add current atom to list
 			 */
 			rings[thisRing] = atom;
+			ringOtherAtoms[thisRing] = builder.newInstance(IAtom.class);
+			addAtomToActiveChiralities(atom, ringOtherAtoms[thisRing]);
 			ringbonds[thisRing] = bondStatusForRingClosure;
 		}
 		bondStatusForRingClosure = IBond.Order.SINGLE;
 	}
 
-	private void addImplicitHydrogens(IMolecule container) {
+	/**
+	 * Replaces the <code>templateAtom</code> by <code>atom</code> in all currently defined stereochemistries.
+	 *
+	 * @param templateAtom {@link IAtom} to replace
+	 * @param atom         new {@link IAtom}
+	 */
+	private void replaceTemplateAtomInStereos(IAtom templateAtom, IAtom atom) {
+	    for (TemporaryChiralityStorage chirality : chiralityInfo.values()) {
+            for (int i=0; i<4; i++) {
+                if (chirality.atoms[i] == templateAtom)
+                    chirality.atoms[i] = atom;
+            }
+        }
+    }
+
+    private void addImplicitHydrogens(IMolecule container) {
 		try {
 			logger.debug("before H-adding: ", container);
 			Iterator<IAtom> atoms = container.atoms().iterator();

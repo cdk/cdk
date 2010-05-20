@@ -472,29 +472,4 @@ public class SMSDTest {
 
         assertEquals(score, smsd2.getEuclideanDistance(), 0.005);
     }
-
-    /**
-     * Test of getComparison method, of class SMSD.
-     */
-    @Test
-    public void testGetComparison() {
-        System.out.println("getComparison");
-        SMSD smsd2 = new SMSD(Algorithm.VFLibMCS, true);
-        AbstractMCS expResult = new SMSD(Algorithm.CDKMCS, true);
-        AbstractMCS result = smsd2.getComparison();
-        assertNotSame(expResult, result);
-    }
-
-    /**
-     * Test of setComparison method, of class SMSD.
-     */
-    @Test
-    public void testSetComparison() {
-        System.out.println("setComparison");
-        AbstractMCS comparison = new SMSD(Algorithm.VFLibMCS, true);
-        SMSD instance = new SMSD(Algorithm.VFLibMCS, true);
-        instance.setComparison(comparison);
-        assertEquals(comparison, instance.getComparison());
-
-    }
 }

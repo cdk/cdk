@@ -41,7 +41,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.interfaces.AlgorithmTest")
 public enum Algorithm {
 
@@ -62,9 +61,13 @@ public enum Algorithm {
      */
     CDKMCS(3, "CDK UIT MCS"),
     /**
+     * Turbo Mode based MCS search.
+     */
+    TURBOMCS(4, "Turbo Mode based MCS search"),
+    /**
      * Turbo Mode based Substructure search.
      */
-    SubStructure(4, "Turbo Mode based Substructure search");
+    SubStructure(5, "Turbo Mode based Substructure search");
     private final int type;
     private final String description;
 

@@ -253,7 +253,7 @@ protected JniInchiInputInchi input;
                 }
                 
                 IAtomParity parity = builder.newInstance(IAtomParity.class,atC, at0, at1, at2, at3, sign);
-                molecule.addAtomParity(parity);
+                molecule.addStereoElement(parity);
             } else {
                 // TODO - other types of atom parity - double bond, etc
             }

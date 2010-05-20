@@ -37,18 +37,19 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -787,6 +788,30 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         bosum = AtomContainerManipulator.getBondOrderSum(mol, mol.getAtom(2));
         Assert.assertEquals(1.0, bosum, 0.001);
 
+    }
+
+    @Test
+    public void testGetAtomParity() {
+        IAtomContainer container = new AtomContainer();
+        IAtom carbon = container.getBuilder().newInstance(IAtom.class,"C");
+        carbon.setID("central");
+        IAtom carbon1 = container.getBuilder().newInstance(IAtom.class,"C");
+        carbon1.setID("c1");
+        IAtom carbon2 = container.getBuilder().newInstance(IAtom.class,"C");
+        carbon2.setID("c2");
+        IAtom carbon3 = container.getBuilder().newInstance(IAtom.class,"C");
+        carbon3.setID("c3");
+        IAtom carbon4 = container.getBuilder().newInstance(IAtom.class,"C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        IAtomParity parity = container.getBuilder().newInstance(
+            IAtomParity.class, carbon, carbon1, carbon2, carbon3, carbon4, parityInt
+        );
+        container.addStereoElement(parity);
+
+        parity = AtomContainerManipulator.getAtomParity(container, carbon);
+        Assert.assertNotNull(parity);
+        Assert.assertEquals(carbon, parity.getAtom());
     }
 }
 

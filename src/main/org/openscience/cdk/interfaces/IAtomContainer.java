@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2006-2007,2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -49,25 +47,21 @@ import java.util.List;
 public interface IAtomContainer extends IChemObject, IChemObjectListener {
 
     /**
-     * Adds an AtomParity to this container. If a parity is already given for the
-     * affected Atom, it is overwritten.
+     * Adds a stereo element to this container.
      *
-     * @param parity The new AtomParity for this container
-     * @see   #getAtomParity
+     * @param element        The new {@link IStereoElement} for this container
+     * @see   #stereoElements()
      */
-    public void addAtomParity(IAtomParity parity);
+    public void addStereoElement(IStereoElement element);
 
     /**
-     * Returns the atom parity for the given Atom. If no parity is associated
-     * with the given Atom, it returns null.
+     * Returns the stereo elements defined for this atom container.
      *
-     * @param  atom   Atom for which the parity must be returned
-     * @return The AtomParity for the given Atom, or null if that Atom does
-     *         not have an associated AtomParity
-     * @see    #addAtomParity
+     * @return An {@link Iterable} of {@link IStereoElement}s.
+     * @see    #addStereoElement(IStereoElement)
      */
-    public IAtomParity getAtomParity(IAtom atom);
-    
+    public Iterable<IStereoElement> stereoElements();
+
 	/**
 	 * Sets the array of atoms of this AtomContainer.
 	 *

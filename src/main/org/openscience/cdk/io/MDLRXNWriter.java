@@ -45,6 +45,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
@@ -241,6 +242,13 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             writer.write(line);
             writer.newLine();
             
+            int i=0;
+            for(IMapping mapping : reaction.mappings()){
+                Iterator<IChemObject> it = mapping.relatedChemObjects().iterator();
+                it.next().setProperty(CDKConstants.ATOM_ATOM_MAPPING, i+1);
+                it.next().setProperty(CDKConstants.ATOM_ATOM_MAPPING, i+1);
+                i++;
+            }
             writeMoleculeSet(reaction.getReactants());
             writeMoleculeSet(reaction.getProducts());
             

@@ -20,7 +20,29 @@
  */
 package org.openscience.cdk.inchi;
 
-import net.sf.jniinchi.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import net.sf.jniinchi.INCHI_BOND_STEREO;
+import net.sf.jniinchi.INCHI_BOND_TYPE;
+import net.sf.jniinchi.INCHI_KEY;
+import net.sf.jniinchi.INCHI_PARITY;
+import net.sf.jniinchi.INCHI_RADICAL;
+import net.sf.jniinchi.INCHI_RET;
+import net.sf.jniinchi.INCHI_STEREOTYPE;
+import net.sf.jniinchi.JniInchiAtom;
+import net.sf.jniinchi.JniInchiBond;
+import net.sf.jniinchi.JniInchiException;
+import net.sf.jniinchi.JniInchiInput;
+import net.sf.jniinchi.JniInchiOutput;
+import net.sf.jniinchi.JniInchiOutputKey;
+import net.sf.jniinchi.JniInchiStereo0D;
+import net.sf.jniinchi.JniInchiWrapper;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
@@ -31,13 +53,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
@@ -326,7 +342,7 @@ public class InChIGenerator {
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
         	IAtom atom = atoms.next();
-            IAtomParity parity = atomContainer.getAtomParity(atom);
+            IAtomParity parity = AtomContainerManipulator.getAtomParity(atomContainer, atom);
             if (parity != null) {
                 IAtom[] surroundingAtoms = parity.getSurroundingAtoms();
                 int sign = parity.getParity();
