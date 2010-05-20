@@ -36,8 +36,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -47,6 +47,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -556,7 +557,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testPseudoAtom()
 	{
-		Atom atom = new PseudoAtom("Star");
+		IAtom atom = new PseudoAtom("Star");
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles = "";
 		Molecule molecule = new Molecule();
