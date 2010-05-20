@@ -357,5 +357,25 @@ public class AbstractMCSTest {
         public Map<Integer, Integer> getFirstMapping() {
             return null;
         }
+
+        @Override
+        public double getBondSensitiveTimeOut() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void setBondSensitiveTimeOut(double bondSensitiveTimeOut) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public double getBondInSensitiveTimeOut() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 }

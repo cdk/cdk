@@ -80,7 +80,6 @@ public class SMSDTest {
 
     /**
      * Test of init method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -99,7 +98,6 @@ public class SMSDTest {
 
     /**
      * Test of init method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -140,7 +138,6 @@ public class SMSDTest {
 
     /**
      * Test of set method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -203,7 +200,6 @@ public class SMSDTest {
 
     /**
      * Test of set method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -223,7 +219,6 @@ public class SMSDTest {
 
     /**
      * Test of getAllAtomMapping method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -243,7 +238,6 @@ public class SMSDTest {
 
     /**
      * Test of getAllMapping method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -263,7 +257,6 @@ public class SMSDTest {
 
     /**
      * Test of getFirstAtomMapping method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -283,7 +276,6 @@ public class SMSDTest {
 
     /**
      * Test of getFirstMapping method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -303,7 +295,6 @@ public class SMSDTest {
 
     /**
      * Test of setChemFilters method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -321,7 +312,6 @@ public class SMSDTest {
 
     /**
      * Test of getFragmentSize method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -340,7 +330,6 @@ public class SMSDTest {
 
     /**
      * Test of getStereoScore method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -359,7 +348,6 @@ public class SMSDTest {
 
     /**
      * Test of getEnergyScore method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -378,7 +366,6 @@ public class SMSDTest {
 
     /**
      * Test of getReactantMolecule method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -397,7 +384,6 @@ public class SMSDTest {
 
     /**
      * Test of getProductMolecule method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -435,7 +421,6 @@ public class SMSDTest {
 
     /**
      * Test of isStereoMisMatch method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -453,7 +438,6 @@ public class SMSDTest {
 
     /**
      * Test of isSubgraph method, of class SMSD.
-     * @throws InvalidSmilesException
      * @throws CDKException
      */
     @Test
@@ -546,32 +530,15 @@ public class SMSDTest {
     }
 
     @Test
-    public void testQueryAtomContainerTurbo() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.TURBOMCS, true);
+    public void testQueryAtomSingle() throws CDKException {
+        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
 
         smsd.init(query, target, false);
         boolean foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
-
-        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-        smsd.init(queryContainer, target, false);
-        foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
-    }
-
-    @Test
-    public void testQueryAtomSingle() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer query = sp.parseSmiles("C");
-        IAtomContainer target = sp.parseSmiles("CC");
-
-        smsd.init(query, target, false);
-        boolean foundMatches = smsd.isSubgraph();
-        Assert.assertEquals(1, smsd.getFirstMapping().size());
+        Assert.assertEquals(18, smsd.getAllAtomMapping().size());
         Assert.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
