@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2008-2010  Egon Willighagen <egonw@users.sf.net>
+ *                    2009  Rajarshi Guha <rajarshi.guha@gmail.com>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -19,27 +15,24 @@
  * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.validate;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
@@ -59,14 +52,14 @@ public class BasicValidator extends AbstractValidator {
     public BasicValidator() {
     }
     
-    public ValidationReport validateAtom(Atom subject) {
+    public ValidationReport validateAtom(IAtom subject) {
         ValidationReport report = new ValidationReport();
         report.addReport(validateCharge(subject));
         report.addReport(validateHydrogenCount(subject));
         report.addReport(validatePseudoAtom(subject));
         return report;
     }
-    public ValidationReport validateBond(Bond subject) {
+    public ValidationReport validateBond(IBond subject) {
         ValidationReport report = new ValidationReport();
         report.addReport(validateStereoChemistry(subject));
         report.addReport(validateMaxBondOrder(subject));
@@ -75,7 +68,7 @@ public class BasicValidator extends AbstractValidator {
     public ValidationReport validateIsotope(IIsotope subject) {
         return validateIsotopeExistence(subject);
     }
-    public ValidationReport validateMolecule(Molecule subject) {
+    public ValidationReport validateMolecule(IMolecule subject) {
         ValidationReport report = new ValidationReport();
         ValidationTest emptyMolecule = new ValidationTest(subject,
             "Molecule does not contain any atom"
@@ -90,7 +83,7 @@ public class BasicValidator extends AbstractValidator {
             );
             boolean foundMassCalcProblem = false;
             for (int i=0; i<subject.getAtomCount(); i++) {
-                if (subject.getAtom(i) instanceof PseudoAtom) {
+                if (subject.getAtom(i) instanceof IPseudoAtom) {
                     foundMassCalcProblem = true;
                 } else {
                     report.addReport(validateBondOrderSum(subject.getAtom(i), subject));
@@ -104,14 +97,14 @@ public class BasicValidator extends AbstractValidator {
         }
         return report;
     }
-    public ValidationReport validateReaction(Reaction subject) {
+    public ValidationReport validateReaction(IReaction subject) {
         ValidationReport report = new ValidationReport();
-        AtomContainer container1 = new AtomContainer();
+        IAtomContainer container1 = subject.getBuilder().newInstance(IAtomContainer.class);
         IMoleculeSet reactants = subject.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             container1.add(reactants.getMolecule(i));
         }
-        AtomContainer container2 = new AtomContainer();
+        IAtomContainer container2 = subject.getBuilder().newInstance(IAtomContainer.class);
         IMoleculeSet products = subject.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
             container2.add(products.getMolecule(i));
@@ -123,7 +116,7 @@ public class BasicValidator extends AbstractValidator {
     
     // the Atom tests
     
-    private ValidationReport validateCharge(Atom atom) {
+    private ValidationReport validateCharge(IAtom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
         if (atom.getSymbol().equals("O") || atom.getSymbol().equals("N") ||
@@ -161,7 +154,7 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
 
-    private ValidationReport validateHydrogenCount(Atom atom) {
+    private ValidationReport validateHydrogenCount(IAtom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest negativeHydrogenCount = new ValidationTest(atom,
             "An Atom cannot have a negative number of hydrogens attached."
@@ -177,12 +170,12 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
 
-    private ValidationReport validatePseudoAtom(Atom atom) {
+    private ValidationReport validatePseudoAtom(IAtom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest isElementOrPseudo = new ValidationTest(atom,
             "Non-element atom must be of class PseudoAtom."
         );
-        if (atom instanceof PseudoAtom) {
+        if (atom instanceof IPseudoAtom) {
             // that's fine
             report.addOK(isElementOrPseudo);
         } else {
@@ -209,7 +202,7 @@ public class BasicValidator extends AbstractValidator {
     
     // the Bond tests
     
-    private ValidationReport validateStereoChemistry(Bond bond) {
+    private ValidationReport validateStereoChemistry(IBond bond) {
         ValidationReport report = new ValidationReport();
         ValidationTest bondStereo = new ValidationTest(bond,
             "Defining stereochemistry on bonds is not safe.",
@@ -223,7 +216,7 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
     
-    private ValidationReport validateMaxBondOrder(Bond bond) {
+    private ValidationReport validateMaxBondOrder(IBond bond) {
         ValidationReport report = new ValidationReport();
         ValidationTest maxBO = new ValidationTest(bond,
             "Bond order exceeds the maximum for one of its atoms."
@@ -235,7 +228,7 @@ public class BasicValidator extends AbstractValidator {
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
                 IAtom atom = bond.getAtom(i);
-                if (atom instanceof PseudoAtom) {
+                if (atom instanceof IPseudoAtom) {
                     // ok, all is fine; we don't know the properties of pseudo atoms
                     break;
                 }
@@ -306,7 +299,7 @@ public class BasicValidator extends AbstractValidator {
     
     // the Molecule tests
 
-    private ValidationReport validateBondOrderSum(IAtom atom, Molecule molecule) {
+    private ValidationReport validateBondOrderSum(IAtom atom, IMolecule molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkBondSum = new ValidationTest(atom,
             "The atom's total bond order is too high."
@@ -358,9 +351,9 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
 
-    private ValidationReport validateAtomCountConservation(Reaction reaction,
-                                                        AtomContainer reactants,
-                                                        AtomContainer products) {
+    private ValidationReport validateAtomCountConservation(IReaction reaction,
+                                                        IAtomContainer reactants,
+                                                        IAtomContainer products) {
         ValidationReport report = new ValidationReport();
         ValidationTest atomCount = new ValidationTest(reaction,
             "Atom count mismatch for reaction: the product side has a different atom count than the reactant side."
@@ -373,9 +366,9 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
 
-    private ValidationReport validateChargeConservation(Reaction reaction,
-                                                     AtomContainer reactants,
-                                                     AtomContainer products) {
+    private ValidationReport validateChargeConservation(IReaction reaction,
+                                                     IAtomContainer reactants,
+                                                     IAtomContainer products) {
         ValidationReport report = new ValidationReport();
         ValidationTest chargeConservation = new ValidationTest(reaction,
             "Total formal charge is not preserved during the reaction"
