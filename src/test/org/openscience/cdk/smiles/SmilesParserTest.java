@@ -1864,8 +1864,6 @@ public class SmilesParserTest extends CDKTestCase {
 
     /**
      * Tests reading stereochemistry from a SMILES with one of the four groups being an implicit hydrogen.
-     * Per SMILES specification, this hydrogen is the atom towards the viewer, and will therefore end up
-     * as first atom in the array.
      */
     @Test public void testAtAt() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
