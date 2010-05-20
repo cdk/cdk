@@ -530,7 +530,7 @@ public class SMSDTest {
     }
 
     @Test
-    public void testQueryAtomSingle() throws CDKException {
+    public void testMatchCount() throws CDKException {
         SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
@@ -545,5 +545,17 @@ public class SMSDTest {
         smsd.init(queryContainer, target, false);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
+    }
+
+    @Test
+    public void testImpossibleQuery() throws CDKException {
+        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer query = sp.parseSmiles("CC");
+        IAtomContainer target = sp.parseSmiles("C");
+
+        smsd.init(query, target, false);
+        boolean foundMatches = smsd.isSubgraph();
+        Assert.assertFalse(foundMatches);
     }
 }
