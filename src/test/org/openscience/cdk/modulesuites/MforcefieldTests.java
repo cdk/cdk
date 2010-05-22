@@ -29,7 +29,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.coverage.ForcefieldCoverageTest;
-import org.openscience.cdk.modeling.forcefield.ForceFieldTests;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -39,7 +38,6 @@ import org.openscience.cdk.modeling.forcefield.ForceFieldTests;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     ForcefieldCoverageTest.class,
-    ForceFieldTests.class,
     MMFF94PartialChargesTest.class
 })
 public class MforcefieldTests {}
