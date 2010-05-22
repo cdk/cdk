@@ -125,11 +125,12 @@ public class SMSDTest {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             IAtomContainer target = null;
             target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = null;
-            queryac = sp.parseSmiles("Nc1ccccc1");
+            IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
             SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
             smsd1.init(queryac, target, true);
             smsd1.setChemFilters(true, true, true);
+            Assert.assertEquals(7, smsd1.getFirstAtomMapping().size());
+            Assert.assertEquals(2, smsd1.getAllAtomMapping().size());
             assertNotNull(smsd1.getFirstMapping());
         } catch (InvalidSmilesException ex) {
             Logger.getLogger(MCSPlusHandlerTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -529,8 +530,42 @@ public class SMSDTest {
         Assert.assertTrue(foundMatches);
     }
 
-    @Test
+    public void testQueryAtomCount() throws CDKException {
+        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer query = sp.parseSmiles("CC");
+        IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
+
+        smsd.init(query, target, false);
+        boolean foundMatches = smsd.isSubgraph();
+        Assert.assertEquals(18, smsd.getAllAtomMapping().size());
+        Assert.assertTrue(foundMatches);
+
+        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        smsd.init(queryContainer, target, false);
+        foundMatches = smsd.isSubgraph();
+        Assert.assertTrue(foundMatches);
+    }
+
     public void testMatchCount() throws CDKException {
+        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer query = sp.parseSmiles("CC");
+        IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
+
+        smsd.init(query, target, false);
+        boolean foundMatches = smsd.isSubgraph();
+        Assert.assertEquals(18, smsd.getAllAtomMapping().size());
+        Assert.assertTrue(foundMatches);
+
+        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        smsd.init(queryContainer, target, false);
+        foundMatches = smsd.isSubgraph();
+        Assert.assertTrue(foundMatches);
+    }
+
+    @Test
+    public void testMatchCountCDKMCS() throws CDKException {
         SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
