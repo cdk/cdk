@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -50,7 +51,7 @@ public class TaeAminoAcidDescriptorTest extends CDKTestCase {
     }
 
     @Test public void testTaeAminoAcidDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        BioPolymer pepseq = ProteinBuilderTool.createProtein("ACDEFGH");
+        IBioPolymer pepseq = ProteinBuilderTool.createProtein("ACDEFGH");
         DescriptorValue result = descriptor.calculate(pepseq);
 
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();

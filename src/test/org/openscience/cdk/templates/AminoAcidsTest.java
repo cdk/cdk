@@ -26,6 +26,7 @@ package org.openscience.cdk.templates;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AminoAcid;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.CDKTestCase;
 
@@ -45,7 +46,7 @@ public class AminoAcidsTest extends CDKTestCase {
 
     @Test
     public void testCreateAAs() {
-        AminoAcid[] aas = AminoAcids.createAAs();
+        IAminoAcid[] aas = AminoAcids.createAAs();
         Assert.assertNotNull(aas);
         Assert.assertEquals(20, aas.length);
         for (int i=0; i<20; i++) {
@@ -60,7 +61,7 @@ public class AminoAcidsTest extends CDKTestCase {
 
     @Test
     public void testGetHashMapBySingleCharCode() {
-        Map<String,AminoAcid> map = AminoAcids.getHashMapBySingleCharCode();
+        Map<String,IAminoAcid> map = AminoAcids.getHashMapBySingleCharCode();
         Assert.assertNotNull(map);
         Assert.assertEquals(20, map.size());
 

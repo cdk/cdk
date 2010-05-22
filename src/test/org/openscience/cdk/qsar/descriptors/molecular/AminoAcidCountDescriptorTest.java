@@ -24,6 +24,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
@@ -46,7 +47,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
     }
 
 	@Test public void testAACount() throws Exception {
-        BioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
+        IBioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult)result;
@@ -58,7 +59,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 
 	@Test
     public void testFCount() throws Exception {
-        BioPolymer protein = ProteinBuilderTool.createProtein("FF");
+        IBioPolymer protein = ProteinBuilderTool.createProtein("FF");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult)result;
@@ -67,7 +68,7 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 	}
 
 	@Test public void testTCount() throws Exception {
-        BioPolymer protein = ProteinBuilderTool.createProtein("TT");
+        IBioPolymer protein = ProteinBuilderTool.createProtein("TT");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult)result;
