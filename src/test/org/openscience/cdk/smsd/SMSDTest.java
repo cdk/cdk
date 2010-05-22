@@ -547,6 +547,7 @@ public class SMSDTest {
         Assert.assertTrue(foundMatches);
     }
 
+    @Test
     public void testMatchCount() throws CDKException {
         SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

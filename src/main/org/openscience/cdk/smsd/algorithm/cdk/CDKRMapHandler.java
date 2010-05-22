@@ -228,7 +228,7 @@ public class CDKRMapHandler {
      * @param  graph2  second molecule. May be an IQueryAtomContainer.
      * @return     The mapping found projected on graph1. This is sourceAtom List of CDKRMap objects containing Ids of matching atoms.
      */
-    public static List<List<CDKRMap>> makeAtomsMapOfBondsMap(List<CDKRMap> rMapList, IAtomContainer graph1, IAtomContainer graph2) {
+    private static List<List<CDKRMap>> makeAtomsMapOfBondsMap(List<CDKRMap> rMapList, IAtomContainer graph1, IAtomContainer graph2) {
         if (rMapList == null) {
             return (null);
         }
@@ -288,13 +288,13 @@ public class CDKRMapHandler {
 
     /**
      *  This makes atom map of matching atoms out of atom map of matching bonds as produced by the get(Subgraph|Ismorphism)Map methods.
-     * @see Added by Asad since CDK one doesn't pick up the correct changes
+     *  Added by Asad since CDK one doesn't pick up the correct changes
      * @param  list   The list produced by the getMap method.
      * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
      * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
      * @return     The mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching atoms.
      */
-    public static List<List<CDKRMap>> makeAtomsMapOfBondsMapSingleBond(List<CDKRMap> list, IAtomContainer sourceGraph, IAtomContainer targetGraph) {
+    private static List<List<CDKRMap>> makeAtomsMapOfBondsMapSingleBond(List<CDKRMap> list, IAtomContainer sourceGraph, IAtomContainer targetGraph) {
         if (list == null) {
             return null;
         }
@@ -438,10 +438,10 @@ public class CDKRMapHandler {
                 array1.add(sourceAtom);
                 array2.add(targetAtom);
 
-                int IndexI = source.getAtomNumber(sourceAtom);
-                int IndexJ = target.getAtomNumber(targetAtom);
+                int indexI = source.getAtomNumber(sourceAtom);
+                int indexJ = target.getAtomNumber(targetAtom);
 
-                atomNumbersFromContainer.put(IndexI, IndexJ);
+                atomNumbersFromContainer.put(indexI, indexJ);
             }
             /*Added the Mapping Numbers to the FinalMapping*
              */
@@ -481,11 +481,11 @@ public class CDKRMapHandler {
             array1.add(sAtom);
             array2.add(tAtom);
 
-            int IndexI = source.getAtomNumber(sAtom);
-            int IndexJ = target.getAtomNumber(tAtom);
+            int indexI = source.getAtomNumber(sAtom);
+            int indexJ = target.getAtomNumber(tAtom);
 
 
-            atomNumbersFromContainer.put(IndexI, IndexJ);
+            atomNumbersFromContainer.put(indexI, indexJ);
 
             /*Added the Mapping Numbers to the FinalMapping*
              */
