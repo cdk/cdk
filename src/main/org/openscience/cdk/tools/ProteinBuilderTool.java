@@ -30,6 +30,7 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.AminoAcids;
@@ -111,7 +112,7 @@ public class ProteinBuilderTool {
      * </pre>
      */
     public static BioPolymer createProtein(String sequence) throws CDKException {
-        Map<String,AminoAcid> templates = AminoAcids.getHashMapBySingleCharCode();
+        Map<String,IAminoAcid> templates = AminoAcids.getHashMapBySingleCharCode();
         BioPolymer protein = new BioPolymer();
         Strand strand = new Strand();
         AminoAcid previousAA = null;
