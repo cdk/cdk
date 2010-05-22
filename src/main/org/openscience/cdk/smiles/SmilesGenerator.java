@@ -24,15 +24,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.annotations.TestClass;
@@ -48,10 +39,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -59,6 +50,15 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
@@ -133,7 +133,7 @@ public class SmilesGenerator
 
 	/**
 	 *  Create the SMILES generator.
-	 *  @param userAromaticityFlag if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case (same as using setUseAromaticityFlag later)
+	 *  @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case (same as using setUseAromaticityFlag later)
 	 */
 	public SmilesGenerator(boolean useAromaticityFlag) {
 		this.useAromaticityFlag=useAromaticityFlag;
@@ -201,7 +201,7 @@ public class SmilesGenerator
      * @return the SMILES representation of the molecule
      */
     @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
-    public synchronized String createSMILES(IMolecule molecule)
+    public synchronized String createSMILES(IAtomContainer molecule)
 	{
 		try
 		{
@@ -285,7 +285,7 @@ public class SmilesGenerator
      * @return the SMILES representation of the molecule
 	 */
     @TestMethod("testAlaSMILES,testSugarSMILES")
-    public synchronized String createChiralSMILES(IMolecule molecule, boolean[] doubleBondConfiguration) throws CDKException
+    public synchronized String createChiralSMILES(IAtomContainer molecule, boolean[] doubleBondConfiguration) throws CDKException
 	{
 		return (createSMILES(molecule, true, doubleBondConfiguration));
 	}
@@ -316,7 +316,7 @@ public class SmilesGenerator
      * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
      * @return the SMILES representation of the molecule
      */
-	public synchronized String createSMILES(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
+	public synchronized String createSMILES(IAtomContainer molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
 		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
 		if (moleculeSet.getMoleculeCount() > 1)
@@ -358,9 +358,6 @@ public class SmilesGenerator
      *                                  If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
      *                                  ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
      *                                  possible, but note the coordinates might be arbitrary).
-	 * @param  detectAromaticity        true=an aromaticity detection will be done
-	 *                                  (using setRings avoids ring search for that),
-	 *                                  false=no aromaticity detection will be done
 	 * @exception  CDKException         At least one atom has no Point2D;
 	 *      coordinates are needed for creating the chiral smiles. This excpetion
 	 *      can only be thrown if chiral smiles is created, ignore it if you want a
@@ -370,7 +367,7 @@ public class SmilesGenerator
      * @return the SMILES representation of the molecule
 	 */
 	@TestMethod("testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity,testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity")
-	public synchronized String createSMILESWithoutCheckForMultipleMolecules(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
+	public synchronized String createSMILESWithoutCheckForMultipleMolecules(IAtomContainer molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
 		if (molecule.getAtomCount() == 0)
 		{
