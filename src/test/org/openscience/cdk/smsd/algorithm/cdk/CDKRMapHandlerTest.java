@@ -158,7 +158,7 @@ public class CDKRMapHandlerTest {
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.calculateOverlapsAndReduceExactMatch(Molecule1, Molecule2);
         List<Map<Integer, Integer>> result = instance.getMappings();
-        assertEquals(10, result.size());
+        assertEquals(2, result.size());
     }
 
     /**
