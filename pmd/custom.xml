@@ -27,5 +27,6 @@
 
   <rule ref="pmd/customCDK.xml"/>
   <rule ref="pmd/customOptimization.xml"/>
+  <rule ref="pmd/cdkinterfaces.xml"/>
 
 </ruleset>
