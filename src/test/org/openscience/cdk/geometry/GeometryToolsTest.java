@@ -40,6 +40,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
@@ -668,5 +669,31 @@ public class GeometryToolsTest extends CDKTestCase {
             );
         }
     }
-}
 
+    @Test
+    public void testGetBestAlignmentForLabelXY() {
+    	final String TYPE = "C";
+    	IAtom zero = new Atom("O");zero.setPoint2d(new Point2d());
+    	IAtom pX = new Atom(TYPE); pX.setPoint2d(new Point2d(1,0));
+    	IAtom nX = new Atom(TYPE); nX.setPoint2d(new Point2d(-1,0));
+    	IAtom pY = new Atom(TYPE); pY.setPoint2d(new Point2d(0,1));
+    	IAtom nY = new Atom(TYPE); nY.setPoint2d(new Point2d(0,-1));
+
+    	Assert.assertEquals(-1, alignmentTestHelper(zero, pX));
+    	Assert.assertEquals( 1, alignmentTestHelper(zero, nX));
+    	Assert.assertEquals(-2, alignmentTestHelper(zero, pY));
+    	Assert.assertEquals( 2, alignmentTestHelper(zero, nY));
+
+    	Assert.assertEquals( 1, alignmentTestHelper(zero, pY,nY));
+    }
+
+    private int alignmentTestHelper(IAtom zero, IAtom... pos) {
+    	IMolecule mol = new Molecule();
+		mol.addAtom(zero);
+		for(IAtom atom:pos){
+			mol.addAtom(atom);
+			mol.addBond(new Bond(zero,atom));
+		}
+		return GeometryTools.getBestAlignmentForLabelXY(mol, zero);
+    }
+}
