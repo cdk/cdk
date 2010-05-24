@@ -60,7 +60,7 @@ public class MolHandler {
     private IAtomContainerSet fragmentMolSet = null;
     private boolean removeHydrogen = false;
     private boolean connectedFlag = false;
-    private final static ILoggingTool logger =
+    private final static ILoggingTool Logger =
             LoggingToolFactory.createLoggingTool(MolHandler.class);
 
     private void checkFragmentation() {
@@ -108,7 +108,7 @@ public class MolHandler {
             }
             checkFragmentation();
         } catch (IOException ex) {
-            logger.error(Level.SEVERE, null, ex);
+            Logger.error(Level.SEVERE, null, ex);
         } catch (CDKException e) {
             System.err.println(e);
         }
@@ -145,7 +145,7 @@ public class MolHandler {
             checkFragmentation();
 
         } catch (IOException ex) {
-            logger.error(Level.SEVERE, null, ex);
+            Logger.error(Level.SEVERE, null, ex);
         } catch (CDKException e) {
             System.err.println(e);
         }
@@ -172,11 +172,11 @@ public class MolHandler {
                 this.mol = (IMolecule) ExtAtomContainerManipulator.removeHydrogensAndPreserveAtomID(mol);
                 mol.setID(molID);
             } catch (Exception ex) {
-                logger.error(Level.SEVERE, null, ex);
+                Logger.error(Level.SEVERE, null, ex);
             }
 
         } else {
-            this.mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class,mol);
+            this.mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, mol);
             mol.setID(molID);
 
         }
@@ -203,10 +203,10 @@ public class MolHandler {
                 this.mol = (IMolecule) ExtAtomContainerManipulator.removeHydrogensAndPreserveAtomID(mol);
                 mol.setID(molID);
             } catch (Exception ex) {
-                logger.error(Level.SEVERE, null, ex);
+                Logger.error(Level.SEVERE, null, ex);
             }
         } else {
-            this.mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class,mol);
+            this.mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, mol);
             mol.setID(molID);
         }
         checkFragmentation();

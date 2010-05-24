@@ -51,6 +51,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -326,7 +327,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         for (IAtom atom : container.atoms()) {
-            if (!(atom instanceof PseudoAtom)) {
+            if (!(atom instanceof IPseudoAtom)) {
 
                 IAtomType matched = matcher.findMatchingAtomType(container, atom);
                 if (matched != null) {
@@ -342,7 +343,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         IAtom[] atoms = new IAtom[atomCount];
         for (int index = 0; index < container.getAtomCount(); index++) {
 
-            if (container.getAtom(index) instanceof PseudoAtom) {
+            if (container.getAtom(index) instanceof IPseudoAtom) {
                 atoms[index] = new PseudoAtom(container.getAtom(index));
             } else {
                 atoms[index] = new Atom(container.getAtom(index));
@@ -412,7 +413,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                     continue; // since for the case of H2, neight H has atom heavy atom neighbor
                 }
                 //Added by Asad
-                if (!(neighb instanceof PseudoAtom)) {
+                if (!(neighb instanceof IPseudoAtom)) {
                     neighb.setHydrogenCount(
                             (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount()) + 1);
                 } else {

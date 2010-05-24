@@ -75,7 +75,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     private IAtomContainer ac2 = null;
     private List<Map<INode, IAtom>> vfLibSolutions = null;
     private int vfMCSSize = 0;
-    private final static ILoggingTool logger =
+    private final static ILoggingTool Logger =
             LoggingToolFactory.createLoggingTool(VFlibMCSHandler.class);
 
     /**
@@ -104,9 +104,9 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             try {
                 searchMcGregorMapping();
             } catch (CDKException ex) {
-                logger.error(Level.SEVERE, null, ex);
+                Logger.error(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                logger.error(Level.SEVERE, null, ex);
+                Logger.error(Level.SEVERE, null, ex);
             }
 
         } else if (!allAtomMCSCopy.isEmpty()) {
@@ -318,7 +318,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     try {
                         throw new CDKException("Atom index pointing to NULL");
                     } catch (CDKException ex) {
-                        logger.error(Level.SEVERE, null, ex);
+                        Logger.error(Level.SEVERE, null, ex);
                     }
                 }
 

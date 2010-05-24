@@ -84,7 +84,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     private List<Double> bEnergies = null;
     private Algorithm algorithmType;
     private boolean removeHydrogen = false;
-    private final static ILoggingTool logger =
+    private final static ILoggingTool Logger =
             LoggingToolFactory.createLoggingTool(SubStructureSearchAlgorithms.class);
     private double bondSensitiveTimeOut = 0.10;//mins
     private double bondInSensitiveTimeOut = 0.15;//mins
@@ -152,7 +152,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
                 try {
                     throw new CDKException("This mode is no longer supported");
                 } catch (CDKException ex) {
-                    logger.error(Level.SEVERE, null, ex);
+                    Logger.error(Level.SEVERE, null, ex);
                 }
         }
     }
@@ -414,7 +414,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
                     chemFilter.sortResultsByStereoAndBondMatch();
                     this.stereoScore = chemFilter.getStereoMatches();
                 } catch (CDKException ex) {
-                    logger.error(Level.SEVERE, null, ex);
+                    Logger.error(Level.SEVERE, null, ex);
                 }
             }
             if (fragmentFilter) {
@@ -427,7 +427,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
                     chemFilter.sortResultsByEnergies();
                     this.bEnergies = chemFilter.getSortedEnergy();
                 } catch (CDKException ex) {
-                    logger.error(Level.SEVERE, null, ex);
+                    Logger.error(Level.SEVERE, null, ex);
                 }
             }
         }

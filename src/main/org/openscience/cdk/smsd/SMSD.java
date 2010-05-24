@@ -24,10 +24,7 @@ package org.openscience.cdk.smsd;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.smsd.factory.SubStructureSearchAlgorithms;
-import org.openscience.cdk.smsd.interfaces.AbstractMCS;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  *  <p>This class implements the SMSD- a multipurpose structure comparison tool.
