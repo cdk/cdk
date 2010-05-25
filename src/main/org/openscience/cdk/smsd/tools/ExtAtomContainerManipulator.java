@@ -121,8 +121,9 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     }
 
     /**
-     *
-     * @param mol
+     * This function finds rings and uses aromaticity detection code to
+     * aromatize the molecule.
+     * @param mol input molecule
      */
     @TestMethod("testAromatizeMolecule")
     public static void aromatizeMolecule(IAtomContainer mol) {

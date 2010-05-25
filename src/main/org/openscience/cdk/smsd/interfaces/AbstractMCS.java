@@ -180,22 +180,26 @@ public abstract class AbstractMCS {
     public abstract Map<Integer, Integer> getFirstMapping();
 
     /**
+     * get timeout in mins for bond sensitive searches
      * @return the bondSensitive TimeOut
      */
     public abstract double getBondSensitiveTimeOut();
 
     /**
-     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.15 min)
+     * set timeout in mins (default 0.10 min) for bond sensitive searches
+     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.10 min)
      */
     public abstract void setBondSensitiveTimeOut(double bondSensitiveTimeOut);
 
     /**
+     * get timeout in mins for bond insensitive searches
      * @return the bondInSensitive TimeOut
      */
     public abstract double getBondInSensitiveTimeOut();
 
     /**
-     * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
+     * set timeout in mins (default 0.15 min) for bond insensitive searches
+     * @param bondInSensitiveTimeOut the bond insensitive 
      */
     public abstract void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut);
 }

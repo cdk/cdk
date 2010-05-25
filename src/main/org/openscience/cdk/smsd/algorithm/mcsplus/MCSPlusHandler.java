@@ -42,7 +42,7 @@ import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 
 /**
- * This class acts as a handler class for MCSPlus algorithm
+ * This class acts as a handler class for MCSPlus algorithm.
  * {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus}
  * @cdk.module smsd
  * @cdk.githash

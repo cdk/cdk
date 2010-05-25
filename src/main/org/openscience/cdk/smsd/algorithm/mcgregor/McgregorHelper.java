@@ -29,11 +29,13 @@ import org.openscience.cdk.annotations.TestClass;
 
 /**
  * Helper Class for McGregor algorithm.
+ *
+ * The second part of the program extents the mapping by the McGregor algorithm in case,
+ * that not all atoms of molecule A and molecule B are mapped by the clique approach.
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.McgregorHelperTest")
 public class McgregorHelper {
 

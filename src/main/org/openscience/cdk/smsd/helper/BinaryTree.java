@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 
 /**
- * Class to construct a Binary tree for McGregor search
+ * Class to construct a Binary tree for McGregor search.
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
@@ -39,10 +39,8 @@ import org.openscience.cdk.annotations.TestMethod;
 public class BinaryTree {
 
     /**
-     * Creates a new instance of BinaryTree
-     * the second part of the program extents the mapping by the McGregor algorithm in case
-     * that not all atoms of molecule A and molecule B are mapped by the clique approach
-     * @param value
+     * Creates a new instance of BinaryTree.
+     * @param value node value
      */
     @TestMethod("testGetEnergies")
     public BinaryTree(int value) {

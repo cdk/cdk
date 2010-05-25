@@ -627,6 +627,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     /**
+     * {@inheritDoc}
      * @return the bondSensitiveTimeOut
      */
     public double getBondSensitiveTimeOut() {
@@ -634,6 +635,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     /**
+     * {@inheritDoc}
      * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.15 min)
      */
     public void setBondSensitiveTimeOut(double bondSensitiveTimeOut) {
@@ -641,6 +643,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     /**
+     * {@inheritDoc}
      * @return the bondInSensitiveTimeOut
      */
     public double getBondInSensitiveTimeOut() {
@@ -648,6 +651,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     /**
+     * {@inheritDoc}
      * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
      */
     public void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut) {
