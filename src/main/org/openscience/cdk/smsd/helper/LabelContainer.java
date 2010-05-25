@@ -53,7 +53,7 @@ public class LabelContainer {
 
     /**
      * Create ids from atom labels
-     * @return
+     * @return instance of this object
      */
     @TestMethod("testGetInstance")
     synchronized public static LabelContainer getInstance() {

@@ -109,7 +109,7 @@ public class VFQueryBuilder implements IQuery {
     /**
      * Return a node for a given atom else return null
      * @param atom
-     * @return
+     * @return Node in the graph for a given atom
      */
     public INode getNode(IAtom atom) {
 

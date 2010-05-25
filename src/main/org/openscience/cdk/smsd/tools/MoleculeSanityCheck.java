@@ -50,7 +50,7 @@ public class MoleculeSanityCheck {
     /**
      * Modules for cleaning a molecule
      * @param molecule
-     * @return
+     * @return cleaned AtomContainer
      */
     @TestMethod("testCheckAndCleanMolecule")
     public static IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) {

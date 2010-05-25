@@ -50,7 +50,7 @@ public class FinalMappings implements IFinalMapping {
 
     /**
      * Stores mapping solutions
-     * @return
+     * @return instance of this object
      */
     @TestMethod("testGetInstance")
     synchronized public static FinalMappings getInstance() {

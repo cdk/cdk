@@ -113,10 +113,9 @@ public class VFAtomMatcher extends PseudoAtom implements IQueryAtom {
         return true;
     }
 
-    /** {@inheritDoc}
+    /** 
      *
-     *
-     * @param maximum
+     * @param maximum maximum numbers of connected atoms allowed
      */
     public void setMaximumNeighbors(int maximum) {
         this.maximumNeighbors = maximum;

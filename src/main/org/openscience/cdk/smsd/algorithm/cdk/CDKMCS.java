@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.atomContainer.uk}
+ * Copyright (C) 2007-2010  Syed Asad Rahman {asad@ebi.atomContainer.uk}
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -112,8 +112,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *    Be reminded that this algorithm matches bonds only.
  * </p>
  *
- * @author      Stephane Werner from IXELIS mail@ixelis.net
- * @Copyright (C)   2009  Syed Asad Rahman <asad@ebi.ebi.uk> (modified the orignal code)
+ * @author      Stephane Werner from IXELIS mail@ixelis.net,
+ *              Syed Asad Rahman <asad@ebi.ebi.uk> (modified the orignal code)
  * @cdk.created 2002-07-17
  * @cdk.require java1.5+
  * @cdk.module  smsd

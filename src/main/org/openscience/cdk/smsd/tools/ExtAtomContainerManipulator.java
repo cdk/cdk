@@ -228,7 +228,6 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
      * is atom Hydrogen then its not removed.
      * @param atomContainer
-     * @note function added by Asad
      * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
      * is atom Hydrogen then its not removed.
      */
@@ -292,7 +291,6 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
      * is atom Hydrogen then its not removed.
      * @param atomContainer
-     * @note function added by Asad
      * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
      * is atom Hydrogen then its not removed.
      */
@@ -319,7 +317,6 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      * matcher finds atom matching atom type, the <code>IAtom</code> will be configured
      * to have the same properties as the <code>IAtomType</code>. If no matching atom
      * type is found, no configuration is performed.
-     * @see function added by Asad to fix the PseudoAtom configration
      * @param container
      * @throws CDKException
      */
