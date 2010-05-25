@@ -903,10 +903,6 @@
                 <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/">
                     <fileset dir="${src}/main/org/openscience/cdk/dict/data/" includes="*.owl"/>
                 </copy>
-                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/qsar/model/data/"/>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/qsar/model/data/">
-                    <fileset dir="${src}/main/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
-                </copy>
                 <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/"/>
                 <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/">
                     <fileset dir="${src}/main/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
@@ -966,10 +962,6 @@
                   tofile="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/chemical.xml" />
                 <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/">
                   <fileset dir="${src}/main/org/openscience/cdk/dict/data/" includes="*.owl"/>
-                </copy>
-                <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/"/>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/qsar/model/data/">
-                    <fileset dir="${src}/main/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
                 </copy>
                 <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/"/>
                 <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/">
