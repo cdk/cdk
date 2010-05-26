@@ -24,6 +24,8 @@
 package org.openscience.cdk.qsar;
 
 
+import java.io.Serializable;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.qsar.result.*;
@@ -35,7 +37,9 @@ import org.openscience.cdk.qsar.result.*;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.DescriptorValueTest")
-public class DescriptorValue {
+public class DescriptorValue implements Serializable{
+
+	private static final long serialVersionUID = -5672896059814842972L;
 
     private DescriptorSpecification specification;
     private String[] parameterNames;

@@ -34,6 +34,8 @@ import org.openscience.cdk.annotations.TestMethod;
 public class DoubleResult implements IDescriptorResult {
     
     private double value;
+	private static final long serialVersionUID = 7711619468523616757L;
+	
     
     public DoubleResult(double value) {
         this.value = value;

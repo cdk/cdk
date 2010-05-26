@@ -37,6 +37,8 @@ import java.util.List;
 public class DoubleArrayResult extends DoubleArrayResultType {
 
     private List<Double> array;
+	private static final long serialVersionUID = 2345607580017306612L;
+	
 
     public DoubleArrayResult() {
     	super(0);

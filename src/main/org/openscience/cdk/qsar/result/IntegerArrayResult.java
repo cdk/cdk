@@ -36,6 +36,8 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.result.IntegerArrayResultTest")
 public class IntegerArrayResult extends IntegerArrayResultType {
 
+	private static final long serialVersionUID = 4077762427385735922L;
+
     private List<Integer> array;
 
     public IntegerArrayResult() {

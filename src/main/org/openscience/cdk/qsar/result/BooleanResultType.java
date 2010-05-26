@@ -31,6 +31,8 @@ import org.openscience.cdk.annotations.TestMethod;
  */
 @TestClass("org.openscience.cdk.qsar.result.BooleanResultTypeTest")
 public class BooleanResultType implements IDescriptorResult {
+	
+	private static final long serialVersionUID = 143647705094158395L;
 
     @TestMethod("testToString")
     public String toString() {

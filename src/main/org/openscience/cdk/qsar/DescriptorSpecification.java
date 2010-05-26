@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.qsar;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -34,7 +36,9 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.DescriptorSpecificationTest")
-public class DescriptorSpecification implements IImplementationSpecification {
+public class DescriptorSpecification implements Serializable, IImplementationSpecification {
+
+	private static final long serialVersionUID = 7044545275802343828L;
 
     private String specificationReference;
     private String implementationTitle;

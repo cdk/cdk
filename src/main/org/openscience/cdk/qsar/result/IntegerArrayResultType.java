@@ -32,6 +32,8 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.qsar.result.IntegerArrayResultTypeTest")
 public class IntegerArrayResultType implements IDescriptorResult {
     
+	private static final long serialVersionUID = 1492674654677531635L;
+	
 	private int size;
 	
 	public IntegerArrayResultType(int size) {
