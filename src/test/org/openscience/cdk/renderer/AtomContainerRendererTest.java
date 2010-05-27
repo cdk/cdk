@@ -28,6 +28,7 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -65,11 +66,11 @@ public class AtomContainerRendererTest {
 	}
 	
 	public IMolecule makeSquare() {
-		IMolecule square = builder.newMolecule();
-		square.addAtom(builder.newAtom("C"));
-		square.addAtom(builder.newAtom("C"));
-		square.addAtom(builder.newAtom("C"));
-		square.addAtom(builder.newAtom("C"));
+		IMolecule square = builder.newInstance(IMolecule.class);
+		square.addAtom(builder.newInstance(IAtom.class,"C"));
+		square.addAtom(builder.newInstance(IAtom.class,"C"));
+		square.addAtom(builder.newInstance(IAtom.class,"C"));
+		square.addAtom(builder.newInstance(IAtom.class,"C"));
 		square.addBond(0, 1, IBond.Order.SINGLE);
 		square.addBond(0, 3, IBond.Order.SINGLE);
 		square.addBond(1, 2, IBond.Order.SINGLE);

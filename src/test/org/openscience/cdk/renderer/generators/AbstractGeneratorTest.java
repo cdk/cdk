@@ -27,6 +27,7 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -172,8 +173,8 @@ public abstract class AbstractGeneratorTest {
 	 * @return an atom container with a single atom
 	 */
 	public IAtomContainer makeSingleAtom() {
-		IAtomContainer container = builder.newAtomContainer();
-		container.addAtom(builder.newAtom("C", new Point2d(0,0)));
+		IAtomContainer container = builder.newInstance(IAtomContainer.class);
+		container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(0,0)));
 		return container;
 	}
 	
@@ -184,9 +185,9 @@ public abstract class AbstractGeneratorTest {
 	 * @return an atom container with a single C-C bond
 	 */
 	public IAtomContainer makeSingleBond() {
-		IAtomContainer container = builder.newAtomContainer();
-		container.addAtom(builder.newAtom("C", new Point2d(0,-1)));
-		container.addAtom(builder.newAtom("C", new Point2d(0, 1)));
+		IAtomContainer container = builder.newInstance(IAtomContainer.class);
+		container.addAtom(builder.newInstance(IAtom.class,"C", new Point2d(0,-1)));
+		container.addAtom(builder.newInstance(IAtom.class,"C", new Point2d(0, 1)));
 		container.addBond(0, 1, IBond.Order.SINGLE);
 		return container;
 	}
@@ -198,11 +199,11 @@ public abstract class AbstractGeneratorTest {
 	 * @return four carbon atoms connected by bonds into a square
 	 */
 	public IAtomContainer makeSquare() {
-		IAtomContainer container = builder.newAtomContainer();
-		container.addAtom(builder.newAtom("C", new Point2d(-1,-1)));
-		container.addAtom(builder.newAtom("C", new Point2d( 1,-1)));
-		container.addAtom(builder.newAtom("C", new Point2d( 1, 1)));
-		container.addAtom(builder.newAtom("C", new Point2d(-1, 1)));
+		IAtomContainer container = builder.newInstance(IAtomContainer.class);
+		container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(-1,-1)));
+		container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d( 1,-1)));
+		container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d( 1, 1)));
+		container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(-1, 1)));
 		container.addBond(0, 1, IBond.Order.SINGLE);
 		container.addBond(0, 3, IBond.Order.SINGLE);
 		container.addBond(1, 2, IBond.Order.SINGLE);
