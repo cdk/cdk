@@ -669,8 +669,8 @@ public class RendererModel implements Serializable, Cloneable {
 	 * @return the {@link IGeneratorParameter} instance with the active value.
 	 */
 	public <T extends IGeneratorParameter<?> >T getRenderingParameter(Class<T> param) {
-	    if (renderingParameters.containsKey(param.getClass().getName()))
-	        return (T)renderingParameters.get(param.getClass().getName());
+	    if (renderingParameters.containsKey(param.getName()))
+	        return (T)renderingParameters.get(param.getName());
 	    try {
             return param.newInstance();
         } catch (InstantiationException exception) {
