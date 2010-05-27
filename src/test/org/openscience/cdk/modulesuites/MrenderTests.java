@@ -1,4 +1,4 @@
-/* Copyright (C) 2008-2009  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2008-2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderCoverageTest;
+import org.openscience.cdk.renderer.RendererModelTest;
 import org.openscience.cdk.renderer.color.CDK2DAtomColorsTest;
 import org.openscience.cdk.renderer.color.CDKAtomColorsTest;
 import org.openscience.cdk.renderer.color.CPKAtomColorsTest;
@@ -40,6 +41,7 @@ import org.openscience.cdk.renderer.color.PartialAtomicChargeColorsTest;
 	RasmolColorsTest.class,
 	CDKAtomColorsTest.class,
 	CDK2DAtomColorsTest.class,
-	PartialAtomicChargeColorsTest.class
+	PartialAtomicChargeColorsTest.class,
+	RendererModelTest.class
 })
 public class MrenderTests {}
