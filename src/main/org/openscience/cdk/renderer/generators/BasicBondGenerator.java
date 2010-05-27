@@ -117,7 +117,7 @@ public class BasicBondGenerator implements IAtomContainerGenerator {
 
 	protected IRingSet getRingSet(final IAtomContainer atomContainer) {
 
-		IRingSet ringSet = atomContainer.getBuilder().newRingSet();
+		IRingSet ringSet = atomContainer.getBuilder().newInstance(IRingSet.class);
 		try {
 			IMoleculeSet molecules =
 				ConnectivityChecker.partitionIntoMolecules(atomContainer);
