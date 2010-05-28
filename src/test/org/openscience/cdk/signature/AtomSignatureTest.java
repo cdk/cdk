@@ -40,6 +40,30 @@ import org.openscience.cdk.signature.AtomSignature;
 public class AtomSignatureTest extends AbstractSignatureTest {
     
     @Test
+    public void integerInvariantsTest() {
+        IMolecule isotopeChiralMol = builder.newInstance(IMolecule.class);
+        isotopeChiralMol.addAtom(builder.newInstance(IAtom.class, "C"));
+        
+        IAtom s32 = builder.newInstance(IAtom.class, "S");
+        s32.setMassNumber(32);
+        isotopeChiralMol.addAtom(s32);
+        
+        IAtom s33 = builder.newInstance(IAtom.class, "S");
+        s33.setMassNumber(33);
+        isotopeChiralMol.addAtom(s33);
+        
+        IAtom s34 = builder.newInstance(IAtom.class, "S");
+        s34.setMassNumber(34);
+        isotopeChiralMol.addAtom(s34);
+        
+        IAtom s36 = builder.newInstance(IAtom.class, "S");
+        s36.setMassNumber(36);
+        isotopeChiralMol.addAtom(s36);
+        
+        
+    }
+    
+    @Test
     public void heightTest() {
         IMolecule benzene = makeBenzene();
         AtomSignature atomSignature = new AtomSignature(0, 1, benzene);
