@@ -275,14 +275,14 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 							StringBuffer apoLine=new StringBuffer();
 							for (int atIdx = 0; atIdx < rgroup.getGroup().getAtomCount(); atIdx++) {
 								if (rgroup.getGroup().getAtom(atIdx).equals(firstAttachmentPoint)) {
-									apoLine.append(MDLWriter.formatMDLInt((atIdx+1), 3));
+									apoLine.append(MDLWriter.formatMDLInt((atIdx+1), 4));
 									apoCount++;
 									if (secondAttachmentPoint!=null && 
 											secondAttachmentPoint.equals(firstAttachmentPoint)) {
-										apoLine.append(MDLWriter.formatMDLInt(3, 3));
+										apoLine.append(MDLWriter.formatMDLInt(3, 4));
 									}
 									else {
-										apoLine.append(MDLWriter.formatMDLInt(1, 3));
+										apoLine.append(MDLWriter.formatMDLInt(1, 4));
 									}
 								}
 							}
@@ -290,8 +290,8 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 								for (int atIdx = 0; atIdx < rgroup.getGroup().getAtomCount(); atIdx++) {
 									if (rgroup.getGroup().getAtom(atIdx).equals(secondAttachmentPoint)) {
 										apoCount++;
-										apoLine.append(MDLWriter.formatMDLInt((atIdx+1), 3));
-										apoLine.append(MDLWriter.formatMDLInt(2, 3));
+										apoLine.append(MDLWriter.formatMDLInt((atIdx+1), 4));
+										apoLine.append(MDLWriter.formatMDLInt(2, 4));
 									}
 								}
 							}
