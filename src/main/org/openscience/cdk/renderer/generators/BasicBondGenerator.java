@@ -43,6 +43,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement.Direction;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -88,6 +89,17 @@ public class BasicBondGenerator implements IAtomContainerGenerator {
         }
     }
     private IGeneratorParameter<Color> defaultBondColor = new DefaultBondColor();
+
+    /**
+     * The length on the screen of a typical bond.
+     */
+    public static class BondLength extends
+    AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 40.0;
+        }
+    }
+    private IGeneratorParameter<Double> bondLength = new BondLength();
 
 	private ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
@@ -167,7 +179,7 @@ public class BasicBondGenerator implements IAtomContainerGenerator {
 	 * @return a double in chem-model space
 	 */
 	public double getWidthForBond(IBond bond, RendererModel model) {
-		double scale = model.getScale();
+		double scale = model.getRenderingParameter(Scale.class).getValue();
 		if (this.overrideBondWidth != -1) {
 			return this.overrideBondWidth / scale;
 		} else {
@@ -225,7 +237,8 @@ public class BasicBondGenerator implements IAtomContainerGenerator {
 		Point2d p2 = bond.getAtom(1).getPoint2d();
 		Color color = this.getColorForBond(bond, model);
 		double bondWidth = this.getWidthForBond(bond, model);
-		double bondDistance = this.bondDistance.getValue() / model.getScale();
+		double bondDistance = this.bondDistance.getValue() /
+		    model.getRenderingParameter(Scale.class).getValue();
 		if (type == IBond.Order.SINGLE) {
 		    return new LineElement(p1.x, p1.y, p2.x, p2.y, bondWidth, color);
 		} else {
@@ -391,7 +404,8 @@ public class BasicBondGenerator implements IAtomContainerGenerator {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
                 bondWidth,
-                defaultBondColor
+                defaultBondColor,
+                bondLength
             }
         );
     }

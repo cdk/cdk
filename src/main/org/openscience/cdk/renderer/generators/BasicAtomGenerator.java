@@ -38,6 +38,7 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 import org.openscience.cdk.validate.ProblemMarker;
 
@@ -197,7 +198,8 @@ public class BasicAtomGenerator implements IAtomContainerGenerator {
 	public IRenderingElement generateCompactElement(
 	        IAtom atom, RendererModel model) {
 	    Point2d p = atom.getPoint2d();
-	    double r = atomRadius.getValue() / model.getScale();
+	    double r = atomRadius.getValue() /
+	       model.getRenderingParameter(Scale.class).getValue();
 	    double d = 2 * r;
 	    if (compactShape.getValue() == Shape.SQUARE) {
     	    return new RectangleElement(

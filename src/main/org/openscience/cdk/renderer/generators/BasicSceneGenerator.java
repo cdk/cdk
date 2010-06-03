@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/* Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+ *               2010  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -35,6 +34,19 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module renderbasic
  */
 public class BasicSceneGenerator implements IAtomContainerGenerator {
+
+	/**
+     * The scale is the factor to multiply model coordinates by to convert the
+     * coordinates to screen space coordinate, such that the entire structure
+     * fits the visible screen dimension.
+     */
+    public static class Scale extends
+    AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 1.0;
+        }
+    }
+    private IGeneratorParameter<Double> scale = new Scale();	
 
     public static class BackGroundColor extends
         AbstractGeneratorParameter<Color> {
@@ -88,6 +100,14 @@ public class BasicSceneGenerator implements IAtomContainerGenerator {
     }
     private IGeneratorParameter<String> fontName = new FontName();
 
+    public static class ZoomFactor extends
+    AbstractGeneratorParameter<Double> {
+    	public Double getDefault() {
+    		return 1.0;
+    	}
+    }
+    private IGeneratorParameter<Double> zoomFactor = new ZoomFactor();
+
     public BasicSceneGenerator() {}
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
@@ -102,7 +122,9 @@ public class BasicSceneGenerator implements IAtomContainerGenerator {
                 margin,
                 useAntiAliasing,
                 fontStyle,
-                fontName
+                fontName,
+                zoomFactor,
+                scale
             }
         );
     }
