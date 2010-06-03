@@ -20,6 +20,7 @@
 package org.openscience.cdk.renderer.generators;
 
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 
 /**
@@ -41,7 +43,19 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
  * @cdk.module renderextra
  */
 public class BoundsGenerator implements IReactionGenerator {
-    
+
+	/**
+	 * The color of the box drawn at the bounds of a
+	 * molecule, molecule set, or reaction.
+	 */
+    public static class BoundsColor extends
+    AbstractGeneratorParameter<Color> {
+        public Color getDefault() {
+            return Color.LIGHT_GRAY;
+        }
+    }
+    private IGeneratorParameter<Color> boundsColor = new BoundsColor();
+
     public BoundsGenerator() {}
     
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
@@ -65,7 +79,7 @@ public class BoundsGenerator implements IReactionGenerator {
                 bounds.getMinY(),
                 bounds.getMaxX(),
                 bounds.getMaxY(),
-                model.getBoundsColor());
+                boundsColor.getValue());
     }
     
     public IRenderingElement generate(
@@ -76,12 +90,13 @@ public class BoundsGenerator implements IReactionGenerator {
                                     totalBounds.getMinY(),
                                     totalBounds.getMaxX(),
                                     totalBounds.getMaxY(),
-                                    model.getBoundsColor());
+                                    boundsColor.getValue());
     }
 
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
+            	boundsColor
             }
         );
     }
