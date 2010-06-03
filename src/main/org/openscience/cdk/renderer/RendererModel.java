@@ -39,10 +39,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
-import org.openscience.cdk.renderer.generators.ExternalHighlightGenerator.ExternalHighlightColor;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 
@@ -81,10 +79,20 @@ public class RendererModel implements Serializable, Cloneable {
 
 	private Map<IAtom, IAtom> merge=new HashMap<IAtom, IAtom>();
 
+	/**
+	 * The color used to highlight external selections.
+	 */
+    public static class ExternalHighlightColor extends
+    AbstractGeneratorParameter<Color> {
+    	public Color getDefault() {
+    		return Color.gray;
+    	}
+    }
+    private IGeneratorParameter<Color> externalHighlightColor =
+    	new ExternalHighlightColor();
+
     /**
      * The color hash is used to color substructures.
-     *
-     * @see #getColorHash()
      */
     public static class ColorHash extends
     AbstractGeneratorParameter<Map<IChemObject, Color>> {
@@ -96,11 +104,15 @@ public class RendererModel implements Serializable, Cloneable {
     	new ColorHash();
 
     public RendererModel() {
-        this.parameters = new RenderingParameters();
+        this(new RenderingParameters());
     }
 
     public RendererModel(RenderingParameters parameters) {
         this.parameters = parameters;
+        renderingParameters.put(colorHash.getClass().getName(), colorHash);
+        renderingParameters.put(
+        	externalHighlightColor.getClass().getName(), externalHighlightColor
+        );
     }
 
     public boolean getHighlightShapeFilled() {
