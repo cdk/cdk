@@ -154,26 +154,6 @@ public class RendererModel implements Serializable, Cloneable {
         fireChange();
     }
 
-    /**
-     * Returns the thickness of an atom atom mapping line.
-     *
-     * @return the thickness of an atom atom mapping line
-     */
-    public double getMappingLineWidth() {
-        return this.parameters.getMappingLineWidth();
-    }
-
-    /**
-     * Sets the thickness of an atom atom mapping line.
-     *
-     * @param mappingLineWidth
-     *            the thickness of an atom atom mapping line
-     */
-    public void setMappingLineWidth(double mappingLineWidth) {
-        this.parameters.setMappingLineWidth(mappingLineWidth);
-        fireChange();
-    }
-
     public boolean isFitToScreen() {
         return this.parameters.isFitToScreen();
     }
@@ -199,26 +179,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void setForeColor(Color foreColor) {
         this.parameters.setForeColor(foreColor);
-        fireChange();
-    }
-
-    /**
-     * Returns the atom-atom mapping line color
-     *
-     * @return the atom-atom mapping line color
-     */
-    public Color getAtomAtomMappingLineColor() {
-        return this.parameters.getMappingColor();
-    }
-
-    /**
-     * Sets the atom-atom mapping line color
-     *
-     * @param mappingColor
-     *            the atom-atom mapping line color
-     */
-    public void setAtomAtomMappingLineColor(Color mappingColor) {
-        this.parameters.setMappingColor(mappingColor);
         fireChange();
     }
 

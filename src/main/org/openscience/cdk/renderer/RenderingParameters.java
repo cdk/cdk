@@ -29,11 +29,6 @@ import java.awt.Color;
  */
 public class RenderingParameters {
 
-    /**
-     * The width on screen of an atom-atom mapping line
-     */
-    private double mappingLineWidth = 1.0;
-
     private Color externalHighlightColor = Color.orange;
 
     private boolean fitToScreen = false;
@@ -49,8 +44,6 @@ public class RenderingParameters {
     private double highlightDistance = 8;
 
     private boolean highlightShapeFilled = false;
-
-    private Color mappingColor = Color.gray;
 
     private Color selectedPartColor = Color.lightGray;
 
@@ -111,10 +104,6 @@ public class RenderingParameters {
         this.highlightDistance = highlightDistance;
     }
 
-    public double getMappingLineWidth() {
-        return mappingLineWidth;
-    }
-    
     public Color getExternalHighlightColor() {
         return externalHighlightColor;
     }
@@ -133,10 +122,6 @@ public class RenderingParameters {
 
     public Color getHoverOverColor() {
         return hoverOverColor;
-    }
-
-    public Color getMappingColor() {
-        return mappingColor;
     }
 
     public Color getSelectedPartColor() {
@@ -175,10 +160,6 @@ public class RenderingParameters {
         return willDrawNumbers;
     }
 
-    public void setMappingLineWidth(double mappingLineWidth) {
-        this.mappingLineWidth = mappingLineWidth;
-    }
-    
     public void setExternalHighlightColor(Color externalHighlightColor) {
         this.externalHighlightColor = externalHighlightColor;
     }
@@ -189,10 +170,6 @@ public class RenderingParameters {
 
     public void setHoverOverColor(Color hoverOverColor) {
         this.hoverOverColor = hoverOverColor;
-    }
-
-    public void setMappingColor(Color mappingColor) {
-        this.mappingColor = mappingColor;
     }
 
     public void setSelectedPartColor(Color selectedPartColor) {
