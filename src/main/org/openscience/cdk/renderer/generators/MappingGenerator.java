@@ -40,6 +40,30 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  */
 public class MappingGenerator implements IReactionGenerator {
 
+	/**
+	 * The width on screen of an atom-atom mapping line.
+	 */
+    public static class AtomAtomMappingLineColor extends
+    AbstractGeneratorParameter<Color> {
+    	public Color getDefault() {
+    		return Color.gray;
+    	}
+    }
+    private IGeneratorParameter<Color> atomAtomMappingLineColor =
+    	new AtomAtomMappingLineColor();
+
+    /**
+	 * The width on screen of an atom-atom mapping line.
+	 */
+    public static class MappingLineWidth extends
+    AbstractGeneratorParameter<Double> {
+    	public Double getDefault() {
+    		return 1.0;
+    	}
+    }
+    private IGeneratorParameter<Double> mappingLineWidth =
+    	new MappingLineWidth();
+
     public static class ShowAtomAtomMapping extends
     AbstractGeneratorParameter<Boolean> {
     	public Boolean getDefault() {
@@ -54,7 +78,7 @@ public class MappingGenerator implements IReactionGenerator {
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if(!showAtomAtomMapping.getValue()) return null;
         ElementGroup elementGroup = new ElementGroup();
-        Color mappingColor = model.getAtomAtomMappingLineColor();
+        Color mappingColor = atomAtomMappingLineColor.getValue();
         for (IMapping mapping : reaction.mappings()) {
             // XXX assume that there are only 2 endpoints!
             // XXX assume that the ChemObjects are actually IAtoms...
@@ -78,12 +102,15 @@ public class MappingGenerator implements IReactionGenerator {
 	 */
 	public double getWidthForMappingLine(RendererModel model) {
 		double scale = model.getRenderingParameter(Scale.class).getValue();
-		return model.getMappingLineWidth() / scale;
+		return mappingLineWidth.getValue() / scale;
 	}
 	
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
+            	showAtomAtomMapping,
+            	mappingLineWidth,
+            	atomAtomMappingLineColor
             }
         );
     }
