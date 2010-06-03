@@ -429,23 +429,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Gets the color used for drawing the part we are hovering over.
-     */
-    public Color getHoverOverColor() {
-        return this.parameters.getHoverOverColor();
-    }
-
-    /**
-     * Sets the color used for drawing the part we are hovering over.
-     *
-     * @param hoverOverColor
-     *            The color
-     */
-    public void setHoverOverColor(Color hoverOverColor) {
-        this.parameters.setHoverOverColor(hoverOverColor);
-    }
-
-    /**
      * Gets the color used for drawing the internally selected part.
      */
     public Color getSelectedPartColor() {

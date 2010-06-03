@@ -33,8 +33,6 @@ public class RenderingParameters {
 
     private Color foreColor = Color.black;
 
-    private Color hoverOverColor = Color.lightGray;
-
     /**
      * The maximum distance on the screen the mouse pointer has to be to
      * highlight an element.
@@ -114,10 +112,6 @@ public class RenderingParameters {
         return foreColor;
     }
 
-    public Color getHoverOverColor() {
-        return hoverOverColor;
-    }
-
     public Color getSelectedPartColor() {
         return selectedPartColor;
     }
@@ -156,10 +150,6 @@ public class RenderingParameters {
 
     public void setForeColor(Color foreColor) {
         this.foreColor = foreColor;
-    }
-
-    public void setHoverOverColor(Color hoverOverColor) {
-        this.hoverOverColor = hoverOverColor;
     }
 
     public void setSelectedPartColor(Color selectedPartColor) {
