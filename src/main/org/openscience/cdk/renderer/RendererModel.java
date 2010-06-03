@@ -39,8 +39,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
+import org.openscience.cdk.renderer.generators.ExternalHighlightGenerator.ExternalHighlightColor;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 
@@ -427,23 +429,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Gets the color used for drawing the part which was selected externally
-     */
-    public Color getExternalHighlightColor() {
-        return this.parameters.getExternalHighlightColor();
-    }
-
-    /**
-     * Sets the color used for drawing the part which was selected externally
-     *
-     * @param externalHighlightColor
-     *            The color
-     */
-    public void setExternalHighlightColor(Color externalHighlightColor) {
-        this.parameters.setExternalHighlightColor(externalHighlightColor);
-    }
-
-    /**
      * Gets the color used for drawing the part we are hovering over.
      */
     public Color getHoverOverColor() {
@@ -502,11 +487,15 @@ public class RendererModel implements Serializable, Cloneable {
         if(externalSelectedPart !=null) {
             for (int i = 0; i < externalSelectedPart.getAtomCount(); i++) {
                 colorHash.put(externalSelectedPart.getAtom(i),
-                                   this.getExternalHighlightColor());
+                    this.getRenderingParameter(ExternalHighlightColor.class).
+                    getValue());
             }
             Iterator<IBond> bonds = externalSelectedPart.bonds().iterator();
             while (bonds.hasNext()) {
-            	colorHash.put(bonds.next(), getExternalHighlightColor());
+            	colorHash.put(bonds.next(),
+            		this.getRenderingParameter(ExternalHighlightColor.class).
+                        getValue()
+                );
             }
         }
         fireChange();

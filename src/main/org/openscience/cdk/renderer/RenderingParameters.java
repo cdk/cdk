@@ -29,8 +29,6 @@ import java.awt.Color;
  */
 public class RenderingParameters {
 
-    private Color externalHighlightColor = Color.orange;
-
     private boolean fitToScreen = false;
 
     private Color foreColor = Color.black;
@@ -104,10 +102,6 @@ public class RenderingParameters {
         this.highlightDistance = highlightDistance;
     }
 
-    public Color getExternalHighlightColor() {
-        return externalHighlightColor;
-    }
-
     public boolean isFitToScreen() {
         return fitToScreen;
     }
@@ -158,10 +152,6 @@ public class RenderingParameters {
 
     public boolean isWillDrawNumbers() {
         return willDrawNumbers;
-    }
-
-    public void setExternalHighlightColor(Color externalHighlightColor) {
-        this.externalHighlightColor = externalHighlightColor;
     }
 
     public void setForeColor(Color foreColor) {
