@@ -37,6 +37,7 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.AtomRadius;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 
 /**
  * Generate the symbols for radicals.
@@ -61,7 +62,8 @@ public class RadicalGenerator implements IGenerator {
             ((AtomRadius)model.getRenderingParameter(AtomRadius.class)).
             getValue();
         
-        double modelRadius = SCREEN_RADIUS / model.getScale();
+        double modelRadius = SCREEN_RADIUS /
+            model.getRenderingParameter(Scale.class).getValue();
         Map<IAtom,Integer> singleElectronsPerAtom = new HashMap<IAtom, Integer>();
         for (ISingleElectron e : ac.singleElectrons()) {
             IAtom atom = e.getAtom();

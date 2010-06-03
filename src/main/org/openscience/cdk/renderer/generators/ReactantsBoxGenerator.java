@@ -30,6 +30,8 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.elements.TextElement;
+import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReactionBoxes;
 
 /**
@@ -47,7 +49,8 @@ public class ReactantsBoxGenerator implements IReactionGenerator {
 	    if (reaction.getReactantCount() == 0) 
 	    	return new ElementGroup();
 	    
-		double d = model.getBondLength() / model.getScale()/2;
+		double d = model.getRenderingParameter(BondLength.class)
+    		.getValue() / model.getRenderingParameter(Scale.class).getValue()/2;
         Rectangle2D totalBounds = Renderer.calculateBounds(reaction.getReactants());
         
         ElementGroup diagram = new ElementGroup();

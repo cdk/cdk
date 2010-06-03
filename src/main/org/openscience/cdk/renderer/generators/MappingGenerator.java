@@ -32,6 +32,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
@@ -76,7 +77,7 @@ public class MappingGenerator implements IReactionGenerator {
 	 * @return a double in chem-model space
 	 */
 	public double getWidthForMappingLine(RendererModel model) {
-		double scale = model.getScale();
+		double scale = model.getRenderingParameter(Scale.class).getValue();
 		return model.getMappingLineWidth() / scale;
 	}
 	

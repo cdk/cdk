@@ -35,6 +35,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.TextElement;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
@@ -71,7 +72,7 @@ public class AtomNumberGenerator implements IGenerator {
 		if (!model.drawNumbers()) return numbers;
 
 		Vector2d offset = new Vector2d(this.offset.x,-this.offset.y);
-		offset.scale( 1/model.getScale() );
+		offset.scale( 1/model.getRenderingParameter(Scale.class).getValue() );
 
 		int number = 1;
 		for (IAtom atom : ac.atoms()) {
