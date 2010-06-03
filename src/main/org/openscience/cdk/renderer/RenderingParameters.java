@@ -33,17 +33,6 @@ public class RenderingParameters {
      * The width on screen of an atom-atom mapping line
      */
     private double mappingLineWidth = 1.0;
-    
-    /**
-     * The color of the box drawn at the bounds of a
-     * molecule, molecule set, or reaction
-     */
-    private Color boundsColor = Color.LIGHT_GRAY;
-
-    /**
-     * The shape of the compact mode atom.
-     */
-//    private AtomShape compactShape = AtomShape.SQUARE;
 
     private Color externalHighlightColor = Color.orange;
 
@@ -240,14 +229,6 @@ public class RenderingParameters {
 
     public void setWillDrawNumbers(boolean willDrawNumbers) {
         this.willDrawNumbers = willDrawNumbers;
-    }
-
-    public Color getBoundsColor() {
-        return this.boundsColor;
-    }
-
-    public void setBoundsColor(Color color) {
-        this.boundsColor = color;
     }
 
 	public double getSelectionRadius() {

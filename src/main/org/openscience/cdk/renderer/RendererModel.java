@@ -568,14 +568,6 @@ public class RendererModel implements Serializable, Cloneable {
         this.parameters.setShowAtomTypeNames(showAtomTypeNames);
     }
 
-    public Color getBoundsColor() {
-        return this.parameters.getBoundsColor();
-    }
-
-    public void setBoundsColor(Color color) {
-        this.parameters.setBoundsColor(color);
-    }
-
 	/**
 	 * @return the on screen radius of the selection element
 	 */
