@@ -30,22 +30,6 @@ import java.awt.Color;
 public class RenderingParameters {
 
     /**
-     * When atoms are selected or in compact mode, they will
-     * be covered by a shape determined by this enumeration
-     */
-//    public enum AtomShape { OVAL, SQUARE };
-    
-    /**
-     * The width of an arrow head
-     */
-    private int arrowHeadWidth = 10;
-
-    /**
-     * The length on screen of a typical bond
-     */
-    private double bondLength = 40.0;
-
-    /**
      * The width on screen of an atom-atom mapping line
      */
     private double mappingLineWidth = 1.0;
@@ -78,11 +62,6 @@ public class RenderingParameters {
     private boolean highlightShapeFilled = false;
 
     private Color mappingColor = Color.gray;
-
-    /**
-     * The factor to convert from model space to screen space.
-     */
-    private double scale = 1.0;
 
     private Color selectedPartColor = Color.lightGray;
 
@@ -119,15 +98,6 @@ public class RenderingParameters {
      */
     private double wedgeWidth = 2.0;
 
-
-    public int getArrowHeadWidth() {
-        return arrowHeadWidth;
-    }
-
-    public void setArrowHeadWidth(int arrowHeadWidth) {
-        this.arrowHeadWidth = arrowHeadWidth;
-    }
-
     public boolean isHighlightShapeFilled() {
         return highlightShapeFilled;
     }
@@ -144,34 +114,12 @@ public class RenderingParameters {
         this.wedgeWidth = wedgeWidth;
     }
 
-    /**
-     * The scale is the factor to multiply model coordinates by to convert to
-     * coordinates in screen space.
-     *
-     * @return the scale
-     */
-    public double getScale() {
-        return scale;
-    }
-
-    public void setScale(double scale) {
-        this.scale = scale;
-    }
-
     public double getHighlightDistance() {
         return highlightDistance;
     }
 
     public void setHighlightDistance(double highlightDistance) {
         this.highlightDistance = highlightDistance;
-    }
-
-    public double getBondLength() {
-        return bondLength;
-    }
-
-    public void setBondLength(double bondLength) {
-        this.bondLength = bondLength;
     }
 
     public double getMappingLineWidth() {

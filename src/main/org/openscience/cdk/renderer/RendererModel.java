@@ -62,9 +62,6 @@ public class RendererModel implements Serializable, Cloneable {
     private transient List<ICDKChangeListener> listeners =
         new ArrayList<ICDKChangeListener>();
 
-    /** Determines how much the image is zoomed into on. */
-    private double zoomFactor = 1.0;
-
     //this is used for the size of the arrowhead, might become configurable
     public static final int arrowHeadWidth = 10;
 
@@ -103,14 +100,6 @@ public class RendererModel implements Serializable, Cloneable {
     public RendererModel(RenderingParameters parameters) {
         this.parameters = parameters;
     }
-    
-    public int getArrowHeadWidth() {
-        return this.parameters.getArrowHeadWidth();
-    }
-    
-    public void setArrowHeadWidth(int arrowHeadWidth) {
-        this.parameters.setArrowHeadWidth(arrowHeadWidth);
-    }
 
     public boolean getHighlightShapeFilled() {
         return this.parameters.isHighlightShapeFilled();
@@ -126,14 +115,6 @@ public class RendererModel implements Serializable, Cloneable {
 
     public void setWedgeWidth(double wedgeWidth) {
         this.parameters.setWedgeWidth(wedgeWidth);
-    }
-
-    public double getScale() {
-        return this.parameters.getScale();
-    }
-
-    public void setScale(double scale) {
-        this.parameters.setScale(scale);
     }
 
     public void setSelection(IChemObjectSelection selection) {
@@ -174,25 +155,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * The length on the screen of a typical bond.
-     *
-     * @return the user-selected length of a bond, or the default length.
-     */
-    public double getBondLength() {
-        return this.parameters.getBondLength();
-    }
-
-    /**
-     * Set the length on the screen of a typical bond.
-     *
-     * @param bondLength the length in pixels of a typical bond.
-     *
-     */
-    public void setBondLength(double length) {
-        this.parameters.setBondLength(length);
-    }
-
-    /**
      * Returns the thickness of an atom atom mapping line.
      *
      * @return the thickness of an atom atom mapping line
@@ -209,26 +171,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void setMappingLineWidth(double mappingLineWidth) {
         this.parameters.setMappingLineWidth(mappingLineWidth);
-        fireChange();
-    }
-
-    /**
-     * A zoom factor for the drawing.
-     *
-     * @return a zoom factor for the drawing
-     */
-    public double getZoomFactor() {
-        return this.zoomFactor;
-    }
-
-    /**
-     * Returns the zoom factor for the drawing.
-     *
-     * @param zoomFactor
-     *            the zoom factor for the drawing
-     */
-    public void setZoomFactor(double zoomFactor) {
-        this.zoomFactor = zoomFactor;
         fireChange();
     }
 
