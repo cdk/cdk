@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/* Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+ *               2010  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -45,6 +44,15 @@ public class ReactionSceneGenerator implements IGenerator {
     private IGeneratorParameter<Boolean> showReactionBoxes =
     	new ShowReactionBoxes();
 
+    public static class ArrowHeadWidth extends
+    AbstractGeneratorParameter<Double> {
+    	public Double getDefault() {
+    		return 10.0;
+    	}
+    }
+    private IGeneratorParameter<Double> arrowHeadWidth =
+    	new ArrowHeadWidth();
+
     public ReactionSceneGenerator() {}
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
@@ -54,7 +62,8 @@ public class ReactionSceneGenerator implements IGenerator {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
-            	showReactionBoxes
+            	showReactionBoxes,
+            	arrowHeadWidth
             }
         );
     }

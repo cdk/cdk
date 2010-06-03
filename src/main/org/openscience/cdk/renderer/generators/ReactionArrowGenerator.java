@@ -28,6 +28,8 @@ import org.openscience.cdk.renderer.Renderer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ArrowElement;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 
 /**
  * Generate the arrow for a reaction.
@@ -47,7 +49,8 @@ public class ReactionArrowGenerator implements IReactionGenerator {
         if (totalBoundsReactants == null || totalBoundsProducts == null)
         	return null;
         
-        double d = model.getBondLength() / model.getScale();
+        double d = model.getRenderingParameter(BondLength.class)
+    		.getValue() / model.getRenderingParameter(Scale.class).getValue();
         Color foregroundColor = model.getRenderingParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         return new ArrowElement(
@@ -55,7 +58,7 @@ public class ReactionArrowGenerator implements IReactionGenerator {
             totalBoundsReactants.getCenterY(), 
             totalBoundsProducts.getMinX() - d, 
             totalBoundsReactants.getCenterY(),
-            1 / model.getScale(), true,
+            1 / model.getRenderingParameter(Scale.class).getValue(), true,
             foregroundColor
         );
 	}

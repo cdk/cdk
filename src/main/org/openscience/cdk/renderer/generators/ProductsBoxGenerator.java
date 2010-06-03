@@ -33,6 +33,8 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.elements.TextElement;
+import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReactionBoxes;
 
 /**
@@ -51,7 +53,8 @@ public class ProductsBoxGenerator implements IReactionGenerator {
 			return null;
 	    if (reaction.getProductCount() == 0) 
 	    	return new ElementGroup();
-		DISTANCE = model.getBondLength() / model.getScale() / 2;
+		DISTANCE = model.getRenderingParameter(BondLength.class)
+    		.getValue() / model.getRenderingParameter(Scale.class).getValue() / 2;
         Rectangle2D totalBounds = null;
         for (IAtomContainer molecule : reaction.getProducts().molecules()) {
             Rectangle2D bounds = Renderer.calculateBounds(molecule);
