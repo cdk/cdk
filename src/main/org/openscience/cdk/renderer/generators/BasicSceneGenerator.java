@@ -34,6 +34,31 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module renderbasic
  */
 public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
+    
+    public static class ShowTooltip extends 
+                        AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private ShowTooltip showTooltip;
+    
+    public static class ShowMoleculeTitle extends 
+                        AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private ShowMoleculeTitle showMoleculeTitle;
+    
+    
+    public static class FitToScreen extends 
+                        AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private FitToScreen fitToScreen = new FitToScreen();
 
 	/**
      * The scale is the factor to multiply model coordinates by to convert the
@@ -48,13 +73,13 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     }
     private IGeneratorParameter<Double> scale = new Scale();	
 
-    public static class BackGroundColor extends
+    public static class BackgroundColor extends
         AbstractGeneratorParameter<Color> {
         public Color getDefault() {
             return Color.WHITE;
         }
     }
-    private IGeneratorParameter<Color> backgroundColor = new BackGroundColor();
+    private IGeneratorParameter<Color> backgroundColor = new BackgroundColor();
 
     public static class ForegroundColor extends
     AbstractGeneratorParameter<Color> {
@@ -124,7 +149,10 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
                 fontStyle,
                 fontName,
                 zoomFactor,
-                scale
+                scale,
+                fitToScreen,
+                showMoleculeTitle,
+                showTooltip
             }
         );
     }

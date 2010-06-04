@@ -100,6 +100,16 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
     private IGeneratorParameter<Double> bondLength = new BondLength();
+    
+    /**
+     * The width on screen of the fat end of a wedge bond.
+     */
+    public static class WedgeWidth extends AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 2.0;
+        }
+    }
+    private IGeneratorParameter wedgeWidth = new WedgeWidth();
 
 	private ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
@@ -405,7 +415,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
             new IGeneratorParameter<?>[] {
                 bondWidth,
                 defaultBondColor,
-                bondLength
+                bondLength,
+                wedgeWidth
             }
         );
     }

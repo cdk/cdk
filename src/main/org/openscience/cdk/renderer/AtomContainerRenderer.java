@@ -37,6 +37,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.FitToScreen;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.FontName;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
@@ -491,7 +492,7 @@ public class AtomContainerRenderer {
 
 	    // this controls whether editing a molecule causes it to re-center
 	    // with each change or not
-	    if (reset || rendererModel.isFitToScreen()) {
+	    if (reset || rendererModel.getRenderingParameter(FitToScreen.class).getValue()) {
             this.setModelCenter(
                     modelBounds.getCenterX(), modelBounds.getCenterY());
         }
