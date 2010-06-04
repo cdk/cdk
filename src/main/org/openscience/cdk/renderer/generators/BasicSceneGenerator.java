@@ -33,7 +33,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 /**
  * @cdk.module renderbasic
  */
-public class BasicSceneGenerator implements IAtomContainerGenerator {
+public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
 	/**
      * The scale is the factor to multiply model coordinates by to convert the

@@ -29,6 +29,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -38,7 +39,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator;
-import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
+import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactShape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.KekuleStructure;
@@ -83,7 +84,8 @@ public class AtomContainerRendererTest {
 	public void testSquareMolecule() {
 		IMolecule square = makeSquare();
 		
-		List<IAtomContainerGenerator> generators = new ArrayList<IAtomContainerGenerator>();
+		List<IGenerator<IAtomContainer>> generators =
+			new ArrayList<IGenerator<IAtomContainer>>();
 		generators.add(new BasicBondGenerator());
 		BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
 		generators.add(atomGenerator);

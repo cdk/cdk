@@ -45,7 +45,7 @@ import org.openscience.cdk.validate.ProblemMarker;
 /**
  * @cdk.module renderbasic
  */
-public class BasicAtomGenerator implements IAtomContainerGenerator {
+public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     public static class AtomColor extends
         AbstractGeneratorParameter<Color> {

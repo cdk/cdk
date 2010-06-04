@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
-import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.FontName;
@@ -118,7 +117,7 @@ public class AtomContainerRenderer {
 	 */
     protected final RendererModel rendererModel = new RendererModel();
 
-    protected List<IAtomContainerGenerator> generators;
+    protected List<IGenerator<IAtomContainer>> generators;
 	
     protected AffineTransform transform;
 
@@ -141,7 +140,7 @@ public class AtomContainerRenderer {
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public AtomContainerRenderer(List<IAtomContainerGenerator> generators, IFontManager fontManager) {
+	public AtomContainerRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
 	    this.generators = generators;
         this.fontManager = fontManager;
         for (IGenerator generator : generators)
@@ -582,13 +581,13 @@ public class AtomContainerRenderer {
 
 	protected IRenderingElement generateDiagram(IAtomContainer ac) {
 	    ElementGroup diagram = new ElementGroup();
-        for (IAtomContainerGenerator generator : this.generators) {
+        for (IGenerator<IAtomContainer> generator : this.generators) {
             diagram.add(generator.generate(ac, this.rendererModel));
         }
         return diagram;
 	}
 
-	public List<IAtomContainerGenerator> getGenerators(){
-	    return new ArrayList<IAtomContainerGenerator>(generators);
+	public List<IGenerator<IAtomContainer>> getGenerators(){
+	    return new ArrayList<IGenerator<IAtomContainer>>(generators);
 	}
 }

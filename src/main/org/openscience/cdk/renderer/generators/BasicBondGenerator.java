@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 /**
  * @cdk.module renderbasic
  */
-public class BasicBondGenerator implements IAtomContainerGenerator {
+public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     // FIXME: bond width should be defined in world, not screen coordinates
     /**
