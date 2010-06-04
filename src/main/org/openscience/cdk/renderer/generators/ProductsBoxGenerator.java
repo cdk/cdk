@@ -44,7 +44,7 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
  * @cdk.module renderextra
  *
  */
-public class ProductsBoxGenerator implements IReactionGenerator {
+public class ProductsBoxGenerator implements IGenerator<IReaction> {
 
 	private static double DISTANCE;
 

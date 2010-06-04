@@ -22,7 +22,7 @@ package org.openscience.cdk.renderer.generators;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -33,7 +33,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  *
  * @cdk.module renderextra
  */
-public class ReactionSceneGenerator implements IGenerator {
+public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
     public static class ShowReactionBoxes extends
     AbstractGeneratorParameter<Boolean> {
@@ -55,7 +55,7 @@ public class ReactionSceneGenerator implements IGenerator {
 
     public ReactionSceneGenerator() {}
 
-	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		return new ElementGroup();
 	}
 	

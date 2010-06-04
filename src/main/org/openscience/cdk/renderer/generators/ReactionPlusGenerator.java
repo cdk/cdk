@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.elements.TextElement;
  * @cdk.module renderextra
  *
  */
-public class ReactionPlusGenerator implements IReactionGenerator {
+public class ReactionPlusGenerator implements IGenerator<IReaction> {
 
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		ElementGroup diagram = new ElementGroup();

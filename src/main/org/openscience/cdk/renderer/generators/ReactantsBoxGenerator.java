@@ -41,7 +41,7 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
  * @cdk.module renderextra
  *
  */
-public class ReactantsBoxGenerator implements IReactionGenerator {
+public class ReactantsBoxGenerator implements IGenerator<IReaction> {
 
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if (!model.getRenderingParameter(ShowReactionBoxes.class).getValue())

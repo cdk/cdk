@@ -42,7 +42,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @author maclean
  * @cdk.module renderextra
  */
-public class AtomNumberGenerator implements IGenerator {
+public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     public static class AtomNumberTextColor extends
         AbstractGeneratorParameter<Color> {
