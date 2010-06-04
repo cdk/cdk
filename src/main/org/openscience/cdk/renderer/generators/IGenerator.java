@@ -20,12 +20,18 @@ package org.openscience.cdk.renderer.generators;
 
 import java.util.List;
 
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.elements.IRenderingElement;
+
 /**
  * @cdk.module  render
  * @cdk.githash
  */
-public interface IGenerator {
+public interface IGenerator<T extends IChemObject>  {
 
-	public abstract List<IGeneratorParameter<?>> getParameters();
+	public List<IGeneratorParameter<?>> getParameters();
+
+	public IRenderingElement generate(T object, RendererModel model); 
 
 }

@@ -570,7 +570,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 *
 	 * @param generator
 	 */
-    public void registerParameters(IGenerator generator) {
+    public void registerParameters(IGenerator<? extends IChemObject> generator) {
         for (IGeneratorParameter<?> param : generator.getParameters()) {
             renderingParameters.put(
                 param.getClass().getName(),

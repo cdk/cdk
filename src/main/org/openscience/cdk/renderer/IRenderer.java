@@ -50,7 +50,7 @@ public interface IRenderer {
 	 * @param screenYTo the screen's y coordinate
 	 * @return          the matching model coordinates
 	 *
-	 * @see #toScreenCoordinates(double, double)
+	 * @see #toScreenCoordinates(dhttp://download.eclipse.org/egit/updates/ouble, double)
 	 */
 	public Point2d toModelCoordinates(double screenXTo, double screenYTo);
 

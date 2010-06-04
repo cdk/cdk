@@ -26,6 +26,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
@@ -36,14 +38,19 @@ public class RendererModelTest {
 
 	@Test
 	public void testGetRenderingParameter() {
-		IGenerator generator = new IGenerator() {
+		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
 			@Override
 			public List<IGeneratorParameter<?>> getParameters() {
-				List<IGenerator> list = new ArrayList<IGenerator>();
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
+			}
+			@Override
+			public IRenderingElement generate(IChemObject object,
+					RendererModel model) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		};
 		RendererModel model = new RendererModel();
@@ -56,14 +63,19 @@ public class RendererModelTest {
 
 	@Test
 	public void testReturningTheRealParamaterValue() {
-		IGenerator generator = new IGenerator() {
+		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
 			@Override
 			public List<IGeneratorParameter<?>> getParameters() {
-				List<IGenerator> list = new ArrayList<IGenerator>();
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
+			}
+			@Override
+			public IRenderingElement generate(IChemObject object,
+					RendererModel model) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		};
 		RendererModel model = new RendererModel();
