@@ -38,7 +38,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * @cdk.module renderextra
  *
  */
-public class ReactionArrowGenerator implements IReactionGenerator {
+public class ReactionArrowGenerator implements IGenerator<IReaction> {
 
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
         Rectangle2D totalBoundsReactants = 

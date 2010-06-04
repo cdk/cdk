@@ -38,7 +38,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 /**
  * @cdk.module renderextra
  */
-public class MappingGenerator implements IReactionGenerator {
+public class MappingGenerator implements IGenerator<IReaction> {
 
 	/**
 	 * The width on screen of an atom-atom mapping line.

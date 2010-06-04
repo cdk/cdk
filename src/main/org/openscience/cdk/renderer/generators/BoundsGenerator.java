@@ -42,7 +42,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @author maclean
  * @cdk.module renderextra
  */
-public class BoundsGenerator implements IReactionGenerator {
+public class BoundsGenerator implements IGenerator<IReaction> {
 
 	/**
 	 * The color of the box drawn at the bounds of a

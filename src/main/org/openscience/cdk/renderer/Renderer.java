@@ -39,8 +39,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
-import org.openscience.cdk.renderer.generators.IAtomContainerGenerator;
-import org.openscience.cdk.renderer.generators.IReactionGenerator;
+import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.FontName;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
@@ -115,7 +114,7 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
 	/**
 	 * Generators specific to reactions
 	 */
-	private List<IReactionGenerator> reactionGenerators;
+	private List<IGenerator<IReaction>> reactionGenerators;
 	
     /**
      * A renderer that generates diagrams using the specified
@@ -126,15 +125,15 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public Renderer(List<IAtomContainerGenerator> generators, IFontManager fontManager) {
+	public Renderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
         super(generators, fontManager);
     }
 	
-	public Renderer(List<IAtomContainerGenerator> generators, 
-	                List<IReactionGenerator> reactionGenerators, 
+	public Renderer(List<IGenerator<IAtomContainer>> generators, 
+	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
 	    this(generators, fontManager);
-        for (IReactionGenerator generator : reactionGenerators)
+        for (IGenerator<IReaction> generator : reactionGenerators)
             rendererModel.registerParameters(generator);
         this.reactionGenerators = reactionGenerators;
         this.setup();
@@ -951,7 +950,7 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
     private IRenderingElement generateDiagram(IReaction reaction) {
 	    ElementGroup diagram = new ElementGroup();
 	    
-	    for (IReactionGenerator generator : this.reactionGenerators) {
+	    for (IGenerator<IReaction> generator : this.reactionGenerators) {
 	        diagram.add(generator.generate(reaction, rendererModel));
 	    }
 
@@ -965,14 +964,14 @@ public class Renderer extends AtomContainerRenderer implements IRenderer {
 	    ElementGroup diagram = new ElementGroup();
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
             IAtomContainer ac = moleculeSet.getAtomContainer(i);
-            for (IAtomContainerGenerator generator : this.generators) {
+            for (IGenerator<IAtomContainer> generator : this.generators) {
                 diagram.add(generator.generate(ac, this.rendererModel));
             }
         }
         return diagram;
 	}
 
-	public List<IReactionGenerator> getReactionGenerators(){
-	    return new ArrayList<IReactionGenerator>(reactionGenerators);
+	public List<IGenerator<IReaction>> getReactionGenerators(){
+	    return new ArrayList<IGenerator<IReaction>>(reactionGenerators);
 	}
 }

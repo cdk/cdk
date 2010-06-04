@@ -46,7 +46,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * @cdk.module renderextra
  *
  */
-public class RadicalGenerator implements IGenerator {
+public class RadicalGenerator implements IGenerator<IAtomContainer> {
     
     public RadicalGenerator() {}
 

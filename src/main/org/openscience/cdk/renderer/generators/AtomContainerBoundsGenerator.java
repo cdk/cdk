@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -33,7 +31,7 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
 /**
  * @cdk.module renderextra
  */
-public class AtomContainerBoundsGenerator implements IGenerator {
+public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> {
 
     public IRenderingElement generate( IAtomContainer ac, RendererModel model) {
         double[] minMax = GeometryTools.getMinMax(ac);

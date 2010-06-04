@@ -44,7 +44,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * @cdk.module renderextra
  *
  */
-public class LonePairGenerator implements IGenerator {
+public class LonePairGenerator implements IGenerator<IAtomContainer> {
     
     public LonePairGenerator() {}
 
