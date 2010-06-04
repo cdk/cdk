@@ -54,8 +54,6 @@ public class RendererModel implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -4420308906715213445L;
 
-    private RenderingParameters parameters;
-
     /* If true, the class will notify its listeners of changes */
     private boolean notification = true;
 
@@ -104,31 +102,10 @@ public class RendererModel implements Serializable, Cloneable {
     	new ColorHash();
 
     public RendererModel() {
-        this(new RenderingParameters());
-    }
-
-    public RendererModel(RenderingParameters parameters) {
-        this.parameters = parameters;
         renderingParameters.put(colorHash.getClass().getName(), colorHash);
         renderingParameters.put(
         	externalHighlightColor.getClass().getName(), externalHighlightColor
         );
-    }
-
-    public boolean getHighlightShapeFilled() {
-        return this.parameters.isHighlightShapeFilled();
-    }
-
-    public void setHighlightShapeFilled(boolean highlightShapeFilled) {
-        this.parameters.setHighlightShapeFilled(highlightShapeFilled);
-    }
-
-    public double getWedgeWidth() {
-        return this.parameters.getWedgeWidth();
-    }
-
-    public void setWedgeWidth(double wedgeWidth) {
-        this.parameters.setWedgeWidth(wedgeWidth);
     }
 
     public void setSelection(IChemObjectSelection selection) {
@@ -159,24 +136,6 @@ public class RendererModel implements Serializable, Cloneable {
         fireChange();
     }
 
-    public boolean getShowMoleculeTitle() {
-        return this.parameters.isShowMoleculeTitle();
-    }
-
-    public void setShowMoleculeTitle(boolean bool) {
-        this.parameters.setShowMoleculeTitle(bool);
-        fireChange();
-    }
-
-    public boolean isFitToScreen() {
-        return this.parameters.isFitToScreen();
-    }
-
-    public void setFitToScreen(boolean value) {
-        this.parameters.setFitToScreen(value);
-    }
-
-    /**
      * Returns the foreground color for the drawing.
      *
      * @return the foreground color for the drawing
@@ -197,14 +156,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns if the drawing of atom numbers is switched on for this model
-     *
-     * @return true if the drawing of atom numbers is switched on for this model
-     */
-    public boolean drawNumbers() {
-        return this.parameters.isWillDrawNumbers();
-    }
-
     public boolean getShowImplicitHydrogens() {
         return this.parameters.isShowImplicitHydrogens();
     }
@@ -223,44 +174,6 @@ public class RendererModel implements Serializable, Cloneable {
         fireChange();
     }
 
-    /**
-     * Sets if the drawing of atom numbers is switched on for this model.
-     *
-     * @param drawNumbers
-     *            true if the drawing of atom numbers is to be switched on for
-     *            this model
-     */
-    public void setDrawNumbers(boolean drawNumbers) {
-        this.parameters.setWillDrawNumbers(drawNumbers);
-        fireChange();
-    }
-
-    /**
-     * Returns true if atom numbers are drawn.
-     */
-    public boolean getDrawNumbers() {
-        return this.parameters.isWillDrawNumbers();
-    }
-
-    /**
-     * Returns the radius around an atoms, for which the atom is marked
-     * highlighted if a pointer device is placed within this radius.
-     *
-     * @return The highlight distance for all atoms (in screen space)
-     */
-    public double getHighlightDistance() {
-        return this.parameters.getHighlightDistance();
-    }
-
-    /**
-     * Sets the radius around an atoms, for which the atom is marked highlighted
-     * if a pointer device is placed within this radius.
-     *
-     * @param highlightDistance
-     *            the highlight radius of all atoms (in screen space)
-     */
-    public void setHighlightDistance(double highlightDistance) {
-        this.parameters.setHighlightDistance(highlightDistance);
         fireChange();
     }
 
@@ -276,9 +189,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void setShowAtomAtomMapping(boolean value) {
         this.parameters.setShowAtomAtomMapping(value);
-        fireChange();
-    }
-
     /**
      * Returns the atom currently highlighted.
      *
@@ -399,26 +309,6 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Sets the showTooltip attribute.
-     *
-     * @param showToolTip
-     *            The new value.
-     */
-    public void setShowTooltip(boolean showTooltip) {
-        this.parameters.setShowTooltip(showTooltip);
-        fireChange();
-    }
-
-    /**
-     * Gets showTooltip attribute.
-     *
-     * @return The showTooltip value.
-     */
-    public boolean getShowTooltip() {
-        return this.parameters.isShowTooltip();
-    }
-
-    /**
      * Sets the toolTipTextMap.
      *
      * @param map
@@ -438,23 +328,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public Map<IAtom, String> getToolTipTextMap() {
         return toolTipTextMap;
-    }
-
-    /**
-     * Gets the color used for drawing the internally selected part.
-     */
-    public Color getSelectedPartColor() {
-        return this.parameters.getSelectedPartColor();
-    }
-
-    /**
-     * Sets the color used for drawing the internally selected part.
-     *
-     * @param selectedPartColor
-     *            The color
-     */
-    public void setSelectedPartColor(Color selectedPartColor) {
-        this.parameters.setSelectedPartColor(selectedPartColor);
     }
 
     /**
@@ -503,25 +376,6 @@ public class RendererModel implements Serializable, Cloneable {
     public void setNotification(boolean notification) {
         this.notification = notification;
     }
-
-    public boolean showAtomTypeNames() {
-        return this.parameters.isShowAtomTypeNames();
-    }
-
-    public void setShowAtomTypeNames(boolean showAtomTypeNames) {
-        this.parameters.setShowAtomTypeNames(showAtomTypeNames);
-    }
-
-	/**
-	 * @return the on screen radius of the selection element
-	 */
-	public double getSelectionRadius() {
-		return this.parameters.getSelectionRadius();
-	}
-
-	public void setSelectionRadius(double selectionRadius) {
-		this.parameters.setSelectionRadius(selectionRadius);
-	}
 
 	private Map<String,IGeneratorParameter<?>> renderingParameters =
 	        new HashMap<String,IGeneratorParameter<?>>();
