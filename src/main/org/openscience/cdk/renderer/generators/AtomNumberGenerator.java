@@ -52,6 +52,14 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     }
 
     private IGeneratorParameter<Color> textColor = new AtomNumberTextColor();
+    
+    public static class WillDrawAtomNumbers extends
+                        AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.TRUE;
+        }
+    }
+    private WillDrawAtomNumbers willDrawAtomNumbers;
 
     Vector2d offset;
 
@@ -69,7 +77,8 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup numbers = new ElementGroup();
-		if (!model.drawNumbers()) return numbers;
+		if (!model.getRenderingParameter(WillDrawAtomNumbers.class).getValue())
+		    return numbers;
 
 		Vector2d offset = new Vector2d(this.offset.x,-this.offset.y);
 		offset.scale( 1/model.getRenderingParameter(Scale.class).getValue() );
@@ -90,7 +99,11 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 	}
 
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList( new IGeneratorParameter<?>[] {textColor} );
+        return Arrays.asList( new IGeneratorParameter<?>[] {
+                textColor,
+                willDrawAtomNumbers
+            } 
+        );
     }
 
 
