@@ -20,6 +20,8 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 import javax.vecmath.Point2d;
@@ -32,6 +34,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.TextGroupElement;
 import org.openscience.cdk.renderer.elements.TextGroupElement.Position;
+import org.openscience.cdk.renderer.generators.AtomNumberGenerator.WillDrawAtomNumbers;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
@@ -52,12 +55,22 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     private IGeneratorParameter<Boolean> showImplicitHydrogens =
     	new ShowImplicitHydrogens();
 
+    public static class ShowAtomTypeNames extends
+                        AbstractGeneratorParameter<Boolean> {
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+    private ShowAtomTypeNames showAtomTypeNames;
+    
     public IRenderingElement generate(
             IAtomContainer ac, IAtom atom, RendererModel model) {
-        
+        boolean drawNumbers = 
+            model.getRenderingParameter(WillDrawAtomNumbers.class).getValue(); 
         if (!hasCoordinates(atom) 
              || invisibleHydrogen(atom, model) 
-             || (invisibleCarbon(atom, ac, model) && !model.getDrawNumbers())) {
+             || (invisibleCarbon(atom, ac, model) 
+             && !drawNumbers)) {
             return null;
         } else if (model.getRenderingParameter(CompactAtom.class).getValue()) {
             return this.generateCompactElement(atom, model);
@@ -65,7 +78,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             String text;
             if (atom instanceof IPseudoAtom) {
                 text = ((IPseudoAtom) atom).getLabel();
-            } else if (invisibleCarbon(atom, ac, model) && model.drawNumbers()) {
+            } else if (invisibleCarbon(atom, ac, model) && drawNumbers) {
                 text = String.valueOf(ac.getAtomNumber(atom) + 1);
             } else {
                 text = atom.getSymbol();
@@ -89,7 +102,9 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
                          RendererModel model) {
         Stack<Position> unused = getUnusedPositions(ac, atom);
         
-        if (!invisibleCarbon(atom, ac, model) && model.getDrawNumbers()) {
+        boolean drawNumbers = 
+            model.getRenderingParameter(WillDrawAtomNumbers.class).getValue();
+        if (!invisibleCarbon(atom, ac, model) && drawNumbers) {
             Position position = getNextPosition(unused);
             String number = String.valueOf(ac.getAtomNumber(atom) + 1);
             textGroup.addChild(number, position);
@@ -184,4 +199,12 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
     
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(
+            new IGeneratorParameter<?>[] {
+                    showImplicitHydrogens,
+                    showAtomTypeNames
+            }
+        );
+    }
 }
