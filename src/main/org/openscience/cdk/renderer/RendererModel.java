@@ -419,6 +419,19 @@ public class RendererModel implements Serializable, Cloneable {
 	}
 
 	/**
+	 * Returns the default value for the {@link IGeneratorParameter} for the
+	 * active {@link IRenderer}.
+	 *
+	 * @param param {@link IGeneratorParameter} to get the value of.
+	 * @return the default value for which the type is defined by the provided
+	 *         {@link IGeneratorParameter}-typed <code>param</code> parameter.
+	 */
+	public <T extends IGeneratorParameter<S>,S> S
+	getDefaultRenderingParameter(Class<T> param) {
+		return getRenderingParameter(param).getDefault();
+	}
+
+	/**
 	 * Sets the {@link IGeneratorParameter} for the active {@link IRenderer}.
 	 * @param <T>
 	 *
