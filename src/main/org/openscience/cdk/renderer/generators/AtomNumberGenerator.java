@@ -59,7 +59,8 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
             return Boolean.TRUE;
         }
     }
-    private WillDrawAtomNumbers willDrawAtomNumbers;
+    private WillDrawAtomNumbers willDrawAtomNumbers =
+    	new WillDrawAtomNumbers();
 
     Vector2d offset;
 

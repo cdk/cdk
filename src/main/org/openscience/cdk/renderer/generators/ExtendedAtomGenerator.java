@@ -61,7 +61,8 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             return Boolean.FALSE;
         }
     }
-    private ShowAtomTypeNames showAtomTypeNames;
+    private ShowAtomTypeNames showAtomTypeNames =
+    	new ShowAtomTypeNames();
     
     public IRenderingElement generate(
             IAtomContainer ac, IAtom atom, RendererModel model) {
