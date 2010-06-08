@@ -144,9 +144,6 @@ public class RendererModel implements Serializable, Cloneable {
 		return merge;
 	}
 
-        fireChange();
-    }
-
     /**
      * Returns the atom currently highlighted.
      *
