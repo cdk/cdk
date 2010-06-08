@@ -41,7 +41,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
             return Boolean.FALSE;
         }
     }
-    private ShowTooltip showTooltip;
+    private ShowTooltip showTooltip = new ShowTooltip();
     
     public static class ShowMoleculeTitle extends 
                         AbstractGeneratorParameter<Boolean> {
@@ -49,9 +49,8 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
             return Boolean.FALSE;
         }
     }
-    private ShowMoleculeTitle showMoleculeTitle;
-    
-    
+    private ShowMoleculeTitle showMoleculeTitle = new ShowMoleculeTitle();
+
     public static class FitToScreen extends 
                         AbstractGeneratorParameter<Boolean> {
         public Boolean getDefault() {
