@@ -419,6 +419,19 @@ public class RendererModel implements Serializable, Cloneable {
 	}
 
 	/**
+	 * Sets the {@link IGeneratorParameter} for the active {@link IRenderer}.
+	 * @param <T>
+	 *
+	 * @param param {@link IGeneratorParameter} to get the value of.
+	 * @return the {@link IGeneratorParameter} instance with the active value.
+	 */
+	public <T extends IGeneratorParameter<S>,S> void setRenderingParameter(
+			Class<T> paramType, S value) {
+		T parameter = getRenderingParameter(paramType);
+		parameter.setValue(value);
+	}
+
+	/**
 	 * Registers rendering parameters from {@link IAtomContainerGenerator}s with this
 	 * model.
 	 *
