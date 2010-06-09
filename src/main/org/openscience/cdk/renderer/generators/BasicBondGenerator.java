@@ -416,7 +416,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
                 bondWidth,
                 defaultBondColor,
                 bondLength,
-                wedgeWidth
+                wedgeWidth,
+                bondDistance
             }
         );
     }

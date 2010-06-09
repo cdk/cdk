@@ -283,7 +283,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
                 compactShape,
                 isCompact,
                 isKekule,
-                showEndCarbons
+                showEndCarbons,
+                showExplicitHydrogens
             }
         );
     }
