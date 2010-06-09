@@ -109,7 +109,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
             return 2.0;
         }
     }
-    private IGeneratorParameter wedgeWidth = new WedgeWidth();
+    private IGeneratorParameter<Double> wedgeWidth = new WedgeWidth();
 
 	private ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
