@@ -62,26 +62,27 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     private WillDrawAtomNumbers willDrawAtomNumbers =
     	new WillDrawAtomNumbers();
 
-    Vector2d offset;
-
-	public AtomNumberGenerator() {
-	    offset = new Vector2d();
-	}
-
-	/**
-	 * Allows for drawing the atom number offset from the atom position.
-	 * @param offset vector in screen space.
-	 */
-	public AtomNumberGenerator(Vector2d offset) {
-	    this.offset = new Vector2d(offset);
-	}
+    /**
+     * Offset vector in screen space coordinates where the atom number label
+     * will be placed.
+     */
+    public static class Offset extends
+    AbstractGeneratorParameter<Vector2d> {
+    	public Vector2d getDefault() {
+    		return new Vector2d();
+    	}
+    }
+    private Offset offset = new Offset();
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup numbers = new ElementGroup();
 		if (!model.getParameter(WillDrawAtomNumbers.class).getValue())
 		    return numbers;
 
-		Vector2d offset = new Vector2d(this.offset.x,-this.offset.y);
+		Vector2d offset = new Vector2d(
+			this.offset.getValue().x,
+			-this.offset.getValue().y
+		);
 		offset.scale( 1/model.getParameter(Scale.class).getValue() );
 
 		int number = 1;
@@ -102,7 +103,8 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList( new IGeneratorParameter<?>[] {
                 textColor,
-                willDrawAtomNumbers
+                willDrawAtomNumbers,
+                offset
             } 
         );
     }
