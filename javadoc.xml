@@ -157,12 +157,12 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.github.ojdcheck.OpenJavaDocCheck"
-                    path="develjar/ojdcheck.jar:src/main">
+                    path="develjar/ojdcheck.jar:develjar/ojdcheck-jazzy.jar:src/main">
               <param name="-xhtml"/>
               <param name="-file"
                     value="reports/ojdcheck/${module}.html"/>
               <param name="-tests"
-                    value="net.sf.cdk.tools.checkdoctest.MissingGithashTagletTest,net.sf.cdk.tools.checkdoctest.MissingModuleTagletTest,net.sf.cdk.tools.checkdoctest.IncorrectBugNumberTagletTest"/>
+                    value="net.sf.cdk.tools.checkdoctest.MissingGithashTagletTest,net.sf.cdk.tools.checkdoctest.MissingModuleTagletTest,net.sf.cdk.tools.checkdoctest.IncorrectBugNumberTagletTest,com.github.ojdcheck.jazzy.SpellCheckerTest"/>
             </doclet>
             <sourcepath>
               <pathelement path="${build}/src/${module}"/>
