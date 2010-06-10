@@ -170,10 +170,10 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 	        return overrideColor;
 	    }
 
-	    Color color = model.getRenderingParameter(ColorHash.class)
+	    Color color = model.getParameter(ColorHash.class)
 	    	.getValue().get(bond);
 	    if (color == null) {
-	        return model.getRenderingParameter(DefaultBondColor.class).getValue();
+	        return model.getParameter(DefaultBondColor.class).getValue();
 	    } else {
 	        return color;
 	    }
@@ -189,12 +189,12 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 	 * @return a double in chem-model space
 	 */
 	public double getWidthForBond(IBond bond, RendererModel model) {
-		double scale = model.getRenderingParameter(Scale.class).getValue();
+		double scale = model.getParameter(Scale.class).getValue();
 		if (this.overrideBondWidth != -1) {
 			return this.overrideBondWidth / scale;
 		} else {
 			return
-			    model.getRenderingParameter(BondWidth.class).getValue()
+			    model.getParameter(BondWidth.class).getValue()
 			    / scale;
 		}
 	}
@@ -248,7 +248,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 		Color color = this.getColorForBond(bond, model);
 		double bondWidth = this.getWidthForBond(bond, model);
 		double bondDistance = this.bondDistance.getValue() /
-		    model.getRenderingParameter(Scale.class).getValue();
+		    model.getParameter(Scale.class).getValue();
 		if (type == IBond.Order.SINGLE) {
 		    return new LineElement(p1.x, p1.y, p2.x, p2.y, bondWidth, color);
 		} else {
@@ -396,7 +396,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 	}
 
 	public IRenderingElement generateBond(IBond bond, RendererModel model) {
-		boolean showExplicitHydrogens = model.getRenderingParameter(
+		boolean showExplicitHydrogens = model.getParameter(
 			BasicAtomGenerator.ShowExplicitHydrogens.class
 		).getValue();
 		if (!showExplicitHydrogens && bindsHydrogen(bond)) {

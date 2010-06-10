@@ -199,7 +199,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 	        IAtom atom, RendererModel model) {
 	    Point2d p = atom.getPoint2d();
 	    double r = atomRadius.getValue() /
-	       model.getRenderingParameter(Scale.class).getValue();
+	       model.getParameter(Scale.class).getValue();
 	    double d = 2 * r;
 	    if (compactShape.getValue() == Shape.SQUARE) {
     	    return new RectangleElement(

@@ -92,10 +92,10 @@ public class AtomContainerRendererTest {
 		
 		AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new AWTFontManager());
 		RendererModel model = renderer.getRenderer2DModel();
-		model.getRenderingParameter(CompactShape.class).setValue(Shape.OVAL);
-		model.getRenderingParameter(CompactAtom.class).setValue(true);
-		model.getRenderingParameter(KekuleStructure.class).setValue(true);
-		model.getRenderingParameter(ShowEndCarbons.class).setValue(true);
+		model.getParameter(CompactShape.class).setValue(Shape.OVAL);
+		model.getParameter(CompactAtom.class).setValue(true);
+		model.getParameter(KekuleStructure.class).setValue(true);
+		model.getParameter(ShowEndCarbons.class).setValue(true);
 
 		ElementUtility visitor = new ElementUtility();
 		Rectangle screen = new Rectangle(0, 0, 100, 100);
