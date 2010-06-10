@@ -112,7 +112,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     public void visit(ArrowElement line) {
-    	double scale = this.rendererModel.getRenderingParameter(
+    	double scale = this.rendererModel.getParameter(
             Scale.class).getValue();
         Stroke savedStroke = this.g.getStroke();
         
@@ -129,7 +129,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         int[] a = this.transformPoint(line.x1, line.y1);
         int[] b = this.transformPoint(line.x2, line.y2);
         this.g.drawLine(a[0], a[1], b[0], b[1]);
-        double aW = rendererModel.getRenderingParameter(
+        double aW = rendererModel.getParameter(
         	ArrowHeadWidth.class
         ).getValue() / scale;
         if(line.direction){
@@ -150,7 +150,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public void visit(LineElement line) {
         Stroke savedStroke = this.g.getStroke();
         
-        int w = (int) (line.width * this.rendererModel.getRenderingParameter(
+        int w = (int) (line.width * this.rendererModel.getParameter(
             	Scale.class).getValue());
         if (strokeMap.containsKey(w)) {
             this.g.setStroke(strokeMap.get(w));
@@ -202,8 +202,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             new Vector2d(wedge.y1 - wedge.y2, wedge.x2 - wedge.x1);
         normal.normalize();
         normal.scale(
-                rendererModel.getRenderingParameter(WedgeWidth.class).getValue() 
-                / rendererModel.getRenderingParameter(Scale.class).getValue());  
+                rendererModel.getParameter(WedgeWidth.class).getValue() 
+                / rendererModel.getParameter(Scale.class).getValue());  
         
         // make the triangle corners
         Point2d vertexA = new Point2d(wedge.x1, wedge.y1);
@@ -501,7 +501,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
-        if (rendererModel.getUseAntiAliasing()) {
+        if (rendererModel.getParameter(UseAntiAliasing.class)
+            .getValue()) {
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 //            g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
