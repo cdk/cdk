@@ -46,6 +46,7 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ColorByType;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactShape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.Shape;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowExplicitHydrogens;
 
 /**
  * @cdk.module test-renderbasic
@@ -151,6 +152,22 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
             AtomSymbolElement symbolElement = (AtomSymbolElement) element;
             Assert.assertEquals(defaultColor, symbolElement.color);
 	    }
+	}
+	
+	@Test
+	public void showExplicitHydrogensTest() {
+	    IAtomContainer methane = makeMethane();
+	    // don't generate elements for hydrogens
+	    model.set(ShowExplicitHydrogens.class, false);
+	    List<IRenderingElement> carbonOnly =
+	        getAllSimpleElements(generator, methane);
+	    Assert.assertEquals(1, carbonOnly.size());
+	    
+	    // do generate elements for hydrogens
+	    model.set(ShowExplicitHydrogens.class, true);
+	    List<IRenderingElement> carbonPlusHydrogen =
+	        getAllSimpleElements(generator, methane);
+	    Assert.assertEquals(5, carbonPlusHydrogen.size());
 	}
 	
 	@Test

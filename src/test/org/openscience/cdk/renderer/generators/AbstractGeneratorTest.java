@@ -195,6 +195,16 @@ public abstract class AbstractGeneratorTest {
              builder.newInstance(IAtom.class, elementSymbol, new Point2d(0,0)));
         return container;
     }
+    
+    public IAtomContainer makeMethane() {
+        IAtomContainer methane = builder.newInstance(IAtomContainer.class);
+        methane.addAtom(builder.newInstance(IAtom.class, "C", new Point2d( 0, 0)));
+        methane.addAtom(builder.newInstance(IAtom.class, "H", new Point2d( 1, 1)));
+        methane.addAtom(builder.newInstance(IAtom.class, "H", new Point2d( 1,-1)));
+        methane.addAtom(builder.newInstance(IAtom.class, "H", new Point2d(-1, 1)));
+        methane.addAtom(builder.newInstance(IAtom.class, "H", new Point2d(-1,-1)));
+        return methane;
+    }
 	
 	/**
 	 * Makes a single C-C bond aligned horizontally. The endpoints are (0, -1)

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
@@ -74,9 +75,10 @@ public class ElementUtility implements IDrawVisitor {
 	}
 	
 	public List<IRenderingElement> getAllSimpleElements(IRenderingElement root) {
+	    elements.clear();
 		getElementGroups = false;
 		root.accept(this);
-		return elements;
+		return new ArrayList<IRenderingElement>(elements);
 	}
 	
 	public int[] transformPoint(double x, double y) {
@@ -118,7 +120,7 @@ public class ElementUtility implements IDrawVisitor {
 			String p2 = toString(e.x2, e.y2);
 			String p1T = toString(transformPoint(e.x1, e.y1));
 			String p2T = toString(transformPoint(e.x2, e.y2));
-			String lineFormat = "Line [%s, %s] -> [%s, %s]";
+			String lineFormat = "Line [%s, %s] -> [%s, %s]\n";
 			return String.format(lineFormat, p1, p2, p1T, p2T);
 		} else if (element instanceof OvalElement) {
 			OvalElement e = (OvalElement) element;
@@ -126,11 +128,14 @@ public class ElementUtility implements IDrawVisitor {
 			String c = toString(e.x, e.y, r);
 			String p1 = toString(transformPoint(e.x - r, e.y - r));
 			String p2 = toString(transformPoint(e.x + r, e.y + r));
-			return String.format("Oval [%s] -> [%s, %s]", c, p1, p2);
+			return String.format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
+		} else if (element instanceof AtomSymbolElement) {
+		    AtomSymbolElement e = (AtomSymbolElement) element;
+		    return String.format("AtomSymbol [%s]\n", e.text);
 		} else if (element instanceof ElementGroup) {
-			return "Element Group";
+			return "Element Group\n";
 		} else {
-			return "Unknown element";
+			return "Unknown element\n";
 		}
 	}
 	
