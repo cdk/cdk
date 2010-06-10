@@ -33,6 +33,9 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
+import org.openscience.cdk.renderer.elements.RectangleElement;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactShape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.Shape;
 
 /**
@@ -52,11 +55,30 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 	public void setup() {
 		super.setup();
 		this.generator = new BasicAtomGenerator();
-		((IGeneratorParameter<Shape>)generator.getParameters().get(4)).setValue(Shape.OVAL);
-		((IGeneratorParameter<Boolean>)generator.getParameters().get(5)).setValue(true);
-		((IGeneratorParameter<Boolean>)generator.getParameters().get(6)).setValue(true);
-		((IGeneratorParameter<Boolean>)generator.getParameters().get(7)).setValue(true);
+		model.registerParameters(generator);
 	}
+	
+	@Test
+	public void ovalShapeTest() {
+	    IAtomContainer singleAtom = makeSingleAtom();
+	    model.set(CompactShape.class, Shape.OVAL);
+	    model.set(CompactAtom.class, true);
+        List<IRenderingElement> elements = 
+            getAllSimpleElements(generator, singleAtom);
+        Assert.assertEquals(1, elements.size());
+        Assert.assertEquals(OvalElement.class, elements.get(0).getClass());
+	}
+	
+	@Test
+    public void squareShapeTest() {
+        IAtomContainer singleAtom = makeSingleAtom();
+        model.set(CompactShape.class, Shape.SQUARE);
+        model.set(CompactAtom.class, true);
+        List<IRenderingElement> elements = 
+            getAllSimpleElements(generator, singleAtom);
+        Assert.assertEquals(1, elements.size());
+        Assert.assertEquals(RectangleElement.class, elements.get(0).getClass());
+    }
 	
 	@Test
 	public void testSingleAtom() {

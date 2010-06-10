@@ -63,6 +63,12 @@ public abstract class AbstractGeneratorTest {
 		elementUtil.setTransform(this.getTransform());
 	}
 	
+	public List<IRenderingElement> getAllSimpleElements(
+	        IGenerator generator, IAtomContainer container) {
+	    IRenderingElement root = generator.generate(container, model);
+	    return elementUtil.getAllSimpleElements(root);
+	}
+	
 	/**
 	 * Implement this in derived classes, either returning null if no custom 
 	 * canvas is desired, or with a Rectangle with the appropriate size.
