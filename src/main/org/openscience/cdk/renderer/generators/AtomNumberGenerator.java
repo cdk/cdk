@@ -78,11 +78,11 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup numbers = new ElementGroup();
-		if (!model.getRenderingParameter(WillDrawAtomNumbers.class).getValue())
+		if (!model.getParameter(WillDrawAtomNumbers.class).getValue())
 		    return numbers;
 
 		Vector2d offset = new Vector2d(this.offset.x,-this.offset.y);
-		offset.scale( 1/model.getRenderingParameter(Scale.class).getValue() );
+		offset.scale( 1/model.getParameter(Scale.class).getValue() );
 
 		int number = 1;
 		for (IAtom atom : ac.atoms()) {

@@ -67,13 +67,13 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     public IRenderingElement generate(
             IAtomContainer ac, IAtom atom, RendererModel model) {
         boolean drawNumbers = 
-            model.getRenderingParameter(WillDrawAtomNumbers.class).getValue(); 
+            model.getParameter(WillDrawAtomNumbers.class).getValue(); 
         if (!hasCoordinates(atom) 
              || invisibleHydrogen(atom, model) 
              || (invisibleCarbon(atom, ac, model) 
              && !drawNumbers)) {
             return null;
-        } else if (model.getRenderingParameter(CompactAtom.class).getValue()) {
+        } else if (model.getParameter(CompactAtom.class).getValue()) {
             return this.generateCompactElement(atom, model);
         } else {
             String text;
@@ -94,7 +94,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     
     public boolean hideAtomSymbol(IAtom atom, RendererModel model) {
         return atom.getSymbol().equals("C") &&
-               !model.getRenderingParameter(KekuleStructure.class).getValue();
+               !model.getParameter(KekuleStructure.class).getValue();
     }
     
     public void decorate(TextGroupElement textGroup, 
@@ -104,7 +104,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         Stack<Position> unused = getUnusedPositions(ac, atom);
         
         boolean drawNumbers = 
-            model.getRenderingParameter(WillDrawAtomNumbers.class).getValue();
+            model.getParameter(WillDrawAtomNumbers.class).getValue();
         if (!invisibleCarbon(atom, ac, model) && drawNumbers) {
             Position position = getNextPosition(unused);
             String number = String.valueOf(ac.getAtomNumber(atom) + 1);

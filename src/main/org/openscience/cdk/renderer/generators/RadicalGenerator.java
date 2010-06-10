@@ -59,11 +59,11 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         
         // XXX : is this the best option?
         final double ATOM_RADIUS =
-            ((AtomRadius)model.getRenderingParameter(AtomRadius.class)).
+            ((AtomRadius)model.getParameter(AtomRadius.class)).
             getValue();
         
         double modelRadius = SCREEN_RADIUS /
-            model.getRenderingParameter(Scale.class).getValue();
+            model.getParameter(Scale.class).getValue();
         Map<IAtom,Integer> singleElectronsPerAtom = new HashMap<IAtom, Integer>();
         for (ISingleElectron e : ac.singleElectrons()) {
             IAtom atom = e.getAtom();

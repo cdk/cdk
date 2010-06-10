@@ -49,16 +49,16 @@ public class ReactionArrowGenerator implements IGenerator<IReaction> {
         if (totalBoundsReactants == null || totalBoundsProducts == null)
         	return null;
         
-        double d = model.getRenderingParameter(BondLength.class)
-    		.getValue() / model.getRenderingParameter(Scale.class).getValue();
-        Color foregroundColor = model.getRenderingParameter(
+        double d = model.getParameter(BondLength.class)
+    		.getValue() / model.getParameter(Scale.class).getValue();
+        Color foregroundColor = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         return new ArrowElement(
         	totalBoundsReactants.getMaxX() + d,
             totalBoundsReactants.getCenterY(), 
             totalBoundsProducts.getMinX() - d, 
             totalBoundsReactants.getCenterY(),
-            1 / model.getRenderingParameter(Scale.class).getValue(), true,
+            1 / model.getParameter(Scale.class).getValue(), true,
             foregroundColor
         );
 	}

@@ -44,15 +44,15 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 public class ReactionBoxGenerator implements IGenerator<IReaction> {
 
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
-		if (!model.getRenderingParameter(ShowReactionBoxes.class).getValue())
+		if (!model.getParameter(ShowReactionBoxes.class).getValue())
 			return null;
-		double d = model.getRenderingParameter(BondLength.class)
-    		.getValue() / model.getRenderingParameter(Scale.class).getValue();
+		double d = model.getParameter(BondLength.class)
+    		.getValue() / model.getParameter(Scale.class).getValue();
 		Rectangle2D totalBounds = Renderer.calculateBounds(reaction);
         if (totalBounds == null) return null;
         
         ElementGroup diagram = new ElementGroup();
-        Color foregroundColor = model.getRenderingParameter(
+        Color foregroundColor = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         diagram.add(new RectangleElement(
         	totalBounds.getMinX()-d,
