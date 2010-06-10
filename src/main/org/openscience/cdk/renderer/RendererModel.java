@@ -403,19 +403,17 @@ public class RendererModel implements Serializable, Cloneable {
 	public <T extends IGeneratorParameter<?> >T getRenderingParameter(Class<T> param) {
 	    if (renderingParameters.containsKey(param.getName()))
 	        return (T)renderingParameters.get(param.getName());
-	    try {
-            return param.newInstance();
-        } catch (InstantiationException exception) {
-            throw new RuntimeException(
-                "Could not instantiate a default " +
-                param.getClass().getName(), exception
-            );
-        } catch (IllegalAccessException exception) {
-            throw new RuntimeException(
-                "Could not instantiate a default " +
-                param.getClass().getName(), exception
-            );
-        }
+
+	    // the parameter was not registered yet, so we throw an exception to
+	    // indicate that the API is not used correctly.
+	    throw new IllegalAccessError(
+			"You requested the active parameter of the given type, but it " +
+			"has not been registered yet. Did you " +
+			"make sure the IGeneratorParameter is registered, by " +
+			"registring the appropriate IGenerator? Alternatively, " +
+			"you can use getDefault() to query the default value for " +
+			"any parameter on the classpath."
+	    );
 	}
 
 	/**
