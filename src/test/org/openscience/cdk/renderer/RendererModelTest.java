@@ -57,7 +57,7 @@ public class RendererModelTest {
 		model.registerParameters(generator);
 		Assert.assertEquals(
 			Boolean.FALSE,
-			model.getRenderingParameter(SomeParam.class).getDefault()
+			model.getParameter(SomeParam.class).getDefault()
 		);
 	}
 
@@ -81,13 +81,13 @@ public class RendererModelTest {
 		RendererModel model = new RendererModel();
 		model.registerParameters(generator);
 		IGeneratorParameter<Boolean> param =
-			model.getRenderingParameter(SomeParam.class);
+			model.getParameter(SomeParam.class);
 		// test the default value
 		Assert.assertEquals(Boolean.FALSE, param.getValue());
 		param.setValue(Boolean.TRUE);
 		Assert.assertEquals(
 			Boolean.TRUE,
-			model.getRenderingParameter(SomeParam.class).getValue()
+			model.getParameter(SomeParam.class).getValue()
 		);
 	}
 }

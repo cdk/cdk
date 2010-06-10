@@ -350,18 +350,18 @@ public class RendererModel implements Serializable, Cloneable {
     public void setExternalSelectedPart(IAtomContainer externalSelectedPart) {
         this.externalSelectedPart = externalSelectedPart;
         Map<IChemObject, Color> colorHash =
-        	getRenderingParameter(ColorHash.class).getValue();
+        	getParameter(ColorHash.class).getValue();
         colorHash.clear();
         if(externalSelectedPart !=null) {
             for (int i = 0; i < externalSelectedPart.getAtomCount(); i++) {
                 colorHash.put(externalSelectedPart.getAtom(i),
-                    this.getRenderingParameter(ExternalHighlightColor.class).
+                    this.getParameter(ExternalHighlightColor.class).
                     getValue());
             }
             Iterator<IBond> bonds = externalSelectedPart.bonds().iterator();
             while (bonds.hasNext()) {
             	colorHash.put(bonds.next(),
-            		this.getRenderingParameter(ExternalHighlightColor.class).
+            		this.getParameter(ExternalHighlightColor.class).
                         getValue()
                 );
             }
@@ -400,7 +400,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 * @param param {@link IGeneratorParameter} to get the value of.
 	 * @return the {@link IGeneratorParameter} instance with the active value.
 	 */
-	public <T extends IGeneratorParameter<?> >T getRenderingParameter(Class<T> param) {
+	public <T extends IGeneratorParameter<?> >T getParameter(Class<T> param) {
 	    if (renderingParameters.containsKey(param.getName()))
 	        return (T)renderingParameters.get(param.getName());
 
@@ -423,10 +423,11 @@ public class RendererModel implements Serializable, Cloneable {
 	 * @param param {@link IGeneratorParameter} to get the value of.
 	 * @return the default value for which the type is defined by the provided
 	 *         {@link IGeneratorParameter}-typed <code>param</code> parameter.
+	 *
+	 * @see #get(Class)
 	 */
-	public <T extends IGeneratorParameter<S>,S> S
-	getDefaultRenderingParameter(Class<T> param) {
-		return getRenderingParameter(param).getDefault();
+	public <T extends IGeneratorParameter<S>,S> S getDefault(Class<T> param) {
+		return getParameter(param).getDefault();
 	}
 
 	/**
@@ -436,9 +437,9 @@ public class RendererModel implements Serializable, Cloneable {
 	 * @param param {@link IGeneratorParameter} to get the value of.
 	 * @return the {@link IGeneratorParameter} instance with the active value.
 	 */
-	public <T extends IGeneratorParameter<S>,S> void setRenderingParameter(
+	public <T extends IGeneratorParameter<S>,S> void set(
 			Class<T> paramType, S value) {
-		T parameter = getRenderingParameter(paramType);
+		T parameter = getParameter(paramType);
 		parameter.setValue(value);
 	}
 
