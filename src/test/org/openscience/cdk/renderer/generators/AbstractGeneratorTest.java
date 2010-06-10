@@ -215,6 +215,25 @@ public abstract class AbstractGeneratorTest {
 		container.addBond(1, 2, IBond.Order.SINGLE);
 		container.addBond(2, 3, IBond.Order.SINGLE);
 		return container;
-		
+	}
+	
+	/**
+	 * Make a square with four different elements, to test things like atom 
+	 * color.
+	 * 
+	 * @return an unlikely S-N-O-P square
+	 */
+	public IAtomContainer makeSNOPSquare() {
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        container.addAtom(builder.newInstance(IAtom.class, "S", new Point2d(-1,-1)));
+        container.addAtom(builder.newInstance(IAtom.class, "N", new Point2d( 1,-1)));
+        container.addAtom(builder.newInstance(IAtom.class, "O", new Point2d( 1, 1)));
+        container.addAtom(builder.newInstance(IAtom.class, "P", new Point2d(-1, 1)));
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(0, 3, IBond.Order.SINGLE);
+        container.addBond(1, 2, IBond.Order.SINGLE);
+        container.addBond(2, 3, IBond.Order.SINGLE);
+        return container;
+	    
 	}
 }

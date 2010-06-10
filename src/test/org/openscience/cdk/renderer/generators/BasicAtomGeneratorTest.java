@@ -21,8 +21,11 @@
  */
 package org.openscience.cdk.renderer.generators;
 
+import java.awt.Color;
 import java.awt.Rectangle;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 
@@ -30,10 +33,16 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.renderer.color.IAtomColorer;
+import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.AtomColor;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.AtomColorer;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ColorByType;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactShape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.Shape;
@@ -79,6 +88,59 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         Assert.assertEquals(1, elements.size());
         Assert.assertEquals(RectangleElement.class, elements.get(0).getClass());
     }
+	
+	@Test
+	public void atomColorTest() {
+	    Color testColor = Color.RED;
+	    IAtomContainer singleAtom = makeSingleAtom();
+	    model.set(CompactShape.class, Shape.OVAL);
+        model.set(CompactAtom.class, true);
+	    model.set(AtomColor.class, testColor);
+	    model.set(ColorByType.class, false);
+	    List<IRenderingElement> elements = 
+            getAllSimpleElements(generator, singleAtom);
+	    Assert.assertEquals(1, elements.size());
+	    Assert.assertEquals(testColor, ((OvalElement)elements.get(0)).color);
+	}
+	
+	@Test
+	public void atomColorerTest() {
+	    IAtomContainer cnop = makeSNOPSquare();
+	    final Map<String, Color> colorMap = new HashMap<String, Color>();
+	    colorMap.put("S", Color.YELLOW);
+	    colorMap.put("N", Color.BLUE);
+	    colorMap.put("O", Color.RED);
+	    colorMap.put("P", Color.MAGENTA);
+	    IAtomColorer atomColorer = new IAtomColorer() {
+
+            public Color getAtomColor(IAtom atom) {
+                String symbol = atom.getSymbol();
+                if (colorMap.containsKey(symbol)) {
+                    return colorMap.get(symbol);
+                } else {
+                    return null;
+                }
+            }
+
+            public Color getAtomColor(IAtom atom, Color defaultColor) {
+                Color color = getAtomColor(atom);
+                if (color == null) {
+                    return defaultColor;
+                } else {
+                    return color;
+                }
+            }
+	    };
+	    model.set(AtomColorer.class, atomColorer);
+	    List<IRenderingElement> elements = getAllSimpleElements(generator, cnop);
+        Assert.assertEquals(4, elements.size());
+        for (IRenderingElement element : elements) {
+            AtomSymbolElement symbolElement = (AtomSymbolElement) element;
+            String symbol = symbolElement.text;
+            Assert.assertTrue(colorMap.containsKey(symbol));
+            Assert.assertEquals(colorMap.get(symbol), symbolElement.color);
+        }
+	}
 	
 	@Test
 	public void testSingleAtom() {
