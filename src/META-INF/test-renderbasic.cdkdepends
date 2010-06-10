@@ -6,4 +6,6 @@ cdk-render.jar
 cdk-renderbasic.jar
 cdk-test.jar
 cdk-sdg.jar
+cdk-data.jar
 cdk-nonotify.jar
+cdk-io.jar
