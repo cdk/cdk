@@ -26,12 +26,14 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.vecmath.Vector2d;
 import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.TextElement;
@@ -62,6 +64,22 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     private WillDrawAtomNumbers willDrawAtomNumbers =
     	new WillDrawAtomNumbers();
 
+    public static class AtomColorer extends
+    AbstractGeneratorParameter<IAtomColorer> {
+    	public IAtomColorer getDefault() {
+    		return new CDK2DAtomColors();
+    	}
+    }
+    private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
+
+    public static class ColorByType extends
+    AbstractGeneratorParameter<Boolean> {
+    	public Boolean getDefault() {
+    		return Boolean.FALSE;
+    	}
+    }
+    private IGeneratorParameter<Boolean> colorByType = new ColorByType();
+
     /**
      * Offset vector in screen space coordinates where the atom number label
      * will be placed.
@@ -90,10 +108,12 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 			Point2d p = new Point2d(atom.getPoint2d());
 			p.add( offset );
 			numbers.add(
-					new TextElement(
-						p.x, p.y, String.valueOf(number),
-						textColor.getValue()
-				    )
+				new TextElement(
+					p.x, p.y, String.valueOf(number),
+					colorByType.getValue() ?
+						atomColorer.getValue().getAtomColor(atom)
+						: textColor.getValue()
+				)
 			);
 			number++;
 		}
@@ -104,7 +124,9 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
         return Arrays.asList( new IGeneratorParameter<?>[] {
                 textColor,
                 willDrawAtomNumbers,
-                offset
+                offset,
+                atomColorer,
+                colorByType
             } 
         );
     }
