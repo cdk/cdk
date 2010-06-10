@@ -20,7 +20,7 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -201,11 +201,11 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     }
     
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-                    showImplicitHydrogens,
-                    showAtomTypeNames
-            }
-        );
+    	List<IGeneratorParameter<?>> parameters =
+    		new ArrayList<IGeneratorParameter<?>>();
+    	parameters.add(showImplicitHydrogens);
+    	parameters.add(showAtomTypeNames);
+    	parameters.addAll(super.getParameters());
+    	return parameters;
     }
 }
