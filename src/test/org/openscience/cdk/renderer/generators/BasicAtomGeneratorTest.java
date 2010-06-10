@@ -45,7 +45,9 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.AtomColorer;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ColorByType;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactShape;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.KekuleStructure;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.Shape;
+import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowEndCarbons;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowExplicitHydrogens;
 
 /**
@@ -171,6 +173,15 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 	}
 	
 	@Test
+	public void kekuleTest() {
+	    IAtomContainer singleBond = makeSingleBond();
+	    model.set(KekuleStructure.class, true);
+	    Assert.assertEquals(2, getAllSimpleElements(generator, singleBond).size());
+	    model.set(KekuleStructure.class, false);
+        Assert.assertEquals(0, getAllSimpleElements(generator, singleBond).size());
+	}
+	
+	@Test
 	public void testSingleAtom() {
 		IAtomContainer singleAtom = makeSingleAtom();
 		
@@ -183,6 +194,9 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 	@Test
 	public void testSingleBond() {
 		IAtomContainer container = makeSingleBond();
+		model.set(CompactAtom.class, true);
+		model.set(CompactShape.class, Shape.OVAL);
+		model.set(ShowEndCarbons.class, true);
 		
 		// generate the single line element
 		IRenderingElement root = generator.generate(container, model);
