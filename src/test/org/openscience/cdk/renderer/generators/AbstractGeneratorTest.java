@@ -53,6 +53,8 @@ public abstract class AbstractGeneratorTest {
 	
 	protected ElementUtility elementUtil;
 	
+	protected BasicSceneGenerator sceneGenerator;
+	
 	/**
 	 * Sets up the model and transform.
 	 * Call from the 'Before' method in subclasses.
@@ -61,6 +63,8 @@ public abstract class AbstractGeneratorTest {
 		model = new RendererModel();
 		elementUtil = new ElementUtility();
 		elementUtil.setTransform(this.getTransform());
+		sceneGenerator = new BasicSceneGenerator();
+		model.registerParameters(sceneGenerator);
 	}
 	
 	public List<IRenderingElement> getAllSimpleElements(
