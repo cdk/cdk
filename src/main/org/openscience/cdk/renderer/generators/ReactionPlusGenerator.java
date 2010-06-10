@@ -49,7 +49,7 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
         Rectangle2D bounds1 = 
             Renderer.calculateBounds(reactants.getAtomContainer(0));
         double axis = totalBoundsReactants.getCenterY();
-        Color color = model.getRenderingParameter(
+        Color color = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         for (int i = 1; i < reaction.getReactantCount(); i++) {
         	Rectangle2D bounds2 = 

@@ -59,10 +59,10 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
 
         // XXX : is this the best option?
         final double ATOM_RADIUS =
-            ((AtomRadius)model.getRenderingParameter(AtomRadius.class)).
+            ((AtomRadius)model.getParameter(AtomRadius.class)).
             getValue();
         
-        double scale = model.getRenderingParameter(Scale.class).getValue();
+        double scale = model.getParameter(Scale.class).getValue();
         double modelAtomRadius = ATOM_RADIUS / scale;
         double modelPointRadius = SCREEN_RADIUS / scale;
         double modelSeparation = SCREEN_SEPARATION / scale;

@@ -49,12 +49,12 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
 	private static double DISTANCE;
 
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
-		if(!model.getRenderingParameter(ShowReactionBoxes.class).getValue())
+		if(!model.getParameter(ShowReactionBoxes.class).getValue())
 			return null;
 	    if (reaction.getProductCount() == 0) 
 	    	return new ElementGroup();
-		DISTANCE = model.getRenderingParameter(BondLength.class)
-    		.getValue() / model.getRenderingParameter(Scale.class).getValue() / 2;
+		DISTANCE = model.getParameter(BondLength.class)
+    		.getValue() / model.getParameter(Scale.class).getValue() / 2;
         Rectangle2D totalBounds = null;
         for (IAtomContainer molecule : reaction.getProducts().molecules()) {
             Rectangle2D bounds = Renderer.calculateBounds(molecule);
@@ -67,7 +67,7 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
         if (totalBounds == null) return null;
         
         ElementGroup diagram = new ElementGroup();
-        Color foregroundColor = model.getRenderingParameter(
+        Color foregroundColor = model.getParameter(
         	BasicSceneGenerator.ForegroundColor.class).getValue();
         diagram.add(new RectangleElement(
         	totalBounds.getMinX()-DISTANCE,

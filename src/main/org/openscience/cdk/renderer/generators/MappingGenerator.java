@@ -101,7 +101,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
 	 * @return a double in chem-model space
 	 */
 	public double getWidthForMappingLine(RendererModel model) {
-		double scale = model.getRenderingParameter(Scale.class).getValue();
+		double scale = model.getParameter(Scale.class).getValue();
 		return mappingLineWidth.getValue() / scale;
 	}
 	
