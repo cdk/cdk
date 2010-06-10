@@ -182,6 +182,15 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 	}
 	
 	@Test
+    public void showEndCarbonsTest() {
+        IAtomContainer singleBond = makeCCC();
+        model.set(ShowEndCarbons.class, true);
+        Assert.assertEquals(2, getAllSimpleElements(generator, singleBond).size());
+        model.set(ShowEndCarbons.class, false);
+        Assert.assertEquals(0, getAllSimpleElements(generator, singleBond).size());
+    }
+	
+	@Test
 	public void testSingleAtom() {
 		IAtomContainer singleAtom = makeSingleAtom();
 		

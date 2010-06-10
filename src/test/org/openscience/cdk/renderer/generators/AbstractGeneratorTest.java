@@ -220,6 +220,16 @@ public abstract class AbstractGeneratorTest {
 		return container;
 	}
 	
+	public IAtomContainer makeCCC() {
+	    IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        container.addAtom(builder.newInstance(IAtom.class,"C", new Point2d(-1,-1)));
+        container.addAtom(builder.newInstance(IAtom.class,"C", new Point2d( 0, 0)));
+        container.addAtom(builder.newInstance(IAtom.class,"C", new Point2d( 1,-1)));
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(1, 2, IBond.Order.SINGLE);
+        return container;
+	}
+	
 	/**
 	 * Make a square (sort-of cyclobutane, without any hydrogens) centered on 
 	 * the origin, with a bond length of 2.
