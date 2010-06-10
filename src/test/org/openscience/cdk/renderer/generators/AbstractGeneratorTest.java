@@ -174,7 +174,7 @@ public abstract class AbstractGeneratorTest {
 	}
 	
 	/**
-	 * Makes a single atom, centered on the origin.
+	 * Makes a single carbon atom, centered on the origin.
 	 * 
 	 * @return an atom container with a single atom
 	 */
@@ -183,6 +183,18 @@ public abstract class AbstractGeneratorTest {
 		container.addAtom(builder.newInstance(IAtom.class, "C", new Point2d(0,0)));
 		return container;
 	}
+	
+	/**
+     * Makes a single atom of a particular element, centered on the origin.
+     * 
+     * @return an atom container with a single atom
+     */
+    public IAtomContainer makeSingleAtom(String elementSymbol) {
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        container.addAtom(
+             builder.newInstance(IAtom.class, elementSymbol, new Point2d(0,0)));
+        return container;
+    }
 	
 	/**
 	 * Makes a single C-C bond aligned horizontally. The endpoints are (0, -1)

@@ -92,15 +92,14 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 	@Test
 	public void atomColorTest() {
 	    Color testColor = Color.RED;
-	    IAtomContainer singleAtom = makeSingleAtom();
-	    model.set(CompactShape.class, Shape.OVAL);
-        model.set(CompactAtom.class, true);
+	    IAtomContainer singleAtom = makeSingleAtom("O");
 	    model.set(AtomColor.class, testColor);
 	    model.set(ColorByType.class, false);
 	    List<IRenderingElement> elements = 
             getAllSimpleElements(generator, singleAtom);
 	    Assert.assertEquals(1, elements.size());
-	    Assert.assertEquals(testColor, ((OvalElement)elements.get(0)).color);
+	    AtomSymbolElement element = ((AtomSymbolElement)elements.get(0));
+	    Assert.assertEquals(testColor, element.color);
 	}
 	
 	@Test
@@ -140,6 +139,18 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
             Assert.assertTrue(colorMap.containsKey(symbol));
             Assert.assertEquals(colorMap.get(symbol), symbolElement.color);
         }
+	}
+	
+	@Test
+	public void colorByTypeTest() {
+	    IAtomContainer snop = makeSNOPSquare();
+	    model.set(ColorByType.class, false);
+	    List<IRenderingElement> elements = getAllSimpleElements(generator, snop);
+	    Color defaultColor = model.getDefault(AtomColor.class);
+	    for (IRenderingElement element : elements) {
+            AtomSymbolElement symbolElement = (AtomSymbolElement) element;
+            Assert.assertEquals(defaultColor, symbolElement.color);
+	    }
 	}
 	
 	@Test
