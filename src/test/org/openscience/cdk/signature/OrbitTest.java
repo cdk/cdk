@@ -54,6 +54,12 @@ public class OrbitTest {
     }
     
     @Test
+    public void testClone() {
+        Orbit clonedOrbit = (Orbit)orbit.clone();
+        Assert.assertEquals(clonedOrbit.toString(), orbit.toString());
+    }
+    
+    @Test
     public void isEmptyTest() {
         Assert.assertFalse("The setUp method should have made an orbit with " +
         		"some indices in it", orbit.isEmpty());
