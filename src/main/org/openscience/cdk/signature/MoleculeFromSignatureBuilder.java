@@ -59,10 +59,7 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
         this.builder = builder;
     }
 
-    /* (non-Javadoc)
-     * @see signature.AbstractGraphBuilder#makeEdge(int, int, java.lang.String, java.lang.String, java.lang.String)
-     */
-    @Override
+    @Override /** {@inheritDoc} */
     public void makeEdge(int vertexIndex1, int vertexIndex2,
             String vertexSymbol1, String vertexSymbol2, String edgeLabel) {
         if (edgeLabel.equals("")) {
@@ -74,18 +71,12 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
         }
     }
 
-    /* (non-Javadoc)
-     * @see signature.AbstractGraphBuilder#makeGraph()
-     */
-    @Override
+    @Override /** {@inheritDoc} */
     public void makeGraph() {
         this.container = this.builder.newInstance(IAtomContainer.class);
     }
 
-    /* (non-Javadoc)
-     * @see signature.AbstractGraphBuilder#makeVertex(java.lang.String)
-     */
-    @Override
+    @Override /** {@inheritDoc} */
     public void makeVertex(String label) {
         this.container.addAtom(this.builder.newInstance(IAtom.class, label));
     }

@@ -73,10 +73,7 @@ public class SignatureQuotientGraph extends AbstractQuotientGraph {
         super.construct(moleculeSignature.getSymmetryClasses(height));
     }
 
-    /* (non-Javadoc)
-     * @see signature.AbstractQuotientGraph#isConnected(int, int)
-     */
-    @Override
+    @Override /** {@inheritDoc} */
     public boolean isConnected(int index1, int index2) {
         IAtom atom1 = atomContainer.getAtom(index1);
         IAtom atom2 = atomContainer.getAtom(index2);

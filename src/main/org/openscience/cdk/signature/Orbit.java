@@ -67,16 +67,12 @@ public class Orbit implements Iterable<Integer>, Cloneable {
         this.height = height;
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Iterable#iterator()
-     */
+    /** {@inheritDoc} */
     public Iterator<Integer> iterator() {
         return this.atomIndices.iterator();
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#clone()
-     */
+    /** {@inheritDoc} */
     @TestMethod("testClone")
     public Object clone() {
         Orbit orbit = new Orbit(this.label, this.height);
@@ -180,9 +176,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
         return this.atomIndices.contains(atomIndex);
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    /** {@inheritDoc} */
     public String toString() {
         return label + " " +
         Arrays.deepToString(atomIndices.toArray()); 

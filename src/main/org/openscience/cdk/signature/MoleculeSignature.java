@@ -69,12 +69,12 @@ public class MoleculeSignature extends AbstractGraphSignature {
         this.molecule = molecule;
     }
 
-    @Override
+    @Override /** {@inheritDoc} */
     public int getVertexCount() {
         return this.molecule.getAtomCount();
     }
 
-    @Override
+    @Override /** {@inheritDoc} */
     public String signatureStringForVertex(int vertexIndex) {
         AtomSignature atomSignature;
         int height = super.getHeight();
@@ -87,14 +87,14 @@ public class MoleculeSignature extends AbstractGraphSignature {
         return atomSignature.toCanonicalString();
     }
 
-    @Override
+    @Override /** {@inheritDoc} */
     public String signatureStringForVertex(int vertexIndex, int height) {
         AtomSignature atomSignature = 
             new AtomSignature(vertexIndex, height, this.molecule);
         return atomSignature.toCanonicalString();
     }
 
-    @Override
+    @Override /** {@inheritDoc} */
     public AbstractVertexSignature signatureForVertex(int vertexIndex) {
         return new AtomSignature(vertexIndex, this.molecule);
     }

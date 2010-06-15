@@ -82,10 +82,7 @@ public class AtomSignature extends AbstractVertexSignature {
         return atom.getMassNumber();
     }
 
-    /* (non-Javadoc)
-     * @see signature.AbstractVertexSignature#getConnected(int)
-     */
-    @Override
+    @Override /** {@inheritDoc} */
     public int[] getConnected(int vertexIndex) {
         IAtom atom  = this.molecule.getAtom(vertexIndex);
         List<IAtom> connected = this.molecule.getConnectedAtomsList(atom);
@@ -97,10 +94,7 @@ public class AtomSignature extends AbstractVertexSignature {
         return connectedIndices;
     }
 
-    /* (non-Javadoc)
-     * @see signature.AbstractVertexSignature#getEdgeLabel(int, int)
-     */
-    @Override
+    @Override /** {@inheritDoc} */
     public String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
         IAtom atomA = this.molecule.getAtom(vertexIndex);
         IAtom atomB = this.molecule.getAtom(otherVertexIndex);
@@ -119,10 +113,7 @@ public class AtomSignature extends AbstractVertexSignature {
         }
     }
 
-    /* (non-Javadoc)
-     * @see signature.AbstractVertexSignature#getVertexSymbol(int)
-     */
-    @Override
+    @Override /** {@inheritDoc} */
     public String getVertexSymbol(int vertexIndex) {
         return this.molecule.getAtom(vertexIndex).getSymbol();
     }
