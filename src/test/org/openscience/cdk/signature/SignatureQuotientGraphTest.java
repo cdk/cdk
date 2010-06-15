@@ -26,7 +26,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.signature.SignatureQuotientGraph;
 
 /**
  * @cdk.module test-signature

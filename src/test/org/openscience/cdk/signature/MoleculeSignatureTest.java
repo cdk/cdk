@@ -41,9 +41,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLWriter;
-import org.openscience.cdk.signature.MoleculeSignature;
-import org.openscience.cdk.signature.Orbit;
-import org.openscience.cdk.signature.SignatureQuotientGraph;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 

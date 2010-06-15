@@ -124,5 +124,4 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         ringTest(5);
     }
 
-
 }
