@@ -68,6 +68,17 @@ public class OrbitTest {
     }
     
     @Test
+    public void iteratorTest() {
+        int count = 0;
+        List<Integer> indices = orbit.getAtomIndices();
+        for (Integer i : orbit) {
+            Assert.assertEquals(i, indices.get(count));
+            count++;
+        }
+        Assert.assertEquals(indices.size(), count);
+    }
+    
+    @Test
     public void testClone() {
         Orbit clonedOrbit = (Orbit)orbit.clone();
         List<Integer> indices = orbit.getAtomIndices();

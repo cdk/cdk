@@ -68,6 +68,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     }
     
     /** {@inheritDoc} */
+    @TestMethod("iteratorTest")
     public Iterator<Integer> iterator() {
         return this.atomIndices.iterator();
     }
