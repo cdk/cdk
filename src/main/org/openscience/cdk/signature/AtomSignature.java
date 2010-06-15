@@ -36,7 +36,7 @@ import signature.AbstractVertexSignature;
  * 
  * @cdk.module signature
  * @author maclean
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.AtomSignatureTest")
 public class AtomSignature extends AbstractVertexSignature {

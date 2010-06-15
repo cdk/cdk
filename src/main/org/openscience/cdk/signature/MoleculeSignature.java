@@ -40,7 +40,7 @@ import signature.SymmetryClass;
  * 
  * @cdk.module signature
  * @author maclean
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.MoleculeSignatureTest")
 public class MoleculeSignature extends AbstractGraphSignature {

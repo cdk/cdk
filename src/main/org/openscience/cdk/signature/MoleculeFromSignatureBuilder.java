@@ -35,7 +35,7 @@ import signature.AbstractGraphBuilder;
  * 
  * @cdk.module signature
  * @author maclean
- * 
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.MoleculeFromSignatureBuilderTest")
 public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {

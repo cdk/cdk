@@ -37,7 +37,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * 
  * @cdk.module signature
  * @author maclean
- * 
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.OrbitTest")
 public class Orbit implements Iterable<Integer>, Cloneable {

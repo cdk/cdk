@@ -39,7 +39,7 @@ import signature.AbstractQuotientGraph;
  * 
  * @cdk.module signature
  * @author maclean
- * 
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.SignatureQuotientGraphTest")
 public class SignatureQuotientGraph extends AbstractQuotientGraph {
