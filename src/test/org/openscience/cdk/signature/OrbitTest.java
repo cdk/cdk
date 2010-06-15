@@ -40,7 +40,7 @@ public class OrbitTest {
     private static Orbit orbit;
     
     @BeforeClass
-    public void setUp() {
+    public static void setUp() {
         
         // make a test orbit instance, with a nonsense
         // string label, and some number of 'indices'
@@ -56,7 +56,11 @@ public class OrbitTest {
     @Test
     public void testClone() {
         Orbit clonedOrbit = (Orbit)orbit.clone();
-        Assert.assertEquals(clonedOrbit.toString(), orbit.toString());
+        List<Integer> indices = new ArrayList<Integer>();
+        for (int i : orbit) { indices.add(i); }
+        List<Integer> clonedIndices = new ArrayList<Integer>();
+        for (int i : clonedOrbit) { clonedIndices.add(i); }
+        Assert.assertEquals(indices, clonedIndices);
     }
     
     @Test
