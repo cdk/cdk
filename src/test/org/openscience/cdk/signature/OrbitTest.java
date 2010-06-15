@@ -37,6 +37,8 @@ import org.junit.Test;
  */
 public class OrbitTest {
     
+    private String orbitLabel;
+    
     private Orbit orbit;
     
     private Orbit unsortedOrbit;
@@ -46,7 +48,7 @@ public class OrbitTest {
         
         // make a test orbit instance, with a nonsense
         // string label, and some number of 'indices'
-        String orbitLabel = "ORBIT";
+        orbitLabel = "ORBIT";
         int height = 2;
         orbit = new Orbit(orbitLabel, height);
         int[] atomIndices = new int[] {0, 1, 2, 3};
@@ -68,10 +70,8 @@ public class OrbitTest {
     @Test
     public void testClone() {
         Orbit clonedOrbit = (Orbit)orbit.clone();
-        List<Integer> indices = new ArrayList<Integer>();
-        for (int i : orbit) { indices.add(i); }
-        List<Integer> clonedIndices = new ArrayList<Integer>();
-        for (int i : clonedOrbit) { clonedIndices.add(i); }
+        List<Integer> indices = orbit.getAtomIndices();
+        List<Integer> clonedIndices = clonedOrbit.getAtomIndices();
         Assert.assertEquals(indices, clonedIndices);
         Assert.assertEquals(orbit.getLabel(), clonedOrbit.getLabel());
     }
@@ -112,6 +112,45 @@ public class OrbitTest {
     }
     
     @Test
+    public void getHeightTest() {
+        Assert.assertEquals(2, orbit.getHeight());
+    }
+    
+    @Test
+    public void getAtomIndicesTest() {
+        Assert.assertNotNull(orbit.getAtomIndices());
+    }
+    
+    @Test
+    public void addAtomTest() {
+        Assert.assertEquals(4, orbit.getAtomIndices().size());
+        orbit.addAtom(4);
+        Assert.assertEquals(5, orbit.getAtomIndices().size());
+    }
+    
+    @Test
+    public void hasLabelTest() {
+        Assert.assertTrue(orbit.hasLabel(orbitLabel));
+    }
+    
+    @Test
+    public void getFirstAtomTest() {
+        Assert.assertEquals(0, orbit.getFirstAtom());
+    }
+    
+    @Test
+    public void removeTest() {
+        Assert.assertEquals(4, orbit.getAtomIndices().size());
+        orbit.remove(0);
+        Assert.assertEquals(3, orbit.getAtomIndices().size());
+    }
+    
+    @Test
+    public void getLabelTest() {
+        Assert.assertEquals(orbitLabel, orbit.getLabel());
+    }
+    
+    @Test
     public void containsTest() {
         for (int index : orbit) {
             Assert.assertTrue("Index " + index + " not in orbit",
@@ -119,5 +158,9 @@ public class OrbitTest {
         }
     }
 
+    @Test
+    public void toStringTest() {
+        Assert.assertEquals("ORBIT [0, 1, 2, 3]", orbit.toString());
+    }
 
 }
