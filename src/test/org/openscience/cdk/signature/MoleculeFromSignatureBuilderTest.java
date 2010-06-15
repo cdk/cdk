@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilderTest;
 
 import signature.AbstractVertexSignature;
 import signature.ColoredTree;
@@ -122,6 +123,74 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     @Test
     public void hexagonRingTest() {
         ringTest(5);
+    }
+    
+    @Test
+    public void makeGraphTest() {
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder(
+                    NoNotificationChemObjectBuilder.getInstance());
+        builder.makeGraph();
+        Assert.assertNotNull(builder.getAtomContainer());
+    }
+    
+    @Test
+    public void makeVertexTest() {
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder(
+                    NoNotificationChemObjectBuilder.getInstance());
+        builder.makeGraph();
+        builder.makeVertex("C");
+        IAtomContainer product = builder.getAtomContainer();
+        Assert.assertEquals(1, product.getAtomCount());
+    }
+    
+    @Test
+    public void makeEdgeTest_singleBond() {
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder(
+                    NoNotificationChemObjectBuilder.getInstance());
+        builder.makeGraph();
+        builder.makeVertex("C");
+        builder.makeVertex("C");
+        builder.makeEdge(0, 1, "C", "C", "");
+        
+        IAtomContainer product = builder.getAtomContainer();
+        Assert.assertEquals(2, product.getAtomCount());
+        Assert.assertEquals(1, product.getBondCount());
+        Assert.assertEquals(IBond.Order.SINGLE, product.getBond(0).getOrder());
+    }
+    
+    @Test
+    public void makeEdgeTest_doubleBond() {
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder(
+                    NoNotificationChemObjectBuilder.getInstance());
+        builder.makeGraph();
+        builder.makeVertex("C");
+        builder.makeVertex("C");
+        builder.makeEdge(0, 1, "C", "C", "=");
+        
+        IAtomContainer product = builder.getAtomContainer();
+        Assert.assertEquals(2, product.getAtomCount());
+        Assert.assertEquals(1, product.getBondCount());
+        Assert.assertEquals(IBond.Order.DOUBLE, product.getBond(0).getOrder());
+    }
+    
+    @Test
+    public void makeEdgeTest_tripleBond() {
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder(
+                    NoNotificationChemObjectBuilder.getInstance());
+        builder.makeGraph();
+        builder.makeVertex("C");
+        builder.makeVertex("C");
+        builder.makeEdge(0, 1, "C", "C", "#");
+        
+        IAtomContainer product = builder.getAtomContainer();
+        Assert.assertEquals(2, product.getAtomCount());
+        Assert.assertEquals(1, product.getBondCount());
+        Assert.assertEquals(IBond.Order.TRIPLE, product.getBond(0).getOrder());
     }
 
 }

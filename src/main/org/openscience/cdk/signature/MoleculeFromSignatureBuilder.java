@@ -23,6 +23,7 @@
 package org.openscience.cdk.signature;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -60,6 +61,7 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
     }
 
     @Override /** {@inheritDoc} */
+    @TestMethod("makeEdgeTest_singleBond,makeEdgeTest_doubleBond,makeEdgeTest_tripleBond")
     public void makeEdge(int vertexIndex1, int vertexIndex2,
             String vertexSymbol1, String vertexSymbol2, String edgeLabel) {
         if (edgeLabel.equals("")) {
@@ -72,11 +74,13 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
     }
 
     @Override /** {@inheritDoc} */
+    @TestMethod("makeGraphTest")
     public void makeGraph() {
         this.container = this.builder.newInstance(IAtomContainer.class);
     }
 
     @Override /** {@inheritDoc} */
+    @TestMethod("makeVertexTest")
     public void makeVertex(String label) {
         this.container.addAtom(this.builder.newInstance(IAtom.class, label));
     }
