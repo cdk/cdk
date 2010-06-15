@@ -27,7 +27,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -39,7 +39,7 @@ public class OrbitTest {
     
     private static Orbit orbit;
     
-    @Before
+    @BeforeClass
     public void setUp() {
         
         // make a test orbit instance, with a nonsense
