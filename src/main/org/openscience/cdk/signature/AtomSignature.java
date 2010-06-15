@@ -25,6 +25,7 @@ package org.openscience.cdk.signature;
 import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -79,12 +80,14 @@ public class AtomSignature extends AbstractVertexSignature {
         super.create(atomIndex, molecule.getAtomCount(), height);
     }
     
+    @TestMethod("getIntLabelTest")
     public int getIntLabel(int vertexIndex) {
         IAtom atom = molecule.getAtom(vertexIndex);
         return atom.getMassNumber();
     }
 
     @Override /** {@inheritDoc} */
+    @TestMethod("getConnectedTest")
     public int[] getConnected(int vertexIndex) {
         IAtom atom  = this.molecule.getAtom(vertexIndex);
         List<IAtom> connected = this.molecule.getConnectedAtomsList(atom);
@@ -97,6 +100,7 @@ public class AtomSignature extends AbstractVertexSignature {
     }
 
     @Override /** {@inheritDoc} */
+    @TestMethod("getEdgeLabelTest")
     public String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
         IAtom atomA = this.molecule.getAtom(vertexIndex);
         IAtom atomB = this.molecule.getAtom(otherVertexIndex);
@@ -116,6 +120,7 @@ public class AtomSignature extends AbstractVertexSignature {
     }
 
     @Override /** {@inheritDoc} */
+    @TestMethod("getVertexSymbolTest")
     public String getVertexSymbol(int vertexIndex) {
         return this.molecule.getAtom(vertexIndex).getSymbol();
     }

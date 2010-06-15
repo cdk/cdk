@@ -27,8 +27,11 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 
 /**
@@ -37,6 +40,41 @@ import org.openscience.cdk.interfaces.IMolecule;
  *
  */
 public class AtomSignatureTest extends AbstractSignatureTest {
+    
+    private IAtomContainer atomContainer;
+    
+    private AtomSignature atomSignature;
+    
+    @Before
+    public void setUp() {
+        atomContainer = builder.newInstance(IAtomContainer.class);
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));
+        atomContainer.addBond(0, 1, IBond.Order.DOUBLE);
+        atomSignature = new AtomSignature(0, atomContainer);
+    }
+    
+    
+    @Test
+    public void getIntLabelTest() {
+        atomContainer.getAtom(0).setMassNumber(12);
+        Assert.assertEquals(12, atomSignature.getIntLabel(0));
+    }
+    
+    @Test
+    public void getConnectedTest() {
+        Assert.assertEquals(1, atomSignature.getConnected(0)[0]);
+    }
+    
+    @Test
+    public void getEdgeLabelTest() {
+        Assert.assertEquals("=", atomSignature.getEdgeLabel(0, 1));
+    }
+    
+    @Test
+    public void getVertexSymbolTest() {
+        Assert.assertEquals("C", atomSignature.getVertexSymbol(0));
+    }
     
     @Test
     public void integerInvariantsTest() {
