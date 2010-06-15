@@ -77,10 +77,10 @@ public class SignatureQuotientGraph extends AbstractQuotientGraph {
      * @see signature.AbstractQuotientGraph#isConnected(int, int)
      */
     @Override
-    public boolean isConnected(int i, int j) {
-        IAtom a = atomContainer.getAtom(i);
-        IAtom b = atomContainer.getAtom(j);
-        return atomContainer.getBond(a, b) != null;
+    public boolean isConnected(int index1, int index2) {
+        IAtom atom1 = atomContainer.getAtom(index1);
+        IAtom atom2 = atomContainer.getAtom(index2);
+        return atomContainer.getBond(atom1, atom2) != null;
     }
 
 }

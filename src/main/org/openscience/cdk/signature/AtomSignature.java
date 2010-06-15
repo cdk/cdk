@@ -90,9 +90,9 @@ public class AtomSignature extends AbstractVertexSignature {
         IAtom atom  = this.molecule.getAtom(vertexIndex);
         List<IAtom> connected = this.molecule.getConnectedAtomsList(atom);
         int[] connectedIndices = new int[connected.size()];
-        int i = 0;
+        int indexCounter = 0;
         for (IAtom otherAtom : connected) {
-            connectedIndices[i++] = this.molecule.getAtomNumber(otherAtom);
+            connectedIndices[indexCounter++] = this.molecule.getAtomNumber(otherAtom);
         }
         return connectedIndices;
     }

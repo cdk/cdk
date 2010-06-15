@@ -79,11 +79,11 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      */
     @TestMethod("testClone")
     public Object clone() {
-        Orbit o = new Orbit(this.label, this.height);
+        Orbit orbit = new Orbit(this.label, this.height);
         for (Integer i : this.atomIndices) {
-            o.atomIndices.add(new Integer(i));
+            orbit.atomIndices.add(Integer.valueOf(i));
         }
-        return o;
+        return orbit;
     }
     
     /**
