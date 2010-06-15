@@ -30,6 +30,7 @@ import java.util.Map;
 import junit.framework.Assert;
 
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -55,9 +56,57 @@ public class MoleculeSignatureTest extends CDKTestCase {
     
     private IChemObjectBuilder builder; 
     
-    public MoleculeSignatureTest() {
+    private IAtomContainer mol;
+    
+    private MoleculeSignature molSig;
+    
+    @Before
+    public void setUp() {
         this.parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         this.builder = DefaultChemObjectBuilder.getInstance();
+        mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        molSig = new MoleculeSignature(mol);
+    }
+    
+    @Test
+    public void getVertexCountTest() {
+        Assert.assertEquals(mol.getAtomCount(), molSig.getVertexCount());
+    }
+    
+    @Test
+    public void getSignatureStringForVertexTest() {
+        Assert.assertEquals("[C]([C])", molSig.signatureStringForVertex(0));
+    }
+    
+    @Test
+    public void getSignatureStringForVertexTest_height() {
+        Assert.assertEquals("[C]", molSig.signatureStringForVertex(0, 0));
+    }
+    
+    @Test
+    public void getSignatureForVertexTest() {
+        Assert.assertNotNull(molSig.getVertexSignatures());
+    }
+    
+    @Test
+    public void calculateOrbitsTest() {
+        Assert.assertEquals(1, molSig.calculateOrbits().size());
+    }
+    
+    @Test
+    public void fromSignatureStringTest() {
+        String signatureString = molSig.toCanonicalString();
+        IAtomContainer reconstructed = 
+            MoleculeSignature.fromSignatureString(signatureString, builder);
+        Assert.assertEquals(mol.getAtomCount(), reconstructed.getAtomCount());
+    }
+    
+    @Test
+    public void toCanonicalSignatureStringTest() {
+        Assert.assertEquals("[C]", molSig.toCanonicalSignatureString(0));
     }
     
     public void toMolfileString(IMolecule mol) {
