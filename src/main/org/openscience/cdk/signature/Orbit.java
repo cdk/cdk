@@ -77,6 +77,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     /* (non-Javadoc)
      * @see java.lang.Object#clone()
      */
+    @TestMethod("testClone")
     public Object clone() {
         Orbit o = new Orbit(this.label, this.height);
         for (Integer i : this.atomIndices) {
