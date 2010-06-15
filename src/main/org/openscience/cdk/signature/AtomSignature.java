@@ -75,6 +75,8 @@ public class AtomSignature extends AbstractVertexSignature {
     public AtomSignature(int atomIndex, int height, 
             InvariantType invariantType, IAtomContainer molecule) {
         super(invariantType);
+        this.molecule = molecule;
+        super.create(atomIndex, molecule.getAtomCount(), height);
     }
     
     public int getIntLabel(int vertexIndex) {
