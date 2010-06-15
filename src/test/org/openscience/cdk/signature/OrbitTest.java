@@ -27,7 +27,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -37,10 +37,12 @@ import org.junit.Test;
  */
 public class OrbitTest {
     
-    private static Orbit orbit;
+    private Orbit orbit;
     
-    @BeforeClass
-    public static void setUp() {
+    private Orbit unsortedOrbit;
+    
+    @Before
+    public void setUp() {
         
         // make a test orbit instance, with a nonsense
         // string label, and some number of 'indices'
@@ -51,6 +53,16 @@ public class OrbitTest {
         for (int atomIndex : atomIndices) {
             orbit.addAtom(atomIndex);
         }
+        
+        // also make an unsorted orbit
+        String unsortedOrbitLabel = "UNSORTED_ORBIT";
+        int unsortedHeight = 2;
+        unsortedOrbit = new Orbit(unsortedOrbitLabel, unsortedHeight);
+        int[] unsortedAtomIndices = new int[] {3, 1, 0, 2};
+        for (int atomIndex : unsortedAtomIndices) {
+            unsortedOrbit.addAtom(atomIndex);
+        }
+        
     }
     
     @Test
@@ -61,6 +73,7 @@ public class OrbitTest {
         List<Integer> clonedIndices = new ArrayList<Integer>();
         for (int i : clonedOrbit) { clonedIndices.add(i); }
         Assert.assertEquals(indices, clonedIndices);
+        Assert.assertEquals(orbit.getLabel(), clonedOrbit.getLabel());
     }
     
     @Test
@@ -75,6 +88,27 @@ public class OrbitTest {
             orbit.remove(index);
         }
         Assert.assertTrue("Orbit should now be empty", orbit.isEmpty());
+    }
+    
+    private boolean isSorted(Orbit orbit) {
+        int prev = -1;
+        for (int index : orbit) {
+            if (prev == -1 || index > prev) {
+                prev = index;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    @Test
+    public void sortTest() {
+        Assert.assertFalse(
+                "Unsorted orbit is actually sorted", isSorted(unsortedOrbit));
+        unsortedOrbit.sort();
+        Assert.assertTrue(
+                "Orbit is not sorted after sort called", isSorted(unsortedOrbit));
     }
     
     @Test
