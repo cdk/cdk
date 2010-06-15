@@ -90,6 +90,7 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
      * 
      * @return the constructed atom container
      */
+    @TestMethod("getAtomContainerTest")
     public IAtomContainer getAtomContainer() {
         return this.container;
     }

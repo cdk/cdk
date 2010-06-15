@@ -191,5 +191,14 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         Assert.assertEquals(1, product.getBondCount());
         Assert.assertEquals(IBond.Order.TRIPLE, product.getBond(0).getOrder());
     }
+    
+    @Test
+    public void getAtomContainerTest() {
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder(
+                    NoNotificationChemObjectBuilder.getInstance());
+        builder.makeGraph();
+        Assert.assertNotNull(builder.getAtomContainer());
+    }
 
 }
