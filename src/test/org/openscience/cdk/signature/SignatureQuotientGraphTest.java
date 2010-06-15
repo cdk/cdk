@@ -25,6 +25,9 @@ package org.openscience.cdk.signature;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 
 /**
@@ -33,6 +36,17 @@ import org.openscience.cdk.interfaces.IMolecule;
  *
  */
 public class SignatureQuotientGraphTest extends AbstractSignatureTest {
+    
+    @Test
+    public void isConnectedTest() {
+        IAtomContainer singleBond = builder.newInstance(IAtomContainer.class);
+        singleBond.addAtom(builder.newInstance(IAtom.class, "C"));
+        singleBond.addAtom(builder.newInstance(IAtom.class, "C"));
+        singleBond.addBond(0, 1, IBond.Order.SINGLE);
+        SignatureQuotientGraph quotientGraph = 
+            new SignatureQuotientGraph(singleBond);
+        Assert.assertTrue(quotientGraph.isConnected(0, 1));
+    }
     
     public void checkParameters(SignatureQuotientGraph qGraph,
                                 int expectedVertexCount, 

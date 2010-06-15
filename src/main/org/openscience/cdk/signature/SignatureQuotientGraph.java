@@ -23,6 +23,7 @@
 package org.openscience.cdk.signature;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -74,6 +75,7 @@ public class SignatureQuotientGraph extends AbstractQuotientGraph {
     }
 
     @Override /** {@inheritDoc} */
+    @TestMethod("isConnectedTest")
     public boolean isConnected(int index1, int index2) {
         IAtom atom1 = atomContainer.getAtom(index1);
         IAtom atom2 = atomContainer.getAtom(index2);
