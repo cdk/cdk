@@ -33,7 +33,43 @@ import org.openscience.cdk.interfaces.IBond;
 import signature.AbstractVertexSignature;
 
 /**
- * The signature for a molecule rooted at a particular atom.
+ * <p>
+ * The signature {@cdk.cite FAU03, FAU04} for a molecule rooted at a particular
+ * atom.
+ * </p>
+ * 
+ * <p>
+ * A signature is a description of the connectivity of a molecule, in the form
+ * of a tree-like structure called a directed acyclic graph (DAG). This DAG can
+ * be written out as a string, for example ethane:
+ * </p>
+ * 
+ * <pre>
+ *   [C]([C]([H][H][H])[H][H][H])
+ * </pre>
+ * 
+ * <p>
+ * where each atom is represented by an atom symbol in square brackets. The
+ * branching of the tree is indicated by round brackets. When the molecule has a
+ * cycle, the signature string will have numbers after the atom symbol, like:
+ * </p>
+ * 
+ * <pre>
+ * [C]([C]([C,0])[C]([C,0]))
+ * </pre>
+ * 
+ * <p>
+ * these are known as 'colors' and indicate ring closures, in a roughly similar
+ * way to SMILES notation. Note that the colors start from 0 in this
+ * implementation, in contrast to the examples in {@cdk.cite FAU04}.
+ * </p>
+ * 
+ * <p>
+ * Multiple bonds are represented by symbols in front of the opening square
+ * bracket of an atom. Double bonds are '=', triple are '#'. Since there is a
+ * defined direction for the signature tree, only the child node will have the
+ * bond symbol, and the relevant bond is to the parent.
+ * </p>
  * 
  * @cdk.module signature
  * @author maclean
@@ -43,7 +79,7 @@ import signature.AbstractVertexSignature;
 public class AtomSignature extends AbstractVertexSignature {
     
     /**
-     * The atom container to make signatures from
+     * The atom container to make signatures from.
      */
     private IAtomContainer molecule;
     

@@ -37,7 +37,56 @@ import signature.ColoredTree;
 import signature.SymmetryClass;
 
 /**
- * A signature for an entire molecule.
+ * <p>
+ * A molecule signature is a way to produce {@link AtomSignature}s and to get
+ * the canonical {@cdk.cite FAU04} signature string for a molecule. There are
+ * several possible uses for a molecule signature.
+ * </p>
+ * 
+ * <p>
+ * Firstly, a signature with a height greater than the diameter of a molecule
+ * can be used to reconstruct the molecule. In this sense, the signature string
+ * is like a SMILES {@cdk.cite WEI88, WEI89} string. It is more verbose, but it
+ * will work for all molecules.
+ * </p>
+ * 
+ * <p>
+ * Secondly, the set of signatures for a molecule partition the atoms into
+ * equivalence classes (or 'orbits' - see the {@link Orbit} class). This is
+ * similar to partitioning atoms by Morgan number {@cdk.cite MOR65} except that
+ * it works for 3-regular graphs like fullerenes.
+ * </p>
+ * 
+ * <p>
+ * Thirdly, signatures can be calculated at different heights to give
+ * descriptions of the connectivity around atoms. 'Height' is the same as the
+ * idea of a 'sphere' in HOSE codes, and signatures are also path descriptors in
+ * this sense.
+ * </p>
+ * 
+ * So, for example, to get the canonical signature for a molecule:
+ * 
+ * <pre>
+ * IMolecule diamantane = MoleculeFactory.makeBenzene();
+ * MoleculeSignature moleculeSignature = new MoleculeSignature(diamantane);
+ * String canonicalSignature = moleculeSignature.toCanonicalString();
+ * </pre>
+ * 
+ * to get the orbits of this molecule:
+ * 
+ * <pre>
+ * List&lt;Orbit&gt; orbits = moleculeSignature.calculateOrbits();
+ * </pre>
+ * 
+ * and to get the height-2 signature string of just atom 5:
+ * 
+ * <pre>
+ * String hSignatureForAtom5 = moleculeSignature.signatureStringForVertex(5, 2);
+ * </pre>
+ * 
+ * it is also possible to get AtomSignatures using the signatureForVertex method
+ * - which is just a convenience method equivalent to calling the constructor of
+ * an AtomSignature class.
  * 
  * @cdk.module signature
  * @author maclean
@@ -46,6 +95,9 @@ import signature.SymmetryClass;
 @TestClass("org.openscience.cdk.signature.MoleculeSignatureTest")
 public class MoleculeSignature extends AbstractGraphSignature {
     
+    /**
+     * The molecule to use when making atom signatures
+     */
     private IAtomContainer molecule;
     
     /**
@@ -141,6 +193,12 @@ public class MoleculeSignature extends AbstractGraphSignature {
         return builder.getAtomContainer();
     }
 
+    /**
+     * Make a canonical signature string of a given height.
+     * 
+     * @param height the maximum height to make signatures
+     * @return the canonical signature string
+     */
     @TestMethod("toCanonicalSignatureStringTest")
     public String toCanonicalSignatureString(int height) {
         String canonicalSignature = null;
