@@ -160,6 +160,34 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="FAU03">
+    <bibtex:article>
+      <bibtex:author>Faulon, J. L., Visco, D. P., and Pophale, R. S.</bibtex:author>
+      <bibtex:title>The signature molecular descriptor. 1. Using extended
+       valence sequences in QSAR and QSPR studies.</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:year>2003</bibtex:year>
+      <bibtex:volume>43</bibtex:volume>
+      <bibtex:number>3</bibtex:number>
+      <bibtex:pages>707-720</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+   <bibtex:entry id="FAU04">
+    <bibtex:article>
+      <bibtex:author>Faulon, J. L., Collins, M. J., and Carr, R. D.</bibtex:author>
+      <bibtex:title>The Signature Molecular Descriptor. 4. Canonizing Molecules
+       Using Extended Valence Sequences</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>44</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>427-436</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="FIG96">
     <bibtex:article>
       <bibtex:author>Figueras, J.</bibtex:author>
