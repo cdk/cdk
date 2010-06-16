@@ -61,7 +61,7 @@ public class AtomSignature extends AbstractVertexSignature {
     
     /**
      * Create an atom signature starting at <code>atomIndex</code> and with a
-     * maximum height of <code>h</code>.
+     * maximum height of <code>height</code>.
      * 
      * @param atomIndex the index of the atom that roots this signature
      * @param height the maximum height of the signature 
@@ -73,6 +73,15 @@ public class AtomSignature extends AbstractVertexSignature {
         super.create(atomIndex, molecule.getAtomCount(), height);
     }
     
+    /**
+     * Create an atom signature starting at <code>atomIndex</code>, with maximum
+     * height of <code>height</code>, and using a particular invariant type.
+     * 
+     * @param atomIndex the index of the atom that roots this signature
+     * @param height the maximum height of the signature
+     * @param invariantType the type of invariant (int, string, ...)
+     * @param molecule the molecule to create the signature from
+     */
     public AtomSignature(int atomIndex, int height, 
             InvariantType invariantType, IAtomContainer molecule) {
         super(invariantType);
@@ -80,6 +89,7 @@ public class AtomSignature extends AbstractVertexSignature {
         super.create(atomIndex, molecule.getAtomCount(), height);
     }
     
+    @Override /** {@inheritDoc} */
     @TestMethod("getIntLabelTest")
     public int getIntLabel(int vertexIndex) {
         IAtom atom = molecule.getAtom(vertexIndex);
