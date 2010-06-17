@@ -139,6 +139,8 @@ public class FormatFactory {
      *
      * @throws IOException  if an I/O error occurs
      * @throws IllegalArgumentException if the input is null
+     * @return The guessed <code>IChemFormat</code> or <code>null</code> if the 
+     *         file format is not recognized.
      *
      * @see #guessFormat(InputStream)
      */
