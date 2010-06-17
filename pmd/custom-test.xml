@@ -19,5 +19,6 @@
   <!-- Rules specific for CDK -->
 
   <rule ref="pmd/customJunit.xml"/>
+  <rule ref="pmd/cdkinterfaces.xml"/>
 
 </ruleset>

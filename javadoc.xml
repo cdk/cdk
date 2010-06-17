@@ -14,6 +14,9 @@
     <property name="pathtojava3d" value="" />
     <property name="build" value="build" />
 
+	<!-- Used in the html task to properly link to java library classes -->
+	<property name="javaURL" value="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+	
     <path id="project.class.path">
         <pathelement location="." />
         <fileset dir="jar">
@@ -79,6 +82,7 @@
             <packageset dir="${src}/main" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
             </packageset>
+        	<link href="${javaURL}"/>
         </javadoc>
     </target>
 
@@ -103,78 +107,8 @@
       javacchome="jar"/>
   </target>
 
-    <!-- The doclet used in the following targets cannot be put in CVS because it is 
-         licensed otherwise, but it can be downloaded from:
-
-         http://java.sun.com/j2se/javadoc/doccheck/
-
-      -->
-
-    <target name="doccheck" depends="check-doccheck" if="doccheck.present">
-      <antcall target="doccheck-module"><param name="module" value="interfaces"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="core"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="data"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="log4j"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="datadebug"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="nonotify"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="standard"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="atomtype"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="io"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="ioformats"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="inchi"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="extra"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="fingerprint"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="formula"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="render"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="reaction"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="libiocml"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="libiomd"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="builder3d"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="smiles"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="smarts"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="sdg"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="forcefield"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="pdb"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="qsar"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="qsaratomic"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="qsarbond"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="qsarionpot"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="qsarmolecular"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="qsarprotein"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="pcore"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="structgen"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="valencycheck"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="charges"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="diff"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="smsd"/></antcall>
-    </target>
-
-    <target name="check-doccheck">
-        <available file="develjar/doccheck.jar" property="doccheck.present" />
-        <fail unless="doccheck.present"
-              message="This task requires DocCheck, which can be downloaded from http://java.sun.com/j2se/javadoc/doccheck/. Copy the doccheck.jar into develjar/."/>
-    </target>
-
-    <target name="doccheck-module">
-        <mkdir dir="reports/javadoc/${module}/"/>
-        <mkdir dir="${build}/src/${module}"/>
-        <copy todir="${build}/src/${module}">
-            <fileset dir="${src}/main">
-                <includesfile name="${build}/${module}.javafiles"/>
-            </fileset>
-        </copy>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/${module}/">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <sourcepath>
-              <pathelement path="${build}/src/${module}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
     <target name="ojdcheck" depends="compileDocTests">
       <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>

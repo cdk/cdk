@@ -886,7 +886,6 @@
             <copy todir="${sourcedist.dir}/develjar">
                     <fileset dir="develjar">
                         <exclude name="pmd-1.8.jar"/>
-                        <exclude name="doccheck.jar"/>
                         <exclude name="dbdoclet*.*"/>
                     </fileset>
             </copy>
