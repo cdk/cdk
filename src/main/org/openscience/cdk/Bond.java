@@ -314,6 +314,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     public void setAtom(IAtom atom, int position) {
         if (atoms[position] == null && atom != null) atomCount++;
+        if (atoms[position] != null && atom == null) atomCount--;
         atoms[position] = atom;
         notifyChanged();
     }
