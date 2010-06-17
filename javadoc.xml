@@ -14,6 +14,9 @@
     <property name="pathtojava3d" value="" />
     <property name="build" value="build" />
 
+	<!-- Used in the html task to properly link to java library classes -->
+	<property name="javaURL" value="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+	
     <path id="project.class.path">
         <pathelement location="." />
         <fileset dir="jar">
@@ -79,6 +82,7 @@
             <packageset dir="${src}/main" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
             </packageset>
+        	<link href="${javaURL}"/>
         </javadoc>
     </target>
 
