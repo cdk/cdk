@@ -255,9 +255,9 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		if (properties == null) {
             return;
         }
-        lazyProperties().remove(description);
+        if (lazyProperties().remove(description) != null)
+            notifyChanged();
 	}
-
 
 	/**
 	 *  Returns a property for the IChemObject.

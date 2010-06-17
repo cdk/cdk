@@ -353,6 +353,35 @@ public abstract class AbstractChemObjectTest extends CDKTestCase {
         Assert.assertNotNull(listener.event);
     }
 
+    @Test public void testNotifyChanged_SetProperty() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemObject chemObject = newChemObject();
+        chemObject.addListener(listener);
+
+        chemObject.setProperty("Changed", "Yes");
+        Assert.assertNotNull(listener.event);
+    }
+
+    @Test public void testNotifyChanged_RemoveProperty() {
+        IChemObject chemObject = newChemObject();
+        chemObject.setProperty("Changed", "Yes");
+
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        chemObject.addListener(listener);
+
+        chemObject.removeProperty("Changed");
+        Assert.assertNotNull(listener.event);
+    }
+
+    @Test public void testNotifyChanged_RemoveNonExistentProperty() {
+        IChemObject chemObject = newChemObject();
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        chemObject.addListener(listener);
+
+        chemObject.removeProperty("Changed");
+        Assert.assertNull(listener.event);
+    }
+
     @Test public void testCompare_Object() {
         // Added to keep the Coverage checker happy, but since the
         // compare(Object) method is not part of the interface, nothing is tested
