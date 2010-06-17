@@ -22,8 +22,8 @@
 */
 package org.openscience.cdk.signature;
 
-import junit.framework.Assert;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,7 +52,6 @@ public class SignatureQuotientGraphTest extends AbstractSignatureTest {
                                 int expectedVertexCount, 
                                 int expectedEdgeCount, 
                                 int expectedLoopEdgeCount) {
-        System.out.println(qGraph);
         Assert.assertEquals(expectedVertexCount, qGraph.getVertexCount());
         Assert.assertEquals(expectedEdgeCount, qGraph.getEdgeCount());
         Assert.assertEquals(expectedLoopEdgeCount, qGraph.numberOfLoopEdges());

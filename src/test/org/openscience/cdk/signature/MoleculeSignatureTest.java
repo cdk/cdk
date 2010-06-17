@@ -22,14 +22,11 @@
 */
 package org.openscience.cdk.signature;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Assert;
-
-import org.junit.Assume;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -41,7 +38,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -109,21 +105,9 @@ public class MoleculeSignatureTest extends CDKTestCase {
         Assert.assertEquals("[C]", molSig.toCanonicalSignatureString(0));
     }
     
-    public void toMolfileString(IMolecule mol) {
-        MDLWriter writer = new MDLWriter(System.out);
-        try {
-            writer.writeMolecule(mol);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     public void fullPermutationTest(IMolecule mol) {
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol);
         String expected = new MoleculeSignature(mol).toCanonicalString();
-        System.out.println("canonical = " + expected);
         int numberOfPermutationsTried = 0;
         while (permutor.hasNext()) {
             IAtomContainer permutation = permutor.next();
@@ -135,22 +119,6 @@ public class MoleculeSignatureTest extends CDKTestCase {
         }
     }
     
-    public void randomPermutationTest(IMolecule mol) {
-        AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol);
-        String expected = new MoleculeSignature(mol).toCanonicalString();
-        int numberOfPermutationsTried = 0;
-        while (permutor.hasNext()) {
-//            IAtomContainer permutation = permutor.randomNext();
-//            String actual = 
-//                new MoleculeSignature(permutation).toCanonicalString();
-            numberOfPermutationsTried++;
-//            String msg = "Failed on permutation " + numberOfPermutationsTried;
-//            Assert.assertEquals(msg, expected, actual);
-        }
-        System.out.println(expected);
-        System.out.println("Tried " + numberOfPermutationsTried);
-    }
-    
     public String canonicalStringFromSmiles(String smiles)
             throws InvalidSmilesException {
         IMolecule mol = parser.parseSmiles(smiles);
@@ -160,7 +128,6 @@ public class MoleculeSignatureTest extends CDKTestCase {
     
     public String canonicalStringFromMolecule(IMolecule molecule) {
         MoleculeSignature signature = new MoleculeSignature(molecule);
-//        return signature.toCanonicalString();
         return signature.getGraphSignature();
     }
     
@@ -301,9 +268,6 @@ public class MoleculeSignatureTest extends CDKTestCase {
         String expected = "[C]([C]([C,0])[C]([C,0])[C,0])";
         IMolecule mol = AbstractSignatureTest.makeBridgedCyclobutane();
         String signature = this.canonicalStringFromMolecule(mol);
-        for (String atomicSignature : this.getAtomicSignatures(mol)) {
-            System.out.println(atomicSignature);
-        }
         Assert.assertEquals(expected, signature);
     }
     
@@ -409,23 +373,6 @@ public class MoleculeSignatureTest extends CDKTestCase {
             }
         }
         return -1;
-    }
-    
-    // XXX commented out this test for now, as it takes a long time - this
-    // is a known weakness of the current implementation
-    @Test
-    public void testPolyPhenylMolecule() throws Exception {
-        Assume.assumeTrue(runSlowTests());
-        String smiles = "C1=CC=C(C=C1)P(C2=CC=CC=C2)(C3=CC=CC=C3)[RhH]" +
-        		"(P(C4=CC=CC=C4)(C5=CC=CC=C5)C6=CC=CC=C6)(P(C7=CC=CC=C7)" +
-        		"(C8=CC=CC=C8)C9=CC=CC=C9)P(C%10=CC=CC=C%10)" +
-        		"(C%11=CC=CC=C%11)C%12=CC=CC=C%12";
-        IMolecule mol = parser.parseSmiles(smiles);
-        int rhIndex = findFirstAtomIndexForSymbol(mol, "Rh");
-        
-        MoleculeSignature molSig = new MoleculeSignature(mol);
-        String signatureForRh = molSig.signatureStringForVertex(rhIndex);
-        System.out.println(signatureForRh);
     }
     
     @Test
