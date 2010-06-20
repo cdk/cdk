@@ -124,7 +124,7 @@ public class MoleculeSignature extends AbstractGraphSignature {
 
     @Override /** {@inheritDoc} */
     @TestMethod("getVertexCountTest")
-    public int getVertexCount() {
+    protected int getVertexCount() {
         return this.molecule.getAtomCount();
     }
 

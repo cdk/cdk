@@ -127,14 +127,14 @@ public class AtomSignature extends AbstractVertexSignature {
     
     @Override /** {@inheritDoc} */
     @TestMethod("getIntLabelTest")
-    public int getIntLabel(int vertexIndex) {
+    protected int getIntLabel(int vertexIndex) {
         IAtom atom = molecule.getAtom(vertexIndex);
         return atom.getMassNumber();
     }
 
     @Override /** {@inheritDoc} */
     @TestMethod("getConnectedTest")
-    public int[] getConnected(int vertexIndex) {
+    protected int[] getConnected(int vertexIndex) {
         IAtom atom  = this.molecule.getAtom(vertexIndex);
         List<IAtom> connected = this.molecule.getConnectedAtomsList(atom);
         int[] connectedIndices = new int[connected.size()];
@@ -147,7 +147,7 @@ public class AtomSignature extends AbstractVertexSignature {
 
     @Override /** {@inheritDoc} */
     @TestMethod("getEdgeLabelTest")
-    public String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
+    protected String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
         IAtom atomA = this.molecule.getAtom(vertexIndex);
         IAtom atomB = this.molecule.getAtom(otherVertexIndex);
         IBond bond = this.molecule.getBond(atomA, atomB);
@@ -167,7 +167,7 @@ public class AtomSignature extends AbstractVertexSignature {
 
     @Override /** {@inheritDoc} */
     @TestMethod("getVertexSymbolTest")
-    public String getVertexSymbol(int vertexIndex) {
+    protected String getVertexSymbol(int vertexIndex) {
         return this.molecule.getAtom(vertexIndex).getSymbol();
     }
 
