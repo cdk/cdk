@@ -96,6 +96,16 @@ public class AtomSignature extends AbstractVertexSignature {
     }
     
     /**
+     * Create an atom signature for the atom <code>atom</code>.
+     * 
+     * @param atom the atom to make the signature for
+     * @param molecule the molecule to create the signature from
+     */
+    public AtomSignature(IAtom atom, IAtomContainer molecule) {
+        this(molecule.getAtomNumber(atom), molecule);
+    }
+    
+    /**
      * Create an atom signature starting at <code>atomIndex</code> and with a
      * maximum height of <code>height</code>.
      * 
@@ -107,6 +117,18 @@ public class AtomSignature extends AbstractVertexSignature {
         super();
         this.molecule = molecule;
         super.create(atomIndex, molecule.getAtomCount(), height);
+    }
+    
+    /**
+     * Create an atom signature for the atom <code>atom</code> and with a
+     * maximum height of <code>height</code>.
+     * 
+     * @param atomIndex the index of the atom that roots this signature
+     * @param height the maximum height of the signature 
+     * @param molecule the molecule to create the signature from
+     */
+    public AtomSignature(IAtom atom, int height, IAtomContainer molecule) {
+        this(molecule.getAtomNumber(atom), height, molecule);
     }
     
     /**
@@ -123,6 +145,20 @@ public class AtomSignature extends AbstractVertexSignature {
         super(invariantType);
         this.molecule = molecule;
         super.create(atomIndex, molecule.getAtomCount(), height);
+    }
+    
+    /**
+     * Create an atom signature for the atom <code>atom</code>, with maximum
+     * height of <code>height</code>, and using a particular invariant type.
+     * 
+     * @param atomIndex the index of the atom that roots this signature
+     * @param height the maximum height of the signature
+     * @param invariantType the type of invariant (int, string, ...)
+     * @param molecule the molecule to create the signature from
+     */
+    public AtomSignature(IAtom atom, int height, 
+            InvariantType invariantType, IAtomContainer molecule) {
+        this(molecule.getAtomNumber(atom), height, invariantType, molecule);
     }
     
     @Override /** {@inheritDoc} */
