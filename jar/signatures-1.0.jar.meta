@@ -1,0 +1,9 @@
+[template.jar]
+Library=Signatures
+Version=1.0
+Copyright=Lars Carlsson and Gilleain Torrance
+License=MIT licence
+LicenseURL=http://github.com/gilleain/signatures/blob/master/LICENCE.txt
+#Download=
+#SourceCode=
+Homepage=http://github.com/gilleain/signatures
