@@ -27,6 +27,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -90,10 +91,29 @@ abstract public class CoverageAnnotationTest {
         Class coreClass = loadClass(getClassName(className));
         if (coreClass.isInterface()) return 0;
 
-        // lets get all the methods in the class we're checking
-        // we're going to skip private.
         int missingTestCount = 0;
         HashMap<String, TestMethod> methodAnnotations = new HashMap<String, TestMethod>();
+
+        // lets get all the constructors in the class we're checking
+        // we're going to skip private.
+        Constructor[] constructors = coreClass.getDeclaredConstructors();
+        for (Constructor constructor : constructors) {
+            int modifiers = constructor.getModifiers();
+            if (Modifier.isPrivate(modifiers)) continue;
+
+            TestMethod testMethodAnnotation = (TestMethod)constructor.getAnnotation(TestMethod.class);
+
+            if (constructor.getName().startsWith("access$")) {
+                // skip this test
+            } else if (testMethodAnnotation == null) {
+                // if a method does not have the annotation, it's missing a test
+                System.out.println(className + toString(constructor) + " does not have a test method");
+                missingTestCount++;
+            } else methodAnnotations.put(constructor.getName(), testMethodAnnotation);
+        }
+
+        // lets get all the methods in the class we're checking
+        // we're going to skip private.
         Method[] sourceMethods = coreClass.getDeclaredMethods();
         for (Method method : sourceMethods) {
             int modifiers = method.getModifiers();
@@ -176,6 +196,19 @@ abstract public class CoverageAnnotationTest {
         StringBuffer methodString = new StringBuffer();
         methodString.append(method.getName()).append('(');
         Class[] classes = method.getParameterTypes();
+        for (int i=0;i<classes.length; i++) {
+            Class clazz = classes[i];
+            methodString.append(clazz.getName().substring(clazz.getName().lastIndexOf('.')+1));
+            if ((i+1)<classes.length) methodString.append(',');
+        }
+        methodString.append(')');
+        return methodString.toString();
+    }
+
+    private String toString(Constructor constructor) {
+        StringBuffer methodString = new StringBuffer();
+        methodString.append('(');
+        Class[] classes = constructor.getParameterTypes();
         for (int i=0;i<classes.length; i++) {
             Class clazz = classes[i];
             methodString.append(clazz.getName().substring(clazz.getName().lastIndexOf('.')+1));
