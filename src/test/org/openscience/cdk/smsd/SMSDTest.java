@@ -43,13 +43,13 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandlerTest;
-import org.openscience.cdk.smsd.helper.MolHandler;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>

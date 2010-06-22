@@ -35,7 +35,6 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -79,7 +78,7 @@ public class ExtAtomContainerManipulatorTest {
             a.setID(String.valueOf(counter++));
         }
 
-        IMolecule result = ExtAtomContainerManipulator.makeDeepCopy(container);
+        IAtomContainer result = ExtAtomContainerManipulator.makeDeepCopy(container);
         for (int i = 0; i < result.getAtomCount(); i++) {
             assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
             assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());
@@ -151,7 +150,7 @@ public class ExtAtomContainerManipulatorTest {
         }
 
         int expResult = 1;
-        int result = ExtAtomContainerManipulator.getImplicitHydrogenCount(atomContainer, atom);
+        int result = ExtAtomContainerManipulator.getImplicitHydrogenCount(atom);
         assertEquals(expResult, result);
     }
 
@@ -196,7 +195,7 @@ public class ExtAtomContainerManipulatorTest {
                 break;
             }
         }
-        IAtomContainer result = ExtAtomContainerManipulator.removeHydrogensAndPreserveAtomID(atomContainer);
+        IAtomContainer result = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
 
         for (IAtom a : result.atoms()) {
             if (a.getSymbol().equalsIgnoreCase("P")) {

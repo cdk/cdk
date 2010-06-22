@@ -37,9 +37,9 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.SMSD;
-import org.openscience.cdk.smsd.helper.MolHandler;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
+import org.openscience.cdk.smsd.tools.MolHandler;
 import static org.junit.Assert.*;
 
 /**

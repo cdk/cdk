@@ -37,6 +37,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>

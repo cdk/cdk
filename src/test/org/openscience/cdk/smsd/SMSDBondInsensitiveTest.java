@@ -139,7 +139,6 @@ public class SMSDBondInsensitiveTest {
         Assert.assertEquals(true, ebimcs.isSubgraph());
     }
 
-
     @Test
     public void testCyclopropaneNotASubgraphOfIsoButane() throws Exception {
         IMolecule cycloPropane = createCyclopropane();
@@ -148,8 +147,8 @@ public class SMSDBondInsensitiveTest {
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(cycloPropane);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(isobutane);
 
-        IAtomContainer source = (IMolecule) ExtAtomContainerManipulator.removeHydrogensAndPreserveAtomID(cycloPropane);
-        IAtomContainer target = (IMolecule) ExtAtomContainerManipulator.removeHydrogensAndPreserveAtomID(isobutane);
+        IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(cycloPropane);
+        IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(isobutane);
 
         CDKHueckelAromaticityDetector.detectAromaticity(source);
         CDKHueckelAromaticityDetector.detectAromaticity(target);
@@ -217,8 +216,8 @@ public class SMSDBondInsensitiveTest {
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 
-        IAtomContainer source = (IMolecule) ExtAtomContainerManipulator.removeHydrogensAndPreserveAtomID(mol1);
-        IAtomContainer target = (IMolecule) ExtAtomContainerManipulator.removeHydrogensAndPreserveAtomID(mol2);
+        IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol1);
+        IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol2);
 
 //	Calling the main algorithm to perform MCS cearch
 
@@ -244,19 +243,19 @@ public class SMSDBondInsensitiveTest {
 
     private IMolecule create4Toluene() throws CDKException {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c2.setID("2");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c3.setID("3");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("4");
-        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("5");
-        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("6");
-        IAtom c7 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c7 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c7.setID("7");
 
         result.addAtom(c1);
@@ -292,7 +291,7 @@ public class SMSDBondInsensitiveTest {
 
     public IMolecule createMethane() {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         result.addAtom(c1);
 
         return result;
@@ -300,9 +299,9 @@ public class SMSDBondInsensitiveTest {
 
     public IMolecule createPropane() {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
 
 
         result.addAtom(c1);
@@ -325,17 +324,17 @@ public class SMSDBondInsensitiveTest {
     public IMolecule createHexane() throws CDKException {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
 
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c2.setID("2");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c3.setID("3");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("4");
-        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("5");
-        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("6");
 
         result.addAtom(c1);
@@ -366,17 +365,17 @@ public class SMSDBondInsensitiveTest {
     public static IMolecule createBenzene() throws CDKException {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
 
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c2.setID("2");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c3.setID("3");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("4");
-        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("5");
-        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("6");
 
         result.addAtom(c1);
@@ -470,25 +469,25 @@ public class SMSDBondInsensitiveTest {
     public static IMolecule createNaphthalene() throws CDKException {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
 
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c2.setID("2");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c3.setID("3");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("4");
-        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("5");
-        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("6");
-        IAtom c7 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c7 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("7");
-        IAtom c8 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c8 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("8");
-        IAtom c9 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c9 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("9");
-        IAtom c10 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c10 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("10");
 
         result.addAtom(c1);
@@ -637,17 +636,17 @@ public class SMSDBondInsensitiveTest {
 
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
 
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c2.setID("2");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c3.setID("3");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c4.setID("4");
-        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c5 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c5.setID("5");
-        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c6 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c6.setID("6");
 
         result.addAtom(c1);
@@ -684,9 +683,9 @@ public class SMSDBondInsensitiveTest {
     public static IMolecule createCyclopropane() {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
 
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
 
         result.addAtom(c1);
         result.addAtom(c2);
@@ -707,10 +706,10 @@ public class SMSDBondInsensitiveTest {
     public static IMolecule createIsobutane() {
         IMolecule result = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
 
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
-        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
-        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
-        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
 
         result.addAtom(c1);
         result.addAtom(c2);

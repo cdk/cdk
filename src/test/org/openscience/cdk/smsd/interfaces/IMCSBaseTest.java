@@ -35,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.smsd.helper.MolHandler;
+import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
@@ -65,6 +65,7 @@ public class IMCSBaseTest {
 
     /**
      * Test of set method, of class IMCSBase.
+     * @throws Exception
      */
     @Test
     public void testSet_MolHandler_MolHandler() throws Exception {
@@ -79,6 +80,7 @@ public class IMCSBaseTest {
 
     /**
      * Test of set method, of class IMCSBase.
+     * @throws Exception
      */
     @Test
     public void testSet_IMolecule_IMolecule() throws Exception {
@@ -93,6 +95,7 @@ public class IMCSBaseTest {
 
     /**
      * Test of set method, of class IMCSBase.
+     * @throws Exception
      */
     @Test
     public void testSet_IAtomContainer_IAtomContainer() throws Exception {
@@ -107,6 +110,7 @@ public class IMCSBaseTest {
 
     /**
      * Test of set method, of class IMCSBase.
+     * @throws Exception 
      */
     @Test
     public void testSet_String_String() throws Exception {
@@ -205,5 +209,4 @@ public class IMCSBaseTest {
             return null;
         }
     }
-
 }
