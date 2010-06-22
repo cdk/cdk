@@ -94,6 +94,7 @@ public class SMSDBondInsensitiveTest {
 
     @Test
     public void testMCSPlus() throws Exception {
+        //TO DO fix me this error
         SMSD ebimcs = new SMSD(Algorithm.MCSPlus, false);
         ebimcs.init(Cyclohexane, Benzene, true);
         ebimcs.setChemFilters(true, true, true);
@@ -169,7 +170,7 @@ public class SMSDBondInsensitiveTest {
         Assert.assertEquals(false, comparison.isSubgraph());
         Assert.assertEquals(new Double(0.75), new Double(comparison.getTanimotoSimilarity()));
         Assert.assertEquals(3, comparison.getFirstMapping().size());
-        Assert.assertEquals(18, comparison.getAllMapping().size());
+        Assert.assertEquals(6, comparison.getAllMapping().size());
     }
 
     @Test

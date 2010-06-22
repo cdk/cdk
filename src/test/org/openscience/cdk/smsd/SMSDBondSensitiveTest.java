@@ -134,7 +134,7 @@ public class SMSDBondSensitiveTest {
         SMSD ebimcs = new SMSD(Algorithm.MCSPlus, true);
         ebimcs.init(Cyclohexane, Benzene, true);
         ebimcs.setChemFilters(true, true, true);
-        Assert.assertEquals(true, ebimcs.isSubgraph());
+        Assert.assertEquals(false, ebimcs.isSubgraph());
     }
 
     @Test
@@ -153,7 +153,7 @@ public class SMSDBondSensitiveTest {
         SMSD ebimcs = new SMSD(Algorithm.DEFAULT, true);
         ebimcs.init(Cyclohexane, Benzene, true);
         ebimcs.setChemFilters(true, true, true);
-        Assert.assertEquals(6, ebimcs.getFirstMapping().size());
+        Assert.assertEquals(1, ebimcs.getFirstMapping().size());
 
         SMSD ebimcs1 = new SMSD(Algorithm.DEFAULT, true);
         ebimcs1.init(Benzene, Napthalene, true);
@@ -196,7 +196,7 @@ public class SMSDBondSensitiveTest {
         ebimcs3.setChemFilters(true, true, true);
         BondType bondType = BondType.getInstance();
         System.out.println(bondType.isBondSensitive());
-        Assert.assertEquals(6, ebimcs3.getFirstAtomMapping().size());
+        Assert.assertEquals(1, ebimcs3.getFirstAtomMapping().size());
 
         SMSD ebimcs4 = new SMSD(Algorithm.CDKMCS, true);
         ebimcs4.init(Benzene, Napthalene, true);

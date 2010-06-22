@@ -64,9 +64,9 @@ public class FragmentMatcherTest {
         target.addAtomContainer(target1);
         FragmentMatcher instance = new FragmentMatcher(source, target, true);
         instance.searchMCS();
-        Assert.assertEquals(2, instance.getAllAtomMapping().size());
+        Assert.assertEquals(1, instance.getAllAtomMapping().size());
         Assert.assertEquals(7, instance.getFirstAtomMapping().size());
-        Assert.assertEquals(2, instance.getAllMapping().size());
+        Assert.assertEquals(1, instance.getAllMapping().size());
         Assert.assertEquals(7, instance.getFirstMapping().size());
     }
 
@@ -89,7 +89,7 @@ public class FragmentMatcherTest {
         target.addAtomContainer(target1);
         FragmentMatcher instance = new FragmentMatcher(source, target, true);
         instance.searchMCS();
-        Assert.assertEquals(2, instance.getAllAtomMapping().size());
+        Assert.assertEquals(1, instance.getAllAtomMapping().size());
     }
 
     /**
@@ -111,7 +111,7 @@ public class FragmentMatcherTest {
         target.addAtomContainer(target1);
         FragmentMatcher instance = new FragmentMatcher(source, target, true);
         instance.searchMCS();
-        Assert.assertEquals(2, instance.getAllMapping().size());
+        Assert.assertEquals(1, instance.getAllMapping().size());
     }
 
     /**

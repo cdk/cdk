@@ -85,7 +85,7 @@ public class ChemicalFiltersTest {
         SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true);
         smsd1.setChemFilters(true, false, false);
-        assertEquals(1, smsd1.getAllAtomMapping().size());
+        assertEquals(3, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -103,7 +103,7 @@ public class ChemicalFiltersTest {
         SMSD smsd = new SMSD(Algorithm.DEFAULT, false);
         smsd.init(queryac, target, true);
         smsd.setChemFilters(false, false, false);
-        assertEquals(6, smsd.getAllAtomMapping().size());
+        assertEquals(4, smsd.getAllAtomMapping().size());
 
         SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true);
@@ -125,7 +125,7 @@ public class ChemicalFiltersTest {
         SMSD smsd = new SMSD(Algorithm.DEFAULT, false);
         smsd.init(queryac, target, true);
         smsd.setChemFilters(false, false, false);
-        assertEquals(6, smsd.getAllAtomMapping().size());
+        assertEquals(4, smsd.getAllAtomMapping().size());
 
         SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true);
