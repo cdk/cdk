@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.smsd.tools;
 
+import org.openscience.reactionblast.tools.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,15 +33,11 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -71,25 +68,31 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 @TestClass("org.openscience.cdk.smsd.tools.ExtAtomContainerManipulatorTest")
 public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
+    private static void printAtoms(IAtomContainer mol) {
+        System.out.print("Atom: ");
+        for (IAtom a : mol.atoms()) {
+
+            System.out.print(a.getSymbol());
+            System.out.print("[" + a.getFormalCharge() + "]");
+            if (a.getID() != null) {
+                System.out.print("[" + a.getID() + "]");
+            }
+
+        }
+        System.out.println();
+        System.out.println();
+    }
+
     /**
      * Retrurns deep copy of the molecule
      * @param container
      * @return deep copy of the mol
      */
     @TestMethod("testMakeDeepCopy")
-    public static IMolecule makeDeepCopy(IAtomContainer container) {
-
-        IMolecule newAtomContainer = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+    public static IAtomContainer makeDeepCopy(IAtomContainer container) {
 
 
-
-        int lonePairCount = container.getLonePairCount();
-        int singleElectronCount = container.getSingleElectronCount();
-
-
-        ILonePair[] lonePairs = new ILonePair[lonePairCount];
-        ISingleElectron[] singleElectrons = new ISingleElectron[singleElectronCount];
-
+        IAtomContainer newAtomContainer = container.getBuilder().newInstance(IAtomContainer.class);
 //      Deep copy of the Atoms
         IAtom[] atoms = copyAtoms(container, newAtomContainer);
 
@@ -98,26 +101,58 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
 //      Deep copy of the LonePairs
         for (int index = 0; index < container.getLonePairCount(); index++) {
-
-            if (container.getAtom(index).getSymbol().equalsIgnoreCase("R")) {
-                lonePairs[index] = DefaultChemObjectBuilder.getInstance().newInstance(ILonePair.class, container.getAtom(index));
+            if (container.getAtom(index).getSymbol().equalsIgnoreCase("R") || container.getAtom(index).getSymbol().equalsIgnoreCase("A")) {
+                newAtomContainer.addLonePair(container.getBuilder().newInstance(ILonePair.class, container.getAtom(index)));
+            } else {
+                newAtomContainer.addLonePair(index);
             }
-            newAtomContainer.addLonePair(lonePairs[index]);
         }
 
         for (int index = 0; index < container.getSingleElectronCount(); index++) {
-            singleElectrons[index] = DefaultChemObjectBuilder.getInstance().newInstance(ISingleElectron.class, container.getAtom(index));
-            newAtomContainer.addSingleElectron(singleElectrons[index]);
-
+            newAtomContainer.addSingleElectron(index);
         }
         newAtomContainer.setProperties(container.getProperties());
         newAtomContainer.setFlags(container.getFlags());
-
         newAtomContainer.setID(container.getID());
-
         newAtomContainer.notifyChanged();
-        return newAtomContainer;
 
+        return newAtomContainer;
+    }
+
+    /**
+     * Retrurns deep copy of the molecule
+     * @param container
+     * @return deep copy of the mol
+     */
+    @TestMethod("testMakeDeepCopy")
+    public static IMolecule makeDeepCopy(IMolecule container) {
+
+        IMolecule newMolecule = container.getBuilder().newInstance(IMolecule.class);
+//      Deep copy of the Atoms
+        IAtom[] atoms = copyAtoms(container, newMolecule);
+
+//      Deep copy of the bonds
+        copyBonds(atoms, container, newMolecule);
+
+//      Deep copy of the LonePairs
+        for (int index = 0; index < container.getLonePairCount(); index++) {
+            if (container.getAtom(index).getSymbol().equalsIgnoreCase("R") || container.getAtom(index).getSymbol().equalsIgnoreCase("A")) {
+                newMolecule.addLonePair(container.getBuilder().newInstance(ILonePair.class, container.getAtom(index)));
+            } else {
+                newMolecule.addLonePair(index);
+            }
+        }
+
+        for (int index = 0; index < container.getSingleElectronCount(); index++) {
+            newMolecule.addSingleElectron(index);
+        }
+
+        newMolecule.setProperties(container.getProperties());
+        newMolecule.setFlags(container.getFlags());
+        newMolecule.setID(container.getID());
+        newMolecule.notifyChanged();
+
+        return newMolecule;
     }
 
     /**
@@ -205,12 +240,11 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
     /**
      * Returns The number of Implicit Hydrogen Count for a given IAtom.
-     * @param atomContainer
      * @param atom
      * @return Implicit Hydrogen Count
      */
     @TestMethod("testGetImplicitHydrogenCount")
-    public static int getImplicitHydrogenCount(IAtomContainer atomContainer, IAtom atom) {
+    public static int getImplicitHydrogenCount(IAtom atom) {
         return atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
     }
 
@@ -222,7 +256,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      */
     @TestMethod("testGetHydrogenCount")
     public static int getHydrogenCount(IAtomContainer atomContainer, IAtom atom) {
-        return getExplicitHydrogenCount(atomContainer, atom) + getImplicitHydrogenCount(atomContainer, atom);
+        return getExplicitHydrogenCount(atomContainer, atom) + getImplicitHydrogenCount(atom);
     }
 
     /**
@@ -233,7 +267,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      * is atom Hydrogen then its not removed.
      */
     @TestMethod("testRemoveHydrogensAndPreserveAtomID")
-    public static IAtomContainer removeHydrogensAndPreserveAtomID(IAtomContainer atomContainer) {
+    public static IMolecule removeHydrogensExceptSingleAndPreserveAtomID(IAtomContainer atomContainer) {
         Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>();        // maps original atoms to clones.
         List<IAtom> remove = new ArrayList<IAtom>();  // lists removed Hs.
         IMolecule mol = null;
@@ -274,15 +308,14 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
         } else {
             mol = atomContainer.getBuilder().newInstance(IMolecule.class, atomContainer);
-            mol.setProperties(atomContainer.getProperties());
-            mol.setFlags(atomContainer.getFlags());
-            if (atomContainer.getID() != null) {
-                mol.setID(atomContainer.getID());
-            }
             if (atomContainer.getAtom(0).getSymbol().equalsIgnoreCase("H")) {
                 System.err.println("WARNING: single hydrogen atom removal not supported!");
             }
-
+            mol.setFlags(atomContainer.getFlags());
+        }
+        mol.setProperties(atomContainer.getProperties());
+        if (atomContainer.getID() != null) {
+            mol.setID(atomContainer.getID());
         }
 
         return mol;
@@ -297,7 +330,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      */
     @TestMethod("testConvertExplicitToImplicitHydrogens")
     public static IAtomContainer convertExplicitToImplicitHydrogens(IAtomContainer atomContainer) {
-        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
+        IAtomContainer mol = atomContainer.getBuilder().newInstance(IMolecule.class, atomContainer);
         convertImplicitToExplicitHydrogens(mol);
         if (mol.getAtomCount() > 1) {
             mol = removeHydrogens(mol);
@@ -336,15 +369,15 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         }
     }
 
-    private static IAtom[] copyAtoms(IAtomContainer container, IMolecule newAtomContainer) {
+    private static IAtom[] copyAtoms(IAtomContainer container, IAtomContainer newAtomContainer) {
         int atomCount = container.getAtomCount();
         IAtom[] atoms = new IAtom[atomCount];
         for (int index = 0; index < container.getAtomCount(); index++) {
 
             if (container.getAtom(index) instanceof IPseudoAtom) {
-                atoms[index] = new PseudoAtom(container.getAtom(index));
+                atoms[index] = container.getBuilder().newInstance(IPseudoAtom.class, container.getAtom(index));
             } else {
-                atoms[index] = new Atom(container.getAtom(index));
+                atoms[index] = container.getBuilder().newInstance(IAtom.class, container.getAtom(index));
             }
 
             set2D(container, index, atoms);
@@ -356,13 +389,12 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             setStereoParity(container, index, atoms);
             newAtomContainer.addAtom(atoms[index]);
             setAtomParity(container, index, newAtomContainer);
-
         }
 
         return atoms;
     }
 
-    private static void copyBonds(IAtom[] atoms, IAtomContainer container, IMolecule newAtomContainer) {
+    private static void copyBonds(IAtom[] atoms, IAtomContainer container, IAtomContainer newAtomContainer) {
         int bondCount = container.getBondCount();
         IBond[] bonds = new IBond[bondCount];
         for (int index = 0; index < container.getBondCount(); index++) {

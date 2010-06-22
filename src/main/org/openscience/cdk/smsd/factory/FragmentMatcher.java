@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandler;
 import org.openscience.cdk.smsd.algorithm.single.SingleMappingHandler;
 import org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler;
-import org.openscience.cdk.smsd.helper.MolHandler;
+import org.openscience.cdk.smsd.tools.MolHandler;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;

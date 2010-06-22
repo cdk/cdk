@@ -138,10 +138,8 @@ public class SingleMapping {
         List<TreeMap<Integer, Integer>> SortedMap = new ArrayList<TreeMap<Integer, Integer>>();
         connectedBondOrder = sortByValue(connectedBondOrder);
         for (Map.Entry<Integer, Integer> map : connectedBondOrder.entrySet()) {
-
             TreeMap<Integer, Integer> mapToBeMoved = mappings.get(map.getKey());
             SortedMap.add(mapToBeMoved);
-
         }
         mappings = SortedMap;
         FinalMappings final_MAPPINGS = FinalMappings.getInstance();

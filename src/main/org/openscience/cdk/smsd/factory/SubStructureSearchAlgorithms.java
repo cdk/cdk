@@ -48,7 +48,7 @@ import org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandler;
 import org.openscience.cdk.smsd.filters.ChemicalFilters;
 import org.openscience.cdk.smsd.global.BondType;
 import org.openscience.cdk.smsd.global.TimeOut;
-import org.openscience.cdk.smsd.helper.MolHandler;
+import org.openscience.cdk.smsd.tools.MolHandler;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 import org.openscience.cdk.smsd.interfaces.AbstractMCS;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -186,8 +186,6 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
         firstAtomMCS.putAll(mcs.getFirstAtomMapping());
         allAtomMCS.addAll(mcs.getAllAtomMapping());
 
-
-
     }
 
     private synchronized void mcsPlusAlgorithm() {
@@ -289,11 +287,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
     }
 
     private void defaultAlgorithm() {
-        if (BondType.getInstance().isBondSensitive()) {
-            cdkMCSAlgorithm();
-        } else {
-            mcsPlusAlgorithm();
-        }
+        cdkMCSAlgorithm();
         if (isTimeOut() || getFirstAtomMapping() == null) {
             vfLibMCS();
         }
@@ -514,6 +508,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
         int decimalPlaces = 4;
         int rAtomCount = 0;
         int pAtomCount = 0;
+        double tanimoto = 0.0;
         if (!removeHydrogen) {
             rAtomCount = rMol.getMolecule().getAtomCount();
             pAtomCount = pMol.getMolecule().getAtomCount();
@@ -521,13 +516,13 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
             rAtomCount = rMol.getMolecule().getAtomCount() - getHCount(rMol.getMolecule());
             pAtomCount = pMol.getMolecule().getAtomCount() - getHCount(pMol.getMolecule());
         }
-        double matchCount = getFirstMapping().size();
-        double tanimoto = (matchCount) / (rAtomCount + pAtomCount - matchCount);
-
-        BigDecimal tan = new BigDecimal(tanimoto);
-
-        tan = tan.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-        tanimoto = tan.doubleValue();
+        if (getFirstMapping() != null || !getFirstMapping().isEmpty()) {
+            double matchCount = getFirstMapping().size();
+            tanimoto = (matchCount) / (rAtomCount + pAtomCount - matchCount);
+            BigDecimal tan = new BigDecimal(tanimoto);
+            tan = tan.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+            tanimoto = tan.doubleValue();
+        }
         return tanimoto;
     }
 
@@ -610,6 +605,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
         int decimalPlaces = 4;
         double source = 0;
         double target = 0;
+        double euclidean = -1;
         if (!removeHydrogen) {
             source = rMol.getMolecule().getAtomCount();
             target = pMol.getMolecule().getAtomCount();
@@ -617,12 +613,14 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
             source = rMol.getMolecule().getAtomCount() - getHCount(rMol.getMolecule());
             target = pMol.getMolecule().getAtomCount() - getHCount(pMol.getMolecule());
         }
-        double common = getFirstMapping().size();
-        double euclidean = Math.sqrt(source + target - 2 * common);
 
-        BigDecimal dist = new BigDecimal(euclidean);
-        dist = dist.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-        euclidean = dist.doubleValue();
+        if (getFirstMapping() != null || !getFirstMapping().isEmpty()) {
+            double common = getFirstMapping().size();
+            euclidean = Math.sqrt(source + target - 2 * common);
+            BigDecimal dist = new BigDecimal(euclidean);
+            dist = dist.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+            euclidean = dist.doubleValue();
+        }
         return euclidean;
     }
 
@@ -630,6 +628,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      * {@inheritDoc}
      * @return the bondSensitiveTimeOut
      */
+    @Override
     public double getBondSensitiveTimeOut() {
         return bondSensitiveTimeOut;
     }
@@ -638,6 +637,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      * {@inheritDoc}
      * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.15 min)
      */
+    @Override
     public void setBondSensitiveTimeOut(double bondSensitiveTimeOut) {
         this.bondSensitiveTimeOut = bondSensitiveTimeOut;
     }
@@ -646,6 +646,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      * {@inheritDoc}
      * @return the bondInSensitiveTimeOut
      */
+    @Override
     public double getBondInSensitiveTimeOut() {
         return bondInSensitiveTimeOut;
     }
@@ -654,6 +655,7 @@ public class SubStructureSearchAlgorithms extends AbstractMCS {
      * {@inheritDoc}
      * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
      */
+    @Override
     public void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut) {
         this.bondInSensitiveTimeOut = bondInSensitiveTimeOut;
     }

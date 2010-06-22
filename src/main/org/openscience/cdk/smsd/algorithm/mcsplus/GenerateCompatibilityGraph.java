@@ -329,8 +329,6 @@ public final class GenerateCompatibilityGraph {
         //Size of C and D edges of the compatibility graph
         cEdgesSize = cEdges.size();
         dEdgesSize = dEdges.size();
-
-
         return 0;
     }
 

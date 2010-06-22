@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import org.openscience.cdk.smsd.tools.BondEnergies;
-import org.openscience.cdk.smsd.helper.MolHandler;
+import org.openscience.cdk.smsd.tools.MolHandler;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -226,23 +226,31 @@ public class ChemicalFilters {
         boolean flag = false;
         if (stereoMatchFlag) {
 
+            //Higher Score is mapped preferred over lower
             stereoScoreMap = sortMapByValueInDecendingOrder(stereoScoreMap);
-
-
-            double higestStereoScore = 0.0;
+            double higestStereoScore = stereoScoreMap.isEmpty() ? 0 : stereoScoreMap.values().iterator().next();
+            double secondhigestStereoScore = higestStereoScore;
             for (Integer key : stereoScoreMap.keySet()) {
-                higestStereoScore = stereoScoreMap.get(key).doubleValue();
+                if (secondhigestStereoScore < higestStereoScore
+                        && stereoScoreMap.get(key) > secondhigestStereoScore) {
+                    secondhigestStereoScore = stereoScoreMap.get(key);
+                } else if (secondhigestStereoScore == higestStereoScore
+                        && stereoScoreMap.get(key) < secondhigestStereoScore) {
+                    secondhigestStereoScore = stereoScoreMap.get(key);
+                }
+            }
+
+            if (!stereoScoreMap.isEmpty()) {
                 flag = true;
                 clear();
-                break;
             }
 
             /*Put back the sorted solutions*/
 
             int counter = 0;
             for (Integer I : stereoScoreMap.keySet()) {
-                if (higestStereoScore == stereoScoreMap.get(I).doubleValue()) {
-
+                if (higestStereoScore == stereoScoreMap.get(I).doubleValue()
+                        || secondhigestStereoScore == stereoScoreMap.get(I).doubleValue()) {
                     addSolution(counter, I,
                             allStereoAtomMCS,
                             allStereoMCS,
@@ -251,9 +259,8 @@ public class ChemicalFilters {
                             fragmentScoreMap);
                     counter++;
                 }
-//                System.out.println("Sorted Map Key " + key + " Sorted Value: " + sortedStereoScoreMap.get(key));
+//                System.out.println("Sorted Map Key " + I + " Sorted Value: " + stereoScoreMap.get(I));
 //                System.out.println("sortedAllMCS Key " + key + " Sorted Value: " + sortedAllMCS.get(key));
-
             }
             if (flag) {
                 firstSolution.putAll(allMCS.get(0));
@@ -301,8 +308,6 @@ public class ChemicalFilters {
             flag = true;
             clear();
         }
-
-
         int counter = 0;
         for (Map.Entry<Integer, Integer> map : fragmentScoreMap.entrySet()) {
             if (_minFragmentScore == map.getValue().intValue()) {
@@ -421,14 +426,11 @@ public class ChemicalFilters {
                             if (ac1Bond != null && ac2Bond != null) {
                                 maps.put(ac1Bond, ac2Bond);
                             }
-
                         }
-
                     }
                 }
             }
         }
-
 //        System.out.println("Mol Map size:" + maps.size());
         return maps;
 
@@ -560,7 +562,6 @@ public class ChemicalFilters {
      */
     @TestMethod("testGetStereoMatches")
     public List<Double> getStereoMatches() {
-
         return Collections.unmodifiableList(stereoScore);
     }
 
@@ -580,7 +581,6 @@ public class ChemicalFilters {
                 }
             }
         } else {
-
             System.out.println("1: Reactant, 2: Product " + key + "is invalid option");
         }
 
@@ -639,26 +639,29 @@ public class ChemicalFilters {
     }
 
     private double getBondFormalChargeMatches(IBond RBond, IBond PBond) {
-
         double score = 0.0;
-        if (RBond.getAtom(0).getFormalCharge() == PBond.getAtom(0).getFormalCharge()) {
-            score += Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
-
-        } else {
-            score -= Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
-
+        if (RBond.getAtom(0).getID().equals(PBond.getAtom(0).getID())
+                && RBond.getAtom(1).getID().equals(PBond.getAtom(1).getID())) {
+            if (!RBond.getOrder().equals(PBond.getOrder())
+                    && RBond.getAtom(0).getFormalCharge() != PBond.getAtom(0).getFormalCharge()) {
+                score += Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
+            }
+            if (!RBond.getOrder().equals(PBond.getOrder())
+                    && RBond.getAtom(1).getFormalCharge() != PBond.getAtom(1).getFormalCharge()) {
+                score += Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
+            }
+        } else if (RBond.getAtom(1).getID().equals(PBond.getAtom(0).getID())
+                && RBond.getAtom(0).getID().equals(PBond.getAtom(1).getID())) {
+            if (!RBond.getOrder().equals(PBond.getOrder())
+                    && RBond.getAtom(1).getFormalCharge() != PBond.getAtom(0).getFormalCharge()) {
+                score += Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
+            }
+            if (!RBond.getOrder().equals(PBond.getOrder())
+                    && RBond.getAtom(0).getFormalCharge() != PBond.getAtom(1).getFormalCharge()) {
+                score += Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
+            }
         }
-
-
-        if (RBond.getAtom(1).getFormalCharge() == PBond.getAtom(1).getFormalCharge()) {
-            score += Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
-
-        } else {
-            score -= Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
-        }
-
         return score;
-
     }
 
     private double getRingMatchScore(double score, IAtomContainer subgraphRContainer, IAtomContainer subgraphPContainer) {
@@ -683,7 +686,6 @@ public class ChemicalFilters {
             if (rLength > pLength) {
                 score += (rLength - pLength) * 2;
             }
-
         }
         return score;
     }
@@ -804,12 +806,10 @@ public class ChemicalFilters {
             int ReactantBondType = queryBond.getOrder().ordinal();
             int ProductBondType = targetBond.getOrder().ordinal();
 
-
             if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
                     && (ReactantBondType == ProductBondType)) {
                 score += 2;
             }
-
             if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
                 score += 4;
             }
@@ -824,15 +824,12 @@ public class ChemicalFilters {
                 score += Math.abs(ReactantBondType - ProductBondType);
             }
         }
-
         return score;
     }
 
     private int getFragmentCount(IAtomContainer molecule) {
         boolean fragmentFlag = true;
-
         IAtomContainerSet fragmentMolSet = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-
         int countFrag = 0;
         if (molecule.getAtomCount() > 0) {
             fragmentFlag = ConnectivityChecker.isConnected(molecule);
@@ -843,7 +840,6 @@ public class ChemicalFilters {
             }
             countFrag = fragmentMolSet.getAtomContainerCount();
         }
-
         return countFrag;
     }
 }

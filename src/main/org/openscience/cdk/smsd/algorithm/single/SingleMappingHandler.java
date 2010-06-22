@@ -31,7 +31,7 @@ import java.util.TreeMap;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.smsd.helper.FinalMappings;
-import org.openscience.cdk.smsd.helper.MolHandler;
+import org.openscience.cdk.smsd.tools.MolHandler;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -193,11 +193,8 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
 
                     sourceAtom = source.getAtom(IIndex);
                     targetAtom = target.getAtom(JIndex);
-
                     atomMappings.put(sourceAtom, targetAtom);
-
                 }
-
                 allAtomMCS.add(counter++, atomMappings);
             }
         } catch (Exception I) {
@@ -208,14 +205,14 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
     private synchronized void setFirstMapping() {
 
         if (allMCS.size() > 0) {
-            firstMCS = new TreeMap<Integer, Integer>(allMCS.get(0));
+            firstMCS = new TreeMap<Integer, Integer>(allMCS.iterator().next());
         }
 
     }
 
     private synchronized void setFirstAtomMapping() {
         if (allAtomMCS.size() > 0) {
-            atomsMCS = new HashMap<IAtom, IAtom>(allAtomMCS.get(0));
+            atomsMCS = new HashMap<IAtom, IAtom>(allAtomMCS.iterator().next());
         }
 
     }

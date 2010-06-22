@@ -52,7 +52,7 @@ public class ExactMapping {
         List<Integer> clique_List = new ArrayList<Integer>(clique_List_org);
         int clique_siz = clique_List.size();
         int vec_size = comp_graph_nodes.size();
-        //System.out.println("VEC  SIZE " + vec_size);
+//        System.out.println("VEC  SIZE " + vec_size);
         for (int a = 0; a < clique_siz; a++) {
             for (int b = 0; b < vec_size; b += 3) {
                 if (clique_List.get(a) == comp_graph_nodes.get(b + 2)) {
@@ -77,10 +77,8 @@ public class ExactMapping {
             List<Integer> clique_List_org) {
 
         try {
-
             List<Integer> clique_List = extractCliqueMapping(comp_graph_nodes, clique_List_org);
             _mappings.add(clique_List);
-
         } catch (Exception e) {
             System.err.println("Error in FinalMapping List: " + e.getCause());
             e.printStackTrace();

@@ -41,7 +41,7 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.smsd.helper.FinalMappingsTest")
 public class FinalMappings implements IFinalMapping {
 
-    private List<Map<Integer, Integer>> mappings = null;
+    private static List<Map<Integer, Integer>> mappings = null;
     private static FinalMappings instance = null;
 
     protected FinalMappings() {

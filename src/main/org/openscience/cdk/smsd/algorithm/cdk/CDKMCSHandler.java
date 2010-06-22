@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smsd.helper.FinalMappings;
-import org.openscience.cdk.smsd.helper.MolHandler;
+import org.openscience.cdk.smsd.tools.MolHandler;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
