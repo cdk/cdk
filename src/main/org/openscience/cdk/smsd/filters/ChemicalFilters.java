@@ -640,25 +640,31 @@ public class ChemicalFilters {
 
     private double getBondFormalChargeMatches(IBond RBond, IBond PBond) {
         double score = 0.0;
-        if (RBond.getAtom(0).getID().equals(PBond.getAtom(0).getID())
-                && RBond.getAtom(1).getID().equals(PBond.getAtom(1).getID())) {
-            if (!RBond.getOrder().equals(PBond.getOrder())
-                    && RBond.getAtom(0).getFormalCharge() != PBond.getAtom(0).getFormalCharge()) {
-                score += Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
-            }
-            if (!RBond.getOrder().equals(PBond.getOrder())
-                    && RBond.getAtom(1).getFormalCharge() != PBond.getAtom(1).getFormalCharge()) {
-                score += Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
-            }
-        } else if (RBond.getAtom(1).getID().equals(PBond.getAtom(0).getID())
-                && RBond.getAtom(0).getID().equals(PBond.getAtom(1).getID())) {
-            if (!RBond.getOrder().equals(PBond.getOrder())
-                    && RBond.getAtom(1).getFormalCharge() != PBond.getAtom(0).getFormalCharge()) {
-                score += Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
-            }
-            if (!RBond.getOrder().equals(PBond.getOrder())
-                    && RBond.getAtom(0).getFormalCharge() != PBond.getAtom(1).getFormalCharge()) {
-                score += Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
+        if (RBond != null
+                && PBond != null
+                && RBond.getAtom(0).getID() != null && PBond.getAtom(0).getID() != null
+                && RBond.getAtom(1).getID() != null && PBond.getAtom(1).getID() != null) {
+
+            if (RBond.getAtom(0).getID().equals(PBond.getAtom(0).getID())
+                    && RBond.getAtom(1).getID().equals(PBond.getAtom(1).getID())) {
+                if (!RBond.getOrder().equals(PBond.getOrder())
+                        && RBond.getAtom(0).getFormalCharge() != PBond.getAtom(0).getFormalCharge()) {
+                    score += Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
+                }
+                if (!RBond.getOrder().equals(PBond.getOrder())
+                        && RBond.getAtom(1).getFormalCharge() != PBond.getAtom(1).getFormalCharge()) {
+                    score += Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
+                }
+            } else if (RBond.getAtom(1).getID().equals(PBond.getAtom(0).getID())
+                    && RBond.getAtom(0).getID().equals(PBond.getAtom(1).getID())) {
+                if (!RBond.getOrder().equals(PBond.getOrder())
+                        && RBond.getAtom(1).getFormalCharge() != PBond.getAtom(0).getFormalCharge()) {
+                    score += Math.abs(RBond.getAtom(1).getFormalCharge() - PBond.getAtom(0).getFormalCharge());
+                }
+                if (!RBond.getOrder().equals(PBond.getOrder())
+                        && RBond.getAtom(0).getFormalCharge() != PBond.getAtom(1).getFormalCharge()) {
+                    score += Math.abs(RBond.getAtom(0).getFormalCharge() - PBond.getAtom(1).getFormalCharge());
+                }
             }
         }
         return score;
