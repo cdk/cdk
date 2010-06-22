@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 //~--- non-JDK imports --------------------------------------------------------
-import org.openscience.reactionblast.tools.ExtAtomContainerManipulator;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;

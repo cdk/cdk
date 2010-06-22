@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.smsd.tools;
 
-import org.openscience.reactionblast.tools.ExtAtomContainerManipulator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
