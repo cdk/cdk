@@ -200,8 +200,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     @TestMethod("invisibleHydrogenTest")
     public boolean invisibleHydrogen(IAtom atom, RendererModel model) {
-        return atom.getSymbol().equals("H") 
-            && !showExplicitHydrogens.getValue();
+        return isHydrogen(atom) && !model.get(ShowExplicitHydrogens.class);
     }
 
     /**
@@ -262,7 +261,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
             IAtomContainer atomContainer, IAtom atom, RendererModel model) {
         if (!canDraw(atom, atomContainer, model)) {
             return null;
-        } else if (isCompact.getValue()) {
+	    } else if (model.get(CompactAtom.class)) {
             return this.generateCompactElement(atom, model);
         } else {
             int alignment = 0;
@@ -290,12 +289,12 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     public IRenderingElement generateCompactElement(
             IAtom atom, RendererModel model) {
         Point2d p = atom.getPoint2d();
-        double r = atomRadius.getValue() /
+	    double r = model.get(AtomRadius.class) /
         model.getParameter(Scale.class).getValue();
         double d = 2 * r;
-        if (compactShape.getValue() == Shape.SQUARE) {
+	    if (model.get(CompactShape.class) == Shape.SQUARE) {
             return new RectangleElement(
-                    p.x - r, p.y - r, d, d, true, getAtomColor(atom));
+    	            p.x - r, p.y - r, d, d, true, getAtomColor(atom,model));
         } else {
             return new OvalElement(p.x, p.y, r, true, getAtomColor(atom, model));
         }
@@ -324,7 +323,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
                 text,
                 atom.getFormalCharge(),
                 atom.getImplicitHydrogenCount(),
-                alignment, getAtomColor(atom));
+				alignment, getAtomColor(atom,model));
     }
 
     /**
@@ -341,7 +340,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     public boolean showCarbon(
             IAtom carbonAtom, IAtomContainer ac, RendererModel model) {
 
-        if (isKekule.getValue())
+		if (model.get(KekuleStructure.class))
             return true;
 
         if (carbonAtom.getFormalCharge() != 0)
@@ -352,8 +351,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         if (connectedBondCount < 1)
             return true;
 
-        if (showEndCarbons.getValue() && connectedBondCount == 1)
-            return true;
+		if (model.get(ShowEndCarbons.class) && connectedBondCount == 1)
+			return true;
 
         if (carbonAtom.getProperty(ProblemMarker.ERROR_MARKER) != null)
             return true;
@@ -371,10 +370,10 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * selected). Otherwise, the atom is colored black.
      */
     @TestMethod("getAtomColorTest")
-    protected Color getAtomColor(IAtom atom) {
-        Color atomColor = this.atomColor.getValue();
-        if (colorByType.getValue()) {
-            atomColor = this.atomColorer.getValue().getAtomColor(atom);
+	protected Color getAtomColor(IAtom atom, RendererModel model) {
+	    Color atomColor = model.get(AtomColor.class);
+	    if (model.get(ColorByType.class)) {
+	        atomColor = model.get(AtomColorer.class).getAtomColor(atom);
         }
         return atomColor;
     }
