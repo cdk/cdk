@@ -18,12 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -34,6 +28,12 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.AtomValenceTool;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Utility methods for chi index calculations.
