@@ -24,6 +24,7 @@
 package org.openscience.cdk.io;
 
 import java.io.StringWriter;
+
 import java.util.Properties;
 
 import javax.vecmath.Point2d;
@@ -32,6 +33,7 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
@@ -49,7 +51,10 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -297,11 +302,38 @@ public class MDLWriterTest extends ChemObjectIOTest {
         StringWriter writer = new StringWriter();
         MDLWriter mdlWriter = new MDLWriter(writer);
         mdlWriter.write(molecule);
-        System.out.println(writer.toString());
         
         Assert.assertTrue(writer.toString().indexOf("V    1 Oxygen comment") != -1);
         Assert.assertTrue(writer.toString().indexOf("V    2 Carbon comment") != -1);
         
     }
+    
+    /**
+     * Test option to write aromatic bonds with bond type "4".
+     * Please note: bond type values 4 through 8 are for SSS queries only.
+     * @throws Exception
+     */
+    @Test public void testAromaticBondType4() throws Exception {
+        SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        String smiles = "c1ccccc1";
+        IMolecule benzene = sp.parseSmiles(smiles);
 
+
+        StringWriter writer = new StringWriter();
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(benzene);
+        Assert.assertTrue(writer.toString().indexOf("2  1  1  0  0  0  0") != -1);
+
+
+        writer = new StringWriter();
+        mdlWriter = new MDLWriter(writer);
+        Properties prop = new Properties();
+        prop.setProperty("WriteAromaticBondTypes","true");
+        PropertiesListener listener = new PropertiesListener(prop);
+        mdlWriter.addChemObjectIOListener(listener);
+        mdlWriter.customizeJob();
+        mdlWriter.write(benzene);
+        Assert.assertTrue(writer.toString().indexOf("2  1  4  0  0  0  0") != -1);
+    }
+    
 }
