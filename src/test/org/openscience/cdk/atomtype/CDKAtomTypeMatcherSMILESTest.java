@@ -125,4 +125,20 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         Assert.assertEquals("Pt.4", mol1.getAtom(0).getAtomTypeName());
     }
 
+    @Test public void testAmineOxide() throws Exception {
+        String smiles = "CN(C)(=O)CCC=C2c1ccccc1CCc3ccccc23";
+
+        IMolecule mol = smilesParser.parseSmiles(smiles);
+        Assert.assertEquals("N.oxide", mol.getAtom(1).getAtomTypeName());
+    }
+
+    @Test public void testYetAnotherNitrogen() throws Exception {
+        String smiles = "CCCN1CC(CSC)CC2C1Cc3c[nH]c4cccc2c34";
+
+        IMolecule mol = smilesParser.parseSmiles(smiles);
+        IAtomType[] types = atomTypeMatcher.findMatchingAtomType(mol);
+        for (IAtomType type : types) {
+            Assert.assertNotNull(type.getAtomTypeName());
+        }
+    }
 }
