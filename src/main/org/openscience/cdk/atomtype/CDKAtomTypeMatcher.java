@@ -563,6 +563,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 }
                 // but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
             	int neighborCount = atomContainer.getConnectedAtomsCount(atom);
+            	if (neighborCount == 4 &&
+            	    IBond.Order.DOUBLE == atomContainer.getMaximumBondOrder(atom)) {
+            	    IAtomType type = getAtomType("N.oxide");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+            	} else
             	if (neighborCount > 1 && bothNeighborsAreSp2(atom, atomContainer)) {
             		IRing ring = getRing(atom, atomContainer);
             		int ringSize = ring == null ? 0 : ring.getAtomCount();
@@ -655,7 +660,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 }
             }
         } else if (atomContainer.getConnectedBondsCount(atom) > 3) {
-            // FIXME: I don't perceive carbons with more than 3 connections yet
+            if (atomContainer.getConnectedBondsCount(atom) == 4 &&
+                countAttachedDoubleBonds(atomContainer, atom) == 1) {
+                IAtomType type = getAtomType("N.oxide");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
             return null;
         } else if (atomContainer.getConnectedBondsCount(atom) == 0) {
             IAtomType type = getAtomType("N.sp3");
