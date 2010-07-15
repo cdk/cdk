@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CDKConstantsTest;
+import org.openscience.cdk.CDKTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherFilesTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherSMILESTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
@@ -63,6 +63,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
 @SuiteClasses(value={
     CoreCoverageTest.class,
 
+    CDKTest.class,
     CDKConstantsTest.class,
     DataFeaturesTest.class,
 
