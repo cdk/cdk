@@ -86,6 +86,9 @@ public class MDLWriter extends DefaultChemObjectWriter {
         LoggingToolFactory.createLoggingTool(MDLWriter.class);
 
     private BooleanIOSetting forceWriteAs2DCoords;
+    
+    /* Should aromatic bonds be written as bond type 4? If true, this makes the output a query file. */
+    private BooleanIOSetting writeAromaticBondTypes;
 
     private BufferedWriter writer;
     
@@ -324,7 +327,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // write Bond block
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
 
         	if (bond.getAtomCount() != 2) {
         		logger.warn("Skipping bond with more/less than two atoms: " + bond);
@@ -339,7 +342,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
         			line = formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
         			line += formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
         		}
-        		line += formatMDLInt((int)bond.getOrder().ordinal()+1,3);
+                        int bondType;
+                        if (writeAromaticBondTypes.isSet() && bond.getFlag(CDKConstants.ISAROMATIC))
+                            bondType=4;
+                        else
+                            bondType=(int)bond.getOrder().ordinal()+1;
+                        line += formatMDLInt(bondType,3);
+                            
         		line += "  ";
         		switch(bond.getStereo()){
         		case UP:
@@ -513,7 +522,12 @@ public class MDLWriter extends DefaultChemObjectWriter {
             s += " ";
         return s;
     }
-
+    
+    /**
+     * Initializes IO settings.<br>
+     * Please note with regards to "writeAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
+     * so a 'query file' is created if the container has aromatic bonds and this settings is true.
+     */
     private void initIOSettings() {
         forceWriteAs2DCoords = new BooleanIOSetting(
             "ForceWriteAs2DCoordinates",
@@ -521,18 +535,26 @@ public class MDLWriter extends DefaultChemObjectWriter {
             "Should coordinates always be written as 2D?",
             "false"
         );
+        writeAromaticBondTypes = new BooleanIOSetting(
+            "WriteAromaticBondTypes",
+            IOSetting.LOW,
+            "Should aromatic bonds be written as bond type 4?",
+            "false"
+        );
     }
 
     public void customizeJob() {
         fireIOSettingQuestion(forceWriteAs2DCoords);
+        fireIOSettingQuestion(writeAromaticBondTypes);
+
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[1];
+        IOSetting[] settings = new IOSetting[2];
         settings[0] = forceWriteAs2DCoords;
+        settings[1] = writeAromaticBondTypes;
         return settings;
     }
-
 }
 
 
