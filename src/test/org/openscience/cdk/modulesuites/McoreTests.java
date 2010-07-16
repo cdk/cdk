@@ -28,6 +28,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcherFilesTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherSMILESTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTestFileReposTest;
+import org.openscience.cdk.atomtype.RepeatedCDKAtomTypeMatcherSMILESTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.IsotopeFactoryTest;
@@ -82,6 +83,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
     CDKAtomTypeMatcherTestFileReposTest.class,
     CDKAtomTypeMatcherFilesTest.class,
     CDKAtomTypeMatcherSMILESTest.class,
+    RepeatedCDKAtomTypeMatcherSMILESTest.class,
 
     // other
     CDKExceptionTest.class,
