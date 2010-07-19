@@ -55,7 +55,7 @@ import java.util.BitSet;
  *   Molecule molecule = new Molecule();
  *   PubchemFingerprinter fprinter = new PubchemFingerprinter();
  *   BitSet fingerprint = fprinter.getFingerprint(molecule);
- *   fingerprint.size(); // returns 881
+ *   fprinter.getSize(); // returns 881
  *   fingerprint.length(); // returns the highest set bit
  * </pre>
  * Note that the fingerprinter assumes that you have detected aromaticity and 
