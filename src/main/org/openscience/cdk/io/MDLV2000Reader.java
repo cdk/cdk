@@ -265,6 +265,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 throw new CDKException("Expecting data line here, but found null!");
             }
 			StringBuilder data = new StringBuilder();
+			data.append(line);
 			while ((line = input.readLine()) != null &&
 			       line.trim().length() > 0) {
                 if (line.equals("$$$$")) {
