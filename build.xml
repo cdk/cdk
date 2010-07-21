@@ -1159,6 +1159,7 @@
           <pathelement path="${dist}/jar/cdk-io.jar" />
           <pathelement path="${dist}/jar/cdk-ioformats.jar" />
           <pathelement path="${dist}/jar/cdk-data.jar" />
+          <pathelement path="${dist}/jar/cdk-isomorphism.jar" />
 	</classpath>
 	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf" />
 	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt" />
