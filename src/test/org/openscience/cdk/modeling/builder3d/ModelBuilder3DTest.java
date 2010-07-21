@@ -117,7 +117,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         Assume.assumeTrue(runSlowTests());
 
     	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
-    	String smile="c1ccccc1C=0";
+    	String smile="c1ccccc1C=O";
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     	IMolecule mol = sp.parseSmiles(smile);
     	addExplicitHydrogens(mol);
