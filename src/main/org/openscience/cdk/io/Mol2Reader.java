@@ -58,25 +58,25 @@ import java.util.StringTokenizer;
  * Reads a molecule from an Mol2 file, such as written by Sybyl.
  * See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
  *
+ * @author Egon Willighagen
  * @cdk.module io
  * @cdk.githash
- *
- * @author         Egon Willighagen
- * @cdk.created    2003-08-21
- *
- * @cdk.keyword    file format, Mol2
+ * @cdk.created 2003-08-21
+ * @cdk.keyword file format, Mol2
  */
 @TestClass("org.openscience.cdk.io.Mol2ReaderTest")
 public class Mol2Reader extends DefaultChemObjectReader {
 
+    boolean firstLineisMolecule = false;
+
     BufferedReader input = null;
     private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(Mol2Reader.class);
+            LoggingToolFactory.createLoggingTool(Mol2Reader.class);
 
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
      *
-     * @param  in  The Reader to read from
+     * @param in The Reader to read from
      */
     public Mol2Reader(Reader in) {
         input = new BufferedReader(in);
@@ -85,11 +85,11 @@ public class Mol2Reader extends DefaultChemObjectReader {
     public Mol2Reader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public Mol2Reader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return Mol2Format.getInstance();
@@ -98,7 +98,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -109,82 +109,114 @@ public class Mol2Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (IMolecule.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class[] interfaces = classObject.getInterfaces();
+        for (Class anInterface : interfaces) {
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IMolecule.class.equals(anInterface)) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        return superClass != null && this.accepts(superClass);
+    }
 
-    /**
-     * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-     * this from from the Reader. If the specific implementation
-     * does not support a specific IChemObject it will throw an Exception.
-     *
-     * @param  object The object that subclasses IChemObject
-     * @return        The IChemObject read
-     * @exception     CDKException
-     */
-     public IChemObject read(IChemObject object) throws CDKException {
-         if (object instanceof IChemFile) {
-             IChemFile file = (IChemFile)object;
-             IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
-             IChemModel model = file.getBuilder().newInstance(IChemModel.class);
-             IMoleculeSet moleculeSet = file.getBuilder().newInstance(IMoleculeSet.class);
-             moleculeSet.addMolecule(readMolecule(
-                 model.getBuilder().newInstance(IMolecule.class)
-             ));
-             model.setMoleculeSet(moleculeSet);
-             sequence.addChemModel(model);
-             file.addChemSequence(sequence);
-             return file;
-         } else if (object instanceof IChemModel) {
-             IChemModel model = (IChemModel)object;
-             IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
-             moleculeSet.addMolecule(readMolecule(
-                 model.getBuilder().newInstance(IMolecule.class)
-             ));
-             model.setMoleculeSet(moleculeSet);
-             return model;
-         } else if (object instanceof IMolecule) {
-             IMolecule molecule = (IMolecule)object;
-        	 return readMolecule(molecule);
-         } else {
-             throw new CDKException("Only supported is ChemModel, and not " +
-                 object.getClass().getName() + "."
-             );
-         }
-     }
-     
-     @TestMethod("testAccepts")
+    public <T extends IChemObject> T read(T object) throws CDKException {
+        if (object instanceof IChemFile) {
+            return (T) readChemFile((IChemFile) object);
+        } else if (object instanceof IChemModel) {
+            return (T) readChemModel((IChemModel) object);
+        } else if (object instanceof IMolecule) {
+            return (T) readMolecule((IMolecule) object);
+        } else {
+            throw new CDKException("Only supported are ChemFile and Molecule.");
+        }
+    }
+
+    private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
+        IMoleculeSet setOfMolecules = chemModel.getMoleculeSet();
+        if (setOfMolecules == null) {
+            setOfMolecules = chemModel.getBuilder().newInstance(IMoleculeSet.class);
+        }
+        IMolecule m = readMolecule(chemModel.getBuilder().newInstance(IMolecule.class));
+        if (m != null) {
+            setOfMolecules.addMolecule(m);
+        }
+        chemModel.setMoleculeSet(setOfMolecules);
+        return chemModel;
+    }
+
+    private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
+        IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
+
+        IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
+        IMoleculeSet setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
+        IMolecule m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
+        if (m != null) setOfMolecules.addMolecule(m);
+        chemModel.setMoleculeSet(setOfMolecules);
+        chemSequence.addChemModel(chemModel);
+        setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
+        chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
+        try {
+            firstLineisMolecule = true;
+            while (m != null) {
+                m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
+                if (m != null) {
+                    setOfMolecules.addMolecule(m);
+                    chemModel.setMoleculeSet(setOfMolecules);
+                    chemSequence.addChemModel(chemModel);
+                    setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
+                    chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
+                }
+            }
+        } catch (CDKException cdkexc) {
+            throw cdkexc;
+        } catch (Exception exception) {
+            String error = "Error while parsing MOL2";
+            logger.error(error);
+            logger.debug(exception);
+            throw new CDKException(error, exception);
+        }
+        try {
+            input.close();
+        } catch (Exception exc) {
+            String error = "Error while closing file: " + exc.getMessage();
+            logger.error(error);
+            throw new CDKException(error, exc);
+        }
+
+        chemFile.addChemSequence(chemSequence);
+
+        // reset it to false so that other read methods called later do not get confused
+        firstLineisMolecule = false;
+        
+        return chemFile;
+    }
+
+
+    @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
-         if (object instanceof IChemFile) {
-             return true;
-         } else if (object instanceof IChemModel) {
-             return true;
-         } else if (object instanceof IMolecule) {
-             return true;
-         }
-         return false;
-     }
+        if (object instanceof IChemFile) {
+            return true;
+        } else if (object instanceof IChemModel) {
+            return true;
+        } else if (object instanceof IMolecule) {
+            return true;
+        }
+        return false;
+    }
 
 
     /**
      * Read a Reaction from a file in MDL RXN format
      *
-     * @return  The Reaction that was read from the MDL file.
+     * @return The Reaction that was read from the MDL file.
      */
     private IMolecule readMolecule(IMolecule molecule) throws CDKException {
         AtomTypeFactory atFactory = null;
         try {
             atFactory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/mol2_atomtypes.xml", molecule.getBuilder()
+                    "org/openscience/cdk/config/data/mol2_atomtypes.xml", molecule.getBuilder()
             );
         } catch (Exception exception) {
             String error = "Could not instantiate an AtomTypeFactory";
@@ -193,71 +225,94 @@ public class Mol2Reader extends DefaultChemObjectReader {
             throw new CDKException(error, exception);
         }
         try {
-            String line = input.readLine();
             int atomCount = 0;
             int bondCount = 0;
+
+            String line;
+            while (true) {
+                line = input.readLine();
+                if (line == null) return null;
+                if (line.startsWith("@<TRIPOS>MOLECULE")) break;
+                if (!line.startsWith("#") && line.trim().length() > 0) break;
+            }
+
+            // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
+            if (firstLineisMolecule) molecule.setProperty(CDKConstants.TITLE, line);
+            else {
+                line = input.readLine();
+                molecule.setProperty(CDKConstants.TITLE, line);
+            }
+
+            // get atom and bond counts
+            String counts = input.readLine();
+            StringTokenizer tokenizer = new StringTokenizer(counts);
+            try {
+                atomCount = Integer.parseInt(tokenizer.nextToken());
+            } catch (NumberFormatException nfExc) {
+                String error = "Error while reading atom count from MOLECULE block";
+                logger.error(error);
+                logger.debug(nfExc);
+                throw new CDKException(error, nfExc);
+            }
+            if (tokenizer.hasMoreTokens()) {
+                try {
+                    bondCount = Integer.parseInt(tokenizer.nextToken());
+                } catch (NumberFormatException nfExc) {
+                    String error = "Error while reading atom and bond counts";
+                    logger.error(error);
+                    logger.debug(nfExc);
+                    throw new CDKException(error, nfExc);
+                }
+            } else {
+                bondCount = 0;
+            }
+            logger.info("Reading #atoms: ", atomCount);
+            logger.info("Reading #bonds: ", bondCount);
+
+            // we skip mol type, charge type and status bit lines
+            logger.warn("Not reading molecule qualifiers");
+
+            line = input.readLine();
+            boolean molend = false;
             while (line != null) {
                 if (line.startsWith("@<TRIPOS>MOLECULE")) {
-                    logger.info("Reading molecule block");
-                    // second line has atom/bond counts?
-                    input.readLine(); // disregard the name line
-                    String counts = input.readLine();
-                    StringTokenizer tokenizer = new StringTokenizer(counts);
-                    try {
-                        atomCount = Integer.parseInt(tokenizer.nextToken());
-                    } catch (NumberFormatException nfExc) {
-                        String error = "Error while reading atom count from MOLECULE block";
-                        logger.error(error);
-                        logger.debug(nfExc);
-                        throw new CDKException(error, nfExc);
-                    }
-                    if (tokenizer.hasMoreTokens()) {
-                        try {
-                            bondCount = Integer.parseInt(tokenizer.nextToken());
-                        } catch (NumberFormatException nfExc) {
-                            String error = "Error while reading atom and bond counts";
-                            logger.error(error);
-                            logger.debug(nfExc);
-                            throw new CDKException(error, nfExc);
-                        }
-                    } else {
-                        bondCount = 0;
-                    }
-                    logger.info("Reading #atoms: ", atomCount);
-                    logger.info("Reading #bonds: ", bondCount);
-                    
-                    logger.warn("Not reading molecule qualifiers");
+                    molend = true;
+                    break;
                 } else if (line.startsWith("@<TRIPOS>ATOM")) {
                     logger.info("Reading atom block");
-                    for (int i=0; i<atomCount; i++) {
+                    for (int i = 0; i < atomCount; i++) {
                         line = input.readLine().trim();
-                        StringTokenizer tokenizer = new StringTokenizer(line);
+                        if (line.startsWith("@<TRIPOS>MOLECULE")) {
+                            molend = true;
+                            break;
+                        }
+                        tokenizer = new StringTokenizer(line);
                         tokenizer.nextToken(); // disregard the id token
                         String nameStr = tokenizer.nextToken();
                         String xStr = tokenizer.nextToken();
                         String yStr = tokenizer.nextToken();
                         String zStr = tokenizer.nextToken();
                         String atomTypeStr = tokenizer.nextToken();
-                        
-                    	// fix OpenBabel atom type codes to SYBYL specification
-                    	if ("S.o2".equals(atomTypeStr)) atomTypeStr = "S.O2";  
-                    	if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
 
-                        IAtom atom = molecule.getBuilder().newInstance(IAtom.class,"X");
+                        // fix OpenBabel atom type codes to SYBYL specification
+                        if ("S.o2".equals(atomTypeStr)) atomTypeStr = "S.O2";
+                        if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
+
+                        IAtom atom = molecule.getBuilder().newInstance(IAtom.class, "X");
                         IAtomType atomType;
                         try {
-                        	atomType = atFactory.getAtomType(atomTypeStr);
+                            atomType = atFactory.getAtomType(atomTypeStr);
                         } catch (Exception exception) {
-                        	// ok, *not* an mol2 atom type
-                        	atomType = null;
+                            // ok, *not* an mol2 atom type
+                            atomType = null;
                         }
                         // Maybe it is just an element
                         if (atomType == null && isElementSymbol(atomTypeStr)) {
-                        	atom.setSymbol(atomTypeStr);
-                        } else {                        	
+                            atom.setSymbol(atomTypeStr);
+                        } else {
                             if (atomType == null) {
                                 atomType = atFactory.getAtomType("X");
-                            	logger.error("Could not find specified atom type: ", atomTypeStr);
+                                logger.error("Could not find specified atom type: ", atomTypeStr);
                             }
                             AtomTypeManipulator.configure(atom, atomType);
                         }
@@ -279,9 +334,13 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     }
                 } else if (line.startsWith("@<TRIPOS>BOND")) {
                     logger.info("Reading bond block");
-                    for (int i=0; i<bondCount; i++) {
+                    for (int i = 0; i < bondCount; i++) {
                         line = input.readLine();
-                        StringTokenizer tokenizer = new StringTokenizer(line);
+                        if (line.startsWith("@<TRIPOS>MOLECULE")) {
+                            molend = true;
+                            break;
+                        }
+                        tokenizer = new StringTokenizer(line);
                         tokenizer.nextToken(); // disregard the id token
                         String atom1Str = tokenizer.nextToken();
                         String atom2Str = tokenizer.nextToken();
@@ -290,29 +349,29 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             int atom1 = Integer.parseInt(atom1Str);
                             int atom2 = Integer.parseInt(atom2Str);
                             if ("nc".equals(orderStr)) {
-                            	// do not connect the atoms
+                                // do not connect the atoms
                             } else {
-                        		IBond bond = molecule.getBuilder().newInstance(IBond.class,
-                        			molecule.getAtom(atom1-1),
-                        			molecule.getAtom(atom2-1)
-                        		);
-                            	if ("1".equals(orderStr)) {
-                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
-                            	} else if ("2".equals(orderStr)) {
-                            		bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
-                            	} else if ("3".equals(orderStr)) {
-                            		bond.setOrder(CDKConstants.BONDORDER_TRIPLE);
-                            	} else if ("am".equals(orderStr) || "ar".equals(orderStr)) {
-                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
-                            		bond.setFlag(CDKConstants.ISAROMATIC, true);
-                            		bond.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
-                            		bond.getAtom(1).setFlag(CDKConstants.ISAROMATIC, true);
-                            	} else if ("du".equals(orderStr)) {
-                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
-                            	} else if ("un".equals(orderStr)) {
-                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
-                            	}
-                            	molecule.addBond(bond);
+                                IBond bond = molecule.getBuilder().newInstance(IBond.class,
+                                        molecule.getAtom(atom1 - 1),
+                                        molecule.getAtom(atom2 - 1)
+                                );
+                                if ("1".equals(orderStr)) {
+                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                } else if ("2".equals(orderStr)) {
+                                    bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+                                } else if ("3".equals(orderStr)) {
+                                    bond.setOrder(CDKConstants.BONDORDER_TRIPLE);
+                                } else if ("am".equals(orderStr) || "ar".equals(orderStr)) {
+                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                    bond.setFlag(CDKConstants.ISAROMATIC, true);
+                                    bond.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
+                                    bond.getAtom(1).setFlag(CDKConstants.ISAROMATIC, true);
+                                } else if ("du".equals(orderStr)) {
+                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                } else if ("un".equals(orderStr)) {
+                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                }
+                                molecule.addBond(bond);
                             }
                         } catch (NumberFormatException nfExc) {
                             String error = "Error while reading bond information";
@@ -322,6 +381,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         }
                     }
                 }
+                if (molend) return molecule;
                 line = input.readLine();
             }
         } catch (IOException exception) {

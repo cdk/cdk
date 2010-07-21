@@ -24,11 +24,12 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
+
+import java.io.InputStream;
+
 
 /**
  * TestCase for CDK IO classes.

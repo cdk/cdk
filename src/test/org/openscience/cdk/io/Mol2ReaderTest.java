@@ -27,14 +27,6 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.zip.GZIPInputStream;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -51,7 +43,16 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.util.Iterator;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 /**
  * TestCase for the reading SYBYL mol2 files using a test file.
@@ -124,7 +125,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
      * 
      * @throws Exception if an error occurs
      */
-    @Test public void testNCIfeb03_2D() throws Exception {
+     public void testNCIfeb03_2D() throws Exception {
         Assume.assumeTrue(runSlowTests());
     	
         String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
@@ -143,6 +144,32 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
             checkMol(buf);
         }
     }
+
+    @Test
+    public void testMultiMol() throws Exception {
+        Assume.assumeTrue(runSlowTests());
+        String filename = "data/mol2/actives.mol2";
+        logger.info("Testing: ", filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        Mol2Reader reader = new Mol2Reader(ins);
+        IChemFile chemFile = reader.read(new ChemFile());
+        List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(30, mols.size());
+    }
+
+    @Test
+    public void testMultiMolButSingle() throws Exception {
+        Assume.assumeTrue(runSlowTests());
+        String filename = "data/mol2/fromWebsite.mol2";
+        logger.info("Testing: ", filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        Mol2Reader reader = new Mol2Reader(ins);
+        IChemFile chemFile = reader.read(new ChemFile());
+        List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(1, mols.size());
+
+    }
+
     
     @Test public void testIMolecule() throws Exception {
         String filename = "data/mol2/fromWebsite.mol2";
