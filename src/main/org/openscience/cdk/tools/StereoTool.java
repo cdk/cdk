@@ -10,7 +10,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * class of a set of atoms.
  * 
  * @author maclean
- *
+ * @cdk.module stereo
  */
 public class StereoTool {
 
@@ -146,7 +146,7 @@ public class StereoTool {
         Point3d pointD = atomD.getPoint3d();
 
         Vector3d normal = StereoTool.getNormal(pointA, pointB, pointC);
-        double distance = distanceToPlane(normal, pointA, pointD);
+        double distance = signedDistanceToPlane(normal, pointA, pointD);
 
         // the point-plane distance is the absolute value,
         // the sign of the distance gives the side of the plane the point is on
@@ -201,7 +201,7 @@ public class StereoTool {
      * @param point the point to measure
      * @return the signed distance to the plane
      */
-    public static double distanceToPlane(
+    public static double signedDistanceToPlane(
             Vector3d planeNormal, Point3d pointInPlane, Point3d point) {
         if (planeNormal == null) return Double.NaN;
 
