@@ -28,12 +28,19 @@ import java.io.Reader;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * This class is the interface that all IO readers should implement.
- *
+ * This interface specifies the common functionality all IO readers should provide.
+ * 
+ * IO readers should not implement this interface directly, but rather implement
+ * one of its child interfaces: {@link ISimpleChemObjectReader} or {@link org.openscience.cdk.io.iterator.IIteratingChemObjectReader}.
+ * These sub-interfaces specify the information access methods:
+ * a simple read() method for the {@link ISimpleChemObjectReader} and
+ * more advanced iterator based access for the {@link org.openscience.cdk.io.iterator.IIteratingChemObjectReader} (suitable for large files)  
+ * 
  * @cdk.module io
  * @cdk.githash
  *
  * @author     Egon Willighagen <egonw@users.sf.net>
+ * @see ISimpleChemObjectReader, org.openscience.cdk.io.iterator.IIteratingChemObjectReader
  **/
 public interface IChemObjectReader extends IChemObjectIO {
 
