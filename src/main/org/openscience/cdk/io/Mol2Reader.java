@@ -295,6 +295,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         String atomTypeStr = tokenizer.nextToken();
 
                         // fix OpenBabel atom type codes to SYBYL specification
+                        // this addresses wrong types that were output by OB (but is now fixed)
+                        // see https://sourceforge.net/tracker/index.php?func=detail&aid=1650239&group_id=40728&atid=428740
                         if ("S.o2".equals(atomTypeStr)) atomTypeStr = "S.O2";
                         if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
 

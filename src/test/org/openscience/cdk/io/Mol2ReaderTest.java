@@ -125,7 +125,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
      * 
      * @throws Exception if an error occurs
      */
-     public void testNCIfeb03_2D() throws Exception {
+     @Test public void testNCIfeb03_2D() throws Exception {
         Assume.assumeTrue(runSlowTests());
     	
         String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
@@ -155,6 +155,8 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = reader.read(new ChemFile());
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assert.assertEquals(30, mols.size());
+        Assert.assertEquals(25, mols.get(0).getAtomCount());
+        Assert.assertEquals(24, mols.get(29).getAtomCount());
     }
 
     @Test
@@ -167,6 +169,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = reader.read(new ChemFile());
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assert.assertEquals(1, mols.size());
+        Assert.assertEquals(12, mols.get(0).getAtomCount());
 
     }
 
