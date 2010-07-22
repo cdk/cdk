@@ -38,16 +38,20 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -60,7 +64,10 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.util.BitSet;
 /**
@@ -557,6 +564,41 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         List<List<RMap>> atomMappings = UniversalIsomorphismTester.makeAtomsMapsOfBondsMaps(matches, target, queryac);
         Assert.assertEquals(matches, atomMappings);
     }
+    
+ 	@Test
+ 	public void testUITTimeoutFix() throws Exception {
+		// Load molecules
+ 		String filename = "data/mdl/UITTimeout.sdf";
+  		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
+  				filename);
+  		ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+   		ChemFile content = (ChemFile) reader.read(new ChemFile());
+   		List cList = ChemFileManipulator.getAllAtomContainers(content);
+   		IAtomContainer[] molecules = new IAtomContainer[2];
+   		for (int j = 0; j < 2; j++) {
+   			IAtomContainer aAtomContainer = (IAtomContainer) cList.get(j);
+   			CDKAtomTypeMatcher tmpMatcher = CDKAtomTypeMatcher.getInstance(aAtomContainer.getBuilder());
+   			CDKHydrogenAdder tmpAdder = CDKHydrogenAdder.getInstance(aAtomContainer.getBuilder());
+   			for (int i = 0; i < aAtomContainer.getAtomCount(); i++) {
+   				IAtom tmpAtom = aAtomContainer.getAtom(i);
+   					IAtomType tmpType = tmpMatcher.findMatchingAtomType(aAtomContainer, tmpAtom);
+   					AtomTypeManipulator.configure(tmpAtom, tmpType);
+   					tmpAdder.addImplicitHydrogens(aAtomContainer, tmpAtom);
+   			}
+   			AtomContainerManipulator
+   					.convertImplicitToExplicitHydrogens(aAtomContainer);
+   			molecules[j] = aAtomContainer;
+   		}
+   		QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomForPseudoAtomQueryContainer(molecules[1]);
+   		// test
+   		long starttime = System.currentTimeMillis();
+   		UniversalIsomorphismTester.setTimeout(200);
+   		UniversalIsomorphismTester.getSubgraphAtomsMaps(molecules[0], query);
+   		long duration = System.currentTimeMillis() - starttime;
+   		// The search must last much longer then two seconds if the timeout not works
+   		Assert.assertTrue(duration < 2000);
+   	}
+
 
 }
 

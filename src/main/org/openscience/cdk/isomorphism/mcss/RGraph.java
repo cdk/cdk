@@ -127,6 +127,9 @@ public class RGraph
     int nbIteration = 0;
     BitSet graphBitSet = null;
     
+    private long timeout = -1;
+    private long start;
+    
     /**
      * Constructor for the RGraph object and creates an empty RGraph.
      */
@@ -253,6 +256,11 @@ public class RGraph
         BitSet newExtension = null;
         BitSet newForbidden = null;
         BitSet potentialNode = null;
+        
+        // Test whether the timeout is reached. Stop searching.
+        if(this.timeout > -1 && (System.currentTimeMillis() - this.start) > this.timeout) {
+        	stop = true;
+        }
 
         // if there is no more extension possible we
         // have reached a potential new solution
@@ -617,6 +625,23 @@ public class RGraph
         }
 
         return result;
-    }   
+    }  
+    
+    /**
+     * Sets the time in milliseconds until the substructure search will be breaked.
+     * @param timeout
+     * Time in milliseconds. -1 to ignore the timeout.
+     */
+	public void setTimeout(long timeout) {
+		this.timeout = timeout;
+	}
+
+	/**
+	 * @param start
+	 * The start time in milliseconds.
+	 */
+	public void setStart(long start) {
+		this.start = start;
+	}   
 }
 

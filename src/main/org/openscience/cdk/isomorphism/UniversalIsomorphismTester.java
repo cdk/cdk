@@ -112,7 +112,7 @@ public class UniversalIsomorphismTester {
   final static int ID1 = 0;
   final static int ID2 = 1;
   private static long start;
-  public static long timeout=-1;
+  private static long timeout=-1;
 
   ///////////////////////////////////////////////////////////////////////////
   //                            Query Methods
@@ -440,7 +440,9 @@ public class UniversalIsomorphismTester {
    */
   public static List<List<RMap>> search(IAtomContainer g1, IAtomContainer g2, BitSet c1,
 		  BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
-
+	  // remember start time
+	  start = System.currentTimeMillis();
+	  
       // handle single query atom case separately
       if (g2.getAtomCount() == 1) {
           List<List<RMap>> matches = new ArrayList<List<RMap>>();
@@ -472,7 +474,10 @@ public class UniversalIsomorphismTester {
 	  List<List<RMap>> rMapsList = new ArrayList<List<RMap>>();
 
 	  // build the RGraph corresponding to this problem
-	  RGraph rGraph = buildRGraph(g1, g2);
+	  RGraph rGraph = buildRGraph(g1, g2); 
+	  // Set time data
+	  rGraph.setTimeout(UniversalIsomorphismTester.timeout);
+	  rGraph.setStart(UniversalIsomorphismTester.start);
 	  // parse the RGraph with the given constrains and options
 	  rGraph.parse(c1, c2, findAllStructure, findAllMap);
 	  List<BitSet> solutionList = rGraph.getSolutions();
@@ -750,8 +755,6 @@ public class UniversalIsomorphismTester {
       // compares each bond of G1 to each bond of G2
     for (int i = 0; i < ac1.getBondCount(); i++) {
       for (int j = 0; j < ac2.getBondCount(); j++) {
-          if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
-        	  throw new CDKException("Timeout exceeded in getOverlaps");
           IBond bondA2 = ac2.getBond(j);
           if (bondA2 instanceof IQueryBond) {
               IQueryBond queryBond = (IQueryBond)bondA2;
@@ -836,8 +839,6 @@ public class UniversalIsomorphismTester {
       // relationship in are equivalent in G1 and G2
       // else they are incompatible.
       for (int j = i + 1; j < gr.getGraph().size(); j++) {
-        if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
-          throw new CDKException("Timeout exceeded in getOverlaps");
         RNode y = gr.getGraph().get(j);
 
         a1 = ac1.getBond(gr.getGraph().get(i).getRMap().getId1());
@@ -1078,7 +1079,15 @@ public class UniversalIsomorphismTester {
 	  if (ac1ICount < ac2ICount) return false;
       return ac1CCount >= ac2CCount;
 
-
+  }
+  
+  /**
+   * Sets the time in milliseconds until the substructure search will be breaked.
+   * @param timeout
+   * Time in milliseconds. -1 to ignore the timeout.
+   */
+  public static void setTimeout(long timeout) {
+	  UniversalIsomorphismTester.timeout = timeout;
   }
   
 }
