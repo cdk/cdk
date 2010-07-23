@@ -130,20 +130,23 @@ public class StereoTool {
     }
 
     /**
-     * Gets the tetrahedral handedness of four atoms. 
+     * Gets the tetrahedral handedness of four atoms - three of which form the
+     * 'base' of the tetrahedron, and the other the apex. Note that it assumes
+     * a right-handed coordinate system, and that the points {A,B,C} are in
+     * a counter-clockwise order in the plane they share. 
      * 
-     * @param atomA
-     * @param atomB
-     * @param atomC
-     * @param atomD
+     * @param baseAtomA the first atom in the base of the tetrahedron
+     * @param baseAtomB the second atom in the base of the tetrahedron
+     * @param baseAtomC the third atom in the base of the tetrahedron
+     * @param apexAtom the atom in the point of the tetrahedron
      * @return
      */
     public static TetrahedralSign getHandedness(
-            IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
-        Point3d pointA = atomA.getPoint3d();
-        Point3d pointB = atomB.getPoint3d();
-        Point3d pointC = atomC.getPoint3d();
-        Point3d pointD = atomD.getPoint3d();
+            IAtom baseAtomA, IAtom baseAtomB, IAtom baseAtomC, IAtom apexAtom) {
+        Point3d pointA = baseAtomA.getPoint3d();
+        Point3d pointB = baseAtomB.getPoint3d();
+        Point3d pointC = baseAtomC.getPoint3d();
+        Point3d pointD = apexAtom.getPoint3d();
 
         Vector3d normal = StereoTool.getNormal(pointA, pointB, pointC);
         double distance = signedDistanceToPlane(normal, pointA, pointD);
@@ -166,7 +169,6 @@ public class StereoTool {
         return isDiaxial(pointA, pointB, pointC, pointD, maxAngle);
     }
 
-    // side-effect free version \o/
     private static boolean isDiaxial(Point3d pointA, Point3d pointB, 
             Point3d pointC, Point3d pointD,  double maxAngle) {
         // we don't care about these vectors...
