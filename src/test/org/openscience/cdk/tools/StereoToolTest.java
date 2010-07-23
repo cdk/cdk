@@ -89,5 +89,31 @@ public class StereoToolTest extends CDKTestCase {
             StereoTool.getHandedness(baseA, baseB, baseC, negativeApex);
         Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
     }
+    
+    @Test
+    public void colinearTestWithColinearPoints() {
+        Point3d pointA = new Point3d(1, 1, 1);
+        Point3d pointB = new Point3d(2, 2, 2);
+        Point3d pointC = new Point3d(3, 3, 3);
+        
+        Assert.assertTrue(StereoTool.colinear(pointA, pointB, pointC));
+    }
+    
+    @Test
+    public void colinearTestWithNearlyColinearPoints() {
+        Point3d pointA = new Point3d(1, 1, 1);
+        Point3d pointB = new Point3d(2, 2.001, 2);
+        Point3d pointC = new Point3d(3, 3, 3);
+        
+        Assert.assertTrue(StereoTool.colinear(pointA, pointB, pointC));
+    }
 
+    @Test
+    public void colinearTestWithNonColinearPoints() {
+        Point3d pointA = new Point3d(1, 1, 1);
+        Point3d pointB = new Point3d(2, 3, 2);
+        Point3d pointC = new Point3d(3, 3, 3);
+        
+        Assert.assertFalse(StereoTool.colinear(pointA, pointB, pointC));
+    }
 }

@@ -43,6 +43,11 @@ public class StereoTool {
     public static final double MAX_AXIS_ANGLE = 0.95;
 
     /**
+     * The maximum tolerance for the normal calculated during colinearity.
+     */
+    public static final double MIN_COLINEAR_NORMAL = 0.05;
+    
+    /**
      * Checks these four atoms for square planarity.
      * 
      * @param atomA
@@ -193,6 +198,26 @@ public class StereoTool {
         // -0.95f about 172 degrees
         return vAC.dot(vBD) < maxAngle;
     }
+    
+    /**
+     * Checks the three supplied points to see if they fall on the same line.
+     * It does this by finding the normal to an arbitrary pair of lines between
+     * the points (in fact, A-B and A-C) and checking that its length is 0.
+     * 
+     * @param ptA
+     * @param ptB
+     * @param ptC
+     * @return
+     */
+    public static boolean colinear(Point3d ptA, Point3d ptB, Point3d ptC) {
+        Vector3d vectorAB = new Vector3d();
+        Vector3d vectorAC = new Vector3d();
+        Vector3d normal = new Vector3d();
+        
+        StereoTool.getRawNormal(ptA, ptB, ptC, normal, vectorAB, vectorAC);
+        double baCrossACLen = normal.length();
+        return baCrossACLen < StereoTool.MIN_COLINEAR_NORMAL;
+    }
 
     /**
      * Given a normalized normal for a plane, any point in that plane, and
@@ -232,9 +257,12 @@ public class StereoTool {
         Vector3d vectorE = new Vector3d();
 
         // the normals (normalA, normalB, normalC) are calculated
-        StereoTool.getNormal(pointA, pointB, pointC, normalA, vectorD, vectorE);
-        StereoTool.getNormal(pointB, pointC, pointD, normalB, vectorD, vectorE);
-        StereoTool.getNormal(pointC, pointD, pointA, normalC, vectorD, vectorE);
+        StereoTool.getRawNormal(pointA, pointB, pointC, normalA, vectorD, vectorE);
+        StereoTool.getRawNormal(pointB, pointC, pointD, normalB, vectorD, vectorE);
+        StereoTool.getRawNormal(pointC, pointD, pointA, normalC, vectorD, vectorE);
+        normalA.normalize();
+        normalB.normalize();
+        normalC.normalize();
     }
     
     /**
@@ -254,11 +282,12 @@ public class StereoTool {
         Vector3d vectorAB = new Vector3d();
         Vector3d vectorAC = new Vector3d();
         Vector3d normal   = new Vector3d();
-        StereoTool.getNormal(ptA, ptB, ptC, normal, vectorAB, vectorAC);
+        StereoTool.getRawNormal(ptA, ptB, ptC, normal, vectorAB, vectorAC);
+        normal.normalize();
         return normal;
     }
     
-    private static void getNormal(Point3d ptA, Point3d ptB, Point3d ptC, 
+    private static void getRawNormal(Point3d ptA, Point3d ptB, Point3d ptC, 
                                Vector3d normal, Vector3d vcAB, Vector3d vcAC) {
         // make A->B and A->C
         vcAB.sub(ptB, ptA);
@@ -266,7 +295,6 @@ public class StereoTool {
         
         // make the normal to this
         normal.cross(vcAB, vcAC);
-        normal.normalize();
     }
 
 }
