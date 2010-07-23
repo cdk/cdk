@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.tools.StereoTool.SquarePlanarShape;
 import org.openscience.cdk.tools.StereoTool.TetrahedralSign;
 
 /**
@@ -96,7 +97,7 @@ public class StereoToolTest extends CDKTestCase {
         Point3d pointB = new Point3d(2, 2, 2);
         Point3d pointC = new Point3d(3, 3, 3);
         
-        Assert.assertTrue(StereoTool.colinear(pointA, pointB, pointC));
+        Assert.assertTrue(StereoTool.isColinear(pointA, pointB, pointC));
     }
     
     @Test
@@ -105,7 +106,7 @@ public class StereoToolTest extends CDKTestCase {
         Point3d pointB = new Point3d(2, 2.001, 2);
         Point3d pointC = new Point3d(3, 3, 3);
         
-        Assert.assertTrue(StereoTool.colinear(pointA, pointB, pointC));
+        Assert.assertTrue(StereoTool.isColinear(pointA, pointB, pointC));
     }
 
     @Test
@@ -114,6 +115,74 @@ public class StereoToolTest extends CDKTestCase {
         Point3d pointB = new Point3d(2, 3, 2);
         Point3d pointC = new Point3d(3, 3, 3);
         
-        Assert.assertFalse(StereoTool.colinear(pointA, pointB, pointC));
+        Assert.assertFalse(StereoTool.isColinear(pointA, pointB, pointC));
     }
+    
+    @Test
+    public void squarePlanarUShapeTest() {
+        // all points are in the XY plane
+        IAtom atomA = new Atom("C", new Point3d(1, 2, 0));
+        IAtom atomB = new Atom("C", new Point3d(1, 1, 0));
+        IAtom atomC = new Atom("C", new Point3d(2, 1, 0));
+        IAtom atomD = new Atom("C", new Point3d(2, 2, 0));
+        
+        SquarePlanarShape shape = 
+            StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
+        Assert.assertEquals(SquarePlanarShape.U_SHAPE, shape);
+    }
+    
+    @Test
+    public void squarePlanar4ShapeTest() {
+        // all points are in the XY plane
+        IAtom atomA = new Atom("C", new Point3d(1, 2, 0));
+        IAtom atomB = new Atom("C", new Point3d(2, 1, 0));
+        IAtom atomC = new Atom("C", new Point3d(2, 2, 0));
+        IAtom atomD = new Atom("C", new Point3d(1, 1, 0));
+        
+        SquarePlanarShape shape = 
+            StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
+        Assert.assertEquals(SquarePlanarShape.FOUR_SHAPE, shape);
+    }
+    
+    @Test
+    public void squarePlanarZShapeTest() {
+        // all points are in the XY plane
+        IAtom atomA = new Atom("C", new Point3d(1, 2, 0));
+        IAtom atomB = new Atom("C", new Point3d(1, 1, 0));
+        IAtom atomC = new Atom("C", new Point3d(2, 2, 0));
+        IAtom atomD = new Atom("C", new Point3d(2, 1, 0));
+        
+        SquarePlanarShape shape = 
+            StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
+        Assert.assertEquals(SquarePlanarShape.Z_SHAPE, shape);
+    }
+    
+    @Test
+    public void trigonalBipyramidalTest() {
+        IAtom atomA = new Atom("C", new Point3d(1, 1, 2));  // axis point 1
+        IAtom atomB = new Atom("C", new Point3d(1, 1, 1));  // center of plane
+        IAtom atomC = new Atom("C", new Point3d(0, 1, 1));
+        IAtom atomD = new Atom("C", new Point3d(1, 0, 1));
+        IAtom atomE = new Atom("C", new Point3d(2, 2, 1));  
+        IAtom atomF = new Atom("C", new Point3d(1, 1, 0));  // axis point 2
+        Assert.assertTrue(
+                StereoTool.isTrigonalBipyramidal(
+                        atomA, atomB, atomC, atomD, atomE, atomF));
+    }
+    
+    @Test
+    public void octahedralTest() {
+        IAtom atomA = new Atom("C", new Point3d(2, 2, 2)); // axis point 1
+        IAtom atomB = new Atom("C", new Point3d(2, 2, 1)); // center of plane
+        IAtom atomC = new Atom("C", new Point3d(1, 3, 1));
+        IAtom atomD = new Atom("C", new Point3d(3, 3, 1));
+        IAtom atomE = new Atom("C", new Point3d(3, 1, 1));
+        IAtom atomF = new Atom("C", new Point3d(1, 3, 1));
+        IAtom atomG = new Atom("C", new Point3d(2, 2, 0)); // axis point 2
+        
+        Assert.assertTrue(
+                StereoTool.isOctahedral(
+                        atomA, atomB, atomC, atomD, atomE, atomF, atomG));
+    }
+
 }

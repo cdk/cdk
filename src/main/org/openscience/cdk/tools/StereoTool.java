@@ -46,68 +46,161 @@ public class StereoTool {
      * The maximum tolerance for the normal calculated during colinearity.
      */
     public static final double MIN_COLINEAR_NORMAL = 0.05;
+
+    public static final double PLANE_TOLERANCE = 0.05;
     
     /**
      * Checks these four atoms for square planarity.
      * 
-     * @param atomA
-     * @param atomB
-     * @param atomC
-     * @param atomD
-     * @return
+     * @param atomA an atom in the plane
+     * @param atomB an atom in the plane 
+     * @param atomC an atom in the plane
+     * @param atomD an atom in the plane
+     * @return true if all the atoms are in the same plane
      */
     public static boolean isSquarePlanar(
             IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
-        Vector3d vNorm1 = new Vector3d();
-        Vector3d vNorm2 = new Vector3d();
-        Vector3d vNorm3 = new Vector3d();
-        StereoTool.getPlaneNormals(
-                atomA, atomB, atomC, atomD, vNorm1, vNorm2, vNorm3);
-
-        // vNorm1 vNorm2 vNorm3 are right-hand normals for the given
+        Point3d pointA = atomA.getPoint3d();
+        Point3d pointB = atomB.getPoint3d();
+        Point3d pointC = atomC.getPoint3d();
+        Point3d pointD = atomD.getPoint3d();
+        
+        return isSquarePlanar(pointA, pointB, pointC, pointD);
+    }
+    
+    private static boolean isSquarePlanar(
+            Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD) {
+        return isSquarePlanar(pointA, pointB, pointC, pointD, new Vector3d());
+    }
+    
+    private static boolean isSquarePlanar(
+            Point3d pointA, Point3d pointB, 
+            Point3d pointC, Point3d pointD, Vector3d normal) {
+        // define a plane using ABC, also checking that the are not colinear
+        Vector3d vectorAB = new Vector3d();
+        Vector3d vectorAC = new Vector3d();
+        getRawNormal(pointA, pointB, pointC, normal, vectorAB, vectorAC);
+        if (StereoTool.isColinear(normal)) return false;
+        
+        // check that F is in the same plane as CDE
+        return StereoTool.allCoplanar(normal, pointC, pointD);
+    }
+    
+    /**
+     * <p>Given four atoms (assumed to be in the same plane), returns the 
+     * arrangement of those atoms in that plane.</p>
+     * 
+     * <p>The 'shapes' returned represent arrangements that look a little like
+     * the characters 'U', '4', and 'Z'.</p>
+     * 
+     * @param atomA an atom in the plane
+     * @param atomB an atom in the plane 
+     * @param atomC an atom in the plane
+     * @param atomD an atom in the plane
+     * @return the shape (U/4/Z)
+     */
+    public static SquarePlanarShape getSquarePlanarShape(
+            IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
+        Point3d pointA = atomA.getPoint3d();
+        Point3d pointB = atomB.getPoint3d();
+        Point3d pointC = atomC.getPoint3d();
+        Point3d pointD = atomD.getPoint3d();
+        
+        // normalA normalB normalC are right-hand normals for the given
         // triangles
-        // 1-2-3, 2-3-4, 3-4-1
+        // A-B-C, B-C-D, C-D-A
+        Vector3d normalA = new Vector3d();
+        Vector3d normalB = new Vector3d();
+        Vector3d normalC = new Vector3d();
+        
+        // these are temporary vectors that are re-used in the calculations
+        Vector3d tmpX = new Vector3d();
+        Vector3d tmpY = new Vector3d();
+        
+        // the normals (normalA, normalB, normalC) are calculated
+        StereoTool.getRawNormal(pointA, pointB, pointC, normalA, tmpX, tmpY);
+        StereoTool.getRawNormal(pointB, pointC, pointD, normalB, tmpX, tmpY);
+        StereoTool.getRawNormal(pointC, pointD, pointA, normalC, tmpX, tmpY);
+        
+        // normalize the normals
+        normalA.normalize();
+        normalB.normalize();
+        normalC.normalize();
+        
         // sp1 up up up U-shaped
         // sp2 up up DOWN 4-shaped
         // sp3 up DOWN DOWN Z-shaped
-        double norm12 = vNorm1.dot(vNorm2);
-        double norm23 = vNorm2.dot(vNorm3);
-
-        // XXX this is certainly wrong... (as in, a bad translation from Jmol)
-        return norm12 < 0 || norm23 < 0;    
+        double aDotB = normalA.dot(normalB);
+        double aDotC = normalA.dot(normalC);
+        double bDotC = normalB.dot(normalC);
+        if (aDotB > 0 && aDotC > 0 && bDotC > 0) {  // UUU or DDD
+            return SquarePlanarShape.U_SHAPE; 
+        } else if (aDotB > 0 && aDotC < 0 && bDotC < 0) {   // UUD or DDU
+            return SquarePlanarShape.FOUR_SHAPE;
+        } else {    // UDD or DUU
+            return SquarePlanarShape.Z_SHAPE;
+        }
     }
-
+    
+    /**
+     * Check that all the points in the list are coplanar (in the same plane)
+     * as the plane defined by the planeNormal and the pointInPlane.
+     * 
+     * @param planeNormal the normal to the plane
+     * @param pointInPlane any point know to be in the plane
+     * @param points an array of points to test 
+     * @return false if any of the points is not in the plane
+     */
+    public static boolean allCoplanar(
+            Vector3d planeNormal, Point3d pointInPlane, Point3d... points) {
+        for (Point3d point : points) {
+            double distance = StereoTool.signedDistanceToPlane(
+                    planeNormal, pointInPlane, point);
+            if (distance < PLANE_TOLERANCE) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true; 
+    }
+    
     /**
      * Checks these 7 atoms to see if they are at the points of an octahedron.
      * 
-     * @param atomA
-     * @param atomB
-     * @param atomC
-     * @param atomD
-     * @param atomE
-     * @param atomF
-     * @param atomG
+     * @param atomA one of the axial atoms
+     * @param atomB the central atom
+     * @param atomC one of the equatorial atoms
+     * @param atomD one of the equatorial atoms
+     * @param atomE one of the equatorial atoms
+     * @param atomF one of the equatorial atoms
+     * @param atomG the other axial atom
      * @return
      */
     public static boolean isOctahedral(IAtom atomA, IAtom atomB, IAtom atomC,
             IAtom atomD, IAtom atomE, IAtom atomF, IAtom atomG) {
-        boolean isDiaxialAAGB = 
-            isDiaxial(atomA, atomA, atomG, atomB, StereoTool.MAX_AXIS_ANGLE);
-        if (!isDiaxialAAGB) return false;   // XXX ?
-
-        Vector3d vNorm1 = new Vector3d();
-        Vector3d vNorm2 = new Vector3d();
-        Vector3d vNorm3 = new Vector3d();
-        StereoTool.getPlaneNormals(
-                atomC, atomD, atomE, atomF, vNorm1, vNorm2, vNorm3);
+        Point3d pointA = atomA.getPoint3d();
+        Point3d pointB = atomB.getPoint3d();
+        Point3d pointC = atomC.getPoint3d();
+        Point3d pointD = atomD.getPoint3d();
+        Point3d pointE = atomE.getPoint3d();
+        Point3d pointF = atomF.getPoint3d();
+        Point3d pointG = atomG.getPoint3d();
         
-        // XXX ?
-        if ((vNorm1.dot(vNorm2) < 0) || vNorm2.dot(vNorm3) < 0) return false;
+        // the points on the axis should be in a line
+        boolean isColinearABG = isColinear(pointA, pointB, pointG);
+        if (!isColinearABG) return false;
+
+        // check that CDEF are in a plane 
+        Vector3d normal = new Vector3d();
+        isSquarePlanar(pointC, pointD, pointE, pointF, normal);
 
         // now check rotation in relation to the first atom
-        vNorm2.set(atomA.getPoint3d());
-        vNorm2.sub(atomB.getPoint3d());
-        return vNorm1.dot(vNorm2) < 0;  // XXX ?
+        Vector3d vectorAB = new Vector3d(pointA);
+        vectorAB.sub(pointB);
+        
+        // that is, they point in opposite directions
+        return normal.dot(vectorAB) < 0;
     }
 
     /**
@@ -130,7 +223,7 @@ public class StereoTool {
         Point3d pointE = atomE.getPoint3d();
         Point3d pointF = atomF.getPoint3d();
         
-        boolean isColinearABF = StereoTool.colinear(pointA, pointB, pointF);
+        boolean isColinearABF = StereoTool.isColinear(pointA, pointB, pointF);
         if (isColinearABF) {
             // the normal to the equatorial plane
             Vector3d normal = StereoTool.getNormal(pointC, pointD, pointE);
@@ -195,7 +288,7 @@ public class StereoTool {
         }
     }
 
-    private static boolean isDiaxial(
+    public static boolean isDiaxial(
           IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD, double maxAngle) {
         Point3d pointA = atomA.getPoint3d();
         Point3d pointB = atomB.getPoint3d();
@@ -239,12 +332,16 @@ public class StereoTool {
      * @param ptC
      * @return
      */
-    public static boolean colinear(Point3d ptA, Point3d ptB, Point3d ptC) {
+    public static boolean isColinear(Point3d ptA, Point3d ptB, Point3d ptC) {
         Vector3d vectorAB = new Vector3d();
         Vector3d vectorAC = new Vector3d();
         Vector3d normal = new Vector3d();
         
         StereoTool.getRawNormal(ptA, ptB, ptC, normal, vectorAB, vectorAC);
+        return isColinear(normal);
+    }
+    
+    private static boolean isColinear(Vector3d normal) {
         double baCrossACLen = normal.length();
         return baCrossACLen < StereoTool.MIN_COLINEAR_NORMAL;
     }
@@ -267,34 +364,6 @@ public class StereoTool {
         return planeNormal.dot(pointPointDiff);
     }
 
-    private static void getPlaneNormals(IAtom atomA, IAtom atomB, IAtom atomC, 
-            IAtom atomD, Vector3d normalA, Vector3d normalB, Vector3d normalC) {
-        Point3d pointA = atomA.getPoint3d();
-        Point3d pointB = atomB.getPoint3d();
-        Point3d pointC = atomC.getPoint3d();
-        Point3d pointD = atomD.getPoint3d();
-        
-        StereoTool.getPlaneNormals(pointA, pointB, pointC, pointD, 
-                                   normalA, normalB, normalC);
-    }
-    
-    private static void getPlaneNormals(
-            Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD,
-            Vector3d normalA, Vector3d normalB, Vector3d normalC) {
-
-        // these are temporary vectors that are re-used in the calculations
-        Vector3d vectorD = new Vector3d();
-        Vector3d vectorE = new Vector3d();
-
-        // the normals (normalA, normalB, normalC) are calculated
-        StereoTool.getRawNormal(pointA, pointB, pointC, normalA, vectorD, vectorE);
-        StereoTool.getRawNormal(pointB, pointC, pointD, normalB, vectorD, vectorE);
-        StereoTool.getRawNormal(pointC, pointD, pointA, normalC, vectorD, vectorE);
-        normalA.normalize();
-        normalB.normalize();
-        normalC.normalize();
-    }
-    
     /**
      * <p>Given three points (A, B, C), makes the vectors A-B and A-C, and makes
      * the cross product of these two vectors; this has the effect of making a
