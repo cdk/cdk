@@ -111,24 +111,41 @@ public class StereoTool {
     }
 
     /**
-     * Checks these 6 atoms to see if they form a triangular-bipyramidal shape. 
+     * Checks these 6 atoms to see if they form a trigonal-bipyramidal shape. 
      * 
-     * @param atomA
-     * @param atomB
-     * @param atomC
-     * @param atomD
-     * @param atomE
-     * @param atomF
+     * @param atomA one of the axial atoms
+     * @param atomB the central atom
+     * @param atomC one of the equatorial atoms
+     * @param atomD one of the equatorial atoms
+     * @param atomE one of the equatorial atoms
+     * @param atomF the other axial atom
      * @return
      */
     public static boolean isTrigonalBipyramidal(IAtom atomA, IAtom atomB, 
             IAtom atomC, IAtom atomD, IAtom atomE, IAtom atomF) {
-        boolean isDiaxialAAFB = StereoTool.isDiaxial(
-                atomA, atomA, atomF, atomB, StereoTool.MAX_AXIS_ANGLE);
-        if (isDiaxialAAFB) {
-            TetrahedralSign handednessCDEB = 
-                StereoTool.getHandedness(atomC, atomD, atomE, atomB); 
-            return handednessCDEB == TetrahedralSign.PLUS;  // XXX ? not sure
+        Point3d pointA = atomA.getPoint3d();
+        Point3d pointB = atomB.getPoint3d();
+        Point3d pointC = atomC.getPoint3d();
+        Point3d pointD = atomD.getPoint3d();
+        Point3d pointE = atomE.getPoint3d();
+        Point3d pointF = atomF.getPoint3d();
+        
+        boolean isColinearABF = StereoTool.colinear(pointA, pointB, pointF);
+        if (isColinearABF) {
+            // the normal to the equatorial plane
+            Vector3d normal = StereoTool.getNormal(pointC, pointD, pointE);
+            
+            // get the side of the plane that axis point A is 
+            TetrahedralSign handednessCDEA = 
+                StereoTool.getHandedness(normal, pointC, pointF);
+            
+            // get the side of the plane that axis point F is
+            TetrahedralSign handednessCDEF = 
+                StereoTool.getHandedness(normal, pointC, pointA);
+            
+            // in other words, the two axial points (A,F) are on opposite sides
+            // of the equatorial plane CDE
+            return handednessCDEA != handednessCDEF;
         } else {
             return false;
         }
@@ -152,9 +169,22 @@ public class StereoTool {
         Point3d pointB = baseAtomB.getPoint3d();
         Point3d pointC = baseAtomC.getPoint3d();
         Point3d pointD = apexAtom.getPoint3d();
+        return StereoTool.getHandedness(pointA, pointB, pointC, pointD);
+    }
 
+    private static TetrahedralSign getHandedness(
+            Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD) {
+        // assumes anti-clockwise for a right-handed system
         Vector3d normal = StereoTool.getNormal(pointA, pointB, pointC);
-        double distance = signedDistanceToPlane(normal, pointA, pointD);
+        
+        // it doesn't matter which of points {A,B,C} is used
+        return StereoTool.getHandedness(normal, pointA, pointD);
+    }
+        
+    private static TetrahedralSign getHandedness(
+            Vector3d planeNormal, Point3d pointInPlane, Point3d testPoint) {
+        double distance = signedDistanceToPlane(
+                planeNormal, pointInPlane, testPoint);
 
         // the point-plane distance is the absolute value,
         // the sign of the distance gives the side of the plane the point is on
