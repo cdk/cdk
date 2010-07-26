@@ -22,18 +22,13 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import java.io.InputStream;
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,6 +46,10 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point2d;
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * @author steinbeck
@@ -796,6 +795,41 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
             Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+    }
+
+
+    /**
+     * Tests to check for aromaticity issues in SMARTS matches
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testAromaticNOxide() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("O=n1ccccc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getSymbol().equals("O")) continue;
+            Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been", atom.getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
+
+    /**
+     * Tests to check for aromaticity issues in SMARTS matches
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testAromaticNOxideCharged() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("[O-][n+]1ccccc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getSymbol().equals("O")) continue;
+            Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been", atom.getFlag(CDKConstants.ISAROMATIC));
+        }
     }
 
 }
