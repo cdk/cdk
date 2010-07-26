@@ -68,24 +68,52 @@ public class StereoToolTest extends CDKTestCase {
     }
     
     @Test
-    public void tetrahedralPlusAtomsTest() {
-        IAtom baseA = new Atom("C", new Point3d(ORIGIN));
-        IAtom baseB = new Atom("C", new Point3d(XAXIS));
-        IAtom baseC = new Atom("C", new Point3d(YAXIS));
+    public void tetrahedralPlusAtomsAboveXYTest() {
+        // above the XY plane
+        IAtom baseA = new Atom("C", new Point3d(0, 0, 1));
+        IAtom baseB = new Atom("C", new Point3d(1, 0, 1));
+        IAtom baseC = new Atom("C", new Point3d(1, 1, 1));
         
-        IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 1));
+        IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 2));
         TetrahedralSign tetSign =
             StereoTool.getHandedness(baseA, baseB, baseC, positiveApex);
         Assert.assertEquals(TetrahedralSign.PLUS, tetSign);
     }
     
     @Test
-    public void tetrahedralMinusAtomsTest() {
-        IAtom baseA = new Atom("C", new Point3d(ORIGIN));
-        IAtom baseB = new Atom("C", new Point3d(XAXIS));
-        IAtom baseC = new Atom("C", new Point3d(YAXIS));
+    public void tetrahedralMinusAtomsAboveXYTest() {
+        // above the XY plane
+        IAtom baseA = new Atom("C", new Point3d(0, 0, 1));
+        IAtom baseB = new Atom("C", new Point3d(1, 0, 1));
+        IAtom baseC = new Atom("C", new Point3d(1, 1, 1));
         
         IAtom negativeApex = new Atom("C", new Point3d(0.5, 0.5, -1));
+        TetrahedralSign tetSign =
+            StereoTool.getHandedness(baseA, baseB, baseC, negativeApex);
+        Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
+    }
+    
+    @Test
+    public void tetrahedralPlusAtomsBelowXYTest() {
+        // below the XY plane
+        IAtom baseA = new Atom("C", new Point3d(0, 0, -1));
+        IAtom baseB = new Atom("C", new Point3d(1, 0, -1));
+        IAtom baseC = new Atom("C", new Point3d(1, 1, -1));
+        
+        IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 0));
+        TetrahedralSign tetSign =
+            StereoTool.getHandedness(baseA, baseB, baseC, positiveApex);
+        Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
+    }
+    
+    @Test
+    public void tetrahedralMinusAtomsBelowXYTest() {
+        // below the XY plane
+        IAtom baseA = new Atom("C", new Point3d(0, 0, -1));
+        IAtom baseB = new Atom("C", new Point3d(1, 0, -1));
+        IAtom baseC = new Atom("C", new Point3d(1, 1, -1));
+        
+        IAtom negativeApex = new Atom("C", new Point3d(0.5, 0.5, -2));
         TetrahedralSign tetSign =
             StereoTool.getHandedness(baseA, baseB, baseC, negativeApex);
         Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
