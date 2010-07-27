@@ -55,6 +55,8 @@ public class StereoTool {
      */
     public enum TetrahedralSign { PLUS, MINUS }
 
+    public enum TetrahedralDescriptor { R, S }
+    
     /**
      * The shape that four atoms take in a plane.
      */
@@ -267,12 +269,38 @@ public class StereoTool {
             return false;
         }
     }
+    
+    /**
+     * Take four atoms in order of priority, and return 'R' or 'S'.
+     * 
+     * @param atom1 the first atom in priority
+     * @param atom2 the second atom in priority
+     * @param atom3 the third atom in priority
+     * @param atom4 the fourth atom in priority
+     * @return 'R' or 'S'
+     */
+    public static TetrahedralDescriptor getTetrahedralDescriptor(
+            IAtom atom1, IAtom atom2, IAtom atom3, IAtom atom4) {
+        
+        // The handedness uses the first three arguments in an anti-clockwise
+        // order, so a result of "+" == "R" and "-" == "S".
+        // In other words, if you fix the first 3 priorities so that they are 
+        // anti-clockwise, the fourth is either 'towards' the viewer or 'away',
+        // which is equivalent to the normal clockwise/anti-clockwise definition.
+        
+        if (StereoTool.getHandedness(atom1, atom2, atom3, atom4) 
+                == TetrahedralSign.PLUS) {
+            return TetrahedralDescriptor.R;
+        } else {
+            return TetrahedralDescriptor.S;
+        }
+    }
 
     /**
      * Gets the tetrahedral handedness of four atoms - three of which form the
      * 'base' of the tetrahedron, and the other the apex. Note that it assumes
      * a right-handed coordinate system, and that the points {A,B,C} are in
-     * a counter-clockwise order in the plane they share. 
+     * a counter-clockwise order in the plane they share.
      * 
      * @param baseAtomA the first atom in the base of the tetrahedron
      * @param baseAtomB the second atom in the base of the tetrahedron
@@ -303,8 +331,9 @@ public class StereoTool {
         double distance = signedDistanceToPlane(
                 planeNormal, pointInPlane, testPoint);
 
-        // the point-plane distance is the absolute value,
+        // The point-plane distance is the absolute value,
         // the sign of the distance gives the side of the plane the point is on
+        // relative to the plane normal.
         if (distance > 0) {
             return TetrahedralSign.PLUS;
         } else {
