@@ -99,7 +99,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 2));
         TetrahedralSign tetSign =
             StereoTool.getHandedness(baseC, baseB, baseA, positiveApex);
-        Assert.assertEquals(TetrahedralSign.PLUS, tetSign);
+        Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
     }
     
     @Test

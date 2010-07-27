@@ -396,10 +396,10 @@ public class StereoTool {
      * <p>NOTE : the returned normal is normalized; that is, it has been
      * divided by its length.</p> 
      * 
-     * @param ptA
-     * @param ptB
-     * @param ptC
-     * @return
+     * @param ptA the 'middle' point
+     * @param ptB one of the end points
+     * @param ptC one of the end points
+     * @return the vector at right angles to AB and AC
      */
     public static Vector3d getNormal(Point3d ptA, Point3d ptB, Point3d ptC) {
         Vector3d vectorAB = new Vector3d();
