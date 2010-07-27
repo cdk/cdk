@@ -86,6 +86,7 @@ public class StereoTool {
      * @param atomD an atom in the plane
      * @return true if all the atoms are in the same plane
      */
+    @TestMethod("squarePlanarTest")
     public static boolean isSquarePlanar(
             IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
         Point3d pointA = atomA.getPoint3d();
@@ -180,6 +181,7 @@ public class StereoTool {
      * @param points an array of points to test 
      * @return false if any of the points is not in the plane
      */
+    @TestMethod("allCoplanarTest")
     public static boolean allCoplanar(
             Vector3d planeNormal, Point3d pointInPlane, Point3d... points) {
         for (Point3d point : points) {
@@ -285,6 +287,7 @@ public class StereoTool {
      * @param atom4 the fourth atom (points away)
      * @return clockwise or anticlockwise
      */
+    @TestMethod("getStereoCWTest, getStereoACWTest")
     public static Stereo getStereo(
             IAtom atom1, IAtom atom2, IAtom atom3, IAtom atom4) {
         
@@ -350,40 +353,6 @@ public class StereoTool {
         }
     }
 
-    public static boolean isDiaxial(
-          IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD, double maxAngle) {
-        Point3d pointA = atomA.getPoint3d();
-        Point3d pointB = atomB.getPoint3d();
-        Point3d pointC = atomC.getPoint3d();
-        Point3d pointD = atomD.getPoint3d();
-        return isDiaxial(pointA, pointB, pointC, pointD, maxAngle);
-    }
-
-    private static boolean isDiaxial(Point3d pointA, Point3d pointB, 
-            Point3d pointC, Point3d pointD,  double maxAngle) {
-        // we don't care about these vectors...
-        Vector3d vAC = new Vector3d();
-        Vector3d vBD = new Vector3d();
-        return isDiaxial(pointA, pointB, pointC, pointD, vAC, vBD, maxAngle);
-    }
-
-    // NOTE : taken from Jmol class o.j.smiles.SmilesSearch
-    // I think that it is finding the angle between the lines A-C and B-D, and 
-    // checking that angle is less than f...
-    // XXX the side-effect (boo!) of the method is to create 
-    // the vectors corresponding to the lines
-    private static boolean isDiaxial(Point3d pointA, Point3d pointB, 
-            Point3d pointC, Point3d pointD, Vector3d vAC, Vector3d vBD, 
-            double maxAngle) {
-        vAC.set(pointA);
-        vBD.set(pointB);
-        vAC.sub(pointC);
-        vBD.sub(pointD);
-        
-        // -0.95f about 172 degrees
-        return vAC.dot(vBD) < maxAngle;
-    }
-    
     /**
      * Checks the three supplied points to see if they fall on the same line.
      * It does this by finding the normal to an arbitrary pair of lines between

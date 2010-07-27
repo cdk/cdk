@@ -31,6 +31,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.stereo.StereoTool.SquarePlanarShape;
 import org.openscience.cdk.stereo.StereoTool.TetrahedralSign;
 
@@ -138,7 +139,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 0));
         TetrahedralSign tetSign =
             StereoTool.getHandedness(baseA, baseB, baseC, positiveApex);
-        Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
+        Assert.assertEquals(TetrahedralSign.PLUS, tetSign);
     }
     
     @Test
@@ -247,5 +248,52 @@ public class StereoToolTest extends CDKTestCase {
                 StereoTool.isOctahedral(
                         atomA, atomB, atomC, atomD, atomE, atomF, atomG));
     }
-
+    
+    @Test
+    public void squarePlanarTest() {
+        IAtom atomA = new Atom("C", new Point3d(1, 2, 0));
+        IAtom atomB = new Atom("C", new Point3d(1, 1, 0));
+        IAtom atomC = new Atom("C", new Point3d(2, 2, 0));
+        IAtom atomD = new Atom("C", new Point3d(2, 1, 0));
+        Assert.assertTrue(StereoTool.isSquarePlanar(atomA, atomB, atomC, atomD));
+    }
+    
+    @Test
+    public void allCoplanarTest() {
+        Point3d pointA = new Point3d(1, 1, 0);
+        Point3d pointB = new Point3d(2, 1, 0);
+        Point3d pointC = new Point3d(1, 2, 0);
+        Point3d pointD = new Point3d(2, 2, 0);
+        Point3d pointE = new Point3d(3, 2, 0);
+        Point3d pointF = new Point3d(3, 3, 0);
+        
+        Vector3d normal = StereoTool.getNormal(pointA, pointB, pointC);
+        Assert.assertTrue(
+                StereoTool.allCoplanar(
+                        normal, pointA, pointB, pointC, pointD, pointE, pointF));
+    }
+    
+    @Test
+    public void getStereoACWTest() {
+        IAtom closestAtomToViewer = new Atom("F", new Point3d(1, 1, 1));
+        IAtom highestCIPPriority = new Atom("I", new Point3d(0, 1, 2));
+        IAtom middleCIPPriority = new Atom("Br", new Point3d(0, 0, 0));
+        IAtom nearlylowestCIPPriority = new Atom("Cl", new Point3d(0, 2, 0));
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, 
+                StereoTool.getStereo(
+                        closestAtomToViewer, highestCIPPriority, 
+                        middleCIPPriority, nearlylowestCIPPriority));
+    }
+    
+    @Test
+    public void getStereoCWTest() {
+        IAtom closestAtomToViewer = new Atom("F", new Point3d(1, 1, 1));
+        IAtom highestCIPPriority = new Atom("I", new Point3d(0, 1, 2));
+        IAtom middleCIPPriority = new Atom("Br", new Point3d(0, 2, 0));
+        IAtom nearlylowestCIPPriority = new Atom("Cl", new Point3d(0, 0, 0));
+        Assert.assertEquals(Stereo.CLOCKWISE,
+                StereoTool.getStereo(
+                        closestAtomToViewer, highestCIPPriority, 
+                        middleCIPPriority, nearlylowestCIPPriority));
+    }
 }
