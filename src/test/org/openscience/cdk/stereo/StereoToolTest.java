@@ -20,7 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.stereo;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -31,12 +31,12 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.tools.StereoTool.SquarePlanarShape;
-import org.openscience.cdk.tools.StereoTool.TetrahedralSign;
+import org.openscience.cdk.stereo.StereoTool.SquarePlanarShape;
+import org.openscience.cdk.stereo.StereoTool.TetrahedralSign;
 
 /**
  * @author maclean
- * @cdk.module test-stereo
+ * @cdk.module test-standard
  */
 public class StereoToolTest extends CDKTestCase {
 

@@ -21,11 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.stereo;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.geometry.cip.CIPTool;
+import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -34,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * Some of these methods were adapted from Jmol's smiles search package.
  * 
  * @author maclean
- * @cdk.module stereo
+ * @cdk.module standard
  */
 public class StereoTool {
 
@@ -55,8 +57,6 @@ public class StereoTool {
      */
     public enum TetrahedralSign { PLUS, MINUS }
 
-    public enum TetrahedralDescriptor { R, S }
-    
     /**
      * The shape that four atoms take in a plane.
      */
@@ -279,7 +279,7 @@ public class StereoTool {
      * @param atom4 the fourth atom in priority
      * @return 'R' or 'S'
      */
-    public static TetrahedralDescriptor getTetrahedralDescriptor(
+    public static CIP_CHIRALITY getTetrahedralDescriptor(
             IAtom atom1, IAtom atom2, IAtom atom3, IAtom atom4) {
         
         // The handedness uses the first three arguments in an anti-clockwise
@@ -290,9 +290,9 @@ public class StereoTool {
         
         if (StereoTool.getHandedness(atom1, atom2, atom3, atom4) 
                 == TetrahedralSign.PLUS) {
-            return TetrahedralDescriptor.R;
+            return CIP_CHIRALITY.R;
         } else {
-            return TetrahedralDescriptor.S;
+            return CIP_CHIRALITY.S;
         }
     }
 
