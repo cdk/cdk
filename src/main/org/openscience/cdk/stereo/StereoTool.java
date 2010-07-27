@@ -26,9 +26,8 @@ package org.openscience.cdk.stereo;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.geometry.cip.CIPTool;
-import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 /**
  * Methods to determine or check the stereo class of a set of atoms.
@@ -271,28 +270,27 @@ public class StereoTool {
     }
     
     /**
-     * Take four atoms in order of priority, and return 'R' or 'S'.
+     * Take four atoms, and return Stereo.CLOCKWISE or Stereo.ANTI_CLOCKWISE.
+     * The first atom is the one pointing towards the observer.
      * 
-     * @param atom1 the first atom in priority
-     * @param atom2 the second atom in priority
-     * @param atom3 the third atom in priority
-     * @param atom4 the fourth atom in priority
-     * @return 'R' or 'S'
+     * @param atom1 the atom pointing towards the observer
+     * @param atom2 the second atom (points away)
+     * @param atom3 the third atom (points away)
+     * @param atom4 the fourth atom (points away)
+     * @return clockwise or anticlockwise
      */
-    public static CIP_CHIRALITY getTetrahedralDescriptor(
+    public static Stereo getStereo(
             IAtom atom1, IAtom atom2, IAtom atom3, IAtom atom4) {
         
-        // The handedness uses the first three arguments in an anti-clockwise
-        // order, so a result of "+" == "R" and "-" == "S".
-        // In other words, if you fix the first 3 priorities so that they are 
-        // anti-clockwise, the fourth is either 'towards' the viewer or 'away',
-        // which is equivalent to the normal clockwise/anti-clockwise definition.
+        // a normal is calculated for the base atoms (2, 3, 4) and compared to
+        // the first atom. PLUS indicates ACW.
+        TetrahedralSign sign = 
+            StereoTool.getHandedness(atom2, atom3, atom4, atom1);
         
-        if (StereoTool.getHandedness(atom1, atom2, atom3, atom4) 
-                == TetrahedralSign.PLUS) {
-            return CIP_CHIRALITY.R;
+        if (sign == TetrahedralSign.PLUS) {
+            return Stereo.ANTI_CLOCKWISE;
         } else {
-            return CIP_CHIRALITY.S;
+            return Stereo.CLOCKWISE;
         }
     }
 
