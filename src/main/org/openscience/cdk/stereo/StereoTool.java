@@ -26,6 +26,8 @@ package org.openscience.cdk.stereo;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
@@ -37,6 +39,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * @author maclean
  * @cdk.module standard
  */
+@TestClass("org.openscience.cdk.stereo.StereoToolTest")
 public class StereoTool {
 
     /**
@@ -124,6 +127,7 @@ public class StereoTool {
      * @param atomD an atom in the plane
      * @return the shape (U/4/Z)
      */
+    @TestMethod("squarePlanarUShapeTest, squarePlanarZShapeTest, squarePlanar4ShapeTest")
     public static SquarePlanarShape getSquarePlanarShape(
             IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
         Point3d pointA = atomA.getPoint3d();
@@ -202,6 +206,7 @@ public class StereoTool {
      * @param atomG the other axial atom
      * @return
      */
+    @TestMethod("octahedralTest")
     public static boolean isOctahedral(IAtom atomA, IAtom atomB, IAtom atomC,
             IAtom atomD, IAtom atomE, IAtom atomF, IAtom atomG) {
         Point3d pointA = atomA.getPoint3d();
@@ -239,6 +244,7 @@ public class StereoTool {
      * @param atomF the other axial atom
      * @return
      */
+    @TestMethod("trigonalBipyramidalTest")
     public static boolean isTrigonalBipyramidal(IAtom atomA, IAtom atomB, 
             IAtom atomC, IAtom atomD, IAtom atomE, IAtom atomF) {
         Point3d pointA = atomA.getPoint3d();
@@ -306,6 +312,11 @@ public class StereoTool {
      * @param apexAtom the atom in the point of the tetrahedron
      * @return
      */
+    @TestMethod("tetrahedralPlusAtomsAboveXYClockwiseTest, " +
+    		    "tetrahedralPlusAtomsAboveXYTest," +
+                "tetrahedralMinusAtomsAboveXYTest," +
+    		    "tetrahedralPlusAtomsBelowXYTest," +
+    		    "tetrahedralMinusAtomsBelowXYTest")
     public static TetrahedralSign getHandedness(
             IAtom baseAtomA, IAtom baseAtomB, IAtom baseAtomC, IAtom apexAtom) {
         Point3d pointA = baseAtomA.getPoint3d();
@@ -383,6 +394,9 @@ public class StereoTool {
      * @param ptC
      * @return
      */
+    @TestMethod("colinearTestWithColinearPoints," +
+    		"colinearTestWithNearlyColinearPoints," +
+    		"colinearTestWithNonColinearPoints")
     public static boolean isColinear(Point3d ptA, Point3d ptB, Point3d ptC) {
         Vector3d vectorAB = new Vector3d();
         Vector3d vectorAC = new Vector3d();
@@ -406,6 +420,7 @@ public class StereoTool {
      * @param point the point to measure
      * @return the signed distance to the plane
      */
+    @TestMethod("positivePointPlaneDistanceTest, negativePointPlaneDistanceTest")
     public static double signedDistanceToPlane(
             Vector3d planeNormal, Point3d pointInPlane, Point3d point) {
         if (planeNormal == null) return Double.NaN;
@@ -428,6 +443,7 @@ public class StereoTool {
      * @param ptC one of the end points
      * @return the vector at right angles to AB and AC
      */
+    @TestMethod("getNormalFromThreePoints")
     public static Vector3d getNormal(Point3d ptA, Point3d ptB, Point3d ptC) {
         Vector3d vectorAB = new Vector3d();
         Vector3d vectorAC = new Vector3d();

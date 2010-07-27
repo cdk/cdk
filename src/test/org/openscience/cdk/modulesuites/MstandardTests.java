@@ -76,6 +76,7 @@ import org.openscience.cdk.ringsearch.cyclebasis.CycleBasisTest;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasisTest;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleTest;
 import org.openscience.cdk.smiles.InvPairTest;
+import org.openscience.cdk.stereo.StereoToolTest;
 import org.openscience.cdk.tools.ElementComparatorTest;
 import org.openscience.cdk.tools.FormatStringBufferTest;
 import org.openscience.cdk.tools.HOSECodeGeneratorTest;
@@ -186,7 +187,8 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     HOSECodeGeneratorTest.class,
     LonePairElectronCheckerTest.class ,
     PeriodicTableElementTest.class,
-    PeriodicTableTest.class
+    PeriodicTableTest.class,
+    StereoToolTest.class
 
 })
 public class MstandardTests {}
