@@ -40,6 +40,7 @@ public class NNBond extends Bond {
 
 	public NNBond() {
 		this(null, null, null, IBond.Stereo.NONE);
+		this.atomCount = 0;
 	}
 
 	public NNBond(IAtom atom1, IAtom atom2) {

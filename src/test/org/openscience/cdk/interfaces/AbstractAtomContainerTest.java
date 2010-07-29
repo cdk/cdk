@@ -195,6 +195,33 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtom(1)));
 	}
 
+    @Test public void testClone_AtomlessIBond() throws Exception {
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
+        IBond bond = molecule.getBuilder().newBond();
+        molecule.addBond(bond);
+        Assert.assertEquals(bond, molecule.getBond(0));
+        IAtomContainer clone = (IAtomContainer)molecule.clone();
+        Assert.assertEquals(0, clone.getBond(0).getAtomCount());
+    }
+
+    @Test public void testClone_AtomlessILonePair() throws Exception {
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
+        ILonePair lonePair = molecule.getBuilder().newLonePair();
+        molecule.addLonePair(lonePair);
+        Assert.assertEquals(lonePair, molecule.getLonePair(0));
+        IAtomContainer clone = (IAtomContainer)molecule.clone();
+        Assert.assertNotNull(clone.getLonePair(0));
+    }
+
+    @Test public void testClone_AtomlessISingleElectron() throws Exception {
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
+        ISingleElectron singleElectron = molecule.getBuilder().newSingleElectron();
+        molecule.addSingleElectron(singleElectron);
+        Assert.assertEquals(singleElectron, molecule.getSingleElectron(0));
+        IAtomContainer clone = (IAtomContainer)molecule.clone();
+        Assert.assertNotNull(clone.getSingleElectron(0));
+    }
+
     @Test public void testClone_ILonePair() throws Exception {
 		IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom atom1 = molecule.getBuilder().newInstance(IAtom.class,"C");

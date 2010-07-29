@@ -91,6 +91,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     public Bond() {
         this(null, null, null, IBond.Stereo.NONE);
+        atomCount = 0;
     }
 
 
@@ -309,6 +310,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @see #getAtom
      */
     public void setAtom(IAtom atom, int position) {
+        if (atoms[position] == null && atom != null) atomCount++;
+        if (atoms[position] != null && atom == null) atomCount--;
         atoms[position] = atom;
         notifyChanged();
     }

@@ -792,7 +792,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("c1cnc2s[cH][cH]n12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
             Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
     }
@@ -829,6 +829,47 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         for (IAtom atom : mol.atoms()) {
             if (atom.getSymbol().equals("O")) continue;
             Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been", atom.getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
+
+    @Test public void testSMILES() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C=1N=CNC=1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms())
+            Assert.assertTrue(
+                "Atom is expected to be aromatic: " + atom,
+                atom.getFlag(CDKConstants.ISAROMATIC)
+            );
+        }
+    }
+
+    @Test public void testSMILES2() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("OCN1C=CN=C1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (int i=2; i<=6; i++) {
+            IAtom atom = mol.getAtom(i);
+            Assert.assertTrue(
+                "Atom is expected to be aromatic: " + atom,
+                atom.getFlag(CDKConstants.ISAROMATIC)
+            );
+        }
+    }
+
+    @Test public void testSMILES3() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("OC(=O)N1C=CN=C1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (int i=3; i<=7; i++) {
+            IAtom atom = mol.getAtom(i);
+            Assert.assertTrue(
+                "Atom is expected to be aromatic: " + atom,
+                atom.getFlag(CDKConstants.ISAROMATIC)
+            );
         }
     }
 
