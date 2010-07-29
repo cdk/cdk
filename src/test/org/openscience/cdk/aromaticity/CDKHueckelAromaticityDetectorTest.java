@@ -842,7 +842,6 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                 "Atom is expected to be aromatic: " + atom,
                 atom.getFlag(CDKConstants.ISAROMATIC)
             );
-        }
     }
 
     @Test public void testSMILES2() throws Exception {

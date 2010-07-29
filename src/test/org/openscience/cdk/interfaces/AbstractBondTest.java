@@ -92,16 +92,16 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
     @Test
     public void testSetAtom_SomeNull() {
         IBond b = (IBond)newChemObject();
-        b.setAtom(b.getBuilder().newAtom("C"), 0);
+        b.setAtom(b.getBuilder().newInstance(IAtom.class, "C"), 0);
         Assert.assertEquals(1, b.getAtomCount());
     }
 
     @Test
     public void testUnSetAtom() {
         IBond b = (IBond)newChemObject();
-        b.setAtom(b.getBuilder().newAtom("C"), 0);
+        b.setAtom(b.getBuilder().newInstance(IAtom.class, "C"), 0);
         Assert.assertEquals(1, b.getAtomCount());
-        b.setAtom(b.getBuilder().newAtom("C"), 0);
+        b.setAtom(b.getBuilder().newInstance(IAtom.class, "C"), 0);
         Assert.assertEquals(1, b.getAtomCount());
         b.setAtom(null, 0);
         Assert.assertEquals(0, b.getAtomCount());
@@ -112,9 +112,9 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
     @Test
     public void testOverwriteAtom() {
         IBond b = (IBond)newChemObject();
-        b.setAtom(b.getBuilder().newAtom("C"), 0);
+        b.setAtom(b.getBuilder().newInstance(IAtom.class, "C"), 0);
         Assert.assertEquals(1, b.getAtomCount());
-        b.setAtom(b.getBuilder().newAtom("C"), 0);
+        b.setAtom(b.getBuilder().newInstance(IAtom.class, "C"), 0);
         Assert.assertEquals(1, b.getAtomCount());
 
         // test overwrite with null
