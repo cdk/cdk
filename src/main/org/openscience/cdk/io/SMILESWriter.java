@@ -134,6 +134,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 			if (IMoleculeSet.class.equals(interfaces[i])) return true;
 			if (IMolecule.class.equals(interfaces[i])) return true;
 		}
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 
