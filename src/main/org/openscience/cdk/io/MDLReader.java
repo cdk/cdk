@@ -541,15 +541,22 @@ public class MDLReader extends DefaultChemObjectReader {
                 IAtom a1 = molecule.getAtom(atom1 - 1);
                 IAtom a2 = molecule.getAtom(atom2 - 1);
                 IBond newBond = null;
-                if (order == 1) {
-                	newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE, stereo);
-                } else if (order == 2) {
-                	newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE, stereo);
-                } else if (order == 3) {
-                	newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.TRIPLE, stereo);
+                if (order >= 1 && order <= 3) {
+                    IBond.Order cdkOrder = IBond.Order.SINGLE;
+                    if (order == 2) cdkOrder = IBond.Order.DOUBLE;
+                    if (order == 3) cdkOrder = IBond.Order.TRIPLE;
+                    if (stereo != null) {
+                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, cdkOrder, stereo);
+                    } else {
+                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, cdkOrder);
+                    }
                 } else if (order == 4) {                
                     // aromatic bond
-                	newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE, stereo);
+                    if (stereo != null) {
+                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE, stereo);
+                    } else {
+                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+                    }
                     // mark both atoms and the bond as aromatic
                 	newBond.setFlag(CDKConstants.ISAROMATIC, true);
                     a1.setFlag(CDKConstants.ISAROMATIC, true);
