@@ -87,7 +87,7 @@ public class StereoToolTest extends CDKTestCase {
         
         // the normal of X and Y should be Z
         Vector3d normal = StereoTool.getNormal(ORIGIN, axisXPoint, axisYPoint);
-        Assert.assertEquals(ZAXIS, normal);
+        assertEquals(ZAXIS, normal, 0.0001);
     }
     
     @Test
