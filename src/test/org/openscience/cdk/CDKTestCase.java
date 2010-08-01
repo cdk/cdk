@@ -33,6 +33,8 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
 import java.util.Iterator;
 
 /**
@@ -101,7 +103,7 @@ public class CDKTestCase {
     	Assert.assertEquals(p1.x, p2.x, error);
     	Assert.assertEquals(p1.y, p2.y, error);
     }
-        
+
     /**
      * Compares two Point3d objects, and asserts that the XY coordinates
      * are identical within the given error.
@@ -116,6 +118,22 @@ public class CDKTestCase {
     	Assert.assertEquals(p1.x, p2.x, error);
     	Assert.assertEquals(p1.y, p2.y, error);
     	Assert.assertEquals(p1.z, p2.z, error);
+    }
+
+    /**
+     * Compares two Vector3d objects, and asserts that the XYZ coordinates
+     * are identical within the given error.
+     *
+     * @param v1    first Point3d
+     * @param v2    second Point3d
+     * @param error maximal allowed error
+     */
+    public void assertEquals(Vector3d v1, Vector3d v2, double error) {
+        Assert.assertNotNull("The expected Vector3d is null", v1);
+        Assert.assertNotNull("The tested Vector3d is null", v2);
+        Assert.assertEquals(v1.x, v2.x, error);
+        Assert.assertEquals(v1.y, v2.y, error);
+        Assert.assertEquals(v1.z, v2.z, error);
     }
 
     /**
