@@ -28,6 +28,7 @@
 package org.openscience.cdk.layout;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -101,6 +102,7 @@ public class TemplateHandler
 					line = reader.readLine();
 					line = "org/openscience/cdk/layout/templates/" + line;
 					logger.debug("Attempting to read template ", line);
+				try {
 					CMLReader structureReader = new CMLReader(
 						this.getClass().getClassLoader().getResourceAsStream(line)
 					);
@@ -109,12 +111,18 @@ public class TemplateHandler
 					for (int i = 0; i < files.size(); i++)
 						templates.add(files.get(i));
 					logger.debug("Successfully read template ", line);
+				} catch (CDKException cdke) {
+				    logger.warn("Could not read template ", line, ", reason: ", cdke.getMessage());
+				    logger.debug(cdke);
+				} catch (IllegalArgumentException iae) {
+				    logger.warn("Could not read template ", line, ", reason: ", iae.getMessage());
+				    logger.debug(iae);
+				}
+
 			}
-		} catch (Exception exc) {
-			logger.debug("Could not read templates");
-			System.out.println("Reason: " + exc.getMessage());
-			exc.printStackTrace();
-			logger.debug(exc);
+		} catch (IOException ioe) {
+		    logger.warn("Could not read (all of the) templates, reason: ", ioe.getMessage());
+		    logger.debug(ioe);
 		}
 	}
 
