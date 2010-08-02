@@ -87,7 +87,7 @@ public class MolHandler {
     @TestMethod("MolHandlerTest")
     public MolHandler(String MolFile, boolean cleanMolecule, boolean removeHydrogen) {
 
-        MDLReader molRead;
+        MDLReader molRead = null;
         this.removeHydrogen = removeHydrogen;
         try {
             FileInputStream readMolecule;
@@ -108,6 +108,15 @@ public class MolHandler {
             Logger.error(Level.SEVERE, null, ex);
         } catch (CDKException e) {
             System.err.println(e);
+        } finally {
+        	if (molRead != null) {
+                try {
+                    molRead.close();
+                } catch (IOException ioe) {
+                    Logger.warn("Couldn't close molReader: ", ioe.getMessage());
+                    Logger.debug(ioe);
+                }
+            }
         }
     }
 
@@ -119,7 +128,7 @@ public class MolHandler {
     @TestMethod("MolHandlerTest")
     public MolHandler(String MolFile, boolean cleanMolecule) {
 
-        MDLReader molRead;
+        MDLReader molRead = null;
         this.removeHydrogen = false;
 
 
@@ -144,6 +153,15 @@ public class MolHandler {
             Logger.error(Level.SEVERE, null, ex);
         } catch (CDKException e) {
             System.err.println(e);
+        } finally {
+            if (molRead != null) {
+                try {
+                    molRead.close();
+                } catch (IOException ioe) {
+                    Logger.warn("Couldn't close molReader: ", ioe.getMessage());
+                    Logger.debug(ioe);
+                }
+            }
         }
     }
 
