@@ -1,9 +1,4 @@
-/* $RCSfile: $
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2007  Todd Martin (Environmental Protection Agency)  <Martin.Todd@epamail.epa.gov>
+/* Copyright (C) 2007  Todd Martin (Environmental Protection Agency)  <Martin.Todd@epamail.epa.gov>
  * Copyright (C) 2007  Nikolay Kochev <nick@argon.acad.bg>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -47,7 +42,7 @@ import java.lang.reflect.Method;
 
 /**
  * This class calculates ALOGP (Ghose-Crippen LogKow) and the 
- * Ghose-Crippen molar refractivity @cdk.cite{GHOSE1986} @cdk.cite{GHOSE1987}.
+ * Ghose-Crippen molar refractivity {@cdk.cite GHOSE1986,GHOSE1987}.
  *
  * <b>Note</b> The code assumes that aromaticity has been detected before
  * evaluating this descriptor. The code also expects that the molecule
@@ -57,7 +52,7 @@ import java.lang.reflect.Method;
  * 
  * <p>TODO: what should sub return if have missing fragment?
  * Just report sum for other fragments? Or report as -9999 and 
- * then dont use descriptor if have this  value for any 
+ * then do not use descriptor if have this  value for any 
  * chemicals in cluster?
  * 
  * <p>This descriptor uses these parameters:
