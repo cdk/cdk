@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -49,6 +50,20 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	
 	@BeforeClass public static void setup() {
 		dbst = new DeduceBondSystemTool();
+	}
+
+	@Test public void testConstructors() {
+	    // basically: just test that no exception is thrown
+	    Assert.assertNotNull(new DeduceBondSystemTool());
+        Assert.assertNotNull(new DeduceBondSystemTool(new AllRingsFinder()));
+	}
+
+	@Test public void testInterruption() {
+        dbst.setInterrupted(false);
+        Assert.assertFalse(dbst.isInterrupted());
+        dbst.setInterrupted(true);
+        Assert.assertTrue(dbst.isInterrupted());
+        dbst.setInterrupted(false);
 	}
 
 	@Test(timeout=1000) 
@@ -143,6 +158,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
+        Assert.assertTrue(dbst.isOK(enol));
         
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(0).getOrder());
@@ -198,6 +214,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
+        Assert.assertTrue(dbst.isOK(enol));
 		
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(0).getOrder());;
@@ -251,6 +268,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
+        Assert.assertTrue(dbst.isOK(enol));
 		
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
@@ -315,6 +333,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
+        Assert.assertTrue(dbst.isOK(enol));
 		
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
