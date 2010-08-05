@@ -921,6 +921,10 @@
             <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/">
                 <fileset dir="${src}/main/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
             </copy>
+                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates"/>
+                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates">
+                    <fileset dir="${src}/main/org/openscience/cdk/layout/templates" includes="*"/>
+                </copy>
                 <mkdir dir="${sourcedist.dir}/doc/" />
                 <copy todir="${sourcedist.dir}/doc/">
                     <fileset dir="doc/" includes="lgpl.license" />
@@ -981,6 +985,10 @@
             <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/">
                 <fileset dir="${src}/main/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
             </copy>
+                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates"/>
+                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates">
+                    <fileset dir="${src}/main/org/openscience/cdk/layout/templates" includes="*"/>
+                </copy>
                 <mkdir dir="${sourcedist.dir}/doc/" />
                 <copy todir="${sourcedist.dir}/doc/">
                     <fileset dir="doc/" includes="lgpl.license" />
