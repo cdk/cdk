@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNBond;
 import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -49,7 +50,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	@BeforeClass public static void setup() {
 		dbst = new DeduceBondSystemTool();
 	}
-	
+
 	@Test(timeout=1000) 
 	public void testPyrrole() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
@@ -63,6 +64,25 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         for (int i = 0; i < molecule.getBondCount(); i++) {
         	IBond bond = molecule.getBond(i);
         	Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
+
+	@Test(timeout=1000) 
+    public void testPyrrole_CustomRingFinder() throws Exception {
+        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        
+        DeduceBondSystemTool dbst = new DeduceBondSystemTool(
+            new AllRingsFinder()
+        );
+        molecule = dbst.fixAromaticBondOrders(molecule);
+        Assert.assertNotNull(molecule);
+
+        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        for (int i = 0; i < molecule.getBondCount(); i++) {
+            IBond bond = molecule.getBond(i);
+            Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 

@@ -84,6 +84,15 @@ public class DeduceBondSystemTool {
     	allRingsFinder = new AllRingsFinder();
     }
 
+    /**
+     * Constructor for the DeduceBondSystemTool object accepting a custom {@link AllRingsFinder}.
+     *
+     * @param ringFinger a custom {@link AllRingsFinder}.
+     */
+    public DeduceBondSystemTool(AllRingsFinder ringFinder) {
+        allRingsFinder = ringFinder;
+    }
+
     public boolean isOK(IMolecule m) throws CDKException {
     	IRingSet rs = allRingsFinder.findAllRings(m);
     	storeRingSystem(m, rs);
