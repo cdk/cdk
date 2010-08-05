@@ -94,7 +94,9 @@ public class DeduceBondSystemTool {
     }
 
     public boolean isOK(IMolecule m) throws CDKException {
-    	IRingSet rs = allRingsFinder.findAllRings(m);
+        // OK, we take advantage here from the fact that this class does not take
+        // into account rings larger than 7 atoms. See fixAromaticBondOrders().
+        IRingSet rs = allRingsFinder.findAllRings(m,7);
     	storeRingSystem(m, rs);
     	boolean StructureOK=this.isStructureOK(m);
     	IRingSet irs=this.removeExtraRings(m);
@@ -108,9 +110,9 @@ public class DeduceBondSystemTool {
 
     @TestMethod("xtestQuinone,xtestPyrrole")
     public IMolecule fixAromaticBondOrders(IMolecule molecule) throws CDKException {
-        //logger.debug("here");
-    	
-    	IRingSet rs = allRingsFinder.findAllRings(molecule);
+        // OK, we take advantage here from the fact that this class does not take
+        // into account rings larger than 7 atoms. See fixAromaticBondOrders().
+        IRingSet rs = allRingsFinder.findAllRings(molecule,7);
     	storeRingSystem(molecule, rs);
     	
         IRingSet ringSet;
@@ -131,6 +133,8 @@ public class DeduceBondSystemTool {
 
             IRing ring = (IRing) ringSet.getAtomContainer(i);
 
+            // only takes into account rings up to 7 atoms... if that changes,
+            // make sure to update the findAllRings() calls too!
             if (ring.getAtomCount() == 5) {
                 fiveMemberedRingPossibilities(molecule, ring, MasterList);
             } else if (ring.getAtomCount() == 6) {
