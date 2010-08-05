@@ -56,7 +56,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingManipulator;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
- * for a number of common ring systems.
+ * for a number of common ring systems of up to seven-membered rings.
+ * 
+ * <p>The calculation can be interrupted with {@link #setInterrupted(boolean)},
+ * but assumes that this class is not used in a threaded fashion. When a calculation
+ * is interrupted, the boolean is reset to false.
  *
  * @author Todd Martin
  * @cdk.module smiles
@@ -65,6 +69,8 @@ import org.openscience.cdk.tools.manipulator.RingManipulator;
  * 
  * @cdk.bug 1895805
  * @cdk.bug 1931262
+ * 
+ * @cdk.threadnonsafe
  */
 @TestClass("org.openscience.cdk.smiles.DeduceBondSystemToolTest")
 public class DeduceBondSystemTool {
@@ -80,6 +86,7 @@ public class DeduceBondSystemTool {
     /**
      * Constructor for the DeduceBondSystemTool object.
      */
+    @TestMethod("testConstructors")
     public DeduceBondSystemTool() {
     	allRingsFinder = new AllRingsFinder();
     }
@@ -89,10 +96,20 @@ public class DeduceBondSystemTool {
      *
      * @param ringFinger a custom {@link AllRingsFinder}.
      */
+    @TestMethod("testConstructors")
     public DeduceBondSystemTool(AllRingsFinder ringFinder) {
         allRingsFinder = ringFinder;
     }
 
+    /**
+     * Determines if, according to the algorithms implemented in this class, the given
+     * molecule has properly distributed double bonds.
+     *
+     * @param  m {@link IMolecule} to check the bond orders for.
+     * @return true, if bond orders are properly distributed
+     * @throws CDKException thrown when something went wrong
+     */
+    @TestMethod("testPyrrole")
     public boolean isOK(IMolecule m) throws CDKException {
         // OK, we take advantage here from the fact that this class does not take
         // into account rings larger than 7 atoms. See fixAromaticBondOrders().
@@ -108,6 +125,13 @@ public class DeduceBondSystemTool {
         return StructureOK && count == 0;
     }
 
+    /**
+     * Added missing bond orders based on atom type information.
+     * 
+     * @param molecule {@link IMolecule} for which to distribute double bond orders
+     * @return a {@link IMolecule} with assigned double bonds.
+     * @throws CDKException if something went wrong.
+     */
     @TestMethod("xtestQuinone,xtestPyrrole")
     public IMolecule fixAromaticBondOrders(IMolecule molecule) throws CDKException {
         // OK, we take advantage here from the fact that this class does not take
@@ -556,6 +580,8 @@ public class DeduceBondSystemTool {
         	//time out after 100 seconds
         	throw new CDKException("Timed out after 100 seconds.");
         } else if (this.interrupted) {
+            // reset the interruption
+            this.interrupted = false;
         	throw new CDKException("Process was interrupted.");
         }
 
@@ -832,10 +858,22 @@ public class DeduceBondSystemTool {
     	return ringSet;
     }
 
+    /**
+     * Sets if the calculation should be interrupted.
+     *
+     * @param interrupted true, if the calculation should be canceled
+     */
+    @TestMethod("testInterruption")
 	public void setInterrupted(boolean interrupted) {
 		this.interrupted = interrupted;
 	}
 
+    /**
+     * Returns if the next or running calculation should be interrupted.
+     *
+     * @return true or false
+     */
+    @TestMethod("testInterruption")
 	public boolean isInterrupted() {
 		return this.interrupted;
 	}
