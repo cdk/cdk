@@ -160,6 +160,8 @@ public class CDKHueckelAromaticityDetector {
                     electronCount += 2;
                 } else if ("O.planar3".equals(ringAtom.getAtomTypeName())) {
                     electronCount += 2;
+                } else if ("N.sp2.3".equals(ringAtom.getAtomTypeName())) {
+                    electronCount += 1;
                 } else {
                     if (factory == null) {
 						factory = AtomTypeFactory.getInstance(
@@ -192,18 +194,22 @@ public class CDKHueckelAromaticityDetector {
 
     /**
 	 * Determines if the isolatedRingSystem has attached double bonds, which are not part of the ring system itself,
-	 * and not part of any other ring system.
+	 * and not part of any other ring system. Exceptions: a N.sp2.3 nitrogen with a double ring to an
+	 * oxygen outwards.
 	 */
 	private static boolean isRingSystemSproutedWithNonRingDoubleBonds(IAtomContainer fullContainer, IAtomContainer isolatedRingSystem) {
 		Iterator<IAtom> atoms = isolatedRingSystem.atoms().iterator();
 		while (atoms.hasNext()) {
-			Iterator<IBond> neighborBonds = fullContainer.getConnectedBondsList(atoms.next()).iterator();
+		    IAtom atom = atoms.next();
+			Iterator<IBond> neighborBonds = fullContainer.getConnectedBondsList(atom).iterator();
 			while (neighborBonds.hasNext()) {
 				IBond neighborBond = neighborBonds.next();
 				if (!neighborBond.getFlag(CDKConstants.ISINRING) &&
 					neighborBond.getOrder() == CDKConstants.BONDORDER_DOUBLE ||
 					neighborBond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
-					return true;
+				    if (!("N.sp2.3".equals(atom.getAtomTypeName()) &&
+				        "O.sp2".equals(neighborBond.getConnectedAtom(atom).getAtomTypeName())))
+				        return true;
 				}
 			}
 		}
