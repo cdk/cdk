@@ -27,3 +27,6 @@ cdk-ionpot.jar
 cdk-testdata.jar
 cdk-diff.jar
 cdk-builder3d.jar
+cdk-forcefield.jar
+cdk-sdg.jar
+cdk-ioformats.jar
