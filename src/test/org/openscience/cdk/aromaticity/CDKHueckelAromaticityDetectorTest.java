@@ -808,7 +808,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("O=n1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
             if (atom.getSymbol().equals("O")) continue;
             Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been", atom.getFlag(CDKConstants.ISAROMATIC));
