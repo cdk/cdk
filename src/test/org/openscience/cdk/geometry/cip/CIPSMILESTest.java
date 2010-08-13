@@ -120,6 +120,17 @@ public class CIPSMILESTest extends CDKTestCase {
         Assert.assertTrue(stereo instanceof ITetrahedralChirality);
         CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo);
     }
+
+    @Test(timeout=5000) // 5 seconds should be enough
+    public void testTermination2() throws Exception {
+        IMolecule mol = smiles.parseSmiles("OC1CCC[C@](F)(CC1)Cl");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereo = stereoElements.next();
+        Assert.assertNotNull(stereo);
+        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
+        CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo);
+    }
 }
 
 
