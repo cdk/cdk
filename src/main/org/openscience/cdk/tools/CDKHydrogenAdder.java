@@ -45,9 +45,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *   IAtom carbon = new Atom("C");
  *   methane.addAtom(carbon);
  *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(methane.getNewBuilder());
- *   Iterator<IAtom> atoms = methane.atoms();
- *   while (atoms.hasNext()) {
- *     IAtom atom = atoms.next();
+ *   for (IAtom atom : methane.atoms) {
  *     IAtomType type = matcher.findMatchingAtomType(methane, atom);
  *     AtomTypeManipulator.configure(atom, type);
  *   }
