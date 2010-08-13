@@ -47,7 +47,9 @@ import java.util.Map;
  * <code>// Generate factory - throws CDKException if native code does not load</code><br>
  * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>
  * <code>// Get InChIToStructure</code><br>
- * <code>InChIToStructure intostruct = factory.getInChIToStructure(inchi);</code><br>
+ * <code>InChIToStructure intostruct = factory.getInChIToStructure(</code><br>
+ * <code>  inchi, DefaultChemObjectBuilder.getInstance()</code><br>
+ * <code>);</code><br>
  * <code></code><br>
  * <code>INCHI_RET ret = intostruct.getReturnStatus();</code><br>
  * <code>if (ret == INCHI_RET.WARNING) {</code><br>
