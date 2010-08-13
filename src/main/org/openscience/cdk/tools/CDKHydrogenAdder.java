@@ -45,9 +45,7 @@ import java.util.Map;
  *   IAtom carbon = new Atom("C");
  *   methane.addAtom(carbon);
  *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(methane.getBuilder());
- *   Iterator<IAtom> atoms = methane.atoms();
- *   while (atoms.hasNext()) {
- *     IAtom atom = atoms.next();
+ *   for (IAtom atom : methane.atoms) {
  *     IAtomType type = matcher.findMatchingAtomType(methane, atom);
  *     AtomTypeManipulator.configure(atom, type);
  *   }
