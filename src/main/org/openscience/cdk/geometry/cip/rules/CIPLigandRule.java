@@ -64,10 +64,8 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
             return 1;
         // ok, both have at least one ligand
         int minLigandCount = Math.min(ligand1Ligands.length, ligand2Ligands.length);
-        if (minLigandCount > 1) {
-            ligand1Ligands = order(ligand1Ligands);
-            ligand2Ligands = order(ligand2Ligands);
-        }
+        if (ligand1Ligands.length > 1) ligand1Ligands = order(ligand1Ligands);
+        if (ligand2Ligands.length > 1) ligand2Ligands = order(ligand2Ligands);
         // first do a basic number rule
         for (int i=0; i<minLigandCount; i++) {
             int comparison = numberRule.compare(ligand1Ligands[i], ligand2Ligands[i]);

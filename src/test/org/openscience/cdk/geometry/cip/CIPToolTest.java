@@ -28,13 +28,18 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
@@ -211,6 +216,37 @@ public class CIPToolTest extends CDKTestCase {
         IMolecule molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)");
         ILigand ligand = CIPTool.defineLigand(molecule, 3, CIPTool.HYDROGEN);
         Assert.assertTrue(ligand instanceof ImplicitHydrogenLigand);
+    }
+
+    @Test //(timeout=5000)
+    public void testTermination() {
+        int ringSize = 7;
+        IAtomContainer ring = new AtomContainer();
+        for (int i = 0; i < ringSize; i++) {
+            ring.addAtom(new Atom("C"));
+        }
+        for (int j = 0; j < ringSize - 1; j++) {
+            ring.addBond(j, j + 1, IBond.Order.SINGLE);
+        }
+        ring.addBond(ringSize - 1, 0, IBond.Order.SINGLE);
+        
+        ring.addAtom(new Atom("Cl"));
+        ring.addAtom(new Atom("F"));
+        ring.addBond(0, ringSize, IBond.Order.SINGLE);
+        ring.addBond(0, ringSize + 1, IBond.Order.SINGLE);
+        ring.addAtom(new Atom("O"));
+        ring.addBond(1, ringSize + 2, IBond.Order.SINGLE);
+        IAtom[] atoms = new IAtom[] {
+            ring.getAtom(ringSize), 
+            ring.getAtom(ringSize + 1), 
+            ring.getAtom(ringSize - 1), 
+            ring.getAtom(1) 
+        };
+        ITetrahedralChirality stereoCenter =
+            new TetrahedralChirality(ring.getAtom(0), atoms, Stereo.ANTI_CLOCKWISE);
+        ring.addStereoElement(stereoCenter);
+        SmilesGenerator generator = new SmilesGenerator();
+        CIPTool.getCIPChirality(ring, stereoCenter);
     }
 }
 
