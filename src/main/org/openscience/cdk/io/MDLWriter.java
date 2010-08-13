@@ -35,12 +35,9 @@ import java.io.Writer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
-import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
@@ -50,6 +47,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -345,6 +343,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
                         int bondType;
                         if (writeAromaticBondTypes.isSet() && bond.getFlag(CDKConstants.ISAROMATIC))
                             bondType=4;
+                        else if (Order.QUADRUPLE  == bond.getOrder())
+                            throw new CDKException("MDL molfiles do not support quadruple bonds.");
                         else
                             bondType=(int)bond.getOrder().ordinal()+1;
                         line += formatMDLInt(bondType,3);

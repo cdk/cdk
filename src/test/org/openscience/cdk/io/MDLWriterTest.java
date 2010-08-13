@@ -36,6 +36,7 @@ import org.junit.Test;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -45,6 +46,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -233,6 +235,22 @@ public class MDLWriterTest extends ChemObjectIOTest {
         String output = writer.toString();
         Assert.assertTrue(output.indexOf("1  2  2  4  0  0  0")>-1);
         Assert.assertTrue(output.indexOf("2  3  1  3  0  0  0")>-1);
+    }
+
+    @Test(expected=CDKException.class)
+    public void testUnsupportedBondOrder() throws Exception {
+        Molecule molecule = new Molecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("C"));
+        molecule.addBond(
+            new Bond(
+                molecule.getAtom(0),
+                molecule.getAtom(1),
+                Order.QUADRUPLE
+            )
+        );
+        MDLWriter mdlWriter = new MDLWriter(new StringWriter());
+        mdlWriter.write(molecule);
     }
 
     @Test public void testTwoFragmentsWithTitle() throws CDKException{
