@@ -19,6 +19,6 @@
 	<classpathentry kind="lib" path="jar/cmlxom-2.5-b1.jar"/>
 	<classpathentry kind="lib" path="develjar/ojdcheck.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="jar/signatures-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="jar/signatures-1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
