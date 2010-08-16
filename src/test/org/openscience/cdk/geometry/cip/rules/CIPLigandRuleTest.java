@@ -46,6 +46,42 @@ public class CIPLigandRuleTest extends CDKTestCase {
     static SmilesParser smiles = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 
     @Test
+    public void testCBrIFCl() throws Exception {
+        IMolecule molecule = smiles.parseSmiles("FC(Br)(Cl)I");
+        ILigand ligandF = new Ligand(
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
+        );
+        ILigand ligandBr = new Ligand(
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2)
+        );
+        ILigand ligandCl = new Ligand(
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3)
+        );
+        ILigand ligandI = new Ligand(
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4)
+        );
+        ISequenceSubRule<ILigand> rule = new CIPLigandRule();
+        Assert.assertEquals(-1, rule.compare(ligandF, ligandI));
+        Assert.assertEquals(-1, rule.compare(ligandF, ligandBr));
+        Assert.assertEquals(-1, rule.compare(ligandF, ligandCl));
+        Assert.assertEquals(-1, rule.compare(ligandCl, ligandI));
+        Assert.assertEquals(-1, rule.compare(ligandCl, ligandBr));
+        Assert.assertEquals(-1, rule.compare(ligandBr, ligandI));
+
+        List<ILigand> ligands = new ArrayList<ILigand>();
+        ligands.add(ligandI);
+        ligands.add(ligandBr);
+        ligands.add(ligandF);
+        ligands.add(ligandCl);
+        Collections.sort(ligands, new CIPLigandRule());
+
+        Assert.assertEquals("F", ligands.get(0).getLigandAtom().getSymbol());
+        Assert.assertEquals("Cl", ligands.get(1).getLigandAtom().getSymbol());
+        Assert.assertEquals("Br", ligands.get(2).getLigandAtom().getSymbol());
+        Assert.assertEquals("I", ligands.get(3).getLigandAtom().getSymbol());
+    }
+
+    @Test
     public void testCompare_Identity() throws Exception {
         IMolecule molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
         ILigand ligand = new Ligand(

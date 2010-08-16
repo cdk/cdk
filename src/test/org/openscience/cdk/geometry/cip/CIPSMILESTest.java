@@ -132,6 +132,15 @@ public class CIPSMILESTest extends CDKTestCase {
         CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo);
     }
 
+    @Test
+    public void testTetraHalogenMethane() throws Exception {
+        IMolecule molecule = smiles.parseSmiles("FC(Br)(Cl)I");
+        LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(
+            molecule, 1, 0, 4, 2, 3, Stereo.ANTI_CLOCKWISE
+        );
+        Assert.assertEquals(CIP_CHIRALITY.R, CIPTool.getCIPChirality(chirality));
+    }
+
     /**
      * @cdk.inchi InChI=1S/C20H20BrN3O3S/c1-23(2)9-10-24(20-22-14-8-7-13(21)11-18(14)28-20)19(25)17-12-26-15-5-3-4-6-16(15)27-17/h3-8,11,17H,9-10,12H2,1-2H3/p+1/t17-/m1/s1
      */
