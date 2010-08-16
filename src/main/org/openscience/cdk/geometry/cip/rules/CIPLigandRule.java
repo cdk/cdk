@@ -71,19 +71,21 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
             int comparison = numberRule.compare(ligand1Ligands[i], ligand2Ligands[i]);
             if (comparison != 0) return comparison;
         }
-        // it that does not resolve it, do a full, recursive compare
-        for (int i=0; i<minLigandCount; i++) {
-            int comparison = compare(ligand1Ligands[i], ligand2Ligands[i]);
-            if (comparison != 0) return comparison;
+        if (ligand1Ligands.length == ligand2Ligands.length) {
+            // it that does not resolve it, do a full, recursive compare
+            for (int i=0; i<minLigandCount; i++) {
+                int comparison = compare(ligand1Ligands[i], ligand2Ligands[i]);
+                if (comparison != 0) return comparison;
+            }
         }
         // OK, if we reached this point, then the ligands they 'share' are all equals, so the one
         // with more ligands wins
-        if (ligand1Ligands.length == ligand2Ligands.length)
-            return 0;
         if (ligand1Ligands.length > ligand2Ligands.length)
             return 1;
-        else
+        else if (ligand1Ligands.length < ligand2Ligands.length)
             return -1;
+        else
+            return 0;
     }
 
     /**
