@@ -806,5 +806,40 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertTrue(oxygen.getSymbol().equals("O"));
     	Assert.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");
     }
-    
+
+
+    @Test
+    public void testDeuterium() throws Exception {
+        String filename = "data/mdl/chemblMolregno5369.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
+
+        Properties prop = new Properties();
+        prop.setProperty("InterpretHydrogenIsotopes", "true");
+        PropertiesListener listener = new PropertiesListener(prop);
+        reader.addChemObjectIOListener(listener);
+        reader.customizeJob();
+
+        Molecule molecule = new Molecule();
+        molecule = reader.read(molecule);
+        int deuteriumCount = 0;
+        for (IAtom atom : molecule.atoms())
+            if (atom.getSymbol().equals("H") && atom.getMassNumber() != null && atom.getMassNumber() == 2)
+                deuteriumCount++;
+        Assert.assertEquals(deuteriumCount, 3);
+    }
+
+    @Test public void testTritium() throws Exception {
+        String filename = "data/mdl/chemblMolregno7039.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        Molecule molecule = new Molecule();
+        molecule = reader.read(molecule);
+        int tritiumCount=0;
+        for (IAtom atom : molecule.atoms())
+            if(atom.getSymbol().equals("H") && atom.getMassNumber()!=null && atom.getMassNumber()==3)
+                tritiumCount++;
+        Assert.assertEquals(tritiumCount, 1);
+    }
+
 }

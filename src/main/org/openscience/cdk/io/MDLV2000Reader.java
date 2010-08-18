@@ -823,6 +823,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.warn("Skipping line in property block: ", line);
                 }
             }
+
+		    if (interpretHydrogenIsotopes.isSet()) {
+		        fixHydrogenIsotopes(molecule, isotopeFactory);
+		    }
+
 		} catch (CDKException exception) {
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
@@ -839,28 +844,26 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 exception
             );
 		}
-		if (interpretHydrogenIsotopes.isSet()) {
-			fixHydrogenIsotopes(molecule);
-		}
 		return molecule;
 	}
     
-    private void fixHydrogenIsotopes(IMolecule molecule) {
+    private void fixHydrogenIsotopes(IMolecule molecule,IsotopeFactory isotopeFactory) {
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atom = atoms.next();
 			if (atom instanceof IPseudoAtom) {
 				IPseudoAtom pseudo = (IPseudoAtom)atom;
-                Integer massNumber = atom.getMassNumber();
-                if ("D".equals(pseudo.getLabel()) &&
-				        massNumber != null && massNumber == 2) {
+                if ("D".equals(pseudo.getLabel())) {
 					IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
+                    IIsotope isotope = new org.openscience.cdk.Isotope("H", 2);
+                    isotopeFactory.configure(newAtom, isotope);               
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
-				} else if ("T".equals(pseudo.getLabel()) &&
-				        massNumber != null && massNumber == 3) {
-					IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
+                } else if ("T".equals(pseudo.getLabel())) {
+                    IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
+				    IIsotope isotope = new org.openscience.cdk.Isotope("H", 3);
+				    isotopeFactory.configure(newAtom, isotope);               
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
 				}
 			}
