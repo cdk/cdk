@@ -1532,7 +1532,22 @@ public class SmilesGenerator
 				boolean brackets = true;
 				List result = new Vector();
 				addAtoms((List) o, result);
-				if (isRingOpening(parent, result) && container.getConnectedBondsCount(parent) < 4)
+				IAtom prevAtom;
+
+				/*				
+				 * Got to find last atom that was processed.
+				 * This is to check the relative position of the current atom/chain with respect to its parent
+				*/				
+				prevAtom = (IAtom)((Vector)atomsInOrderOfSmiles).lastElement();
+				int maxConnectedBondCount = 4;
+				/**
+				 * If the parent atom of this new chain is the very first atom in the SMILES string and this chain is placed
+				 * immediately after the parent atom then the max connected bond count for the parent should be 3 instead of 4.
+				 */
+				if (atomsInOrderOfSmiles.indexOf(parent) == 0 && prevAtom == parent){
+					maxConnectedBondCount = 3;
+				}
+				if (isRingOpening(parent, result) && container.getConnectedBondsCount(parent) < maxConnectedBondCount)
 				{
 					brackets = false;
 				}
