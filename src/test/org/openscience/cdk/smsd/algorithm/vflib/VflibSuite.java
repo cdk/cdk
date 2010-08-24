@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -38,10 +38,10 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    org.openscience.cdk.smsd.algorithm.vflib.VFlibHandlerTest.class,
     org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandlerTest.class,
     org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandlerTest.class,
-    org.openscience.cdk.smsd.algorithm.vflib.VFLibTest.class})
+    org.openscience.cdk.smsd.algorithm.vflib.VFLibTest.class,
+    org.openscience.cdk.smsd.algorithm.vflib.VFMapperTest.class})
 public class VflibSuite {
 
     @BeforeClass

@@ -23,7 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -49,7 +49,6 @@ package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
 import java.util.Map;
 import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.smsd.algorithm.vflib.validator.VFMatch;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -84,7 +83,7 @@ public interface IState {
      *
      * @return the next candidate match.
      */
-    public VFMatch nextCandidate();
+    public IMatch nextCandidate();
 
     /**
      * Returns true if the given match will work with the current
@@ -94,7 +93,7 @@ public interface IState {
      * @return true if the given match will work with the current
      * map, or false otherwise.
      */
-    public boolean isMatchFeasible(VFMatch match);
+    public boolean isMatchFeasible(IMatch match);
 
     /**
      * Returns true if all atoms in the query molecule have been
@@ -120,7 +119,7 @@ public interface IState {
      * @return  a state in which the atoms in match have been
      * added to the current mapping.
      */
-    public IState nextState(VFMatch match);
+    public IState nextState(IMatch match);
 
     /**
      * Returns this IState's atom map to its original condition.

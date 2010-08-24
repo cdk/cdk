@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -50,17 +50,18 @@ package org.openscience.cdk.smsd.algorithm.vflib.builder;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
+import org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher;
+
+
 
 /**
  * Class for parsing and generating query graph.
@@ -68,7 +69,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class VFQueryBuilder implements IQuery {
 
@@ -154,7 +154,7 @@ public class VFQueryBuilder implements IQuery {
      * @param atom
      * @return added Node
      */
-    public INode addNode(IQueryAtom matcher, IAtom atom) {
+    public INode addNode(IAtomMatcher matcher, IAtom atom) {
         NodeBuilder node = new NodeBuilder(matcher);
         nodesList.add(node);
         nodeBondMap.put(node, atom);
@@ -189,7 +189,7 @@ public class VFQueryBuilder implements IQuery {
      * @param matcher
      * @return connected edges
      */
-    public IEdge connect(INode source, INode target, IQueryBond matcher) {
+    public IEdge connect(INode source, INode target, IBondMatcher matcher) {
         NodeBuilder sourceImpl = (NodeBuilder) source;
         NodeBuilder targetImpl = (NodeBuilder) target;
         EdgeBuilder edge = new EdgeBuilder(sourceImpl, targetImpl, matcher);

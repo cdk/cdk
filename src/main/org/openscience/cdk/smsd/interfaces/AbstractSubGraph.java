@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,16 +30,14 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.interfaces.AbstractSubGraphTest")
-public abstract class AbstractSubGraph{
+public abstract class AbstractSubGraph {
 
     /** 
      * Initialise the Subgraph search algorithm. Each Subgraph algorithm
      * should contain this method.
-     * @return true if Query/Reactant is a subgraph of Target/Product
+     * @return true if Query/reactant is a subgraph of Target/product
      * else false
      */
-    public abstract boolean isSubgraph();
-
+    public abstract boolean isSubgraph(boolean bondMatch);
 }

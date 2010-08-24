@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,15 +28,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.smsd.global.BondType;
 import org.openscience.cdk.smsd.helper.LabelContainer;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
 
 /**
  * This class generates compatibility graph between query and target molecule.
@@ -48,12 +45,6 @@ import org.openscience.cdk.smsd.helper.LabelContainer;
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public final class GenerateCompatibilityGraph {
 
-    /**
-     * @return the bondTypeFlag
-     */
-    protected static boolean isBondTypeFlag() {
-        return BondType.getInstance().isBondSensitive();
-    }
     private List<Integer> compGraphNodes = null;
     private List<Integer> compGraphNodesCZero = null;
     private List<Integer> cEdges = null;
@@ -62,14 +53,19 @@ public final class GenerateCompatibilityGraph {
     private int dEdgesSize = 0;
     private IAtomContainer source = null;
     private IAtomContainer target = null;
+    private boolean shouldMatchBonds = false;
 
     /**
      * Generates a compatibility graph between two molecules
      * @param source
      * @param target
+     * @param shouldMatchBonds
      * @throws java.io.IOException
      */
-    protected GenerateCompatibilityGraph(IAtomContainer source, IAtomContainer target) throws IOException {
+    public GenerateCompatibilityGraph(IAtomContainer source,
+            IAtomContainer target,
+            boolean shouldMatchBonds) throws IOException {
+        setMatchBond(shouldMatchBonds);
         this.source = source;
         this.target = target;
         compGraphNodes = new ArrayList<Integer>();
@@ -93,7 +89,6 @@ public final class GenerateCompatibilityGraph {
             compatibilityGraphCEdgeZero();
             clearCompGraphNodesCZero();
         }
-
     }
 
     private List<List<Integer>> labelAtoms(IAtomContainer atomCont) {
@@ -144,11 +139,9 @@ public final class GenerateCompatibilityGraph {
                     label.set(i, label.get(j + 1));
                     label.set(j + 1, temp);
                     flag = true; // indicates that iIndex swap occurred.
-
                 }
             }
         }
-
     }
 
     private List<IAtom> reduceAtomSet(IAtomContainer atomCont) {
@@ -180,15 +173,11 @@ public final class GenerateCompatibilityGraph {
         List<List<Integer>> label_list_molA = labelAtoms(reactant);
         List<List<Integer>> label_list_molB = labelAtoms(product);
 
-
-
         int molA_nodes = 0;
         int count_nodes = 1;
 
         for (List<Integer> labelA : label_list_molA) {
-
             int molB_nodes = 0;
-
             for (List<Integer> labelB : label_list_molB) {
                 if (labelA.equals(labelB)) {
                     compGraphNodes.add(reactant.getAtomNumber(basic_atom_vec_A.get(molA_nodes)));
@@ -225,13 +214,13 @@ public final class GenerateCompatibilityGraph {
                 // if element atomCont !=jIndex and atoms on the adjacent sides of the bonds are not equal
                 if (a != b && index_a != index_b && index_aPlus1 != index_bPlus1) {
 
-                    IBond ReactantBond = null;
-                    IBond ProductBond = null;
+                    IBond reactantBond = null;
+                    IBond productBond = null;
 
-                    ReactantBond = source.getBond(source.getAtom(index_a), source.getAtom(index_b));
-                    ProductBond = target.getBond(target.getAtom(index_aPlus1), target.getAtom(index_bPlus1));
-                    if (ReactantBond != null && ProductBond != null) {
-                        addEdges(ReactantBond, ProductBond, a, b);
+                    reactantBond = source.getBond(source.getAtom(index_a), source.getAtom(index_b));
+                    productBond = target.getBond(target.getAtom(index_aPlus1), target.getAtom(index_bPlus1));
+                    if (reactantBond != null && productBond != null) {
+                        addEdges(reactantBond, productBond, a, b);
                     }
                 }
             }
@@ -241,11 +230,12 @@ public final class GenerateCompatibilityGraph {
         return 0;
     }
 
-    private void addEdges(IBond ReactantBond, IBond ProductBond, int iIndex, int jIndex) {
-        if (bondMatch(ReactantBond, ProductBond)) {
+    private void addEdges(IBond reactantBond, IBond productBond, int iIndex, int jIndex) {
+        //if (isMatchBond() && bondMatch(ReactantBond, ProductBond)) {
+        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
             cEdges.add((iIndex / 3) + 1);
             cEdges.add((jIndex / 3) + 1);
-        } else if (ReactantBond == null && ProductBond == null) {
+        } else if (reactantBond == null && productBond == null) {
             dEdges.add((iIndex / 3) + 1);
             dEdges.add((jIndex / 3) + 1);
         }
@@ -311,15 +301,14 @@ public final class GenerateCompatibilityGraph {
                 if ((a != b) && (index_a != index_b)
                         && (index_aPlus1 != index_bPlus1)) {
 
+                    IBond reactantBond = null;
+                    IBond productBond = null;
 
-                    IBond ReactantBond = null;
-                    IBond ProductBond = null;
+                    reactantBond = source.getBond(source.getAtom(index_a), source.getAtom(index_b));
+                    productBond = target.getBond(target.getAtom(index_aPlus1), target.getAtom(index_bPlus1));
 
-                    ReactantBond = source.getBond(source.getAtom(index_a), source.getAtom(index_b));
-                    ProductBond = target.getBond(target.getAtom(index_aPlus1), target.getAtom(index_bPlus1));
-
-                    if (ReactantBond != null && ProductBond != null) {
-                        addCZeroEdges(ReactantBond, ProductBond, a, b);
+                    if (reactantBond != null && productBond != null) {
+                        addCZeroEdges(reactantBond, productBond, a, b);
                     }
 
                 }
@@ -332,75 +321,51 @@ public final class GenerateCompatibilityGraph {
         return 0;
     }
 
-    private void addCZeroEdges(IBond ReactantBond, IBond ProductBond, int indexI, int indexJ) {
-        if (bondMatch(ReactantBond, ProductBond)) {
+    private void addCZeroEdges(IBond reactantBond, IBond productBond, int indexI, int indexJ) {
+        if (isMatchFeasible(source, productBond, target, productBond, shouldMatchBonds)) {
+            //bondMatch(reactantBond, productBond)
             cEdges.add((indexI / 4) + 1);
             cEdges.add((indexJ / 4) + 1);
-        } else if (ReactantBond == null && ProductBond == null) {
+        }
+        if (reactantBond == null && productBond == null) {
             dEdges.add((indexI / 4) + 1);
             dEdges.add((indexJ / 4) + 1);
         }
     }
 
-    /**
-     *
-     * @param ReactantBond
-     * @param targetBond
-     * @return
-     */
-    private boolean bondMatch(IBond queryBond, IBond targetBond) {
-        if (isBondTypeFlag()) {
-            if (targetBond instanceof IQueryBond && queryBond instanceof IBond) {
-                IQueryBond bond = (IQueryBond) targetBond;
-                IQueryAtom atom1 = (IQueryAtom) (targetBond.getAtom(0));
-                IQueryAtom atom2 = (IQueryAtom) (targetBond.getAtom(1));
-                if (bond.matches(queryBond)) {
-                    // ok, bonds match
-                    if (atom1.matches(queryBond.getAtom(0)) && atom2.matches(queryBond.getAtom(1))
-                            || atom1.matches(queryBond.getAtom(1)) && atom2.matches(queryBond.getAtom(0))) {
-                        // ok, atoms match in either order
-                        return true;
-                    }
-                }
-            } else if (queryBond instanceof IQueryBond && targetBond instanceof IBond) {
-                IQueryBond bond = (IQueryBond) queryBond;
-                IQueryAtom atom1 = (IQueryAtom) (queryBond.getAtom(0));
-                IQueryAtom atom2 = (IQueryAtom) (queryBond.getAtom(1));
-                if (bond.matches(targetBond)) {
-                    // ok, bonds match
-                    if (atom1.matches(targetBond.getAtom(0)) && atom2.matches(targetBond.getAtom(1))
-                            || atom1.matches(targetBond.getAtom(1)) && atom2.matches(targetBond.getAtom(0))) {
-                        // ok, atoms match in either order
-                        return true;
-                    }
-                }
-            } else {
+    private static boolean isMatchFeasible(IAtomContainer ac1,
+            IBond bondA1,
+            IAtomContainer ac2,
+            IBond bondA2,
+            boolean shouldMatchBonds) {
 
-                int ReactantBondType = queryBond.getOrder().ordinal();
-                int ProductBondType = targetBond.getOrder().ordinal();
+        //Bond Matcher
+        org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher bondMatcher =
+                new org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+        //Atom Matcher
+        org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher1 =
+                new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+        //Atom Matcher
+        org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher2 =
+                new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
 
-
-                if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
-                        && (ReactantBondType == ProductBondType)) {
-                    return true;
-                }
-
-                if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
-                    return true;
-                }
-
-            }
-            return false;
+        if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
+                && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
-    protected List<Integer> getCEgdes() {
+    public List<Integer> getCEgdes() {
         return Collections.unmodifiableList(cEdges);
     }
 
     protected List<Integer> getDEgdes() {
         return Collections.unmodifiableList(dEdges);
+    }
+
+    protected List<Integer> getCompGraphNodes() {
+        return Collections.unmodifiableList(compGraphNodes);
     }
 
     protected int getCEdgesSize() {
@@ -411,21 +376,15 @@ public final class GenerateCompatibilityGraph {
         return dEdgesSize;
     }
 
-    protected List<Integer> getCompGraphNodes() {
-        return compGraphNodes;
-    }
-
     protected List<Integer> getCompGraphNodesCZero() {
         return compGraphNodesCZero;
     }
 
     protected void clearCEgdes() {
-
         cEdges.clear();
     }
 
     protected void clearDEgdes() {
-
         dEdges.clear();
     }
 
@@ -445,10 +404,24 @@ public final class GenerateCompatibilityGraph {
         dEdgesSize = 0;
     }
 
-    protected void clear() {
+    public void clear() {
         cEdges = null;
         dEdges = null;
         compGraphNodes = null;
         compGraphNodesCZero = null;
+    }
+
+    /**
+     * @return the shouldMatchBonds
+     */
+    public boolean isMatchBond() {
+        return shouldMatchBonds;
+    }
+
+    /**
+     * @param shouldMatchBonds the shouldMatchBonds to set
+     */
+    public void setMatchBond(boolean shouldMatchBonds) {
+        this.shouldMatchBonds = shouldMatchBonds;
     }
 }

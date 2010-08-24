@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,6 +25,7 @@
 package org.openscience.cdk.smsd.tools;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -36,6 +37,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -84,7 +86,7 @@ public class MoleculeSanityCheck {
                 }
             }
         }
-        fixAromaticity(molecule);
+        configure(molecule);
         return molecule;
     }
 
@@ -94,60 +96,49 @@ public class MoleculeSanityCheck {
      * @param mol
      */
     @TestMethod("testFixAromaticity")
-    public static void fixAromaticity(IAtomContainer mol) {
+    public static void configure(IAtomContainer mol) {
         // need to find rings and aromaticity again since added H's
 
         IRingSet ringSet = null;
         try {
             AllRingsFinder arf = new AllRingsFinder();
             ringSet = arf.findAllRings(mol);
-
-            // SSSRFinder s = new SSSRFinder(mol);
-            // srs = s.findEssentialRings();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
             // figure out which atoms are in aromatic rings:
+            CDKHydrogenAdder cdk = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
+            cdk.addImplicitHydrogens(mol);
             ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+
             CDKHueckelAromaticityDetector.detectAromaticity(mol);
             // figure out which rings are aromatic:
             RingSetManipulator.markAromaticRings(ringSet);
             // figure out which simple (non cycles) rings are aromatic:
-            // HueckelAromaticityDetector.detectAromaticity(mol, srs);
+
+            // only atoms in 6 membered rings are aromatic
+            // determine largest ring that each atom is a part of
+
+            for (int i = 0; i < mol.getAtomCount(); i++) {
+                mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
+                jloop:
+                for (int j = 0; j < ringSet.getAtomContainerCount(); j++) {
+                    //logger.debug(i+"\t"+j);
+                    IRing ring = (IRing) ringSet.getAtomContainer(j);
+                    if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
+                        continue jloop;
+                    }
+                    boolean haveatom = ring.contains(mol.getAtom(i));
+                    //logger.debug("haveatom="+haveatom);
+                    if (haveatom && ring.getAtomCount() == 6) {
+                        mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        // only atoms in 6 membered rings are aromatic
-        // determine largest ring that each atom is a part of
-
-        for (int i = 0; i <= mol.getAtomCount() - 1; i++) {
-
-            mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
-
-            jloop:
-            for (int j = 0; j <= ringSet.getAtomContainerCount() - 1; j++) {
-                //logger.debug(i+"\t"+j);
-                IRing ring = (IRing) ringSet.getAtomContainer(j);
-                if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
-                    continue jloop;
-                }
-
-                boolean haveatom = ring.contains(mol.getAtom(i));
-
-                //logger.debug("haveatom="+haveatom);
-
-                if (haveatom && ring.getAtomCount() == 6) {
-                    mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
-                }
-
-            }
-
-        }
-
     }
 }

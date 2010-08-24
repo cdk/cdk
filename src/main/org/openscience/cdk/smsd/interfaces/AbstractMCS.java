@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,6 +30,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
  * Interface for all MCS algorithms.
@@ -43,29 +44,45 @@ public abstract class AbstractMCS {
     /** 
      * initialize query and target molecules.
      *
-     * @param source
-     * @param target
-     * @param removeHydrogen true if remove H before mapping
+     * @param source query mol
+     * @param target target mol
+     * @param removeHydrogen true if remove H (implicit) before mapping
+     * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
      * @throws CDKException
      */
-    public abstract void init(IMolecule source, IMolecule target, boolean removeHydrogen) throws CDKException;
+    public abstract void init(IMolecule source, IMolecule target, boolean removeHydrogen, boolean cleanAndConfigureMolecule) throws CDKException;
 
     /**
      * initialize query and target molecules.
      *
-     * @param source
-     * @param target
-     * @param removeHydrogen true if remove H before mapping
+     * @param source query mol
+     * @param target target mol
+     * @param removeHydrogen true if remove H (implicit) before mapping
+     * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
      * @throws CDKException
      */
-    public abstract void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen) throws CDKException;
+    public abstract void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen, boolean cleanAndConfigureMolecule) throws CDKException;
 
     /**
      * initialize query and target molecules.
      *
-     * @param stereoFilter
-     * @param fragmentFilter
-     * @param energyFilter
+     * Note: Here its assumed that hydrogens are implicit
+     * and user has called these two methods
+     * percieveAtomTypesAndConfigureAtoms and CDKAromicityDetector 
+     * before initializing calling this method.
+     * 
+     * @param source query mol
+     * @param target target mol
+     * @throws CDKException
+     */
+    public abstract void init(IQueryAtomContainer source, IAtomContainer target) throws CDKException;
+    /**
+     * initialize query and target molecules.
+     *
+     * @param stereoFilter set true to rank the solutions as per stereo matches
+     * @param fragmentFilter set true to return matches with minimum fragments
+     * @param energyFilter set true to return matches with minimum bond changes
+     * based on the bond breaking energy
      */
     public abstract void setChemFilters(boolean stereoFilter, boolean fragmentFilter, boolean energyFilter);
 
@@ -96,7 +113,7 @@ public abstract class AbstractMCS {
      * performed.
      *
      *
-     * @return return modified Product Molecule
+     * @return return modified product Molecule
      */
     public abstract IAtomContainer getProductMolecule();
 
@@ -104,7 +121,7 @@ public abstract class AbstractMCS {
      * Returns modified query molecule on which mapping was
      * performed.
      *
-     * @return return modified Reactant Molecule
+     * @return return modified reactant Molecule
      */
     public abstract IAtomContainer getReactantMolecule();
 
@@ -113,22 +130,26 @@ public abstract class AbstractMCS {
      * A solution with highest stereo score is preferred over other
      * scores.
      * @param Key Index of the mapping solution
-     * @return true if no stereo mismatch occures
-     * else false if stereo mismatch occures
+     * @return true if no stereo mismatch occurs
+     * else false if stereo mismatch occurs
      */
     public abstract Integer getStereoScore(int Key);
 
     /**
+     *
+     * Returns true if mols have different stereo
+     * chemistry else false if no stereo mismatch.
+     * 
+     * @return true if mols have different stereo
+     * chemistry else false if no stereo mismatch.
      * true if stereo mismatch occurs
      * else true if stereo mismatch occurs.
-     *
-     * @return true if two molecules have different stereo match
      */
     public abstract boolean isStereoMisMatch();
 
     /** 
      * Checks if query is a subgraph of the target.
-     *
+     * Returns true if query is a subgraph of target else false
      * @return true if query molecule is a subgraph of the target molecule
      */
     public abstract boolean isSubgraph();
@@ -187,7 +208,7 @@ public abstract class AbstractMCS {
 
     /**
      * set timeout in mins (default 0.10 min) for bond sensitive searches
-     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.10 min)
+     * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.30 min)
      */
     public abstract void setBondSensitiveTimeOut(double bondSensitiveTimeOut);
 
@@ -198,7 +219,7 @@ public abstract class AbstractMCS {
     public abstract double getBondInSensitiveTimeOut();
 
     /**
-     * set timeout in mins (default 0.15 min) for bond insensitive searches
+     * set timeout in mins (default 1.00 min) for bond insensitive searches
      * @param bondInSensitiveTimeOut the bond insensitive 
      */
     public abstract void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut);

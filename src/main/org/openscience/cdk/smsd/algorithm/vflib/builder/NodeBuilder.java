@@ -1,4 +1,4 @@
-/* Copyright (C) 2009-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,14 +22,14 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.builder;
 
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
+import org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher;
 
 /**
  * Class for building/storing nodes (atoms) in the graph with atom
@@ -38,19 +38,18 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class NodeBuilder implements INode {
 
     private List<INode> neighborsList;
     private List<IEdge> edgesList;
-    private IQueryAtom matcher;
+    private IAtomMatcher matcher;
 
     /**
      * Construct a node for a query atom
      * @param matcher
      */
-    protected NodeBuilder(IQueryAtom matcher) {
+    protected NodeBuilder(IAtomMatcher matcher) {
         edgesList = new ArrayList<IEdge>();
         neighborsList = new ArrayList<INode>();
         this.matcher = matcher;
@@ -73,7 +72,7 @@ public class NodeBuilder implements INode {
     /** {@inheritDoc}
      */
     @Override
-    public IQueryAtom getAtomMatcher() {
+    public IAtomMatcher getAtomMatcher() {
         return matcher;
     }
 
@@ -98,4 +97,3 @@ public class NodeBuilder implements INode {
         neighborsList.add(node);
     }
 }
-

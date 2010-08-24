@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,16 +28,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.smsd.helper.FinalMappings;
-import org.openscience.cdk.smsd.tools.MolHandler;
-import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
+import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * This is a handler class for single atom mapping
@@ -54,6 +55,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
     private static Map<Integer, Integer> firstMCS = null;
     private static List<Map<Integer, Integer>> allMCS = null;
     private IAtomContainer source = null;
+    private IQueryAtomContainer smartSource = null;
     private IAtomContainer target = null;
     private boolean removeHydrogen = false;
 
@@ -78,121 +80,83 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
      * @param target
      */
     @Override
-    @TestMethod("testSet_IAtomContainer_IAtomContainer")
-    public void set(IAtomContainer source, IAtomContainer target) {
-
-        IAtomContainer mol1 = source;
-        IAtomContainer mol2 = target;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-
-        set(Reactant, Product);
-
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param source
-     * @param target
-     */
-    @TestMethod("testSet_IMolecule_IMolecule")
-    public void set(IMolecule source, IMolecule target) throws CDKException {
-
-        IMolecule mol1 = source;
-        IMolecule mol2 = target;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-
-        set(Reactant, Product);
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param sourceMolFileName
-     * @param targetMolFileName
-     */
-    @Override
-    @TestMethod("testSet_String_String")
-    public void set(String sourceMolFileName, String targetMolFileName) {
-
-        String mol1 = sourceMolFileName;
-        String mol2 = targetMolFileName;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-        set(Reactant, Product);
-
-
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param source
-     * @param target
-     */
-    @Override
     @TestMethod("testSet_MolHandler_MolHandler")
     public void set(MolHandler source, MolHandler target) {
         this.source = source.getMolecule();
         this.target = target.getMolecule();
     }
+
+    /** {@inheritDoc}
+     *
+     * @param source
+     * @param target
+     */
+    @Override
+    @TestMethod("testSet_IQueryAtomContainer_MolHandler")
+    public void set(IQueryAtomContainer source, IAtomContainer target) {
+        this.smartSource = source;
+        this.source = source;
+        this.target = target;
+    }
     //Function is called by the main program and serves as a starting point for the comparision procedure.
 
     /** {@inheritDoc}
      *
+     * @param bondTypeMatch 
      */
     @Override
     @TestMethod("testSearchMCS")
-    public void searchMCS() {
+    public void searchMCS(boolean bondTypeMatch) {
         SingleMapping singleMapping = new SingleMapping();
-        singleMapping.getOverLaps(source, target, removeHydrogen);
+        List<Map<IAtom, IAtom>> mappings = null;
+        try {
+            if (this.smartSource == null) {
+                mappings = singleMapping.getOverLaps(source, target, removeHydrogen);
+            } else {
+                mappings = singleMapping.getOverLaps(smartSource, target, removeHydrogen);
+            }
+        } catch (CDKException ex) {
+            Logger.getLogger(SingleMappingHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        setAllMapping();
-        setAllAtomMapping();
+        setAllAtomMapping(mappings);
+        setAllMapping(mappings);
         setFirstMapping();
         setFirstAtomMapping();
         //setStereoScore();
-
     }
 
     /** {@inheritDoc}
      *
      * Set the mappings
      */
-    private final void setAllMapping() {
+    private void setAllMapping(List<Map<IAtom, IAtom>> mappings) {
         try {
-
-            List<Map<Integer, Integer>> final_solution = FinalMappings.getInstance().getFinalMapping();
             int counter = 0;
-            for (Map<Integer, Integer> solution : final_solution) {
-                allMCS.add(counter++, solution);
+            for (Map<IAtom, IAtom> solution : mappings) {
+                Map<Integer, Integer> atomMappings = new TreeMap<Integer, Integer>();
+                for (Map.Entry<IAtom, IAtom> map : solution.entrySet()) {
+                    IAtom sourceAtom = map.getKey();
+                    IAtom targetAtom = map.getValue();
+                    atomMappings.put(source.getAtomNumber(sourceAtom), target.getAtomNumber(targetAtom));
+                }
+                allMCS.add(counter++, atomMappings);
             }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception I) {
+            I.getCause();
         }
     }
 
-    private final synchronized void setAllAtomMapping() {
+    private synchronized void setAllAtomMapping(List<Map<IAtom, IAtom>> mappings) {
 
         try {
-            List<Map<Integer, Integer>> final_solution = FinalMappings.getInstance().getFinalMapping();
-
             int counter = 0;
-            for (Map<Integer, Integer> solution : final_solution) {
+            for (Map<IAtom, IAtom> solution : mappings) {
                 Map<IAtom, IAtom> atomMappings = new HashMap<IAtom, IAtom>();
-                for (Map.Entry<Integer, Integer> map : solution.entrySet()) {
+                for (Map.Entry<IAtom, IAtom> map : solution.entrySet()) {
 
-                    int IIndex = map.getKey();
-                    int JIndex = map.getValue();
-                    IAtom sourceAtom = null;
-                    IAtom targetAtom = null;
-
-
-                    sourceAtom = source.getAtom(IIndex);
-                    targetAtom = target.getAtom(JIndex);
+                    IAtom sourceAtom = map.getKey();
+                    IAtom targetAtom = map.getValue();
                     atomMappings.put(sourceAtom, targetAtom);
                 }
                 allAtomMCS.add(counter++, atomMappings);
@@ -203,7 +167,6 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
     }
 
     private synchronized void setFirstMapping() {
-
         if (allMCS.size() > 0) {
             firstMCS = new TreeMap<Integer, Integer>(allMCS.iterator().next());
         }
@@ -214,7 +177,6 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         if (allAtomMCS.size() > 0) {
             atomsMCS = new HashMap<IAtom, IAtom>(allAtomMCS.iterator().next());
         }
-
     }
 
     /** {@inheritDoc}

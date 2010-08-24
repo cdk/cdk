@@ -23,7 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -47,12 +47,12 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.smsd.algorithm.vflib.builder.EdgeBuilder;
-import org.openscience.cdk.smsd.algorithm.vflib.builder.NodeBuilder;
 
 import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.smsd.algorithm.vflib.builder.EdgeBuilder;
+import org.openscience.cdk.smsd.algorithm.vflib.builder.NodeBuilder;
+import org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher;
 
 /**
  * Interface for the Node (atomss) in graph.
@@ -60,7 +60,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public interface INode {
 
@@ -80,7 +79,7 @@ public interface INode {
      * Returns Query Atom.
      * @return Query Atom.
      */
-    public IQueryAtom getAtomMatcher();
+    public IAtomMatcher getAtomMatcher();
 
     /**
      * Returns List of Edges.

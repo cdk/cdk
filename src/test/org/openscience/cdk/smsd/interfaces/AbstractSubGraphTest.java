@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
+import org.openscience.cdk.smsd.tools.MolHandler;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,7 +33,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smsd.algorithm.vflib.VFlibHandler;
+import org.openscience.cdk.smsd.algorithm.vflib.VFlibSubStructureHandler;
 import static org.junit.Assert.*;
 
 /**
@@ -82,14 +83,17 @@ public class AbstractSubGraphTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibHandler smsd1 = new VFlibHandler();
-        smsd1.set(queryac, target);
-        assertEquals(true, smsd1.isSubgraph());
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        assertEquals(true, smsd1.isSubgraph(true));
     }
 
     public class ISubGraphImpl extends AbstractSubGraph {
 
-        public boolean isSubgraph() {
+        @Override
+        public boolean isSubgraph(boolean bondMatch) {
             return false;
         }
     }

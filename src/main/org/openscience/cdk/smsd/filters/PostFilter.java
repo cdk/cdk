@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -65,22 +65,16 @@ public class PostFilter {
         } else {
             final_MAPPINGS.set(new ArrayList<Map<Integer, Integer>>());
         }
-
         return final_MAPPINGS.getFinalMapping();
     }
 
     private static boolean hasMap(Map<Integer, Integer> newMap, List<Map<Integer, Integer>> nonRedundantMapping) {
-        boolean flag = false;
-
-        for (Map<Integer, Integer> map : nonRedundantMapping) {
-            if (map.equals(newMap)) {
-                flag = true;
-                break;
-            } else {
-                flag = false;
+        for (Map<Integer, Integer> storedMap : nonRedundantMapping) {
+            if (storedMap.equals(newMap)) {
+                return true;
             }
         }
-        return flag;
+        return false;
     }
 
     /**
@@ -89,24 +83,20 @@ public class PostFilter {
      * @return
      */
     private static List<Map<Integer, Integer>> removeRedundantMapping(List<List<Integer>> mapping_org) {
-
         List<Map<Integer, Integer>> nonRedundantMapping = new ArrayList<Map<Integer, Integer>>();
         for (List<Integer> M : mapping_org) {
             Map<Integer, Integer> newMap = getMappingMapFromList(M);
             if (!hasMap(newMap, nonRedundantMapping)) {
-                nonRedundantMapping.add(new TreeMap<Integer, Integer>(newMap));
+                nonRedundantMapping.add(newMap);
             }
-
         }
-
-//        System.out.println("nonRedundantMapping Solutions " + nonRedundantMapping);
         return nonRedundantMapping;
     }
 
-    private static TreeMap<Integer, Integer> getMappingMapFromList(List<Integer> map) {
-        TreeMap<Integer, Integer> newMap = new TreeMap<Integer, Integer>();
-        for (int index = 0; index < map.size(); index += 2) {
-            newMap.put(map.get(index), map.get(index + 1));
+    private static Map<Integer, Integer> getMappingMapFromList(List<Integer> list) {
+        Map<Integer, Integer> newMap = new TreeMap<Integer, Integer>();
+        for (int index = 0; index < list.size(); index += 2) {
+            newMap.put(list.get(index), list.get(index + 1));
         }
         return newMap;
     }

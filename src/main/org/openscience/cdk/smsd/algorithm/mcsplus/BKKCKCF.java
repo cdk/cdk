@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
  * This class implements Bron-Kerbosch clique detection algorithm as it is
@@ -42,16 +43,15 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.module smsd
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class BKKCKCF {
 
-    private List<List<Integer>> maxCliquesSet;
+    private List<List<Integer>> maxCliquesSet = null;
     /***********************************************************************/
-    private List<Integer> cEdges;
-    private List<Integer> dEdges;
-    private int bestCliqueSize;
-    private List<Integer> compGraphNodes;
+    private List<Integer> cEdges = null;
+    private List<Integer> dEdges = null;
+    private int bestCliqueSize = 0;
+    private List<Integer> compGraphNodes = null;
     private double dEdgeIterationSize = 0;
     private double cEdgeIterationSize = 0;
 
@@ -66,7 +66,7 @@ public class BKKCKCF {
      * @param D_edges_org D-Edges set of prohibited edges
      */
     protected BKKCKCF(List<Integer> comp_graph_nodes_org, List<Integer> C_edges_org, List<Integer> D_edges_org) {
-
+        MCSPlus.setTimeManager(new TimeManager());
         this.compGraphNodes = comp_graph_nodes_org;
         this.cEdges = C_edges_org;
         this.dEdges = D_edges_org;
@@ -78,7 +78,7 @@ public class BKKCKCF {
         cEdgeIterationSize = cEdges.size() / 2;
 
         //reset Degdes and Cedges if required
-        setEdges();
+//        setEdges();
 
         //Initialization maxCliquesSet
 
@@ -97,9 +97,9 @@ public class BKKCKCF {
 
         /********************************************************************/
         /*
-         *vertex: stored all the vertices for the Graph G
+         * vertex: stored all the vertices for the Graph G
          * vertex[G]
-         *nodes of vector compGraphNodes are stored in vertex
+         * nodes of vector compGraphNodes are stored in vertex
          */
         List<Integer> vertex = new ArrayList<Integer>(); //Initialization of ArrayList vertex
 
@@ -132,13 +132,11 @@ public class BKKCKCF {
     private int enumerateCliques(List<Integer> vertexOfCurrentClique, Stack<Integer> potentialCVertex,
             List<Integer> potentialDVertex, List<Integer> excludedVertex, List<Integer> excludedCVertex) {
         List<Integer> potentialVertex = new ArrayList<Integer>();//Defined as potentialCVertex' in the paper
-
-
         for (Integer I : potentialCVertex) {
             potentialVertex.add(I);
         }
 
-        if ((potentialCVertex.size() == 1) && (excludedVertex.size() == 0)) {
+        if ((potentialCVertex.size() == 1) && (excludedVertex.isEmpty())) {
 
             //store best solutions in stack maxCliquesSet
             int clique_size = vertexOfCurrentClique.size();
@@ -154,11 +152,8 @@ public class BKKCKCF {
                     //System.out.println("vertexOfCurrentClique-Clique " + vertexOfCurrentClique);
                     maxCliquesSet.add(vertexOfCurrentClique);
                 }
-
             }
-
             return 0;
-
         }
         findCliques(
                 potentialVertex,
@@ -196,9 +191,7 @@ public class BKKCKCF {
                 neighborVertex.add(dEdges.get(a * 2 + 0));
                 neighborVertex.add(2); // 2 means: is connected via D-edge
             }
-
         }
-
         return neighborVertex;
     }
 
@@ -219,7 +212,6 @@ public class BKKCKCF {
         List<Integer> neighbourVertex = new ArrayList<Integer>(); ////Initialization ArrayList neighbourVertex
 
         while (potentialVertex.get(index) != 0) {
-
             int potentialVertexIndex = potentialVertex.get(index);
 
             potentialCVertex.removeElement(potentialVertexIndex);
@@ -298,7 +290,6 @@ public class BKKCKCF {
                 Y_copy_N_intersec.add(nElement);
             }
         }
-
     }
 
     private void groupNeighbors(int index,
@@ -346,26 +337,20 @@ public class BKKCKCF {
             if (potentialVertex.indexOf(Nelement_at_b) <= index && potentialVertex.indexOf(Nelement_at_b) > -1) {
                 --index;
             }
-
             potentialVertex.remove(Nelement_at_b);
-
         }
     }
 
     private void setEdges() {
-
-
         boolean d_edgeFlag = false;
 
         if (dEdges.size() > cEdges.size()) {
             if (dEdges.size() > 10000000 && cEdges.size() > 100000) {
                 dEdgeIterationSize = (float) dEdges.size() * 0.000001;
                 d_edgeFlag = true;
-
             } else if (dEdges.size() > 10000000 && cEdges.size() > 5000) {
                 dEdgeIterationSize = (float) dEdges.size() * 0.001;
                 d_edgeFlag = true;
-
             }
 
 //        else if (dEdges.size() > 5000000 && dEdges.size() > cEdges.size()) {
@@ -377,10 +362,11 @@ public class BKKCKCF {
 //            d_edgeFlag = true;
 //        }
 
-//        } else if (dEdges.size() >= 10000 && 500 >= cEdges.size()) {
+//        }
+
+//        else if (dEdges.size() >= 10000 && 500 >= cEdges.size()) {
 //            dEdgeIterationSize = (float) dEdges.size() * 0.1;
 //            d_edgeFlag = true;
-//
 //        }
 //
 //
@@ -434,11 +420,7 @@ public class BKKCKCF {
 
         int index = 0;
         while (vertex.get(index) != 0) {
-
-
             int central_node = vertex.get(index);
-
-
             potentialCVertex.clear();
             potentialDVertex.clear();
             excludedVertex.clear();
@@ -448,7 +430,6 @@ public class BKKCKCF {
             neighbourVertex = findNeighbors(central_node);
 
             for (int c = 0; c < neighbourVertex.size(); c = c + 2) {
-
                 /*
                  * u and v are adjacent via index vertexOfCurrentClique-edge
                  */
@@ -487,7 +468,6 @@ public class BKKCKCF {
             enumerateCliques(vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex, excludedCVertex);
             //enumerateCliques(vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex);
             processedVertex.add(central_node);
-
             index++;
         }
     }

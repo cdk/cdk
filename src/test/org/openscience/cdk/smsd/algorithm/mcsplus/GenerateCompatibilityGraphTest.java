@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,15 +23,12 @@
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
 import static org.junit.Assert.*;
 
 /**
@@ -63,6 +60,6 @@ public class GenerateCompatibilityGraphTest {
     public void testSomeMethod() throws IOException {
         System.out.println("GenerateCompatibilityGraph");
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer()));
+        assertNotNull(new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer(), true));
     }
 }

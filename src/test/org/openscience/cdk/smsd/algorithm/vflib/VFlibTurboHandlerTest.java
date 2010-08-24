@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -72,7 +72,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
     }
 
     /**
-     * Test of isSubgraph method, of class VFlibTurboHandler.
+     * Test of isSubgraph method, of class VFlibSubStructureHandler.
      * @throws InvalidSmilesException
      */
     @Test
@@ -83,13 +83,15 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(queryac, target);
-        assertEquals(true, smsd1.isSubgraph());
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        assertEquals(true, smsd1.isSubgraph(true));
     }
 
     /**
-     * Test of set method, of class VFlibTurboHandler.
+     * Test of set method, of class VFlibSubStructureHandler.
      * @throws InvalidSmilesException
      */
     @Test
@@ -99,14 +101,16 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(queryac, target);
-        assertEquals(true, smsd1.isSubgraph());
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        assertEquals(true, smsd1.isSubgraph(true));
 
     }
 
     /**
-     * Test of set method, of class VFlibTurboHandler.
+     * Test of set method, of class VFlibSubStructureHandler.
      * @throws Exception
      */
     @Test
@@ -116,14 +120,16 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         IMolecule target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IMolecule queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(queryac, target);
-        assertEquals(true, smsd1.isSubgraph());
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        assertEquals(true, smsd1.isSubgraph(true));
     }
 
     /**
-     * Test of set method, of class VFlibTurboHandler.
-     * @throws CDKException 
+     * Test of set method, of class VFlibSubStructureHandler.
+     * @throws CDKException
      */
     @Test
     public void testSet_String_String() throws CDKException {
@@ -140,14 +146,16 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(target);
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(query, target);
-        assertEquals(true, smsd1.isSubgraph());
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(query, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        assertEquals(true, smsd1.isSubgraph(true));
     }
 
     /**
-     * Test of set method, of class VFlibTurboHandler.
-     * @throws InvalidSmilesException 
+     * Test of set method, of class VFlibSubStructureHandler.
+     * @throws InvalidSmilesException
      */
     @Test
     public void testSet_MolHandler_MolHandler() throws InvalidSmilesException {
@@ -156,15 +164,15 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
         IAtomContainer target1 = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-        MolHandler source = new MolHandler(queryac, true);
-        MolHandler target = new MolHandler(target1, true);
-        VFlibTurboHandler instance = new VFlibTurboHandler();
+        MolHandler source = new MolHandler(queryac, true, true);
+        MolHandler target = new MolHandler(target1, true, true);
+        VFlibSubStructureHandler instance = new VFlibSubStructureHandler();
         instance.set(source, target);
-        assertEquals(true, instance.isSubgraph());
+        assertEquals(true, instance.isSubgraph(true));
     }
 
     /**
-     * Test of getAllAtomMapping method, of class VFlibTurboHandler.
+     * Test of getAllAtomMapping method, of class VFlibSubStructureHandler.
      * @throws InvalidSmilesException
      */
     @Test
@@ -174,15 +182,17 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(queryac, target);
-        smsd1.isSubgraph();
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.isSubgraph(true);
 
-        assertEquals(1, smsd1.getAllAtomMapping().size());
+        assertEquals(4, smsd1.getAllAtomMapping().size());
     }
 
     /**
-     * Test of getAllMapping method, of class VFlibTurboHandler.
+     * Test of getAllMapping method, of class VFlibSubStructureHandler.
      * @throws InvalidSmilesException 
      */
     @Test
@@ -192,15 +202,17 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(queryac, target);
-        smsd1.isSubgraph();
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.isSubgraph(true);
 
-        assertEquals(1, smsd1.getAllMapping().size());
+        assertEquals(4, smsd1.getAllMapping().size());
     }
 
     /**
-     * Test of getFirstAtomMapping method, of class VFlibTurboHandler.
+     * Test of getFirstAtomMapping method, of class VFlibSubStructureHandler.
      * @throws InvalidSmilesException
      */
     @Test
@@ -210,15 +222,17 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(queryac, target);
-        smsd1.isSubgraph();
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.isSubgraph(true);
 
         assertEquals(7, smsd1.getFirstAtomMapping().size());
     }
 
     /**
-     * Test of getFirstMapping method, of class VFlibTurboHandler.
+     * Test of getFirstMapping method, of class VFlibSubStructureHandler.
      * @throws InvalidSmilesException
      */
     @Test
@@ -228,9 +242,11 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        VFlibTurboHandler smsd1 = new VFlibTurboHandler();
-        smsd1.set(queryac, target);
-        smsd1.isSubgraph();
+        VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.isSubgraph(true);
 
         assertEquals(7, smsd1.getFirstMapping().size());
     }

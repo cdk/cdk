@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,12 +25,12 @@
 package org.openscience.cdk.smsd.helper;
 
 import java.util.ArrayList;
-import org.openscience.cdk.smsd.interfaces.IFinalMapping;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.smsd.interfaces.IFinalMapping;
 
 /**
  * Class that stores raw mapping(s) after each algorithm is executed.
@@ -99,7 +99,7 @@ public class FinalMappings implements IFinalMapping {
     @Override
     @TestMethod("testClear")
     synchronized public void clear() {
-        this.mappings.clear();
+        FinalMappings.mappings.clear();
     }
 
     /**

@@ -98,8 +98,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         }
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
     }
 
@@ -115,8 +117,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
     }
@@ -133,8 +137,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         IMolecule queryac = sp.parseSmiles("Nc1ccccc1");
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
     }
 
@@ -158,8 +164,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         reader.read(target);
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(query, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(query, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
 
         assertNotNull(smsd1.getFirstMapping());
     }
@@ -175,11 +183,11 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
         IAtomContainer target1 = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-        MolHandler source = new MolHandler(queryac, true);
-        MolHandler target = new MolHandler(target1, true);
+        MolHandler source = new MolHandler(queryac, true, true);
+        MolHandler target = new MolHandler(target1, true, true);
         VFlibMCSHandler instance = new VFlibMCSHandler();
         instance.set(source, target);
-        instance.searchMCS();
+        instance.searchMCS(true);
         assertNotNull(instance.getFirstMapping());
     }
 
@@ -195,8 +203,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(4, smsd1.getAllAtomMapping().size());
@@ -214,8 +224,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(4, smsd1.getAllMapping().size());
@@ -233,8 +245,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(7, smsd1.getFirstAtomMapping().size());
@@ -252,8 +266,10 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         VFlibMCSHandler smsd1 = new VFlibMCSHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(7, smsd1.getFirstMapping().size());

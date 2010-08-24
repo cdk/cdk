@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -86,7 +86,7 @@ public class MoleculeSanityCheckTest {
         String rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(rawMolSmiles);
-        MoleculeSanityCheck.fixAromaticity(mol);
+        MoleculeSanityCheck.checkAndCleanMolecule(mol);
         int count = 0;
         for (IBond b : mol.bonds()) {
             if (b.getFlag(CDKConstants.ISAROMATIC) && b.getOrder().equals(IBond.Order.DOUBLE)) {

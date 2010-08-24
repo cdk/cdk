@@ -30,7 +30,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smsd.SMSD;
+import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 
 /**
@@ -47,11 +47,11 @@ public class SubStructureSearchAlgorithmsTest {
     @Test
     public void testSubStructureSearchAlgorithms() {
         Assert.assertNotNull(
-                new SubStructureSearchAlgorithms(
+                new Isomorphism(
                 Algorithm.CDKMCS,
                 true));
         Assert.assertNotNull(
-                new SubStructureSearchAlgorithms(
+                new Isomorphism(
                 Algorithm.CDKMCS,
                 false));
     }
@@ -68,8 +68,8 @@ public class SubStructureSearchAlgorithmsTest {
         IMolecule target = sp.parseSmiles("C\\C=C/OCC=C");
         IMolecule queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         assertNotNull(smsd1.getReactantMolecule());
         assertNotNull(smsd1.getProductMolecule());
@@ -87,8 +87,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         assertNotNull(smsd1.getReactantMolecule());
         assertNotNull(smsd1.getProductMolecule());
@@ -107,8 +107,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         assertNotNull(smsd1.getReactantMolecule());
         assertNotNull(smsd1.getProductMolecule());
@@ -127,8 +127,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertEquals(1, smsd1.getAllAtomMapping().size());
     }
@@ -145,8 +145,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
         Integer score = 2;
         assertEquals(score, smsd1.getFragmentSize(0));
@@ -164,10 +164,10 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        Integer score = 30;
+        Integer score = 1048;
         assertEquals(score, smsd1.getStereoScore(0));
     }
 
@@ -183,8 +183,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
         Double score = 610.0;
         assertEquals(score, smsd1.getEnergyScore(0));
@@ -202,8 +202,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(7, smsd1.getFirstMapping().size());
@@ -221,8 +221,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(2, smsd1.getAllMapping().size());
@@ -240,8 +240,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(7, smsd1.getFirstAtomMapping().size());
@@ -259,8 +259,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(2, smsd1.getAllAtomMapping().size());
@@ -278,8 +278,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(7, smsd1.getReactantMolecule().getAtomCount());
@@ -297,8 +297,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(20, smsd1.getProductMolecule().getAtomCount());
@@ -315,8 +315,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         double score = 0.35;
@@ -335,8 +335,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertEquals(false, smsd1.isStereoMisMatch());
     }
@@ -352,8 +352,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.SubStructure, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertEquals(true, smsd1.isSubgraph());
     }
@@ -369,15 +369,15 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.SubStructure, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         double score = 3.605;
         assertEquals(score, smsd1.getEuclideanDistance(), 0.005);
 
-        SMSD smsd2 = new SMSD(Algorithm.VFLibMCS, true);
-        smsd2.init(queryac, target, true);
+        Isomorphism smsd2 = new Isomorphism(Algorithm.VFLibMCS, true);
+        smsd2.init(queryac, target, true, true);
         smsd2.setChemFilters(true, true, true);
 
         assertEquals(score, smsd2.getEuclideanDistance(), 0.005);

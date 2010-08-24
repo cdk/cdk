@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smsd.SMSD;
+import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 import static org.junit.Assert.*;
 
@@ -77,15 +77,15 @@ public class ChemicalFiltersTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, false);
-        smsd.init(queryac, target, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd.init(queryac, target, true, true);
         smsd.setChemFilters(false, false, false);
         assertEquals(4, smsd.getAllAtomMapping().size());
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        assertEquals(3, smsd1.getAllAtomMapping().size());
+        assertEquals(1, smsd1.getAllAtomMapping().size());
     }
 
     /**
@@ -100,13 +100,13 @@ public class ChemicalFiltersTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, false);
-        smsd.init(queryac, target, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.CDKMCS, false);
+        smsd.init(queryac, target, true, true);
         smsd.setChemFilters(false, false, false);
         assertEquals(4, smsd.getAllAtomMapping().size());
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.CDKMCS, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
         assertEquals(2, smsd1.getAllAtomMapping().size());
     }
@@ -122,13 +122,13 @@ public class ChemicalFiltersTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, false);
-        smsd.init(queryac, target, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd.init(queryac, target, true, true);
         smsd.setChemFilters(false, false, false);
         assertEquals(4, smsd.getAllAtomMapping().size());
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
         assertEquals(2, smsd1.getAllAtomMapping().size());
     }
@@ -188,8 +188,8 @@ public class ChemicalFiltersTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
         Double score = 610.0;
         assertEquals(score, smsd1.getEnergyScore(0));
@@ -207,8 +207,8 @@ public class ChemicalFiltersTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
         Integer score = 2;
         assertEquals(score, smsd1.getFragmentSize(0));
@@ -226,10 +226,10 @@ public class ChemicalFiltersTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        Integer score = 30;
+        Integer score = 1048;
         assertEquals(score, smsd1.getStereoScore(0));
     }
 }

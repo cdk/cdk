@@ -1,4 +1,4 @@
-/* Copyright (C) 2009-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,9 +23,9 @@
 package org.openscience.cdk.smsd.algorithm.vflib.builder;
 
 import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
+import org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher;
 
 /**
  * Class for building/storing edges (bonds) in the graph with bond
@@ -34,13 +34,12 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class EdgeBuilder implements IEdge {
 
     private NodeBuilder source;
     private NodeBuilder target;
-    private IQueryBond matcher;
+    private IBondMatcher matcher;
 
     /**
      * 
@@ -48,7 +47,7 @@ public class EdgeBuilder implements IEdge {
      * @param target
      * @param matcher
      */
-    protected EdgeBuilder(NodeBuilder source, NodeBuilder target, IQueryBond matcher) {
+    protected EdgeBuilder(NodeBuilder source, NodeBuilder target, IBondMatcher matcher) {
         this.source = source;
         this.target = target;
         this.matcher = matcher;
@@ -71,7 +70,7 @@ public class EdgeBuilder implements IEdge {
     /** {@inheritDoc}
      */
     @Override
-    public IQueryBond getBondMatcher() {
+    public IBondMatcher getBondMatcher() {
         return matcher;
     }
 }

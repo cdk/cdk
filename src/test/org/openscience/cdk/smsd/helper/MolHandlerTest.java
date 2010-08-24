@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -72,7 +72,7 @@ public class MolHandlerTest {
     @Test
     public void testGetMolecule() {
         System.out.println("getMolecule");
-        MolHandler instance = new MolHandler(new Molecule(), true);
+        MolHandler instance = new MolHandler(new Molecule(), true, true);
         IAtomContainer result = instance.getMolecule();
         assertNotNull(result);
     }
@@ -87,43 +87,5 @@ public class MolHandlerTest {
         boolean expResult = true;
         boolean result = instance.getRemoveHydrogenFlag();
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of getFragmentedMolecule method, of class MolHandler.
-     */
-    @Test
-    public void testGetFragmentedMolecule() {
-        try {
-            System.out.println("getFragmentedMolecule");
-            String fragmentMolSmiles = "C1=CC=CC=C1.C1=CC2=C(C=C1)C=CC=C2";
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-            IAtomContainer molecule = sp.parseSmiles(fragmentMolSmiles);
-            MolHandler instance = new MolHandler(molecule, true, true);
-            int expResult = 2;
-            IAtomContainerSet result = instance.getFragmentedMolecule();
-            assertEquals(expResult, result.getAtomContainerCount());
-        } catch (InvalidSmilesException ex) {
-            Logger.getLogger(MolHandlerTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * Test of getConnectedFlag method, of class MolHandler.
-     */
-    @Test
-    public void testGetConnectedFlag() {
-        try {
-            System.out.println("getConnectedFlag");
-            String fragmentMolSmiles = "C1=CC=CC=C1.C1=CC2=C(C=C1)C=CC=C2";
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-            IAtomContainer molecule = sp.parseSmiles(fragmentMolSmiles);
-            MolHandler instance = new MolHandler(molecule, true, true);
-            boolean expResult = false;
-            boolean result = instance.getConnectedFlag();
-            assertEquals(expResult, result);
-        } catch (InvalidSmilesException ex) {
-            Logger.getLogger(MolHandlerTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -38,7 +38,7 @@ import org.junit.runners.Suite;
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.global.BondTypeTest.class,org.openscience.cdk.smsd.global.TimeOutTest.class})
+@Suite.SuiteClasses({org.openscience.cdk.smsd.global.TimeOutTest.class})
 public class GlobalSuite {
 
     @BeforeClass

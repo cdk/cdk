@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -36,6 +36,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
@@ -74,7 +75,7 @@ public class AbstractMCSTest {
         IMolecule target = null;
         boolean removeHydrogen = false;
         AbstractMCS instance = new AbstractMCSImpl();
-        instance.init(source, target, removeHydrogen);
+        instance.init(source, target, removeHydrogen, true);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -90,7 +91,7 @@ public class AbstractMCSTest {
         IAtomContainer target = null;
         boolean removeHydrogen = false;
         AbstractMCS instance = new AbstractMCSImpl();
-        instance.init(source, target, removeHydrogen);
+        instance.init(source, target, removeHydrogen, true);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -297,51 +298,68 @@ public class AbstractMCSTest {
 
     public class AbstractMCSImpl extends AbstractMCS {
 
-        public void init(IMolecule source, IMolecule target, boolean removeHydrogen) throws CDKException {
+        @Override
+        public void init(IMolecule source, IMolecule target, boolean removeHydrogen, boolean cleanMol) throws CDKException {
         }
 
-        public void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen) throws CDKException {
+        @Override
+        public void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen, boolean cleanMol) throws CDKException {
         }
 
+        @Override
+        public void init(IQueryAtomContainer source, IAtomContainer target) throws CDKException {
+        }
+
+        @Override
         public void setChemFilters(boolean stereoFilter, boolean fragmentFilter, boolean energyFilter) {
         }
 
+        @Override
         public Double getEnergyScore(int Key) {
             return null;
         }
 
+        @Override
         public Integer getFragmentSize(int Key) {
             return null;
         }
 
+        @Override
         public IAtomContainer getProductMolecule() {
             return null;
         }
 
+        @Override
         public IAtomContainer getReactantMolecule() {
             return null;
         }
 
+        @Override
         public Integer getStereoScore(int Key) {
             return null;
         }
 
+        @Override
         public boolean isStereoMisMatch() {
             return false;
         }
 
+        @Override
         public boolean isSubgraph() {
             return false;
         }
 
+        @Override
         public double getTanimotoSimilarity() throws IOException {
             return 0.0;
         }
 
+        @Override
         public double getEuclideanDistance() throws IOException {
             return 0.0;
         }
 
+        @Override
         public List<Map<IAtom, IAtom>> getAllAtomMapping() {
             return null;
         }
@@ -350,10 +368,12 @@ public class AbstractMCSTest {
             return null;
         }
 
+        @Override
         public Map<IAtom, IAtom> getFirstAtomMapping() {
             return null;
         }
 
+        @Override
         public Map<Integer, Integer> getFirstMapping() {
             return null;
         }

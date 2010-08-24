@@ -1,6 +1,6 @@
 
 /* Copyright (C) 2005-2006 Markus Leber
- *               2006-2009 Syed Asad Rahman {asad@ebi.ac.uk}
+ *               2006-2009 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
  * Class to handle mappings of query molecule.
@@ -35,8 +36,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
-
 @TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.QueryProcessorTest")
 public class QueryProcessor {
 
@@ -75,7 +74,7 @@ public class QueryProcessor {
             int mappingSize,
             List<Integer> i_bond_setA,
             List<String> c_bond_setA) {
- 
+
         this.cTab1Copy = cTab1Copy;
         this.cTab2Copy = cTab2Copy;
         this.signs = signArray;
@@ -116,6 +115,57 @@ public class QueryProcessor {
             Integer indexI = query.getAtomNumber(query.getBond(atomIndex).getAtom(0));
             Integer indexJ = query.getAtomNumber(query.getBond(atomIndex).getAtom(1));
             Integer order = query.getBond(atomIndex).getOrder().ordinal() + 1;
+
+//            System.out.println(AtomI + "= , =" + AtomJ );
+            for (Integer unMappedAtomIndex = 0; unMappedAtomIndex < unmapped_numA; unMappedAtomIndex++) {
+
+                if (unmapped_atoms_molA.get(unMappedAtomIndex).equals(indexI)) {
+                    normal_bond = unMappedAtomsEqualsIndexJ(query, target, atomIndex, counter, mapped_atoms, indexI, indexJ, order);
+                    bond_considered = true;
+                } else //Does a ungemaptes atom at second position in the connection occur?
+                if (unmapped_atoms_molA.get(unMappedAtomIndex).equals(indexJ)) {
+                    normal_bond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mapped_atoms, indexI, indexJ, order);
+                    bond_considered = true;
+                }
+                if (normal_bond && bond_considered) {
+                    markNormalBonds(atomIndex, indexI, indexJ, order);
+                    normal_bond = true;
+                    break;
+                }
+            }
+            bond_considered = false;
+        }
+    }
+
+    /**
+     *
+     * @param query
+     * @param target
+     * @param unmapped_atoms_molA
+     * @param mapped_atoms
+     * @param counter
+     */
+    protected void process(
+            IQueryAtomContainer query,
+            IAtomContainer target,
+            List<Integer> unmapped_atoms_molA,
+            List<Integer> mapped_atoms,
+            int counter) {
+
+        int unmapped_numA = unmapped_atoms_molA.size();
+        boolean bond_considered = false;
+        boolean normal_bond = true;
+
+//        System.out.println("\n" + cTab1Copy + "\n");
+
+
+        for (int atomIndex = 0; atomIndex < query.getBondCount(); atomIndex++) {
+            Integer indexI = query.getAtomNumber(query.getBond(atomIndex).getAtom(0));
+            Integer indexJ = query.getAtomNumber(query.getBond(atomIndex).getAtom(1));
+            Integer order = 0;
+            if (query.getBond(atomIndex).getOrder() != null) {
+                order = query.getBond(atomIndex).getOrder().ordinal() + 1;
+            }
 
 //            System.out.println(AtomI + "= , =" + AtomJ );
             for (Integer unMappedAtomIndex = 0; unMappedAtomIndex < unmapped_numA; unMappedAtomIndex++) {

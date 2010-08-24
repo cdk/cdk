@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
@@ -88,7 +89,9 @@ public class IMCSBaseTest {
         IMolecule source = null;
         IMolecule target = null;
         IMCSBase instance = new IMCSBaseImpl();
-        instance.set(source, target);
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -103,7 +106,9 @@ public class IMCSBaseTest {
         IAtomContainer source = null;
         IAtomContainer target = null;
         IMCSBase instance = new IMCSBaseImpl();
-        instance.set(source, target);
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -118,7 +123,9 @@ public class IMCSBaseTest {
         String sourceMolFileName = "";
         String targetMolFileName = "";
         IMCSBase instance = new IMCSBaseImpl();
-        instance.set(sourceMolFileName, targetMolFileName);
+        MolHandler mol1 = new MolHandler(sourceMolFileName, true, true);
+        MolHandler mol2 = new MolHandler(targetMolFileName, true, true);
+        instance.set(mol1, mol2);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -130,8 +137,8 @@ public class IMCSBaseTest {
     public void testGetAllAtomMapping() {
         System.out.println("getAllAtomMapping");
         IMCSBase instance = new IMCSBaseImpl();
-        List expResult = null;
-        List result = instance.getAllAtomMapping();
+        List<Map<IAtom, IAtom>> expResult = null;
+        List<Map<IAtom, IAtom>> result = instance.getAllAtomMapping();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -144,8 +151,8 @@ public class IMCSBaseTest {
     public void testGetAllMapping() {
         System.out.println("getAllMapping");
         IMCSBase instance = new IMCSBaseImpl();
-        List expResult = null;
-        List result = instance.getAllMapping();
+        List<Map<Integer, Integer>> expResult = null;
+        List<Map<Integer, Integer>> result = instance.getAllMapping();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -181,30 +188,30 @@ public class IMCSBaseTest {
 
     public class IMCSBaseImpl implements IMCSBase {
 
+        @Override
         public void set(MolHandler source, MolHandler target) throws CDKException {
         }
 
-        public void set(IMolecule source, IMolecule target) throws CDKException {
+        @Override
+        public void set(IQueryAtomContainer source, IAtomContainer target) throws CDKException {
         }
 
-        public void set(IAtomContainer source, IAtomContainer target) throws CDKException {
-        }
-
-        public void set(String sourceMolFileName, String targetMolFileName) throws CDKException {
-        }
-
+        @Override
         public List<Map<IAtom, IAtom>> getAllAtomMapping() {
             return null;
         }
 
+        @Override
         public List<Map<Integer, Integer>> getAllMapping() {
             return null;
         }
 
+        @Override
         public Map<IAtom, IAtom> getFirstAtomMapping() {
             return null;
         }
 
+        @Override
         public Map<Integer, Integer> getFirstMapping() {
             return null;
         }

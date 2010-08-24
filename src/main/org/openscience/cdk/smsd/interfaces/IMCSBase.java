@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,7 +28,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
@@ -37,7 +37,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.interfaces.IMCSBaseTest")
 public interface IMCSBase {
 
@@ -51,32 +50,15 @@ public interface IMCSBase {
      */
     public abstract void set(MolHandler source, MolHandler target) throws CDKException;
 
-    /** 
+    /**
      * Initialise the query and target molecule.
      *
-     * @param source molecule
-     * @param target molecule
+     * @param source source molecule
+     * @param target target molecule
      * @throws CDKException
-     */
-    public abstract void set(IMolecule source, IMolecule target) throws CDKException;
-
-    /** 
-     * Initialise the query and target molecule.
      *
-     * @param source molecule
-     * @param target molecule
-     * @throws CDKException
      */
-    public abstract void set(IAtomContainer source, IAtomContainer target) throws CDKException;
-
-    /** 
-     * Initialise the query and target molecule.
-     *
-     * @param sourceMolFileName mol File
-     * @param targetMolFileName mol File
-     * @throws CDKException
-     */
-    public abstract void set(String sourceMolFileName, String targetMolFileName) throws CDKException;
+    public abstract void set(IQueryAtomContainer source, IAtomContainer target) throws CDKException;
 
     /**
      * Returns all plausible mappings between query and target molecules.

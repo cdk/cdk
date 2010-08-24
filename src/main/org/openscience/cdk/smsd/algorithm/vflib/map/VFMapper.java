@@ -1,25 +1,4 @@
-/* Copyright (C) 2009-2010  Syed Asad Rahman {asad@ebi.ac.uk}
- *
- * Contact: cdk-devel@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
+/*
  * MX Cheminformatics Tools for Java
  *
  * Copyright (c) 2007-2009 Metamolecular, LLC
@@ -44,7 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * * Copyright (C) 2009-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -74,14 +53,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
-import org.openscience.cdk.smsd.algorithm.vflib.query.TemplateCompiler;
-import org.openscience.cdk.smsd.algorithm.vflib.validator.VFMatch;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMatch;
+import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
+import org.openscience.cdk.smsd.global.TimeOut;
+import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
  * This class finds MCS between query and target molecules
@@ -96,33 +77,58 @@ public class VFMapper implements IMapper {
 
     private IQuery query;
     private List<Map<INode, IAtom>> maps;
+    private int currentMCSSize = -1;
+    private static TimeManager timeManager = null;
+
+    /**
+     * @return the timeout
+     */
+    protected synchronized static double getTimeout() {
+        return TimeOut.getInstance().getTimeOut();
+    }
+
+    /**
+     * @return the timeManager
+     */
+    protected synchronized static TimeManager getTimeManager() {
+        return timeManager;
+    }
+
+    /**
+     * @param aTimeManager the timeManager to set
+     */
+    protected synchronized static void setTimeManager(TimeManager aTimeManager) {
+        TimeOut.getInstance().setTimeOutFlag(false);
+        timeManager = aTimeManager;
+    }
 
     /**
      *
      * @param query
      */
     public VFMapper(IQuery query) {
+        setTimeManager(new TimeManager());
         this.query = query;
         this.maps = new ArrayList<Map<INode, IAtom>>();
     }
 
     /**
      *
-     * @param molecule
+     * @param queryMolecule
+     * @param bondMatcher
      */
-    public VFMapper(IAtomContainer molecule) {
-//        this.query = new VFQuery(molecule);
-        this.query = TemplateCompiler.compile(molecule);
+    public VFMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
+        setTimeManager(new TimeManager());
+        this.query = QueryCompiler.compile(queryMolecule, bondMatcher);
         this.maps = new ArrayList<Map<INode, IAtom>>();
     }
 
     /** {@inheritDoc}
-     *
-     * @param target
+     * @param targetMolecule targetMolecule graph
      */
     @Override
-    public boolean hasMap(IAtomContainer target) {
-        VFState state = new VFState(query, target);
+    public boolean hasMap(IAtomContainer targetMolecule) {
+        IState state = new VFState(query, targetMolecule);
         maps.clear();
         return mapFirst(state);
     }
@@ -137,8 +143,9 @@ public class VFMapper implements IMapper {
         return new ArrayList<Map<INode, IAtom>>(maps);
     }
 
-    /**
-     * {@inheritDoc}
+    /** {@inheritDoc}
+     *
+     * @param target
      *
      */
     @Override
@@ -149,9 +156,7 @@ public class VFMapper implements IMapper {
         return maps.isEmpty() ? new HashMap<INode, IAtom>() : maps.get(0);
     }
 
-    /**
-     * {@inheritDoc}
-     *
+    /** {@inheritDoc}
      */
     @Override
     public int countMaps(IAtomContainer target) {
@@ -161,22 +166,32 @@ public class VFMapper implements IMapper {
         return maps.size();
     }
 
+    private void addMapping(IState state) {
+        Map<INode, IAtom> map = state.getMap();
+        if (!hasMap(map) && map.size() > currentMCSSize) {
+            maps.add(map);
+            currentMCSSize = map.size();
+        } else if (!hasMap(map) && map.size() == currentMCSSize) {
+            maps.add(map);
+        }
+    }
+
     private void mapAll(IState state) {
         if (state.isDead()) {
             return;
         }
 
-        if (state.isGoal()) {
-            Map<INode, IAtom> map = state.getMap();
-            if (!hasMap(map)) {
-                maps.add(state.getMap());
-            }
-            return;
+        if (hasMap(state.getMap())) {
+            state.backTrack();
         }
 
+        if (state.isGoal()) {
+            Map<INode, IAtom> map = state.getMap();
+            maps.add(map);
+        }
 
         while (state.hasNextCandidate()) {
-            VFMatch candidate = state.nextCandidate();
+            IMatch candidate = state.nextCandidate();
             if (state.isMatchFeasible(candidate)) {
                 IState nextState = state.nextState(candidate);
                 mapAll(nextState);
@@ -190,16 +205,18 @@ public class VFMapper implements IMapper {
             return false;
         }
 
+        if (hasMap(state.getMap())) {
+            state.backTrack();
+        }
+
         if (state.isGoal()) {
             maps.add(state.getMap());
             return true;
         }
 
         boolean found = false;
-
         while (!found && state.hasNextCandidate()) {
-            VFMatch candidate = state.nextCandidate();
-
+            IMatch candidate = state.nextCandidate();
             if (state.isMatchFeasible(candidate)) {
                 IState nextState = state.nextState(candidate);
                 found = mapFirst(nextState);
@@ -210,12 +227,19 @@ public class VFMapper implements IMapper {
     }
 
     private boolean hasMap(Map<INode, IAtom> map) {
-        for (Map<INode, IAtom> test : maps) {
-            if (test.equals(map)) {
+        for (Map<INode, IAtom> storedMap : maps) {
+            if (storedMap.equals(map)) {
                 return true;
             }
         }
+        return false;
+    }
 
+    public synchronized static boolean isTimeOut() {
+        if (getTimeout() > -1 && getTimeManager().getElapsedTimeInMinutes() > getTimeout()) {
+            TimeOut.getInstance().setTimeOutFlag(true);
+            return true;
+        }
         return false;
     }
 }

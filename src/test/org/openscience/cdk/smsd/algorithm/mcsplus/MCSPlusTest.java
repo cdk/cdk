@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,7 +61,7 @@ public class MCSPlusTest {
         System.out.println("MCSPlus().getOverlaps");
 
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(new MCSPlus().getOverlaps(new AtomContainer(), new AtomContainer()));
+        assertNotNull(new MCSPlus().getOverlaps(new AtomContainer(), new AtomContainer(), true));
 
     }
 }

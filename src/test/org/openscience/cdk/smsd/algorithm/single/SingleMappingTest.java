@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,6 +30,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import static org.junit.Assert.*;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -65,7 +66,7 @@ public class SingleMappingTest {
      * Test of getOverLaps method, of class SingleMapping.
      */
     @Test
-    public void testGetOverLaps() {
+    public void testGetOverLaps() throws CDKException {
         System.out.println("getOverLaps");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");

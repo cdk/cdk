@@ -23,7 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -48,7 +48,7 @@
 package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
 import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher;
 
 /**
  * Interface for the Edges (bonds) in graph.
@@ -56,7 +56,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public interface IEdge {
 
@@ -76,5 +75,5 @@ public interface IEdge {
      * Returns bond matcher.
      * @return Query Bond.
      */
-    public IQueryBond getBondMatcher();
+    public IBondMatcher getBondMatcher();
 }

@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -49,6 +49,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.smsd.tools.ExtAtomContainerManipulator;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
@@ -79,7 +81,7 @@ public class SMSDTest {
     }
 
     /**
-     * Test of init method, of class SMSD.
+     * Test of init method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -89,15 +91,15 @@ public class SMSDTest {
         IMolecule target = sp.parseSmiles("C\\C=C/OCC=C");
         IMolecule queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         assertNotNull(smsd1.getReactantMolecule());
         assertNotNull(smsd1.getProductMolecule());
     }
 
     /**
-     * Test of init method, of class SMSD.
+     * Test of init method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -107,15 +109,15 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
         assertNotNull(smsd1.getReactantMolecule());
         assertNotNull(smsd1.getProductMolecule());
     }
 
     /**
-     * Test of searchMCS method, of class SMSD.
+     * Test of searchMCS method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -126,8 +128,8 @@ public class SMSDTest {
             IAtomContainer target = null;
             target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-            SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-            smsd1.init(queryac, target, true);
+            Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+            smsd1.init(queryac, target, true, true);
             smsd1.setChemFilters(true, true, true);
             Assert.assertEquals(7, smsd1.getFirstAtomMapping().size());
             Assert.assertEquals(2, smsd1.getAllAtomMapping().size());
@@ -138,7 +140,7 @@ public class SMSDTest {
     }
 
     /**
-     * Test of set method, of class SMSD.
+     * Test of set method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -148,15 +150,15 @@ public class SMSDTest {
         IMolecule target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IMolecule queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
 
     }
 
     /**
-     * Test of set method, of class SMSD.
+     * Test of set method, of class Isomorphism.
      * @throws Exception
      */
     @Test
@@ -166,14 +168,14 @@ public class SMSDTest {
         IMolecule target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IMolecule queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
     }
 
     /**
-     * Test of set method, of class SMSD.
+     * Test of set method, of class Isomorphism.
      * @throws CDKException
      * @throws IOException
      */
@@ -192,15 +194,15 @@ public class SMSDTest {
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(target);
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(query, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(query, target, true, true);
         smsd1.setChemFilters(true, true, true);
         double score = 1.0;
         assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
     }
 
     /**
-     * Test of set method, of class SMSD.
+     * Test of set method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -210,16 +212,16 @@ public class SMSDTest {
 
         IAtomContainer target1 = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-        MolHandler source = new MolHandler(queryac, true);
-        MolHandler target = new MolHandler(target1, true);
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(source.getMolecule(), target.getMolecule(), true);
+        MolHandler source = new MolHandler(queryac, true, true);
+        MolHandler target = new MolHandler(target1, true, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(source.getMolecule(), target.getMolecule(), true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
     }
 
     /**
-     * Test of getAllAtomMapping method, of class SMSD.
+     * Test of getAllAtomMapping method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -229,16 +231,23 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
+        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
+
+//	Calling the main algorithm to perform MCS cearch
+
+        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
+        CDKHueckelAromaticityDetector.detectAromaticity(target);
+
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
-
         assertEquals(2, smsd1.getAllAtomMapping().size());
     }
 
     /**
-     * Test of getAllMapping method, of class SMSD.
+     * Test of getAllMapping method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -248,8 +257,8 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
 
@@ -257,7 +266,7 @@ public class SMSDTest {
     }
 
     /**
-     * Test of getFirstAtomMapping method, of class SMSD.
+     * Test of getFirstAtomMapping method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -267,8 +276,8 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
 
@@ -276,7 +285,7 @@ public class SMSDTest {
     }
 
     /**
-     * Test of getFirstMapping method, of class SMSD.
+     * Test of getFirstMapping method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -286,8 +295,8 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
 
@@ -295,7 +304,7 @@ public class SMSDTest {
     }
 
     /**
-     * Test of setChemFilters method, of class SMSD.
+     * Test of setChemFilters method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -305,14 +314,14 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertEquals(1, smsd1.getAllAtomMapping().size());
     }
 
     /**
-     * Test of getFragmentSize method, of class SMSD.
+     * Test of getFragmentSize method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -322,15 +331,15 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, true, false);
         Integer score = 2;
         assertEquals(score, smsd1.getFragmentSize(0));
     }
 
     /**
-     * Test of getStereoScore method, of class SMSD.
+     * Test of getStereoScore method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -340,15 +349,15 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, false, false);
-        Integer score = 30;
+        Integer score = 1048;
         assertEquals(score, smsd1.getStereoScore(0));
     }
 
     /**
-     * Test of getEnergyScore method, of class SMSD.
+     * Test of getEnergyScore method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -358,15 +367,15 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(false, false, true);
         Double score = 610.0;
         assertEquals(score, smsd1.getEnergyScore(0));
     }
 
     /**
-     * Test of getReactantMolecule method, of class SMSD.
+     * Test of getReactantMolecule method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -376,15 +385,15 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(7, smsd1.getReactantMolecule().getAtomCount());
     }
 
     /**
-     * Test of getProductMolecule method, of class SMSD.
+     * Test of getProductMolecule method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -394,15 +403,15 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         assertEquals(20, smsd1.getProductMolecule().getAtomCount());
     }
 
     /**
-     * Test of getTanimotoSimilarity method, of class SMSD.
+     * Test of getTanimotoSimilarity method, of class Isomorphism.
      * @throws Exception
      */
     @Test
@@ -412,8 +421,8 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         double score = 0.35;
@@ -421,7 +430,7 @@ public class SMSDTest {
     }
 
     /**
-     * Test of isStereoMisMatch method, of class SMSD.
+     * Test of isStereoMisMatch method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -431,14 +440,14 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertEquals(false, smsd1.isStereoMisMatch());
     }
 
     /**
-     * Test of isSubgraph method, of class SMSD.
+     * Test of isSubgraph method, of class Isomorphism.
      * @throws CDKException
      */
     @Test
@@ -448,14 +457,14 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.SubStructure, false);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, false);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertEquals(true, smsd1.isSubgraph());
     }
 
     /**
-     * Test of getEuclideanDistance method, of class SMSD.
+     * Test of getEuclideanDistance method, of class Isomorphism.
      * @throws Exception
      */
     @Test
@@ -465,15 +474,15 @@ public class SMSDTest {
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
-        SMSD smsd1 = new SMSD(Algorithm.SubStructure, true);
-        smsd1.init(queryac, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, true);
+        smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
 
         double score = 3.605;
         assertEquals(score, smsd1.getEuclideanDistance(), 0.005);
 
-        SMSD smsd2 = new SMSD(Algorithm.VFLibMCS, true);
-        smsd2.init(queryac, target, true);
+        Isomorphism smsd2 = new Isomorphism(Algorithm.VFLibMCS, true);
+        smsd2.init(queryac, target, true, true);
         smsd2.setChemFilters(true, true, true);
 
         assertEquals(score, smsd2.getEuclideanDistance(), 0.005);
@@ -481,116 +490,127 @@ public class SMSDTest {
 
     @Test
     public void testQueryAtomContainerDefault() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
 
-        smsd.init(query, target, false);
+        smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-        smsd.init(queryContainer, target, false);
+        smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
 
     @Test
     public void testQueryAtomContainerMCSPLUS() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.MCSPlus, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.MCSPlus, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
 
-        smsd.init(query, target, false);
+        smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-        smsd.init(queryContainer, target, false);
+        smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
 
     @Test
     public void testQueryAtomContainerSubstructure() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.SubStructure, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
 
-        smsd.init(query, target, false);
+        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(query);
+        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
+
+//	Calling the main algorithm to perform MCS cearch
+
+        CDKHueckelAromaticityDetector.detectAromaticity(query);
+        CDKHueckelAromaticityDetector.detectAromaticity(target);
+
+        Isomorphism smsd = new Isomorphism(Algorithm.SubStructure, true);
+        smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-        smsd.init(queryContainer, target, false);
-        foundMatches = smsd.isSubgraph();
-        Assert.assertTrue(foundMatches);
+//        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+//
+//        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, true);
+//        smsd1.init(queryContainer, target, true, true);
+//        smsd1.setChemFilters(true, true, true);
+//        foundMatches = smsd1.isSubgraph();
+//        Assert.assertFalse(foundMatches);
     }
 
     public void testQueryAtomCount() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
 
-        smsd.init(query, target, false);
+        smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertEquals(18, smsd.getAllAtomMapping().size());
         Assert.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-        smsd.init(queryContainer, target, false);
+        smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
 
     @Test
     public void testMatchCount() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
 
-        smsd.init(query, target, false);
+        smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertEquals(18, smsd.getAllAtomMapping().size());
         Assert.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-        smsd.init(queryContainer, target, false);
+        smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
 
     @Test
     public void testMatchCountCDKMCS() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.CDKMCS, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C1CCC12CCCC2");
 
-        smsd.init(query, target, false);
+        smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertEquals(18, smsd.getAllAtomMapping().size());
         Assert.assertTrue(foundMatches);
 
         IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-        smsd.init(queryContainer, target, false);
+        smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
     }
 
     @Test
     public void testImpossibleQuery() throws CDKException {
-        SMSD smsd = new SMSD(Algorithm.DEFAULT, true);
+        Isomorphism smsd = new Isomorphism(Algorithm.DEFAULT, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer query = sp.parseSmiles("CC");
         IAtomContainer target = sp.parseSmiles("C");
 
-        smsd.init(query, target, false);
+        smsd.init(query, target, false, true);
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertFalse(foundMatches);
     }

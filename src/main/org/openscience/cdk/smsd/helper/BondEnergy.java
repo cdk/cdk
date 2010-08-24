@@ -25,6 +25,7 @@ package org.openscience.cdk.smsd.helper;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 
@@ -39,10 +40,10 @@ import org.openscience.cdk.interfaces.IBond.Order;
 @TestClass("org.openscience.cdk.smsd.helper.BondEnergyTest")
 public class BondEnergy {
 
-    private String symbol1;
-    private String symbol2;
-    private IBond.Order bondOrder;
-    private int energy;
+    private String symbol1 = "";
+    private String symbol2 = "";
+    private IBond.Order bondOrder = null;
+    private int energy = -1;
 
     /**
      * Creates a new bond energy for the given elements and
@@ -100,5 +101,18 @@ public class BondEnergy {
     @TestMethod("testGetEnergy")
     public int getEnergy() {
         return energy;
+    }
+
+    public boolean matches(IBond bond) {
+        IAtom atom1 = bond.getAtom(0);
+        IAtom atom2 = bond.getAtom(1);
+
+        if ((atom1.getSymbol().equalsIgnoreCase(symbol1) && atom2.getSymbol().equalsIgnoreCase(symbol2))
+                || (atom1.getSymbol().equalsIgnoreCase(symbol2) && atom2.getSymbol().equalsIgnoreCase(symbol1))) {
+            if (bond.getOrder().compareTo(bondOrder) == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

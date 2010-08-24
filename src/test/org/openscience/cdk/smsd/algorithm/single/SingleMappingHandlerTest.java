@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.smsd.SMSD;
+import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 import org.openscience.cdk.smsd.tools.MolHandler;
@@ -70,7 +70,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        instance.set(source, target);
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
         assertNotNull(instance.getFirstAtomMapping());
     }
 
@@ -89,7 +91,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        instance.set(source, target);
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
         assertNotNull(instance.getFirstAtomMapping());
     }
 
@@ -113,8 +117,8 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(target);
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(query, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(query, target, true, true);
         smsd1.setChemFilters(true, true, true);
         double score = 1.0;
         assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
@@ -132,13 +136,13 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         source.addAtom(atomSource);
         IMolecule target = new Molecule();
         target.addAtom(atomTarget);
-        MolHandler source1 = new MolHandler(source, true);
-        MolHandler target1 = new MolHandler(target, true);
+        MolHandler source1 = new MolHandler(source, true, true);
+        MolHandler target1 = new MolHandler(target, true, true);
 
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
         instance.set(source1, target1);
-        instance.searchMCS();
+        instance.searchMCS(true);
         assertNotNull(instance.getFirstAtomMapping());
     }
 
@@ -157,8 +161,10 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        instance.set(source, target);
-        instance.searchMCS();
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
+        instance.searchMCS(true);
         assertNotNull(instance.getAllMapping());
         assertEquals(1, instance.getAllMapping().size());
     }
@@ -177,8 +183,10 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        instance.set(source, target);
-        instance.searchMCS();
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
+        instance.searchMCS(true);
         assertNotNull(instance.getAllMapping());
     }
 
@@ -196,8 +204,10 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        instance.set(source, target);
-        instance.searchMCS();
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
+        instance.searchMCS(true);
         assertNotNull(instance.getFirstMapping());
     }
 
@@ -215,8 +225,10 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        instance.set(source, target);
-        instance.searchMCS();
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
+        instance.searchMCS(true);
         assertNotNull(instance.getAllAtomMapping());
     }
 
@@ -234,8 +246,10 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        instance.set(source, target);
-        instance.searchMCS();
+        MolHandler mol1 = new MolHandler(source, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        instance.set(mol1, mol2);
+        instance.searchMCS(true);
         assertNotNull(instance.getFirstAtomMapping());
     }
 }

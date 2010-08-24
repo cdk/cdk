@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,19 +28,22 @@ package org.openscience.cdk.smsd.tools;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
 //~--- non-JDK imports --------------------------------------------------------
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
-import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.smsd.labelling.CanonicalLabellingAdaptor;
+import org.openscience.cdk.smsd.labelling.ICanonicalMoleculeLabeller;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -54,30 +57,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class MolHandler {
 
     private IAtomContainer atomContainer = null;
-    private IAtomContainerSet fragmentMolSet = null;
     private boolean removeHydrogen = false;
-    private boolean connectedFlag = false;
-    private final static ILoggingTool Logger =
+    private final ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(MolHandler.class);
+    private ICanonicalMoleculeLabeller canonLabeler = new CanonicalLabellingAdaptor();
 
-    private void checkFragmentation() {
-
-        if (atomContainer.getAtomCount() > 0) {
-            connectedFlag = ConnectivityChecker.isConnected(atomContainer);
-        }
-        fragmentMolSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
-
-        if (!connectedFlag) {
-            fragmentMolSet.add(ConnectivityChecker.partitionIntoMolecules(atomContainer));
-            fragmentMolSet.setID(atomContainer.getID());
-
-        } else {
-            fragmentMolSet.addAtomContainer(atomContainer);
-            fragmentMolSet.setID(atomContainer.getID());
-        }
-    }
-
-    /** 
+    /**
      * Creates a new instance of MolHandler
      * @param MolFile atomContainer file name
      * @param cleanMolecule
@@ -85,72 +70,38 @@ public class MolHandler {
      *
      */
     @TestMethod("MolHandlerTest")
-    public MolHandler(String MolFile, boolean cleanMolecule, boolean removeHydrogen) {
+    public MolHandler(String MolFile, boolean removeHydrogen, boolean cleanMolecule) {
 
         MDLReader molRead = null;
         this.removeHydrogen = removeHydrogen;
         try {
-            FileInputStream readMolecule;
+            FileInputStream readMolecule = null;
 
             readMolecule = new FileInputStream(MolFile);
             molRead = new MDLReader(new InputStreamReader(readMolecule));
             this.atomContainer = (IMolecule) molRead.read(new Molecule());
-            if (cleanMolecule) {
-                MoleculeSanityCheck.fixAromaticity((IMolecule) atomContainer);
-            }
-            BondTools.makeUpDownBonds(atomContainer);
+            molRead.close();
+            readMolecule.close();
             /*Remove Hydrogen by Asad*/
             if (removeHydrogen) {
-                atomContainer = ExtAtomContainerManipulator.removeHydrogens(atomContainer);
+                atomContainer = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
             }
-            checkFragmentation();
-        } catch (IOException ex) {
-            Logger.error(Level.SEVERE, null, ex);
-        } catch (CDKException e) {
-            System.err.println(e);
-        } finally {
-        	if (molRead != null) {
-                try {
-                    molRead.close();
-                } catch (IOException ioe) {
-                    Logger.warn("Couldn't close molReader: ", ioe.getMessage());
-                    Logger.debug(ioe);
+            if (cleanMolecule) {
+
+                if (!isPseudoAtoms()) {
+                    atomContainer = canonLabeler.getCanonicalMolecule(atomContainer);
                 }
+                // percieve atoms, set valency etc
+                ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                //Add implicit Hydrogens
+                CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
+                adder.addImplicitHydrogens(atomContainer);
+                // figure out which atoms are in aromatic rings:
+                CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+                BondTools.makeUpDownBonds(atomContainer);
             }
-        }
-    }
-
-    /**
-     * Creates a new instance of MolHandler
-     * @param MolFile
-     * @param cleanMolecule
-     */
-    @TestMethod("MolHandlerTest")
-    public MolHandler(String MolFile, boolean cleanMolecule) {
-
-        MDLReader molRead = null;
-        this.removeHydrogen = false;
-
-
-        try {
-            FileInputStream ReadMolecule;
-
-            ReadMolecule = new FileInputStream(MolFile);
-            molRead = new MDLReader(new InputStreamReader(ReadMolecule));
-            this.atomContainer = (IMolecule) molRead.read(new Molecule());
-            if (cleanMolecule) {
-                MoleculeSanityCheck.fixAromaticity(atomContainer);
-            }
-            BondTools.makeUpDownBonds(atomContainer);
-            /*Remove Hydrogen by Asad*/
-            if (removeHydrogen) {
-                atomContainer = ExtAtomContainerManipulator.removeHydrogens(atomContainer);
-            }
-
-            checkFragmentation();
-
         } catch (IOException ex) {
-            Logger.error(Level.SEVERE, null, ex);
+            logger.debug(ex);
         } catch (CDKException e) {
             System.err.println(e);
         } finally {
@@ -158,8 +109,8 @@ public class MolHandler {
                 try {
                     molRead.close();
                 } catch (IOException ioe) {
-                    Logger.warn("Couldn't close molReader: ", ioe.getMessage());
-                    Logger.debug(ioe);
+                    logger.warn("Couldn't close molReader: ", ioe.getMessage());
+                    logger.debug(ioe);
                 }
             }
         }
@@ -172,57 +123,37 @@ public class MolHandler {
      * @param removeHydrogen
      */
     @TestMethod("MolHandlerTest")
-    public MolHandler(IAtomContainer container, boolean cleanMolecule, boolean removeHydrogen) {
-
+    public MolHandler(IAtomContainer container, boolean removeHydrogen, boolean cleanMolecule) {
         String molID = container.getID();
         this.removeHydrogen = removeHydrogen;
         this.atomContainer = container;
-        if (cleanMolecule) {
-            MoleculeSanityCheck.fixAromaticity(atomContainer);
-        }  /*Hydrogen are always removed for this container before mapping*/
-
         if (removeHydrogen) {
             try {
                 this.atomContainer = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
-                atomContainer.setID(molID);
             } catch (Exception ex) {
-                Logger.error(Level.SEVERE, null, ex);
+                logger.error(ex);
             }
-
         } else {
             this.atomContainer = container.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-            atomContainer.setID(molID);
         }
-        checkFragmentation();
-    }
 
-    /**
-     * Creates a new instance of MolHandler
-     * @param container
-     * @param cleanMolecule
-     */
-    @TestMethod("MolHandlerTest")
-    public MolHandler(IAtomContainer container, boolean cleanMolecule) {
-
-        String molID = container.getID();
-        this.removeHydrogen = false;
-        this.atomContainer = container;
         if (cleanMolecule) {
-            MoleculeSanityCheck.fixAromaticity(atomContainer);
-        }  /*Hydrogen are always removed for this container before mapping*/
-
-        if (removeHydrogen) {
             try {
-                this.atomContainer = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
-                atomContainer.setID(molID);
-            } catch (Exception ex) {
-                Logger.error(Level.SEVERE, null, ex);
+                if (!isPseudoAtoms()) {
+                    atomContainer = canonLabeler.getCanonicalMolecule(atomContainer);
+                }
+                // percieve atoms, set valency etc
+                ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                //Add implicit Hydrogens
+                CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
+                adder.addImplicitHydrogens(atomContainer);
+                // figure out which atoms are in aromatic rings:
+                CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+            } catch (CDKException ex) {
+                logger.error(ex);
             }
-        } else {
-            this.atomContainer = container.getBuilder().newInstance(IAtomContainer.class, atomContainer);
-            atomContainer.setID(molID);
         }
-        checkFragmentation();
+        atomContainer.setID(molID);
     }
 
     /**
@@ -243,21 +174,12 @@ public class MolHandler {
         return removeHydrogen;
     }
 
-    /**
-     * Returns Fragmented container if getConnectedFlag was false
-     * @return AtomContainer Set
-     */
-    @TestMethod("testGetFragmentedMolecule")
-    public IAtomContainerSet getFragmentedMolecule() {
-        return this.fragmentMolSet;
-    }
-
-    /**
-     * Returns true is container is not fragmented else false
-     * @return true is atomContainer is connected else false
-     */
-    @TestMethod("testGetConnectedFlag")
-    public boolean getConnectedFlag() {
-        return this.connectedFlag;
+    private boolean isPseudoAtoms() {
+        for (IAtom atoms : atomContainer.atoms()) {
+            if (atoms instanceof IPseudoAtom || atoms instanceof PseudoAtom) {
+                return true;
+            }
+        }
+        return false;
     }
 }

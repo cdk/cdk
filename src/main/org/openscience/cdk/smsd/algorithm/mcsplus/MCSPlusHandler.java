@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,7 +23,6 @@
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,12 +33,12 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.filters.PostFilter;
 import org.openscience.cdk.smsd.helper.FinalMappings;
-import org.openscience.cdk.smsd.tools.MolHandler;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
+import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * This class acts as a handler class for MCSPlus algorithm.
@@ -75,80 +74,39 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param target
      */
     @Override
-    @TestMethod("testSet_IAtomContainer_IAtomContainer")
-    public void set(IAtomContainer source, IAtomContainer target) {
-
-        IAtomContainer mol1 = source;
-        IAtomContainer mol2 = target;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-
-        set(Reactant, Product);
-
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param source
-     * @param target
-     */
-    @TestMethod("testSet_IMolecule_IMolecule")
-    @Override
-    public void set(IMolecule source, IMolecule target) throws CDKException {
-
-        IMolecule mol1 = source;
-        IMolecule mol2 = target;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-
-        set(Reactant, Product);
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param sourceMolFileName
-     * @param targetMolFileName
-     */
-    @Override
-    @TestMethod("testSet_String_String")
-    public void set(String sourceMolFileName, String targetMolFileName) {
-
-        String mol1 = sourceMolFileName;
-        String mol2 = targetMolFileName;
-
-        MolHandler Reactant = new MolHandler(mol1, false);
-        MolHandler Product = new MolHandler(mol2, false);
-        set(Reactant, Product);
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param source
-     * @param target
-     */
-    @Override
     @TestMethod("testSet_MolHandler_MolHandler")
-    public void set(MolHandler source, MolHandler target) {
+    public synchronized void set(MolHandler source, MolHandler target) {
         this.source = source.getMolecule();
         this.target = target.getMolecule();
     }
 
     /** {@inheritDoc}
-     * Function is called by the main program and serves as a starting point for the comparision procedure.
      *
+     * @param source
+     * @param target
+     */
+    @Override
+    @TestMethod("testSet_IQueryAtomContainer_MolHandler")
+    public void set(IQueryAtomContainer source, IAtomContainer target) {
+        this.source = source;
+        this.target = target;
+    }
+
+    /** {@inheritDoc}
+     * Function is called by the main program and serves as a starting point for the comparison procedure.
+     *
+     * @param shouldMatchBonds 
      */
     @Override
     @TestMethod("testSearchMCS")
-    public void searchMCS() {
+    public synchronized void searchMCS(boolean shouldMatchBonds) {
         List<List<Integer>> mappings = null;
         try {
-            if (source.getAtomCount() > target.getAtomCount()) {
-                mappings = new MCSPlus().getOverlaps(source, target);
+            if (source.getAtomCount() >= target.getAtomCount()) {
+                mappings = new MCSPlus().getOverlaps(source, target, shouldMatchBonds);
             } else {
                 flagExchange = true;
-                mappings = new MCSPlus().getOverlaps(target, source);
+                mappings = new MCSPlus().getOverlaps(target, source, shouldMatchBonds);
             }
             PostFilter.filter(mappings);
             setAllMapping();
@@ -160,7 +118,7 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
         }
     }
 
-    private final void setAllMapping() {
+    private synchronized void setAllMapping() {
         try {
 
             List<Map<Integer, Integer>> final_solution = FinalMappings.getInstance().getFinalMapping();
@@ -186,8 +144,7 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     }
 
-    private final synchronized void setAllAtomMapping() {
-
+    private synchronized void setAllAtomMapping() {
         try {
 
             int counter = 0;
@@ -200,14 +157,7 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
                     IAtom sourceAtom = null;
                     IAtom targetAtom = null;
-//
-//                    if (!flagExchange) {
-//                        sourceAtom = source.getAtom(IIndex);
-//                        targetAtom = target.getAtom(JIndex);
-//                    } else {
-//                        sourceAtom = source.getAtom(JIndex);
-//                        targetAtom = target.getAtom(IIndex);
-//                    }
+
                     sourceAtom = source.getAtom(IIndex);
                     targetAtom = target.getAtom(JIndex);
                     atomMappings.put(sourceAtom, targetAtom);
@@ -236,31 +186,31 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      */
     @Override
     @TestMethod("testSearchMCS")
-    public List<Map<Integer, Integer>> getAllMapping() {
-        return Collections.unmodifiableList(allMCS);
+    public synchronized List<Map<Integer, Integer>> getAllMapping() {
+        return allMCS;
     }
 
     /** {@inheritDoc}
      */
     @Override
     @TestMethod("testSearchMCS")
-    public Map<Integer, Integer> getFirstMapping() {
-        return Collections.unmodifiableMap(firstMCS);
+    public synchronized Map<Integer, Integer> getFirstMapping() {
+        return firstMCS;
     }
 
     /** {@inheritDoc}
      */
     @Override
     @TestMethod("testSearchMCS")
-    public List<Map<IAtom, IAtom>> getAllAtomMapping() {
-        return Collections.unmodifiableList(allAtomMCS);
+    public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
+        return allAtomMCS;
     }
 
     /** {@inheritDoc}
      */
     @Override
     @TestMethod("testSearchMCS")
-    public Map<IAtom, IAtom> getFirstAtomMapping() {
-        return Collections.unmodifiableMap(atomsMCS);
+    public synchronized Map<IAtom, IAtom> getFirstAtomMapping() {
+        return atomsMCS;
     }
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.atomContainer.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -31,11 +31,7 @@ import java.util.List;
 import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -44,8 +40,11 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
@@ -56,7 +55,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * Class that handles some cutomised features for SMSD atomcontainers.
+ * Class that handles some customised features for SMSD atom containers.
  * <p>This is an extension of CDK AtomContainer.
  * Some part of this code was taken from CDK source code and modified.</p>
  *

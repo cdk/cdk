@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,7 +35,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class ExactMapping {
 
@@ -73,9 +72,8 @@ public class ExactMapping {
      * @param clique_List_org
      * @return
      */
-    protected static List<List<Integer>> extractMapping(List<List<Integer>> _mappings, List<Integer> comp_graph_nodes,
+    public static List<List<Integer>> extractMapping(List<List<Integer>> _mappings, List<Integer> comp_graph_nodes,
             List<Integer> clique_List_org) {
-
         try {
             List<Integer> clique_List = extractCliqueMapping(comp_graph_nodes, clique_List_org);
             _mappings.add(clique_List);

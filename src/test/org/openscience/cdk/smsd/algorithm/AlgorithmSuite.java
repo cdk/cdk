@@ -1,5 +1,5 @@
 
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -41,7 +41,7 @@ import org.junit.runners.Suite;
     org.openscience.cdk.smsd.algorithm.vflib.VflibSuite.class,
     org.openscience.cdk.smsd.algorithm.mcsplus.McsplusSuite.class,
     //        org.openscience.cdk.smsd.algorithm.mcgregor.McgregorSuite.class,
-    org.openscience.cdk.smsd.algorithm.cdk.CdkSuite.class
+    org.openscience.cdk.smsd.algorithm.rgraph.CdkSuite.class
 })
 public class AlgorithmSuite {
 

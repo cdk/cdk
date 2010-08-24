@@ -1,4 +1,4 @@
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,15 +26,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.smsd.global.BondType;
 import org.openscience.cdk.smsd.helper.BinaryTree;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
 
 /**
  * Class to perform check/methods for McGregor class.
@@ -44,8 +44,6 @@ import org.openscience.cdk.smsd.helper.BinaryTree;
  */
 @TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.McGregorChecksTest")
 public class McGregorChecks {
-
-    private static boolean bondTypeFlag = BondType.getInstance().isBondSensitive();
 
     /**
      *
@@ -57,6 +55,7 @@ public class McGregorChecks {
      * @param i_bond_neighbor_atoms_B
      * @param cBondNeighborsA
      * @param cBondNeighborsB
+     * @param shouldMatchBonds 
      * @return
      */
     protected static boolean isFurtherMappingPossible(
@@ -67,7 +66,8 @@ public class McGregorChecks {
             List<Integer> i_bond_neighbor_atoms_A,
             List<Integer> i_bond_neighbor_atoms_B,
             List<String> cBondNeighborsA,
-            List<String> cBondNeighborsB) {
+            List<String> cBondNeighborsB,
+            boolean shouldMatchBonds) {
 
         for (int row = 0; row < neighborBondNumA; row++) {
 //            System.out.println("i " + row);
@@ -92,13 +92,13 @@ public class McGregorChecks {
 
                         IAtom R1_A = source.getAtom(Index_I);
                         IAtom R2_A = source.getAtom(Index_IPlus1);
-                        IBond ReactantBond = source.getBond(R1_A, R2_A);
+                        IBond reactantBond = source.getBond(R1_A, R2_A);
 
                         IAtom P1_B = target.getAtom(Index_J);
                         IAtom P2_B = target.getAtom(Index_JPlus1);
-                        IBond ProductBond = target.getBond(P1_B, P2_B);
+                        IBond productBond = target.getBond(P1_B, P2_B);
 
-                        if (matches(ReactantBond, ProductBond)) {
+                        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
                             return true;
                         }
                     } catch (Exception e) {
@@ -111,70 +111,43 @@ public class McGregorChecks {
         return false;
     }
 
-    /**
-     *
-     * @param ReactantBond
-     * @param ProductBond
-     * @return
-     */
-    protected static boolean matches(IBond ReactantBond, IBond ProductBond) {
-        if (bondTypeFlag) {
-            return bondMatch(ReactantBond, ProductBond);
-        } else if (ReactantBond != null && ProductBond != null) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     *
-     * @param queryBond
-     * @param targetBond
-     * @return
-     */
-    private static boolean bondMatch(IBond queryBond, IBond targetBond) {
+    protected static boolean isMatchFeasible(IAtomContainer ac1,
+            IBond bondA1,
+            IAtomContainer ac2,
+            IBond bondA2,
+            boolean shouldMatchBonds) {
 
-        if (targetBond instanceof IQueryBond && queryBond instanceof IBond) {
-            IQueryBond bond = (IQueryBond) targetBond;
-            IQueryAtom atom1 = (IQueryAtom) (targetBond.getAtom(0));
-            IQueryAtom atom2 = (IQueryAtom) (targetBond.getAtom(1));
-            if (bond.matches(queryBond)) {
+        if (ac1 instanceof IQueryAtomContainer) {
+            if (((IQueryBond) bondA1).matches(bondA2)) {
+                IQueryAtom atom1 = (IQueryAtom) (bondA1.getAtom(0));
+                IQueryAtom atom2 = (IQueryAtom) (bondA1.getAtom(1));
                 // ok, bonds match
-                if (atom1.matches(queryBond.getAtom(0)) && atom2.matches(queryBond.getAtom(1))
-                        || atom1.matches(queryBond.getAtom(1)) && atom2.matches(queryBond.getAtom(0))) {
+                if (atom1.matches(bondA2.getAtom(0)) && atom2.matches(bondA2.getAtom(1))
+                        || atom1.matches(bondA2.getAtom(1)) && atom2.matches(bondA2.getAtom(0))) {
                     // ok, atoms match in either order
                     return true;
                 }
+                return false;
             }
-        } else if (queryBond instanceof IQueryBond && targetBond instanceof IBond) {
-            IQueryBond bond = (IQueryBond) queryBond;
-            IQueryAtom atom1 = (IQueryAtom) (queryBond.getAtom(0));
-            IQueryAtom atom2 = (IQueryAtom) (queryBond.getAtom(1));
-            if (bond.matches(targetBond)) {
-                // ok, bonds match
-                if (atom1.matches(targetBond.getAtom(0)) && atom2.matches(targetBond.getAtom(1))
-                        || atom1.matches(targetBond.getAtom(1)) && atom2.matches(targetBond.getAtom(0))) {
-                    // ok, atoms match in either order
-                    return true;
-                }
-            }
+            return false;
         } else {
 
-            int ReactantBondType = queryBond.getOrder().ordinal();
-            int ProductBondType = targetBond.getOrder().ordinal();
+            //Bond Matcher
+            org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher bondMatcher =
+                    new org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+            //Atom Matcher
+            org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher1 =
+                    new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+            //Atom Matcher
+            org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher2 =
+                    new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
 
-
-            if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
-                    && (ReactantBondType == ProductBondType)) {
+            if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
+                    && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {
                 return true;
             }
-
-            if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
-                return true;
-            }
-
+            return false;
         }
-        return false;
     }
 
     /**
@@ -332,8 +305,26 @@ public class McGregorChecks {
             cTabCopy.add("X");
             cTabCopy.add("X");
         }
-
         return cTabCopy;
+    }
+
+    /**
+     *
+     * @param atomContainer
+     * @return
+     * @throws IOException
+     */
+    protected static List<String> generateCTabCopy(IAtomContainer atomContainer) throws IOException {
+        List<String> c_tab_copy = new ArrayList<String>();
+        for (int a = 0; a < atomContainer.getBondCount(); a++) {
+            String AtomI = atomContainer.getBond(a).getAtom(0).getSymbol();
+            String AtomJ = atomContainer.getBond(a).getAtom(1).getSymbol();
+            c_tab_copy.add(AtomI);
+            c_tab_copy.add(AtomJ);
+            c_tab_copy.add("X");
+            c_tab_copy.add("X");
+        }
+        return c_tab_copy;
     }
 
     /**
@@ -443,6 +434,7 @@ public class McGregorChecks {
      * @param cBondNeighborsA
      * @param cBondNeighborsB
      * @param modifiedARCS
+     * @param shouldMatchBonds 
      * @return
      */
     protected static List<Integer> setArcs(IAtomContainer source,
@@ -453,7 +445,8 @@ public class McGregorChecks {
             List<Integer> i_bond_neighbor_atoms_B,
             List<String> cBondNeighborsA,
             List<String> cBondNeighborsB,
-            List<Integer> modifiedARCS) {
+            List<Integer> modifiedARCS,
+            boolean shouldMatchBonds) {
 
         for (int row = 0; row < neighborBondNumA; row++) {
             for (int column = 0; column < neighborBondNumB; column++) {
@@ -472,41 +465,21 @@ public class McGregorChecks {
 
                     IAtom R1_A = source.getAtom(Index_I);
                     IAtom R2_A = source.getAtom(Index_IPlus1);
-                    IBond ReactantBond = source.getBond(R1_A, R2_A);
+                    IBond reactantBond = source.getBond(R1_A, R2_A);
 
                     int Index_J = i_bond_neighbor_atoms_B.get(column * 3 + 0);
                     int Index_JPlus1 = i_bond_neighbor_atoms_B.get(column * 3 + 1);
 
                     IAtom P1_B = target.getAtom(Index_J);
                     IAtom P2_B = target.getAtom(Index_JPlus1);
-                    IBond ProductBond = target.getBond(P1_B, P2_B);
-                    if (matches(ReactantBond, ProductBond)) {
+                    IBond productBond = target.getBond(P1_B, P2_B);
+                    if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
                         modifiedARCS.set(row * neighborBondNumB + column, 1);
                     }
                 }
             }
         }
         return modifiedARCS;
-    }
-
-    /**
-     *
-     * @param atomContainer
-     * @return
-     * @throws IOException
-     */
-    protected static List<String> generateCTabCopy(IAtomContainer atomContainer) throws IOException {
-        List<String> c_tab_copy = new ArrayList<String>();
-        for (int a = 0; a < atomContainer.getBondCount(); a++) {
-            String AtomI = atomContainer.getBond(a).getAtom(0).getSymbol();
-            String AtomJ = atomContainer.getBond(a).getAtom(1).getSymbol();
-            c_tab_copy.add(AtomI);
-            c_tab_copy.add(AtomJ);
-            c_tab_copy.add("X");
-            c_tab_copy.add("X");
-        }
-
-        return c_tab_copy;
     }
 
     /**
@@ -590,7 +563,8 @@ public class McGregorChecks {
         return 0;
     }
 
-    static boolean isFurtherMappingPossible(IAtomContainer source, IAtomContainer target, McgregorHelper mcGregorHelper) {
+    static boolean isFurtherMappingPossible(IAtomContainer source, IAtomContainer target,
+            McgregorHelper mcGregorHelper, boolean shouldMatchBonds) {
 
         int neighborBondNumA = mcGregorHelper.getNeighborBondNumA();
         int neighborBondNumB = mcGregorHelper.getNeighborBondNumB();
@@ -621,15 +595,15 @@ public class McGregorChecks {
                         int Index_J = iBondNeighborAtomsB.get(column * 3 + 0);
                         int Index_JPlus1 = iBondNeighborAtomsB.get(column * 3 + 1);
 
-                        IAtom R1_A = source.getAtom(Index_I);
-                        IAtom R2_A = source.getAtom(Index_IPlus1);
-                        IBond ReactantBond = source.getBond(R1_A, R2_A);
+                        IAtom r1_A = source.getAtom(Index_I);
+                        IAtom r2_A = source.getAtom(Index_IPlus1);
+                        IBond reactantBond = source.getBond(r1_A, r2_A);
 
-                        IAtom P1_B = target.getAtom(Index_J);
-                        IAtom P2_B = target.getAtom(Index_JPlus1);
-                        IBond ProductBond = target.getBond(P1_B, P2_B);
+                        IAtom p1_B = target.getAtom(Index_J);
+                        IAtom p2_B = target.getAtom(Index_JPlus1);
+                        IBond productBond = target.getBond(p1_B, p2_B);
 
-                        if (matches(ReactantBond, ProductBond)) {
+                        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
                             return true;
                         }
                     } catch (Exception e) {
@@ -650,24 +624,13 @@ public class McGregorChecks {
 
         for (int a = 0; a < container.getAtomCount(); a++) {
             //Atomic list are only numbers from 1 to atom_number1
-
-            if (flag) {
-                for (Integer key : present_Mapping.keySet()) {
-                    if (key == a) {
-                        atom_is_unmapped = false;
-                    }
-                }
-            } else {
-                for (Integer value : present_Mapping.values()) {
-                    if (value == a) {
-                        atom_is_unmapped = false;
-                    }
-                }
+            if (flag && present_Mapping.containsKey(a)) {
+                atom_is_unmapped = false;
+            } else if (!flag && present_Mapping.containsValue(a)) {
+                atom_is_unmapped = false;
             }
-
             if (atom_is_unmapped) {
-                unmappedMolAtoms.add(unmapped_num, a);
-                unmapped_num++;
+                unmappedMolAtoms.add(unmapped_num++, a);
             }
             atom_is_unmapped = true;
         }
@@ -678,20 +641,16 @@ public class McGregorChecks {
         List<Integer> unmappedMolAtoms = new ArrayList<Integer>();
         int unmapped_num = 0;
         boolean atom_is_unmapped = true;
-
-//        System.out.println("Mapped Atoms: " + mappedAtoms);
-
         for (int a = 0; a < source.getAtomCount(); a++) {
             //Atomic list are only numbers from 1 to atom_number1
-
-            for (int b = 0; b < clique_siz; b++) {
-                //the number of nodes == number of assigned pairs
-                if ((flag && mapped_atoms.get(b * 2) == a)
-                        || (!flag && mapped_atoms.get(b * 2 + 1) == a)) {
+            for (int b = 0; b < clique_siz; b += 2) {
+                if (flag && mapped_atoms.get(b) == a) {
+                    atom_is_unmapped = false;
+                } else if (!flag && mapped_atoms.get(b + 1) == a) {
                     atom_is_unmapped = false;
                 }
             }
-            if (atom_is_unmapped == true) {
+            if (atom_is_unmapped) {
                 unmappedMolAtoms.add(unmapped_num++, a);
             }
             atom_is_unmapped = true;

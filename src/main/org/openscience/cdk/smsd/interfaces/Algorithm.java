@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,6 +35,7 @@ import org.openscience.cdk.annotations.TestClass;
  * <lI>2: VFLibMCS,
  * <lI>3: CDKMCS,
  * <lI>4: SubStructure
+ * <lI>5: TurboSubStructure
  * </OL>
  *
  * @cdk.module smsd
@@ -61,13 +62,13 @@ public enum Algorithm {
      */
     CDKMCS(3, "CDK UIT MCS"),
     /**
-     * Turbo Mode based MCS search.
+     * Substructure search will return all maps.
      */
-    TURBOMCS(4, "Turbo Mode based MCS search"),
+    SubStructure(4, "Substructure search"),
     /**
-     * Turbo Mode based Substructure search.
+     * Substructure search will return first map.
      */
-    SubStructure(5, "Turbo Mode based Substructure search");
+    TurboSubStructure(5, "Turbo Mode- Substructure search");
     private final int type;
     private final String description;
 

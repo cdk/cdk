@@ -1,4 +1,4 @@
-/* Copyright (C) 2009-2010 Syed Asad Rahman {asad@ebi.ac.uk}
+/* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -68,8 +68,8 @@ public class SMSDBondInsensitiveTest {
 
     @Test
     public void testVFLib() throws Exception {
-        SMSD sbf = new SMSD(Algorithm.SubStructure, false);
-        sbf.init(Benzene, Benzene, true);
+        Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, false);
+        sbf.init(Benzene, Benzene, true, true);
         sbf.setChemFilters(true, true, true);
         Assert.assertEquals(true, sbf.isSubgraph());
 
@@ -77,16 +77,16 @@ public class SMSDBondInsensitiveTest {
 
     @Test
     public void testSubgraph() throws Exception {
-        SMSD sbf = new SMSD(Algorithm.SubStructure, false);
-        sbf.init(Benzene, Benzene, true);
+        Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, false);
+        sbf.init(Benzene, Benzene, true, true);
         sbf.setChemFilters(false, false, false);
         Assert.assertEquals(true, sbf.isSubgraph());
     }
 
     @Test
     public void testCDKMCS() throws Exception {
-        SMSD ebimcs = new SMSD(Algorithm.CDKMCS, false);
-        ebimcs.init(Cyclohexane, Benzene, true);
+        Isomorphism ebimcs = new Isomorphism(Algorithm.CDKMCS, false);
+        ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
         Assert.assertEquals(6, ebimcs.getFirstMapping().size());
         Assert.assertEquals(true, ebimcs.isSubgraph());
@@ -95,16 +95,16 @@ public class SMSDBondInsensitiveTest {
     @Test
     public void testMCSPlus() throws Exception {
         //TO DO fix me this error
-        SMSD ebimcs = new SMSD(Algorithm.MCSPlus, false);
-        ebimcs.init(Cyclohexane, Benzene, true);
+        Isomorphism ebimcs = new Isomorphism(Algorithm.MCSPlus, false);
+        ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
         Assert.assertEquals(true, ebimcs.isSubgraph());
     }
 
     @Test
     public void testSMSD() throws Exception {
-        SMSD ebimcs = new SMSD(Algorithm.DEFAULT, false);
-        ebimcs.init(Cyclohexane, Benzene, true);
+        Isomorphism ebimcs = new Isomorphism(Algorithm.DEFAULT, false);
+        ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
         Assert.assertEquals(6, ebimcs.getFirstMapping().size());
     }
@@ -112,29 +112,29 @@ public class SMSDBondInsensitiveTest {
     @Test
     public void testSMSDCyclohexaneBenzeneSubgraph() throws Exception {
 
-        SMSD ebimcs1 = new SMSD(Algorithm.SubStructure, false);
-        ebimcs1.init(Cyclohexane, Benzene, true);
+        Isomorphism ebimcs1 = new Isomorphism(Algorithm.SubStructure, false);
+        ebimcs1.init(Cyclohexane, Benzene, true, true);
         ebimcs1.setChemFilters(true, true, true);
         Assert.assertEquals(true, ebimcs1.isSubgraph());
     }
 
     @Test
     public void testSMSDBondInSensitive() throws Exception {
-        SMSD ebimcs1 = new SMSD(Algorithm.DEFAULT, false);
-        ebimcs1.init(Cyclohexane, Benzene, true);
+        Isomorphism ebimcs1 = new Isomorphism(Algorithm.DEFAULT, false);
+        ebimcs1.init(Cyclohexane, Benzene, true, true);
         ebimcs1.setChemFilters(true, true, true);
         Assert.assertEquals(6, ebimcs1.getFirstAtomMapping().size());
 
-        SMSD ebimcs2 = new SMSD(Algorithm.DEFAULT, false);
-        ebimcs2.init(Benzene, Napthalene, true);
+        Isomorphism ebimcs2 = new Isomorphism(Algorithm.DEFAULT, false);
+        ebimcs2.init(Benzene, Napthalene, true, true);
         ebimcs2.setChemFilters(true, true, true);
         Assert.assertEquals(6, ebimcs2.getFirstAtomMapping().size());
     }
 
     @Test
     public void testSMSDChemicalFilters() throws Exception {
-        SMSD ebimcs = new SMSD(Algorithm.DEFAULT, false);
-        ebimcs.init(Cyclohexane, Benzene, true);
+        Isomorphism ebimcs = new Isomorphism(Algorithm.DEFAULT, false);
+        ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
         Assert.assertEquals(12, ebimcs.getAllMapping().size());
         Assert.assertEquals(true, ebimcs.isSubgraph());
@@ -162,15 +162,13 @@ public class SMSDBondInsensitiveTest {
 
 
 //	Calling the main algorithm to perform MCS cearch
-        SMSD comparison = new SMSD(Algorithm.DEFAULT, bondSensitive);
-        comparison.init(source, target, removeHydrogen);
+        Isomorphism comparison = new Isomorphism(Algorithm.SubStructure, bondSensitive);
+        comparison.init(source, target, removeHydrogen, true);
         comparison.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
 
 //        Cyclopropane is not a subgraph of Isobutane
         Assert.assertEquals(false, comparison.isSubgraph());
-        Assert.assertEquals(new Double(0.75), new Double(comparison.getTanimotoSimilarity()));
-        Assert.assertEquals(3, comparison.getFirstMapping().size());
-        Assert.assertEquals(6, comparison.getAllMapping().size());
+        Assert.assertEquals(new Double(0.625), new Double(comparison.getTanimotoSimilarity()));
     }
 
     @Test
@@ -178,7 +176,6 @@ public class SMSDBondInsensitiveTest {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C");
-        QueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
 
         IMolecule mol2 = create4Toluene();
 
@@ -191,8 +188,8 @@ public class SMSDBondInsensitiveTest {
         boolean fragmentMinimization = false;
         boolean energyMinimization = false;
 
-        SMSD comparison = new SMSD(Algorithm.DEFAULT, bondSensitive);
-        comparison.init(query, mol2, removeHydrogen);
+        Isomorphism comparison = new Isomorphism(Algorithm.DEFAULT, bondSensitive);
+        comparison.init(atomContainer, mol2, removeHydrogen, true);
         comparison.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
 
         Assert.assertEquals(true, comparison.isSubgraph());
@@ -231,8 +228,8 @@ public class SMSDBondInsensitiveTest {
         boolean fragmentMinimization = true;
         boolean energyMinimization = true;
 
-        SMSD comparison = new SMSD(Algorithm.DEFAULT, bondSensitive);
-        comparison.init(source, target, removeHydrogen);
+        Isomorphism comparison = new Isomorphism(Algorithm.DEFAULT, bondSensitive);
+        comparison.init(source, target, removeHydrogen, true);
         comparison.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
 
 

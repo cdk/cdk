@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smsd.SMSD;
+import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 import org.openscience.cdk.smsd.tools.MolHandler;
@@ -70,8 +70,10 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
             IAtomContainer queryac = null;
             queryac = sp.parseSmiles("Nc1ccccc1");
             MCSPlusHandler smsd1 = new MCSPlusHandler();
-            smsd1.set(queryac, target);
-            smsd1.searchMCS();
+            MolHandler mol1 = new MolHandler(queryac, true, true);
+            MolHandler mol2 = new MolHandler(target, true, true);
+            smsd1.set(mol1, mol2);
+            smsd1.searchMCS(true);
             assertNotNull(smsd1.getFirstMapping());
         } catch (InvalidSmilesException ex) {
             Logger.getLogger(MCSPlusHandlerTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,8 +92,10 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
     }
@@ -108,8 +112,10 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         IMolecule queryac = sp.parseSmiles("Nc1ccccc1");
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
     }
 
@@ -133,8 +139,8 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(target);
 
-        SMSD smsd1 = new SMSD(Algorithm.DEFAULT, true);
-        smsd1.init(query, target, true);
+        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
+        smsd1.init(query, target, true, true);
         smsd1.setChemFilters(true, true, true);
         double score = 1.0;
         assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
@@ -151,11 +157,11 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
         IAtomContainer target1 = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-        MolHandler source = new MolHandler(queryac, true);
-        MolHandler target = new MolHandler(target1, true);
+        MolHandler source = new MolHandler(queryac, true, true);
+        MolHandler target = new MolHandler(target1, true, true);
         MCSPlusHandler instance = new MCSPlusHandler();
         instance.set(source, target);
-        instance.searchMCS();
+        instance.searchMCS(true);
         assertNotNull(instance.getFirstMapping());
     }
 
@@ -171,8 +177,10 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(4, smsd1.getAllAtomMapping().size());
@@ -190,8 +198,10 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(4, smsd1.getAllMapping().size());
@@ -209,8 +219,10 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(7, smsd1.getFirstAtomMapping().size());
@@ -228,8 +240,10 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
-        smsd1.set(queryac, target);
-        smsd1.searchMCS();
+        MolHandler mol1 = new MolHandler(queryac, true, true);
+        MolHandler mol2 = new MolHandler(target, true, true);
+        smsd1.set(mol1, mol2);
+        smsd1.searchMCS(true);
         assertNotNull(smsd1.getFirstMapping());
 
         assertEquals(7, smsd1.getFirstMapping().size());

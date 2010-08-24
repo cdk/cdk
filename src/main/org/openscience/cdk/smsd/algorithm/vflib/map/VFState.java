@@ -1,7 +1,7 @@
 /*
  *
  *
- * Copyright (C) 2009-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -55,14 +55,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
-import org.openscience.cdk.smsd.algorithm.vflib.validator.VFMatch;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMatch;
 
 /**
  * This class finds mapping states between query and target
@@ -75,40 +75,39 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class VFState implements IState {
 
-    private List<VFMatch> candidates;
+    private List<IMatch> candidates;
     private IQuery query;
     private IAtomContainer target;
     private List<INode> queryPath;
     private List<IAtom> targetPath;
     private Map<INode, IAtom> map;
-    private int targetAtomCount = 0;
 
     /**
-     * Initialise the VFstate with query and target
-     * @param query query
-     * @param target molecule
+     * Initialise the VFState with query and target
+     * @param query
+     * @param target
      */
     public VFState(IQuery query, IAtomContainer target) {
         this.map = new HashMap<INode, IAtom>();
         this.queryPath = new ArrayList<INode>();
         this.targetPath = new ArrayList<IAtom>();
-        this.targetAtomCount = target.getAtomCount();
 
         this.query = query;
         this.target = target;
-        candidates = new ArrayList<VFMatch>();
+        this.candidates = new ArrayList<IMatch>();
 
         loadRootCandidates();
     }
 
-    private VFState(VFState state, VFMatch match) {
-        candidates = new ArrayList<VFMatch>();
+    private VFState(VFState state, IMatch match) {
+        this.candidates = new ArrayList<IMatch>();
         this.queryPath = new ArrayList<INode>(state.queryPath);
         this.targetPath = new ArrayList<IAtom>(state.targetPath);
+
         this.map = state.map;
         this.query = state.query;
         this.target = state.target;
-        this.targetAtomCount = state.target.getAtomCount();
+
         map.put(match.getQueryNode(), match.getTargetAtom());
         queryPath.add(match.getQueryNode());
         targetPath.add(match.getTargetAtom());
@@ -124,17 +123,13 @@ public class VFState implements IState {
             map.clear();
             return;
         }
-
         if (isHeadMapped()) {
             return;
         }
-
         map.clear();
-
         for (int i = 0; i < queryPath.size() - 1; i++) {
             map.put(queryPath.get(i), targetPath.get(i));
         }
-
     }
 
     /** {@inheritDoc}
@@ -155,7 +150,7 @@ public class VFState implements IState {
      */
     @Override
     public boolean isDead() {
-        return query.countNodes() > this.targetAtomCount;//target.getAtomCount();
+        return query.countNodes() > target.getAtomCount();
     }
 
     /** {@inheritDoc}
@@ -168,8 +163,9 @@ public class VFState implements IState {
     /** {@inheritDoc}
      */
     @Override
-    public boolean isMatchFeasible(VFMatch match) {
-        if (map.containsKey(match.getQueryNode()) || map.containsValue(match.getTargetAtom())) {
+    public boolean isMatchFeasible(IMatch match) {
+        if (map.containsKey(match.getQueryNode())
+                || map.containsValue(match.getTargetAtom())) {
             return false;
         }
 
@@ -187,36 +183,33 @@ public class VFState implements IState {
     /** {@inheritDoc}
      */
     @Override
-    public VFMatch nextCandidate() {
+    public IMatch nextCandidate() {
         return candidates.remove(candidates.size() - 1);
     }
 
     /** {@inheritDoc}
      */
     @Override
-    public IState nextState(VFMatch match) {
+    public IState nextState(IMatch match) {
         return new VFState(this, match);
     }
 
     private void loadRootCandidates() {
         for (int i = 0; i < query.countNodes(); i++) {
             for (int j = 0; j < target.getAtomCount(); j++) {
-                VFMatch match = new VFMatch(query.getNode(i), target.getAtom(j));
+                IMatch match = new IMatch(query.getNode(i), target.getAtom(j));
                 candidates.add(match);
             }
         }
-
-
     }
 
-    private void loadCandidates(VFMatch lastMatch) {
+//@TODO Asad Check the Neighbour count
+    private void loadCandidates(IMatch lastMatch) {
         IAtom atom = lastMatch.getTargetAtom();
         List<IAtom> targetNeighbors = target.getConnectedAtomsList(atom);
-
-        for (INode node : lastMatch.getQueryNode().neighbors()) {
-            for (IAtom targetAtom : targetNeighbors) {
-                VFMatch match = new VFMatch(node, targetAtom);
-
+        for (INode q : lastMatch.getQueryNode().neighbors()) {
+            for (IAtom t : targetNeighbors) {
+                IMatch match = new IMatch(q, t);
                 if (candidateFeasible(match)) {
                     candidates.add(match);
                 }
@@ -224,26 +217,30 @@ public class VFState implements IState {
         }
     }
 
-    private boolean candidateFeasible(VFMatch candidate) {
+    private boolean candidateFeasible(IMatch candidate) {
         for (INode queryAtom : map.keySet()) {
             if (queryAtom.equals(candidate.getQueryNode())
                     || map.get(queryAtom).equals(candidate.getTargetAtom())) {
                 return false;
             }
         }
-
         return true;
     }
+    //This function is updated by Asad to include more matches
 
-    private boolean matchAtoms(VFMatch match) {
+    private boolean matchAtoms(IMatch match) {
         IAtom atom = match.getTargetAtom();
-        if (match.getQueryNode().countNeighbors() > target.getConnectedAtomsCount(atom)) {
+        int virtualHydrogenCount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount().intValue();
+
+        if (match.getQueryNode().countNeighbors() > (target.getConnectedAtomsCount(atom)
+                + virtualHydrogenCount)) {
+
             return false;
         }
-        return match.getQueryNode().getAtomMatcher().matches(atom);
+        return match.getQueryNode().getAtomMatcher().matches(target, atom);
     }
 
-    private boolean matchBonds(VFMatch match) {
+    private boolean matchBonds(IMatch match) {
         if (queryPath.isEmpty()) {
             return true;
         }
@@ -255,47 +252,22 @@ public class VFState implements IState {
         for (int i = 0; i < queryPath.size() - 1; i++) {
             IEdge queryBond = query.getEdge(queryPath.get(i), match.getQueryNode());
             IBond targetBond = target.getBond(targetPath.get(i), match.getTargetAtom());
-//          return false else it keeps on searching, fixed by Asad
+//          return false (gets more solutions) else it keeps on searching, fixed by Asad
             if (queryBond == null) {
-                continue;
+                continue;//return false;
             }
-
             if (targetBond == null) {
                 return false;
             }
-
             if (!matchBond(queryBond, targetBond)) {
                 return false;
             }
         }
-
         return true;
     }
 
-    private boolean matchBondsToHead(VFMatch match) {
-        INode queryHead = getQueryPathHead();
-        IAtom targetHead = getTargetPathHead();
-
-        IEdge queryBond = query.getEdge(queryHead, match.getQueryNode());
-        IBond targetBond = target.getBond(targetHead, match.getTargetAtom());
-
-        if (queryBond == null || targetBond == null) {
-            return false;
-        }
-
-        return matchBond(queryBond, targetBond);
-    }
-
-    private INode getQueryPathHead() {
-        return queryPath.get(queryPath.size() - 1);
-    }
-
-    private IAtom getTargetPathHead() {
-        return targetPath.get(targetPath.size() - 1);
-    }
-
     private boolean matchBond(IEdge edge, IBond targetBond) {
-        return edge.getBondMatcher().matches(targetBond);
+        return edge.getBondMatcher().matches(target, targetBond);
     }
 
     private boolean isHeadMapped() {
@@ -305,7 +277,27 @@ public class VFState implements IState {
                 return false;
             }
         }
-
         return true;
+    }
+
+    private boolean matchBondsToHead(IMatch match) {
+        INode queryHead = getQueryPathHead();
+        IAtom targetHead = getTargetPathHead();
+
+        IEdge queryBond = query.getEdge(queryHead, match.getQueryNode());
+        IBond targetBond = target.getBond(targetHead, match.getTargetAtom());
+
+        if (queryBond == null || targetBond == null) {
+            return false;
+        }
+        return matchBond(queryBond, targetBond);
+    }
+
+    private INode getQueryPathHead() {
+        return queryPath.get(queryPath.size() - 1);
+    }
+
+    private IAtom getTargetPathHead() {
+        return targetPath.get(targetPath.size() - 1);
     }
 }
