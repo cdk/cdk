@@ -549,7 +549,7 @@ public class SmilesParser {
 		// first, the two char elements
 		if (pos < s.length() - 1)
 		{
-			String possibleSymbol = s.substring(pos, pos + 2);
+            String possibleSymbol = ("" + s.charAt(pos)).toUpperCase() + s.charAt(pos + 1);
 			logger.debug("possibleSymbol: ", possibleSymbol);
 			if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
 					("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
