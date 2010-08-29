@@ -70,7 +70,7 @@ public class MDLCMLRoundtripTest extends CDKTestCase {
         IChemFile file = (IChemFile)cmlreader.read(new org.openscience.cdk.ChemFile());
         //And finally write as mol
         StringWriter writermdl = new StringWriter();
-        MDLWriter mdlWriter = new MDLWriter(writermdl);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writermdl);
         mdlWriter.write(file);
         String output = writermdl.toString();
         //if there would be 3 instances (as in the bug), the only instance wouldnt't be right at the end

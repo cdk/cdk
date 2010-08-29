@@ -69,7 +69,7 @@ public class MDLV2000Format implements IChemFormatMatcher {
     }
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
-    	return "org.openscience.cdk.io.MDLWriter";
+    	return "org.openscience.cdk.io.MDLV2000Writer";
     }
 
     public boolean matches(int lineNumber, String line) {

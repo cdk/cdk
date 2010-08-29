@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -187,10 +187,10 @@ public class TemplateExtractor {
 		String molfile = dataFile + "_UniqueRings";
 
 		// FileOutputStream fout=null;
-		MDLWriter mdlw = null;
+		MDLV2000Writer mdlw = null;
 		try {
 			FileOutputStream fout = new FileOutputStream(molfile);
-			mdlw = new MDLWriter(fout);
+			mdlw = new MDLV2000Writer(fout);
 		} catch (Exception ex2) {
 			System.out.println("IOError:cannot write file due to:"
 					+ ex2.toString());
@@ -297,7 +297,7 @@ public class TemplateExtractor {
 		String molfile = file + endFix;
 		try {
 			FileOutputStream fout = new FileOutputStream(molfile);
-			MDLWriter mdlw = new MDLWriter(fout);
+			MDLV2000Writer mdlw = new MDLV2000Writer(fout);
 			mdlw.write(som);
 			mdlw.close();
 		} catch (Exception ex2) {

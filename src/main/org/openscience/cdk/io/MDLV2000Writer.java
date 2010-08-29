@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *                    2009  Egon Willighagen <egonw@users.sf.net>
  *                    2010  Mark Rijnbeek <mark_rynbeek@users.sf.net>
  * 
@@ -77,11 +75,11 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.githash
  * @cdk.keyword file format, MDL molfile
  */
-@TestClass("org.openscience.cdk.io.MDLWriterTest")
-public class MDLWriter extends DefaultChemObjectWriter {
+@TestClass("org.openscience.cdk.io.MDLV2000WriterTest")
+public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private final static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MDLWriter.class);
+        LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
     private BooleanIOSetting forceWriteAs2DCoords;
     
@@ -96,7 +94,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param   out  The Writer to write to
      */
-    public MDLWriter(Writer out) {
+    public MDLV2000Writer(Writer out) {
     	if (out instanceof BufferedWriter) {
     	    writer = (BufferedWriter)out;
     	} else {
@@ -111,11 +109,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param   output  The OutputStream to write to
      */
-    public MDLWriter(OutputStream output) {
+    public MDLV2000Writer(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
     
-    public MDLWriter() {
+    public MDLV2000Writer() {
         this(new StringWriter());
     }
 

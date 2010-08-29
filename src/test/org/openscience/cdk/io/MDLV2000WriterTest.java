@@ -63,19 +63,19 @@ import org.openscience.cdk.templates.MoleculeFactory;
  *
  * @cdk.module test-io
  *
- * @see org.openscience.cdk.io.MDLWriter
+ * @see org.openscience.cdk.io.MDLV2000Writer
  */
-public class MDLWriterTest extends ChemObjectIOTest {
+public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
     @BeforeClass public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
-        setChemObjectIO(new MDLWriter());
+        setChemObjectIO(new MDLV2000Writer());
     }
 
     @Test public void testAccepts() throws Exception {
-    	MDLWriter reader = new MDLWriter();
+    	MDLV2000Writer reader = new MDLV2000Writer();
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
     	Assert.assertTrue(reader.accepts(Molecule.class));
@@ -93,7 +93,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         Assert.assertTrue(writer.toString().indexOf("M  END") != -1);
     }
@@ -108,7 +108,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         atom.setMassNumber(14);
         molecule.addAtom(atom);
         
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
         //logger.debug("MDL output for testBug1212219: " + output);
@@ -120,7 +120,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         Molecule molecule = MoleculeFactory.makeAlphaPinene();
         molecule.getAtom(0).setValency(1);
         molecule.getAtom(1).setValency(0);
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
         Assert.assertTrue(output.indexOf("0  0  0  0  0  1  0  0  0  0  0  0") != -1);
@@ -132,7 +132,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         Molecule molecule = MoleculeFactory.makeAlphaPinene();
         molecule.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,1);
         molecule.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,15);
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
         Assert.assertTrue(output.indexOf("0  0  0  0  0  0  0  0  0  1  0  0") != -1);
@@ -160,7 +160,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         molecule.addAtom(atom2);
         molecule.addBond(bond);
             
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
         Assert.assertEquals("Test for zero length pseudo atom label in MDL file", -1, output.indexOf("0.0000    0.0000    0.0000     0  0  0  0  0  0  0  0  0  0  0  0"));
@@ -173,7 +173,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         atom.setFormalCharge(null);
         molecule.addAtom(atom);
 
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
         // test ensures that the writer does not throw an exception on
@@ -191,7 +191,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
         molecule.addAtom(atom);
 
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         mdlWriter.close();
         String output = writer.toString();
@@ -210,7 +210,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
         molecule.addAtom(atom);
 
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         Properties prop = new Properties();
         prop.setProperty("ForceWriteAs2DCoordinates","true");
         PropertiesListener listener = new PropertiesListener(prop);
@@ -230,7 +230,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
       mol.getBond(0).setStereo(IBond.Stereo.UP_OR_DOWN);
       mol.getBond(1).setStereo(IBond.Stereo.E_OR_Z);
       StringWriter writer = new StringWriter();
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(mol);
         String output = writer.toString();
         Assert.assertTrue(output.indexOf("1  2  2  4  0  0  0")>-1);
@@ -249,7 +249,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
                 Order.QUADRUPLE
             )
         );
-        MDLWriter mdlWriter = new MDLWriter(new StringWriter());
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(new StringWriter());
         mdlWriter.write(molecule);
     }
 
@@ -263,7 +263,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         model.getMoleculeSet().addAtomContainer(mol1);
         model.getMoleculeSet().addAtomContainer(mol2);
         StringWriter writer = new StringWriter();
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(model);
         String output = writer.toString();
         Assert.assertTrue(output.contains("title1; title2"));
@@ -293,7 +293,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         molecule.addBond(bond);
         molecule.addBond(bond2);
             
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
         
@@ -318,7 +318,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
         molecule.addBond(bond);
         
         StringWriter writer = new StringWriter();
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         
         Assert.assertTrue(writer.toString().indexOf("V    1 Oxygen comment") != -1);
@@ -338,13 +338,13 @@ public class MDLWriterTest extends ChemObjectIOTest {
 
 
         StringWriter writer = new StringWriter();
-        MDLWriter mdlWriter = new MDLWriter(writer);
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(benzene);
         Assert.assertTrue(writer.toString().indexOf("2  1  1  0  0  0  0") != -1);
 
 
         writer = new StringWriter();
-        mdlWriter = new MDLWriter(writer);
+        mdlWriter = new MDLV2000Writer(writer);
         Properties prop = new Properties();
         prop.setProperty("WriteAromaticBondTypes","true");
         PropertiesListener listener = new PropertiesListener(prop);

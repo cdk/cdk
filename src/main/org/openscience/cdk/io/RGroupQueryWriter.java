@@ -52,7 +52,7 @@ import org.openscience.cdk.isomorphism.matchers.RGroupList;
  * Each RGfile is a combination of Ctabs defining the root molecule and each
  * member of each Rgroup in the query.
  * <br>
- * This class relies on the {@link org.openscience.cdk.io.MDLWriter} to
+ * This class relies on the {@link org.openscience.cdk.io.MDLV2000Writer} to
  * create CTAB data blocks.
  *
  * @cdk.module io
@@ -120,7 +120,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 	 */
 	private String getCTAB (IAtomContainer atomContainer) throws CDKException {
 		StringWriter strWriter = new StringWriter();
-		MDLWriter mdlWriter = new MDLWriter(strWriter);
+		MDLV2000Writer mdlWriter = new MDLV2000Writer(strWriter);
 		mdlWriter.write(atomContainer);
 		String ctab =  strWriter.toString();
 		//strip of the individual header, as we have one super header instead.
@@ -194,10 +194,10 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 				int restH = rgList.isRestH()?1:0;
 				String logLine = 
 					"M  LOG"+
-					MDLWriter.formatMDLInt(1, 3)+
-					MDLWriter.formatMDLInt(rgrpNum, 4)+
- 					MDLWriter.formatMDLInt(rgList.getRequiredRGroupNumber(), 4)+
-					MDLWriter.formatMDLInt(restH, 4)+
+					MDLV2000Writer.formatMDLInt(1, 3)+
+					MDLV2000Writer.formatMDLInt(rgrpNum, 4)+
+ 					MDLV2000Writer.formatMDLInt(rgList.getRequiredRGroupNumber(), 4)+
+					MDLV2000Writer.formatMDLInt(restH, 4)+
 					"   "+rgList.getOccurrence()
 					;
 				rootBlock.append(logLine).append(LSEP);
@@ -228,8 +228,8 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 						StringBuffer aalLine=new StringBuffer("M  AAL");
 						for (int atIdx = 0; atIdx < rootAtc.getAtomCount(); atIdx++) {
 							if (rootAtc.getAtom(atIdx).equals(rgroupAtom)) {
-								aalLine.append(MDLWriter.formatMDLInt((atIdx+1), 4));
-								aalLine.append(MDLWriter.formatMDLInt(rApo.size(), 3));
+								aalLine.append(MDLV2000Writer.formatMDLInt((atIdx+1), 4));
+								aalLine.append(MDLV2000Writer.formatMDLInt(rApo.size(), 3));
 
 								apoIdx=1;
 								while (rApo.get(apoIdx)!=null) {
@@ -237,8 +237,8 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
 									for(int a=0; a<rootAtc.getAtomCount(); a++) {
 										if (rootAtc.getAtom(a).equals(partner)) {
-											aalLine.append(MDLWriter.formatMDLInt(a+1, 4));
-											aalLine.append(MDLWriter.formatMDLInt(apoIdx, 4));
+											aalLine.append(MDLV2000Writer.formatMDLInt(a+1, 4));
+											aalLine.append(MDLV2000Writer.formatMDLInt(apoIdx, 4));
 										}
 									}
 									apoIdx++;
@@ -258,7 +258,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 				List<RGroup> rgrpList = rGroupQuery.getRGroupDefinitions().get(rgrpNum).getRGroups();
 				if(rgrpList!=null &&  rgrpList.size()!=0) {
 					rgpBlock.append("$RGP").append(LSEP);;
-					rgpBlock.append(MDLWriter.formatMDLInt(rgrpNum, 4)).append(LSEP);
+					rgpBlock.append(MDLV2000Writer.formatMDLInt(rgrpNum, 4)).append(LSEP);
 
 					for (RGroup rgroup : rgrpList) {
 						//CTAB block
@@ -275,14 +275,14 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 							StringBuffer apoLine=new StringBuffer();
 							for (int atIdx = 0; atIdx < rgroup.getGroup().getAtomCount(); atIdx++) {
 								if (rgroup.getGroup().getAtom(atIdx).equals(firstAttachmentPoint)) {
-									apoLine.append(MDLWriter.formatMDLInt((atIdx+1), 4));
+									apoLine.append(MDLV2000Writer.formatMDLInt((atIdx+1), 4));
 									apoCount++;
 									if (secondAttachmentPoint!=null && 
 											secondAttachmentPoint.equals(firstAttachmentPoint)) {
-										apoLine.append(MDLWriter.formatMDLInt(3, 4));
+										apoLine.append(MDLV2000Writer.formatMDLInt(3, 4));
 									}
 									else {
-										apoLine.append(MDLWriter.formatMDLInt(1, 4));
+										apoLine.append(MDLV2000Writer.formatMDLInt(1, 4));
 									}
 								}
 							}
@@ -290,13 +290,13 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 								for (int atIdx = 0; atIdx < rgroup.getGroup().getAtomCount(); atIdx++) {
 									if (rgroup.getGroup().getAtom(atIdx).equals(secondAttachmentPoint)) {
 										apoCount++;
-										apoLine.append(MDLWriter.formatMDLInt((atIdx+1), 4));
-										apoLine.append(MDLWriter.formatMDLInt(2, 4));
+										apoLine.append(MDLV2000Writer.formatMDLInt((atIdx+1), 4));
+										apoLine.append(MDLV2000Writer.formatMDLInt(2, 4));
 									}
 								}
 							}
 							if (apoCount>0) {
-								apoLine.insert(0, "M  APO"+MDLWriter.formatMDLInt(apoCount, 3));
+								apoLine.insert(0, "M  APO"+MDLV2000Writer.formatMDLInt(apoCount, 3));
 								rgpBlock.append(apoLine).append(LSEP);
 							}
 						}

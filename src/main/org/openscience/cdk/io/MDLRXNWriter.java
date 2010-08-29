@@ -293,9 +293,9 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                 StringWriter sw = new StringWriter();
                 writer.write("$MOL");
                 writer.newLine();
-                MDLWriter mdlwriter = null;
+                MDLV2000Writer mdlwriter = null;
                 try {
-                    mdlwriter = new MDLWriter(sw);
+                    mdlwriter = new MDLV2000Writer(sw);
                 } catch (Exception ex) {
                     logger.error(ex.getMessage());
                     logger.debug(ex);

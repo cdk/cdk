@@ -197,7 +197,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         try {
             // write the MDL molfile bits
             StringWriter stringWriter = new StringWriter();
-            MDLWriter mdlWriter = new MDLWriter(stringWriter);
+            MDLV2000Writer mdlWriter = new MDLV2000Writer(stringWriter);
             mdlWriter.write(container);
             mdlWriter.close();
             writer.write(stringWriter.toString());
