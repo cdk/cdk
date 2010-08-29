@@ -177,8 +177,8 @@ public class APolDescriptor implements IMolecularDescriptor {
                 element = ifac.getElement(symbol);
                 atomicNumber = element.getAtomicNumber();
                 apol += polarizabilities[atomicNumber];
-                if (atom.getHydrogenCount() != CDKConstants.UNSET) {
-                    apol += polarizabilities[1] * atom.getHydrogenCount();
+                if (atom.getImplicitHydrogenCount() != CDKConstants.UNSET) {
+                    apol += polarizabilities[1] * atom.getImplicitHydrogenCount();
                 }
             }
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

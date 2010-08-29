@@ -91,7 +91,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
 		double bondOrderSum = atomContainer.getBondOrderSum(atom);
 		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
 		int charge = atom.getFormalCharge();
-		int hcount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount();
+		int hcount = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();
 
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (IAtomType type : types) {

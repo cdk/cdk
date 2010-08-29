@@ -132,7 +132,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
         	String originalAtomtypeName = atom.getAtomTypeName();
         	Integer originalNeighborCount = atom.getFormalNeighbourCount();
-        	Integer originalHCount = atom.getHydrogenCount();
+        	Integer originalHCount = atom.getImplicitHydrogenCount();
         	Integer originalValency = atom.getValency();
         	IAtomType.Hybridization originalHybridization = atom.getHybridization();
         	boolean originalFlag = atom.getFlag(4);
@@ -141,7 +141,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         	atom.setAtomTypeName(originalAtomtypeName);
         	atom.setFormalNeighbourCount(originalNeighborCount);
         	atom.setValency(originalValency);
-        	atom.setHydrogenCount(originalHCount);
+        	atom.setImplicitHydrogenCount(originalHCount);
         	atom.setFlag(4, originalFlag);
         	atom.setHybridization(originalHybridization);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

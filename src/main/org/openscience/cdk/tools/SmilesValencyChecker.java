@@ -235,7 +235,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      */
     public boolean couldMatchAtomType(IAtom atom, double bondOrderSum, IBond.Order maxBondOrder, IAtomType type) {
         logger.debug("couldMatchAtomType:   ... matching atom ", atom, " vs ", type);
-        int hcount = atom.getHydrogenCount();
+        int hcount = atom.getImplicitHydrogenCount();
         int charge = atom.getFormalCharge();
         if (charge == type.getFormalCharge()) {
             logger.debug("couldMatchAtomType:     formal charge matches...");
@@ -323,7 +323,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
         }
         double bondOrderSum = container.getBondOrderSum(atom);
         IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
-        int hcount = atom.getHydrogenCount();
+        int hcount = atom.getImplicitHydrogenCount();
         int charge = atom.getFormalCharge();
 
         logger.debug("Checking saturation of atom ", atom.getSymbol());

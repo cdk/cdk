@@ -90,7 +90,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 		molecule1.addBond(bondInMol1);
 		molecule2 = new Molecule();
 		atomInMol2 = new Atom("O");
-		atomInMol2.setHydrogenCount(2);
+		atomInMol2.setImplicitHydrogenCount(2);
 		molecule2.addAtom(atomInMol2);
 		moleculeSet = new MoleculeSet();
 		moleculeSet.addAtomContainer(molecule1);

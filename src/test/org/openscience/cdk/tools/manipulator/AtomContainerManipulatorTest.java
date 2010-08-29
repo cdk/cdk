@@ -93,9 +93,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testConvertImplicitToExplicitHydrogens_IAtomContainer() throws Exception {
         Molecule mol = new Molecule(); // ethene
         mol.addAtom(new Atom("C"));
-        mol.getAtom(0).setHydrogenCount(2);
+        mol.getAtom(0).setImplicitHydrogenCount(2);
         mol.addAtom(new Atom("C"));
-        mol.getAtom(1).setHydrogenCount(2);
+        mol.getAtom(1).setImplicitHydrogenCount(2);
         mol.addBond(0,1, CDKConstants.BONDORDER_DOUBLE);
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
@@ -110,8 +110,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Molecule mol = new Molecule(); // ethane
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
-        mol.getAtom(0).setHydrogenCount(3);
-        mol.getAtom(1).setHydrogenCount(3);
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.getAtom(1).setImplicitHydrogenCount(3);
         mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
@@ -126,9 +126,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalHydrogenCount_IAtomContainer_zeroImplicit() throws IOException, ClassNotFoundException, CDKException {
         Molecule mol = new Molecule(); // ethene
         mol.addAtom(new Atom("C"));
-        mol.getAtom(0).setHydrogenCount(0);
+        mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.addAtom(new Atom("C"));
-        mol.getAtom(1).setHydrogenCount(0);
+        mol.getAtom(1).setImplicitHydrogenCount(0);
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
@@ -149,9 +149,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalHydrogenCount_IAtomContainer_nullImplicit() throws IOException, ClassNotFoundException, CDKException {
         Molecule mol = new Molecule(); // ethene
         mol.addAtom(new Atom("C"));
-        mol.getAtom(0).setHydrogenCount(null);
+        mol.getAtom(0).setImplicitHydrogenCount(null);
         mol.addAtom(new Atom("C"));
-        mol.getAtom(1).setHydrogenCount(null);
+        mol.getAtom(1).setImplicitHydrogenCount(null);
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
@@ -172,7 +172,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalHydrogenCount_ImplicitHydrogens() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon = new Atom("C");
-        carbon.setHydrogenCount(4);
+        carbon.setImplicitHydrogenCount(4);
         mol.addAtom(carbon);
         Assert.assertEquals(4, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
@@ -215,14 +215,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(4, ac.getAtomCount());
-        Assert.assertNotNull(ac.getAtom(0).getHydrogenCount());
-        Assert.assertNotNull(ac.getAtom(1).getHydrogenCount());
-        Assert.assertNotNull(ac.getAtom(2).getHydrogenCount());
-        Assert.assertNotNull(ac.getAtom(3).getHydrogenCount());
-        Assert.assertEquals(0, ac.getAtom(0).getHydrogenCount().intValue());
-        Assert.assertEquals(2, ac.getAtom(1).getHydrogenCount().intValue());
-        Assert.assertEquals(0, ac.getAtom(2).getHydrogenCount().intValue());
-        Assert.assertEquals(0, ac.getAtom(3).getHydrogenCount().intValue());
+        Assert.assertNotNull(ac.getAtom(0).getImplicitHydrogenCount());
+        Assert.assertNotNull(ac.getAtom(1).getImplicitHydrogenCount());
+        Assert.assertNotNull(ac.getAtom(2).getImplicitHydrogenCount());
+        Assert.assertNotNull(ac.getAtom(3).getImplicitHydrogenCount());
+        Assert.assertEquals(0, ac.getAtom(0).getImplicitHydrogenCount().intValue());
+        Assert.assertEquals(2, ac.getAtom(1).getImplicitHydrogenCount().intValue());
+        Assert.assertEquals(0, ac.getAtom(2).getImplicitHydrogenCount().intValue());
+        Assert.assertEquals(0, ac.getAtom(3).getImplicitHydrogenCount().intValue());
     }
     
     @Test public void testGetAllIDs_IAtomContainer() {
@@ -386,8 +386,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         // Should be two disconnected Bs with H-count == 4
         Assert.assertEquals("incorrect atom count", 2, ac.getAtomCount());
         Assert.assertEquals("incorrect bond count", 0, ac.getBondCount());
-        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(0).getHydrogenCount().intValue());
-        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(1).getHydrogenCount().intValue());
+        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(0).getImplicitHydrogenCount().intValue());
+        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(1).getImplicitHydrogenCount().intValue());
     }
     /**
      * Test total formal charge.
@@ -709,7 +709,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             {
                 // Each B has two explicit and two implicit H.
                 b++;
-                Assert.assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount().intValue());
+                Assert.assertEquals("incorrect hydrogen count", 2, atom.getImplicitHydrogenCount().intValue());
                 List<IAtom> nbs = ac.getConnectedAtomsList(atom);
                 Assert.assertEquals("incorrect connected count", 2, nbs.size());
                 Assert.assertEquals("incorrect bond", "H", ((IAtom)nbs.get(0)).getSymbol());

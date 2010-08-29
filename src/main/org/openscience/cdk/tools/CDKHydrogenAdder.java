@@ -127,7 +127,7 @@ public class CDKHydrogenAdder {
 			throw new CDKException("IAtom is not typed! " + atom.getSymbol());
 		
 		if ("X".equals(atom.getAtomTypeName())) {
-			atom.setHydrogenCount(0);
+			atom.setImplicitHydrogenCount(0);
 			return; 
 		}
 		
@@ -139,7 +139,7 @@ public class CDKHydrogenAdder {
 			throw new CDKException("Atom type is too general; cannot decide the number of implicit hydrogen to add for: " + atom.getAtomTypeName());
 		
 		// very simply counting: each missing explicit neighbor is a missing hydrogen
-		atom.setHydrogenCount(
+		atom.setImplicitHydrogenCount(
 			type.getFormalNeighbourCount() - container.getConnectedAtomsCount(atom)
 		);
 	}

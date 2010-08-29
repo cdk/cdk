@@ -1154,10 +1154,10 @@ public class CMLCoreModule implements ICMLModule {
 
     private void convertCMLToCDKHydrogenCounts() {
         for (IAtom atom : currentMolecule.atoms()) {
-            if (atom.getHydrogenCount() != null) {
+            if (atom.getImplicitHydrogenCount() != null) {
                 int explicitHCount = AtomContainerManipulator.countExplicitHydrogens(currentMolecule, atom);
                 if (explicitHCount != 0) {
-                    atom.setHydrogenCount(atom.getHydrogenCount() - explicitHCount);
+                    atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() - explicitHCount);
                 }
             }
         }
@@ -1401,9 +1401,9 @@ public class CMLCoreModule implements ICMLModule {
             	// FIXME: the hCount in CML is the total of implicit *and* explicit
                 String hCount = hCounts.get(i);
                 if (hCount != null) {
-                    currentAtom.setHydrogenCount(Integer.parseInt(hCount));
+                    currentAtom.setImplicitHydrogenCount(Integer.parseInt(hCount));
                 } else {
-                    currentAtom.setHydrogenCount((Integer)CDKConstants.UNSET);
+                    currentAtom.setImplicitHydrogenCount((Integer)CDKConstants.UNSET);
                 }
             }
 

@@ -339,8 +339,8 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(1,mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
         Assert.assertNotNull(atom);
-        Assert.assertNotNull(atom.getHydrogenCount());
-        Assert.assertEquals(4, atom.getHydrogenCount().intValue());
+        Assert.assertNotNull(atom.getImplicitHydrogenCount());
+        Assert.assertEquals(4, atom.getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -368,8 +368,8 @@ public class CML23FragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         Assert.assertNotNull(atom);
         Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertNotNull(atom.getHydrogenCount());
-        Assert.assertEquals(0, atom.getHydrogenCount().intValue());
+        Assert.assertNotNull(atom.getImplicitHydrogenCount());
+        Assert.assertEquals(0, atom.getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -392,8 +392,8 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(2,mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
         Assert.assertNotNull(atom);
-        Assert.assertNotNull(atom.getHydrogenCount());
-        Assert.assertEquals(3, atom.getHydrogenCount().intValue());
+        Assert.assertNotNull(atom.getImplicitHydrogenCount());
+        Assert.assertEquals(3, atom.getImplicitHydrogenCount().intValue());
     }
 
     @Test public void testInChI() throws Exception {

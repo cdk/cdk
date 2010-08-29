@@ -175,7 +175,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
             // implicit H's and if so, consider the associated "implicit" bonds. Note that
             // if the count is UNSET, we assume it is 0
             for (IAtom atom : container.atoms()) {
-                int impH = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+                int impH = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
                 IElement elem = ifac.getElement(atom.getSymbol());
                 int atnum = elem.getAtomicNumber();
                 difference = Math.abs(polarizabilities[atnum] - polarizabilities[1]) * impH;

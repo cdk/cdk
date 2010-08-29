@@ -651,7 +651,7 @@ public class DeduceBondSystemTool {
                 if (Check[i]) {
                 	
                     for (int j = 0; j <= ring.getAtomCount() - 1; j++) {
-                        if (ring.getAtom(j).getHydrogenCount() != CDKConstants.UNSET && ring.getAtom(j).getHydrogenCount() < 0) {
+                        if (ring.getAtom(j).getImplicitHydrogenCount() != CDKConstants.UNSET && ring.getAtom(j).getImplicitHydrogenCount() < 0) {
                         	return false;
                         }
                     }

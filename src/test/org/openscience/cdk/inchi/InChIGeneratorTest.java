@@ -99,7 +99,7 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test public void testGetInchiFromHydrogenChlorideImplicitH() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Cl");
-        a.setHydrogenCount(1);
+        a.setImplicitHydrogenCount(1);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
@@ -114,7 +114,7 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test public void testGetInchiFromMethylRadical() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("C");
-        a.setHydrogenCount(3);
+        a.setImplicitHydrogenCount(3);
         ac.addAtom(a);
         ac.addSingleElectron(new SingleElectron(a));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
@@ -131,8 +131,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = new AtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
-        a1.setHydrogenCount(3);
-        a2.setHydrogenCount(3);
+        a1.setImplicitHydrogenCount(3);
+        a2.setImplicitHydrogenCount(3);
         ac.addAtom(a1);
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
@@ -151,8 +151,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = new AtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
-        a1.setHydrogenCount(2);
-        a2.setHydrogenCount(2);
+        a1.setImplicitHydrogenCount(2);
+        a2.setImplicitHydrogenCount(2);
         ac.addAtom(a1);
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_DOUBLE));
@@ -170,8 +170,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = new AtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
-        a1.setHydrogenCount(1);
-        a2.setHydrogenCount(1);
+        a1.setImplicitHydrogenCount(1);
+        a2.setImplicitHydrogenCount(1);
         ac.addAtom(a1);
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_TRIPLE));
@@ -193,8 +193,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtom a2E = new Atom("C", new Point2d(3.732, 0.250));
         IAtom a3E = new Atom("Cl", new Point2d(2.000, 2.500));
         IAtom a4E = new Atom("Cl", new Point2d(4.598, -0.250));
-        a1E.setHydrogenCount(1);
-        a2E.setHydrogenCount(1);
+        a1E.setImplicitHydrogenCount(1);
+        a2E.setImplicitHydrogenCount(1);
         acE.addAtom(a1E);
         acE.addAtom(a2E);
         acE.addAtom(a3E);
@@ -216,8 +216,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtom a2Z = new Atom("C", new Point2d(3.732, 0.060));
         IAtom a3Z = new Atom("Cl", new Point2d(2.000, 0.060));
         IAtom a4Z = new Atom("Cl", new Point2d(3.732, 1.060));
-        a1Z.setHydrogenCount(1);
-        a2Z.setHydrogenCount(1);
+        a1Z.setImplicitHydrogenCount(1);
+        a2Z.setImplicitHydrogenCount(1);
         acZ.addAtom(a1Z);
         acZ.addAtom(a2Z);
         acZ.addAtom(a3Z);
@@ -250,10 +250,10 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtom a4L = new Atom("C", new Point3d(0.952, 0.043, 20.838));
         IAtom a5L = new Atom("O", new Point3d(-2.678, 0.479, 21.093));
         IAtom a6L = new Atom("O", new Point3d(-1.596, -1.239, 20.958));
-        a1L.setHydrogenCount(1);
-        a3L.setHydrogenCount(2);
-        a4L.setHydrogenCount(3);
-        a5L.setHydrogenCount(1);
+        a1L.setImplicitHydrogenCount(1);
+        a3L.setImplicitHydrogenCount(2);
+        a4L.setImplicitHydrogenCount(3);
+        a5L.setImplicitHydrogenCount(1);
         acL.addAtom(a1L);
         acL.addAtom(a2L);
         acL.addAtom(a3L);
@@ -280,10 +280,10 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtom a4D = new Atom("C", new Point3d(-0.952, 0.043, 20.838));
         IAtom a5D = new Atom("O", new Point3d(2.678, 0.479, 21.093));
         IAtom a6D = new Atom("O", new Point3d(1.596, -1.239, 20.958));
-        a1D.setHydrogenCount(1);
-        a3D.setHydrogenCount(2);
-        a4D.setHydrogenCount(3);
-        a5D.setHydrogenCount(1);
+        a1D.setImplicitHydrogenCount(1);
+        a3D.setImplicitHydrogenCount(2);
+        a4D.setImplicitHydrogenCount(3);
+        a5D.setImplicitHydrogenCount(1);
         acD.addAtom(a1D);
         acD.addAtom(a2D);
         acD.addAtom(a3D);

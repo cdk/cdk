@@ -84,14 +84,14 @@ public class DebugAtom extends Atom implements IAtom {
 		return super.getCharge();
 	}
 
-	public void setHydrogenCount(Integer hydrogenCount) {
+	public void setImplicitHydrogenCount(Integer hydrogenCount) {
 		logger.debug("Setting hydrogen count: ", hydrogenCount);
-		super.setHydrogenCount(hydrogenCount);
+		super.setImplicitHydrogenCount(hydrogenCount);
 	}
 
-	public Integer getHydrogenCount() {
-		logger.debug("Getting hydrogen count: ", super.getHydrogenCount());
-		return super.getHydrogenCount();
+	public Integer getImplicitHydrogenCount() {
+		logger.debug("Getting hydrogen count: ", super.getImplicitHydrogenCount());
+		return super.getImplicitHydrogenCount();
 	}
 
 	public void setPoint2d(Point2d point2d) {

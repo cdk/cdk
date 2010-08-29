@@ -583,7 +583,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             			} else if (neighborCount == 2) {
             				IBond.Order maxOrder = atomContainer.getMaximumBondOrder(atom);
             				if (maxOrder == IBond.Order.SINGLE) {
-            				    if (atom.getHydrogenCount() != CDKConstants.UNSET && atom.getHydrogenCount() == 1) {
+            				    if (atom.getImplicitHydrogenCount() != CDKConstants.UNSET && atom.getImplicitHydrogenCount() == 1) {
             						IAtomType type = getAtomType("N.planar3");
             						if (isAcceptable(atom, atomContainer, type)) return type;
             					} else {
@@ -684,7 +684,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 	List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
                     if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
                             bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
-                        Integer hCount = atom.getHydrogenCount();
+                        Integer hCount = atom.getImplicitHydrogenCount();
                         if (hCount == CDKConstants.UNSET || hCount == 0) {
                             IAtomType type = getAtomType("N.sp2");
                             if (isAcceptable(atom, atomContainer, type))
@@ -1545,10 +1545,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		int requiredContainerCount = type.getFormalNeighbourCount();
     		if (actualContainerCount != requiredContainerCount)
     			return false;
-    	} else if (atom.getHydrogenCount() != CDKConstants.UNSET) {
+    	} else if (atom.getImplicitHydrogenCount() != CDKConstants.UNSET) {
     		// confirm correct neighbour count
     		int connectedAtoms = container.getConnectedAtomsCount(atom);
-    		int hCount = atom.getHydrogenCount();
+    		int hCount = atom.getImplicitHydrogenCount();
     		int actualNeighbourCount =  connectedAtoms + hCount;
     		int requiredNeighbourCount = type.getFormalNeighbourCount();
     		if (actualNeighbourCount > requiredNeighbourCount)

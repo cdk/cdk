@@ -240,7 +240,7 @@ public class CDKTestCase {
 	protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container) throws Exception {
 		int i = 0;
 		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
-			Assert.assertEquals(hydrogenCounts[i], atoms.next().getHydrogenCount().intValue());
+			Assert.assertEquals(hydrogenCounts[i], atoms.next().getImplicitHydrogenCount().intValue());
 	}
 
 	/**

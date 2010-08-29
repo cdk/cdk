@@ -40,9 +40,9 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
     public void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
-        atom.setHydrogenCount(3);
+        atom.setImplicitHydrogenCount(3);
         Atom atom2 = new Atom("N");
-        atom2.setHydrogenCount(2);
+        atom2.setImplicitHydrogenCount(2);
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addBond(new Bond(atom, atom2, IBond.Order.SINGLE));

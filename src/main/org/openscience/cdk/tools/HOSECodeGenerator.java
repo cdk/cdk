@@ -300,7 +300,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	{
 		int partnerCount = 0;
 		partnerCount = atomContainer.getConnectedBondsCount(root) +
-                (root.getHydrogenCount() == CDKConstants.UNSET ? 0 : root.getHydrogenCount()); 
+                (root.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : root.getImplicitHydrogenCount()); 
 		centerCode = root.getSymbol() + "-" + partnerCount + createChargeCode(root)+(ringsize ? getRingcode(root, ac) : "" )+";";
 	}
 	

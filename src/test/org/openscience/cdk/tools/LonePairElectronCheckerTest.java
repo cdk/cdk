@@ -88,9 +88,9 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testAllSaturated_Methanethiol() throws Exception {
 		// test Methanethiol, CH4S
 		Atom c = new Atom("C");
-		c.setHydrogenCount(3);
+		c.setImplicitHydrogenCount(3);
 		Atom s = new Atom("S");
-		s.setHydrogenCount(1);
+		s.setImplicitHydrogenCount(1);
 		
 		Bond b1 = new Bond(c, s, IBond.Order.SINGLE);
 		
@@ -112,7 +112,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testNewSaturate_Methyl_chloride() throws Exception {
 		// test Methyl chloride, CH3Cl
 		Atom c1 = new Atom("C");
-		c1.setHydrogenCount(3);
+		c1.setImplicitHydrogenCount(3);
 		Atom cl = new Atom("Cl");
 		Bond b1 = new Bond(c1, cl, IBond.Order.SINGLE);
 		
@@ -132,9 +132,9 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testNewSaturate_Methyl_alcohol() throws Exception {
 		// test Methyl chloride, CH3OH
 		Atom c1 = new Atom("C");
-		c1.setHydrogenCount(3);
+		c1.setImplicitHydrogenCount(3);
 		Atom o = new Atom("O");
-		o.setHydrogenCount(1);
+		o.setImplicitHydrogenCount(1);
 		Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
@@ -175,10 +175,10 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testNewSaturate_Methyl_alcohol_protonated() throws Exception {
 		// test Methyl alcohol protonated, CH3OH2+
 		Atom c1 = new Atom("C");
-		c1.setHydrogenCount(3);
+		c1.setImplicitHydrogenCount(3);
 		Atom o = new Atom("O");
         o.setFormalCharge(+1);
-		o.setHydrogenCount(2);
+		o.setImplicitHydrogenCount(2);
 		Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
@@ -197,7 +197,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testNewSaturate_methoxide_anion() throws Exception {
 		// test methoxide anion, CH3O-
 		Atom c1 = new Atom("C");
-		c1.setHydrogenCount(3);
+		c1.setImplicitHydrogenCount(3);
 		Atom o = new Atom("O");
         o.setFormalCharge(-1);
 		Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
@@ -218,7 +218,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testNewSaturate_Ammonia() throws Exception {
 		// test Ammonia, H3N
 		Atom n = new Atom("N");
-		n.setHydrogenCount(3);
+		n.setImplicitHydrogenCount(3);
 		
 		Molecule m = new Molecule();
 		m.addAtom(n);
@@ -234,9 +234,9 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testNewSaturate_methylamine_radical_cation() throws Exception {
 		// test Ammonia, CH3NH3+
 		Atom c = new Atom("C");
-		c.setHydrogenCount(3);
+		c.setImplicitHydrogenCount(3);
 		Atom n = new Atom("N");
-		n.setHydrogenCount(3);
+		n.setImplicitHydrogenCount(3);
         n.setFormalCharge(+1);
 		Bond b1 = new Bond(c, n, IBond.Order.SINGLE);
 		

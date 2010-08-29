@@ -78,7 +78,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		// test methane with implicit hydrogen
 		mol = new Molecule();
 		c = new Atom("C");
-		c.setHydrogenCount(4);
+		c.setImplicitHydrogenCount(4);
 		mol.addAtom(c);
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		Assert.assertTrue(checker.isSaturated(mol));
@@ -108,7 +108,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		// test methane with implicit hydrogen
 		mol = new Molecule();
 		c = new Atom("C");
-		c.setHydrogenCount(4);
+		c.setImplicitHydrogenCount(4);
 		mol.addAtom(c);
 		findAndConfigureAtomTypesForAllAtoms(mol);
          for (IAtom atom : mol.atoms()) {
@@ -123,7 +123,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
 		Atom c = new Atom("C");
 		mol.addAtom(c);
-		c.setHydrogenCount(3);
+		c.setImplicitHydrogenCount(3);
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		Assert.assertFalse(checker.isSaturated(mol));
 	}
@@ -234,7 +234,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("[F+]=C=C");
 		CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
 		findAndConfigureAtomTypesForAllAtoms(mol);
-		mol.getAtom(2).setHydrogenCount(2); // third atom
+		mol.getAtom(2).setImplicitHydrogenCount(2); // third atom
 		Assert.assertTrue(checker.isSaturated(mol));
     }
         
@@ -243,11 +243,11 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		Molecule mol = new Molecule();
 		CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
 		Atom c1 = new Atom("C");
-		c1.setHydrogenCount(2);
+		c1.setImplicitHydrogenCount(2);
         c1.setHybridization(IAtomType.Hybridization.SP2);
 		Atom c2 = new Atom("C");
         c2.setHybridization(IAtomType.Hybridization.SP2);
-		c2.setHydrogenCount(2);
+		c2.setImplicitHydrogenCount(2);
 		mol.addAtom(c1);
 		mol.addAtom(c2);
 		IBond bond = new Bond(c1, c2, CDKConstants.BONDORDER_SINGLE);

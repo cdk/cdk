@@ -85,7 +85,7 @@ public class CDKValencyChecker implements IValencyChecker {
 
         double bondOrderSum = container.getBondOrderSum(atom);
         IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
-        Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ?  0 : atom.getHydrogenCount();
+        Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ?  0 : atom.getImplicitHydrogenCount();
         
         int piBondCount = ((Integer)type.getProperty(CDKConstants.PI_BOND_COUNT)).intValue();
         int formalNeighborCount = type.getFormalNeighbourCount().intValue();

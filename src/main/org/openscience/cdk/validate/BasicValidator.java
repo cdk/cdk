@@ -159,9 +159,9 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest negativeHydrogenCount = new ValidationTest(atom,
             "An Atom cannot have a negative number of hydrogens attached."
         );
-        if (atom.getHydrogenCount() < 0 ) {
+        if (atom.getImplicitHydrogenCount() < 0 ) {
             negativeHydrogenCount.setDetails(
-                "Atom has " + atom.getHydrogenCount() + " hydrogens."
+                "Atom has " + atom.getImplicitHydrogenCount() + " hydrogens."
             );
             report.addError(negativeHydrogenCount);
         } else {

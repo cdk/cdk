@@ -83,7 +83,7 @@ public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 		double bondOrderSum = atomContainer.getBondOrderSum(atom);
 		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
 		int charge = atom.getFormalCharge();
-		int hcount = atom.getHydrogenCount();
+		int hcount = atom.getImplicitHydrogenCount();
 
 		List<IAtomType> matchingTypes = new ArrayList<IAtomType>();
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());

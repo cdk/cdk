@@ -451,9 +451,9 @@ public class SmilesParser {
 					position = position + currentSymbol.length() + 2;
 					// plus two for [ and ]
 					atom.setProperty(HAS_HARDCODED_HYDROGEN_COUNT, "yes");
-					if (atom.getHydrogenCount() == null) {
+					if (atom.getImplicitHydrogenCount() == null) {
 						// zero implicit hydrogens is implied when the Hx syntax is not used
-						atom.setHydrogenCount(0);
+						atom.setImplicitHydrogenCount(0);
 					}
 					bondExists = true;
 				} else if (mychar == '.')
@@ -759,10 +759,10 @@ public class SmilesParser {
 								atom = builder.newInstance(IAtom.class,currentSymbol);
 								atom.setHybridization(Hybridization.SP2);
 
-                                Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+                                Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
                                 if (hcount > 0)
 								{
-									atom.setHydrogenCount(hcount - 1);
+									atom.setImplicitHydrogenCount(hcount - 1);
 								}
 							} else
 							{
@@ -835,7 +835,7 @@ public class SmilesParser {
 						position++;
 					}
                     if (implicitHydrogens == -1) implicitHydrogens = 1;                    
-					atom.setHydrogenCount(implicitHydrogens);
+					atom.setImplicitHydrogenCount(implicitHydrogens);
 				} else if (mychar == '+' || mychar == '-')
 				{
 					charge = getCharge(s, position);

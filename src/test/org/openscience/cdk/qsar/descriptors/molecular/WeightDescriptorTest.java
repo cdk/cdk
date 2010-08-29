@@ -99,7 +99,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class,"C"));
-        mol.getAtom(0).setHydrogenCount(4);
+        mol.getAtom(0).setImplicitHydrogenCount(4);
         Assert.assertEquals(16.01, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 

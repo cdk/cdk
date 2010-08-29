@@ -223,14 +223,14 @@ public class CMLRoundTripTest extends CDKTestCase {
     @Test public void testHydrogenCount() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
-        atom.setHydrogenCount(3);
+        atom.setImplicitHydrogenCount(3);
         mol.addAtom(atom);
 
         IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
 
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
-        Assert.assertEquals(atom.getHydrogenCount(), roundTrippedAtom.getHydrogenCount());
+        Assert.assertEquals(atom.getImplicitHydrogenCount(), roundTrippedAtom.getImplicitHydrogenCount());
     }
 
     /**
@@ -239,14 +239,14 @@ public class CMLRoundTripTest extends CDKTestCase {
     @Test public void testHydrogenCount_UNSET() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
-        atom.setHydrogenCount((Integer)CDKConstants.UNSET);
+        atom.setImplicitHydrogenCount((Integer)CDKConstants.UNSET);
         mol.addAtom(atom);
 
         IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
 
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
-        Assert.assertEquals(CDKConstants.UNSET, roundTrippedAtom.getHydrogenCount());
+        Assert.assertEquals(CDKConstants.UNSET, roundTrippedAtom.getImplicitHydrogenCount());
     }
 
     @Test public void testAtomPartialCharge() throws Exception {
@@ -729,14 +729,14 @@ public class CMLRoundTripTest extends CDKTestCase {
     @Test public void testUnsetHydrogenCount() throws Exception {
     	Molecule mol = new Molecule();
     	Atom atom = new Atom("C");
-    	Assert.assertNull(atom.getHydrogenCount());
+    	Assert.assertNull(atom.getImplicitHydrogenCount());
     	mol.addAtom(atom);
 
     	IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
 
     	Assert.assertEquals(1, roundTrippedMol.getAtomCount());
     	IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
-    	Assert.assertNull(roundTrippedAtom.getHydrogenCount());
+    	Assert.assertNull(roundTrippedAtom.getImplicitHydrogenCount());
     }
     
 }

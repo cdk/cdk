@@ -334,7 +334,7 @@ public class AtomPlacer
         // the correct counts need saving and restoring
         int[] numh = new int[atomContainer.getAtomCount()];
         for (int i = 0, n = atomContainer.getAtomCount(); i < n; i ++) {
-            Integer tmp = atomContainer.getAtom(i).getHydrogenCount();
+            Integer tmp = atomContainer.getAtom(i).getImplicitHydrogenCount();
             if (tmp == CDKConstants.UNSET) numh[i]= 0;
             else numh[i] = tmp;            
         }
@@ -385,7 +385,7 @@ public class AtomPlacer
 
         // BUGFIX part 2 - restore hydrogen counts
         for (int i = 0, n = atomContainer.getAtomCount(); i < n; i ++) {
-            atomContainer.getAtom(i).setHydrogenCount(numh[i]);
+            atomContainer.getAtom(i).setImplicitHydrogenCount(numh[i]);
         }
     }
 

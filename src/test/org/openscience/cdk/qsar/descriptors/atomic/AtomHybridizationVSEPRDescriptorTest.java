@@ -66,9 +66,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         Molecule molecule = new Molecule();
         Atom O1 = new Atom("O");
         Atom c2 = new Atom("C");
-        c2.setHydrogenCount(1);
+        c2.setImplicitHydrogenCount(1);
         Atom c3 = new Atom("C");
-        c3.setHydrogenCount(3);
+        c3.setImplicitHydrogenCount(3);
         molecule.addAtom(O1);
         molecule.addAtom(c2);
         molecule.addAtom(c3);
@@ -97,7 +97,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         O1.setFormalCharge(1);
         Atom c2 = new Atom("C");
         Atom c3 = new Atom("C");
-        c3.setHydrogenCount(3);
+        c3.setImplicitHydrogenCount(3);
         molecule.addAtom(O1);
         molecule.addAtom(c2);
         molecule.addAtom(c3);
@@ -124,11 +124,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         Molecule molecule = new Molecule();
         Atom c1 = new Atom("C");
         c1.setFormalCharge(1);
-        c1.setHydrogenCount(2);
+        c1.setImplicitHydrogenCount(2);
         Atom c2 = new Atom("C");
-        c2.setHydrogenCount(2);
+        c2.setImplicitHydrogenCount(2);
         Atom c3 = new Atom("C");
-        c3.setHydrogenCount(3);
+        c3.setImplicitHydrogenCount(3);
         molecule.addAtom(c1);
         molecule.addAtom(c2);
         molecule.addAtom(c3);

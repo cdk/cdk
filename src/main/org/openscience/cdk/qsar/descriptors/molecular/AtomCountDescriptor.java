@@ -173,7 +173,7 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
         if (elementName.equals("*")) {
             for (int i = 0; i < container.getAtomCount(); i++) {
                 // we assume that UNSET is equivalent to 0 implicit H's
-                Integer hcount = container.getAtom(i).getHydrogenCount();
+                Integer hcount = container.getAtom(i).getImplicitHydrogenCount();
                 if (hcount != CDKConstants.UNSET) atomCount += hcount;
             }
             atomCount += container.getAtomCount();
@@ -183,7 +183,7 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
                     atomCount += 1;
                 } else {
                     // we assume that UNSET is equivalent to 0 implicit H's
-                    Integer hcount = container.getAtom(i).getHydrogenCount();
+                    Integer hcount = container.getAtom(i).getImplicitHydrogenCount();
                     if (hcount != CDKConstants.UNSET) atomCount += hcount;
                 }
             }

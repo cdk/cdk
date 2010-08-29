@@ -383,7 +383,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Atom sodium = new Atom("Na");
 		sodium.setFormalCharge(+1);
 		Atom hydroxyl = new Atom("O");
-		hydroxyl.setHydrogenCount(1);
+		hydroxyl.setImplicitHydrogenCount(1);
 		hydroxyl.setFormalCharge(-1);
 		molecule.addAtom(sodium);
 		molecule.addAtom(hydroxyl);
@@ -446,7 +446,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         sg.setUseAromaticityFlag(true);
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
 		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
-		sp2CarbonWithOneHydrogen.setHydrogenCount(1);
+		sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
 		molecule.addAtom(sp2CarbonWithOneHydrogen);
 		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
 		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
@@ -482,8 +482,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol.addBond(0, 2, IBond.Order.DOUBLE);
 		mol.addBond(0, 3, IBond.Order.SINGLE);
 		mol.addBond(0, 4, IBond.Order.SINGLE);
-		mol.getAtom(3).setHydrogenCount(1);
-		mol.getAtom(4).setHydrogenCount(1);
+		mol.getAtom(3).setImplicitHydrogenCount(1);
+		mol.getAtom(4).setImplicitHydrogenCount(1);
 		AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(mol);
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles = "";
@@ -513,8 +513,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol.addBond(0, 2, IBond.Order.DOUBLE);
 		mol.addBond(0, 3, IBond.Order.SINGLE);
 		mol.addBond(0, 4, IBond.Order.SINGLE);
-		mol.getAtom(3).setHydrogenCount(1);
-		mol.getAtom(4).setHydrogenCount(1);
+		mol.getAtom(3).setImplicitHydrogenCount(1);
+		mol.getAtom(4).setImplicitHydrogenCount(1);
 		AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(mol);
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles = "";
@@ -544,9 +544,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
 				atom.getCharge()!=null ? atom.getCharge().intValue() : 0
 			);
 			if (atom.getSymbol().equals("C")) {
-				atom.setHydrogenCount(4 - correction);
+				atom.setImplicitHydrogenCount(4 - correction);
 			} else if (atom.getSymbol().equals("N")) {
-				atom.setHydrogenCount(3 - correction);
+				atom.setImplicitHydrogenCount(3 - correction);
 			}
 		}
 	}

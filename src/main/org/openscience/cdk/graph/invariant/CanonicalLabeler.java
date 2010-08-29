@@ -130,7 +130,7 @@ public class CanonicalLabeler {
       a = (IAtom)atoms.next();
       inv = new StringBuffer();
       inv.append(atomContainer.getConnectedAtomsList(a).size() +
-              (a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount())); //Num connections
+              (a.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : a.getImplicitHydrogenCount())); //Num connections
       inv.append(atomContainer.getConnectedAtomsList(a).size());                        //Num of non H bonds
       inv.append(PeriodicTable.getAtomicNumber(a.getSymbol()));
         
@@ -141,7 +141,7 @@ public class CanonicalLabeler {
       else
         inv.append(0);                                                              //Absolute charge
       inv.append((int)Math.abs( (a.getFormalCharge() == CDKConstants.UNSET ? 0.0 : a.getFormalCharge())));                                     //Hydrogen count
-      inv.append((a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount()));
+      inv.append((a.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : a.getImplicitHydrogenCount()));
       vect.add(new InvPair(Long.parseLong(inv.toString()), a));
     }
     return vect;

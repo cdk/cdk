@@ -599,11 +599,11 @@ public class ChemicalFilters {
             double rBO = Reactant.getBondOrderSum(rAtom);
             double pBO = Product.getBondOrderSum(pAtom);
 
-            if (rAtom.getHydrogenCount() != null) {
-                rHCount = rAtom.getHydrogenCount();
+            if (rAtom.getImplicitHydrogenCount() != null) {
+                rHCount = rAtom.getImplicitHydrogenCount();
             }
-            if (pAtom.getHydrogenCount() != null) {
-                pHCount = pAtom.getHydrogenCount();
+            if (pAtom.getImplicitHydrogenCount() != null) {
+                pHCount = pAtom.getImplicitHydrogenCount();
             }
 
             int HScore = Math.abs(rHCount - pHCount);

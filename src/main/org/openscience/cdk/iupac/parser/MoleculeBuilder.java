@@ -469,7 +469,7 @@ public class MoleculeBuilder
     {
         //Create the new atom and bond.
         Atom newAtom = new Atom(newAtomType);
-        newAtom.setHydrogenCount(hydrogenCount);
+        newAtom.setImplicitHydrogenCount(hydrogenCount);
         Bond newBond = new Bond(newAtom, otherConnectingAtom, bondOrder);
         
         //Add the new atom and bond to the molecule.

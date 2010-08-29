@@ -88,7 +88,7 @@ public class VFAtomMatcher extends PseudoAtom implements IQueryAtom {
      */
     public VFAtomMatcher(IAtom template, int blockedPositions) {
         this(template);
-        Integer hCount = template.getHydrogenCount();
+        Integer hCount = template.getImplicitHydrogenCount();
         if (hCount != null) {
             this.maximumNeighbors = template.getFormalNeighbourCount() + hCount;
         } else {

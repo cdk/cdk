@@ -235,7 +235,7 @@ public class AtomContainerManipulator {
     public static int getTotalHydrogenCount(IAtomContainer atomContainer) {
         int hCount = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            Integer ihcount = atomContainer.getAtom(i).getHydrogenCount();
+            Integer ihcount = atomContainer.getAtom(i).getImplicitHydrogenCount();
             if (ihcount != CDKConstants.UNSET)
                 hCount += ihcount;
         }
@@ -266,7 +266,7 @@ public class AtomContainerManipulator {
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
         for (IAtom atom : atomContainer.atoms()) {
             if (!atom.getSymbol().equals("H")) {
-                Integer hCount = atom.getHydrogenCount();
+                Integer hCount = atom.getImplicitHydrogenCount();
                 if (hCount != null) {
                     for (int i = 0; i < hCount; i++) {
                         IAtom hydrogen = atom.getBuilder().newInstance(IAtom.class,"H");
@@ -279,7 +279,7 @@ public class AtomContainerManipulator {
                                 )
                         );
                     }
-                    atom.setHydrogenCount(0);
+                    atom.setImplicitHydrogenCount(0);
                 }
             }
         }
@@ -290,7 +290,7 @@ public class AtomContainerManipulator {
      */
     @TestMethod("testCountH")
     public static int countHydrogens(IAtomContainer atomContainer, IAtom atom) {
-        int hCount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        int hCount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
         hCount += countExplicitHydrogens(atomContainer, atom);
         return hCount;
 	}
@@ -397,15 +397,15 @@ public class AtomContainerManipulator {
             for (IAtom iAtom : atomContainer.getConnectedAtomsList(aRemove)) {
                 final IAtom neighb = map.get(iAtom);
                 if (neighb == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
-                neighb.setHydrogenCount(
-                        (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount())
+                neighb.setImplicitHydrogenCount(
+                        (neighb.getImplicitHydrogenCount() == null ? 0 : neighb.getImplicitHydrogenCount())
                                 + 1
                 );
             }
         }
         for(IAtom atom : mol.atoms()){
-            if(atom.getHydrogenCount()==null)
-                atom.setHydrogenCount(0);
+            if(atom.getImplicitHydrogenCount()==null)
+                atom.setImplicitHydrogenCount(0);
         }
         mol.setProperties(atomContainer.getProperties());
         mol.setFlags(atomContainer.getFlags());
@@ -469,7 +469,7 @@ public class AtomContainerManipulator {
 				} catch (CloneNotSupportedException e) {
 					e.printStackTrace();
 				}
-				a.setHydrogenCount(0);
+				a.setImplicitHydrogenCount(0);
 				mol.addAtom(a);
 				map.put(atom, a);
 			} else {
@@ -515,7 +515,7 @@ public class AtomContainerManipulator {
 			// Process neighbours.
             for (IAtom  neighbor : ac.getConnectedAtomsList(removeAtom)) {
                 final IAtom neighb = map.get(neighbor);
-				neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
+				neighb.setImplicitHydrogenCount(neighb.getImplicitHydrogenCount() + 1);
             }
 		}
 

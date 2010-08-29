@@ -83,7 +83,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		// test methane with implicit hydrogen
 		m = new Molecule();
 		c = new Atom("C");
-		c.setHydrogenCount(4);
+		c.setImplicitHydrogenCount(4);
 		m.addAtom(c);
 		Assert.assertTrue(satcheck.allSaturated(m));
 	}
@@ -181,9 +181,9 @@ public class SaturationCheckerTest extends CDKTestCase
 	@Test public void testSaturate() throws Exception {
 		// test ethene
 		Atom c1 = new Atom("C");
-		c1.setHydrogenCount(2);
+		c1.setImplicitHydrogenCount(2);
 		Atom c2 = new Atom("C");
-		c2.setHydrogenCount(2);
+		c2.setImplicitHydrogenCount(2);
 		Bond b = new Bond(c1, c2, IBond.Order.SINGLE);
 		// force single bond, saturate() must fix that
 		Molecule m = new Molecule();
@@ -200,13 +200,13 @@ public class SaturationCheckerTest extends CDKTestCase
 	@Test public void testSaturate_Butene() throws Exception {
 		// test ethene
 		Atom c1 = new Atom("C");
-		c1.setHydrogenCount(2);
+		c1.setImplicitHydrogenCount(2);
 		Atom c2 = new Atom("C");
-		c2.setHydrogenCount(1);
+		c2.setImplicitHydrogenCount(1);
 		Atom c3 = new Atom("C");
-		c3.setHydrogenCount(1);
+		c3.setImplicitHydrogenCount(1);
 		Atom c4 = new Atom("C");
-		c4.setHydrogenCount(2);
+		c4.setImplicitHydrogenCount(2);
 		Bond b1 = new Bond(c1, c2, IBond.Order.SINGLE);
 		Bond b2 = new Bond(c3, c2, IBond.Order.SINGLE);
 		Bond b3 = new Bond(c3, c4, IBond.Order.SINGLE);
@@ -345,20 +345,20 @@ public class SaturationCheckerTest extends CDKTestCase
       m.addAtom(new Atom("O"));
       m.addAtom(new Atom("O"));
       m.addAtom(new Atom("F"));
-      m.getAtom(0).setHydrogenCount(1);
-      m.getAtom(2).setHydrogenCount(1);
-      m.getAtom(3).setHydrogenCount(1);
-      m.getAtom(6).setHydrogenCount(1);
-      m.getAtom(7).setHydrogenCount(1);
-      m.getAtom(8).setHydrogenCount(1);
-      m.getAtom(9).setHydrogenCount(1);
+      m.getAtom(0).setImplicitHydrogenCount(1);
+      m.getAtom(2).setImplicitHydrogenCount(1);
+      m.getAtom(3).setImplicitHydrogenCount(1);
+      m.getAtom(6).setImplicitHydrogenCount(1);
+      m.getAtom(7).setImplicitHydrogenCount(1);
+      m.getAtom(8).setImplicitHydrogenCount(1);
+      m.getAtom(9).setImplicitHydrogenCount(1);
       //m.getAtomAt(10).setHydrogenCount(1);
       //m.getAtomAt(12).setHydrogenCount(1);
-      m.getAtom(14).setHydrogenCount(1);
-      m.getAtom(15).setHydrogenCount(1);
-      m.getAtom(17).setHydrogenCount(1);
-      m.getAtom(18).setHydrogenCount(1);
-      m.getAtom(19).setHydrogenCount(3);
+      m.getAtom(14).setImplicitHydrogenCount(1);
+      m.getAtom(15).setImplicitHydrogenCount(1);
+      m.getAtom(17).setImplicitHydrogenCount(1);
+      m.getAtom(18).setImplicitHydrogenCount(1);
+      m.getAtom(19).setImplicitHydrogenCount(3);
       m.addBond(0, 1, IBond.Order.SINGLE);
       m.addBond(1, 2, IBond.Order.SINGLE);
       m.addBond(2, 3, IBond.Order.SINGLE);

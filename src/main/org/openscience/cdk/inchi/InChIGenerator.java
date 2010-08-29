@@ -257,7 +257,7 @@ public class InChIGenerator {
             // atom.getHydrogenCount() returns number of implict hydrogens, not
             // total number
             // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
-            Integer implicitH = atom.getHydrogenCount();
+            Integer implicitH = atom.getImplicitHydrogenCount();
             if (implicitH == CDKConstants.UNSET) implicitH = 0;
             
             if (implicitH != 0) {

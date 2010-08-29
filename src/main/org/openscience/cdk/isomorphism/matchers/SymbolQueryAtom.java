@@ -47,7 +47,7 @@ public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryA
         if(ID!=null && HCount==0)
            return this.getSymbol()!=(atom.getSymbol());
         else if(ID==null && HCount!=0){
-            return (this.getHydrogenCount()==HCount);
+            return (this.getImplicitHydrogenCount()==HCount);
         }
         else 
             return this.getSymbol().equals(atom.getSymbol());

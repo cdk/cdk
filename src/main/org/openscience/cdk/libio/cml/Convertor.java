@@ -636,7 +636,7 @@ public class Convertor {
         
         // CML's hydrogen count consists of the sum of implicit and explicit
         // hydrogens (see bug #1655045).
-        Integer totalHydrogen = cdkAtom.getHydrogenCount();
+        Integer totalHydrogen = cdkAtom.getImplicitHydrogenCount();
         if (totalHydrogen != null) {
         	if (container != null) {
         		Iterator<IBond> bonds = container.getConnectedBondsList(cdkAtom).iterator();

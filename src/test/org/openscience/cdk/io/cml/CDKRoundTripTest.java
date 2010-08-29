@@ -188,7 +188,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     @Test public void testIAtom_HydrogenCount() throws Exception {
         IMolecule mol = builder.newInstance(IMolecule.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
-        atom.setHydrogenCount(4);
+        atom.setImplicitHydrogenCount(4);
         mol.addAtom(atom);
         IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;

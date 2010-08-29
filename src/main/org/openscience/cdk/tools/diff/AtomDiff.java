@@ -57,7 +57,7 @@ public class AtomDiff {
         IAtom firstElem = (IAtom)first;
         IAtom secondElem = (IAtom)second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("AtomDiff");
-        totalDiff.addChild(IntegerDifference.construct("H", firstElem.getHydrogenCount(), secondElem.getHydrogenCount()));
+        totalDiff.addChild(IntegerDifference.construct("H", firstElem.getImplicitHydrogenCount(), secondElem.getImplicitHydrogenCount()));
         totalDiff.addChild(IntegerDifference.construct("SP", firstElem.getStereoParity(), secondElem.getStereoParity()));
         totalDiff.addChild(Point2dDifference.construct("2D", firstElem.getPoint2d(), secondElem.getPoint2d()));
         totalDiff.addChild(Point3dDifference.construct("3D", firstElem.getPoint3d(), secondElem.getPoint3d()));

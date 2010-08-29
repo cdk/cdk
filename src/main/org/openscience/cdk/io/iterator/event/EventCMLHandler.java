@@ -253,7 +253,7 @@ public class EventCMLHandler extends CMLHandler {
             propertyType.equals("partialCharge")) {
                 currentAtom.setCharge(Double.parseDouble(propertyValue));
             } else if (propertyType.equals("hydrogenCount")) {
-                currentAtom.setHydrogenCount(Integer.parseInt(propertyValue));
+                currentAtom.setImplicitHydrogenCount(Integer.parseInt(propertyValue));
             } else if (propertyType.equals("dictRef")) {
                 currentAtom.setProperty("org.openscience.cdk.dict", propertyValue);
             } else if (propertyType.equals("atomicNumber")) {

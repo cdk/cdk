@@ -62,14 +62,14 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
 		atomInMol1 = new Atom("Cl");
 		atomInMol1.setCharge(-1.0);
 		atomInMol1.setFormalCharge(-1);
-		atomInMol1.setHydrogenCount(1);
+		atomInMol1.setImplicitHydrogenCount(1);
 		mol1.addAtom(atomInMol1);
 		mol1.addAtom(new Atom("Cl"));
 		bondInMol1 = new Bond(atomInMol1, mol1.getAtom(1));
 		mol1.addBond(bondInMol1);
 		mol2 = new Molecule();
 		atomInMol2 = new Atom("O");
-		atomInMol2.setHydrogenCount(2);
+		atomInMol2.setImplicitHydrogenCount(2);
 		mol2.addAtom(atomInMol2);
 		som.addMolecule(mol1);
 		som.addMolecule(mol2);

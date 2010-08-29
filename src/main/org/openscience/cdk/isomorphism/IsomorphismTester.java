@@ -126,7 +126,7 @@ public class IsomorphismTester implements java.io.Serializable
 					atom1 = base.getAtom(f);
 					atom2 = compare.getAtom(g);
 					if (!(atom1.getSymbol().equals(atom2.getSymbol())) && 
-                          atom1.getHydrogenCount() == atom2.getHydrogenCount())
+                          atom1.getImplicitHydrogenCount() == atom2.getImplicitHydrogenCount())
 					{
 						return false;
 					}

@@ -57,7 +57,7 @@ public interface IAtom extends IAtomType {
 	 * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
 	 * @see    #getHydrogenCount
 	 */
-	public void setHydrogenCount(Integer hydrogenCount);
+	public void setImplicitHydrogenCount(Integer hydrogenCount);
 
 	/**
 	 * Returns the implicit hydrogen count of this atom.
@@ -65,7 +65,7 @@ public interface IAtom extends IAtomType {
 	 * @return    The hydrogen count of this atom.
 	 * @see       #setHydrogenCount
 	 */
-	public Integer getHydrogenCount();
+	public Integer getImplicitHydrogenCount();
 
 	/**
 	 * Sets a point specifying the location of this

@@ -43,7 +43,7 @@ public class ImplicitHCountAtom extends SMARTSAtom {
      * @param hCount
      */
     public ImplicitHCountAtom(int hCount) {
-        this.setHydrogenCount(hCount);
+        this.setImplicitHydrogenCount(hCount);
     }
    
     /**
@@ -53,8 +53,8 @@ public class ImplicitHCountAtom extends SMARTSAtom {
      * @return
      */
     private int getIMPH(IAtom atom){
-        if (atom.getHydrogenCount() == CDKConstants.UNSET) return 0;
-        else return atom.getHydrogenCount();
+        if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET) return 0;
+        else return atom.getImplicitHydrogenCount();
     }
     /* (non-Javadoc)
      * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)

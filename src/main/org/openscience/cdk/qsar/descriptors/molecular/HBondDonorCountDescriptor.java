@@ -157,7 +157,7 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
             // checking for O and N atoms where the formal charge is >= 0
             if ((atom.getSymbol().equals("O") || atom.getSymbol().equals("N")) && atom.getFormalCharge() >= 0) {
                 // implicit hydrogens
-                Integer implicitH = atom.getHydrogenCount();
+                Integer implicitH = atom.getImplicitHydrogenCount();
                 if (implicitH == CDKConstants.UNSET) implicitH = 0;
                 if (implicitH > 0) {
                     hBondDonors++;

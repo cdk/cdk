@@ -178,7 +178,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
                 } else {
                     this.fractionalPoint3d = null;
                 }
-    			this.hydrogenCount = ((IAtom)element).getHydrogenCount();
+    			this.hydrogenCount = ((IAtom)element).getImplicitHydrogenCount();
     			this.charge = ((IAtom)element).getCharge();
     			this.stereoParity = ((IAtom)element).getStereoParity();
     		}
@@ -216,7 +216,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @see    #getHydrogenCount
          */
-        public void setHydrogenCount(Integer hydrogenCount) {
+        public void setImplicitHydrogenCount(Integer hydrogenCount) {
         	this.hydrogenCount = hydrogenCount;
         	notifyChanged();
         }
@@ -228,7 +228,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @see       #setHydrogenCount
          */
-        public Integer getHydrogenCount() {
+        public Integer getImplicitHydrogenCount() {
         	return this.hydrogenCount;
         }
 
@@ -370,8 +370,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
                 if (getSymbol() != null) {
                 	stringContent.append(", S:").append(getSymbol());
                 }
-                if (getHydrogenCount() != null) {
-                	stringContent.append(", H:").append(getHydrogenCount());
+                if (getImplicitHydrogenCount() != null) {
+                	stringContent.append(", H:").append(getImplicitHydrogenCount());
                 }
                 if (getStereoParity() != null) {
                 	stringContent.append(", SP:").append(getStereoParity());

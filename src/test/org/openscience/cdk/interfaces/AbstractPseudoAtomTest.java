@@ -66,8 +66,8 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
 
     @Test public void testSetHydrogenCount_Integer() {
         IPseudoAtom atom = (IPseudoAtom)newChemObject();
-        atom.setHydrogenCount(+5);
-        Assert.assertEquals(5, atom.getHydrogenCount().intValue());
+        atom.setImplicitHydrogenCount(+5);
+        Assert.assertEquals(5, atom.getImplicitHydrogenCount().intValue());
     }
 
     @Test public void testSetCharge_Double() {
@@ -145,12 +145,12 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
      */
     @Test public void testClone_HydrogenCount() throws Exception {
         IAtom atom = (IAtom)newChemObject();
-        atom.setHydrogenCount(3);
+        atom.setImplicitHydrogenCount(3);
         IAtom clone = (IAtom)atom.clone();
 
         // test cloning
-        atom.setHydrogenCount(4);
-        Assert.assertEquals(3, clone.getHydrogenCount().intValue());
+        atom.setImplicitHydrogenCount(4);
+        Assert.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -160,11 +160,11 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     @Test public void testGetHydrogenCount() {
         // expect zero by definition
         IAtom a = (IAtom)newChemObject();
-        Assert.assertNull(a.getHydrogenCount());
-        a.setHydrogenCount(5);
-        Assert.assertEquals(5, a.getHydrogenCount().intValue());
-        a.setHydrogenCount(null);
-        Assert.assertNull(a.getHydrogenCount());
+        Assert.assertNull(a.getImplicitHydrogenCount());
+        a.setImplicitHydrogenCount(5);
+        Assert.assertEquals(5, a.getImplicitHydrogenCount().intValue());
+        a.setImplicitHydrogenCount(null);
+        Assert.assertNull(a.getImplicitHydrogenCount());
     }
 
     /**

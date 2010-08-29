@@ -58,7 +58,7 @@ public class CrossoverMachineTest extends CDKTestCase {
         for(int i=0;i<som.getAtomContainerCount();i++){
 			int[] hydrogencount1=new int[4];
 			for(IAtom atom : som.getAtomContainer(i).atoms()){
-				hydrogencount1[atom.getHydrogenCount()]++;
+				hydrogencount1[atom.getImplicitHydrogenCount()]++;
 			}
         	for(int k=i+1;k<som.getAtomContainerCount();k++){
         		try{
@@ -67,7 +67,7 @@ public class CrossoverMachineTest extends CDKTestCase {
 	        			som.getAtomContainer(k));
 	    			int[] hydrogencount2=new int[4];
 	    			for(IAtom atom : som.getAtomContainer(k).atoms()){
-	    				hydrogencount2[atom.getHydrogenCount()]++;
+	    				hydrogencount2[atom.getImplicitHydrogenCount()]++;
 	    			}
 	        		Assert.assertEquals("Result size must be 2",2, result.size());
 	        		for(int l=0;l<2;l++){
@@ -81,8 +81,8 @@ public class CrossoverMachineTest extends CDKTestCase {
 	        			int[] hydrogencountresult=new int[4];
 	        			int hcounttotal=0;
 	        			for(IAtom atom : result.get(l).atoms()){
-	        				hydrogencountresult[atom.getHydrogenCount()]++;
-	        				hcounttotal+=atom.getHydrogenCount();
+	        				hydrogencountresult[atom.getImplicitHydrogenCount()]++;
+	        				hcounttotal+=atom.getImplicitHydrogenCount();
 	        			}
 	        			if(hydrogencount1[0]==hydrogencount2[0])
 	        				Assert.assertEquals("Hydrogen count of the result must" +

@@ -292,7 +292,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
                     if (((IAtom) connectedAtoms.get(neighbourIndex)).getSymbol().equals("H"))
                         hCount++;
                 // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
-                Integer implicitHAtoms = atom.getHydrogenCount();
+                Integer implicitHAtoms = atom.getImplicitHydrogenCount();
                 if (implicitHAtoms == CDKConstants.UNSET) {
                     implicitHAtoms = 0;
                 }

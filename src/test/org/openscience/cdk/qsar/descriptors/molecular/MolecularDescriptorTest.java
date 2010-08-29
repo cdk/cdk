@@ -189,7 +189,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IMolecule methane1 = builder.newInstance(IMolecule.class);
         IAtom c1 = builder.newInstance(IAtom.class,"C");
-        c1.setHydrogenCount(4);
+        c1.setImplicitHydrogenCount(4);
         methane1.addAtom(c1);
 
         IMolecule methane2 = builder.newInstance(IMolecule.class);
@@ -235,8 +235,8 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IMolecule ethane1 = builder.newInstance(IMolecule.class);
         IAtom c1 = builder.newInstance(IAtom.class,"C");
         IAtom c2 = builder.newInstance(IAtom.class,"C");
-        c1.setHydrogenCount(3);
-        c2.setHydrogenCount(3);
+        c1.setImplicitHydrogenCount(3);
+        c2.setImplicitHydrogenCount(3);
         ethane1.addAtom(c1);
         ethane1.addAtom(c2);
         ethane1.addBond(0,1,IBond.Order.SINGLE);

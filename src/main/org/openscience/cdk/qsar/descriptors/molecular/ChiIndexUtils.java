@@ -165,7 +165,7 @@ class ChiIndexUtils {
                 // TODO there should be a neater way to get the valence electron count
                 int zv = getValenceElectronCount(atom);
 
-                int hsupp = atom.getHydrogenCount();
+                int hsupp = atom.getImplicitHydrogenCount();
                 double deltav = (double) (zv - hsupp) / (double) (z - zv - 1);
 
                 prod = prod * deltav;

@@ -244,7 +244,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      */
     @TestMethod("testGetImplicitHydrogenCount")
     public static int getImplicitHydrogenCount(IAtom atom) {
-        return atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        return atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
     }
 
     /**
@@ -289,10 +289,10 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                     clonedAtom.setID(atom.getID());
                     clonedAtom.setFlags(atom.getFlags());
                     int countH = 0;
-                    if (atom.getHydrogenCount() != null) {
-                        countH = atom.getHydrogenCount();
+                    if (atom.getImplicitHydrogenCount() != null) {
+                        countH = atom.getImplicitHydrogenCount();
                     }
-                    clonedAtom.setHydrogenCount(countH);
+                    clonedAtom.setImplicitHydrogenCount(countH);
                     mol.addAtom(clonedAtom);
                     map.put(atom, clonedAtom);
 
@@ -443,10 +443,10 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 }
                 //Added by Asad
                 if (!(neighb instanceof IPseudoAtom)) {
-                    neighb.setHydrogenCount(
-                            (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount()) + 1);
+                    neighb.setImplicitHydrogenCount(
+                            (neighb.getImplicitHydrogenCount() == null ? 0 : neighb.getImplicitHydrogenCount()) + 1);
                 } else {
-                    neighb.setHydrogenCount(0);
+                    neighb.setImplicitHydrogenCount(0);
                 }
             }
         }
@@ -524,8 +524,8 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     }
 
     private static void setHydrogenCount(IAtomContainer container, int index, IAtom[] atoms) {
-        if (container.getAtom(index).getHydrogenCount() != null) {
-            atoms[index].setHydrogenCount(Integer.valueOf(container.getAtom(index).getHydrogenCount()));
+        if (container.getAtom(index).getImplicitHydrogenCount() != null) {
+            atoms[index].setImplicitHydrogenCount(Integer.valueOf(container.getAtom(index).getImplicitHydrogenCount()));
         }
     }
 

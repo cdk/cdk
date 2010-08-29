@@ -165,18 +165,18 @@ public class HuLuIndexTool
 
             //weightArray[k] = atom.getValenceElectronsCount() - atom.getHydrogenCount(); // method unfinished
             if(atom.getSymbol()=="O")
-                weightArray[i] = 6 - atom.getHydrogenCount();
+                weightArray[i] = 6 - atom.getImplicitHydrogenCount();
             else
-                weightArray[i] = 4 - atom.getHydrogenCount();
+                weightArray[i] = 4 - atom.getImplicitHydrogenCount();
 
 
 
             for (int j = 0; j < apspMatrix.length; j++)
             {
                 if(atomContainer.getAtom(j).getSymbol()=="O")
-                    valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtom(j).getHydrogenCount();
+                    valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtom(j).getImplicitHydrogenCount();
                 else
-                    valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getHydrogenCount();
+                    valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getImplicitHydrogenCount();
             }
 
             Iterator bonds = atomContainer.bonds().iterator();

@@ -500,9 +500,9 @@ public class SmilesGenerator
 			return false;
 		}
 		// TO-DO: We make the silent assumption of unset hydrogen count equals zero hydrogen count here.
-		int lengthAtom = container.getConnectedAtomsCount(atom) + ((atom.getHydrogenCount() == CDKConstants.UNSET) ? 0 : atom.getHydrogenCount());
+		int lengthAtom = container.getConnectedAtomsCount(atom) + ((atom.getImplicitHydrogenCount() == CDKConstants.UNSET) ? 0 : atom.getImplicitHydrogenCount());
 		// TO-DO: We make the silent assumption of unset hydrogen count equals zero hydrogen count here.
-		int lengthParent = container.getConnectedAtomsCount(parent) + ((parent.getHydrogenCount() == CDKConstants.UNSET) ? 0 : parent.getHydrogenCount());
+		int lengthParent = container.getConnectedAtomsCount(parent) + ((parent.getImplicitHydrogenCount() == CDKConstants.UNSET) ? 0 : parent.getImplicitHydrogenCount());
 		if (container.getBond(atom, parent) != null)
 		{
 			if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N"))))
@@ -550,7 +550,7 @@ public class SmilesGenerator
 	private boolean isStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent, boolean[] doubleBondConfiguration)
 	{
 		// TO-DO: We make the silent assumption of unset hydrogen count equals zero hydrogen count here.
-		int lengthAtom = container.getConnectedAtomsCount(a) + ((a.getHydrogenCount() == CDKConstants.UNSET) ? 0 : a.getHydrogenCount());
+		int lengthAtom = container.getConnectedAtomsCount(a) + ((a.getImplicitHydrogenCount() == CDKConstants.UNSET) ? 0 : a.getImplicitHydrogenCount());
 		if (lengthAtom != 3 && (lengthAtom != 2 && !a.getSymbol().equals("N")))
 		{
 			return (false);
@@ -1646,8 +1646,8 @@ public class SmilesGenerator
 			} else
 			{
 				buffer.append(symbol);
-                if (symbol.equals("*") && a.getHydrogenCount() != null && a.getHydrogenCount() > 0)
-                    buffer.append("H").append(a.getHydrogenCount());
+                if (symbol.equals("*") && a.getImplicitHydrogenCount() != null && a.getImplicitHydrogenCount() > 0)
+                    buffer.append("H").append(a.getImplicitHydrogenCount());
 			}
 			if (a.getProperty(RING_CONFIG) != null && a.getProperty(RING_CONFIG).equals(UP))
 			{

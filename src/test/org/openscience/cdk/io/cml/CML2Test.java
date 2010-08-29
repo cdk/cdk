@@ -107,7 +107,7 @@ public class CML2Test extends CDKTestCase {
         chemFile = (IChemFile) reader.read(chemFile);
         IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
         for (IAtom atom : container.atoms()) {
-            Assert.assertEquals(CDKConstants.UNSET, atom.getHydrogenCount());
+            Assert.assertEquals(CDKConstants.UNSET, atom.getImplicitHydrogenCount());
         }
     }
 

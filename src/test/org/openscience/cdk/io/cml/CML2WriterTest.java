@@ -104,7 +104,7 @@ public class CML2WriterTest extends CDKTestCase {
 		StringWriter writer = new StringWriter();
 		IMolecule molecule = new NNMolecule(); // methane
 		molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class,Elements.CARBON));
-		molecule.getAtom(0).setHydrogenCount(4);
+		molecule.getAtom(0).setImplicitHydrogenCount(4);
         CMLWriter cmlWriter = new CMLWriter(writer);
         
         cmlWriter.write(molecule);
@@ -157,7 +157,7 @@ public class CML2WriterTest extends CDKTestCase {
 		IMolecule molecule = new NNMolecule(); // methane
 		molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class,Elements.CARBON));
 		molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class,Elements.HYDROGEN));
-		molecule.getAtom(0).setHydrogenCount(3);
+		molecule.getAtom(0).setImplicitHydrogenCount(3);
 		molecule.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
         CMLWriter cmlWriter = new CMLWriter(writer);
         

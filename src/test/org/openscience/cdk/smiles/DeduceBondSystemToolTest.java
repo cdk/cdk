@@ -152,7 +152,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 		atom4.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.NITROGEN);
 		atom5.setHybridization(Hybridization.SP2);
-		atom5.setHydrogenCount(1);
+		atom5.setImplicitHydrogenCount(1);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);

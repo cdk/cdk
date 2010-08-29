@@ -530,7 +530,7 @@ public class PDBConvention extends CMLCoreModule {
             if (hasHCounts) {
 //          	cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.get(i));
             	// FIXME: the hCount in CML is the total of implicit *and* explicit
-            	currentAtom.setHydrogenCount(Integer.parseInt((String)hCounts.get(i)));
+            	currentAtom.setImplicitHydrogenCount(Integer.parseInt((String)hCounts.get(i)));
             }
 
             if (has2D) {

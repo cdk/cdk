@@ -169,7 +169,7 @@ protected JniInchiInputInchi input;
             // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
             int numH = iAt.getImplicitH();
             if (numH != 0) {
-                cAt.setHydrogenCount(numH);
+                cAt.setImplicitHydrogenCount(numH);
             }
             
             molecule.addAtom(cAt);

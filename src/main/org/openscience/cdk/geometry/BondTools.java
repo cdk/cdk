@@ -209,13 +209,13 @@ public class BondTools {
     }
 
       int hcount;
-      if (atom.getHydrogenCount() == CDKConstants.UNSET) hcount = 0;
-      else hcount = atom.getHydrogenCount();
+      if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+      else hcount = atom.getImplicitHydrogenCount();
 
     int lengthAtom = container.getConnectedAtomsList(atom).size() + hcount;
 
-       if (parent.getHydrogenCount() == CDKConstants.UNSET) hcount = 0;
-      else hcount = parent.getHydrogenCount();
+       if (parent.getImplicitHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+      else hcount = parent.getImplicitHydrogenCount();
 
     int lengthParent = container.getConnectedAtomsList(parent).size() + hcount;
       
@@ -256,8 +256,8 @@ public class BondTools {
    */
   private static boolean isStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent, boolean[] doubleBondConfiguration) {
       int hcount;
-      if (a.getHydrogenCount() == CDKConstants.UNSET) hcount = 0;
-      else hcount = a.getHydrogenCount();
+      if (a.getImplicitHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+      else hcount = a.getImplicitHydrogenCount();
 
     int lengthAtom = container.getConnectedAtomsList(a).size() + hcount;
       

@@ -83,8 +83,8 @@ public class SMARTSTest extends CDKTestCase {
         IAtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
         IAtom carbon = new org.openscience.cdk.Atom("C");
         IAtom carbon2 = carbon.getBuilder().newInstance(IAtom.class,"C");
-        carbon.setHydrogenCount(3);
-        carbon2.setHydrogenCount(3);
+        carbon.setImplicitHydrogenCount(3);
+        carbon2.setImplicitHydrogenCount(3);
         container.addAtom(carbon);
         container.addAtom(carbon2);
         container.addBond(carbon.getBuilder().newInstance(IBond.class,carbon, carbon2, IBond.Order.SINGLE));

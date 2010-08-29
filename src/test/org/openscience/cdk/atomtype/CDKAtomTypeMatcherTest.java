@@ -312,16 +312,16 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {"C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, methane);
         
-        carbon.setHydrogenCount(1);
+        carbon.setImplicitHydrogenCount(1);
         assertAtomTypes(testedAtomTypes, expectedTypes, methane);
 
-        carbon.setHydrogenCount(2);
+        carbon.setImplicitHydrogenCount(2);
         assertAtomTypes(testedAtomTypes, expectedTypes, methane);
 
-        carbon.setHydrogenCount(3);
+        carbon.setImplicitHydrogenCount(3);
         assertAtomTypes(testedAtomTypes, expectedTypes, methane);
 
-        carbon.setHydrogenCount(4);
+        carbon.setImplicitHydrogenCount(4);
         assertAtomTypes(testedAtomTypes, expectedTypes, methane);
     }
     
@@ -1571,16 +1571,16 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
          IAtomContainer cp = new Molecule();
          cp.addAtom(new Atom("C"));
          cp.getAtom(0).setHybridization(IAtomType.Hybridization.SP2);
-         cp.getAtom(0).setHydrogenCount(1);
+         cp.getAtom(0).setImplicitHydrogenCount(1);
          cp.addAtom(new Atom("C"));
          cp.getAtom(1).setHybridization(IAtomType.Hybridization.SP2);
-         cp.getAtom(1).setHydrogenCount(1);
+         cp.getAtom(1).setImplicitHydrogenCount(1);
          cp.addAtom(new Atom("C"));
          cp.getAtom(2).setHybridization(IAtomType.Hybridization.SP2);
-         cp.getAtom(2).setHydrogenCount(1);
+         cp.getAtom(2).setImplicitHydrogenCount(1);
          cp.addAtom(new Atom("C"));
          cp.getAtom(3).setHybridization(IAtomType.Hybridization.SP2);
-         cp.getAtom(3).setHydrogenCount(1);
+         cp.getAtom(3).setImplicitHydrogenCount(1);
          cp.addAtom(new Atom("C"));
          cp.getAtom(4).setFormalCharge(-1);
          cp.getAtom(4).setHybridization(IAtomType.Hybridization.PLANAR3);
@@ -1824,7 +1824,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
             bond.setFlag(CDKConstants.ISAROMATIC, true);
         }
         for (IAtom atom : molecule.atoms()) {
-            atom.setHydrogenCount(1);
+            atom.setImplicitHydrogenCount(1);
         }
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
@@ -3232,7 +3232,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("C")); mol.getAtom(3).setHybridization(Hybridization.SP2);
         mol.addAtom(new Atom("N"));
         mol.getAtom(4).setHybridization(Hybridization.PLANAR3);
-        mol.getAtom(4).setHydrogenCount(1);
+        mol.getAtom(4).setImplicitHydrogenCount(1);
         mol.addAtom(new Atom("C")); mol.getAtom(5).setHybridization(Hybridization.SP2);
         mol.addAtom(new Atom("C")); mol.getAtom(6).setHybridization(Hybridization.SP2);
         mol.addAtom(new Atom("N")); mol.getAtom(7).setHybridization(Hybridization.SP2);
