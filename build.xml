@@ -534,13 +534,13 @@
             list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="control,extra,reaction,pdbcml,libiomd,smsd"/>
+            list="control,extra,reaction,pdbcml,libiomd"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="charges,smarts"/>
+            list="charges,smarts,signature"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="qm,qsar,ionpot,fingerprint,pcore"/>
+            list="qm,qsar,ionpot,fingerprint,pcore,smsd"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
@@ -550,9 +550,6 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="builder3d,builder3dtools"/>
-        <foreach target="compile-module" param="module"
-            parallel="${parallel}" maxthreads="${threadCount}"
-            list="signature"/>
     </target>
 
     <target id="test-dist-all" name="test-dist-all" description="test-dist-all">
