@@ -826,7 +826,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         for (IAtom atom : molecule.atoms())
             if (atom.getSymbol().equals("H") && atom.getMassNumber() != null && atom.getMassNumber() == 2)
                 deuteriumCount++;
-        Assert.assertEquals(deuteriumCount, 3);
+        Assert.assertEquals(3, deuteriumCount);
     }
 
     @Test public void testTritium() throws Exception {
@@ -839,7 +839,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         for (IAtom atom : molecule.atoms())
             if(atom.getSymbol().equals("H") && atom.getMassNumber()!=null && atom.getMassNumber()==3)
                 tritiumCount++;
-        Assert.assertEquals(tritiumCount, 1);
+        Assert.assertEquals(1, tritiumCount);
     }
 
 }
