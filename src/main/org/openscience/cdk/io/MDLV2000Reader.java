@@ -856,13 +856,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 if ("D".equals(pseudo.getLabel())) {
 					IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
-                    IIsotope isotope = new org.openscience.cdk.Isotope("H", 2);
+                    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class,"H", 2);
                     isotopeFactory.configure(newAtom, isotope);               
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
                 } else if ("T".equals(pseudo.getLabel())) {
                     IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
-				    IIsotope isotope = new org.openscience.cdk.Isotope("H", 3);
+				    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class,"H", 3);
 				    isotopeFactory.configure(newAtom, isotope);               
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
 				}
