@@ -154,8 +154,8 @@ public class DefaultBondMatcher implements IBondMatcher {
     }
 
     private int countImplicitHydrogens(IAtom atom) {
-        return (atom.getHydrogenCount() == null)
-                ? 0 : atom.getHydrogenCount();
+        return (atom.getImplicitHydrogenCount() == null)
+                ? 0 : atom.getImplicitHydrogenCount();
     }
 
     private int countNeighbors(IAtomContainer container, IAtom atom) {

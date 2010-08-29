@@ -230,7 +230,7 @@ public class VFState implements IState {
 
     private boolean matchAtoms(IMatch match) {
         IAtom atom = match.getTargetAtom();
-        int virtualHydrogenCount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount().intValue();
+        int virtualHydrogenCount = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount().intValue();
 
         if (match.getQueryNode().countNeighbors() > (target.getConnectedAtomsCount(atom)
                 + virtualHydrogenCount)) {

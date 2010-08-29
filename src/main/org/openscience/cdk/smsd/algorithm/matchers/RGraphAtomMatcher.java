@@ -177,8 +177,8 @@ public class RGraphAtomMatcher implements IAtomMatcher {
     }
 
     private int countImplicitHydrogens(IAtom atom) {
-        return (atom.getHydrogenCount() == null)
-                ? 0 : atom.getHydrogenCount();
+        return (atom.getImplicitHydrogenCount() == null)
+                ? 0 : atom.getImplicitHydrogenCount();
     }
 
     private int countSaturation(IAtomContainer container, IAtom atom) {
