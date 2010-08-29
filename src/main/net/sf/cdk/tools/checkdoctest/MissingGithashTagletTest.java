@@ -17,6 +17,7 @@
 package net.sf.cdk.tools.checkdoctest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sf.cdk.tools.doclets.CDKGitTaglet;
@@ -52,6 +53,10 @@ public class MissingGithashTagletTest implements IClassDocTester {
      * @inheritDoc
      */
     public List<ITestReport> test(ClassDoc classDoc) {
+        if (classDoc.containingClass() != null) {
+            return Collections.emptyList();
+        }
+
         List<ITestReport> reports = new ArrayList<ITestReport>();
         Tag[] tags = classDoc.tags("cdk.githash");
         if (tags.length == 0) {
