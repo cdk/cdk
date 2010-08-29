@@ -27,7 +27,8 @@ import java.util.Properties;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Helper class to provide general information about this CDK library.
@@ -37,7 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass("org.openscience.cdk.CDKTest")
 public class CDK {
 
-    private static LoggingTool logger = new LoggingTool(CDK.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDK.class);
 
     /**
      * Returns the version of this CDK library.
