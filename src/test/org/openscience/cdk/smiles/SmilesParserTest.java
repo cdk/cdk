@@ -1920,6 +1920,87 @@ public class SmilesParserTest extends CDKTestCase {
         IMolecule mol = p.parseSmiles("[255Ac]");
         Assert.assertEquals("Ac", mol.getAtom(0).getSymbol());
     }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testPuParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Pu]");
+        Assert.assertEquals("Pu", mol.getAtom(0).getSymbol());
+    }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testPrParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Pr]");
+        Assert.assertEquals("Pr", mol.getAtom(0).getSymbol());
+    }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testPaParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Pa]");
+        Assert.assertEquals("Pa", mol.getAtom(0).getSymbol());
+    }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testTbParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Tb]");
+        Assert.assertEquals("Tb", mol.getAtom(0).getSymbol());
+    }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testAmParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Am]");
+        Assert.assertEquals("Am", mol.getAtom(0).getSymbol());
+    }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testPmParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Pm]");
+        Assert.assertEquals("Pm", mol.getAtom(0).getSymbol());
+    }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testHoParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Ho]");
+        Assert.assertEquals("Ho", mol.getAtom(0).getSymbol());
+    }
+
+    /**
+     * @cdk.bug 3048501
+     */
+    @Test
+    public void testCfParsing() throws InvalidSmilesException{
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = p.parseSmiles("[Cf]");
+        Assert.assertEquals("Cf", mol.getAtom(0).getSymbol());
+    }
+
     /**
      * @cdk.bug 2976054
      * @throws InvalidSmilesException
