@@ -553,7 +553,7 @@ public class SmilesParser {
 			logger.debug("possibleSymbol: ", possibleSymbol);
 			if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
 					("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
-                    ("GdLaAcSmErCeEu".indexOf(possibleSymbol) >= 0) ||
+                    ("GdLaAcSmErCeEuPuPrPaTbAmPmHoCf".indexOf(possibleSymbol) >= 0) ||
 					("OsIrPtAuHgTlPbBiPoAtRnFrRaLrRfDbSgBhHsMtDs".indexOf(possibleSymbol) >= 0))
 			{
 				return possibleSymbol;
