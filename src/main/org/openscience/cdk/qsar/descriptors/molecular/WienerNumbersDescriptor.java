@@ -1,9 +1,5 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
+ *                    2010  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -58,19 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <li>WPOL - weiner polarity number
  * </ol>
  * 
- * <p>This descriptor uses these parameters:
- * <table border="1">
- *   <tr>
- *     <td>Name</td>
- *     <td>Default</td>
- *     <td>Description</td>
- *   </tr>
- *   <tr>
- *     <td></td>
- *     <td></td>
- *     <td>no parameters</td>
- *   </tr>
- * </table>
+ * <p>This descriptor does not have any parameters.
  * 
  * @author         mfe4
  * @cdk.created        December 7, 2004
