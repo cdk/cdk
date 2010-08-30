@@ -23,6 +23,13 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -53,16 +60,11 @@ import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
 
 /**
  * @author         steinbeck
@@ -934,6 +936,24 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         Assert.assertTrue("The two canonical SMILES should match",o1.equals(o2));
     }
+    
+    /**
+     * @cdk.bug 3040273
+     */
+    @Test 
+    public void testBug3040273() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String testSmiles = "C1(C(C(C(C(C1Br)Br)Br)Br)Br)Br";
+        IAtomContainer mol = sp.parseSmiles(testSmiles);
+        IsotopeFactory fact = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+        fact.configureAtoms(mol);
+        SmilesGenerator sg = new SmilesGenerator();
+        String smiles = sg.createSMILES((IMolecule) mol);
+        System.out.println(smiles);
+        IAtomContainer mol2 = sp.parseSmiles(smiles);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
+    }
+
     
 }
 
