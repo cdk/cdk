@@ -738,6 +738,17 @@ obtained by accurate mass spectrometry</bibtex:title>
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="Wiener1947">
+    <bibtex:article>
+      <bibtex:author>Wiener, Harry</bibtex:author>
+      <bibtex:title>Structural Determination of Paraffin Boiling Points</bibtex:title>
+      <bibtex:journal>Journal of the American Chemical Society</bibtex:journal>
+      <bibtex:year>1947</bibtex:year>
+      <bibtex:volume>69</bibtex:volume>
+      <bibtex:pages>17-20</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
    <bibtex:entry id="SHA97">
     <bibtex:article>
         <bibtex:author>
