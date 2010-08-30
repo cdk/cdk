@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.rgraph;
 
-import org.openscience.cdk.smsd.algorithm.rgraph.CDKRMapHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +31,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import static org.junit.Assert.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -76,7 +75,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         CDKRMapHandler.setSource(expResult);
         IAtomContainer result = CDKRMapHandler.getSource();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -88,7 +87,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         CDKRMapHandler.setSource(expResult);
         IAtomContainer result = CDKRMapHandler.getSource();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -100,7 +99,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         CDKRMapHandler.setTarget(expResult);
         IAtomContainer result = CDKRMapHandler.getTarget();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -112,7 +111,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         CDKRMapHandler.setTarget(expResult);
         IAtomContainer result = CDKRMapHandler.getTarget();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -127,7 +126,7 @@ public class CDKRMapHandlerTest {
         IAtomContainer Molecule2 = sp.parseSmiles("C1CCCC1");
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.calculateOverlapsAndReduce(Molecule1, Molecule2, true);
-        assertNotNull(FinalMappings.getInstance().getSize());
+        Assert.assertNotNull(FinalMappings.getInstance().getSize());
     }
 
     /**
@@ -143,7 +142,7 @@ public class CDKRMapHandlerTest {
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.calculateOverlapsAndReduceExactMatch(Molecule1, Molecule2, true);
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(FinalMappings.getInstance().getSize());
+        Assert.assertNotNull(FinalMappings.getInstance().getSize());
     }
 
     /**
@@ -159,7 +158,7 @@ public class CDKRMapHandlerTest {
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.calculateOverlapsAndReduceExactMatch(Molecule1, Molecule2, true);
         List<Map<Integer, Integer>> result = instance.getMappings();
-        assertEquals(2, result.size());
+        Assert.assertEquals(2, result.size());
     }
 
     /**
@@ -176,7 +175,7 @@ public class CDKRMapHandlerTest {
         mappings.add(map);
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.setMappings(mappings);
-        assertNotNull(instance.getMappings());
+        Assert.assertNotNull(instance.getMappings());
     }
 
     /**
@@ -189,7 +188,7 @@ public class CDKRMapHandlerTest {
         boolean expResult = true;
         instance.setTimeoutFlag(true);
         boolean result = instance.isTimeoutFlag();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -201,6 +200,6 @@ public class CDKRMapHandlerTest {
         boolean timeoutFlag = false;
         CDKRMapHandler instance = new CDKRMapHandler();
         instance.setTimeoutFlag(timeoutFlag);
-        assertNotSame(true, instance.isTimeoutFlag());
+        Assert.assertNotSame(true, instance.isTimeoutFlag());
     }
 }
