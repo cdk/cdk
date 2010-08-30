@@ -662,6 +662,20 @@ obtained by accurate mass spectrometry</bibtex:title>
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="TOD2000">
+    <bibtex:inbook>
+      <bibtex:author>Todeschini, R. and Consonni, V.</bibtex:author>
+      <bibtex:title></bibtex:title>
+      <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
+      <bibtex:year>2000</bibtex:year>
+      <bibtex:editor>Mannhold, R. and Kubinyi, H. and Timmermann, H.</bibtex:editor>
+      <bibtex:series>Methods and Principles in Medicinal Chemistry</bibtex:series>
+      <bibtex:volume>11</bibtex:volume>
+      <bibtex:publisher>Wiley-VCH</bibtex:publisher>
+      <bibtex:address>Weinheim</bibtex:address>
+    </bibtex:inbook>
+  </bibtex:entry>
+
   <bibtex:entry id="TRI92">
     <bibtex:book>
       <bibtex:author>Trinijastic, N.</bibtex:author>
