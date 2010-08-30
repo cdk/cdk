@@ -47,7 +47,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
         AtomContainerManipulator.removeHydrogens(mol);
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-        // OK: Assert.assertEquals(testResult[0], retval.get(0), 0.0001);
+        Assert.assertEquals(testResult[0], retval.get(0), 0.0001);
         Assert.assertEquals(testResult[1], retval.get(1), 0.0001);
     }
 }
