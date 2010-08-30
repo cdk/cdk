@@ -34,6 +34,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -57,9 +58,10 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -938,6 +940,24 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         Assert.assertTrue("The two canonical SMILES should match",o1.equals(o2));
     }
+    
+    /**
+     * @cdk.bug 3040273
+     */
+    @Test 
+    public void testBug3040273() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        String testSmiles = "C1(C(C(C(C(C1Br)Br)Br)Br)Br)Br";
+        IAtomContainer mol = sp.parseSmiles(testSmiles);
+        IsotopeFactory fact = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+        fact.configureAtoms(mol);
+        SmilesGenerator sg = new SmilesGenerator();
+        String smiles = sg.createSMILES((IMolecule) mol);
+        System.out.println(smiles);
+        IAtomContainer mol2 = sp.parseSmiles(smiles);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
+    }
+
     
     @Test public void testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity() throws CDKException{
         IMolecule benzene = MoleculeFactory.makeBenzene();
