@@ -34,8 +34,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.smsd.helper.FinalMappings;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * This algorithm derives from the algorithm described in

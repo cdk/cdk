@@ -33,8 +33,12 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.smsd.helper.BinaryTree;
+import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.BondMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultMCSPlusAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
+import org.openscience.cdk.smsd.helper.BinaryTree;
 
 /**
  * Class to perform check/methods for McGregor class.
@@ -133,14 +137,14 @@ public class McGregorChecks {
         } else {
 
             //Bond Matcher
-            org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher bondMatcher =
-                    new org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+            BondMatcher bondMatcher =
+                    new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
             //Atom Matcher
-            org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher1 =
-                    new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+            AtomMatcher atomMatcher1 =
+                    new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
             //Atom Matcher
-            org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher2 =
-                    new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
+            AtomMatcher atomMatcher2 =
+                    new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
 
             if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                     && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {
@@ -637,11 +641,11 @@ public class McGregorChecks {
         return unmappedMolAtoms;
     }
 
-    static List<Integer> markUnMappedAtoms(boolean flag, IAtomContainer source, List<Integer> mapped_atoms, int clique_siz) {
+    static List<Integer> markUnMappedAtoms(boolean flag, IAtomContainer container, List<Integer> mapped_atoms, int clique_siz) {
         List<Integer> unmappedMolAtoms = new ArrayList<Integer>();
         int unmapped_num = 0;
         boolean atom_is_unmapped = true;
-        for (int a = 0; a < source.getAtomCount(); a++) {
+        for (int a = 0; a < container.getAtomCount(); a++) {
             //Atomic list are only numbers from 1 to atom_number1
             for (int b = 0; b < clique_siz; b += 2) {
                 if (flag && mapped_atoms.get(b) == a) {

@@ -57,7 +57,7 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class DefaultMatcher {
 
-        public static boolean isBondMatch(org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher bondMatcher,
+        public static boolean isBondMatch(BondMatcher bondMatcher,
             IAtomContainer ac2,
             IBond bondA2,
             boolean shouldMatchBonds) {
@@ -71,8 +71,8 @@ public class DefaultMatcher {
 
     }
 
-    public static boolean isAtomMatch(org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher1,
-            org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher2,
+    public static boolean isAtomMatch(AtomMatcher atomMatcher1,
+            AtomMatcher atomMatcher2,
             IAtomContainer ac2,
             IBond bondA2,
             boolean shouldMatchBonds) {

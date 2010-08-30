@@ -53,13 +53,13 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultVFAtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultVFBondMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.VFBondMatcher;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.VFQueryBuilder;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQueryCompiler;
-import org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher;
-import org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher;
-import org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher;
-import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
 
 /**
  * This class creates an template for MCS/substructure query.
@@ -72,44 +72,31 @@ public class QueryCompiler implements IQueryCompiler {
 
     private IAtomContainer molecule = null;
     private IQueryAtomContainer queryMolecule = null;
-    private boolean shouldMatchBonds = false;
-
-    /**
-     *
-     * Template constructor
-     */
-    public QueryCompiler() {
-    }
+    private boolean shouldMatchBonds = true;
 
     /**
      * Construct query object from the molecule
      * @param molecule
      * @param shouldMatchBonds 
-     * @return IQuery
      */
-    public static IQuery compile(IAtomContainer molecule, boolean shouldMatchBonds) {
-        QueryCompiler qc = new QueryCompiler();
-        qc.setMolecule(molecule);
-        qc.setBondMatchFlag(shouldMatchBonds);
-        return qc.compile();
+    public QueryCompiler(IAtomContainer molecule, boolean shouldMatchBonds) {
+        this.setMolecule(molecule);
+        this.setBondMatchFlag(shouldMatchBonds);
     }
 
     /**
      * Construct query object from the molecule
      * @param molecule
-     * @return IQuery
      */
-    public static IQuery compile(IQueryAtomContainer molecule) {
-        QueryCompiler qc = new QueryCompiler();
-        qc.setMolecule(molecule);
-        return qc.compile();
+    public QueryCompiler(IQueryAtomContainer molecule) {
+        this.setQueryMolecule(molecule);
     }
 
     /**
      * Set Molecule
      * @param molecule
      */
-    public void setMolecule(IAtomContainer molecule) {
+    private void setMolecule(IAtomContainer molecule) {
         this.molecule = molecule;
     }
 
@@ -117,7 +104,7 @@ public class QueryCompiler implements IQueryCompiler {
      * Set Molecule
      * @param molecule
      */
-    public void setMolecule(IQueryAtomContainer molecule) {
+    private void setQueryMolecule(IQueryAtomContainer molecule) {
         this.queryMolecule = molecule;
     }
 
@@ -125,30 +112,21 @@ public class QueryCompiler implements IQueryCompiler {
      * Return molecule
      * @return Atom Container
      */
-    public IAtomContainer getMolecule() {
-        if (queryMolecule == null) {
-            return molecule;
-        } else {
-            return queryMolecule;
-        }
+    private IAtomContainer getMolecule() {
+        return queryMolecule == null ? molecule : queryMolecule;
     }
 
     /** {@inheritDoc}
      */
     @Override
     public IQuery compile() {
-        if (this.queryMolecule == null) {
-            return build(molecule);
-        } else {
-            return build(queryMolecule);
-        }
+        return this.queryMolecule == null ? build(molecule) : build(queryMolecule);
     }
 
     private IQuery build(IAtomContainer queryMolecule) {
         VFQueryBuilder result = new VFQueryBuilder();
-        for (IAtom atoms : queryMolecule.atoms()) {
-            IAtom atom = atoms;
-            IAtomMatcher matcher = createAtomMatcher(queryMolecule, atom);
+        for (IAtom atom : queryMolecule.atoms()) {
+            VFAtomMatcher matcher = createAtomMatcher(queryMolecule, atom);
             if (matcher != null) {
                 result.addNode(matcher, atom);
             }
@@ -166,7 +144,7 @@ public class QueryCompiler implements IQueryCompiler {
         VFQueryBuilder result = new VFQueryBuilder();
         for (IAtom atoms : queryMolecule.atoms()) {
             IQueryAtom atom = (IQueryAtom) atoms;
-            IAtomMatcher matcher = createAtomMatcher(atom, queryMolecule);
+            VFAtomMatcher matcher = createAtomMatcher(atom, queryMolecule);
             if (matcher != null) {
                 result.addNode(matcher, atom);
             }
@@ -180,33 +158,33 @@ public class QueryCompiler implements IQueryCompiler {
         return result;
     }
 
-    private IAtomMatcher createAtomMatcher(IAtomContainer mol, IAtom atom) {
-        return new VFAtomMatcher(mol, atom, isBondMatchFlag());
+    private VFAtomMatcher createAtomMatcher(IAtomContainer mol, IAtom atom) {
+        return new DefaultVFAtomMatcher(mol, atom, isBondMatchFlag());
     }
 
-    private IBondMatcher createBondMatcher(IAtomContainer mol, IBond bond) {
-        return new DefaultBondMatcher(mol, bond, isBondMatchFlag());
+    private VFBondMatcher createBondMatcher(IAtomContainer mol, IBond bond) {
+        return new DefaultVFBondMatcher(mol, bond, isBondMatchFlag());
     }
 
-    private IAtomMatcher createAtomMatcher(IQueryAtom atom, IQueryAtomContainer container) {
-        return new VFAtomMatcher(atom, container);
+    private VFAtomMatcher createAtomMatcher(IQueryAtom atom, IQueryAtomContainer container) {
+        return new DefaultVFAtomMatcher(atom, container);
     }
 
-    private IBondMatcher createBondMatcher(IQueryBond bond) {
-        return new DefaultBondMatcher(bond);
+    private VFBondMatcher createBondMatcher(IQueryBond bond) {
+        return new DefaultVFBondMatcher(bond);
     }
 
     /**
      * @return the shouldMatchBonds
      */
-    public boolean isBondMatchFlag() {
+    private boolean isBondMatchFlag() {
         return shouldMatchBonds;
     }
 
     /**
      * @param shouldMatchBonds the shouldMatchBonds to set
      */
-    public void setBondMatchFlag(boolean shouldMatchBonds) {
+    private void setBondMatchFlag(boolean shouldMatchBonds) {
         this.shouldMatchBonds = shouldMatchBonds;
     }
 }

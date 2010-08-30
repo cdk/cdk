@@ -36,8 +36,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.smsd.algorithm.mcgregor.McGregor;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
@@ -47,6 +45,9 @@ import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This class should be used to find MCS between query
@@ -77,6 +78,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     private IAtomContainer mol2 = null;
     private int vfMCSSize = -1;
     private boolean bond_Match_Flag = false;
+    private int countR = 0;
+    private int countP = 0;
     private final static ILoggingTool Logger =
             LoggingToolFactory.createLoggingTool(VFlibMCSHandler.class);
 
@@ -223,17 +226,22 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 //        System.out.println("searchVFMCSMappings ");
         IQuery query = null;
         IMapper mapper = null;
+
+        if (queryMol == null) {
+            countR = getReactantMol().getAtomCount() + AtomContainerManipulator.getSingleBondEquivalentSum(getReactantMol());
+            countP = getProductMol().getAtomCount() + AtomContainerManipulator.getSingleBondEquivalentSum(getProductMol());
+        }
         vfLibSolutions = new ArrayList<Map<INode, IAtom>>();
         if (queryMol != null) {
-            query = QueryCompiler.compile(queryMol);
+            query = new QueryCompiler(queryMol).compile();
             mapper = new VFMCSMapper(query);
             List<Map<INode, IAtom>> maps = mapper.getMaps(getProductMol());
             if (maps != null) {
                 vfLibSolutions.addAll(maps);
             }
             setVFMappings(true, query);
-        } else if (getReactantMol().getAtomCount() <= getProductMol().getAtomCount()) {
-            query = QueryCompiler.compile(mol1, isBondMatchFlag());
+        } else if (countR <= countP) {
+            query = new QueryCompiler(mol1, isBondMatchFlag()).compile();
             mapper = new VFMCSMapper(query);
             List<Map<INode, IAtom>> maps = mapper.getMaps(getProductMol());
             if (maps != null) {
@@ -241,7 +249,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             }
             setVFMappings(true, query);
         } else {
-            query = QueryCompiler.compile(getProductMol(), isBondMatchFlag());
+            query = new QueryCompiler(getProductMol(), isBondMatchFlag()).compile();
             mapper = new VFMCSMapper(query);
             List<Map<INode, IAtom>> maps = mapper.getMaps(getReactantMol());
             if (maps != null) {
@@ -249,6 +257,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             }
             setVFMappings(false, query);
         }
+        setVFMappings(false, query);
 //        System.out.println("Sol count " + vfLibSolutions.size());
 //        System.out.println("Sol size " + vfLibSolutions.iterator().next().size());
 //        System.out.println("MCSSize " + vfMCSSize);
@@ -258,19 +267,30 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     private void searchMcGregorMapping() throws CDKException, IOException {
         List<List<Integer>> mappings = new ArrayList<List<Integer>>();
+        boolean ROPFlag = true;
         for (Map<Integer, Integer> firstPassMappings : allMCSCopy) {
+            Map<Integer, Integer> tMapping = new TreeMap<Integer, Integer>(firstPassMappings);
             McGregor mgit = null;
             if (queryMol != null) {
                 mgit = new McGregor(queryMol, mol2, mappings, isBondMatchFlag());
             } else {
-                mgit = new McGregor(mol1, mol2, mappings, isBondMatchFlag());
+                if (countR > countP) {
+                    mgit = new McGregor(mol1, mol2, mappings, isBondMatchFlag());
+                } else {
+                    tMapping.clear();
+                    mgit = new McGregor(mol2, mol1, mappings, isBondMatchFlag());
+                    ROPFlag = false;
+                    for (Map.Entry<Integer, Integer> map : firstPassMappings.entrySet()) {
+                        tMapping.put(map.getValue(), map.getKey());
+                    }
+                }
             }
-            mgit.startMcGregorIteration(mgit.getMCSSize(), firstPassMappings); //Start McGregor search
+            mgit.startMcGregorIteration(mgit.getMCSSize(), tMapping); //Start McGregor search
             mappings = mgit.getMappings();
             mgit = null;
         }
 //        System.out.println("\nSol count after MG" + mappings.size());
-        setMcGregorMappings(mappings);
+        setMcGregorMappings(ROPFlag, mappings);
         vfMCSSize = vfMCSSize / 2;
 //        System.out.println("After set Sol count MG" + allMCS.size());
 //        System.out.println("MCSSize " + vfMCSSize + "\n");
@@ -290,15 +310,20 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             for (Map.Entry<INode, IAtom> mapping : solution.entrySet()) {
                 IAtom qAtom = null;
                 IAtom tAtom = null;
+                Integer qIndex = 0;
+                Integer tIndex = 0;
                 if (RONP) {
                     qAtom = query.getAtom(mapping.getKey());
                     tAtom = mapping.getValue();
+                    qIndex = getReactantMol().getAtomNumber(qAtom);
+                    tIndex = getProductMol().getAtomNumber(tAtom);
                 } else {
                     tAtom = query.getAtom(mapping.getKey());
                     qAtom = mapping.getValue();
+                    qIndex = getReactantMol().getAtomNumber(qAtom);
+                    tIndex = getProductMol().getAtomNumber(tAtom);
                 }
-                Integer qIndex = Integer.valueOf(getReactantMol().getAtomNumber(qAtom));
-                Integer tIndex = Integer.valueOf(getProductMol().getAtomNumber(tAtom));
+
                 if (qIndex != null && tIndex != null) {
                     atomatomMapping.put(qAtom, tAtom);
                     indexindexMapping.put(qIndex, tIndex);
@@ -319,7 +344,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         }
     }
 
-    private void setMcGregorMappings(List<List<Integer>> mappings) throws CDKException {
+    private void setMcGregorMappings(boolean RONP, List<List<Integer>> mappings) throws CDKException {
         int counter = 0;
         for (List<Integer> mapping : mappings) {
             if (mapping.size() > vfMCSSize) {
@@ -333,12 +358,22 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             for (int index = 0; index < mapping.size(); index += 2) {
                 IAtom qAtom = null;
                 IAtom tAtom = null;
+                Integer qIndex = 0;
+                Integer tIndex = 0;
 
-                qAtom = getReactantMol().getAtom(mapping.get(index));
-                tAtom = getProductMol().getAtom(mapping.get(index + 1));
+                if (RONP) {
+                    qAtom = getReactantMol().getAtom(mapping.get(index));
+                    tAtom = getProductMol().getAtom(mapping.get(index + 1));
 
-                Integer qIndex = mapping.get(index);
-                Integer tIndex = mapping.get(index + 1);
+                    qIndex = mapping.get(index);
+                    tIndex = mapping.get(index + 1);
+                } else {
+                    qAtom = getReactantMol().getAtom(mapping.get(index + 1));
+                    tAtom = getProductMol().getAtom(mapping.get(index));
+                    qIndex = mapping.get(index + 1);
+                    tIndex = mapping.get(index);
+                }
+
 
                 if (qIndex != null && tIndex != null) {
                     atomatomMapping.put(qAtom, tAtom);

@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.builder;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
-import org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher;
 
 /**
  * Class for building/storing nodes (atoms) in the graph with atom
@@ -43,13 +42,13 @@ public class NodeBuilder implements INode {
 
     private List<INode> neighborsList;
     private List<IEdge> edgesList;
-    private IAtomMatcher matcher;
+    private VFAtomMatcher matcher;
 
     /**
      * Construct a node for a query atom
      * @param matcher
      */
-    protected NodeBuilder(IAtomMatcher matcher) {
+    protected NodeBuilder(VFAtomMatcher matcher) {
         edgesList = new ArrayList<IEdge>();
         neighborsList = new ArrayList<INode>();
         this.matcher = matcher;
@@ -72,7 +71,7 @@ public class NodeBuilder implements INode {
     /** {@inheritDoc}
      */
     @Override
-    public IAtomMatcher getAtomMatcher() {
+    public VFAtomMatcher getAtomMatcher() {
         return matcher;
     }
 

@@ -1,4 +1,4 @@
-/* Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ /* Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -49,6 +49,9 @@ package org.openscience.cdk.smsd.algorithm.matchers;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 
 /**
  * Checks if atom is matching between query and target molecules.
@@ -57,12 +60,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
-public class MCSPlusAtomMatcher implements IAtomMatcher {
+public class DefaultVFAtomMatcher implements VFAtomMatcher {
 
     static final long serialVersionUID = -7861469841127327812L;
     private int maximumNeighbors;
     private String symbol = null;
     private IAtom qAtom = null;
+    private IQueryAtom smartQueryAtom = null;
     private boolean shouldMatchBonds = false;
 
     /**
@@ -82,7 +86,7 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
     /**
      * Constructor
      */
-    public MCSPlusAtomMatcher() {
+    public DefaultVFAtomMatcher() {
         this.qAtom = null;
         symbol = null;
         maximumNeighbors = -1;
@@ -94,19 +98,25 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
      * @param atom query atom
      * @param shouldMatchBonds bond matching flag
      */
-    public MCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
+    public DefaultVFAtomMatcher(IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
         this();
         this.qAtom = atom;
         this.symbol = atom.getSymbol();
-        this.maximumNeighbors = countSaturation(queryContainer, atom);
         setBondMatchFlag(shouldMatchBonds);
 
 //        System.out.println("Atom " + atom.getSymbol());
-//        System.out.println("Valency " + getValency(atom));
-//        System.out.println("H " + countHydrogens(queryContainer, atom));
-//        System.out.println("Conn atom count " + countNeighbors(queryContainer, atom));
-//        System.out.println("charge " + getCharge(atom));
 //        System.out.println("MAX allowed " + maximumNeighbors);
+    }
+
+    /**
+     * Constructor
+     * @param smartQueryAtom query atom
+     * @param container 
+     */
+    public DefaultVFAtomMatcher(IQueryAtom smartQueryAtom, IQueryAtomContainer container) {
+        this();
+        this.smartQueryAtom = smartQueryAtom;
+        this.symbol = smartQueryAtom.getSymbol();
     }
 
     /**
@@ -116,27 +126,11 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
      * @param blockedPositions
      * @param shouldMatchBonds bond matching flag
      */
-    public MCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions, boolean shouldMatchBonds) {
+    public DefaultVFAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions, boolean shouldMatchBonds) {
         this(queryContainer, template, shouldMatchBonds);
-        this.maximumNeighbors -= blockedPositions;
-    }
-
-    /** {@inheritDoc}
-     *
-     * @param targetContainer
-     * @param targetAtom
-     * @return
-     */
-    @Override
-    public boolean matches(IAtomContainer targetContainer, IAtom targetAtom) {
-
-        if (!matchSymbol(targetAtom)) {
-            return false;
-        }
-        if (!matchMaximumNeighbors(targetContainer, targetAtom)) {
-            return false;
-        }
-        return true;
+        this.maximumNeighbors = countImplicitHydrogens(template)
+                + queryContainer.getConnectedAtomsCount(template)
+                - blockedPositions;
     }
 
     /**
@@ -161,14 +155,12 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
         return symbol.equals(atom.getSymbol());
     }
 
-    private boolean matchMaximumNeighbors(IAtomContainer targetContainer, IAtom targetAtom) {
+    private boolean matchMaximumNeighbors(TargetProperties targetContainer, IAtom targetAtom) {
         if (maximumNeighbors == -1 || !isBondMatchFlag()) {
             return true;
         }
 
-        int maximumTargetNeighbors = countSaturation(targetContainer, targetAtom);
-//        System.out.println("VF MAX allowed " + maximumNeighbors);
-//        System.out.println("VF MAX found " + maximumTargetNeighbors);
+        int maximumTargetNeighbors = targetContainer.countNeighbors(targetAtom);
         return maximumTargetNeighbors <= maximumNeighbors;
     }
 
@@ -177,12 +169,27 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
                 ? 0 : atom.getImplicitHydrogenCount();
     }
 
-    private int countSaturation(IAtomContainer container, IAtom atom) {
-        return countNeighbors(container, atom) + countImplicitHydrogens(atom);
-    }
-
-    private int countNeighbors(IAtomContainer container, IAtom atom) {
-        return container.getConnectedAtomsCount(atom);
+    /** {@inheritDoc}
+     *
+     * @param targetContainer
+     * @param targetAtom
+     * @return
+     */
+    @Override
+    public boolean matches(TargetProperties targetContainer, IAtom targetAtom) {
+        if (smartQueryAtom != null && qAtom == null) {
+            if (!smartQueryAtom.matches(targetAtom)) {
+                return false;
+            }
+        } else {
+            if (!matchSymbol(targetAtom)) {
+                return false;
+            }
+            if (!matchMaximumNeighbors(targetContainer, targetAtom)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 //
@@ -205,9 +212,9 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
 //
 //        this.symbol = atom.getSymbol();
 //        this.minimumNeighbors = atom.getFormalNeighbourCount();
-//        Integer hCount = atom.getHydrogenCount();
+//        Integer hCount = atom.getImplicitHydrogenCount();
 //        if (hCount != null) {
-//            this.minimumValence = atom.getFormalNeighbourCount() + atom.getHydrogenCount();
+//            this.minimumValence = atom.getFormalNeighbourCount() + atom.getImplicitHydrogenCount();
 //        } else {
 //            this.minimumValence = atom.getFormalNeighbourCount();
 //        }
@@ -310,7 +317,7 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
 //            return true;
 //        }
 //
-//        Integer hCount = atom.getHydrogenCount();
+//        Integer hCount = atom.getImplicitHydrogenCount();
 //        if (hCount != null) {
 //            return atom.getFormalNeighbourCount() + hCount >= minimumValence;
 //        } else {
@@ -324,7 +331,7 @@ public class MCSPlusAtomMatcher implements IAtomMatcher {
 //            return true;
 //        }
 //
-//        return atom.getFormalNeighbourCount() + atom.getHydrogenCount() <= maximumValence;
+//        return atom.getFormalNeighbourCount() + atom.getImplicitHydrogenCount() <= maximumValence;
 //    }
 //}
 //

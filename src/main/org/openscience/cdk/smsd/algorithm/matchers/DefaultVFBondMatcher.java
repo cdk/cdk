@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 
 /**
  * Checks if a bond is matching between query and target molecules.
@@ -60,20 +61,22 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
-public class DefaultBondMatcher implements BondMatcher {
+public class DefaultVFBondMatcher implements VFBondMatcher {
 
     static final long serialVersionUID = -7861469841127328812L;
     private IBond queryBond = null;
-    private IQueryBond smartQueryBond = null;
     private int unsaturation = 0;
-    private boolean shouldMatchBonds = false;
+    private boolean shouldMatchBonds;
+    private IQueryBond smartQueryBond = null;
 
+    /**
+     * Bond type flag
+     */
     /**
      * Constructor
      */
-    public DefaultBondMatcher() {
+    public DefaultVFBondMatcher() {
         this.queryBond = null;
-        this.smartQueryBond = null;
         this.unsaturation = -1;
         shouldMatchBonds = false;
     }
@@ -84,7 +87,7 @@ public class DefaultBondMatcher implements BondMatcher {
      * @param queryBond query Molecule
      * @param shouldMatchBonds bond match flag
      */
-    public DefaultBondMatcher(IAtomContainer queryMol, IBond queryBond, boolean shouldMatchBonds) {
+    public DefaultVFBondMatcher(IAtomContainer queryMol, IBond queryBond, boolean shouldMatchBonds) {
         super();
         this.queryBond = queryBond;
         this.unsaturation = getUnsaturation(queryMol, this.queryBond);
@@ -95,20 +98,20 @@ public class DefaultBondMatcher implements BondMatcher {
      * Constructor
      * @param queryBond query Molecule
      */
-    public DefaultBondMatcher(IQueryBond queryBond) {
+    public DefaultVFBondMatcher(IQueryBond queryBond) {
         super();
         this.smartQueryBond = queryBond;
     }
 
     /** {@inheritDoc}
      *
-     * @param targetContainer target container
+     * @param targetConatiner target container
      * @param targetBond target bond
      * @return true if bonds match
      */
     @Override
-    public boolean matches(IAtomContainer targetContainer, IBond targetBond) {
-        if (this.smartQueryBond != null && queryBond == null) {
+    public boolean matches(TargetProperties targetConatiner, IBond targetBond) {
+        if (this.smartQueryBond != null) {
             return smartQueryBond.matches(targetBond);
         } else {
             if (!isBondMatchFlag()) {
@@ -117,7 +120,7 @@ public class DefaultBondMatcher implements BondMatcher {
             if (isBondMatchFlag() && isBondTypeMatch(targetBond)) {
                 return true;
             }
-            if (isBondMatchFlag() && this.unsaturation == getUnsaturation(targetContainer, targetBond)) {
+            if (isBondMatchFlag() && this.unsaturation == getUnsaturation(targetConatiner, targetBond)) {
                 return true;
             }
         }
@@ -139,6 +142,14 @@ public class DefaultBondMatcher implements BondMatcher {
             return true;
         }
         return false;
+    }
+
+    private int getUnsaturation(TargetProperties container, IBond bond) {
+        return getUnsaturation(container, bond.getAtom(0)) + getUnsaturation(container, bond.getAtom(1));
+    }
+
+    private int getUnsaturation(TargetProperties container, IAtom atom) {
+        return getValency(atom) - container.countNeighbors(atom);
     }
 
     private int getValency(IAtom atom) {

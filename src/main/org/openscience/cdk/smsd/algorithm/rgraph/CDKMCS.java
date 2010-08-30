@@ -65,10 +65,14 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
-import org.openscience.cdk.smsd.global.TimeOut;
+import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.BondMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultRGraphAtomMatcher;
+import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  *  This class implements atom multipurpose structure comparison tool.
@@ -804,14 +808,14 @@ public class CDKMCS {
             boolean shouldMatchBonds) {
 
         //Bond Matcher
-        org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher bondMatcher =
-                new org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+        BondMatcher bondMatcher =
+                new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
         //Atom Matcher
-        org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher1 =
-                new org.openscience.cdk.smsd.algorithm.matchers.RGraphAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+        AtomMatcher atomMatcher1 =
+                new DefaultRGraphAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
         //Atom Matcher
-        org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher2 =
-                new org.openscience.cdk.smsd.algorithm.matchers.RGraphAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
+        AtomMatcher atomMatcher2 =
+                new DefaultRGraphAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
 
         if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                 && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {

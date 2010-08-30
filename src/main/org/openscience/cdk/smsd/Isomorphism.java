@@ -41,8 +41,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandler;
 import org.openscience.cdk.smsd.algorithm.rgraph.CDKMCSHandler;
 import org.openscience.cdk.smsd.algorithm.rgraph.CDKSubGraphHandler;
@@ -55,6 +53,8 @@ import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.interfaces.AbstractMCS;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 import org.openscience.cdk.smsd.tools.MolHandler;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  *  <p>This class implements the Isomorphism- a multipurpose structure comparison tool.
@@ -755,7 +755,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     @TestMethod("testGetTanimotoSimilarity")
     public double getTanimotoSimilarity() throws IOException {
         double tanimoto = getTanimotoAtomSimilarity() + getTanimotoBondSimilarity();
-        if (tanimoto > 0) {
+        if (tanimoto > 0 && getReactantMolecule().getBondCount() > 0
+                && getProductMolecule().getBondCount() > 0) {
             tanimoto /= 2;
         }
         return tanimoto;

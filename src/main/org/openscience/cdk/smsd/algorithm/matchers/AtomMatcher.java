@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
 
-public interface IAtomMatcher {
+public interface AtomMatcher {
 
     boolean matches(IAtomContainer container, IAtom atom);
 }

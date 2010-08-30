@@ -44,10 +44,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
+package org.openscience.cdk.smsd.algorithm.vflib.map;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 
 /**
  * Holds matching query and target nodes.
@@ -56,7 +57,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
-public class IMatch {
+public class Match {
 
     private INode query;
     private IAtom target;
@@ -66,7 +67,7 @@ public class IMatch {
      * @param query
      * @param target
      */
-    public IMatch(INode query, IAtom target) {
+    public Match(INode query, IAtom target) {
         this.query = query;
         this.target = target;
     }

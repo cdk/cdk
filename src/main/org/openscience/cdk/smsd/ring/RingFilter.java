@@ -55,7 +55,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
 
 /**
  *
@@ -67,10 +67,10 @@ public class RingFilter {
 
     private RingFinder ringFinder;
     private Comparator comparator;
-    private IAtomMatcher filter;
+    private AtomMatcher filter;
     private IAtomContainer mol;
 
-    public RingFilter(IAtomMatcher filter, RingFinder finder) {
+    public RingFilter(AtomMatcher filter, RingFinder finder) {
         ringFinder = finder;
         comparator = new RingSizeComparator();
         this.filter = filter;

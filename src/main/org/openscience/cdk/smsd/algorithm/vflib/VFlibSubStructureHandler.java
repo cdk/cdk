@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,9 +35,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.smsd.algorithm.mcgregor.McGregor;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
@@ -47,6 +43,8 @@ import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
 import org.openscience.cdk.smsd.interfaces.AbstractSubGraph;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This is an ultra fast method to report if query
@@ -200,7 +198,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
         IMapper mapper = null;
         vfLibSolutions = new ArrayList<Map<INode, IAtom>>();
         if (queryMol != null) {
-            query = QueryCompiler.compile(queryMol);
+            query = new QueryCompiler(queryMol).compile();
             mapper = new VFMapper(query);
             if (mapper.hasMap(getProductMol())) {
                 List<Map<INode, IAtom>> maps = mapper.getMaps(getProductMol());
@@ -210,7 +208,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
             }
             setVFMappings(true, query);
         } else if (getReactantMol().getAtomCount() <= getProductMol().getAtomCount()) {
-            query = QueryCompiler.compile(mol1, isBondMatchFlag());
+            query = new QueryCompiler(mol1, isBondMatchFlag()).compile();
             mapper = new VFMapper(query);
             if (mapper.hasMap(getProductMol())) {
                 List<Map<INode, IAtom>> maps = mapper.getMaps(getProductMol());
@@ -220,7 +218,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
             }
             setVFMappings(true, query);
         } else {
-            query = QueryCompiler.compile(getProductMol(), isBondMatchFlag());
+            query = new QueryCompiler(getProductMol(), isBondMatchFlag()).compile();
             mapper = new VFMapper(query);
             if (mapper.hasMap(getReactantMol())) {
                 List<Map<INode, IAtom>> maps = mapper.getMaps(getReactantMol());
@@ -230,21 +228,6 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
             }
             setVFMappings(false, query);
         }
-    }
-
-    private void searchMcGregorMapping() throws CDKException, IOException {
-        List<List<Integer>> mappings = new ArrayList<List<Integer>>();
-        for (Map<Integer, Integer> firstPassMappings : allMCSCopy) {
-            McGregor mgit = new McGregor(getReactantMol(), getProductMol(), mappings, isBondMatchFlag());
-            mgit.startMcGregorIteration(mgit.getMCSSize(), firstPassMappings); //Start McGregor search
-            mappings = mgit.getMappings();
-            mgit = null;
-        }
-//        System.out.println("\nSol count after MG" + mappings.size());
-        setMcGregorMappings(mappings);
-        vfMCSSize = vfMCSSize / 2;
-//        System.out.println("After set Sol count MG" + allMCS.size());
-//        System.out.println("MCSSize " + vfMCSSize + "\n");
     }
 
     private void setVFMappings(boolean RONP, IQuery query) {
@@ -291,44 +274,6 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
             }
         }
 //        System.out.println("allMCSCopy " + allMCSCopy.size());
-    }
-
-    private void setMcGregorMappings(List<List<Integer>> mappings) throws CDKException {
-        int counter = 0;
-        this.vfMCSSize = 0;
-        for (List<Integer> mapping : mappings) {
-            if (mapping.size() > vfMCSSize) {
-                vfMCSSize = (mapping.size() / 2);
-                allAtomMCS.clear();
-                allMCS.clear();
-                counter = 0;
-            }
-            Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
-            Map<Integer, Integer> indexindexMapping = new TreeMap<Integer, Integer>();
-            for (int index = 0; index < mapping.size(); index += 2) {
-                IAtom qAtom = null;
-                IAtom tAtom = null;
-
-                qAtom = getReactantMol().getAtom(mapping.get(index));
-                tAtom = getProductMol().getAtom(mapping.get(index + 1));
-
-                Integer qIndex = mapping.get(index);
-                Integer tIndex = mapping.get(index + 1);
-
-                if (qIndex != null && tIndex != null) {
-                    atomatomMapping.put(qAtom, tAtom);
-                    indexindexMapping.put(qIndex, tIndex);
-                } else {
-                    throw new CDKException("Atom index pointing to NULL");
-                }
-            }
-            if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCS)
-                    && (indexindexMapping.size()) == vfMCSSize) {
-                allAtomMCS.add(counter, atomatomMapping);
-                allMCS.add(counter, indexindexMapping);
-                counter++;
-            }
-        }
     }
 
     @Override

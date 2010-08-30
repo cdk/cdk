@@ -50,6 +50,7 @@ package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 import java.util.Map;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.smsd.algorithm.vflib.map.Match;
 
 /**
  * Interface for the storing the states of the mapping in the VF algorithm.
@@ -57,7 +58,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public interface IState {
 
@@ -83,7 +83,7 @@ public interface IState {
      *
      * @return the next candidate match.
      */
-    public IMatch nextCandidate();
+    public Match nextCandidate();
 
     /**
      * Returns true if the given match will work with the current
@@ -93,7 +93,7 @@ public interface IState {
      * @return true if the given match will work with the current
      * map, or false otherwise.
      */
-    public boolean isMatchFeasible(IMatch match);
+    public boolean isMatchFeasible(Match match);
 
     /**
      * Returns true if all atoms in the query molecule have been
@@ -119,7 +119,7 @@ public interface IState {
      * @return  a state in which the atoms in match have been
      * added to the current mapping.
      */
-    public IState nextState(IMatch match);
+    public IState nextState(Match match);
 
     /**
      * Returns this IState's atom map to its original condition.

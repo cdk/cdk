@@ -58,7 +58,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
-public class RGraphAtomMatcher implements IAtomMatcher {
+public class DefaultRGraphAtomMatcher implements AtomMatcher {
 
     static final long serialVersionUID = -7861469841127327812L;
     private int maximumNeighbors;
@@ -83,7 +83,7 @@ public class RGraphAtomMatcher implements IAtomMatcher {
     /**
      * Constructor
      */
-    public RGraphAtomMatcher() {
+    public DefaultRGraphAtomMatcher() {
         this.qAtom = null;
         symbol = null;
         maximumNeighbors = -1;
@@ -95,19 +95,11 @@ public class RGraphAtomMatcher implements IAtomMatcher {
      * @param atom query atom
      * @param shouldMatchBonds bond matching flag
      */
-    public RGraphAtomMatcher(IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
+    public DefaultRGraphAtomMatcher(IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
         this();
         this.qAtom = atom;
         this.symbol = atom.getSymbol();
-        this.maximumNeighbors = countSaturation(queryContainer, atom);
         setBondMatchFlag(shouldMatchBonds);
-
-//        System.out.println("Atom " + atom.getSymbol());
-//        System.out.println("Valency " + getValency(atom));
-//        System.out.println("H " + countHydrogens(queryContainer, atom));
-//        System.out.println("Conn atom count " + countNeighbors(queryContainer, atom));
-//        System.out.println("charge " + getCharge(atom));
-//        System.out.println("MAX allowed " + maximumNeighbors);
     }
 
     /**
@@ -117,9 +109,9 @@ public class RGraphAtomMatcher implements IAtomMatcher {
      * @param blockedPositions
      * @param shouldMatchBonds bond matching flag
      */
-    public RGraphAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions, boolean shouldMatchBonds) {
+    public DefaultRGraphAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions, boolean shouldMatchBonds) {
         this(queryContainer, template, shouldMatchBonds);
-        this.maximumNeighbors -= blockedPositions;
+        this.maximumNeighbors = countSaturation(queryContainer, template) - blockedPositions;
     }
 
     /** {@inheritDoc}
@@ -171,9 +163,7 @@ public class RGraphAtomMatcher implements IAtomMatcher {
         }
 
         int maximumTargetNeighbors = countSaturation(targetContainer, targetAtom);
-//        System.out.println("VF MAX allowed " + maximumNeighbors);
-//        System.out.println("VF MAX found " + maximumTargetNeighbors);
-        return maximumTargetNeighbors <= maximumNeighbors;
+        return maximumTargetNeighbors >= maximumNeighbors;
     }
 
     private int countImplicitHydrogens(IAtom atom) {
@@ -189,147 +179,4 @@ public class RGraphAtomMatcher implements IAtomMatcher {
         return container.getConnectedAtomsCount(atom);
     }
 }
-//
-//    private String symbol;
-//    private int maximumNeighbors;
-//    private int minimumNeighbors;
-//    private int minimumValence;
-//    private int maximumValence;
-//
-//    public AtomMatcher() {
-//        symbol = null;
-//        maximumNeighbors = -1;
-//        minimumNeighbors = -1;
-//        minimumValence = -1;
-//        maximumValence = -1;
-//    }
-//
-//    public AtomMatcher(IAtom atom) {
-//        this();
-//
-//        this.symbol = atom.getSymbol();
-//        this.minimumNeighbors = atom.getFormalNeighbourCount();
-//        Integer hCount = atom.getHydrogenCount();
-//        if (hCount != null) {
-//            this.minimumValence = atom.getFormalNeighbourCount() + atom.getHydrogenCount();
-//        } else {
-//            this.minimumValence = atom.getFormalNeighbourCount();
-//        }
-//
-////        System.out.println("symbol:" + symbol);
-////        System.out.println("minimumNeighbors:" + minimumNeighbors);
-////        System.out.println("minimumValence:" + minimumValence);
-//    }
-//
-//    /**
-//     *
-//     * @param atom
-//     * @return
-//     */
-//
-//    public boolean matches(IAtom atom) {
-//        if (!matchSymbol(atom)) {
-//            return false;
-//        }
-//
-//        if (!matchMaximumNeighbors(atom)) {
-//            return false;
-//        }
-//
-//        if (!matchMinimumNeighbors(atom)) {
-//            return false;
-//        }
-//
-//        if (!matchMinimumValence(atom)) {
-//            return false;
-//        }
-//
-//        if (!matchMaximumValence(atom)) {
-//            return false;
-//        }
-//
-//        return true;
-//    }
-//
-//    public void setMinimumValence(int minimum) {
-//        if (minimum > maximumValence && maximumValence != -1) {
-//            throw new IllegalStateException("Minimum " + minimum + " exceeds maximum");
-//        }
-//        this.minimumValence = minimum;
-//    }
-//
-//    public void setMaximumValence(int maximum) {
-//        if (maximum < minimumValence) {
-//            throw new IllegalStateException("Maximum " + maximum + " less than minimum");
-//        }
-//        this.maximumValence = maximum;
-//    }
-//
-//    public void setMaximumNeighbors(int maximum) {
-//        if (maximum < minimumNeighbors) {
-//            throw new IllegalStateException("Maximum " + maximum + " exceeds minimum " + minimumNeighbors);
-//        }
-//
-//        this.maximumNeighbors = maximum;
-//    }
-//
-//    public void setMinimumNeighbors(int minimum) {
-//        if (minimum > maximumNeighbors && maximumNeighbors != -1) {
-//            throw new IllegalStateException("Minimum " + minimum + " exceeds maximum " + maximumNeighbors);
-//        }
-//
-//        this.minimumNeighbors = minimum;
-//    }
-//
-//    public void setSymbol(String symbol) {
-//        this.symbol = symbol;
-//    }
-//
-//    private boolean matchSymbol(IAtom atom) {
-//        if (symbol == null) {
-//            return true;
-//        }
-//
-//        return symbol.equalsIgnoreCase(atom.getSymbol());
-//    }
-//
-//    private boolean matchMaximumNeighbors(IAtom atom) {
-//        if (maximumNeighbors == -1) {
-//            return true;
-//        }
-//
-//        return atom.getFormalNeighbourCount() <= maximumNeighbors;
-//    }
-//
-//    private boolean matchMinimumNeighbors(IAtom atom) {
-//        if (minimumNeighbors == -1) {
-//            return true;
-//        }
-//
-//        return atom.getFormalNeighbourCount() >= minimumNeighbors;
-//    }
-//
-//    private boolean matchMinimumValence(IAtom atom) {
-//        if (minimumValence == -1) {
-//            return true;
-//        }
-//
-//        Integer hCount = atom.getHydrogenCount();
-//        if (hCount != null) {
-//            return atom.getFormalNeighbourCount() + hCount >= minimumValence;
-//        } else {
-//            return atom.getFormalNeighbourCount() >= minimumValence;
-//        }
-//
-//    }
-//
-//    private boolean matchMaximumValence(IAtom atom) {
-//        if (maximumValence == -1) {
-//            return true;
-//        }
-//
-//        return atom.getFormalNeighbourCount() + atom.getHydrogenCount() <= maximumValence;
-//    }
-//}
-//
 

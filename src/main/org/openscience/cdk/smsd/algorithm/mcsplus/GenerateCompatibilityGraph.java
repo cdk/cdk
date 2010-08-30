@@ -32,8 +32,12 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.smsd.helper.LabelContainer;
+import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.BondMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher;
+import org.openscience.cdk.smsd.algorithm.matchers.DefaultMCSPlusAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
+import org.openscience.cdk.smsd.helper.LabelContainer;
 
 /**
  * This class generates compatibility graph between query and target molecule.
@@ -340,14 +344,14 @@ public final class GenerateCompatibilityGraph {
             boolean shouldMatchBonds) {
 
         //Bond Matcher
-        org.openscience.cdk.smsd.algorithm.matchers.IBondMatcher bondMatcher =
-                new org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+        BondMatcher bondMatcher =
+                new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
         //Atom Matcher
-        org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher1 =
-                new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+        AtomMatcher atomMatcher1 =
+                new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
         //Atom Matcher
-        org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher atomMatcher2 =
-                new org.openscience.cdk.smsd.algorithm.matchers.MCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
+        AtomMatcher atomMatcher2 =
+                new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
 
         if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                 && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {

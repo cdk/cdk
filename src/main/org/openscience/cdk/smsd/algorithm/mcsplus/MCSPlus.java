@@ -87,8 +87,16 @@ public class MCSPlus {
             List<Integer> C_edges = gcg.getCEgdes();
             List<Integer> D_edges = gcg.getDEgdes();
 
+//            System.err.println("**************************************************");
+//            System.err.println("C_edges: " + C_edges.size());
+//            System.out.println("D_edges: " + D_edges.size());
+
             BKKCKCF init = new BKKCKCF(comp_graph_nodes, C_edges, D_edges);
             maxCliqueSet = init.getMaxCliqueSet();
+
+//            System.err.println("**************************************************");
+//            System.err.println("Max_Cliques_Set: " + maxCliqueSet.size());
+//            System.out.println("Best Clique Size: " + init.getBestCliqueSize());
 
             //clear all the compatibility graph content
             gcg.clear();

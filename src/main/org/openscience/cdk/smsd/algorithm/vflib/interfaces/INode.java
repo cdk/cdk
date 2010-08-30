@@ -50,9 +50,9 @@ package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
 import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.EdgeBuilder;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.NodeBuilder;
-import org.openscience.cdk.smsd.algorithm.matchers.IAtomMatcher;
 
 /**
  * Interface for the Node (atomss) in graph.
@@ -79,7 +79,7 @@ public interface INode {
      * Returns Query Atom.
      * @return Query Atom.
      */
-    public IAtomMatcher getAtomMatcher();
+    public VFAtomMatcher getAtomMatcher();
 
     /**
      * Returns List of Edges.
