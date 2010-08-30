@@ -50,5 +50,33 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(testResult[0], retval.get(0), 0.0001);
         Assert.assertEquals(testResult[1], retval.get(1), 0.0001);
     }
-}
 
+    /**
+     * Test if the descriptor returns the same results with and without explicit hydrogens.
+     */
+    @Test
+    public void testWithExplicitHydrogens() throws Exception {
+        double [] testResult = {18, 2};
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
+        DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
+        Assert.assertEquals(testResult[0], retval.get(0), 0.0001);
+        Assert.assertEquals(testResult[1], retval.get(1), 0.0001);
+    }
+
+    /**
+     * Numbers extracted from {@cdk.cite Wiener1947}.
+     */
+    @Test
+    public void testOriginalWienerPaperCompounds() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        double [] testResult = {10, 20, 35, 56, 84, 120, 165, 220, 286};
+        String smiles = "CCC";
+        for (int i=0; i<testResult.length; i++) {
+            smiles += "C"; // create the matching paraffin
+            IAtomContainer mol = sp.parseSmiles(smiles);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
+            Assert.assertEquals(testResult[i], retval.get(0), 0.0001);
+        }
+    }
+}
