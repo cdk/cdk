@@ -75,8 +75,8 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class VFMCSMapper implements IMapper {
 
-    private IQuery query;
-    private List<Map<INode, IAtom>> maps;
+    private IQuery query = null;
+    private List<Map<INode, IAtom>> maps = null;
     private int currentMCSSize = -1;
     private static TimeManager timeManager = null;
 

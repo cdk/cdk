@@ -312,6 +312,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                 IAtom tAtom = null;
                 Integer qIndex = 0;
                 Integer tIndex = 0;
+
                 if (RONP) {
                     qAtom = query.getAtom(mapping.getKey());
                     tAtom = mapping.getValue();
@@ -323,13 +324,13 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     qIndex = getReactantMol().getAtomNumber(qAtom);
                     tIndex = getProductMol().getAtomNumber(tAtom);
                 }
-
-                if (qIndex != null && tIndex != null) {
+                
+                if (qIndex != -1 && tIndex != -1) {
                     atomatomMapping.put(qAtom, tAtom);
                     indexindexMapping.put(qIndex, tIndex);
                 } else {
                     try {
-                        throw new CDKException("Atom index pointing to NULL");
+                        throw new CDKException("Atom index pointing to -1");
                     } catch (CDKException ex) {
                         Logger.error(Level.SEVERE, null, ex);
                     }

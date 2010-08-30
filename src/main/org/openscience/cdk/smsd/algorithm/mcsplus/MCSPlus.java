@@ -45,6 +45,13 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class MCSPlus {
 
+    /**
+    * Default constructor added 
+    */
+    public MCSPlus(){
+        
+    }
+
     private static TimeManager timeManager = null;
 
     /**

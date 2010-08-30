@@ -59,6 +59,12 @@ public class SingleMapping {
     private Map<Integer, Double> connectedBondOrder = null;
 
     /**
+     * Default
+     */
+    public SingleMapping() {
+    }
+
+    /**
      * Returns single mapping solutions.
      * @param source
      * @param target
@@ -119,7 +125,7 @@ public class SingleMapping {
         int counter = 0;
         BondEnergies be = BondEnergies.getInstance();
         for (IAtom sourceAtom : source.atoms()) {
-            IQueryAtom smartAtom=(IQueryAtom)sourceAtom;
+            IQueryAtom smartAtom = (IQueryAtom) sourceAtom;
             if ((removeHydrogen && !smartAtom.getSymbol().equals("H")) || (!removeHydrogen)) {
                 for (IAtom targetAtom : target.atoms()) {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();

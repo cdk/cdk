@@ -95,8 +95,6 @@ public class TargetProperties implements java.io.Serializable {
         map = new IBond[container.getAtomCount()][container.getAtomCount()];
         for (IAtom atom : container.atoms()) {
             int count = container.getConnectedAtomsCount(atom);
-//            int virtualHydrogenCount = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount().intValue();
-//            count += virtualHydrogenCount;
             connectedTargetAtomCountMap.put(atom, count);
             List<IAtom> list = container.getConnectedAtomsList(atom);
             if (list != null) {

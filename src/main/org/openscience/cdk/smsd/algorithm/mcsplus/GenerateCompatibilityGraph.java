@@ -60,6 +60,13 @@ public final class GenerateCompatibilityGraph {
     private boolean shouldMatchBonds = false;
 
     /**
+    * Default constructor added 
+    */
+    public GenerateCompatibilityGraph(){
+        
+    }
+
+    /**
      * Generates a compatibility graph between two molecules
      * @param source
      * @param target

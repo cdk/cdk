@@ -52,6 +52,10 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 @TestClass("org.openscience.cdk.smsd.algorithm.cdk.CDKRMapHandlerTest")
 public class CDKRMapHandler {
 
+
+    public CDKRMapHandler(){
+        
+    }
     /**
      * Returns source molecule
      * @return the source
