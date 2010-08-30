@@ -253,7 +253,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
                 }
                 Integer qIndex = Integer.valueOf(getReactantMol().getAtomNumber(qAtom));
                 Integer tIndex = Integer.valueOf(getProductMol().getAtomNumber(tAtom));
-                if (qIndex != null && tIndex != null) {
+                if (qIndex != -1 && tIndex != -1) {
                     atomatomMapping.put(qAtom, tAtom);
                     indexindexMapping.put(qIndex, tIndex);
                 } else {

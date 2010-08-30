@@ -314,7 +314,7 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
                 Integer qIndex = mapping.get(index);
                 Integer tIndex = mapping.get(index + 1);
 
-                if (qIndex != null && tIndex != null) {
+                if (qIndex != -1 && tIndex != -1) {
                     atomatomMapping.put(qAtom, tAtom);
                     indexindexMapping.put(qIndex, tIndex);
                 } else {
