@@ -38,11 +38,12 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
-import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMatch;
+import org.openscience.cdk.smsd.algorithm.vflib.map.Match;
 import org.openscience.cdk.smsd.algorithm.vflib.map.VFMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.map.VFState;
 import org.openscience.cdk.smsd.algorithm.vflib.query.QueryCompiler;
@@ -50,7 +51,7 @@ import org.openscience.cdk.smsd.tools.ExtAtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * Unit testing for the {@link VFMapper}, {@link VFState}, {@link IMatch} class.
+ * Unit testing for the {@link VFMapper}, {@link VFState}, {@link Match} class.
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  * @cdk.module test-smsd
  */
@@ -68,18 +69,19 @@ public class VFLibTest extends CDKTestCase {
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(hexane);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(hexane);
         CDKHueckelAromaticityDetector.detectAromaticity(hexane);
-        hexaneQuery = QueryCompiler.compile(hexane, true);
+        hexaneQuery = new QueryCompiler(hexane, true).compile();
         Assert.assertEquals(6, hexaneQuery.countNodes());
         benzene = createBenzene();
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(benzene);
         CDKHueckelAromaticityDetector.detectAromaticity(benzene);
-        benzeneQuery = QueryCompiler.compile(benzene, true);
+        benzeneQuery = new QueryCompiler(benzene, true).compile();
     }
 
     @Test
     public void testItShouldFindAllMatchCandidatesInTheRootState() {
-        IState state = new VFState(benzeneQuery, benzene);
+
+        IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
         int count = 0;
 
         while (state.hasNextCandidate()) {
@@ -91,10 +93,10 @@ public class VFLibTest extends CDKTestCase {
 
     @Test
     public void testItShoudFindAllMatchCandidatesInThePrimaryState() {
-        IState state = new VFState(benzeneQuery, benzene);
-        IMatch match = new IMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
+        IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
+        Match match = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState newState = state.nextState(match);
-        List<IMatch> candidates = new ArrayList<IMatch>();
+        List<Match> candidates = new ArrayList<Match>();
 
         while (newState.hasNextCandidate()) {
             candidates.add(newState.nextCandidate());
@@ -105,12 +107,12 @@ public class VFLibTest extends CDKTestCase {
 
     @Test
     public void testItShouldFindAllMatchCandidatesInTheSecondaryState() {
-        IState state0 = new VFState(benzeneQuery, benzene);
-        IMatch match0 = new IMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
+        IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
+        Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
-        IMatch match1 = new IMatch(benzeneQuery.getNode(1), benzene.getAtom(1));
+        Match match1 = new Match(benzeneQuery.getNode(1), benzene.getAtom(1));
         IState state2 = state1.nextState(match1);
-        List<IMatch> candidates = new ArrayList<IMatch>();
+        List<Match> candidates = new ArrayList<Match>();
 
         while (state2.hasNextCandidate()) {
             candidates.add(state2.nextCandidate());
@@ -121,10 +123,10 @@ public class VFLibTest extends CDKTestCase {
 
     @Test
     public void testItShouldMapAllAtomsInTheSecondaryState() {
-        IState state0 = new VFState(benzeneQuery, benzene);
-        IMatch match0 = new IMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
+        IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
+        Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
-        IMatch match1 = new IMatch(benzeneQuery.getNode(1), benzene.getAtom(1));
+        Match match1 = new Match(benzeneQuery.getNode(1), benzene.getAtom(1));
         IState state2 = state1.nextState(match1);
 
         Map<INode, IAtom> map = state2.getMap();
@@ -136,14 +138,14 @@ public class VFLibTest extends CDKTestCase {
 
     @Test
     public void testItShouldFindAllMatchCandidatesFromTheTeriaryState() {
-        IState state0 = new VFState(benzeneQuery, benzene);
-        IMatch match0 = new IMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
+        IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
+        Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
-        IMatch match1 = new IMatch(benzeneQuery.getNode(1), benzene.getAtom(1));
+        Match match1 = new Match(benzeneQuery.getNode(1), benzene.getAtom(1));
         IState state2 = state1.nextState(match1);
-        IMatch match2 = new IMatch(benzeneQuery.getNode(2), benzene.getAtom(2));
+        Match match2 = new Match(benzeneQuery.getNode(2), benzene.getAtom(2));
         IState state3 = state2.nextState(match2);
-        List<IMatch> candidates = new ArrayList<IMatch>();
+        List<Match> candidates = new ArrayList<Match>();
 
         while (state3.hasNextCandidate()) {
             candidates.add(state3.nextCandidate());
@@ -154,12 +156,12 @@ public class VFLibTest extends CDKTestCase {
 
     @Test
     public void testItShouldMapAllAtomsInTheTertiaryState() {
-        IState state0 = new VFState(benzeneQuery, benzene);
-        IMatch match0 = new IMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
+        IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
+        Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
-        IMatch match1 = new IMatch(benzeneQuery.getNode(1), benzene.getAtom(1));
+        Match match1 = new Match(benzeneQuery.getNode(1), benzene.getAtom(1));
         IState state2 = state1.nextState(match1);
-        IMatch match2 = new IMatch(benzeneQuery.getNode(2), benzene.getAtom(2));
+        Match match2 = new Match(benzeneQuery.getNode(2), benzene.getAtom(2));
         IState state3 = state2.nextState(match2);
         Map<INode, IAtom> map = state3.getMap();
 
@@ -171,21 +173,21 @@ public class VFLibTest extends CDKTestCase {
 
     @Test
     public void testItShouldReachGoalWhenAllAtomsAreMapped() {
-        IState state0 = new VFState(benzeneQuery, benzene);
-        IMatch match0 = new IMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
+        IState state0 = new VFState(benzeneQuery, new TargetProperties(benzene));
+        Match match0 = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState state1 = state0.nextState(match0);
-        IMatch match1 = new IMatch(benzeneQuery.getNode(1), benzene.getAtom(1));
+        Match match1 = new Match(benzeneQuery.getNode(1), benzene.getAtom(1));
         IState state2 = state1.nextState(match1);
-        IMatch match2 = new IMatch(benzeneQuery.getNode(2), benzene.getAtom(2));
+        Match match2 = new Match(benzeneQuery.getNode(2), benzene.getAtom(2));
         IState state3 = state2.nextState(match2);
-        IMatch match3 = new IMatch(benzeneQuery.getNode(3), benzene.getAtom(3));
+        Match match3 = new Match(benzeneQuery.getNode(3), benzene.getAtom(3));
         IState state4 = state3.nextState(match3);
-        IMatch match4 = new IMatch(benzeneQuery.getNode(4), benzene.getAtom(4));
+        Match match4 = new Match(benzeneQuery.getNode(4), benzene.getAtom(4));
         IState state5 = state4.nextState(match4);
 
         Assert.assertFalse(state5.isGoal());
 
-        IMatch match5 = new IMatch(benzeneQuery.getNode(5), benzene.getAtom(5));
+        Match match5 = new Match(benzeneQuery.getNode(5), benzene.getAtom(5));
         IState state6 = state5.nextState(match5);
 
         Assert.assertTrue(state6.isGoal());
@@ -193,8 +195,8 @@ public class VFLibTest extends CDKTestCase {
 
     @Test
     public void testItShouldHaveANextCandidateInTheSecondaryState() {
-        IState state = new VFState(benzeneQuery, benzene);
-        IMatch match = new IMatch(benzeneQuery.getNode(0), benzene.getAtom(0));
+        IState state = new VFState(benzeneQuery, new TargetProperties(benzene));
+        Match match = new Match(benzeneQuery.getNode(0), benzene.getAtom(0));
         IState nextState = state.nextState(match);
         Assert.assertTrue(nextState.hasNextCandidate());
     }
