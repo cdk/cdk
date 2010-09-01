@@ -2488,6 +2488,22 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="hybratio">
+        <rdfs:label>Hybridization Ratio</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2010-08-31</dc:date>
+        <definition rdf:parseType='Literal'>
+            Characterizes molecular complexity in terms of carbon hybridization states
+        </definition>
+        <description rdf:parseType='Literal'>
+            This descriptor is designed to give a simple characterization of molecular
+            complexity. A higher ratio of sp3 to sp2 carbons is indicative of more
+            branching.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
 
     <Descriptor rdf:ID="kierHallSmarts">
         <rdfs:label>Kier &amp; Hall SMARTS</rdfs:label>
