@@ -90,6 +90,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.*;
     AutocorrelationDescriptorChargeTest.class,
     AutocorrelationDescriptorMassTest.class,
     AutocorrelationDescriptorPolarizabilityTest.class,
-    CarbonTypesDescriptorTest.class
+    CarbonTypesDescriptorTest.class,
+    HybridizationRatioDescriptorTest.class
 })
 public class MqsarmolecularTests {}
