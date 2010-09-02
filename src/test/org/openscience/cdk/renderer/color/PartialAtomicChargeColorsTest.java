@@ -43,5 +43,14 @@ public class PartialAtomicChargeColorsTest extends CDKTestCase {
 		Assert.assertEquals(Color.white, colors.getAtomColor(helium));
 	}
 
+	@Test public void testGetDefaultAtomColor() {
+		PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
+
+		Assert.assertNotNull(colors);
+		IAtom imaginary = new Atom("Ix");
+		Assert.assertEquals(
+			Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE)
+		);
+	}
 }
 

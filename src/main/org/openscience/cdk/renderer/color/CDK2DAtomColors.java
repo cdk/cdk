@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.renderer.color;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 import java.awt.*;
@@ -28,6 +30,7 @@ import java.awt.*;
  * @cdk.module render
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.color.CDK2DAtomColorsTest")
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
     private static final long serialVersionUID = 6712994043820219426L;
@@ -47,6 +50,7 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
      * @param atom         IAtom to get a color for
      * @return             the atom's color according to this coloring scheme.
      */
+    @TestMethod("testGetAtomColor")
     public Color getAtomColor(IAtom a) {
         return getAtomColor(a, DEFAULT);
     }
@@ -60,6 +64,7 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
      *                     a color for the passed IAtom
      * @return             the atom's color according to this coloring scheme.
      */
+    @TestMethod("testGetDefaultAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         int atomnumber = 0;

@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.renderer.color;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 import java.awt.*;
@@ -31,6 +33,7 @@ import java.util.Map;
  * @cdk.githash
  * @cdk.keyword atom coloring, CPK
  */
+@TestClass("org.openscience.cdk.renderer.color.CPKAtomColorsTest")
 public class CPKAtomColors implements IAtomColorer, java.io.Serializable
 {
     private static final long serialVersionUID = -3205785984391537452L;
@@ -135,6 +138,7 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable
      * @param atom the atom.
      * @return A color for the atom.
      */
+    @TestMethod("testGetAtomColor")
     public Color getAtomColor(IAtom atom)
     {
         return getAtomColor(atom, DEEP_PINK);
@@ -148,6 +152,7 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable
      * @return A color for the atom.  The default colour is used if none is
      *         found for the atom.
      */
+    @TestMethod("testGetDefaultAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor)
     {
         Color color = defaultColor;

@@ -45,5 +45,15 @@ public class RasmolColorsTest extends CDKTestCase {
 		Assert.assertEquals(new Color(255,192,203 ), colors.getAtomColor(helium));
 	}
 
+	@Test public void testGetDefaultAtomColor() {
+		RasmolColors colors = new RasmolColors();
+
+		Assert.assertNotNull(colors);
+		IAtom imaginary = new Atom("Ix");
+		Assert.assertEquals(
+			Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE)
+		);
+	}
+
 }
 
