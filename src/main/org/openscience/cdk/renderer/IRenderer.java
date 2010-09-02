@@ -75,7 +75,8 @@ public interface IRenderer {
     /**
      * Set a new drawing center in screen coordinates.
      *
-     * @param zoomFactor the new new drawing center
+     * @param screenX the x screen coordinate of the drawing center 
+     * @param screenY the y screen coordinate of the drawing center 
      */
 	public void shiftDrawCenter(double screenX, double screenY);
 

@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,7 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.renderer.color;
 
@@ -51,6 +45,7 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
      * Returns the CDK 2D color for the given atom's element.
      *
      * @param atom         IAtom to get a color for
+     * @return             the atom's color according to this coloring scheme.
      */
     public Color getAtomColor(IAtom a) {
         return getAtomColor(a, DEFAULT);
@@ -63,6 +58,7 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
      * @param atom         IAtom to get a color for
      * @param defaultColor Color returned if this scheme does not define
      *                     a color for the passed IAtom
+     * @return             the atom's color according to this coloring scheme.
      */
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;

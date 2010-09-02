@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -23,16 +21,31 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 
 /**
+ * Text element as used in the chemical drawing. This can be a element symbol.
+ *
  * @cdk.module render
  * @cdk.githash
  */
 public class TextElement implements IRenderingElement {
 
+	/** The x coordinate where the text should be displayed. */
 	public final double x;
+	/** The y coordinate where the text should be displayed. */
 	public final double y;
+	/** The text to be displayed. */
 	public final String text;
+	/** The color of the text. */
 	public final Color color;
 
+	/**
+	 * Constructs a new TextElement with the content <code>text</code> to be
+	 * drawn at position (x,y) in the color <code>color</code>.
+	 *
+	 * @param x     x coordinate where the text should be displayed
+	 * @param y     y coordinate where the text should be displayed
+	 * @param text  the text to be drawn
+	 * @param color the color of the text
+	 */
 	public TextElement(double x, double y, String text, Color color) {
 		this.x = x;
 		this.y = y;
@@ -40,8 +53,9 @@ public class TextElement implements IRenderingElement {
 		this.color = color;
 	}
 
-	public void accept(IRenderingVisitor v) {
-		v.visit(this);
+	/** {@inheritDoc} */
+	public void accept(IRenderingVisitor visotor) {
+		visotor.visit(this);
 	}
 
 }

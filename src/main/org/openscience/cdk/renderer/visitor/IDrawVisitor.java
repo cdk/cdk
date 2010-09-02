@@ -23,13 +23,26 @@ import org.openscience.cdk.renderer.elements.IRenderingVisitor;
 import org.openscience.cdk.renderer.font.IFontManager;
 
 /**
+ * An {@link IDrawVisitor} is an {@link IRenderingVisitor} that can be
+ * customized and knows about fonts and other rendering parameters.
+ * 
  * @cdk.module render
  * @cdk.githash
  */
 public interface IDrawVisitor extends IRenderingVisitor {
-    
+
+	/**
+	 * Sets the {@link IFontManager} this {@link IDrawVisitor} should use.
+	 *
+	 * @param fontManager the {@link IFontManager} to be used
+	 */
     public void setFontManager(IFontManager fontManager);
-    
+
+	/**
+	 * Sets the {@link RendererModel} this {@link IDrawVisitor} should use.
+	 *
+	 * @param fontManager the {@link RendererModel} to be used
+	 */
     public void setRendererModel(RendererModel rendererModel);
 
 }

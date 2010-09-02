@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -21,11 +19,18 @@
 package org.openscience.cdk.renderer.elements;
 
 /**
+ * Widget toolkit-independent, abstract definition of something to be drawn.
+ * 
  * @cdk.module render
  * @cdk.githash
  */
 public interface IRenderingElement {
-	
-	public void accept(IRenderingVisitor v);
+
+	/**
+	 * Converts this {@link TextElement} into widget specific objects.
+	 * 
+	 * @param visitor Toolkit specific widget factory.
+	 */
+	public void accept(IRenderingVisitor visitor);
 	
 }

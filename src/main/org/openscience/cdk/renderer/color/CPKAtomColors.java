@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  Chris Pudney
+/* Copyright (C) 1997-2007  Chris Pudney
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,7 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.renderer.color;
 
