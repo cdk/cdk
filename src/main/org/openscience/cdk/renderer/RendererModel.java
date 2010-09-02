@@ -34,6 +34,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,6 +52,7 @@ import org.openscience.cdk.renderer.selection.IChemObjectSelection;
  * @cdk.module render
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.RendererModelTest")
 public class RendererModel implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -4420308906715213445L;
@@ -239,6 +242,7 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @return an atomcontainer with the atoms and bonds on the clipboard.
      */
+    @TestMethod("testClipboardContent")
     public IAtomContainer getClipboardContent() {
         return clipboardContent;
     }
@@ -250,6 +254,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param content
      *            the new content of the clipboard.
      */
+    @TestMethod("testClipboardContent")
     public void setClipboardContent(IAtomContainer content) {
         this.clipboardContent = content;
     }
@@ -300,6 +305,7 @@ public class RendererModel implements Serializable, Cloneable {
      *            The atom.
      * @return The toolTipText value.
      */
+    @TestMethod("testToolTipFunctionality,testNoDefaultToolTips")
     public String getToolTipText(IAtom atom) {
         if (toolTipTextMap.get(atom) != null) {
             return toolTipTextMap.get(atom);
@@ -316,6 +322,7 @@ public class RendererModel implements Serializable, Cloneable {
      *            Strings to display as values. A line break will be inserted
      *            where a \n is in the string.
      */
+    @TestMethod("testToolTipFunctionality")
     public void setToolTipTextMap(Map<IAtom, String> map) {
         toolTipTextMap = map;
         fireChange();
@@ -326,6 +333,7 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @return The toolTipTextValue.
      */
+    @TestMethod("testToolTipFunctionality")
     public Map<IAtom, String> getToolTipTextMap() {
         return toolTipTextMap;
     }
@@ -336,6 +344,7 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @return the selected part
      */
+    @TestMethod("testExternalSelectedPart")
     public IAtomContainer getExternalSelectedPart() {
         return externalSelectedPart;
     }
@@ -347,6 +356,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param externalSelectedPart
      *            the selected part
      */
+    @TestMethod("testExternalSelectedPart")
     public void setExternalSelectedPart(IAtomContainer externalSelectedPart) {
         this.externalSelectedPart = externalSelectedPart;
         Map<IChemObject, Color> colorHash =
@@ -369,10 +379,12 @@ public class RendererModel implements Serializable, Cloneable {
         fireChange();
     }
 
+	@TestMethod("testGetSetNotification")
     public boolean getNotification() {
         return notification;
     }
 
+	@TestMethod("testGetSetNotification")
     public void setNotification(boolean notification) {
         this.notification = notification;
     }
@@ -386,6 +398,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 *
 	 * @return a new List with {@link IGeneratorParameter}s
 	 */
+	@TestMethod("testGetRenderingParameters")
 	public List<IGeneratorParameter<?>> getRenderingParameters() {
 		List<IGeneratorParameter<?>> parameters =
 			new ArrayList<IGeneratorParameter<?>>();
@@ -400,6 +413,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 * @param param {@link IGeneratorParameter} to get the value of.
 	 * @return the {@link IGeneratorParameter} instance with the active value.
 	 */
+	@TestMethod("testGetRenderingParameter,testReturningTheRealParamaterValue")
 	public <T extends IGeneratorParameter<?> >T getParameter(Class<T> param) {
 	    if (renderingParameters.containsKey(param.getName()))
 	        return (T)renderingParameters.get(param.getName());
@@ -427,6 +441,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 *
 	 * @see #get(Class)
 	 */
+	@TestMethod("testGetDefaultRenderingParameter")
 	public <T extends IGeneratorParameter<S>,S> S getDefault(Class<T> param) {
 		if (renderingParameters.containsKey(param.getName()))
 	        return getParameter(param).getDefault();
@@ -455,6 +470,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 * @param param {@link IGeneratorParameter} to get the value of.
 	 * @return the {@link IGeneratorParameter} instance with the active value.
 	 */
+	@TestMethod("testSetRenderingParameter")
 	public <T extends IGeneratorParameter<S>,S> void set(
 			Class<T> paramType, S value) {
 		T parameter = getParameter(paramType);
@@ -470,6 +486,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 *
 	 * @see #getParameter(Class)
 	 */
+	@TestMethod("testSetRenderingParameter")
 	public <T extends IGeneratorParameter<S>,S> S get(Class<T> paramType) {
 		return getParameter(paramType).getValue();
 	}
@@ -480,6 +497,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 *
 	 * @param generator
 	 */
+	@TestMethod("testGetRenderingParameter,testReturningTheRealParamaterValue")
     public void registerParameters(IGenerator<? extends IChemObject> generator) {
         for (IGeneratorParameter<?> param : generator.getParameters()) {
             renderingParameters.put(

@@ -22,10 +22,16 @@
 package org.openscience.cdk.renderer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.generators.IGenerator;
@@ -89,5 +95,138 @@ public class RendererModelTest {
 			Boolean.TRUE,
 			model.getParameter(SomeParam.class).getValue()
 		);
+	}
+
+	@Test
+	public void testSetRenderingParameter() {
+		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			@Override
+			public List<IGeneratorParameter<?>> getParameters() {
+				return new ArrayList<IGeneratorParameter<?>>() {{
+					add(someParam);
+				}};
+			}
+			@Override
+			public IRenderingElement generate(IChemObject object,
+					RendererModel model) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		RendererModel model = new RendererModel();
+		model.registerParameters(generator);
+		Assert.assertEquals(
+			Boolean.FALSE, model.get(SomeParam.class)
+		);
+		model.set(SomeParam.class, true);
+		Assert.assertEquals(
+			Boolean.TRUE, model.get(SomeParam.class)
+		);
+	}
+
+	@Test
+	public void testGetDefaultRenderingParameter() {
+		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			@Override
+			public List<IGeneratorParameter<?>> getParameters() {
+				return new ArrayList<IGeneratorParameter<?>>() {{
+					add(someParam);
+				}};
+			}
+			@Override
+			public IRenderingElement generate(IChemObject object,
+					RendererModel model) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		RendererModel model = new RendererModel();
+		model.registerParameters(generator);
+		Assert.assertEquals(
+			Boolean.FALSE,
+			model.getDefault(SomeParam.class)
+		);
+	}
+
+	@Test
+	public void testGetRenderingParameters() {
+		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			@Override
+			public List<IGeneratorParameter<?>> getParameters() {
+				return new ArrayList<IGeneratorParameter<?>>() {{
+					add(someParam);
+				}};
+			}
+			@Override
+			public IRenderingElement generate(IChemObject object,
+					RendererModel model) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		RendererModel model = new RendererModel();
+		model.registerParameters(generator);
+		List<IGeneratorParameter<?>> params = model.getRenderingParameters();
+		Assert.assertNotNull(params);
+		Assert.assertEquals(3, params.size()); // the registered one + two defaults
+		Assert.assertEquals(SomeParam.class, params.get(2).getClass());
+	}
+	
+	@Test
+	public void testGetSetNotification() {
+		RendererModel model = new RendererModel();
+		// test the default setting
+		Assert.assertTrue(model.getNotification());
+		model.setNotification(false);
+		Assert.assertFalse(model.getNotification());
+		model.setNotification(true);
+		Assert.assertTrue(model.getNotification());
+	}
+
+	@Test
+	public void testNoDefaultToolTips() {
+		RendererModel model = new RendererModel();
+		// test: no default tool tips
+		Assert.assertNull(model.getToolTipText(new Atom()));
+		// but a non-null map
+		Assert.assertNotNull(model.getToolTipTextMap());
+	}
+
+	@Test
+	public void testToolTipFunctionality() {
+		Map<IAtom, String> tips = new HashMap<IAtom, String>();
+		IAtom anonAtom = new Atom();
+		tips.put(anonAtom, "Repelsteeltje");
+		RendererModel model = new RendererModel();
+		model.setToolTipTextMap(tips);
+		Assert.assertEquals(tips, model.getToolTipTextMap());
+		Assert.assertEquals("Repelsteeltje", model.getToolTipText(anonAtom));
+	}
+
+	@Test
+	public void testClipboardContent() {
+		RendererModel model = new RendererModel();
+		// test default
+		Assert.assertNull(model.getClipboardContent());
+		IAtomContainer content = new AtomContainer();
+		model.setClipboardContent(content);
+		Assert.assertEquals(content, model.getClipboardContent());
+		model.setClipboardContent(null);
+		Assert.assertNull(model.getClipboardContent());
+	}
+
+	@Test
+	public void testExternalSelectedPart() {
+		RendererModel model = new RendererModel();
+		// test default
+		Assert.assertNull(model.getExternalSelectedPart());
+		IAtomContainer content = new AtomContainer();
+		model.setExternalSelectedPart(content);
+		Assert.assertEquals(content, model.getExternalSelectedPart());
+		model.setExternalSelectedPart(null);
+		Assert.assertNull(model.getExternalSelectedPart());
 	}
 }
