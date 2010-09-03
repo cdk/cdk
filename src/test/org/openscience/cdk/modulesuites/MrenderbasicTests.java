@@ -23,6 +23,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderbasicCoverageTest;
 import org.openscience.cdk.renderer.AtomContainerRendererTest;
+import org.openscience.cdk.renderer.elements.PathElementTest;
+import org.openscience.cdk.renderer.elements.WedgeLineElementTest;
 import org.openscience.cdk.renderer.generators.BasicAtomGeneratorTest;
 import org.openscience.cdk.renderer.generators.BasicBondGeneratorTest;
 
@@ -37,6 +39,8 @@ import org.openscience.cdk.renderer.generators.BasicBondGeneratorTest;
 	RenderbasicCoverageTest.class,
 	AtomContainerRendererTest.class,
 	BasicAtomGeneratorTest.class,
-	BasicBondGeneratorTest.class
+	BasicBondGeneratorTest.class,
+	WedgeLineElementTest.class,
+	PathElementTest.class
 })
 public class MrenderbasicTests {}

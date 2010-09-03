@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -22,9 +20,13 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * @cdk.module renderbasic
  */
+@TestClass("org.openscience.cdk.renderer.elements.WedgeLineElementTest")
 public class WedgeLineElement extends LineElement {
 
 	public final boolean isDashed;
@@ -34,6 +36,7 @@ public class WedgeLineElement extends LineElement {
 		toFirst, toSecond;
 	}
 
+	@TestMethod("testConstructor")
 	public WedgeLineElement(double x1, double y1, double x2, double y2,
 			double width, boolean dashed, Direction direction, Color color) {
 		super(x1, y1, x2, y2, width, color);
@@ -51,6 +54,7 @@ public class WedgeLineElement extends LineElement {
 	}
 
 	@Override
+	@TestMethod("testAccept")
 	public void accept(IRenderingVisitor v) {
 		v.visit(this);
 	}

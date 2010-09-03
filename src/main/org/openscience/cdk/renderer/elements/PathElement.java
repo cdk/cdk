@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Gilleain Torrance <gilleain.torrance@gmail.com>
+/*  Copyright (C) 2008  Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -25,20 +23,25 @@ import java.util.ArrayList;
 
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * @cdk.module renderbasic
  */
-
+@TestClass("org.openscience.cdk.renderer.elements.PathElementTest")
 public class PathElement implements IRenderingElement {
 
     public final ArrayList<Point2d> points;
     public final Color color;
     
+    @TestMethod("testConstructor")
     public PathElement(ArrayList<Point2d> points, Color color) {
         this.points = points;
         this.color = color;
     }
     
+    @TestMethod("testAccept")
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
