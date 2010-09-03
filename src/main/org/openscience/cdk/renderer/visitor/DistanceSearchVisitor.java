@@ -76,7 +76,7 @@ public class DistanceSearchVisitor implements IRenderingVisitor {
 	}
 
 	public void visitText(TextElement textElement) {
-		this.check(textElement, textElement.x, textElement.y);
+		this.check(textElement, textElement.xCoord, textElement.yCoord);
 	}
 
 	public void visitWedge(WedgeLineElement wedgeElement) {
