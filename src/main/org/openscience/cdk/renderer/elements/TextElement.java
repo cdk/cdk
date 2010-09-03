@@ -33,9 +33,9 @@ import org.openscience.cdk.annotations.TestMethod;
 public class TextElement implements IRenderingElement {
 
 	/** The x coordinate where the text should be displayed. */
-	public final double x;
+	public final double xCoord;
 	/** The y coordinate where the text should be displayed. */
-	public final double y;
+	public final double yCoord;
 	/** The text to be displayed. */
 	public final String text;
 	/** The color of the text. */
@@ -45,15 +45,15 @@ public class TextElement implements IRenderingElement {
 	 * Constructs a new TextElement with the content <code>text</code> to be
 	 * drawn at position (x,y) in the color <code>color</code>.
 	 *
-	 * @param x     x coordinate where the text should be displayed
-	 * @param y     y coordinate where the text should be displayed
+	 * @param xCoord     x coordinate where the text should be displayed
+	 * @param yCoord     y coordinate where the text should be displayed
 	 * @param text  the text to be drawn
 	 * @param color the color of the text
 	 */
 	@TestMethod("testConstructor")
-	public TextElement(double x, double y, String text, Color color) {
-		this.x = x;
-		this.y = y;
+	public TextElement(double xCoord, double yCoord, String text, Color color) {
+		this.xCoord = xCoord;
+		this.yCoord = yCoord;
 		this.text = text;
 		this.color = color;
 	}
