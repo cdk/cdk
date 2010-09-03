@@ -186,10 +186,10 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public void visit(TextElement textElement) {
         this.g.setFont(this.fontManager.getFont());
         Point p = this.getTextBasePoint(
-                textElement.text, textElement.x, textElement.y, g);
+                textElement.text, textElement.xCoord, textElement.yCoord, g);
         Rectangle2D textBounds =
                 this.getTextBounds(
-                        textElement.text, textElement.x, textElement.y, g);
+                        textElement.text, textElement.xCoord, textElement.yCoord, g);
         this.g.setColor(backgroundColor);
         this.g.fill(textBounds);
         this.g.setColor(textElement.color);
@@ -265,9 +265,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.g.setFont(this.fontManager.getFont());
         Point p = 
             super.getTextBasePoint(
-                    atomSymbol.text, atomSymbol.x, atomSymbol.y, g);
+                    atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, g);
         Rectangle2D textBounds = 
-            this.getTextBounds(atomSymbol.text, atomSymbol.x, atomSymbol.y, g);
+            this.getTextBounds(atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, g);
         this.g.setColor(backgroundColor);
         this.g.fill(textBounds);
         this.g.setColor(atomSymbol.color);
@@ -389,9 +389,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.g.setFont(this.fontManager.getFont());
         Point p = 
             super.getTextBasePoint(
-                    textGroup.text, textGroup.x, textGroup.y, g);
+                    textGroup.text, textGroup.xCoord, textGroup.yCoord, g);
         Rectangle2D textBounds = 
-            this.getTextBounds(textGroup.text, textGroup.x, textGroup.y, g);
+            this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, g);
         this.g.setColor(backgroundColor);
         this.g.fill(textBounds);
         this.g.setColor(textGroup.color);
