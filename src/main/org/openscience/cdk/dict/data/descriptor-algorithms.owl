@@ -2493,7 +2493,7 @@
         <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2010-08-31</dc:date>
         <definition rdf:parseType='Literal'>
-            Characterizes molecular complexity in terms of carbon hybridization states
+            Characterizes molecular complexity in terms of carbon hybridization states.
         </definition>
         <description rdf:parseType='Literal'>
             This descriptor is designed to give a simple characterization of molecular

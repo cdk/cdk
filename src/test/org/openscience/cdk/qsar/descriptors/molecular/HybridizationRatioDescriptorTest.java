@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*
+ * Copyright (C) 2010 Rajarshi Guha <rajarshi.guha@gmail.com>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -32,7 +28,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * TestSuite that runs a test for the HybridizationRatioDescriptor.
+ * TestSuite that runs a test for the {@link HybridizationRatioDescriptor}.
  *
  * @cdk.module test-qsarmolecular
  */
@@ -58,5 +54,12 @@ public class HybridizationRatioDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccccc1");
         Assert.assertEquals(0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+    }
+
+    @Test
+    public void testHybRatioDescriptor3() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[H]C#N");
+        Assert.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 }

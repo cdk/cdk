@@ -1,10 +1,7 @@
 /*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *
+ *  Copyright (C) 2010 Rajarshi Guha <rajarshi.guha@gmail.com> 
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -38,7 +35,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * IDescriptor that reports the fraction of sp3 carbons to sp2 carbons.
+ * {@link IDescriptor} that reports the fraction of sp3 carbons to sp2 carbons.
  * <p/>
  * Note that it only considers carbon atoms and rather than use a simple ratio
  * it reports the value of N<sub>sp3</sub>/ (N<sub>sp3</sub> + N<sub>sp2</sub>).
@@ -56,23 +53,15 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class HybridizationRatioDescriptor implements IMolecularDescriptor {
 
     /**
-     * Constructor for the WeightDescriptor object.
+     * Constructor for the HybridizationRatioDescriptor object.
      */
     public HybridizationRatioDescriptor() {
     }
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
-     * <p/>
-     * These fields are used in the map:
-     * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     * this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
-     * </ul>
+     * Returns a {@link Map} which specifies which descriptor is implemented by this class.
      *
+     * @inheritDoc     
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
@@ -85,7 +74,7 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
     }
 
     /**
-     * Sets the parameters attribute of the WeightDescriptor object.
+     * Sets the parameters attribute of the HybridizationRatioDescriptor object.
      *
      * @param params The new parameters value
      * @throws org.openscience.cdk.exception.CDKException
@@ -99,7 +88,9 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
 
 
     /**
-     * Gets the parameters attribute of the WeightDescriptor object.
+     * Gets the parameters attribute of the HybridizationRatioDescriptor object.
+     *
+     * This descriptor takes no parameters
      *
      * @return The parameters value
      * @see #setParameters
@@ -114,6 +105,12 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
         return new String[]{"HybRatio"};
     }
 
+    /**
+     * @inheritDoc
+     * 
+     * @param e
+     * @return
+     */
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(),
                 getParameters(), new DoubleResult(Double.NaN), getDescriptorNames(), e);
@@ -121,10 +118,10 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
 
 
     /**
-     * Calculate the weight of specified element type in the supplied {@link org.openscience.cdk.interfaces.IAtomContainer}.
+     * Calculate sp3/sp2 hybridization ratio in the supplied {@link org.openscience.cdk.interfaces.IAtomContainer}.
      *
      * @param container The AtomContainer for which this descriptor is to be calculated.
-     * @return The total weight of atoms of the specified element type
+     * @return The ratio of sp3 to sp2 carbons
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
@@ -166,7 +163,9 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
 
 
     /**
-     * Gets the parameterNames attribute of the WeightDescriptor object.
+     * Gets the parameterNames attribute of the HybridizationRatioDescriptor object.
+     *
+     * This descriptor takes no parameters
      *
      * @return The parameterNames value
      */
@@ -179,7 +178,9 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
     /**
      * Gets the parameterType attribute of the HybridizationRatioDescriptor object.
      *
-     * @param name Description of the Parameter
+     * This descriptor takes no parameters
+     *
+     * @param name the parameter name
      * @return An Object whose class is that of the parameter requested
      */
     @TestMethod("testGetParameterType_String")
