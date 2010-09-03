@@ -66,6 +66,7 @@ public class CDKAtomColors implements IAtomColorer {
     @TestMethod("testGetDefaultAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
+        if (atom.getAtomicNumber() == null) return defaultColor;
         int atomnumber = atom.getAtomicNumber();
         switch (atomnumber) {
             case 1:  color = HYDROGEN; break;
