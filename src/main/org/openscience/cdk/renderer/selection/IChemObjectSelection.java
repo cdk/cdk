@@ -62,7 +62,20 @@ public interface IChemObjectSelection {
      */
     public boolean isFilled();
 
+    /**
+     * Determines if the {@link IChemObject} is part of the current selection.
+     *
+     * @param obj {@link IChemObject} which might be part of the selection
+     * @return true, if the given <code>obj</code> is part of the selection
+     */
     public boolean contains(IChemObject obj);
 
+    /**
+     * Returns a {@link Collection} of all selected {@link IChemObject}s of the
+     * given type.
+     *
+     * @param clazz type of {@link IChemObject}s that should be returned.
+     * @return a {@link Collection} of {@link IChemObject} of the given type
+     */
     public <E extends IChemObject> Collection<E> elements(Class<E> clazz);
 }

@@ -63,9 +63,6 @@ public class RendererModel implements Serializable, Cloneable {
     private transient List<ICDKChangeListener> listeners =
         new ArrayList<ICDKChangeListener>();
 
-    //this is used for the size of the arrowhead, might become configurable
-    public static final int arrowHeadWidth = 10;
-
     private Map<IAtom, String> toolTipTextMap = new HashMap<IAtom, String>();
 
     private IAtom highlightedAtom = null;
@@ -85,6 +82,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 */
     public static class ExternalHighlightColor extends
     AbstractGeneratorParameter<Color> {
+    	/** {@inheritDoc} */
     	public Color getDefault() {
     		return Color.gray;
     	}
@@ -97,6 +95,7 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public static class ColorHash extends
     AbstractGeneratorParameter<Map<IChemObject, Color>> {
+    	/** {@inheritDoc} */
         public Map<IChemObject, Color> getDefault() {
             return new Hashtable<IChemObject, Color>();
         }
@@ -111,11 +110,23 @@ public class RendererModel implements Serializable, Cloneable {
         );
     }
 
+    /**
+     * Set the selected {@link IChemObject}s.
+     * 
+     * @param selection an {@link IChemObjectSelection} with selected
+     *                  {@link IChemObject}s
+     */
     @TestMethod("testSelection")
     public void setSelection(IChemObjectSelection selection) {
         this.selection = selection;
     }
 
+    /**
+     * Returns an {@link IChemObjectSelection} with the currently selected
+     * {@link IChemObject}s.
+     * 
+     * @return the current selected {@link IChemObject}s
+     */
     @TestMethod("testSelection")
     public IChemObjectSelection getSelection() {
         return this.selection;
@@ -388,11 +399,21 @@ public class RendererModel implements Serializable, Cloneable {
         fireChange();
     }
 
+    /**
+     * Determines if the model sends around change notifications.
+     *
+     * @return true, if notifications are sent around upon changes
+     */
 	@TestMethod("testGetSetNotification")
     public boolean getNotification() {
         return notification;
     }
 
+	/**
+	 * Dis- or enables sending around change notifications.
+	 * 
+	 * @param notification true if notifications should be sent, false otherwise.
+	 */
 	@TestMethod("testGetSetNotification")
     public void setNotification(boolean notification) {
         this.notification = notification;
@@ -460,12 +481,12 @@ public class RendererModel implements Serializable, Cloneable {
 		try {
 			return param.newInstance().getDefault();
 		} catch (InstantiationException exception) {
-			throw new RuntimeException(
+			throw new IllegalArgumentException(
 					"Could not instantiate a default " +
 					param.getClass().getName(), exception
 			);
 		} catch (IllegalAccessException exception) {
-			throw new RuntimeException(
+			throw new IllegalArgumentException(
 					"Could not instantiate a default " +
 					param.getClass().getName(), exception
 			);
@@ -476,8 +497,8 @@ public class RendererModel implements Serializable, Cloneable {
 	 * Sets the {@link IGeneratorParameter} for the active {@link IRenderer}.
 	 * @param <T>
 	 *
-	 * @param param {@link IGeneratorParameter} to get the value of.
-	 * @return the {@link IGeneratorParameter} instance with the active value.
+	 * @param paramType {@link IGeneratorParameter} to set the value of.
+	 * @param value     new {@link IGeneratorParameter} value
 	 */
 	@TestMethod("testSetRenderingParameter")
 	public <T extends IGeneratorParameter<S>,S> void set(

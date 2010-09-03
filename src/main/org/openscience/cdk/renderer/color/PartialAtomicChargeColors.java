@@ -43,6 +43,7 @@ public class PartialAtomicChargeColors implements IAtomColorer {
      * Returns the a color reflecting the given atom's partial charge.
      *
      * @param atom         IAtom to get a color for
+     * @return             the color for the given atom.
      */
     @TestMethod("testGetAtomColor")
     public Color getAtomColor(IAtom atom) {
@@ -56,6 +57,7 @@ public class PartialAtomicChargeColors implements IAtomColorer {
      * @param atom         IAtom to get a color for
      * @param defaultColor Color returned if this scheme does not define
      *                     a color for the passed IAtom
+     * @return             the color for the given atom.
      */
     @TestMethod("testGetDefaultAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor) {

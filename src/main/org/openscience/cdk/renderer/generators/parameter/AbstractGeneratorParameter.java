@@ -49,7 +49,7 @@ public abstract class AbstractGeneratorParameter<T>
      * Gets the value for this parameter. It must provide a reasonable
      * default when no other value has been set.
      *
-     * @param value the new parameter value
+     * @return the current parameter value
      */
     @TestMethod("testValue")
     public T getValue() {

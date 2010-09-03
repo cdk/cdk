@@ -41,7 +41,7 @@ public interface IDrawVisitor extends IRenderingVisitor {
 	/**
 	 * Sets the {@link RendererModel} this {@link IDrawVisitor} should use.
 	 *
-	 * @param fontManager the {@link RendererModel} to be used
+	 * @param rendererModel the {@link RendererModel} to be used
 	 */
     public void setRendererModel(RendererModel rendererModel);
 

@@ -40,7 +40,7 @@ public interface IGeneratorParameter<T> {
      * Gets the value for this parameter. It must provide a reasonable
      * default when no other value has been set.
      *
-     * @param value the new parameter value
+     * @return the current parameter value
      */
     public T getValue();
 
@@ -48,7 +48,7 @@ public interface IGeneratorParameter<T> {
      * Gets the default value for this parameter. This value is set by the
      * parameter class and cannot be changed.
      *
-     * @param value the default value for this parameter
+     * @return the default value for this parameter
      */
     public T getDefault();
 

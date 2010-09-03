@@ -51,8 +51,8 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
      * @return             the atom's color according to this coloring scheme.
      */
     @TestMethod("testGetAtomColor")
-    public Color getAtomColor(IAtom a) {
-        return getAtomColor(a, DEFAULT);
+    public Color getAtomColor(IAtom atom) {
+        return getAtomColor(atom, DEFAULT);
     }
     
     /**
