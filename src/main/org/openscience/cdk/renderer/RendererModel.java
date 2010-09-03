@@ -511,7 +511,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 * Returns the {@link IGeneratorParameter} for the active {@link IRenderer}.
 	 * @param <T>
 	 *
-	 * @param param {@link IGeneratorParameter} to get the value of.
+	 * @param paramType {@link IGeneratorParameter} to get the value of.
 	 * @return the {@link IGeneratorParameter} value.
 	 *
 	 * @see #getParameter(Class)
