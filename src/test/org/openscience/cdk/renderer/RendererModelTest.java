@@ -22,6 +22,8 @@
 package org.openscience.cdk.renderer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +32,17 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 
 /**
  * @cdk.module test-render
@@ -228,5 +235,86 @@ public class RendererModelTest {
 		Assert.assertEquals(content, model.getExternalSelectedPart());
 		model.setExternalSelectedPart(null);
 		Assert.assertNull(model.getExternalSelectedPart());
+	}
+
+	@Test
+	public void testHighlightedAtom() {
+		RendererModel model = new RendererModel();
+		// test default
+		Assert.assertNull(model.getHighlightedAtom());
+		IAtom content = new Atom();
+		model.setHighlightedAtom(content);
+		Assert.assertEquals(content, model.getHighlightedAtom());
+		model.setHighlightedAtom(null);
+		Assert.assertNull(model.getHighlightedAtom());
+	}
+
+	@Test
+	public void testHighlightedBond() {
+		RendererModel model = new RendererModel();
+		// test default
+		Assert.assertNull(model.getHighlightedBond());
+		IBond content = new Bond();
+		model.setHighlightedBond(content);
+		Assert.assertEquals(content, model.getHighlightedBond());
+		model.setHighlightedBond(null);
+		Assert.assertNull(model.getHighlightedBond());
+	}
+
+	class MockSelection implements IChemObjectSelection {
+		@Override public void select(IChemModel chemModel) {}
+		@Override public IAtomContainer getConnectedAtomContainer() {
+			return null;
+		}
+		@Override public boolean isFilled() { return false; }
+		@Override public boolean contains(IChemObject obj) { return false; }
+		@Override
+		public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
+			return null;
+		}
+	}
+
+	@Test
+	public void testSelection() {
+		RendererModel model = new RendererModel();
+		// test default
+		Assert.assertNull(model.getSelection());
+		IChemObjectSelection content = new MockSelection();
+		model.setSelection(content);
+		Assert.assertEquals(content, model.getSelection());
+		model.setSelection(null);
+		Assert.assertNull(model.getSelection());
+	}
+
+	class MockListener implements ICDKChangeListener {
+		boolean isChanged = false;
+		@Override public void stateChanged(EventObject event) {
+			isChanged = true;
+		}
+	}
+	
+	@Test
+	public void testListening() {
+		RendererModel model = new RendererModel();
+		// test default
+		MockListener listener = new MockListener();
+		model.addCDKChangeListener(listener);
+		Assert.assertFalse(listener.isChanged);
+		model.fireChange();
+		Assert.assertTrue(listener.isChanged);
+
+		// test unregistering
+		listener.isChanged = false;
+		Assert.assertFalse(listener.isChanged);
+		model.removeCDKChangeListener(listener);
+		model.fireChange();
+		Assert.assertFalse(listener.isChanged);
+	}
+
+	@Test
+	public void testMerge() {
+		RendererModel model = new RendererModel();
+		Assert.assertNotNull(model.getMerge());
+		// any further testing I can do here?
 	}
 }

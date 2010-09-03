@@ -111,10 +111,12 @@ public class RendererModel implements Serializable, Cloneable {
         );
     }
 
+    @TestMethod("testSelection")
     public void setSelection(IChemObjectSelection selection) {
         this.selection = selection;
     }
 
+    @TestMethod("testSelection")
     public IChemObjectSelection getSelection() {
         return this.selection;
     }
@@ -126,6 +128,7 @@ public class RendererModel implements Serializable, Cloneable {
 	 *
 	 * @return Returns the merge.map
 	 */
+    @TestMethod("testMerge")
 	public Map<IAtom, IAtom> getMerge() {
 		return merge;
 	}
@@ -197,6 +200,7 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @return the atom currently highlighted
      */
+    @TestMethod("testHighlightedAtom")
     public IAtom getHighlightedAtom() {
         return this.highlightedAtom;
     }
@@ -207,6 +211,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param highlightedAtom
      *            The atom to be highlighted
      */
+    @TestMethod("testHighlightedAtom")
     public void setHighlightedAtom(IAtom highlightedAtom) {
         if ((this.highlightedAtom != null) || (highlightedAtom != null)) {
             this.highlightedAtom = highlightedAtom;
@@ -219,6 +224,7 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @return the Bond currently highlighted
      */
+    @TestMethod("testHighlightedBond")
     public IBond getHighlightedBond() {
         return this.highlightedBond;
     }
@@ -229,6 +235,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param highlightedBond
      *            The Bond to be currently highlighted
      */
+    @TestMethod("testHighlightedBond")
     public void setHighlightedBond(IBond highlightedBond) {
         if ((this.highlightedBond != null) || (highlightedBond != null)) {
             this.highlightedBond = highlightedBond;
@@ -265,7 +272,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param listener
      *            The listener added to the list
      */
-
+    @TestMethod("testListening")
     public void addCDKChangeListener(ICDKChangeListener listener) {
         if (listeners == null) {
             listeners = new ArrayList<ICDKChangeListener>();
@@ -281,6 +288,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param listener
      *            The listener removed from the list
      */
+    @TestMethod("testListening")
     public void removeCDKChangeListener(ICDKChangeListener listener) {
         listeners.remove(listener);
     }
@@ -289,6 +297,7 @@ public class RendererModel implements Serializable, Cloneable {
      * Notifies registered listeners of certain changes that have occurred in
      * this model.
      */
+    @TestMethod("testListening")
     public void fireChange() {
         if (getNotification() && listeners != null) {
             EventObject event = new EventObject(this);

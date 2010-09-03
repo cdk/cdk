@@ -26,8 +26,10 @@ import org.openscience.cdk.renderer.RendererModelTest;
 import org.openscience.cdk.renderer.color.CDK2DAtomColorsTest;
 import org.openscience.cdk.renderer.color.CDKAtomColorsTest;
 import org.openscience.cdk.renderer.color.CPKAtomColorsTest;
-import org.openscience.cdk.renderer.color.RasmolColorsTest;
 import org.openscience.cdk.renderer.color.PartialAtomicChargeColorsTest;
+import org.openscience.cdk.renderer.color.RasmolColorsTest;
+import org.openscience.cdk.renderer.elements.TextElementTest;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameterTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>render</code> module.
@@ -42,6 +44,8 @@ import org.openscience.cdk.renderer.color.PartialAtomicChargeColorsTest;
 	CDKAtomColorsTest.class,
 	CDK2DAtomColorsTest.class,
 	PartialAtomicChargeColorsTest.class,
-	RendererModelTest.class
+	RendererModelTest.class,
+	AbstractGeneratorParameterTest.class,
+	TextElementTest.class
 })
 public class MrenderTests {}

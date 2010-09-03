@@ -20,12 +20,16 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Text element as used in the chemical drawing. This can be a element symbol.
  *
  * @cdk.module render
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.elements.TextElementTest")
 public class TextElement implements IRenderingElement {
 
 	/** The x coordinate where the text should be displayed. */
@@ -46,6 +50,7 @@ public class TextElement implements IRenderingElement {
 	 * @param text  the text to be drawn
 	 * @param color the color of the text
 	 */
+	@TestMethod("testConstructor")
 	public TextElement(double x, double y, String text, Color color) {
 		this.x = x;
 		this.y = y;
@@ -54,6 +59,7 @@ public class TextElement implements IRenderingElement {
 	}
 
 	/** {@inheritDoc} */
+	@TestMethod("testAccept")
 	public void accept(IRenderingVisitor visotor) {
 		visotor.visit(this);
 	}
