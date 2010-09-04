@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * @cdk.module test-render
+ * @cdk.module test-renderbasic
  */
 public class WedgeLineElementTest extends AbstractElementTest {
 

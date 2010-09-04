@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @cdk.module test-renderbsaic
+ * @cdk.module test-renderbasic
  */
 public abstract class AbstractElementTest {
 
