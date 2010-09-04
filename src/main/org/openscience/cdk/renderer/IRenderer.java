@@ -22,9 +22,13 @@
  */
 package org.openscience.cdk.renderer;
 
+import java.awt.Rectangle;
+
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
+import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
  * Interface that all 2D renderers implement. The constructor is responsible
@@ -34,7 +38,7 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
  * @cdk.module render
  * @cdk.githash
  */
-public interface IRenderer {
+public interface IRenderer<T extends IChemObject> {
 
     /**
      * Returns the drawing model, giving access to drawing parameters.
@@ -80,4 +84,29 @@ public interface IRenderer {
      */
 	public void shiftDrawCenter(double screenX, double screenY);
 
+	public Rectangle paint(T object, IDrawVisitor drawVisitor);
+
+	/**
+	 * Setup the transformations necessary to draw the {@link IChemObject}
+	 * matching this {@link IRenderer} implementation.
+	 */
+	public void setup(T object, Rectangle screen);
+
+	/**
+	 * Set the scale for an {@link IChemObject}. It calculates the average bond
+	 * length of the model and calculates the multiplication factor to transform
+	 * this to the bond length that is set in the {@link RendererModel}.
+	 * 
+	 * @param  object the {@link IChemObject} to draw.
+	 */
+	public void setScale(T object);
+
+	/**
+	 * Given a {@link IChemObject}, calculates the bounding rectangle in screen
+	 * space.
+	 *
+	 * @param  object the {@link IChemObject} to draw.
+	 * @return        a rectangle in screen space.
+	 */
+	public Rectangle calculateDiagramBounds(T object);
 }
