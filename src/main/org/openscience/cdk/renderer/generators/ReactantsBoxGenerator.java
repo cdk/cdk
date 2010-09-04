@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.renderer.Renderer;
+import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -51,7 +51,7 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
 	    
 		double d = model.getParameter(BondLength.class)
     		.getValue() / model.getParameter(Scale.class).getValue()/2;
-        Rectangle2D totalBounds = Renderer.calculateBounds(reaction.getReactants());
+        Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reaction.getReactants());
         
         ElementGroup diagram = new ElementGroup();
         double minX = totalBounds.getMinX();

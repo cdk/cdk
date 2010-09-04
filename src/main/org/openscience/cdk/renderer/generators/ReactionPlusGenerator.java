@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.renderer.Renderer;
+import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -45,26 +45,26 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 		ElementGroup diagram = new ElementGroup();
 		
 		IMoleculeSet reactants = reaction.getReactants();
-        Rectangle2D totalBoundsReactants = Renderer.calculateBounds(reactants);
+        Rectangle2D totalBoundsReactants = BoundsCalculator.calculateBounds(reactants);
         Rectangle2D bounds1 = 
-            Renderer.calculateBounds(reactants.getAtomContainer(0));
+        	BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
         double axis = totalBoundsReactants.getCenterY();
         Color color = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         for (int i = 1; i < reaction.getReactantCount(); i++) {
         	Rectangle2D bounds2 = 
-        	    Renderer.calculateBounds(reactants.getAtomContainer(i));
+        		BoundsCalculator.calculateBounds(reactants.getAtomContainer(i));
         	diagram.add(makePlus(bounds1, bounds2, axis, color));
         	bounds1 = bounds2;
         }
         
         IMoleculeSet products = reaction.getProducts();
-        Rectangle2D totalBoundsProducts = Renderer.calculateBounds(products);
+        Rectangle2D totalBoundsProducts = BoundsCalculator.calculateBounds(products);
         axis = totalBoundsProducts.getCenterY();
-        bounds1 = Renderer.calculateBounds(reactants.getAtomContainer(0));
+        bounds1 = BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
         for (int i = 1; i < reaction.getProductCount(); i++) {
         	Rectangle2D bounds2 = 
-        	    Renderer.calculateBounds(products.getAtomContainer(i));
+        		BoundsCalculator.calculateBounds(products.getAtomContainer(i));
         	
         	diagram.add(makePlus(bounds1, bounds2, axis, color));
         	bounds1 = bounds2;
