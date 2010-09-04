@@ -105,7 +105,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @author maclean
  * @cdk.module renderextra
  */
-public class Renderer extends AbstractRenderer
+public class ChemModelRenderer extends AbstractRenderer
   implements IRenderer<IChemModel> {
 
 	/**
@@ -122,14 +122,14 @@ public class Renderer extends AbstractRenderer
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public Renderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
 		this.generators = generators;
         this.fontManager = fontManager;
         for (IGenerator generator : generators)
             rendererModel.registerParameters(generator);
     }
 	
-	public Renderer(List<IGenerator<IAtomContainer>> generators, 
+	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, 
 	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
 	    this(generators, fontManager);
