@@ -47,7 +47,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 
 /**
- * Model for {@link Renderer} that contains settings for drawing objects.
+ * Model for {@link IRenderer} that contains settings for drawing objects.
  *
  * @cdk.module render
  * @cdk.githash
