@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.renderer.Renderer;
+import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -57,7 +57,7 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
     		.getValue() / model.getParameter(Scale.class).getValue() / 2;
         Rectangle2D totalBounds = null;
         for (IAtomContainer molecule : reaction.getProducts().molecules()) {
-            Rectangle2D bounds = Renderer.calculateBounds(molecule);
+            Rectangle2D bounds = BoundsCalculator.calculateBounds(molecule);
             if (totalBounds == null) {
                 totalBounds = bounds;
             } else {

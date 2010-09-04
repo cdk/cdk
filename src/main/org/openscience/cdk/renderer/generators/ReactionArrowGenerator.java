@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.renderer.Renderer;
+import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ArrowElement;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -42,9 +42,9 @@ public class ReactionArrowGenerator implements IGenerator<IReaction> {
 
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
         Rectangle2D totalBoundsReactants = 
-            Renderer.calculateBounds(reaction.getReactants());
+        	BoundsCalculator.calculateBounds(reaction.getReactants());
         Rectangle2D totalBoundsProducts = 
-            Renderer.calculateBounds(reaction.getProducts());
+        	BoundsCalculator.calculateBounds(reaction.getProducts());
         
         if (totalBoundsReactants == null || totalBoundsProducts == null)
         	return null;
