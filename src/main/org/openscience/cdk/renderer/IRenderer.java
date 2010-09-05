@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 public interface IRenderer<T extends IChemObject> {
-
+    
     /**
      * Returns the drawing model, giving access to drawing parameters.
      * 
@@ -84,6 +84,13 @@ public interface IRenderer<T extends IChemObject> {
      */
 	public void shiftDrawCenter(double screenX, double screenY);
 
+	/**
+	 * Paint an IChemObject.
+	 * 
+	 * @param object the chem object to paint
+	 * @param drawVisitor the class that visits the generated elements  
+	 * @return
+	 */
 	public Rectangle paint(T object, IDrawVisitor drawVisitor);
 
 	/**
