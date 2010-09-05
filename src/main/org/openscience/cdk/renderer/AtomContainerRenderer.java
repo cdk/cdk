@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ZoomFactor;
 import org.openscience.cdk.renderer.generators.IGenerator;
@@ -98,7 +97,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @author maclean
  * @cdk.module renderbasic
  */
-public class AtomContainerRenderer extends AbstractRenderer
+public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
   implements IRenderer<IAtomContainer> {
 
 	/**
@@ -118,8 +117,9 @@ public class AtomContainerRenderer extends AbstractRenderer
 	public AtomContainerRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
 	    this.generators = generators;
         this.fontManager = fontManager;
-        for (IGenerator generator : generators)
+        for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
+        }
     }
 	
 	/**
@@ -161,7 +161,7 @@ public class AtomContainerRenderer extends AbstractRenderer
 
         // setup and draw
         this.setupTransformNatural(modelBounds);
-        IRenderingElement diagram = this.generateDiagram(atomContainer);
+        IRenderingElement diagram = generateDiagram(atomContainer);
         this.paint(drawVisitor, diagram);
 
         return this.convertToDiagramBounds(modelBounds);
@@ -186,7 +186,7 @@ public class AtomContainerRenderer extends AbstractRenderer
     	        GeometryTools.getBondLengthAverage(atomContainer), resetCenter);
 
     	// the diagram to draw
-    	IRenderingElement diagram = this.generateDiagram(atomContainer);
+    	IRenderingElement diagram = generateDiagram(atomContainer);
 
     	this.paint(drawVisitor, diagram);
     }
@@ -204,7 +204,7 @@ public class AtomContainerRenderer extends AbstractRenderer
 	 * @param reset
 	 * @return
 	 */
-	protected double calculateScaleForBondLength(double modelBondLength) {
+	public double calculateScaleForBondLength(double modelBondLength) {
 	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return DEFAULT_SCALE;
         } else {
@@ -212,40 +212,7 @@ public class AtomContainerRenderer extends AbstractRenderer
             	.getValue() / modelBondLength;
         }
 	}
-
-    /**
-     * Calculate the bounds of the diagram on screen, given the current scale,
-     * zoom, and margin.
-     *
-     * @param modelBounds
-     *            the bounds in model space of the chem object
-     * @return the bounds in screen space of the drawn diagram
-     */
-	private Rectangle convertToDiagramBounds(Rectangle2D modelBounds) {
-	    double cx = modelBounds.getCenterX();
-        double cy = modelBounds.getCenterY();
-        double mw = modelBounds.getWidth();
-        double mh = modelBounds.getHeight();
-
-        double scale = rendererModel.getParameter(Scale.class).getValue();
-        double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
-        Point2d mc = this.toScreenCoordinates(cx, cy);
-
-        // special case for 0 or 1 atoms
-        if (mw == 0 && mh == 0) {
-            return new Rectangle((int)mc.x, (int)mc.y, 0, 0);
-        }
-
-        double margin = this.rendererModel
-            .getParameter(Margin.class).getValue();
-        int w = (int) ((scale * zoom * mw) + (2 * margin));
-        int h = (int) ((scale * zoom * mh) + (2 * margin));
-        int x = (int) (mc.x - w / 2);
-        int y = (int) (mc.y - h / 2);
-
-        return new Rectangle(x, y, w, h);
-	}
-
+	
 	public List<IGenerator<IAtomContainer>> getGenerators(){
 	    return new ArrayList<IGenerator<IAtomContainer>>(generators);
 	}

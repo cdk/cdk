@@ -28,7 +28,7 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
@@ -45,7 +45,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 /**
  * @cdk.module renderbasic
  */
-public abstract class AbstractRenderer {
+public abstract class AbstractRenderer<T extends IChemObject> {
 
 	/**
 	 * The renderer model is final as it is not intended to be replaced.
@@ -58,19 +58,27 @@ public abstract class AbstractRenderer {
 
     protected Point2d drawCenter = new Point2d(150, 200); //diagram on screen
 
-    protected List<IGenerator<IAtomContainer>> generators;
+    protected List<IGenerator<T>> generators;
 
     protected IRenderingElement cachedDiagram;
 
     protected AffineTransform transform;
-
-	protected IRenderingElement generateDiagram(IAtomContainer ac) {
-	    ElementGroup diagram = new ElementGroup();
-        for (IGenerator<IAtomContainer> generator : this.generators) {
-            diagram.add(generator.generate(ac, this.rendererModel));
+    
+    /**
+     * The main method of the renderer, that uses each of the generators
+     * to create a different set of {@link IRenderingElement}s grouped
+     * together into a tree. 
+     * 
+     * @param object
+     * @return
+     */
+    protected IRenderingElement generateDiagram(T object) {
+        ElementGroup diagram = new ElementGroup();
+        for (IGenerator<T> generator : this.generators) {
+            diagram.add(generator.generate(object, this.rendererModel));
         }
         return diagram;
-	}
+    }
 
 	public Rectangle calculateScreenBounds(Rectangle2D modelBounds) {
 	    double scale = rendererModel.getParameter(Scale.class).getValue();
@@ -297,6 +305,40 @@ public abstract class AbstractRenderer {
 
         return new Rectangle(dx, dy, w, h);
     }
+    
+    /**
+     * Calculate the bounds of the diagram on screen, given the current scale,
+     * zoom, and margin.
+     *
+     * @param modelBounds
+     *            the bounds in model space of the chem object
+     * @return the bounds in screen space of the drawn diagram
+     */
+    protected Rectangle convertToDiagramBounds(Rectangle2D modelBounds) {
+        double cx = modelBounds.getCenterX();
+        double cy = modelBounds.getCenterY();
+        double mw = modelBounds.getWidth();
+        double mh = modelBounds.getHeight();
+
+        double scale = rendererModel.getParameter(Scale.class).getValue();
+        double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
+        
+        Point2d mc = this.toScreenCoordinates(cx, cy);
+
+        // special case for 0 or 1 atoms
+        if (mw == 0 && mh == 0) {
+            return new Rectangle((int)mc.x, (int)mc.y, 0, 0);
+        }
+
+        double margin = this.rendererModel
+            .getParameter(Margin.class).getValue();
+        int w = (int) ((scale * zoom * mw) + (2 * margin));
+        int h = (int) ((scale * zoom * mh) + (2 * margin));
+        int x = (int) (mc.x - w / 2);
+        int y = (int) (mc.y - h / 2);
+
+        return new Rectangle(x, y, w, h);
+    }
 
     /**
      * Sets the transformation needed to draw the model on the canvas when
@@ -345,6 +387,6 @@ public abstract class AbstractRenderer {
 	    this.setup();
 	}
 
-	abstract double calculateScaleForBondLength(double bondLength);
+	public abstract double calculateScaleForBondLength(double bondLength);
 
 }
