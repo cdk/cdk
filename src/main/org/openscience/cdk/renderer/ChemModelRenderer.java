@@ -23,7 +23,6 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -38,9 +37,7 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ZoomFactor;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
@@ -105,13 +102,12 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @author maclean
  * @cdk.module renderextra
  */
-public class ChemModelRenderer extends AbstractRenderer
+public class ChemModelRenderer extends AbstractRenderer<IChemModel>
   implements IRenderer<IChemModel> {
 
-	/**
-	 * Generators specific to reactions
-	 */
-	private List<IGenerator<IReaction>> reactionGenerators;
+	private MoleculeSetRenderer moleculeSetRenderer;
+	
+	private ReactionSetRenderer reactionSetRenderer;
 	
     /**
      * A renderer that generates diagrams using the specified
@@ -123,19 +119,19 @@ public class ChemModelRenderer extends AbstractRenderer
      *            a class that manages mappings between zoom and font sizes
      */
 	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		this.generators = generators;
         this.fontManager = fontManager;
-        for (IGenerator generator : generators)
-            rendererModel.registerParameters(generator);
+        moleculeSetRenderer = new MoleculeSetRenderer(generators, fontManager);
+        reactionSetRenderer = new ReactionSetRenderer(generators, fontManager);
+        this.setup();
     }
 	
 	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, 
 	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
-	    this(generators, fontManager);
-        for (IGenerator<IReaction> generator : reactionGenerators)
-            rendererModel.registerParameters(generator);
-        this.reactionGenerators = reactionGenerators;
+	    this.fontManager = fontManager;
+        
+        reactionSetRenderer = 
+            new ReactionSetRenderer(generators, reactionGenerators, fontManager);
         this.setup();
 	}
 	
@@ -185,11 +181,11 @@ public class ChemModelRenderer extends AbstractRenderer
         IReactionSet reactionSet = chemModel.getReactionSet();
 
         if (moleculeSet == null && reactionSet != null) {
-            return paintReactionSet(reactionSet, drawVisitor);
+            return reactionSetRenderer.paint(reactionSet, drawVisitor);
         }
 
         if (moleculeSet != null && reactionSet == null) {
-            return paintMoleculeSet(moleculeSet, drawVisitor);
+            return moleculeSetRenderer.paint(moleculeSet, drawVisitor);
         }
 
         if (moleculeSet != null && reactionSet != null) {
@@ -198,10 +194,8 @@ public class ChemModelRenderer extends AbstractRenderer
                     BoundsCalculator.calculateBounds(moleculeSet));
             this.setupTransformNatural(totalBounds);
             ElementGroup diagram = new ElementGroup();
-            for (IReaction reaction : reactionSet.reactions()) {
-                diagram.add(this.generateDiagram(reaction));
-            }
-            diagram.add(this.generateDiagram(moleculeSet));
+            diagram.add(reactionSetRenderer.generateDiagram(reactionSet));
+            diagram.add(moleculeSetRenderer.generateDiagram(moleculeSet));
             this.paint(drawVisitor, diagram);
 
             // the size of the painted diagram is returned
@@ -210,68 +204,46 @@ public class ChemModelRenderer extends AbstractRenderer
         return new Rectangle(0, 0, 0, 0);
     }
 
-	public Rectangle paintReactionSet(
-            IReactionSet reactionSet, IDrawVisitor drawVisitor) {
-        // total up the bounding boxes
-        Rectangle2D totalBounds = new Rectangle2D.Double();
-        for (IReaction reaction : reactionSet.reactions()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
+//	public Rectangle paintReactionSet(
+//            IReactionSet reactionSet, IDrawVisitor drawVisitor) {
+//        // total up the bounding boxes
+//        Rectangle2D totalBounds = new Rectangle2D.Double();
+//        for (IReaction reaction : reactionSet.reactions()) {
+//            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
+//            if (totalBounds == null) {
+//                totalBounds = modelBounds;
+//            } else {
+//                totalBounds = totalBounds.createUnion(modelBounds);
+//            }
+//        }
+//
+//        // setup and draw
+//        this.setupTransformNatural(totalBounds);
+//        ElementGroup diagram = new ElementGroup();
+//        for (IReaction reaction : reactionSet.reactions()) {
+//            diagram.add(this.generateDiagram(reaction));
+//        }
+//        this.paint(drawVisitor, diagram);
+//
+//        // the size of the painted diagram is returned
+//        return this.convertToDiagramBounds(totalBounds);
+//    }
+//
+//	public Rectangle paintReaction(
+//	        IReaction reaction, IDrawVisitor drawVisitor) {
+//
+//        // calculate the bounds
+//        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
+//
+//        // setup and draw
+//        this.setupTransformNatural(modelBounds);
+//        IRenderingElement diagram = this.generateDiagram(reaction);
+//        this.paint(drawVisitor, diagram);
+//
+//        return this.convertToDiagramBounds(modelBounds);
+//    }
 
-        // setup and draw
-        this.setupTransformNatural(totalBounds);
-        ElementGroup diagram = new ElementGroup();
-        for (IReaction reaction : reactionSet.reactions()) {
-            diagram.add(this.generateDiagram(reaction));
-        }
-        this.paint(drawVisitor, diagram);
-
-        // the size of the painted diagram is returned
-        return this.convertToDiagramBounds(totalBounds);
-    }
-
-	public Rectangle paintReaction(
-	        IReaction reaction, IDrawVisitor drawVisitor) {
-
-        // calculate the bounds
-        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-
-        // setup and draw
-        this.setupTransformNatural(modelBounds);
-        IRenderingElement diagram = this.generateDiagram(reaction);
-        this.paint(drawVisitor, diagram);
-
-        return this.convertToDiagramBounds(modelBounds);
-    }
-
-	public Rectangle paintMoleculeSet(
-            IMoleculeSet moleculeSet, IDrawVisitor drawVisitor) {
-        // total up the bounding boxes
-        Rectangle2D totalBounds = new Rectangle2D.Double();
-        for (IAtomContainer molecule : moleculeSet.molecules()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(molecule);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
-
-        // setup and draw
-        this.setupTransformNatural(totalBounds);
-        ElementGroup diagram = new ElementGroup();
-        for (IAtomContainer molecule : moleculeSet.molecules()) {
-            diagram.add(this.generateDiagram(molecule));
-        }
-        this.paint(drawVisitor, diagram);
-
-        return this.convertToDiagramBounds(totalBounds);
-    }
+	
 
 	/**
      * Paint a ChemModel.
@@ -292,7 +264,7 @@ public class ChemModelRenderer extends AbstractRenderer
         // with BOTH a ReactionSet AND a MoleculeSet...
         if (moleculeSet == null || reactionSet != null) {
             if (reactionSet != null) {
-                paintReactionSet(reactionSet, drawVisitor, bounds, resetCenter);
+                reactionSetRenderer.paintReactionSet(reactionSet, drawVisitor, bounds, resetCenter);
             }
             return;
         }
@@ -304,103 +276,9 @@ public class ChemModelRenderer extends AbstractRenderer
                 AverageBondLengthCalculator.calculateAverageBondLength(chemModel), resetCenter);
 
         // generate the elements
-        IRenderingElement diagram = this.generateDiagram(moleculeSet);
+        IRenderingElement diagram = moleculeSetRenderer.generateDiagram(moleculeSet);
 
         // paint it
-        this.paint(drawVisitor, diagram);
-    }
-
-    /**
-     * Paint a set of reactions.
-     *
-     * @param reaction the reaction to paint
-     * @param drawVisitor the visitor that does the drawing
-     * @param bounds the bounds on the screen
-     * @param resetCenter
-     *     if true, set the draw center to be the center of bounds
-     */
-    public void paintReactionSet(IReactionSet reactionSet,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
-
-        // total up the bounding boxes
-        Rectangle2D totalBounds = null;
-        for (IReaction reaction : reactionSet.reactions()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
-
-        this.setupTransformToFit(bounds, totalBounds,
-                AverageBondLengthCalculator.calculateAverageBondLength(reactionSet), resetCenter);
-
-        ElementGroup diagram = new ElementGroup();
-        for (IReaction reaction : reactionSet.reactions()) {
-            diagram.add(this.generateDiagram(reaction));
-        }
-
-        // paint them all
-        this.paint(drawVisitor, diagram);
-    }
-
-    /**
-	 * Paint a reaction.
-	 *
-	 * @param reaction the reaction to paint
-	 * @param drawVisitor the visitor that does the drawing
-	 * @param bounds the bounds on the screen
-	 * @param resetCenter
-	 *     if true, set the draw center to be the center of bounds
-	 */
-	public void paintReaction(IReaction reaction, IDrawVisitor drawVisitor,
-            Rectangle2D bounds, boolean resetCenter) {
-
-	    // calculate the bounds
-        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-
-        this.setupTransformToFit(bounds, modelBounds,
-                AverageBondLengthCalculator.calculateAverageBondLength(reaction), resetCenter);
-
-        // generate the elements
-        IRenderingElement diagram = this.generateDiagram(reaction);
-
-        // paint it
-        this.paint(drawVisitor, diagram);
-    }
-
-	/**
-     * Paint a set of molecules.
-     *
-     * @param reaction the reaction to paint
-     * @param drawVisitor the visitor that does the drawing
-     * @param bounds the bounds on the screen
-     * @param resetCenter
-     *     if true, set the draw center to be the center of bounds
-     */
-    public void paintMoleculeSet(IMoleculeSet molecules,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
-
-        // total up the bounding boxes
-        Rectangle2D totalBounds = null;
-        for (IAtomContainer molecule : molecules.molecules()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(molecule);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
-
-        this.setupTransformToFit(bounds, totalBounds,
-                AverageBondLengthCalculator.calculateAverageBondLength(molecules), resetCenter);
-
-        ElementGroup diagram = new ElementGroup();
-        for (IAtomContainer molecule : molecules.molecules()) {
-            diagram.add(this.generateDiagram(molecule));
-        }
-
         this.paint(drawVisitor, diagram);
     }
 
@@ -454,7 +332,7 @@ public class ChemModelRenderer extends AbstractRenderer
 	 * @param reset
 	 * @return
 	 */
-	protected double calculateScaleForBondLength(double modelBondLength) {
+	public double calculateScaleForBondLength(double modelBondLength) {
 	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();
         } else {
@@ -463,65 +341,7 @@ public class ChemModelRenderer extends AbstractRenderer
         }
 	}
 
-    /**
-     * Calculate the bounds of the diagram on screen, given the current scale,
-     * zoom, and margin.
-     *
-     * @param modelBounds
-     *            the bounds in model space of the chem object
-     * @return the bounds in screen space of the drawn diagram
-     */
-	private Rectangle convertToDiagramBounds(Rectangle2D modelBounds) {
-	    double cx = modelBounds.getCenterX();
-        double cy = modelBounds.getCenterY();
-        double mw = modelBounds.getWidth();
-        double mh = modelBounds.getHeight();
-
-        double scale = rendererModel.getParameter(Scale.class).getValue();
-        double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
-        
-        Point2d mc = this.toScreenCoordinates(cx, cy);
-
-        // special case for 0 or 1 atoms
-        if (mw == 0 && mh == 0) {
-            return new Rectangle((int)mc.x, (int)mc.y, 0, 0);
-        }
-
-        double margin = this.rendererModel
-            .getParameter(Margin.class).getValue();
-        int w = (int) ((scale * zoom * mw) + (2 * margin));
-        int h = (int) ((scale * zoom * mh) + (2 * margin));
-        int x = (int) (mc.x - w / 2);
-        int y = (int) (mc.y - h / 2);
-
-        return new Rectangle(x, y, w, h);
-	}
-
-    private IRenderingElement generateDiagram(IReaction reaction) {
-	    ElementGroup diagram = new ElementGroup();
-	    
-	    for (IGenerator<IReaction> generator : this.reactionGenerators) {
-	        diagram.add(generator.generate(reaction, rendererModel));
-	    }
-
-	    diagram.add(generateDiagram(reaction.getReactants()));
-	    diagram.add(generateDiagram(reaction.getProducts()));
-
-	    return diagram;
-	}
-
-	private IRenderingElement generateDiagram(IMoleculeSet moleculeSet) {
-	    ElementGroup diagram = new ElementGroup();
-        for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
-            IAtomContainer ac = moleculeSet.getAtomContainer(i);
-            for (IGenerator<IAtomContainer> generator : this.generators) {
-                diagram.add(generator.generate(ac, this.rendererModel));
-            }
-        }
-        return diagram;
-	}
-
 	public List<IGenerator<IReaction>> getReactionGenerators(){
-	    return new ArrayList<IGenerator<IReaction>>(reactionGenerators);
+	    return reactionSetRenderer.getReactionGenerators();
 	}
 }

@@ -36,9 +36,7 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ZoomFactor;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
@@ -103,9 +101,11 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @author maclean
  * @cdk.module renderextra
  */
-public class MoleculeSetRenderer extends AbstractRenderer
+public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
   implements IRenderer<IMoleculeSet> {
 
+    private AtomContainerRenderer atomContainerRenderer;
+    
     /**
      * A renderer that generates diagrams using the specified
      * generators and manages fonts with the supplied font manager.
@@ -116,10 +116,9 @@ public class MoleculeSetRenderer extends AbstractRenderer
      *            a class that manages mappings between zoom and font sizes
      */
 	public MoleculeSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		this.generators = generators;
         this.fontManager = fontManager;
-        for (IGenerator generator : generators)
-            rendererModel.registerParameters(generator);
+        atomContainerRenderer = new AtomContainerRenderer(generators, fontManager);
+        this.setup();
     }
 	
 	/**
@@ -218,7 +217,7 @@ public class MoleculeSetRenderer extends AbstractRenderer
         this.setupTransformNatural(totalBounds);
         ElementGroup diagram = new ElementGroup();
         for (IAtomContainer molecule : moleculeSet.molecules()) {
-            diagram.add(this.generateDiagram(molecule));
+            diagram.add(atomContainerRenderer.generateDiagram(molecule));
         }
         this.paint(drawVisitor, diagram);
 
@@ -253,7 +252,7 @@ public class MoleculeSetRenderer extends AbstractRenderer
 
         ElementGroup diagram = new ElementGroup();
         for (IAtomContainer molecule : molecules.molecules()) {
-            diagram.add(this.generateDiagram(molecule));
+            diagram.add(atomContainerRenderer.generateDiagram(molecule));
         }
 
         this.paint(drawVisitor, diagram);
@@ -272,7 +271,7 @@ public class MoleculeSetRenderer extends AbstractRenderer
 	 * @param reset
 	 * @return
 	 */
-	protected double calculateScaleForBondLength(double modelBondLength) {
+	public double calculateScaleForBondLength(double modelBondLength) {
 	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();
         } else {
@@ -280,39 +279,5 @@ public class MoleculeSetRenderer extends AbstractRenderer
         		.getValue() / modelBondLength;
         }
 	}
-
-    /**
-     * Calculate the bounds of the diagram on screen, given the current scale,
-     * zoom, and margin.
-     *
-     * @param modelBounds
-     *            the bounds in model space of the chem object
-     * @return the bounds in screen space of the drawn diagram
-     */
-	private Rectangle convertToDiagramBounds(Rectangle2D modelBounds) {
-	    double cx = modelBounds.getCenterX();
-        double cy = modelBounds.getCenterY();
-        double mw = modelBounds.getWidth();
-        double mh = modelBounds.getHeight();
-
-        double scale = rendererModel.getParameter(Scale.class).getValue();
-        double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
-        
-        Point2d mc = this.toScreenCoordinates(cx, cy);
-
-        // special case for 0 or 1 atoms
-        if (mw == 0 && mh == 0) {
-            return new Rectangle((int)mc.x, (int)mc.y, 0, 0);
-        }
-
-        double margin = this.rendererModel
-            .getParameter(Margin.class).getValue();
-        int w = (int) ((scale * zoom * mw) + (2 * margin));
-        int h = (int) ((scale * zoom * mh) + (2 * margin));
-        int x = (int) (mc.x - w / 2);
-        int y = (int) (mc.y - h / 2);
-
-        return new Rectangle(x, y, w, h);
-	}
-
+   
 }

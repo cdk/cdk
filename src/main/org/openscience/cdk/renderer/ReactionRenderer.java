@@ -31,16 +31,13 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Margin;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ZoomFactor;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
@@ -105,8 +102,10 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @author maclean
  * @cdk.module renderextra
  */
-public class ReactionRenderer extends AbstractRenderer
+public class ReactionRenderer extends AbstractRenderer<IReaction>
   implements IRenderer<IReaction> {
+    
+    private MoleculeSetRenderer moleculeSetRenderer;
 
 	/**
 	 * Generators specific to reactions
@@ -123,18 +122,17 @@ public class ReactionRenderer extends AbstractRenderer
      *            a class that manages mappings between zoom and font sizes
      */
 	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		this.generators = generators;
         this.fontManager = fontManager;
-        for (IGenerator generator : generators)
-            rendererModel.registerParameters(generator);
+        moleculeSetRenderer = new MoleculeSetRenderer(generators, fontManager);
     }
 	
 	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators, 
 	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
 	    this(generators, fontManager);
-        for (IGenerator<IReaction> generator : reactionGenerators)
+        for (IGenerator<IReaction> generator : reactionGenerators) {
             rendererModel.registerParameters(generator);
+        }
         this.reactionGenerators = reactionGenerators;
         this.setup();
 	}
@@ -240,40 +238,6 @@ public class ReactionRenderer extends AbstractRenderer
         this.paint(drawVisitor, diagram);
     }
 
-	/**
-     * Paint a set of molecules.
-     *
-     * @param reaction the reaction to paint
-     * @param drawVisitor the visitor that does the drawing
-     * @param bounds the bounds on the screen
-     * @param resetCenter
-     *     if true, set the draw center to be the center of bounds
-     */
-    public void paintMoleculeSet(IMoleculeSet molecules,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
-
-        // total up the bounding boxes
-        Rectangle2D totalBounds = null;
-        for (IAtomContainer molecule : molecules.molecules()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(molecule);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
-
-        this.setupTransformToFit(bounds, totalBounds,
-                AverageBondLengthCalculator.calculateAverageBondLength(molecules), resetCenter);
-
-        ElementGroup diagram = new ElementGroup();
-        for (IAtomContainer molecule : molecules.molecules()) {
-            diagram.add(this.generateDiagram(molecule));
-        }
-
-        this.paint(drawVisitor, diagram);
-    }
-
 	public Rectangle calculateDiagramBounds(IReaction reaction) {
         return this.calculateScreenBounds(
                 BoundsCalculator.calculateBounds(reaction));
@@ -287,7 +251,7 @@ public class ReactionRenderer extends AbstractRenderer
 	 * @param reset
 	 * @return
 	 */
-	protected double calculateScaleForBondLength(double modelBondLength) {
+	public double calculateScaleForBondLength(double modelBondLength) {
 	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();
         } else {
@@ -296,62 +260,17 @@ public class ReactionRenderer extends AbstractRenderer
         }
 	}
 
-    /**
-     * Calculate the bounds of the diagram on screen, given the current scale,
-     * zoom, and margin.
-     *
-     * @param modelBounds
-     *            the bounds in model space of the chem object
-     * @return the bounds in screen space of the drawn diagram
-     */
-	private Rectangle convertToDiagramBounds(Rectangle2D modelBounds) {
-	    double cx = modelBounds.getCenterX();
-        double cy = modelBounds.getCenterY();
-        double mw = modelBounds.getWidth();
-        double mh = modelBounds.getHeight();
-
-        double scale = rendererModel.getParameter(Scale.class).getValue();
-        double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
-        
-        Point2d mc = this.toScreenCoordinates(cx, cy);
-
-        // special case for 0 or 1 atoms
-        if (mw == 0 && mh == 0) {
-            return new Rectangle((int)mc.x, (int)mc.y, 0, 0);
-        }
-
-        double margin = this.rendererModel
-            .getParameter(Margin.class).getValue();
-        int w = (int) ((scale * zoom * mw) + (2 * margin));
-        int h = (int) ((scale * zoom * mh) + (2 * margin));
-        int x = (int) (mc.x - w / 2);
-        int y = (int) (mc.y - h / 2);
-
-        return new Rectangle(x, y, w, h);
-	}
-
-    private IRenderingElement generateDiagram(IReaction reaction) {
+    public IRenderingElement generateDiagram(IReaction reaction) {
 	    ElementGroup diagram = new ElementGroup();
 	    
 	    for (IGenerator<IReaction> generator : this.reactionGenerators) {
 	        diagram.add(generator.generate(reaction, rendererModel));
 	    }
 
-	    diagram.add(generateDiagram(reaction.getReactants()));
-	    diagram.add(generateDiagram(reaction.getProducts()));
+	    diagram.add(moleculeSetRenderer.generateDiagram(reaction.getReactants()));
+	    diagram.add(moleculeSetRenderer.generateDiagram(reaction.getProducts()));
 
 	    return diagram;
-	}
-
-	private IRenderingElement generateDiagram(IMoleculeSet moleculeSet) {
-	    ElementGroup diagram = new ElementGroup();
-        for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
-            IAtomContainer ac = moleculeSet.getAtomContainer(i);
-            for (IGenerator<IAtomContainer> generator : this.generators) {
-                diagram.add(generator.generate(ac, this.rendererModel));
-            }
-        }
-        return diagram;
 	}
 
 	public List<IGenerator<IReaction>> getReactionGenerators(){
