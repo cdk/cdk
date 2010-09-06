@@ -104,7 +104,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
   implements IRenderer<IReactionSet> {
     
-    private ReactionRenderer reactionRenderer;
+    private IRenderer<IReaction> reactionRenderer;
 
 	
     /**
@@ -193,7 +193,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
-    public void paintReactionSet(IReactionSet reactionSet,
+    public void paint(IReactionSet reactionSet,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
@@ -241,7 +241,8 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
         }
 	}
 
-	public List<IGenerator<IReaction>> getReactionGenerators(){
-	    return reactionRenderer.getReactionGenerators();
+	public List<IGenerator<IReactionSet>> getGenerators(){
+//	    return reactionRenderer.getReactionGenerators();
+	    return null;
 	}
 }

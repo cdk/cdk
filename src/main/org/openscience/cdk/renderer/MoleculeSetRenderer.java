@@ -104,7 +104,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
   implements IRenderer<IMoleculeSet> {
 
-    private AtomContainerRenderer atomContainerRenderer;
+    private IRenderer<IAtomContainer> atomContainerRenderer;
     
     /**
      * A renderer that generates diagrams using the specified
@@ -233,7 +233,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
-    public void paintMoleculeSet(IMoleculeSet molecules,
+    public void paint(IMoleculeSet molecules,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
@@ -279,5 +279,10 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
         		.getValue() / modelBondLength;
         }
 	}
+
+    public List<IGenerator<IMoleculeSet>> getGenerators() {
+        // TODO Auto-generated method stub
+        return null;
+    }
    
 }

@@ -31,8 +31,8 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
@@ -105,7 +105,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 public class ReactionRenderer extends AbstractRenderer<IReaction>
   implements IRenderer<IReaction> {
     
-    private MoleculeSetRenderer moleculeSetRenderer;
+    private IRenderer<IMoleculeSet> moleculeSetRenderer;
 
 	/**
 	 * Generators specific to reactions
@@ -179,41 +179,6 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
     }
 
     /**
-     * Paint a set of reactions.
-     *
-     * @param reaction the reaction to paint
-     * @param drawVisitor the visitor that does the drawing
-     * @param bounds the bounds on the screen
-     * @param resetCenter
-     *     if true, set the draw center to be the center of bounds
-     */
-    public void paintReactionSet(IReactionSet reactionSet,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
-
-        // total up the bounding boxes
-        Rectangle2D totalBounds = null;
-        for (IReaction reaction : reactionSet.reactions()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
-
-        this.setupTransformToFit(bounds, totalBounds,
-                AverageBondLengthCalculator.calculateAverageBondLength(reactionSet), resetCenter);
-
-        ElementGroup diagram = new ElementGroup();
-        for (IReaction reaction : reactionSet.reactions()) {
-            diagram.add(this.generateDiagram(reaction));
-        }
-
-        // paint them all
-        this.paint(drawVisitor, diagram);
-    }
-
-    /**
 	 * Paint a reaction.
 	 *
 	 * @param reaction the reaction to paint
@@ -222,7 +187,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
 	 * @param resetCenter
 	 *     if true, set the draw center to be the center of bounds
 	 */
-	public void paintReaction(IReaction reaction, IDrawVisitor drawVisitor,
+	public void paint(IReaction reaction, IDrawVisitor drawVisitor,
             Rectangle2D bounds, boolean resetCenter) {
 
 	    // calculate the bounds
@@ -273,7 +238,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
 	    return diagram;
 	}
 
-	public List<IGenerator<IReaction>> getReactionGenerators(){
+	public List<IGenerator<IReaction>> getGenerators(){
 	    return new ArrayList<IGenerator<IReaction>>(reactionGenerators);
 	}
 
