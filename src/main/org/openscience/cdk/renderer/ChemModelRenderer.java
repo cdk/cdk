@@ -105,9 +105,9 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 public class ChemModelRenderer extends AbstractRenderer<IChemModel>
   implements IRenderer<IChemModel> {
 
-	private MoleculeSetRenderer moleculeSetRenderer;
+	private IRenderer<IMoleculeSet> moleculeSetRenderer;
 	
-	private ReactionSetRenderer reactionSetRenderer;
+	private IRenderer<IReactionSet> reactionSetRenderer;
 	
     /**
      * A renderer that generates diagrams using the specified
@@ -254,7 +254,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
      * @param resetCenter
      *     if true, set the modelCenter to the center of the ChemModel's bounds.
      */
-    public void paintChemModel(IChemModel chemModel,
+    public void paint(IChemModel chemModel,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
         // check for an empty model
         IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
@@ -264,7 +264,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
         // with BOTH a ReactionSet AND a MoleculeSet...
         if (moleculeSet == null || reactionSet != null) {
             if (reactionSet != null) {
-                reactionSetRenderer.paintReactionSet(reactionSet, drawVisitor, bounds, resetCenter);
+                reactionSetRenderer.paint(reactionSet, drawVisitor, bounds, resetCenter);
             }
             return;
         }
@@ -341,7 +341,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
         }
 	}
 
-	public List<IGenerator<IReaction>> getReactionGenerators(){
-	    return reactionSetRenderer.getReactionGenerators();
+	public List<IGenerator<IChemModel>> getGenerators(){
+	    return null;
 	}
 }
