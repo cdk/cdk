@@ -111,7 +111,19 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
     private IGeneratorParameter<Double> wedgeWidth = new WedgeWidth();
 
-	private ILoggingTool logger =
+    /**
+     * The proportion to move in towards the ring center.
+     */
+    public static class TowardsRingCenterProportion extends
+        AbstractGeneratorParameter<Double> {
+        public Double getDefault() {
+            return 0.15;
+        }
+    }
+    private IGeneratorParameter<Double> ringCenterProportion =
+    	new TowardsRingCenterProportion();
+
+    private ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
 
 	protected IRingSet ringSet;
@@ -335,7 +347,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 		Point2d b = bond.getAtom(1).getPoint2d();
 
 		// the proportion to move in towards the ring center
-		final double DIST = 0.15;
+		final double DIST = model.getParameter(TowardsRingCenterProportion.class)
+			.getValue();
 
 		Point2d w = new Point2d();
 		w.interpolate(a, center, DIST);
@@ -417,7 +430,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
                 defaultBondColor,
                 bondLength,
                 wedgeWidth,
-                bondDistance
+                bondDistance,
+                ringCenterProportion
             }
         );
     }
