@@ -176,7 +176,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
-    public void paintMolecule(IAtomContainer atomContainer,
+    public void paint(IAtomContainer atomContainer,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // the bounds of the model

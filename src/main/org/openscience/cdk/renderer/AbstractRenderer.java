@@ -72,7 +72,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      * @param object
      * @return
      */
-    protected IRenderingElement generateDiagram(T object) {
+    public IRenderingElement generateDiagram(T object) {
         ElementGroup diagram = new ElementGroup();
         for (IGenerator<T> generator : this.generators) {
             diagram.add(generator.generate(object, this.rendererModel));
