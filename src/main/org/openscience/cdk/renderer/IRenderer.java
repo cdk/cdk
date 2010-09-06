@@ -23,10 +23,14 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
@@ -39,6 +43,14 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 public interface IRenderer<T extends IChemObject> {
+    
+    /**
+     * Internal method to generate the intermediate format. 
+     * 
+     * @param obj the IChemObject to generate a diagram for
+     * @return a tree of rendering elements
+     */
+    public IRenderingElement generateDiagram(T obj);
     
     /**
      * Returns the drawing model, giving access to drawing parameters.
@@ -92,6 +104,17 @@ public interface IRenderer<T extends IChemObject> {
 	 * @return
 	 */
 	public Rectangle paint(T object, IDrawVisitor drawVisitor);
+	
+	/**
+	 * Paint the chem object within the specified bounds.
+	 * 
+	 * @param reactionSet
+	 * @param drawVisitor
+	 * @param bounds
+	 * @param resetCenter
+	 */
+	public void paint(T object, IDrawVisitor drawVisitor, Rectangle2D bounds, 
+	        boolean resetCenter);
 
 	/**
 	 * Setup the transformations necessary to draw the {@link IChemObject}
@@ -116,4 +139,6 @@ public interface IRenderer<T extends IChemObject> {
 	 * @return        a rectangle in screen space.
 	 */
 	public Rectangle calculateDiagramBounds(T object);
+	
+	public List<IGenerator<T>> getGenerators();
 }
