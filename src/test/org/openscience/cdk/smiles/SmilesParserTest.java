@@ -2269,5 +2269,53 @@ public class SmilesParserTest extends CDKTestCase {
             }
         }
     }
+
+    @Test public void testPreserveAromaticity() throws InvalidSmilesException{
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        sp.setPreservingAromaticity(true);
+        IMolecule molecule = sp.parseSmiles("Oc1ccc(Cl)c2C(=O)c3c(sc4nccn34)C(=O)c12");
+        Assert.assertEquals(14, countAromaticAtoms(molecule));
+        Assert.assertEquals(15, countAromaticBonds(molecule));
+
+        molecule = sp.parseSmiles("COc1ccc2[nH]c3c(cnn4c(C)nnc34)c2c1");
+        Assert.assertEquals(16, countAromaticAtoms(molecule));
+        Assert.assertEquals(19, countAromaticBonds(molecule));
+
+        molecule = sp.parseSmiles("C:1C:C:C:C:C1");
+        Assert.assertEquals(6, countAromaticAtoms(molecule));
+        Assert.assertEquals(6, countAromaticBonds(molecule));
+
+        molecule = sp.parseSmiles("c1cc[se]cc1");
+        Assert.assertEquals(6, countAromaticAtoms(molecule));
+        Assert.assertEquals(6, countAromaticBonds(molecule));
+
+    }
+
+    /**
+     * Counts aromatic atoms in a molecule.
+     * @param mol molecule for which to count aromatic atoms.
+     */
+    private int countAromaticAtoms(IMolecule mol) {
+        int aromCount=0;
+        for (IAtom atom : mol.atoms() ) {
+            if(atom.getFlag(CDKConstants.ISAROMATIC))
+                aromCount++;
+        }
+        return aromCount;
+    }
+
+    /**
+     * Counts aromatic bonds in a molecule.
+     * @param mol molecule for which to count aromatic bonds.
+     */
+    private int countAromaticBonds(IMolecule mol) {
+        int aromCount=0;
+        for (IBond bond : mol.bonds() ) {
+            if(bond.getFlag(CDKConstants.ISAROMATIC))
+                aromCount++;
+        }
+        return aromCount;
+    }
+
 }
 

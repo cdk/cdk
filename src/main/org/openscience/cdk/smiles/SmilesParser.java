@@ -100,10 +100,18 @@ public class SmilesParser {
 	private int status = 0;
 	protected IChemObjectBuilder builder;
 
-	private enum Chirality {
+
+    private enum Chirality {
 	    ANTI_CLOCKWISE, // aka @
 	    CLOCKWISE // aka @@
 	}
+    
+    /*
+     * Boolean to preserve aromaticity as provided in the Smiles itself (through lowecase letters (c1cccc1) or colons).
+     * Setting this to true means that CDK will not do aromaticity detection, nor atom typing (as this may conflict 
+     * with the preserved aromaticity).
+     */
+    private boolean preservingAromaticity=false;
 
 	/**
 	 * Constructor for the SmilesParser object.
@@ -245,21 +253,32 @@ public class SmilesParser {
 		    molecule.addStereoElement(l4Chiral);
 		}
 
-		// perceive atom types
-		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-		int i = 0;
-        for (IAtom atom : molecule.atoms()) {
-            i++;
-            try {
-                IAtomType type = matcher.findMatchingAtomType(molecule, atom);
-                AtomTypeManipulator.configure(atom, type);
-            } catch (Exception e) {
-                System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
-                atom.setAtomTypeName("X");
+        if (!preservingAromaticity ) {
+            // perceive atom types
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+            int i = 0;
+            for (IAtom atom : molecule.atoms()) {
+                i++;
+                try {
+                    IAtomType type = matcher.findMatchingAtomType(molecule, atom);
+                    AtomTypeManipulator.configure(atom, type);
+                } catch (Exception e) {
+                    System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
+                    atom.setAtomTypeName("X");
+                }
+            }
+            this.addImplicitHydrogens(molecule);
+            this.perceiveAromaticity(molecule);
+        }
+        else  {
+            for (IBond bond : molecule.bonds() ) {
+                if(!bond.getFlag(CDKConstants.ISAROMATIC) &&
+                    bond.getAtom(0).getFlag(CDKConstants.ISAROMATIC) &&
+                    bond.getAtom(1).getFlag(CDKConstants.ISAROMATIC)) {
+                       bond.setFlag(CDKConstants.ISAROMATIC,true);
+                   }
             }
         }
-		this.addImplicitHydrogens(molecule);
-		this.perceiveAromaticity(molecule);
 
 		return molecule;
 	}
@@ -334,6 +353,9 @@ public class SmilesParser {
 									currentSymbol = currentSymbol.toUpperCase();
 									atom = builder.newInstance(IAtom.class,currentSymbol);
 									atom.setHybridization(Hybridization.SP2);
+                                    if (preservingAromaticity ) {
+                                        atom.setFlag(CDKConstants.ISAROMATIC, true);
+                                    }
 								} else
 								{
 									atom = builder.newInstance(IAtom.class,currentSymbol);
@@ -357,8 +379,12 @@ public class SmilesParser {
 					{
 						logger.debug("Creating bond between ", atom.getSymbol(), " and ", lastNode.getSymbol());
 						bond = builder.newInstance(IBond.class,atom, lastNode, bondStatus);
-						            if (bondIsAromatic) {
+                        if (bondIsAromatic) {
                             bond.setFlag(CDKConstants.ISAROMATIC, true);
+                            if (preservingAromaticity) {
+                                bond.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
+                                bond.getAtom(1).setFlag(CDKConstants.ISAROMATIC, true);
+                            }
                         }
 						molecule.addBond(bond);
 					}
@@ -751,27 +777,23 @@ public class SmilesParser {
 					{
 						logger.debug("Found element symbol: ", currentSymbol);
 						position = position + currentSymbol.length();
-						if (currentSymbol.length() == 1)
-						{
-							if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
-							{
-								currentSymbol = currentSymbol.toUpperCase();
-								atom = builder.newInstance(IAtom.class,currentSymbol);
-								atom.setHybridization(Hybridization.SP2);
-
-                                Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
-                                if (hcount > 0)
-								{
-									atom.setImplicitHydrogenCount(hcount - 1);
-								}
-							} else
-							{
-								atom = builder.newInstance(IAtom.class,currentSymbol);
-							}
-						} else
-						{
-							atom = builder.newInstance(IAtom.class,currentSymbol);
-						}
+					    if(Character.isLowerCase(mychar)) {
+					        if (currentSymbol.length() == 1) {
+					            currentSymbol = currentSymbol.toUpperCase();
+					        }
+					        atom = builder.newInstance(IAtom.class,currentSymbol);
+					        atom.setHybridization(Hybridization.SP2);
+					        Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
+					        if (hcount > 0) {
+					            atom.setImplicitHydrogenCount(hcount - 1);
+					        }
+					        if (preservingAromaticity )
+					            atom.setFlag(CDKConstants.ISAROMATIC, true);
+					    }
+					    else
+					    {
+					        atom = builder.newInstance(IAtom.class,currentSymbol);
+					    }
 						logger.debug("Made atom: ", atom);
 					}
 					break;
@@ -988,6 +1010,23 @@ public class SmilesParser {
 			}
 		}
 	}
+
+    /**
+     * Makes the Smiles parser set aromaticity as provided in the Smiles itself, without detecting it.
+     * Default false. Atoms will not be typed when set to true.
+     * @param preservingAromaticity boolean to indicate if aromaticity is to be preserved.
+     */
+    public void setPreservingAromaticity(boolean preservingAromaticity) {
+        this.preservingAromaticity = preservingAromaticity;
+    }
+
+    /**
+     * Gets the (default false) setting to preserve aromaticity as provided in the Smiles itself.
+     * @return true or false indicating if aromaticity is preserved.
+     */
+    public boolean isPreservingAromaticity() {
+        return preservingAromaticity;
+    }
 	
 }
 
