@@ -79,6 +79,7 @@ import org.openscience.cdk.io.formats.MOPAC93FormatTest;
 import org.openscience.cdk.io.formats.MOPAC97FormatTest;
 import org.openscience.cdk.io.formats.MPQCFormatTest;
 import org.openscience.cdk.io.formats.MacroModelFormatTest;
+import org.openscience.cdk.io.formats.MoSSOutputFormatTest;
 import org.openscience.cdk.io.formats.Mol2FormatTest;
 import org.openscience.cdk.io.formats.NWChemFormatTest;
 import org.openscience.cdk.io.formats.PCModelFormatTest;
@@ -175,6 +176,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     MOPAC7FormatTest.class,
     MOPAC93FormatTest.class,
     MOPAC97FormatTest.class,
+    MoSSOutputFormatTest.class,
     MPQCFormatTest.class,
     NWChemFormatTest.class,
     PCModelFormatTest.class,
