@@ -3253,6 +3253,30 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.bug 3061263
+     */
+    @Test public void testFormalChargeRepresentation() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
+        atom.setHybridization(thisHybridization);
+        mol.addAtom(atom);
+        String[] expectedTypes = {"O.minus"};
+
+        // option one: Integer.valueOf()
+        atom.setFormalCharge(Integer.valueOf(-1));
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        // option one: autoboxing
+        atom.setFormalCharge(-1);
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        // option one: new Integer()
+        atom.setFormalCharge(new Integer(-1));
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
