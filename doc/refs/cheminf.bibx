@@ -12,7 +12,7 @@
       <bibtex:url>http://www.openrasmol.org/doc/rasmol.html#cpkcolours</bibtex:url>
     </bibtex:misc>
   </bibtex:entry>
-  
+
   <bibtex:entry id="BGdV04a">
     <bibtex:article>
       <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
@@ -79,7 +79,19 @@
       <bibtex:pages>271-275</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
+  <bibtex:entry id="BOR2002">
+    <bibtex:inproceedings>
+      <bibtex:author>Borgelt, C. and Berthold, M.R.</bibtex:author>
+      <bibtex:title>Mining Molecular Fragments: Finding Relevant Substructures of Molecules</bibtex:title>
+      <bibtex:year>2002</bibtex:year>
+      <bibtex:booktitle>ICDM '02: Proceedings of the 2002 IEEE International Conference on Data Mining (ICDM'02)</bibtex:booktitle>
+      <bibtex:isbn>0769517544</bibtex:isbn>
+      <bibtex:publisher>IEEE Computer Society</bibtex:publisher>
+      <bibtex:address>Washington, DC, USA</bibtex:address>
+    </bibtex:inproceedings>
+  </bibtex:entry>
+
   <bibtex:entry id="BUR89">
     <bibtex:article>
       <bibtex:author>Burden, F.R.</bibtex:author>
