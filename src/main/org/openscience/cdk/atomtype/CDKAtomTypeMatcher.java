@@ -1565,7 +1565,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		return false;
 
     	// confirm correct formal charge
-    	if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() != type.getFormalCharge())
+        if (atom.getFormalCharge() != CDKConstants.UNSET &&
+            !atom.getFormalCharge().equals(type.getFormalCharge()))
     		return false;
 
     	return true;
