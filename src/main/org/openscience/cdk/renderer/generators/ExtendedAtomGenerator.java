@@ -112,8 +112,8 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
         
         if (showImplicitHydrogens.getValue()) {
-        	if(atom.getHydrogenCount()!=null){
-	            int nH = atom.getHydrogenCount();
+        	if(atom.getImplicitHydrogenCount()!=null){
+	            int nH = atom.getImplicitHydrogenCount();
 	            if (nH > 0) {
 	                Position position = getNextPosition(unused);
 	                if (nH == 1) {
