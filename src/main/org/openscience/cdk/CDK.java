@@ -52,7 +52,6 @@ public class CDK {
         try {
             InputStream stream = CDK.class.getClassLoader().getResourceAsStream(propsFilename);
             props.load(stream);
-            System.out.println("version: " + props.getProperty("version"));
             return props.getProperty("version");
         } catch (Exception exception) {
             // there is no back up
