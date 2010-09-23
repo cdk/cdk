@@ -48,7 +48,7 @@ public class AtomMassGenerator extends BasicAtomGenerator {
 				atom.getPoint2d().y, 
 				atom.getSymbol(), 
 				atom.getFormalCharge(), 
-				atom.getHydrogenCount(), 
+				atom.getImplicitHydrogenCount(), 
 				alignment, 
 				atom.getMassNumber(),
 				super.getAtomColor(atom));
