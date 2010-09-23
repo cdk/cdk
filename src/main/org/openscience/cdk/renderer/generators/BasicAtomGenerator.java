@@ -223,7 +223,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 				atom.getPoint2d().y,
 				text,
 				atom.getFormalCharge(),
-				atom.getHydrogenCount(),
+				atom.getImplicitHydrogenCount(),
 				alignment, getAtomColor(atom));
 	}
 
