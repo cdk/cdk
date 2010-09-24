@@ -1077,5 +1077,14 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
 
+    <bibtex:entry id="WEGNER2006">
+        <bibtex:thesis>
+            <bibtex:author>Wegner, J. K.</bibtex:author>
+            <bibtex:title>Data Mining und Graph Mining auf molekularen Graphen - Cheminformatik und molekulare Kodierungen f\"{u}r ADME/Tox QSAR Analysen</bibtex:title>
+            <bibtex:year>2006</bibtex:year>
+            <bibtex:isbn>3832513795</bibtex:isbn>
+            <bibtex:school>University of T{\"u}bingen</bibtex:school>
+        </bibtex:thesis>
+    </bibtex:entry>
 
 </bibtex:file>

@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -50,11 +46,13 @@ import org.openscience.cdk.qsar.descriptors.molecular.*;
     DescriptorNamesTest.class,
 
 //      from cdk.test.qsar.molecular
+    AcidicGroupCountDescriptorTest.class,
     ALOGPDescriptorTest.class,
     APolDescriptorTest.class,
     AromaticAtomsCountDescriptorTest.class,
     AromaticBondsCountDescriptorTest.class,
     AtomCountDescriptorTest.class,
+    BasicGroupCountDescriptorTest.class,
     BCUTDescriptorTest.class,
     BondCountDescriptorTest.class,
     BPolDescriptorTest.class,

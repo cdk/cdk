@@ -252,6 +252,25 @@
 
     <!-- the facts: Algorithms -->
 
+    <Descriptor rdf:ID="acidicGroupCount">
+        <rdfs:label>Acidic Group Count</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#elw"/>
+                <dc:date>2010-09-23</dc:date>
+            </documentation>
+        </annotation>
+        <definition rdf:parseType='Literal'>
+            Returns the number of acidic groups.
+        </definition>
+        <description rdf:parseType='Literal'>
+            The list of acidic group types is defined by these
+            SMARTS: "$([O;H1]-[C,S,P]=O)", "$([*;-;!$(*~[*;+])])", and
+            "$([NH](S(=O)=O)C(F)(F)F)".
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
     <Descriptor rdf:ID="aminoAcidsCount">
         <rdfs:label>Amino Acid Count</rdfs:label>
         <annotation>
@@ -405,6 +424,26 @@
             .
         </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="basicGroupCount">
+        <rdfs:label>Basic Group Count</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#elw"/>
+                <dc:date>2010-09-24</dc:date>
+            </documentation>
+        </annotation>
+        <definition rdf:parseType='Literal'>
+            Returns the number of basic groups.
+        </definition>
+        <description rdf:parseType='Literal'>
+            The list of basic group types is defined by these
+            SMARTS: "$([NH2]-[CX4])", "$([NH](-[CX4])-[CX4])",
+            "$(N(-[CX4])(-[CX4])-[CX4])", "$([*;+;!$(*~[*;-])])", "$(N=C-N)",
+            and "$(N-C=N)]".
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="BCUT">
