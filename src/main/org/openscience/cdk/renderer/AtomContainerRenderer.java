@@ -100,11 +100,11 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
   implements IRenderer<IAtomContainer> {
 
-	/**
-	 * The default scale is used when the model is empty.
-	 */
-	public static final double DEFAULT_SCALE = 30.0;
-	
+    /**
+     * The default scale is used when the model is empty.
+     */
+    public static final double DEFAULT_SCALE = 30.0;
+
     /**
      * A renderer that generates diagrams using the specified
      * generators and manages fonts with the supplied font manager.
@@ -114,21 +114,21 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public AtomContainerRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-	    this.generators = generators;
+    public AtomContainerRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+        this.generators = generators;
         this.fontManager = fontManager;
         for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
     }
-	
-	/**
-	 * Setup the transformations necessary to draw this Atom Container.
-	 *
-	 * @param atomContainer
-	 * @param screen
-	 */
-	public void setup(IAtomContainer atomContainer, Rectangle screen) {
+
+    /**
+     * Setup the transformations necessary to draw this Atom Container.
+     *
+     * @param atomContainer
+     * @param screen
+     */
+    public void setup(IAtomContainer atomContainer, Rectangle screen) {
         this.setScale(atomContainer);
         Rectangle2D bounds = BoundsCalculator.calculateBounds(atomContainer);
         this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
@@ -157,13 +157,13 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         rendererModel.getParameter(Scale.class).setValue(this.calculateScaleForBondLength(bondLength));
     }
 
-	/* 
-	 * {@inheritDoc}
-	 */
+    /* 
+     * {@inheritDoc}
+     */
     @Override
-	public Rectangle paint(
-			IAtomContainer atomContainer,IDrawVisitor drawVisitor) {
-	    // the bounds of the model
+    public Rectangle paint(
+            IAtomContainer atomContainer, IDrawVisitor drawVisitor) {
+        // the bounds of the model
         Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
 
         // setup and draw
@@ -172,9 +172,9 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         this.paint(drawVisitor, diagram);
 
         return this.convertToDiagramBounds(modelBounds);
-	}
+    }
 
-	/**
+    /**
      * Paint a molecule (an IAtomContainer).
      *
      * @param atomContainer the molecule to paint
@@ -187,47 +187,47 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // the bounds of the model
-    	Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
+        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
 
-    	this.setupTransformToFit(bounds, modelBounds,
-    	        GeometryTools.getBondLengthAverage(atomContainer), resetCenter);
+        this.setupTransformToFit(bounds, modelBounds,
+                GeometryTools.getBondLengthAverage(atomContainer), resetCenter);
 
-    	// the diagram to draw
-    	IRenderingElement diagram = generateDiagram(atomContainer);
+        // the diagram to draw
+        IRenderingElement diagram = generateDiagram(atomContainer);
 
-    	this.paint(drawVisitor, diagram);
+        this.paint(drawVisitor, diagram);
     }
 
-	/* 
-	 * {@inheritDoc}
-	 */
-	public Rectangle calculateDiagramBounds(IAtomContainer atomContainer) {
-		return this.calculateScreenBounds(
-		    BoundsCalculator.calculateBounds(atomContainer));
-	}
+    /* 
+     * {@inheritDoc}
+     */
+    public Rectangle calculateDiagramBounds(IAtomContainer atomContainer) {
+        return calculateScreenBounds(
+                BoundsCalculator.calculateBounds(atomContainer));
+    }
 
-	/**
-	 * Given a bond length for a model, calculate the scale that will transform
-	 * this length to the on screen bond length in RendererModel.
-	 *
-	 * @param modelBondLength
-	 * @param reset
-	 * @return
-	 */
-	public double calculateScaleForBondLength(double modelBondLength) {
-	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
+    /**
+     * Given a bond length for a model, calculate the scale that will transform
+     * this length to the on screen bond length in RendererModel.
+     *
+     * @param modelBondLength
+     * @param reset
+     * @return
+     */
+    public double calculateScaleForBondLength(double modelBondLength) {
+        if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return DEFAULT_SCALE;
         } else {
-            return this.rendererModel.getParameter(BondLength.class)
-            	.getValue() / modelBondLength;
+            return rendererModel.getParameter(
+                    BondLength.class).getValue() / modelBondLength;
         }
-	}
-	
-	/* 
-	 * {@inheritDoc}
-	 */
-	public List<IGenerator<IAtomContainer>> getGenerators(){
-	    return new ArrayList<IGenerator<IAtomContainer>>(generators);
-	}
+    }
+
+    /* 
+     * {@inheritDoc}
+     */
+    public List<IGenerator<IAtomContainer>> getGenerators(){
+        return new ArrayList<IGenerator<IAtomContainer>>(generators);
+    }
 
 }
