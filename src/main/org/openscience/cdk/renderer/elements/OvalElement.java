@@ -23,24 +23,59 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 
 /**
+ * An oval element (should) have both a width and a height.
+ * 
  * @cdk.module renderbasic
  */
 public class OvalElement implements IRenderingElement {
 
-	public final double x;
+	/** The x-coordinate of the center of the oval. **/
+    public final double x;
+	
+    /** The y-coordinate of the center of the oval. **/
 	public final double y;
-	public final double radius;
+	
+	/** The radius of the oval. **/
+	public final double radius;        // TODO : width AND height
+	
+	/** If true, draw the oval as filled. **/
 	public final boolean fill;
+	
+	/** The color to draw the oval. **/
 	public final Color color;
 
+	/**
+	 * Make an oval with a default radius of 10.
+	 * 
+	 * @param x the x-coordinate of the center of the oval
+	 * @param y the y-coordinate of the center of the oval
+	 * @param color the color of the oval
+	 */
 	public OvalElement(double x, double y, Color color) {
 		this(x, y, 10, color);
 	}
 
+	/**
+	 * Make an oval with the supplied radius.
+	 * 
+	 * @param x the x-coordinate of the center of the oval
+	 * @param y the y-coordinate of the center of the oval
+	 * @param radius the radius of the oval
+	 * @param color the color of the oval
+	 */
 	public OvalElement(double x, double y, double radius, Color color) {
 		this(x, y, radius, true, color);
 	}
 
+	/**
+	 * Make an oval with a particular fill and color.
+	 * 
+	 * @param x the x-coordinate of the center of the oval
+	 * @param y the y-coordinate of the center of the oval
+	 * @param radius the radius of the oval
+	 * @param fill if true, fill the oval when drawing
+	 * @param color the color of the oval
+	 */
 	public OvalElement(double x, double y, double radius, boolean fill, Color color) {
 		this.x = x;
 		this.y = y;
@@ -49,6 +84,7 @@ public class OvalElement implements IRenderingElement {
 		this.color = color;
 	}
 
+	/** {@inheritDoc} **/
 	public void accept(IRenderingVisitor v) {
 		v.visit(this);
 	}
