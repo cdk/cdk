@@ -19,6 +19,9 @@
 	<classpathentry exported="true" kind="lib" path="develjar/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="jar/cmlxom-2.5-b1.jar"/>
 	<classpathentry kind="lib" path="develjar/ojdcheck.jar"/>
+	<classpathentry kind="lib" path="develjar/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="develjar/groovy.jar"/>
+	<classpathentry kind="lib" path="develjar/antlr.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="jar/signatures-1.0.jar"/>
 	<classpathentry kind="lib" path="jar/jena/jena.jar"/>
