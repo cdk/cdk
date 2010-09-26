@@ -52,7 +52,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  *
  * @cdk.keyword file format, PubChem Compound XML
  */
-@TestClass("org.openscience.cdk.io.PCCompounsXMLReaderTest")
+@TestClass("org.openscience.cdk.io.PCCompoundXMLReaderTest")
 public class PCCompoundXMLReader extends DefaultChemObjectReader {
 
 	private Reader input;
