@@ -29,50 +29,50 @@ import java.util.List;
  * 
  * @cdk.module  renderbasic
  */
-public class ElementGroup implements IRenderingElement,
-                                       Iterable<IRenderingElement> {
+public class ElementGroup 
+       implements IRenderingElement, Iterable<IRenderingElement> {
 
     /**
      * The elements in the group. 
      */
     private final List<IRenderingElement> elements;
-   
+
     /**
      * Create an empty element group.
      */
     public ElementGroup() {
         elements = new ArrayList<IRenderingElement>();
     }
-    
+
     /** {@inheritDoc} */
     public Iterator<IRenderingElement> iterator() {
         return elements.iterator();
     }
-    
+
     /**
      * Add a new element to the group.
      * 
      * @param element the element to add to the group
      */
     public void add(IRenderingElement element) {
-    	if (element == null) return;
+        if (element == null) return;
         elements.add(element);
     }
-    
+
     /**
      * Visit the members of the group.
      *  
      * @param visitor the class that will be visiting each element
      */
     public void visitChildren(IRenderingVisitor visitor) {
-    	for (IRenderingElement child : this.elements) {
-    		child.accept(visitor);
-    	}
+        for (IRenderingElement child : this.elements) {
+            child.accept(visitor);
+        }
     }
-    
+
     /** {@inheritDoc} */
     public void accept( IRenderingVisitor v ) {
         v.visit( this );
     }
-   
+
 }
