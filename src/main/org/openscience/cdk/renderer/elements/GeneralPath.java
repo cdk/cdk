@@ -29,25 +29,33 @@ import java.util.List;
 import org.openscience.cdk.renderer.elements.path.PathElement;
 
 /**
+ * A path of rendering elements from the elements.path package.
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  */
 public class GeneralPath implements IRenderingElement{
-    
+
+    /** The color of the path. */
     public final Color color;
-    
+
+    /** The elements in the path */
     public final List<PathElement> elements;
-    
-    
+
+    /**
+     * Make a path from a list of path elements.
+     * 
+     * @param elements the elements that make up the path
+     * @param color the color of the path
+     */
     public GeneralPath(List<PathElement> elements, Color color) {
         this.elements = elements;
         this.color = color;
     }
 
+    /** {@inheritDoc} */
     public void accept( IRenderingVisitor v ) {
-
         v.visit( this );
-        
     }
 
 }
