@@ -24,26 +24,33 @@ import java.awt.Color;
 
 
 /**
+ * A text element with added information.
+ * 
  * @cdk.module renderbasic
  */
 public class AtomSymbolElement extends TextElement {
 
-	public final int formalCharge;
-	public final int hydrogenCount;
-	public final int alignment;
+    /** The formal charge. */
+    public final int formalCharge;
 
-	public AtomSymbolElement(double x, double y, String symbol,
-			Integer formalCharge, Integer hydrogenCount, int alignment, Color color) {
-		super(x, y, symbol, color);
-		this.formalCharge = formalCharge != null ? formalCharge : -1;
-		this.hydrogenCount = hydrogenCount != null ? hydrogenCount : -1;
-		this.alignment = alignment;
-	}
+    /** The hydrogen count. */
+    public final int hydrogenCount;
 
-	@Override
-	public void accept(IRenderingVisitor v) {
-	    
-	    v.visit( this );
-	}
+    /** The hydrogen alignment. */
+    public final int alignment;
+
+    public AtomSymbolElement(double x, double y, String symbol,
+            Integer formalCharge, Integer hydrogenCount, int alignment, Color color) {
+        super(x, y, symbol, color);
+        this.formalCharge = formalCharge != null ? formalCharge : -1;
+        this.hydrogenCount = hydrogenCount != null ? hydrogenCount : -1;
+        this.alignment = alignment;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void accept(IRenderingVisitor v) {
+        v.visit( this );
+    }
 
 }
