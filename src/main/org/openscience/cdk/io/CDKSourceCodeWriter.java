@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2003-2007,2010  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -210,13 +208,15 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     public void writeAtom(IAtom atom) throws Exception {
     	if (atom instanceof IPseudoAtom) {
-    		writer.write("  IPseudoAtom " + atom.getID() + " = mol.getNewBuilder().newInstance(IPseudoAtom.class);");
+    		writer.write("  IPseudoAtom " + atom.getID() +
+    		    " = mol.getBuilder().newInstance(IPseudoAtom.class);");
     		writer.newLine();
     		writer.write("  atom.setLabel(\"" + ((IPseudoAtom)atom).getLabel() + "\");");
     		writer.newLine();
     	} else {
-    		writer.write("  IAtom " + atom.getID() + " = mol.getNewBuilder().newInstance(IAtom.class,\"" + atom.getSymbol() +
-    		"\");");
+    		writer.write("  IAtom " + atom.getID() +
+    		    " = mol.getBuilder().newInstance(IAtom.class,\"" +
+    		    atom.getSymbol() + "\");");
     		writer.newLine();
     	}
         if (atom.getFormalCharge() != null) {
@@ -240,7 +240,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
     
     public void writeBond(IBond bond) throws Exception {
-        writer.write("  IBond " + bond.getID() + " = mol.getNewBuilder().newInstance(IBond.class," + 
+        writer.write("  IBond " + bond.getID() + 
+            " = mol.getBuilder().newInstance(IBond.class," + 
                      bond.getAtom(0).getID() + ", " +
                      bond.getAtom(1).getID() + ", IBond.Order." +
                      bond.getOrder() + ");");
