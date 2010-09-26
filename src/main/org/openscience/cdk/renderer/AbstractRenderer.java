@@ -43,6 +43,24 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 
 /**
+ * <p>The base class for all renderers, handling the core aspects of rendering
+ * such as the location of the model in 'model space' and the location on
+ * the screen to draw the model. It also holds a reference to the list of
+ * {@link IGenerator} instances that are used to create the diagram. These
+ * generators are accessed through the generateDiagram method.</p>
+ * 
+ * <p>The terminology 'model space' and 'screen space' refer to the coordinate
+ * systems for the model and the drawing, respectively. So the 2D points for
+ * atoms in the model might be 1 unit apart (roughly representing Ångstrom,
+ * perhaps) but the circles in the diagram that represent those atoms might be
+ * 10 pixels apart on screen. Therefore screen space will be 10 times model
+ * space for this example.</p>
+ * 
+ * <p>The abstract method {@link #calculateScaleForBondLength(double)} is
+ * needed to determine the scale. For the model example just given, this would
+ * return '10.0' for an input of '10.0', as that is the scale for that desired
+ * bond length.</p>
+ * 
  * @cdk.module renderbasic
  */
 public abstract class AbstractRenderer<T extends IChemObject> {
@@ -52,16 +70,34 @@ public abstract class AbstractRenderer<T extends IChemObject> {
 	 */
     protected final RendererModel rendererModel = new RendererModel();
 
+    /**
+     * Font managers change the font size depending on the zoom.
+     */
     protected IFontManager fontManager;
 
-    protected Point2d modelCenter = new Point2d(0, 0); // model
+    /**
+     * The center point of the model (IMolecule, IMoleculeSet, etc).
+     */
+    protected Point2d modelCenter = new Point2d(0, 0);
 
-    protected Point2d drawCenter = new Point2d(150, 200); //diagram on screen
+    /**
+     * The center of the desired position on screen to draw.
+     */
+    protected Point2d drawCenter = new Point2d(150, 200);
 
+    /**
+     * Generators for diagram elements.
+     */
     protected List<IGenerator<T>> generators;
 
+    /**
+     * Used when repainting an unchanged model. 
+     */
     protected IRenderingElement cachedDiagram;
 
+    /**
+     * Converts between model coordinates and screen coordinates.
+     */
     protected AffineTransform transform;
     
     /**
@@ -69,8 +105,8 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      * to create a different set of {@link IRenderingElement}s grouped
      * together into a tree. 
      * 
-     * @param object
-     * @return
+     * @param object the object of type T to draw
+     * @return the diagram as a tree of {@link IRenderingElement}s
      */
     public IRenderingElement generateDiagram(T object) {
         ElementGroup diagram = new ElementGroup();
@@ -80,6 +116,25 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         return diagram;
     }
 
+	/**
+     * Calculate the scale to convert the model bonds into bonds of the length
+     * supplied. A standard way to do this is to calculate the average bond 
+     * length (mean, or median) in model space, and divide the supplied screen
+     * distance by this average to give a scale.
+     * 
+     * @param bondLength the desired length on screen
+     * @return a multiplication factor, or 'scale'
+     */
+    public abstract double calculateScaleForBondLength(double bondLength);
+
+    /**
+	 * Converts a bounding rectangle in 'model space' into the equivalent
+	 * bounds in 'screen space'. Used to determine how much space the model
+	 * will take up on screen given a particular scale, zoom, and margin.
+	 * 
+	 * @param modelBounds the bounds of the model
+	 * @return the bounds of the diagram as drawn on screen
+	 */
 	public Rectangle calculateScreenBounds(Rectangle2D modelBounds) {
 	    double scale = rendererModel.getParameter(Scale.class).getValue();
 	    double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
@@ -96,6 +151,13 @@ public abstract class AbstractRenderer<T extends IChemObject> {
                              (int) h);
 	}
 
+    /**
+     * Convert a point in screen space into a point in model space.
+     * 
+     * @param screenX the screen x-coordinate
+     * @param screenY the screen y-coordinate
+     * @return the equivalent point in model space, or (0,0) if there is an error
+     */
     public Point2d toModelCoordinates(double screenX, double screenY) {
         try {
             double[] dest = new double[2];
@@ -107,28 +169,57 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         }
     }
 
+    /**
+     * Convert a point in model space into a point in screen space.
+     * 
+     * @param modelX the model x-coordinate
+     * @param modelY the model y-coordinate
+     * @return the equivalent point in screen space
+     */
     public Point2d toScreenCoordinates(double modelX, double modelY) {
         double[] dest = new double[2];
         transform.transform(new double[] { modelX, modelY }, 0, dest, 0, 1);
         return new Point2d(dest[0], dest[1]);
     }
 
+    /**
+     * Set the position of the center of the model.
+     * 
+     * @param x the x-coordinate of the model center
+     * @param y the y-coordinate of the model center
+     */
     public void setModelCenter(double x, double y) {
 	    this.modelCenter = new Point2d(x, y);
 	    setup();
 	}
 
+	/**
+	 * Set the point on the screen to draw the diagram.
+	 * 
+	 * @param x the x-coordinate of the point to draw at
+	 * @param y the y-coordinate of the point to draw at
+	 */
 	public void setDrawCenter(double x, double y) {
         this.drawCenter = new Point2d(x, y);
         setup();
     }
 
-	public void setZoom(double z) {
-		this.rendererModel.getParameter(
-		    	ZoomFactor.class).setValue( z );
+	/**
+	 * Set the zoom, where 1.0 is 100% zoom.
+	 * 
+	 * @param zoom the zoom as a double value
+	 */
+	public void setZoom(double zoom) {
+		rendererModel.getParameter(ZoomFactor.class).setValue( zoom );
 	    setup();
 	}
 
+	/**
+	 * Creates the transform using the scale, zoom, drawCenter, and modelCenter.
+	 * In order to scale (and zoom) all elements in a uniform way, a point is
+	 * first moved so that the center of the model is at the origin, scaled, 
+	 * then moved to the correct place on screen.
+	 */
 	protected void setup() {
 	    double scale = rendererModel.getParameter(Scale.class).getValue();
 	    double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
@@ -152,6 +243,12 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         }
 	}
 
+    /**
+     * Get the {@link RendererModel} used by this renderer, which provides
+     * access to the various parameters used to generate and draw the diagram. 
+     * 
+     * @return a reference to the RendererModel
+     */
     public RendererModel getRenderer2DModel() {
 		return this.rendererModel;
 	}
@@ -167,10 +264,20 @@ public abstract class AbstractRenderer<T extends IChemObject> {
 	    setup();
 	}
 
+	/**
+	 * Get the position on screen that the diagram will be drawn.
+	 *  
+	 * @return the draw center
+	 */
 	public Point2d getDrawCenter() {
         return drawCenter;
     }
 
+    /**
+     * Get the center of the model. 
+     * 
+     * @return the model center
+     */
     public Point2d getModelCenter() {
         return modelCenter;
     }
@@ -179,16 +286,17 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      * Calculate and set the zoom factor needed to completely fit the diagram
      * onto the screen bounds.
      *
-     * @param diagramBounds
-     * @param drawBounds
+     * @param drawWidth the width of the area to draw onto
+     * @param drawHeight the height of the area to draw onto
+     * @param diagramWidth the width of the diagram
+     * @param diagramHeight the height of the diagram
      */
     public void setZoomToFit(double drawWidth,
                              double drawHeight,
                              double diagramWidth,
                              double diagramHeight) {
 
-        double m = this.rendererModel
-            .getParameter(Margin.class).getValue();
+        double m = rendererModel.getParameter(Margin.class).getValue();
 
         // determine the zoom needed to fit the diagram to the screen
         double widthRatio  = drawWidth  / (diagramWidth  + (2 * m));
@@ -199,8 +307,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         this.fontManager.setFontForZoom(zoom);
 
         // record the zoom in the model, so that generators can use it
-        this.rendererModel.getParameter(
-    	    	ZoomFactor.class).setValue(zoom);
+        rendererModel.getParameter(ZoomFactor.class).setValue(zoom);
 
     }
 
@@ -386,7 +493,5 @@ public abstract class AbstractRenderer<T extends IChemObject> {
 
 	    this.setup();
 	}
-
-	public abstract double calculateScaleForBondLength(double bondLength);
 
 }
