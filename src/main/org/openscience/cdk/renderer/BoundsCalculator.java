@@ -42,13 +42,13 @@ import org.openscience.cdk.interfaces.IReactionSet;
  */
 public class BoundsCalculator {
 
-	/**
-	 * Calculate the bounding rectangle for a chem model.
-	 * 
-	 * @param chemModel the chem model to use
-	 * @return the bounding rectangle of the chem model
-	 */
-	public static Rectangle2D calculateBounds(IChemModel chemModel) {
+    /**
+     * Calculate the bounding rectangle for a chem model.
+     * 
+     * @param chemModel the chem model to use
+     * @return the bounding rectangle of the chem model
+     */
+    public static Rectangle2D calculateBounds(IChemModel chemModel) {
         IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
         Rectangle2D totalBounds = null;
@@ -139,21 +139,21 @@ public class BoundsCalculator {
             return new Rectangle2D.Double(p.x, p.y, 0, 0);
         }
 
-    	double xmin = Double.POSITIVE_INFINITY;
-    	double xmax = Double.NEGATIVE_INFINITY;
-    	double ymin = Double.POSITIVE_INFINITY;
-    	double ymax = Double.NEGATIVE_INFINITY;
+        double xmin = Double.POSITIVE_INFINITY;
+        double xmax = Double.NEGATIVE_INFINITY;
+        double ymin = Double.POSITIVE_INFINITY;
+        double ymax = Double.NEGATIVE_INFINITY;
 
-    	for (IAtom atom : atomContainer.atoms()) {
-    		Point2d p = atom.getPoint2d();
-    		xmin = Math.min(xmin, p.x);
-    		xmax = Math.max(xmax, p.x);
-    		ymin = Math.min(ymin, p.y);
-    		ymax = Math.max(ymax, p.y);
-    	}
-    	double w = xmax - xmin;
-    	double h = ymax - ymin;
-    	return new Rectangle2D.Double(xmin, ymin, w, h);
+        for (IAtom atom : atomContainer.atoms()) {
+            Point2d p = atom.getPoint2d();
+            xmin = Math.min(xmin, p.x);
+            xmax = Math.max(xmax, p.x);
+            ymin = Math.min(ymin, p.y);
+            ymax = Math.max(ymax, p.y);
+        }
+        double w = xmax - xmin;
+        double h = ymax - ymin;
+        return new Rectangle2D.Double(xmin, ymin, w, h);
     }
 
 }
