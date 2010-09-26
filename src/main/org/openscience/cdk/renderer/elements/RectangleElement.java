@@ -23,24 +23,56 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 
 /**
+ * A rectangle, with width and height.
+ * 
  * @cdk.module renderbasic
  */
 public class RectangleElement implements IRenderingElement {
     
+    /** The x-coordinate of the center of the rectangle. **/
     public final double x;
+    
+    /** The y-coordinate of the center of the rectangle. **/
     public final double y;
+    
+    /** The width of the rectangle. **/
     public final double width;
+    
+    /** The height of the rectangle. **/
     public final double height;
+    
+    /** If true, the rectangle is drawn as filled. **/
     public final boolean filled;
+    
+    /** The color of the rectangle. **/
     public final Color color;
 
     
+    /**
+     * Make a rectangle from two opposite corners (x1, y1) and (x2, y2).
+     * 
+     * @param x1 the x-coordinate of the first point
+     * @param y1 the y-coordinate of the first point
+     * @param x2 the x-coordinate of the second point
+     * @param y2 the y-coordinate of the second point
+     * @param color the color of the rectangle
+     */
     public RectangleElement(
             double x1, double y1, double x2, double y2, Color color) {
         
         this(x1, y1, x2 - x1, y2 - y1, false, color);
     }
     
+    /**
+     * Make a rectangle centered on (x, y).
+     * 
+     * @param x x-coordinate of the center of the rectangle
+     * @param y y-coordinate of the center of the rectangle
+     * @param width width of the rectangle
+     * @param height height of the rectangle
+     * @param filled if true, the rectangle is drawn as filled
+     * @param color the color of the rectangle
+     */
     public RectangleElement(double x,
                             double y, 
                             double width,
@@ -48,13 +80,14 @@ public class RectangleElement implements IRenderingElement {
                             boolean filled,
                             Color color) {
         this.x = x;
-        this.y =y;
+        this.y = y;
         this.width = width;
         this.height = height;
         this.filled = filled;
         this.color = color;
     }
     
+    /** {@inheritDoc }**/
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
