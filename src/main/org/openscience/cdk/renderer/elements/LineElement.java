@@ -23,37 +23,37 @@ import java.awt.Color;
  */
 public class LineElement implements IRenderingElement {
 
-	public final double x1;
-	public final double y1;
-	public final double x2;
-	public final double y2;
-	public final double width;
-	public final Color color;
+    public final double x1;
+    public final double y1;
+    public final double x2;
+    public final double y2;
+    public final double width;
+    public final Color color;
 
-	public LineElement(double x, double y, double x1, double y1, double width, Color color) {
-		this.x2 = x;
-		this.y2 = y;
-		this.x1 = x1;
-		this.y1 = y1;
-		this.width = width;
-		this.color = color;
-	}
+    public LineElement(double x, double y, double x1, double y1, double width, Color color) {
+        this.x2 = x;
+        this.y2 = y;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.width = width;
+        this.color = color;
+    }
 
-	public void accept(IRenderingVisitor v) {
-		v.visit(this);
-	}
+    public void accept(IRenderingVisitor v) {
+        v.visit(this);
+    }
 
-	public enum LineType {
-		SINGLE(1), DOUBLE(2), TRIPLE(3), QUADRUPLE(4);
+    public enum LineType {
+        SINGLE(1), DOUBLE(2), TRIPLE(3), QUADRUPLE(4);
 
-		int n;
+        int n;
 
-		private LineType(int n) {
-			this.n = n;
-		}
+        private LineType(int n) {
+            this.n = n;
+        }
 
-		public int count() {
-			return n;
-		}
-	}
+        public int count() {
+            return n;
+        }
+    }
 }
