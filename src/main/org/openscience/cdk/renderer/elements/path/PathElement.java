@@ -24,17 +24,36 @@
 package org.openscience.cdk.renderer.elements.path;
 
 /**
+ * A path element.
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  */
 public abstract class PathElement {
-    Type type;
     
-    public PathElement( Type type) {
+    /** the type of the path element */
+    public final Type type;
+
+    /**
+     * Create a path element.
+     * 
+     * @param type
+     */
+    public PathElement( Type type ) {
         this.type = type;
     }
-    
+
+    /**
+     * Get the type of the path element.
+     * 
+     * @return the type of the path element
+     */
     public Type type() { return type;}
-    
-   public abstract float[] points();
+
+    /**
+     * Get the points in the path.
+     * 
+     * @return a list of points
+     */
+    public abstract float[] points();
 }

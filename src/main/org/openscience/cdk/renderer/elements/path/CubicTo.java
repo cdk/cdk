@@ -25,31 +25,44 @@
 import javax.vecmath.Point2d;
 
 /**
- *
+ * A cubic curve in the path.
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  */
 public class CubicTo extends PathElement {
 
-    Point2d p1;
-    Point2d p2;
-    Point2d p3;
+    /** first control point in the cubic */
+    public final Point2d cp1;
+    
+    /** second control point in the cubic */
+    public final Point2d cp2;
+    
+    /** end point of the cubic */
+    public final Point2d ep;
 
-    public CubicTo(Point2d p1, Point2d p2, Point2d p3) {
-
+    /**
+     * Make a cubic curve path element.
+     * 
+     * @param cp1 first control point in the cubic
+     * @param cp2 second control point in the cubic
+     * @param ep end point of the cubic 
+     */
+    public CubicTo(Point2d cp1, Point2d cp2, Point2d ep) {
         super( Type.CubicTo );
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
+        this.cp1 = cp1;
+        this.cp2 = cp2;
+        this.ep = ep;
     }
 
+    /** {@inheritDoc} **/
     @Override
     public float[] points() {
-     return new float[] { (float) p1.x,
-                          (float) p1.y,
-                          (float) p2.x,
-                          (float) p2.y,
-                          (float) p3.x,
-                          (float) p3.y};
+     return new float[] { (float) cp1.x,
+                          (float) cp1.y,
+                          (float) cp2.x,
+                          (float) cp2.y,
+                          (float) ep.x,
+                          (float) ep.y};
     }
 }

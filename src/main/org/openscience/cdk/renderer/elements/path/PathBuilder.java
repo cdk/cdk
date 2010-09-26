@@ -32,48 +32,116 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 
 /**
+ * Builder class for paths. All methods for constructing path elements return
+ * a reference to the builder, so that it can be used like:
+ * <pre>
+ *  PathBuilder builder = new PathBuilder();
+ *  builder.moveTo(p1).lineTo(p1).close();
+ *  GeneralPath path = builder.createPath();
+ * </pre>
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  */
 public class PathBuilder {
 
-    List<PathElement> elements = new ArrayList<PathElement>();
-    Color             color    = Color.BLACK;
+    /** The path that is being built */
+    private List<PathElement> elements;
+    
+    /** The color of the path */
+    private Color color;
+    
+    /**
+     * Make a new path builder with a default color of black.
+     */
+    public PathBuilder() {
+        this(Color.BLACK);
+    }
+    
+    /**
+     * Make a path builder that will make a path with a particular color.  
+     * 
+     * @param color the color of the path
+     */
+    public PathBuilder(Color color) {
+        elements = new ArrayList<PathElement>();
+        this.color = color;
+    }
 
+    /**
+     * Internal method that adds the element to the path.
+     * 
+     * @param element the element to add to the path
+     */
     private <T extends PathElement> void add( T element ) {
-
         elements.add( element );
     }
 
+    /**
+     * Make a move in the path, without drawing anything. This is usually used
+     * to start a path.
+     * 
+     * @param point the point to move to
+     * @return a reference to this builder
+     */
     public PathBuilder moveTo( Point2d point ) {
         add( new MoveTo( point ) );
         return this;
     }
 
+    /**
+     * Make a line in the path, from the last point to the given point.
+     * 
+     * @param point the point to make a line to
+     * @return a reference to this builder
+     */
     public PathBuilder lineTo( Point2d point ) {
         add( new LineTo( point ) );
         return this;
     }
 
-    public PathBuilder quadTo( Point2d p1, Point2d p2 ) {
-        add( new QuadTo( p1, p2 ) );
+    /**
+     * Make a quadratic curve in the path, with one control point.
+     *  
+     * @param cp the control point of the curve
+     * @param ep the end point of the curve
+     * @return a reference to this builder
+     */
+    public PathBuilder quadTo( Point2d cp, Point2d ep ) {
+        add( new QuadTo( cp, ep ) );
         return this;
     }
 
-    public PathBuilder cubicTo( Point2d p1, Point2d p2, Point2d p3 ) {
-        add( new CubicTo( p1, p2, p3 ) );
+    /**
+     * Make a cubic curve in the path, with two control points.
+     * 
+     * @param cp1 the first control point
+     * @param cp2 the second control point
+     * @param ep the end point of the curve
+     * @return  a reference to this builder
+     */
+    public PathBuilder cubicTo( Point2d cp1, Point2d cp2, Point2d ep ) {
+        add( new CubicTo( cp1, cp2, ep ) );
         return this;
     }
 
+    /**
+     * Close the path.
+     */
     public void close() {
         add( new Close() );
     }
 
     public PathBuilder color( Color color ) {
-        this.color = color;
-        return this;
+    	this.color = color;
+    	return this;
     }
 
+    /**
+     * Create and return the final path.
+     * 
+     * @return the newly created path
+     */
     public GeneralPath createPath() {
         return new GeneralPath( elements, color );
     }

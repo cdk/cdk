@@ -26,26 +26,37 @@ package org.openscience.cdk.renderer.elements.path;
 import javax.vecmath.Point2d;
 
 /**
+ * Make a quadratic curve in the path.
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  */
 public class QuadTo extends PathElement {
 
-    Point2d p1;
-    Point2d p2;
+    /** control point of the curve */
+    public final Point2d cp;
+    
+    /** end point of the curve */
+    public final Point2d ep;
 
-    public QuadTo(Point2d p1, Point2d p2) {
-
+    /**
+     * Make a quad curve.
+     * 
+     * @param cp control point of the curve
+     * @param ep end point of the curve
+     */
+    public QuadTo(Point2d cp, Point2d ep) {
         super( Type.QuadTo );
-        this.p1 = p1;
-        this.p2 = p2;
+        this.cp = cp;
+        this.ep = ep;
     }
     
+    /** {@inheritDoc} **/
     @Override
     public float[] points() {
-     return new float[] { (float) p1.x,
-                          (float) p1.y,
-                          (float) p2.x,
-                          (float) p2.y};
+     return new float[] { (float) cp.x,
+                          (float) cp.y,
+                          (float) ep.x,
+                          (float) ep.y};
     }
 }

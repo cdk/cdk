@@ -26,19 +26,27 @@ package org.openscience.cdk.renderer.elements.path;
 import javax.vecmath.Point2d;
 
 /**
+ * A line element in the path.
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  */
 public class LineTo extends PathElement {
 
-    Point2d point;
+    /** The point to make a line to */
+    public final Point2d point;
 
+    /**
+     * Make a line to this point.
+     * 
+     * @param point the endpoint of the line
+     */
     public LineTo(Point2d point) {
-
         super( Type.LineTo );
         this.point = point;
     }
     
+    /** {@inheritDoc} **/
     @Override
     public float[] points() {
         return new float[]{ (float) point.x, (float) point.y};

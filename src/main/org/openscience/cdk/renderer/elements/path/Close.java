@@ -24,16 +24,21 @@
 package org.openscience.cdk.renderer.elements.path;
 
 /**
+ * Indicates the closing point of the path.
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  */
 public class Close extends PathElement {
 
+    /**
+     * Make a Close PathElement.
+     */
     public Close() {
-
         super( Type.Close );
     }
     
+    /** {@inheritDoc} **/
     @Override
     public float[] points() {
         return new float[0];
