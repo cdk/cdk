@@ -19,30 +19,59 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 
 /**
+ * A line between two points.
+ * 
  * @cdk.module renderbasic
  */
 public class LineElement implements IRenderingElement {
 
+    /** The x-coordinate of the first point **/
     public final double x1;
+    
+    /** The y-coordinate of the first point **/
     public final double y1;
+    
+    /** The x-coordinate of the second point **/
     public final double x2;
+    
+    /** The y-coordinate of the second point **/
     public final double y2;
+    
+    /** The width of the line **/
     public final double width;
+    
+    /** The color of the line **/
     public final Color color;
 
-    public LineElement(double x, double y, double x1, double y1, double width, Color color) {
-        this.x2 = x;
-        this.y2 = y;
+    /**
+     * Make a line element. 
+     * 
+     * @param x1 x-coordinate of the first point
+     * @param y2 y-coordinate of the first point
+     * @param x2 x-coordinate of the second point
+     * @param y2 y-coordinate of the second point
+     * @param width the width of the line
+     * @param color the color of the line
+     */
+    public LineElement(
+          double x1, double y1, double x2, double y2, double width, Color color) {
         this.x1 = x1;
         this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
         this.width = width;
         this.color = color;
     }
 
+    /** {@inheritDoc} **/
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
 
+    /**
+     * The type of the line.
+     *
+     */
     public enum LineType {
         SINGLE(1), DOUBLE(2), TRIPLE(3), QUADRUPLE(4);
 
