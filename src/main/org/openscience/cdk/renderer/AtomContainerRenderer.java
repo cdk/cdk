@@ -157,10 +157,9 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         rendererModel.getParameter(Scale.class).setValue(this.calculateScaleForBondLength(bondLength));
     }
 
-    /* 
+    /** 
      * {@inheritDoc}
      */
-    @Override
     public Rectangle paint(
             IAtomContainer atomContainer, IDrawVisitor drawVisitor) {
         // the bounds of the model
@@ -198,7 +197,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         this.paint(drawVisitor, diagram);
     }
 
-    /* 
+    /** 
      * {@inheritDoc}
      */
     public Rectangle calculateDiagramBounds(IAtomContainer atomContainer) {
@@ -223,7 +222,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         }
     }
 
-    /* 
+    /** 
      * {@inheritDoc}
      */
     public List<IGenerator<IAtomContainer>> getGenerators(){
