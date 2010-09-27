@@ -52,6 +52,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
+ * Generator for elements from bonds.
+ * 
  * @cdk.module renderbasic
  */
 public class BasicBondGenerator implements IGenerator<IAtomContainer> {
@@ -100,7 +102,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
     private IGeneratorParameter<Double> bondLength = new BondLength();
-    
+
     /**
      * The width on screen of the fat end of a wedge bond.
      */
@@ -115,194 +117,224 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * The proportion to move in towards the ring center.
      */
     public static class TowardsRingCenterProportion extends
-        AbstractGeneratorParameter<Double> {
+    AbstractGeneratorParameter<Double> {
         public Double getDefault() {
             return 0.15;
         }
     }
     private IGeneratorParameter<Double> ringCenterProportion =
-    	new TowardsRingCenterProportion();
+        new TowardsRingCenterProportion();
 
     private ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
+        LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
 
-	protected IRingSet ringSet;
+    /**
+     * Necessary for calculating inner-ring bond elements
+     */
+    protected IRingSet ringSet;
 
-	/**
-	 * A hack to allow the HighlightGenerator to override the standard colors.
-	 * Set it to non-null to have all bond-lines in this color.
-	 */
-	private Color overrideColor = null;
+    /**
+     * A hack to allow the HighlightGenerator to override the standard colors.
+     * Set it to non-null to have all bond-lines in this color.
+     */
+    private Color overrideColor = null;
 
-	/**
-	 * A similar story to the override color
-	 */
-	private double overrideBondWidth = -1;
+    /**
+     * A similar story to the override color
+     */
+    private double overrideBondWidth = -1;
 
-	public BasicBondGenerator() {}
+    /**
+     * An empty constructor necessary for reflection.
+     */
+    public BasicBondGenerator() {}
 
-	public void setOverrideColor(Color color) {
-	    this.overrideColor = color;
-	}
+    /**
+     * Set the color to use for all bonds, overriding the standard bond colors.
+     * 
+     * @param color the override color
+     */
+    public void setOverrideColor(Color color) {
+        this.overrideColor = color;
+    }
 
-	public void setOverrideBondWidth(double bondWidth) {
-		this.overrideBondWidth = bondWidth;
-	}
+    /**
+     * Set the width to use for all bonds, overriding any standard bond widths.
+     * 
+     * @param bondWidth
+     */
+    public void setOverrideBondWidth(double bondWidth) {
+        this.overrideBondWidth = bondWidth;
+    }
 
-	protected IRingSet getRingSet(final IAtomContainer atomContainer) {
+    /**
+     * Determine the ring set for this atom container. 
+     * 
+     * @param atomContainer the atom container to find rings in.
+     * @return
+     */
+    protected IRingSet getRingSet(IAtomContainer atomContainer) {
 
-		IRingSet ringSet = atomContainer.getBuilder().newInstance(IRingSet.class);
-		try {
-			IMoleculeSet molecules =
-				ConnectivityChecker.partitionIntoMolecules(atomContainer);
-			for (IAtomContainer mol : molecules.molecules()) {
-				SSSRFinder sssrf = new SSSRFinder(mol);
-				ringSet.add(sssrf.findSSSR());
-			}
+        IRingSet ringSet = atomContainer.getBuilder().newInstance(IRingSet.class);
+        try {
+            IMoleculeSet molecules =
+                ConnectivityChecker.partitionIntoMolecules(atomContainer);
+            for (IAtomContainer mol : molecules.molecules()) {
+                SSSRFinder sssrf = new SSSRFinder(mol);
+                ringSet.add(sssrf.findSSSR());
+            }
 
-			return ringSet;
-		} catch (Exception exception) {
-			logger.warn("Could not partition molecule: "
-					+ exception.getMessage());
-			logger.debug(exception);
-			return ringSet;
-		}
-	}
+            return ringSet;
+        } catch (Exception exception) {
+            logger.warn("Could not partition molecule: "
+                    + exception.getMessage());
+            logger.debug(exception);
+            return ringSet;
+        }
+    }
 
-	/**
-	 * Determine the color of a bond, returning either the default color,
-	 * the override color or whatever is in the color hash for that bond.
-	 *
-	 * @param bond the bond we are generating an element for
-	 * @param model the rendering model
-	 * @return the color to paint the bond
-	 */
-	public Color getColorForBond(IBond bond, RendererModel model) {
-	    if (this.overrideColor != null) {
-	        return overrideColor;
-	    }
+    /**
+     * Determine the color of a bond, returning either the default color,
+     * the override color or whatever is in the color hash for that bond.
+     *
+     * @param bond the bond we are generating an element for
+     * @param model the rendering model
+     * @return the color to paint the bond
+     */
+    public Color getColorForBond(IBond bond, RendererModel model) {
+        if (this.overrideColor != null) {
+            return overrideColor;
+        }
 
-	    Color color = model.getParameter(ColorHash.class)
-	    	.getValue().get(bond);
-	    if (color == null) {
-	        return model.getParameter(DefaultBondColor.class).getValue();
-	    } else {
-	        return color;
-	    }
-	}
+        Color color = model.getParameter(ColorHash.class).getValue().get(bond);
+        if (color == null) {
+            return model.getParameter(DefaultBondColor.class).getValue();
+        } else {
+            return color;
+        }
+    }
 
-	/**
-	 * Determine the width of a bond, returning either the width defined
-	 * in the model, or the override width. Note that this will be scaled
-	 * to the space of the model.
-	 *
-	 * @param bond the bond to determine the width for
-	 * @param model the renderer model
-	 * @return a double in chem-model space
-	 */
-	public double getWidthForBond(IBond bond, RendererModel model) {
-		double scale = model.getParameter(Scale.class).getValue();
-		if (this.overrideBondWidth != -1) {
-			return this.overrideBondWidth / scale;
-		} else {
-			return
-			    model.getParameter(BondWidth.class).getValue()
-			    / scale;
-		}
-	}
+    /**
+     * Determine the width of a bond, returning either the width defined
+     * in the model, or the override width. Note that this will be scaled
+     * to the space of the model.
+     *
+     * @param bond the bond to determine the width for
+     * @param model the renderer model
+     * @return a double in chem-model space
+     */
+    public double getWidthForBond(IBond bond, RendererModel model) {
+        double scale = model.getParameter(Scale.class).getValue();
+        if (this.overrideBondWidth != -1) {
+            return this.overrideBondWidth / scale;
+        } else {
+            return model.getParameter(BondWidth.class).getValue() / scale;
+        }
+    }
 
-	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
-		ElementGroup group = new ElementGroup();
-		this.ringSet = this.getRingSet(ac);
+    /** {@inheritDoc} */
+    public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+        ElementGroup group = new ElementGroup();
+        this.ringSet = this.getRingSet(ac);
 
-                //Sort the ringSet consistently to ensure consistent rendering.
-                //If this is omitted, the bonds may 'tremble'.
-                ringSet.sortAtomContainers(new AtomContainerComparatorBy2DCenter());
+        //Sort the ringSet consistently to ensure consistent rendering.
+        //If this is omitted, the bonds may 'tremble'.
+        ringSet.sortAtomContainers(new AtomContainerComparatorBy2DCenter());
 
-		for (IBond bond : ac.bonds()) {
-			group.add(this.generate(bond, model));
-		}
-		return group;
-	}
+        for (IBond bond : ac.bonds()) {
+            group.add(this.generate(bond, model));
+        }
+        return group;
+    }
 
-	public IRenderingElement generate(IBond currentBond, RendererModel model) {
-		IRing ring = RingSetManipulator.getHeaviestRing(ringSet, currentBond);
-		if (ring != null) {
-			return generateRingElements(currentBond, ring, model);
-		} else {
-			return generateBond(currentBond, model);
-		}
-	}
+    /**
+     * Generate rendering element(s) for the current bond, including ring
+     * elements if this bond is part of a ring.
+     *  
+     * @param currentBond the bond to use when generating elements
+     * @param model the renderer model
+     * @return one or more rendering elements
+     */
+    public IRenderingElement generate(IBond currentBond, RendererModel model) {
+        IRing ring = RingSetManipulator.getHeaviestRing(ringSet, currentBond);
+        if (ring != null) {
+            return generateRingElements(currentBond, ring, model);
+        } else {
+            return generateBond(currentBond, model);
+        }
+    }
 
-	public IRenderingElement generateBondElement(
-	        IBond bond, RendererModel model) {
-	    return this.generateBondElement(bond, bond.getOrder(), model);
-	}
+    /**
+     * Generate rendering elements for a bond, without ring elements but
+     * considering the type of the bond (single, double, triple).
+     * 
+     * @param bond the bond to use when generating elements
+     * @param model the renderer model
+     * @return one or more rendering elements
+     */
+    public IRenderingElement generateBondElement(
+            IBond bond, RendererModel model) {
+        return generateBondElement(bond, bond.getOrder(), model);
+    }
 
-	/**
-	 * Generate a LineElement or an ElementGroup of LineElements for this bond.
-	 * This version should be used if you want to override the type - for
-	 * example, for ring double bonds.
-	 *
-	 * @param bond the bond to generate for
-	 * @param type the type of the bond - single, double, etc
-	 * @return
-	 */
-	public IRenderingElement generateBondElement(
-	        IBond bond, IBond.Order type, RendererModel model) {
-		// More than 2 atoms per bond not supported by this module
-		if (bond.getAtomCount() > 2)
-			return null;
+    /**
+     * Generate a LineElement or an ElementGroup of LineElements for this bond.
+     * This version should be used if you want to override the type - for
+     * example, for ring double bonds.
+     *
+     * @param bond the bond to generate for
+     * @param type the type of the bond - single, double, etc
+     * @return one or more rendering elements
+     */
+    public IRenderingElement generateBondElement(
+            IBond bond, IBond.Order type, RendererModel model) {
+        // More than 2 atoms per bond not supported by this module
+        if (bond.getAtomCount() > 2)
+            return null;
 
-		// is object right? if not replace with a good one
-		Point2d p1 = bond.getAtom(0).getPoint2d();
-		Point2d p2 = bond.getAtom(1).getPoint2d();
-		Color color = this.getColorForBond(bond, model);
-		double bondWidth = this.getWidthForBond(bond, model);
-		double bondDistance = this.bondDistance.getValue() /
-		    model.getParameter(Scale.class).getValue();
-		if (type == IBond.Order.SINGLE) {
-		    return new LineElement(p1.x, p1.y, p2.x, p2.y, bondWidth, color);
-		} else {
-    		    ElementGroup group = new ElementGroup();
-    		    switch (type) {
-    		        case DOUBLE:
-    		            this.createLines(p1, p2, bondWidth,
-    		                    bondDistance, color, group);
-    		            break;
-    		        case TRIPLE:
-    		            this.createLines(
-    		                    p1, p2, bondWidth,
-    		                    bondDistance * 2, color, group);
-    		            group.add(new LineElement(
-    		                    p1.x, p1.y, p2.x, p2.y, bondWidth, color));
-    		            break;
-    		        case QUADRUPLE:
-    		            this.createLines(
-    		                    p1, p2, bondWidth, bondDistance, color, group);
-    		            this.createLines(
-    		                    p1, p2, bondWidth, bondDistance * 4, color,
-    		                    group);
-    		        default:
-    		            break;
-    		    }
-    		    return group;
-		}
-	}
+        // is object right? if not replace with a good one
+        Point2d p1 = bond.getAtom(0).getPoint2d();
+        Point2d p2 = bond.getAtom(1).getPoint2d();
+        Color color = this.getColorForBond(bond, model);
+        double bondWidth = this.getWidthForBond(bond, model);
+        double bondDistance = this.bondDistance.getValue() /
+        model.getParameter(Scale.class).getValue();
+        if (type == IBond.Order.SINGLE) {
+            return new LineElement(p1.x, p1.y, p2.x, p2.y, bondWidth, color);
+        } else {
+            ElementGroup group = new ElementGroup();
+            switch (type) {
+            case DOUBLE:
+                createLines(p1, p2, bondWidth, bondDistance, color, group);
+                break;
+            case TRIPLE:
+                createLines(p1, p2, bondWidth, bondDistance * 2, color, group);
+                group.add(new LineElement(
+                        p1.x, p1.y, p2.x, p2.y, bondWidth, color));
+                break;
+            case QUADRUPLE:
+                createLines(p1, p2, bondWidth, bondDistance, color, group);
+                createLines(p1, p2, bondWidth, bondDistance * 4, color, group);
+            default:
+                break;
+            }
+            return group;
+        }
+    }
 
-	private void createLines(Point2d p1, Point2d p2, double width, double dist,
-	        Color c, ElementGroup group) {
-	    double[] out = generateDistanceData(p1, p2, dist);
-	    LineElement l1 =
+    private void createLines(Point2d p1, Point2d p2, double width, double dist,
+            Color c, ElementGroup group) {
+        double[] out = generateDistanceData(p1, p2, dist);
+        LineElement l1 =
             new LineElement(out[0], out[1], out[4], out[5], width, c);
         LineElement l2 =
             new LineElement(out[2], out[3], out[6], out[7], width, c);
-	    group.add(l1);
-	    group.add(l2);
-	}
+        group.add(l1);
+        group.add(l2);
+    }
 
-	private double[] generateDistanceData(Point2d p1, Point2d p2, double dist) {
-	    Vector2d normal = new Vector2d();
+    private double[] generateDistanceData(Point2d p1, Point2d p2, double dist) {
+        Vector2d normal = new Vector2d();
         normal.sub(p2, p1);
         normal = new Vector2d(-normal.y, normal.x);
         normal.normalize();
@@ -319,120 +351,167 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         line2p1.add(p1, normal);
         line2p2.add(p2, normal);
 
-        return new double[] { line1p1.x, line1p1.y, line2p1.x, line2p1.y,
+        return new double[] { 
+                line1p1.x, line1p1.y, line2p1.x, line2p1.y,
                 line1p2.x, line1p2.y, line2p2.x, line2p2.y };
-	}
+    }
 
-	public IRenderingElement generateRingElements(
-	        IBond bond, IRing ring, RendererModel model) {
-		if (isSingle(bond) && isStereoBond(bond)) {
-			return generateStereoElement(bond, model);
-		} else if (isDouble(bond)) {
-			ElementGroup pair = new ElementGroup();
-			IRenderingElement e1 = generateBondElement(
-			        bond, IBond.Order.SINGLE, model);
-			IRenderingElement e2 = generateInnerElement(bond, ring, model);
-			pair.add(e1);
-			pair.add(e2);
-			return pair;
-		} else {
-			return generateBondElement(bond, model);
-		}
-	}
+    /**
+     * Generate ring elements, such as inner-ring bonds or ring stereo elements.
+     * 
+     * @param bond the ring bond to use when generating elements
+     * @param ring the ring that the bond is in
+     * @param model the renderer model
+     * @return one or more rendering elements
+     */
+    public IRenderingElement generateRingElements(
+            IBond bond, IRing ring, RendererModel model) {
+        if (isSingle(bond) && isStereoBond(bond)) {
+            return generateStereoElement(bond, model);
+        } else if (isDouble(bond)) {
+            ElementGroup pair = new ElementGroup();
+            pair.add(generateBondElement(bond, IBond.Order.SINGLE, model));
+            pair.add(generateInnerElement(bond, ring, model));
+            return pair;
+        } else {
+            return generateBondElement(bond, model);
+        }
+    }
 
-	public LineElement generateInnerElement(
-	        IBond bond, IRing ring, RendererModel model) {
-		Point2d center = GeometryTools.get2DCenter(ring);
-		Point2d a = bond.getAtom(0).getPoint2d();
-		Point2d b = bond.getAtom(1).getPoint2d();
+    /**
+     * Make the inner ring bond, which is slightly shorter than the outer bond. 
+     * 
+     * @param bond the ring bond
+     * @param ring the ring that the bond is in
+     * @param model the renderer model
+     * @return the line element
+     */
+    public LineElement generateInnerElement(
+            IBond bond, IRing ring, RendererModel model) {
+        Point2d center = GeometryTools.get2DCenter(ring);
+        Point2d a = bond.getAtom(0).getPoint2d();
+        Point2d b = bond.getAtom(1).getPoint2d();
 
-		// the proportion to move in towards the ring center
-		final double DIST = model.getParameter(TowardsRingCenterProportion.class)
-			.getValue();
+        // the proportion to move in towards the ring center
+        double ringDistance = 
+            model.getParameter(TowardsRingCenterProportion.class).getValue();
 
-		Point2d w = new Point2d();
-		w.interpolate(a, center, DIST);
-		Point2d u = new Point2d();
-		u.interpolate(b, center, DIST);
+        Point2d w = new Point2d();
+        w.interpolate(a, center, ringDistance);
+        Point2d u = new Point2d();
+        u.interpolate(b, center, ringDistance);
 
-		double alpha = 0.2;
-		Point2d ww = new Point2d();
-		ww.interpolate(w, u, alpha);
-		Point2d uu = new Point2d();
-		uu.interpolate(u, w, alpha);
+        double alpha = 0.2;
+        Point2d ww = new Point2d();
+        ww.interpolate(w, u, alpha);
+        Point2d uu = new Point2d();
+        uu.interpolate(u, w, alpha);
+        
+        double width = getWidthForBond(bond, model);
+        Color color = getColorForBond(bond, model); 
 
-		return new LineElement(
-		        u.x, u.y, w.x, w.y,
-		        getWidthForBond(bond, model), getColorForBond(bond, model));
-	}
+        return new LineElement(u.x, u.y, w.x, w.y, width, color);
+    }
 
-	private IRenderingElement generateStereoElement(
-	        IBond bond, RendererModel model) {
+    private IRenderingElement generateStereoElement(
+            IBond bond, RendererModel model) {
 
-		IBond.Stereo stereo = bond.getStereo();
-		boolean dashed = false;
-		Direction dir = Direction.toSecond;
-		if (stereo == IBond.Stereo.DOWN ||
-		    stereo == IBond.Stereo.DOWN_INVERTED)
-			dashed = true;
-		if (stereo == IBond.Stereo.DOWN_INVERTED ||
-		    stereo == IBond.Stereo.UP_INVERTED)
-			dir = Direction.toFirst;
+        IBond.Stereo stereo = bond.getStereo();
+        boolean dashed = false;
+        Direction dir = Direction.toSecond;
+        if (stereo == IBond.Stereo.DOWN ||
+                stereo == IBond.Stereo.DOWN_INVERTED)
+            dashed = true;
+        if (stereo == IBond.Stereo.DOWN_INVERTED ||
+                stereo == IBond.Stereo.UP_INVERTED)
+            dir = Direction.toFirst;
 
-		IRenderingElement base = generateBondElement(
-		        bond, IBond.Order.SINGLE, model);
-		return new WedgeLineElement(
-		        (LineElement)base, dashed, dir, getColorForBond(bond, model));
-	}
+        IRenderingElement base = generateBondElement(
+                bond, IBond.Order.SINGLE, model);
+        return new WedgeLineElement(
+                (LineElement)base, dashed, dir, getColorForBond(bond, model));
+    }
 
-	public boolean isDouble(IBond bond) {
-		return bond.getOrder() == IBond.Order.DOUBLE;
-	}
+    /**
+     * Check to see if a bond is a double bond.
+     * 
+     * @param bond the bond to check
+     * @return true if its order is double
+     */
+    public boolean isDouble(IBond bond) {
+        return bond.getOrder() == IBond.Order.DOUBLE;
+    }
 
-	public boolean isSingle(IBond bond) {
-		return bond.getOrder() == IBond.Order.SINGLE;
-	}
+    /**
+     * Check to see if a bond is a single bond.
+     * 
+     * @param bond the bond to check
+     * @return true if its order is single
+     */
+    public boolean isSingle(IBond bond) {
+        return bond.getOrder() == IBond.Order.SINGLE;
+    }
 
-	public boolean isStereoBond(IBond bond) {
-		return bond.getStereo() != IBond.Stereo.NONE
-				&& bond.getStereo() != (IBond.Stereo)CDKConstants.UNSET
-				&& bond.getStereo() != IBond.Stereo.E_Z_BY_COORDINATES;
-	}
+    /**
+     * Check to see if a bond is a stereo bond.
+     * 
+     * @param bond the bond to check
+     * @return true if the bond has stero information
+     */
+    public boolean isStereoBond(IBond bond) {
+        return bond.getStereo() != IBond.Stereo.NONE
+        && bond.getStereo() != (IBond.Stereo)CDKConstants.UNSET
+        && bond.getStereo() != IBond.Stereo.E_Z_BY_COORDINATES;
+    }
 
-	public boolean bindsHydrogen(IBond bond) {
-		for (int i = 0; i < bond.getAtomCount(); i++) {
-			IAtom atom = bond.getAtom(i);
-			if ("H".equals(atom.getSymbol()))
-				return true;
-		}
-		return false;
-	}
+    /**
+     * Check to see if any of the atoms in this bond are hydrogen atoms.
+     * 
+     * @param bond the bond to check
+     * @return true if any atom has an element symbol of "H"
+     */
+    public boolean bindsHydrogen(IBond bond) {
+        for (int i = 0; i < bond.getAtomCount(); i++) {
+            IAtom atom = bond.getAtom(i);
+            if ("H".equals(atom.getSymbol()))
+                return true;
+        }
+        return false;
+    }
 
-	public IRenderingElement generateBond(IBond bond, RendererModel model) {
-		boolean showExplicitHydrogens = model.getParameter(
-			BasicAtomGenerator.ShowExplicitHydrogens.class
-		).getValue();
-		if (!showExplicitHydrogens && bindsHydrogen(bond)) {
-			return null;
-		}
+    /**
+     * Generate stereo or bond elements for this bond.
+     * 
+     * @param bond the bond to use when generating elements
+     * @param model the renderer model
+     * @return one or more rendering elements
+     */
+    public IRenderingElement generateBond(IBond bond, RendererModel model) {
+        boolean showExplicitHydrogens = model.getParameter(
+                BasicAtomGenerator.ShowExplicitHydrogens.class
+        ).getValue();
+        if (!showExplicitHydrogens && bindsHydrogen(bond)) {
+            return null;
+        }
 
-		if (isStereoBond(bond)) {
-			return generateStereoElement(bond, model);
-		} else {
-			return generateBondElement(bond, model);
-		}
-	}
+        if (isStereoBond(bond)) {
+            return generateStereoElement(bond, model);
+        } else {
+            return generateBondElement(bond, model);
+        }
+    }
 
+    /** {@inheritDoc} */
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-                bondWidth,
-                defaultBondColor,
-                bondLength,
-                wedgeWidth,
-                bondDistance,
-                ringCenterProportion
-            }
+                new IGeneratorParameter<?>[] {
+                        bondWidth,
+                        defaultBondColor,
+                        bondLength,
+                        wedgeWidth,
+                        bondDistance,
+                        ringCenterProportion
+                }
         );
     }
 
