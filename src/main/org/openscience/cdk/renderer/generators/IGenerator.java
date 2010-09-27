@@ -28,6 +28,11 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * An {@link IGenerator} converts chemical entities into parts of the 
  * chemical drawing expressed as {@link IRenderingElement}s.
  * 
+ * Note that some generators have explicit empty constructors (like:
+ * "public MyGenerator() {}") which can be useful in some situations where
+ * reflection is required. It is not, however, necessary for most normal
+ * drawing situations.
+ * 
  * @cdk.module  render
  * @cdk.githash
  */
