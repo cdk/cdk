@@ -67,7 +67,6 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
         return diagram;
     }
 
-    @Override
     /** {@inheritDoc} */
     public List<IGeneratorParameter<?>> getParameters() {
         return new ArrayList<IGeneratorParameter<?>>();

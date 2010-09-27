@@ -94,7 +94,6 @@ public class RingGenerator extends BasicBondGenerator {
         this.painted_rings = new HashSet<IRing>();
     }
 
-    @Override
     /** {@inheritDoc} */
     public IRenderingElement generateRingElements(
             IBond bond, IRing ring, RendererModel model) {
