@@ -103,9 +103,16 @@ public class RendererModel implements Serializable, Cloneable {
     private IGeneratorParameter<Map<IChemObject, Color>> colorHash =
         new ColorHash();
 
+    /**
+     * A map of {@link IGeneratorParameter} class names to instances. 
+     */
     private Map<String,IGeneratorParameter<?>> renderingParameters =
         new HashMap<String,IGeneratorParameter<?>>();
 
+    /**
+     * Construct a renderer model with no parameters. To put parameters into
+     * the model, use the registerParameters method. 
+     */
     public RendererModel() {
         renderingParameters.put(colorHash.getClass().getName(), colorHash);
         renderingParameters.put(
@@ -213,8 +220,8 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Registers rendering parameters from {@link IAtomContainerGenerator}s with this
-     * model.
+     * Registers rendering parameters from {@link IAtomContainerGenerator}s 
+     * with this model.
      *
      * @param generator
      */
