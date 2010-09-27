@@ -29,6 +29,7 @@ import javax.vecmath.Point2d;
  * 
  * @author Arvid
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class CubicTo extends PathElement {
 

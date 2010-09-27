@@ -32,7 +32,9 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * Utility class for calculating the average bond length for various
  * IChemObject subtypes : IReaction, IMoleculeSet, IChemModel, and IReactionSet.  
  * 
+ * @author maclean
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class AverageBondLengthCalculator {
 

@@ -55,6 +55,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * Generator for elements from bonds.
  * 
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 

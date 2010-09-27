@@ -28,6 +28,7 @@ import java.util.List;
  * annotation elements are the 'children' of the parent text element.
  *   
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class TextGroupElement extends TextElement {
     

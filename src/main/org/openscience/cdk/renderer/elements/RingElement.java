@@ -7,6 +7,7 @@ import java.awt.Color;
  * the same.
  * 
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class RingElement extends OvalElement implements IRenderingElement {
 

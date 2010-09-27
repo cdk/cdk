@@ -96,6 +96,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  *
  * @author maclean
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
   implements IRenderer<IAtomContainer> {

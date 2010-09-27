@@ -34,8 +34,9 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * elements for atoms and bonds, using the {@link BasicAtomGenerator} and
  * {@link BasicBondGenerator}.
  * 
- * @cdk.module renderbasic
  * @author maclean
+ * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class BasicGenerator implements IGenerator<IAtomContainer> {
 

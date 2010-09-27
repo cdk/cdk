@@ -45,6 +45,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * inner bonds, depending on the value of CDKStyleAromaticity.
  * 
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class RingGenerator extends BasicBondGenerator {
 

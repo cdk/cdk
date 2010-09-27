@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * It can be dashed or not to indicate up and down.
  * 
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.elements.WedgeLineElementTest")
 public class WedgeLineElement extends LineElement {

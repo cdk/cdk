@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * @author Arvid
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public abstract class AbstractSelection implements IChemObjectSelection {
 

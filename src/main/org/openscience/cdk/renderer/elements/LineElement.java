@@ -22,6 +22,7 @@ import java.awt.Color;
  * A line between two points.
  * 
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class LineElement implements IRenderingElement {
 

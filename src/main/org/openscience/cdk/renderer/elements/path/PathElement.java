@@ -28,6 +28,7 @@ package org.openscience.cdk.renderer.elements.path;
  * 
  * @author Arvid
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public abstract class PathElement {
     

@@ -62,6 +62,8 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * bond length.</p>
  * 
  * @cdk.module renderbasic
+ * @author maclean
+ * @cdk.githash
  */
 public abstract class AbstractRenderer<T extends IChemObject> {
 

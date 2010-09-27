@@ -46,6 +46,7 @@ import org.openscience.cdk.validate.ProblemMarker;
  * Generates basic {@link IRenderingElement}s for atoms in an atom container.
  *  
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 

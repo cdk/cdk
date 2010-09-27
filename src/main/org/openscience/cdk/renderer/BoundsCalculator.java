@@ -37,8 +37,10 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * Utility class for calculating the 2D bounding rectangles (bounds) 
  * of various IChemObject subtypes - IChemModel, IReactionSet, IReaction,
  * IMoleculeSet, and IAtomContainer.
- * 
+ *
+ * @author maclean
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class BoundsCalculator {
 

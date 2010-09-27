@@ -27,6 +27,7 @@ import java.awt.Color;
  * A text element with added information.
  * 
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class AtomSymbolElement extends TextElement {
 

@@ -30,6 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * A path composed of points.
  * 
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.elements.PathElementTest")
 public class PathElement implements IRenderingElement {

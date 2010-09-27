@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 /**
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class AWTFontManager extends AbstractFontManager {
 	

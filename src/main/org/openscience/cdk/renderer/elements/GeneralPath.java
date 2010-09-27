@@ -33,6 +33,7 @@ import org.openscience.cdk.renderer.elements.path.PathElement;
  * 
  * @author Arvid
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 public class GeneralPath implements IRenderingElement{
 
