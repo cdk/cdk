@@ -125,8 +125,8 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
     /**
      * Setup the transformations necessary to draw this Atom Container.
      *
-     * @param atomContainer
-     * @param screen
+     * @param atomContainer the atom container to use in the setup
+     * @param screen the area to draw on
      */
     public void setup(IAtomContainer atomContainer, Rectangle screen) {
         this.setScale(atomContainer);
@@ -150,7 +150,8 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * Set the scale for an IAtomContainer. It calculates the average bond
      * length of the model and calculates the multiplication factor to transform
      * this to the bond length that is set in the RendererModel.
-     * @param atomContainer
+     * 
+     * @param atomContainer the atom container that will be drawn
      */
     public void setScale(IAtomContainer atomContainer) {
         double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
@@ -209,9 +210,8 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * Given a bond length for a model, calculate the scale that will transform
      * this length to the on screen bond length in RendererModel.
      *
-     * @param modelBondLength
-     * @param reset
-     * @return
+     * @param modelBondLength the average bond length of the model
+     * @return the scale necessary to transform this to a screen bond
      */
     public double calculateScaleForBondLength(double modelBondLength) {
         if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
