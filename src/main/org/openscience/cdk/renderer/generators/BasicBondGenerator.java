@@ -285,6 +285,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      *
      * @param bond the bond to generate for
      * @param type the type of the bond - single, double, etc
+     * @param model the renderer model
      * @return one or more rendering elements
      */
     public IRenderingElement generateBondElement(
