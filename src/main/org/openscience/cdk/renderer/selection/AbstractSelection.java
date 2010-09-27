@@ -30,6 +30,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
+ * An abstract selection of chem objects.
+ * 
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -38,41 +40,45 @@ public abstract class AbstractSelection implements IChemObjectSelection {
 
     public static IChemObjectSelection EMPTY_SELECTION = new AbstractSelection() {
 
-		public IAtomContainer getConnectedAtomContainer() {
-			return null;
-		}
+        public IAtomContainer getConnectedAtomContainer() {
+            return null;
+        }
 
-		public boolean isFilled() {
+        public boolean isFilled() {
+            return false;
+        }
 
-			return false;
-		}
+        public boolean contains(IChemObject obj) {
+            return false;
+        }
 
-		public boolean contains(IChemObject obj) {
-			return false;
-		}
+        public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
+            return Collections.emptySet();
+        }
 
-		public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
+    };
 
-			return Collections.emptySet();
-		}
+    /** {@inheritDoc} */
+    public void select(IChemModel chemModel) {
+        // TODO Auto-generated method stub
 
+    }
 
-	};
-
-	public void select(IChemModel chemModel) {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void addToAtomContainer(IAtomContainer ac, IChemObject item) {
-
-		if (item instanceof IAtomContainer) {
-			ac.add((IAtomContainer) item);
-		} else if (item instanceof IAtom) {
-			ac.addAtom((IAtom) item);
-		} else if (item instanceof IBond) {
-			ac.addBond((IBond) item);
-		}
-	}
+    
+    /**
+     * Utility method to add a chemobject to an atom container.
+     * 
+     * @param ac the atom container to add to 
+     * @param item the chem object to add
+     */
+    protected void addToAtomContainer(IAtomContainer ac, IChemObject item) {
+        if (item instanceof IAtomContainer) {
+            ac.add((IAtomContainer) item);
+        } else if (item instanceof IAtom) {
+            ac.addAtom((IAtom) item);
+        } else if (item instanceof IBond) {
+            ac.addBond((IBond) item);
+        }
+    }
 
 }
