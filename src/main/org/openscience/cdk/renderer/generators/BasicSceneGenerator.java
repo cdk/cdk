@@ -31,20 +31,24 @@ import org.openscience.cdk.renderer.font.IFontManager.FontStyle;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
+ * This generator does not create any elements, but acts as a holding place
+ * for various generator parameters used by most drawings, such as the zoom,
+ * background color, margin, etc.
+ * 
  * @cdk.module renderbasic
  */
 public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
-    
+
     public static class ShowTooltip extends 
-                        AbstractGeneratorParameter<Boolean> {
+    AbstractGeneratorParameter<Boolean> {
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
     private ShowTooltip showTooltip = new ShowTooltip();
-    
+
     public static class ShowMoleculeTitle extends 
-                        AbstractGeneratorParameter<Boolean> {
+    AbstractGeneratorParameter<Boolean> {
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -52,14 +56,15 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     private ShowMoleculeTitle showMoleculeTitle = new ShowMoleculeTitle();
 
     public static class FitToScreen extends 
-                        AbstractGeneratorParameter<Boolean> {
+    AbstractGeneratorParameter<Boolean> {
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
+    /** If true, the scale is set such that the diagram fills the whole screen*/
     private FitToScreen fitToScreen = new FitToScreen();
 
-	/**
+    /**
      * The scale is the factor to multiply model coordinates by to convert the
      * coordinates to screen space coordinate, such that the entire structure
      * fits the visible screen dimension.
@@ -73,7 +78,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     private IGeneratorParameter<Double> scale = new Scale();	
 
     public static class BackgroundColor extends
-        AbstractGeneratorParameter<Color> {
+    AbstractGeneratorParameter<Color> {
         public Color getDefault() {
             return Color.WHITE;
         }
@@ -82,20 +87,19 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
     public static class ForegroundColor extends
     AbstractGeneratorParameter<Color> {
-    	public Color getDefault() {
-    		return Color.BLACK;
-    	}
+        public Color getDefault() {
+            return Color.BLACK;
+        }
     }
     private IGeneratorParameter<Color> foregroundColor = new ForegroundColor();
 
     public static class UseAntiAliasing extends
     AbstractGeneratorParameter<Boolean> {
-    	public Boolean getDefault() {
-    		return Boolean.TRUE;
-    	}
+        public Boolean getDefault() {
+            return Boolean.TRUE;
+        }
     }
-    private IGeneratorParameter<Boolean> useAntiAliasing =
-    	new UseAntiAliasing();
+    private IGeneratorParameter<Boolean> useAntiAliasing = new UseAntiAliasing();
 
     /**
      * Area on each of the four margins to keep white.
@@ -110,49 +114,55 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
     public static class UsedFontStyle extends
     AbstractGeneratorParameter<FontStyle> {
-    	public FontStyle getDefault() {
-    		return FontStyle.NORMAL;
-    	}
+        public FontStyle getDefault() {
+            return FontStyle.NORMAL;
+        }
     }
     private IGeneratorParameter<FontStyle> fontStyle = new UsedFontStyle();
 
     public static class FontName extends
     AbstractGeneratorParameter<String> {
-    	public String getDefault() {
-    		return "Arial";
-    	}
+        public String getDefault() {
+            return "Arial";
+        }
     }
     private IGeneratorParameter<String> fontName = new FontName();
 
     public static class ZoomFactor extends
     AbstractGeneratorParameter<Double> {
-    	public Double getDefault() {
-    		return 1.0;
-    	}
+        public Double getDefault() {
+            return 1.0;
+        }
     }
+    /** A zoom of 100% is defined to be a value of 1.0 */
     private IGeneratorParameter<Double> zoomFactor = new ZoomFactor();
 
+    /**
+     * An empty constructor necessary for reflection.
+     */
     public BasicSceneGenerator() {}
 
-	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
-		return new ElementGroup();
-	}
-	
+    /** {@inheritDoc} */
+    public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+        return new ElementGroup();
+    }
+
+    /** {@inheritDoc} */
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-                backgroundColor,
-                foregroundColor,
-                margin,
-                useAntiAliasing,
-                fontStyle,
-                fontName,
-                zoomFactor,
-                scale,
-                fitToScreen,
-                showMoleculeTitle,
-                showTooltip
-            }
+                new IGeneratorParameter<?>[] {
+                        backgroundColor,
+                        foregroundColor,
+                        margin,
+                        useAntiAliasing,
+                        fontStyle,
+                        fontName,
+                        zoomFactor,
+                        scale,
+                        fitToScreen,
+                        showMoleculeTitle,
+                        showTooltip
+                }
         );
     }
 }
