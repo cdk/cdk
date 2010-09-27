@@ -66,6 +66,14 @@ public abstract class AbstractGeneratorTest {
 		sceneGenerator = new BasicSceneGenerator();
 		model.registerParameters(sceneGenerator);
 	}
+    
+    public <T> boolean containsParameterType(
+            List<IGeneratorParameter<?>> list, Class<T> type) {
+        for (IGeneratorParameter<?> item : list) {
+            if (item.getClass().getName().equals(type.getName())) return true; 
+        }
+        return false;
+    }
 	
 	public List<IRenderingElement> getAllSimpleElements(
 	        IGenerator generator, IAtomContainer container) {
