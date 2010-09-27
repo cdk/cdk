@@ -24,9 +24,9 @@ import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 import java.awt.Color;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.vecmath.Point2d;
 
@@ -41,6 +41,9 @@ import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
+ * Generates just the aromatic indicators for rings : circles, or light-gray
+ * inner bonds, depending on the value of CDKStyleAromaticity.
+ * 
  * @cdk.module renderbasic
  */
 public class RingGenerator extends BasicBondGenerator {
@@ -63,6 +66,7 @@ public class RingGenerator extends BasicBondGenerator {
             return Boolean.FALSE;
         }
     }
+    /** If true, the aromatic ring is indicated by light gray inner bonds */
     private IGeneratorParameter<Boolean> cdkStyleAromaticity = new CDKStyleAromaticity();
 
     /**
@@ -76,74 +80,83 @@ public class RingGenerator extends BasicBondGenerator {
     }
     private IGeneratorParameter<Double> ringProportion = new RingProportion();
 
-    private Collection<IRing> painted_rings;
+    /**
+     * The rings that have already been painted - that is, a ring element
+     * has been generated for it.
+     */
+    private Set<IRing> painted_rings;
 
-	public RingGenerator() {
-		this.painted_rings = new HashSet<IRing>();
-	}
+    /**
+     * Make a generator for ring elements.
+     */
+    public RingGenerator() {
+        this.painted_rings = new HashSet<IRing>();
+    }
 
-	@Override
-	public IRenderingElement generateRingElements(
-	        IBond bond, IRing ring, RendererModel model) {
-		if (ringIsAromatic(ring) && showAromaticity.getValue()) {
-			ElementGroup pair = new ElementGroup();
-			if (cdkStyleAromaticity.getValue()) {
-			    pair.add(generateBondElement(bond, IBond.Order.SINGLE, model));
-			    super.setOverrideColor(Color.LIGHT_GRAY);
-			    pair.add(generateInnerElement(bond, ring, model));
-			    super.setOverrideColor(null);
-			} else {
-    			pair.add(generateBondElement(bond, IBond.Order.SINGLE, model));
-    			if (!painted_rings.contains(ring)) {
-    				painted_rings.add(ring);
-    				pair.add(generateRingRingElement(bond, ring, model));
-    			}
-			}
-			return pair;
-		} else {
-			return super.generateRingElements(bond, ring, model);
-		}
-	}
+    @Override
+    /** {@inheritDoc} */
+    public IRenderingElement generateRingElements(
+            IBond bond, IRing ring, RendererModel model) {
+        if (ringIsAromatic(ring) && showAromaticity.getValue()) {
+            ElementGroup pair = new ElementGroup();
+            if (cdkStyleAromaticity.getValue()) {
+                pair.add(generateBondElement(bond, IBond.Order.SINGLE, model));
+                super.setOverrideColor(Color.LIGHT_GRAY);
+                pair.add(generateInnerElement(bond, ring, model));
+                super.setOverrideColor(null);
+            } else {
+                pair.add(generateBondElement(bond, IBond.Order.SINGLE, model));
+                if (!painted_rings.contains(ring)) {
+                    painted_rings.add(ring);
+                    pair.add(generateRingRingElement(bond, ring, model));
+                }
+            }
+            return pair;
+        } else {
+            return super.generateRingElements(bond, ring, model);
+        }
+    }
 
-	private IRenderingElement generateRingRingElement(
-	        IBond bond, IRing ring, RendererModel model) {
-		Point2d c = GeometryTools.get2DCenter(ring);
+    private IRenderingElement generateRingRingElement(
+            IBond bond, IRing ring, RendererModel model) {
+        Point2d c = GeometryTools.get2DCenter(ring);
 
-		double[] minmax = GeometryTools.getMinMax(ring);
-		double width  = minmax[2] - minmax[0];
-		double height = minmax[3] - minmax[1];
-		double radius = Math.min(width, height) * ringProportion.getValue();
+        double[] minmax = GeometryTools.getMinMax(ring);
+        double width  = minmax[2] - minmax[0];
+        double height = minmax[3] - minmax[1];
+        double radius = Math.min(width, height) * ringProportion.getValue();
+        Color color = getColorForBond(bond, model);
+        
+        return new OvalElement(c.x, c.y, radius, false, color);
+    }
 
-		return new OvalElement(
-		        c.x, c.y, radius, false, getColorForBond(bond, model));
-	}
+    private boolean ringIsAromatic(IRing ring) {
+        boolean isAromatic = true;
+        for (IAtom atom : ring.atoms()) {
+            if (!atom.getFlag(ISAROMATIC)) {
+                isAromatic = false;
+                break;
+            }
+        }
+        if (!isAromatic) {
+            isAromatic = true;
+            for (IBond b : ring.bonds()) {
+                if (!b.getFlag(ISAROMATIC)) {
+                    return false;
+                }
+            }
+        }
+        return isAromatic;
+    }
 
-	private boolean ringIsAromatic(final IRing ring) {
-		boolean isAromatic = true;
-		for (IAtom atom : ring.atoms()) {
-			if (!atom.getFlag(ISAROMATIC)) {
-				isAromatic = false;
-				break;
-			}
-		}
-		if (!isAromatic) {
-		  isAromatic = true;
-			for (IBond b : ring.bonds()) {
-				if (!b.getFlag(ISAROMATIC)) {
-					return false;
-				}
-			}
-		}
-		return isAromatic;
-	}
-
+    /** {@inheritDoc} */
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-                cdkStyleAromaticity,
-                showAromaticity,
-                ringProportion
-            }
+                new IGeneratorParameter<?>[] {
+                        cdkStyleAromaticity,
+                        showAromaticity,
+                        ringProportion
+                }
         );
     }
 }
