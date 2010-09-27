@@ -152,6 +152,9 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     private IGeneratorParameter<Boolean> showEndCarbons = new ShowEndCarbons();
 
+    /**
+     * An empty constructor necessary for reflection. 
+     */
     public BasicAtomGenerator() {}
 
     /** {@inheritDoc} */
