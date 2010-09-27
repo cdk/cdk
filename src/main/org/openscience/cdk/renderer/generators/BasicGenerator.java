@@ -21,26 +21,43 @@
 
 package org.openscience.cdk.renderer.generators;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
+ * Combination generator for basic drawing of molecules. It only creates drawing
+ * elements for atoms and bonds, using the {@link BasicAtomGenerator} and
+ * {@link BasicBondGenerator}.
+ * 
  * @cdk.module renderbasic
+ * @author maclean
  */
-public class BasicGenerator {
+public class BasicGenerator implements IGenerator<IAtomContainer> {
 	
+    /** Holder for various parameters, such as background color */
     private BasicSceneGenerator sceneGenerator;
+    
+    /** Generates elements for each atom in a container */
 	private BasicAtomGenerator atomGenerator;
+	
+	/** Generates elements for each bond in a container */
 	private BasicBondGenerator bondGenerator;
 	
+	/**
+	 * Make a basic generator that creates elements for atoms and bonds.
+	 */
 	public BasicGenerator() {
 		this.atomGenerator = new BasicAtomGenerator();
 		this.bondGenerator = new BasicBondGenerator();
         this.sceneGenerator = new BasicSceneGenerator();
 	}
 	
+	/** {@inheritDoc} */
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup diagram = new ElementGroup();
         diagram.add(this.sceneGenerator.generate(ac, model));
@@ -48,5 +65,11 @@ public class BasicGenerator {
 		diagram.add(this.atomGenerator.generate(ac, model));
 		return diagram;
 	}
+
+    @Override
+    /** {@inheritDoc} */
+    public List<IGeneratorParameter<?>> getParameters() {
+        return new ArrayList<IGeneratorParameter<?>>();
+    }
 
 }
