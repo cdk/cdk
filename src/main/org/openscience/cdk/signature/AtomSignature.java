@@ -24,6 +24,7 @@ package org.openscience.cdk.signature;
 
 import java.util.List;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -182,12 +183,15 @@ public class AtomSignature extends AbstractVertexSignature {
     }
 
     @Override /** {@inheritDoc} */
-    @TestMethod("getEdgeLabelTest")
+    @TestMethod("getEdgeLabelTest,getAromaticEdgeLabelTest")
     protected String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
         IAtom atomA = this.molecule.getAtom(vertexIndex);
         IAtom atomB = this.molecule.getAtom(otherVertexIndex);
         IBond bond = this.molecule.getBond(atomA, atomB);
         if (bond != null) {
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+                return "p";
+            }
             switch (bond.getOrder()) {
 //                case SINGLE: return "-";
                 case SINGLE: return "";

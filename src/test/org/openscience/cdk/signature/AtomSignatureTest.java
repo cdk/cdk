@@ -28,6 +28,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -67,6 +68,27 @@ public class AtomSignatureTest extends AbstractSignatureTest {
     @Test
     public void getEdgeLabelTest() {
         Assert.assertEquals("=", atomSignature.getEdgeLabel(0, 1));
+    }
+    
+    @Test
+    public void getAromaticEdgeLabelTest() {
+        IAtomContainer benzeneRing = builder.newInstance(IAtomContainer.class);
+        for (int i = 0; i < 6; i++) {
+            benzeneRing.addAtom(builder.newInstance(IAtom.class, "C"));
+        }
+        for (int i = 0; i < 6; i++) {
+            IAtom a = benzeneRing.getAtom(i);
+            IAtom b = benzeneRing.getAtom((i + 1) % 6);
+            IBond bond = builder.newInstance(IBond.class, a, b);
+            benzeneRing.addBond(bond);
+            bond.setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        
+        AtomSignature signature = new AtomSignature(0, benzeneRing);
+        for (int i = 0; i < 6; i++) {
+            Assert.assertEquals("Failed for " + i, 
+                    "p", signature.getEdgeLabel(i, (i + 1) % 6));
+        }
     }
     
     @Test
