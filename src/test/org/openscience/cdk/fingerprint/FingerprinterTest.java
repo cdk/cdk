@@ -24,12 +24,18 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.BitSet;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -39,10 +45,6 @@ import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
@@ -172,7 +174,63 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
         Assert.assertFalse("butane should not be a substructure of propylamine", FingerprinterTool.isSubset(b2, b1));
     }
 
-	public static Molecule makeFragment1()
+    @Test
+    public void testBondPermutation() throws CDKException {
+        IMolecule pamine = makePropylAmine();
+        Fingerprinter fp = new Fingerprinter();
+        BitSet bs1 = fp.getFingerprint(pamine);
+
+        AtomContainerBondPermutor acp = new AtomContainerBondPermutor(pamine);
+        while (acp.hasNext()) {
+            IAtomContainer container = acp.next();
+            BitSet bs2 = fp.getFingerprint(container);
+            Assert.assertTrue(bs1.equals(bs2));
+        }
+    }
+
+    @Test
+    public void testAtomPermutation() throws CDKException {
+        IMolecule pamine = makePropylAmine();
+        Fingerprinter fp = new Fingerprinter();
+        BitSet bs1 = fp.getFingerprint(pamine);
+
+        AtomContainerAtomPermutor acp = new AtomContainerAtomPermutor(pamine);
+        while (acp.hasNext()) {
+            IAtomContainer container = acp.next();
+            BitSet bs2 = fp.getFingerprint(container);
+            Assert.assertTrue(bs1.equals(bs2));
+        }
+    }
+
+    @Test
+    public void testBondPermutation2() throws CDKException {
+        IMolecule pamine = MoleculeFactory.makeCyclopentane();
+        Fingerprinter fp = new Fingerprinter();
+        BitSet bs1 = fp.getFingerprint(pamine);
+
+        AtomContainerBondPermutor acp = new AtomContainerBondPermutor(pamine);
+        while (acp.hasNext()) {
+            IAtomContainer container = acp.next();
+            BitSet bs2 = fp.getFingerprint(container);
+            Assert.assertTrue(bs1.equals(bs2));
+        }
+    }
+
+    @Test
+    public void testAtomPermutation2() throws CDKException {
+        IMolecule pamine = MoleculeFactory.makeCyclopentane();
+        Fingerprinter fp = new Fingerprinter();
+        BitSet bs1 = fp.getFingerprint(pamine);
+
+        AtomContainerAtomPermutor acp = new AtomContainerAtomPermutor(pamine);
+        while (acp.hasNext()) {
+            IAtomContainer container = acp.next();
+            BitSet bs2 = fp.getFingerprint(container);
+            Assert.assertTrue(bs1.equals(bs2));
+        }
+    }
+
+    public static Molecule makeFragment1()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
