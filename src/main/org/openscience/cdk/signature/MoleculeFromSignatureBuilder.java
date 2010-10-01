@@ -22,6 +22,7 @@
 */
 package org.openscience.cdk.signature;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -70,6 +71,13 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
             container.addBond(vertexIndex1, vertexIndex2, IBond.Order.DOUBLE);
         } else if (edgeLabel.equals("#")) {
             container.addBond(vertexIndex1, vertexIndex2, IBond.Order.TRIPLE);
+        } else if (edgeLabel.equals("p")) {
+            IBond bond = builder.newInstance(IBond.class,
+                    container.getAtom(vertexIndex1), 
+                    container.getAtom(vertexIndex2),
+                    IBond.Order.SINGLE);
+            bond.setFlag(CDKConstants.ISAROMATIC, true);
+            container.addBond(bond);
         }
     }
 
