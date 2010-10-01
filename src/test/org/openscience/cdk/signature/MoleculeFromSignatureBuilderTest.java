@@ -24,6 +24,7 @@ package org.openscience.cdk.signature;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -189,6 +190,24 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
         Assert.assertEquals(2, product.getAtomCount());
         Assert.assertEquals(1, product.getBondCount());
         Assert.assertEquals(IBond.Order.TRIPLE, product.getBond(0).getOrder());
+    }
+    
+    @Test
+    public void makeEdgeTest_aromaticBond() {
+        MoleculeFromSignatureBuilder builder = 
+            new MoleculeFromSignatureBuilder(
+                    NoNotificationChemObjectBuilder.getInstance());
+        builder.makeGraph();
+        builder.makeVertex("C");
+        builder.makeVertex("C");
+        builder.makeEdge(0, 1, "C", "C", "p");
+        
+        IAtomContainer product = builder.getAtomContainer();
+        Assert.assertEquals(2, product.getAtomCount());
+        Assert.assertEquals(1, product.getBondCount());
+        IBond bond = product.getBond(0);
+        Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+        Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
     
     @Test
