@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openscience.cdk</groupId>
   <artifactId>cdk${dist}</artifactId>
-  <version>1.3.5</version>
+  <version>1.3.6</version>
   <packaging>jar</packaging>
   <name>cdk</name>
    <url>cdk.sourceforge.net</url>
@@ -14,7 +14,7 @@
     </repository>
 
   </distributionManagement>
-  <inceptionYear>2000(?)</inceptionYear>
+  <inceptionYear>2000</inceptionYear>
  <build>
     <plugins>
       <plugin>
