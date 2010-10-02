@@ -1825,7 +1825,7 @@ public class SmilesGenerator
         }
 
         IIsotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
-		if (majorIsotope.getMassNumber() == a.getMassNumber())
+		if (majorIsotope == null || majorIsotope.getMassNumber() == a.getMassNumber())
 		{
 			return "";
 		} else if (a.getMassNumber() == null)
