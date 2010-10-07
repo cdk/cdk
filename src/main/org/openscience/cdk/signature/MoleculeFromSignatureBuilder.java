@@ -62,7 +62,7 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
     }
 
     @Override /** {@inheritDoc} */
-    @TestMethod("makeEdgeTest_singleBond,makeEdgeTest_doubleBond,makeEdgeTest_tripleBond")
+    @TestMethod("makeEdgeTest_singleBond,makeEdgeTest_doubleBond,makeEdgeTest_tripleBond,makeEdgeTest_aromaticBond")
     public void makeEdge(int vertexIndex1, int vertexIndex2,
             String vertexSymbol1, String vertexSymbol2, String edgeLabel) {
         if (edgeLabel.equals("")) {
