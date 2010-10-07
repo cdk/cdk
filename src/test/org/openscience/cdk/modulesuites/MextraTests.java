@@ -25,6 +25,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.coverage.ExtraCoverageTest;
+import org.openscience.cdk.fragment.ExhaustiveFragmenterTest;
+import org.openscience.cdk.fragment.MurckoFragmenterTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
@@ -52,6 +54,8 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
     DeAromatizationToolTest.class,
     ShelXWriterTest.class,
     BremserPredictorTest.class,
-    ParserTest.class
+    ParserTest.class,
+    ExhaustiveFragmenterTest.class,
+    MurckoFragmenterTest.class    
 })
 public class MextraTests {}
