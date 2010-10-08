@@ -172,4 +172,19 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals(3, rings.length);
     }
 
+    /**
+     * @throws Exception
+     * @cdk.bug 1848591
+     */
+    @Test
+    public void testBug1848591() throws Exception {
+        IAtomContainer mol = smilesParser.parseSmiles("c1(ccc(cc1C)CCC(C(CCC)C2C(C2)CC)C3C=C(C=C3)CC)C");
+        MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+        fragmenter.generateFragments(mol);
+
+        String[] frameworks = fragmenter.getFrameworks();
+        Assert.assertEquals(1, frameworks.length);
+        System.out.println(frameworks[0]);
+    }
+
 }
