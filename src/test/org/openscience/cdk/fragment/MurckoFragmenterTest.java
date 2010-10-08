@@ -184,7 +184,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         String[] frameworks = fragmenter.getFrameworks();
         Assert.assertEquals(1, frameworks.length);
-        System.out.println(frameworks[0]);
+        Assert.assertEquals("c1ccc(cc1)CCC(CC2CC2)C3C=CC=C3", frameworks[0]);
     }
 
 }
