@@ -23,22 +23,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -62,6 +46,21 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
@@ -270,8 +269,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			StringBuilder data = new StringBuilder();
 			int dataLineCount = 0;
 			boolean lineIsContinued = false;
-			while ((line = input.readLine()) != null &&
-			       line.trim().length() > 0) {
+			while ((line = input.readLine()) != null) {
+
+                if (line.equals(" ")) {
+                    // apparently a file can have a field whose value is a single space. Moronic
+                    // we check for it *before* trimming it. ideally we should check for any length
+                    // of whitespace
+                    data.append(line);
+                    lineIsContinued = false;
+                    dataLineCount++;
+                    if (!lineIsContinued && dataLineCount > 1)
+                        data.append(System.getProperty("line.separator"));
+                    continue;
+                }
+
+                line = line.trim();
+                if (line.length() == 0) break;
+                
                 if (line.equals("$$$$")) {
                 	logger.error("Expecting data line here, but found end of molecule: ", line);
                 	break;
@@ -292,6 +306,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // check if the line will be continued on the next line
 			    if (line.length() == 80) lineIsContinued = true;
 			}
+
 			if (fieldName != null) {
 			    logger.info("fieldName, data: ", fieldName, ", ", data);
 			    m.setProperty(fieldName, data.toString());

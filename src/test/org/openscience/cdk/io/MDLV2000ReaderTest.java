@@ -24,22 +24,14 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -56,6 +48,14 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -80,6 +80,39 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
     	Assert.assertTrue(reader.accepts(Molecule.class));
+    }
+
+    /**
+     * @cdk.bug 3084064
+     */
+    @Test public void testBug3084064() throws Exception {
+        String filename = "data/mdl/weirdprops.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = reader.read(new ChemFile());
+
+        Assert.assertNotNull(chemFile);
+
+        List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(10, mols.size());
+
+        IAtomContainer mol = mols.get(0);
+        Map<Object, Object> props = mol.getProperties();
+        Assert.assertNotNull(props);
+        Assert.assertEquals(5, props.size());
+
+        String[] keys = {"DatabaseID", "cdk:Title", "PeaksExplained", "cdk:Remark", "Score"};
+        for (String s : keys) {
+            boolean found = false;
+            for (Object key : props.keySet()) {
+                if (s.equals(key)) {
+                    found = true;
+                    break;
+                }
+            }
+            Assert.assertTrue(s +" was not read from the file", found);
+        }
     }
     
     /**
