@@ -271,10 +271,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			boolean lineIsContinued = false;
 			while ((line = input.readLine()) != null) {
 
-                if (line.equals(" ")) {
+                if (line.equals(" ") && dataLineCount == 0) {
                     // apparently a file can have a field whose value is a single space. Moronic
                     // we check for it *before* trimming it. ideally we should check for any length
                     // of whitespace
+
+                    // In adition some SD files have the blank line after the value line contain
+                    // a space, rather than being a true blank line. So we only store a blank value
+                    // line if it's the first line after the key line
                     data.append(line);
                     lineIsContinued = false;
                     dataLineCount++;
