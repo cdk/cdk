@@ -1071,6 +1071,27 @@
 
     </Descriptor>
 
+     <Descriptor rdf:ID="fmf">
+        <rdfs:label>FMF</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#rguha"/>
+                <dc:date>2004-11-24</dc:date>
+            </documentation>
+        </annotation>
+        <definition rdf:parseType='Literal'>
+            Descriptor characterizing molecular complexity in terms of its Murcko framework
+        </definition>
+        <description rdf:parseType='Literal'>
+            This descriptor is described by Yang et al
+            <bibtex:cite ref="YANG2010"/> and is the ratio of heavy atoms in the Murcko
+            framework of a molecule to the total number of heavy atoms in the molecule.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+
+    </Descriptor>
+
     <Descriptor rdf:ID="gravitationalIndex_SquareAndCubeRoots">
         <rdfs:label>Gravitational Index (Square and Cube Roots)</rdfs:label>
         <annotation>

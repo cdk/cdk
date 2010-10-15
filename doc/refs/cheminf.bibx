@@ -1066,5 +1066,16 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
 
+   <bibtex:entry id="YANG2010">
+        <bibtex:article>
+            <bibtex:author>Yang, Y. and Chen, H. and Nilsson, I. and Muresan, S. and Engkvist, O.</bibtex:author>
+            <bibtex:title>Investigation of the Relationship between Topology and Selectivity for Druglike Molecules</bibtex:title>
+            <bibtex:journal>J. Med. Chem.</bibtex:journal>
+            <bibtex:year>2010</bibtex:year>
+            <bibtex:volume>ASAP</bibtex:volume>
+            <bibtex:pages></bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+
 
 </bibtex:file>
