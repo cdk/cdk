@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
@@ -63,6 +65,7 @@ import java.io.Serializable;
  *
  * @cdk.keyword     isotope
  */
+@TestClass("org.openscience.cdk.IsotopeTest")
 public class Isotope extends Element implements Serializable, IIsotope, Cloneable 
 {
 
@@ -287,12 +290,91 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
         if (!super.compare(object)) {
             return false;
         }
-        Isotope isotope = (Isotope)object;
-        return massNumber == isotope.massNumber &&
-                exactMass == isotope.exactMass &&
-                naturalAbundance == isotope.naturalAbundance;
+        Isotope isotope = (Isotope) object;
+
+                double mn1, mn2;
+        double em1, em2;
+        double na1, na2;
+
+        if (this.massNumber == null) mn1 = -1;
+        else mn1 = this.massNumber.doubleValue();
+        if (isotope.massNumber == null) mn2 = -1;
+        else mn2 = isotope.massNumber.doubleValue();
+
+        if (this.exactMass == null) em1 = -1;
+        else em1 = this.exactMass;
+        if (isotope.exactMass == null) em2 = -1;
+        else em2 = isotope.exactMass;
+
+        if (this.naturalAbundance == null) na1=  -1;
+        else na1 = this.naturalAbundance;
+        if (isotope.naturalAbundance == null) na2 = -1;
+        else na2 = isotope.naturalAbundance;
+
+        return symbol.equals(isotope.getSymbol()) &&
+                mn1 == mn2 &&
+                em1 == em2 &&
+                na1 == na2;        
     }
-    
+
+    /**
+     * Tests (state) equality of two isotope objects.
+     *
+     * @param object The isotope object to compare to
+     * @return true if the two objects are equal in terms of symbol, mass number, exact mass
+     * and natural abundance
+     */
+    @TestMethod("testEquals")
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        
+        if (!(object instanceof Isotope)) {
+            return false;
+        }
+
+        Isotope isotope = (Isotope) object;
+
+        double mn1, mn2;
+        double em1, em2;
+        double na1, na2;
+
+        if (this.massNumber == null) mn1 = -1;
+        else mn1 = this.massNumber.doubleValue();
+        if (isotope.massNumber == null) mn2 = -1;
+        else mn2 = isotope.massNumber.doubleValue();
+
+        if (this.exactMass == null) em1 = -1;
+        else em1 = this.exactMass;
+        if (isotope.exactMass == null) em2 = -1;
+        else em2 = isotope.exactMass;
+
+        if (this.naturalAbundance == null) na1=  -1;
+        else na1 = this.naturalAbundance;
+        if (isotope.naturalAbundance == null) na2 = -1;
+        else na2 = isotope.naturalAbundance;
+
+        return symbol.equals(isotope.getSymbol()) &&
+                mn1 == mn2 &&
+                em1 == em2 &&
+                na1 == na2;
+    }
+
+    private int getDoubleAsLong(double value) {
+        long longbits = Double.doubleToLongBits(value);
+        return (int) (longbits ^ (longbits >>> 32));
+    }
+
+    @TestMethod("testHashcode")
+    public int hashCode() {
+        int hash = 23;
+        int prime = 37;
+        hash = hash * prime + (symbol == null ? 0 : symbol.hashCode());
+        hash = hash * prime + (exactMass == null ? 0 : getDoubleAsLong(exactMass));
+        hash = hash * prime + (naturalAbundance == null ? 0 : getDoubleAsLong(naturalAbundance));
+        hash = hash * prime + (massNumber == null ? 0 : massNumber);
+        return hash;
+    }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

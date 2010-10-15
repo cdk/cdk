@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -119,14 +121,16 @@ public class MolecularFormula implements IMolecularFormula {
     @TestMethod("testAddIsotope_IIsotope_int")
 	public IMolecularFormula addIsotope(IIsotope isotope, int count) {
 		boolean flag = false;
-		for (IIsotope thisIsotope : isotopes()) {
-			if(isTheSame(thisIsotope, isotope)){
+		for (IIsotope thisIsotope : isotopes.keySet()) {
+            System.out.println("thisIsotope = " + thisIsotope);
+			if(isTheSame(isotope, thisIsotope)){
 				isotopes.put(thisIsotope, isotopes.get(thisIsotope) + count);
 				flag = true;
 				break;
 			}
 		}
 		if(!flag){
+            System.out.println("Saw "+isotope.getSymbol()+" for first time with count = "+count);
 			isotopes.put(isotope, count);
 		}
 		
@@ -391,9 +395,9 @@ public class MolecularFormula implements IMolecularFormula {
 
 		if(!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol() ))
 			return false;
-		if(natAbund1.doubleValue() != natAbund2)
+		if(natAbund1.doubleValue() != natAbund2.doubleValue())
 			return false;
-		return exactMass1.doubleValue() == exactMass2;
+		return exactMass1.doubleValue() == exactMass2.doubleValue();
 	}
 
     public IChemObjectBuilder getBuilder() {

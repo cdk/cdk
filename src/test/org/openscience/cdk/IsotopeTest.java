@@ -23,10 +23,10 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -78,6 +78,27 @@ public class IsotopeTest extends AbstractIsotopeTest {
         Assert.assertEquals(6, i.getAtomicNumber().intValue());
         Assert.assertEquals(12.001, i.getExactMass(), 0.001);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+
+    @Test public void testEquals() {
+        IIsotope i1 = new Isotope(6, "C", 12.001, 80.0);
+        IIsotope i2 = new Isotope(6, "C", 12.001, 80.0);
+
+        Assert.assertTrue(i1.equals(i2));
+
+        i1 = new Isotope(6, "C", 12, 12.001, 80.0);
+        i2 = new Isotope(6, "C", 12.001, 80.0);
+        Assert.assertFalse(i1.equals(i2));
+    }
+
+    @Test
+    public void testHashcode() {
+        IIsotope i1 = new Isotope(6, "C", 12.001, 80.0);
+        IIsotope i2 = new Isotope(6, "C", 12.001, 80.0);
+
+        int hash1 = i1.hashCode();
+        int hash2 = i2.hashCode();
+        Assert.assertEquals(hash1, hash2);
     }
 
 }
