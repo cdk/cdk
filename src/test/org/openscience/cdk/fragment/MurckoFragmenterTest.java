@@ -24,8 +24,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.ArrayList;
@@ -185,6 +187,78 @@ public class MurckoFragmenterTest extends CDKTestCase {
         String[] frameworks = fragmenter.getFrameworks();
         Assert.assertEquals(1, frameworks.length);
         Assert.assertEquals("c1ccc(cc1)CCC(CC2CC2)C3C=CC=C3", frameworks[0]);
+    }
+
+    /**
+     * @cdk.bug 3088164
+     */
+    @Test
+    public void testCarbinoxamine_Bug3088164() throws Exception {
+        IAtomContainer mol = smilesParser.parseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+        fragmenter.generateFragments(mol);
+
+        String[] f = fragmenter.getFrameworks();
+        IAtomContainer[] fc = fragmenter.getFragmentsAsContainers();
+        Assert.assertEquals(1, f.length);
+        Assert.assertEquals(f.length, fc.length);
+        Assert.assertEquals("c1ccc(cc1)Cc2ncccc2", f[0]);
+
+        SmilesGenerator sg = new SmilesGenerator(true);
+        for (int i = 0; i < f.length; i++) {
+            String newsmiles = sg.createSMILES(fc[i]);
+            Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
+        }
+    }
+
+    /**
+     * @cdk.bug 3088164
+     */
+    @Test
+    public void testPirenperone_Bug3088164() throws Exception {
+        SmilesGenerator sg = new SmilesGenerator(true);
+
+        IAtomContainer mol = smilesParser.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O");
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+        fragmenter.generateFragments(mol);
+
+        String[] f = fragmenter.getFrameworks();
+        IAtomContainer[] fc = fragmenter.getFragmentsAsContainers();
+
+        Assert.assertEquals(1, f.length);
+        Assert.assertEquals(f.length, fc.length);
+        Assert.assertEquals("N=1C=C(CN2C=CC=CC=12)CCN4CCC(Cc3ccccc3)CC4", f[0]);
+
+        for (int i = 0; i < f.length; i++) {
+            String newsmiles = sg.createSMILES(fc[i]);
+            Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
+        }
+    }
+
+    /**
+     * @cdk.bug 3088164
+     */
+    @Test
+    public void testIsomoltane_Bug3088164() throws Exception {
+        SmilesGenerator sg = new SmilesGenerator(true);
+
+        IAtomContainer mol = smilesParser.parseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+        fragmenter.generateFragments(mol);
+
+        String[] f = fragmenter.getFrameworks();
+        IAtomContainer[] fc = fragmenter.getFragmentsAsContainers();
+        Assert.assertEquals(1, f.length);
+        Assert.assertEquals(f.length, fc.length);
+        Assert.assertEquals("c1ccccc1n2cccc2", f[0]);
+
+        for (int i = 0; i < f.length; i++) {
+            String newsmiles = sg.createSMILES(fc[i]);
+            Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
+        }
     }
 
 }
