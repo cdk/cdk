@@ -24,14 +24,11 @@
  */
 package org.openscience.cdk.formula;
 
-import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.AbstractMolecularFormulaTest;
-import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
@@ -57,25 +54,5 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
 
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
     	Assert.assertNotNull(mf);
-    }
-
-    @Test
-    public void testIsTheSame_IIsotope_IIsotope() throws IOException {
-        MolecularFormula mf = new MolecularFormula();
-        IIsotope carb = getBuilder().newInstance(IIsotope.class,"C");
-        IIsotope anotherCarb = getBuilder().newInstance(IIsotope.class,"C");
-        IIsotope h = getBuilder().newInstance(IIsotope.class,"H");
-
-        carb.setExactMass(12.0);
-        anotherCarb.setExactMass(12.0);
-        h.setExactMass(1.0);
-
-        carb.setNaturalAbundance(34.0);
-        anotherCarb.setNaturalAbundance(34.0);
-        h.setNaturalAbundance(99.0);
-
-        Assert.assertTrue(mf.isTheSame(carb, carb));
-        Assert.assertTrue(mf.isTheSame(carb, anotherCarb));
-        Assert.assertFalse(mf.isTheSame(carb, h));
-    }
+    }  
 }

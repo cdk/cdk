@@ -23,20 +23,18 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 /**
  * Class defining a molecular formula object. It maintains
  * a list of list {@link IIsotope}.
@@ -120,20 +118,11 @@ public class MolecularFormula implements IMolecularFormula {
 	 */
     @TestMethod("testAddIsotope_IIsotope_int")
 	public IMolecularFormula addIsotope(IIsotope isotope, int count) {
-		boolean flag = false;
-		for (IIsotope thisIsotope : isotopes.keySet()) {
-            System.out.println("thisIsotope = " + thisIsotope);
-			if(isTheSame(isotope, thisIsotope)){
-				isotopes.put(thisIsotope, isotopes.get(thisIsotope) + count);
-				flag = true;
-				break;
-			}
-		}
-		if(!flag){
-            System.out.println("Saw "+isotope.getSymbol()+" for first time with count = "+count);
-			isotopes.put(isotope, count);
-		}
-		
+        if (isotopes.containsKey(isotope)) {
+            isotopes.put(isotope, isotopes.get(isotope) + count);
+        } else {
+            isotopes.put(isotope, count);
+        }
 		return this;
 	}
 
@@ -147,12 +136,7 @@ public class MolecularFormula implements IMolecularFormula {
 	 */
     @TestMethod("testContains_IIsotope")
 	public boolean contains(IIsotope isotope) {
-		for (IIsotope thisIsotope : isotopes()) {
-			if(isTheSame(thisIsotope, isotope)){
-				return true;
-			}
-		}
-		return false;
+        return isotopes.containsKey(isotope);
 	}
 
 	/**
@@ -204,7 +188,7 @@ public class MolecularFormula implements IMolecularFormula {
 	 */
 	private IIsotope getIsotope(IIsotope isotope){
 		for (IIsotope thisIsotope : isotopes()) {
-			if(isTheSame(isotope,thisIsotope))
+			if(isotope.equals(thisIsotope))
 				return thisIsotope;
 		}
 		return null;
@@ -370,34 +354,6 @@ public class MolecularFormula implements IMolecularFormula {
 			Object key = keys.next();
 			lazyProperties().put(key, properties.get(key));
 		}
-	}
-	/**
-	 * Compare to IIsotope. The method doesn't compare instance but if they
-	 * have the same symbol, natural abundance and exact mass.
-	 * 
-	 * @param isotopeOne   The first Isotope to compare
-	 * @param isotopeTwo   The second Isotope to compare
-	 * @return             True, if both isotope are the same
-	 */
-    @TestMethod("testIsTheSame")
-	protected boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
-
-        Double natAbund1 = isotopeOne.getNaturalAbundance();
-        Double natAbund2 = isotopeTwo.getNaturalAbundance();
-
-        Double exactMass1 = isotopeOne.getExactMass();
-        Double exactMass2 = isotopeTwo.getExactMass();
-
-        if (natAbund1 == null) natAbund1 = -1.0;
-        if (natAbund2 == null) natAbund2 = -1.0;
-        if (exactMass1 == null) exactMass1 = -1.0;
-        if (exactMass2 == null) exactMass2 = -1.0;
-
-		if(!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol() ))
-			return false;
-		if(natAbund1.doubleValue() != natAbund2.doubleValue())
-			return false;
-		return exactMass1.doubleValue() == exactMass2.doubleValue();
 	}
 
     public IChemObjectBuilder getBuilder() {
