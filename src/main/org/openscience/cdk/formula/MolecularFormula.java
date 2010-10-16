@@ -162,7 +162,7 @@ public class MolecularFormula implements IMolecularFormula {
 	 */
     @TestMethod("testGetIsotopeCount_IIsotope")
 	public int getIsotopeCount(IIsotope isotope) {
-		return !contains(isotope) ? 0 : isotopes.get(getIsotope(isotope));
+		return !isotopes.containsKey(isotope) ? 0 : isotopes.get(isotope);
 	}
 
 	/**
