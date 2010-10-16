@@ -134,19 +134,16 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
             
             // now try to parse the next Molecule
             try {
-                if (input.ready()) {
+                if ((currentLine = input.readLine()) != null) {
                 	currentFormat = (IChemFormat)MDLFormat.getInstance();
-                    currentLine = input.readLine();
                     StringBuffer buffer = new StringBuffer();
                     while (currentLine != null && !currentLine.equals("M  END")) {
                         // still in a molecule
                         buffer.append(currentLine);
                         buffer.append(System.getProperty("line.separator"));
-                        if (input.ready()) {
-                            currentLine = input.readLine();
-                        } else {
-                            currentLine = null;
-                        }
+
+                        currentLine = input.readLine();
+
                         // do MDL molfile version checking
                         if (currentLine.contains("V2000") || currentLine.contains("v2000")) {
                         	currentFormat = (IChemFormat)MDLV2000Format.getInstance();
