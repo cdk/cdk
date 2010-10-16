@@ -200,7 +200,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         String[] f = fragmenter.getFrameworks();
-        IAtomContainer[] fc = fragmenter.getFragmentsAsContainers();
+        IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
         Assert.assertEquals("c1ccc(cc1)Cc2ncccc2", f[0]);
@@ -219,17 +219,17 @@ public class MurckoFragmenterTest extends CDKTestCase {
     public void testPirenperone_Bug3088164() throws Exception {
         SmilesGenerator sg = new SmilesGenerator(true);
 
-        IAtomContainer mol = smilesParser.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O");
+        IAtomContainer mol = smilesParser.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
         fragmenter.generateFragments(mol);
 
         String[] f = fragmenter.getFrameworks();
-        IAtomContainer[] fc = fragmenter.getFragmentsAsContainers();
+        IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
 
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
-        Assert.assertEquals("N=1C=C(CN2C=CC=CC=12)CCN4CCC(Cc3ccccc3)CC4", f[0]);
+        Assert.assertEquals("C=1N=C4C=CC=CN4(CC=1CCN3CCC(Cc2ccccc2)CC3)", f[0]);
 
         for (int i = 0; i < f.length; i++) {
             String newsmiles = sg.createSMILES(fc[i]);
@@ -250,7 +250,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
 
         String[] f = fragmenter.getFrameworks();
-        IAtomContainer[] fc = fragmenter.getFragmentsAsContainers();
+        IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
         Assert.assertEquals("c1ccccc1n2cccc2", f[0]);

@@ -149,14 +149,16 @@ public class MurckoFragmenter implements IFragmenter {
         // only add this in if there is actually a framework
         // in some cases we might just have rings and sidechains
         if (hasframework(currentFramework)) {
-            smiles = smilesGenerator.createSMILES(clone);
+            smiles = smilesGenerator.createSMILES(currentFramework);
 
             // if we only want the single framework according to Murcko, then
             // it was the first framework that is added, since subsequent recursive
             // calls will work on substructures of the original framework
             if (singleFrameworkOnly) {
-                if (frameMap.size() == 0) frameMap.put(smiles, clone);
-            } else frameMap.put(smiles, clone);
+                if (frameMap.size() == 0) {
+                    frameMap.put(smiles, currentFramework);
+                }
+            } else frameMap.put(smiles, currentFramework);
         }
 
         // extract ring systems - we also delete pseudo linker bonds as described by
