@@ -351,20 +351,20 @@ public class Convertor {
         IMolecule mol = null;
         if (mols.hasNext()) {
             Resource rdfMol = mols.next();
-            mol = builder.newMolecule();
+            mol = builder.newInstance(IMolecule.class);
             Map<Resource,IAtom> rdfToCDKAtomMap = new HashMap<Resource,IAtom>();
             StmtIterator atoms = rdfMol.listProperties(CDK.HASATOM);
             while (atoms.hasNext()) {
                 Resource rdfAtom = atoms.nextStatement().getResource();
                 IAtom atom;
                 if (rdfAtom.hasProperty(RDF.type, CDK.PSEUDOATOM)) {
-                    atom = builder.newPseudoAtom();
+                    atom = builder.newInstance(IPseudoAtom.class);
                     atom.setStereoParity(0);
                     Statement label = rdfAtom.getProperty(CDK.HASLABEL);
                     if (label != null)
                         ((IPseudoAtom)atom).setLabel(label.getString());
                 } else {
-                    atom = builder.newAtom();
+                    atom = builder.newInstance(IAtom.class);
                 }
                 Statement symbol = rdfAtom.getProperty(CDK.SYMBOL);
                 if (symbol != null) atom.setSymbol(symbol.getString());
@@ -375,7 +375,7 @@ public class Convertor {
             StmtIterator bonds = rdfMol.listProperties(CDK.HASBOND);
             while (bonds.hasNext()) {
                 Resource rdfBond = bonds.nextStatement().getResource();
-                IBond bond = builder.newBond();
+                IBond bond = builder.newInstance(IBond.class);
                 StmtIterator bondAtoms = rdfBond.listProperties(CDK.BINDSATOM);
                 int atomCounter = 0;
                 while (bondAtoms.hasNext()) {
