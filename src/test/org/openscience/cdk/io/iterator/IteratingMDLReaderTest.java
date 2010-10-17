@@ -45,6 +45,8 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -63,6 +65,34 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingMDLReader reader = new IteratingMDLReader(
             ins, DefaultChemObjectBuilder.getInstance()
+        );
+
+        int molCount = 0;
+        while (reader.hasNext()) {
+            Object object = reader.next();
+            Assert.assertNotNull(object);
+            Assert.assertTrue(object instanceof Molecule);
+            molCount++;
+            Assert.assertEquals("Molecule # was not in MDL V2000 format: " + molCount,
+                    MDLV2000Format.getInstance(), reader.getFormat());
+        }
+
+        Assert.assertEquals(6, molCount);
+    }
+
+  @Test public void testSDF_broken_stream() throws Exception {
+        String filename = "data/mdl/test2.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+	InputStreamReader streamReader = new InputStreamReader(ins) {
+		@Override
+		public boolean ready() throws IOException {
+			return false;
+		}
+	};
+
+	IteratingMDLReader reader = new IteratingMDLReader(
+            streamReader, DefaultChemObjectBuilder.getInstance()
         );
 
         int molCount = 0;
