@@ -546,7 +546,7 @@
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="forcefield,qsarionpot"/>
+            list="forcefield,qsarionpot,iordf"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="builder3d,builder3dtools"/>
