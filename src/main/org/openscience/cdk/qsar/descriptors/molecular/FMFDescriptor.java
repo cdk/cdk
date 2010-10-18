@@ -44,6 +44,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * Note that the authors consider an isolated ring system to be a framework (even
  * though there is no linker).
  *
+ * This descriptor returns a single double value, labeled as "FMF"
+ *
  * @author Rajarshi Guha
  * @cdk.module qsarmolecular
  * @cdk.set qsar-descriptors
@@ -101,8 +103,7 @@ public class FMFDescriptor implements IMolecularDescriptor {
      * length of array result types vary with the values of the parameters. See
      * {@link org.openscience.cdk.qsar.IDescriptor} for more details.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * @return an instance of the {@link org.openscience.cdk.qsar.result.DoubleResultType}
      */
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
@@ -134,11 +135,9 @@ public class FMFDescriptor implements IMolecularDescriptor {
     /**
      * Returns the names of the parameters for this descriptor.
      *
-     * The method returns null or a zero-length Object[] array if the descriptor
-     * does not have any parameters.
+     * Since this descriptor takes no parameters, null is returned
      *
-     * @return An array of String containing the names of the parameters
-     *         that this descriptor can accept.
+     * @return null, since there are no parameters
      */
     public String[] getParameterNames() {
         return null;
@@ -147,11 +146,10 @@ public class FMFDescriptor implements IMolecularDescriptor {
     /**
      * Returns a class matching that of the parameter with the given name.
      *
-     * May only return null for when 'name' does not match any parameters returned
-     * by the getParameters() method.
+     * Since this descriptor has no parameters, null is always returned
      *
      * @param name The name of the parameter whose type is requested
-     * @return An Object of the class corresponding to the parameter with the supplied name
+     * @return null, since this descriptor has no parameters
      */
     public Object getParameterType(String name) {
         return null;
@@ -160,8 +158,7 @@ public class FMFDescriptor implements IMolecularDescriptor {
     /**
      * Sets the parameters for this descriptor.
      * <p/>
-     * Must be done before calling
-     * calculate as the parameters influence the calculation outcome.
+     * This method does nothing, since the descriptor has no parameters
      *
      * @param params An array of Object containing the parameters for this descriptor
      * @throws org.openscience.cdk.exception.CDKException
@@ -172,12 +169,10 @@ public class FMFDescriptor implements IMolecularDescriptor {
     }
 
     /**
-     * Returns the current parameter values. If not parameters have been set,
-     * it must return the default parameters. The method returns null or a
-     * zero-length Object[] array if the descriptor does not have any
-     * parameters.
+     * Returns the current parameter values.
      *
-     * @return An array of Object containing the parameter default values
+     * null is returned since the descriptor has no parameters
+     * @return null, since there are no parameters
      * @see #setParameters
      */
     public Object[] getParameters() {
@@ -187,21 +182,9 @@ public class FMFDescriptor implements IMolecularDescriptor {
     /**
      * Returns an array of names for each descriptor value calculated.
      * <p/>
-     * Many descriptors return multiple values. In general it is useful for the
-     * descriptor to indicate the names for each value.
-     * <p/>
-     * In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
-     * and 1, 2, ..., N are the indices. On the other hand it is also possible to return
-     * other arbitrary names, which should be documented in the Javadocs for the decsriptor
-     * (e.g., the CPSA descriptor).
-     * <p/>
-     * Note that by default if a descriptor returns a single value
-     * (such as {@link ALOGPDescriptor}
-     * the return array will have a single element
-     * <p/>
-     *
-     * @return An array of descriptor names, equal
-     *         in length to the number of descriptor calculated..
+     * Since this descriptor returns a single value, the array has a single element,
+     * viz., "FMF"
+     * @return A 1-element string array, with the value "FMF"
      */
     public String[] getDescriptorNames() {
         return new String[]{"FMF"};
