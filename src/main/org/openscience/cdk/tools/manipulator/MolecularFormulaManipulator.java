@@ -25,26 +25,17 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.HashMap;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -64,35 +55,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 @TestClass("org.openscience.cdk.formula.MolecularFormulaManipulatorTest")
 public class MolecularFormulaManipulator {
-
-    public static void main(String[] args) throws CDKException, FileNotFoundException {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-//                IAtomContainer mol = sp.parseSmiles("[H]OC3([H])(C([H])(O[H])C([H])(OP(=O)(O[H])O[H])C([H])(OP(=O)(O[H])O[H])C([H])(O[H])C3([H])(OP(=O)(O[H])OC([H])([H])C([H])(OC(=O)C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])[H])C([H])([H])OC(=O)C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])N([H])C(=O)C([H])([H])C([H])([H])C([H])([H])C([H])([H])C1([H])(C2([H])(N([H])C(=O)N([H])C2([H])(C([H])([H])S1)))))");
-//        IAtomContainer mol = sp.parseSmiles("[nH]1c(=O)nc2c(c1=O)nc1c(n2C[C@@H]([C@@H]([C@@H](COP(=O)(OP(=O)(OC[C@@H]2[C@H]([C@H]([C@@H](O2)n2c3ncnc(c3nc2)N)O)O)O)O)O)O)O)cc(c(c1)C)C");
-        IAtomContainer mol = sp.parseSmiles("[C@H]1([C@H]([C@@H]([C@H]([C@@H](O1)O)O)O)O)CO");
-
-//        MDLReader reader = new MDLReader(new FileReader("/Users/guhar/Downloads/45002.sdf"));
-//        ChemFile chemFile = (ChemFile) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(ChemFile.class));
-//        List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
-//        mol = mols.get(0);
-
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-    CDKHydrogenAdder ha = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
-        ha.addImplicitHydrogens(mol);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);        
-        
-        int nh = 0;
-        for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("H"))  nh++;
-        }
-        System.out.println("nh = " + nh);
-                IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
-                System.out.println(MolecularFormulaManipulator.getString(molecularFormula));
-
-
-        Iterable<IIsotope> map = molecularFormula.isotopes();
-        for (IIsotope iso : map) System.out.println(iso.getSymbol());
-    }
+	
 	/**
 	 *  Checks a set of Nodes for the occurrence of each isotopes 
 	 *  instance in the molecular formula. In short number of atoms.
@@ -225,7 +188,6 @@ public class MolecularFormulaManipulator {
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
         for (IIsotope isotope : isotopesList) {
             int elemCount = getElementCount(formula, isotope);
-            System.out.println(isotope.getSymbol()+" -> "+elemCount);
             if (elemCount == 1 && !setOne)
                 stringMF = stringMF + isotope.getSymbol();
             else
