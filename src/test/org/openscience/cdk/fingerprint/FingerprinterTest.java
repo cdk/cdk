@@ -24,24 +24,20 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -49,6 +45,10 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
@@ -173,7 +173,8 @@ public class FingerprinterTest extends AbstractFingerprinterTest {
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         Fingerprinter fingerprinter = new Fingerprinter();
-        BitSet bs1 = fingerprinter.getFingerprint(mol);    
+        BitSet bs1 = fingerprinter.getFingerprint(mol);
+        Assert.assertNotNull(bs1);
     }
 
     /**
