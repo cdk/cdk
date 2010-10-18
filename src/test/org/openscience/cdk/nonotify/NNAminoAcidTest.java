@@ -75,4 +75,10 @@ public class NNAminoAcidTest extends AbstractAminoAcidTest {
     @Test public void testSetNotification_true() {
         NNChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
+    @Test public void testNotifyChanged_SetProperty() {
+        NNChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
+    }
+    @Test public void testNotifyChanged_RemoveProperty() {
+        NNChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
+    }
 }

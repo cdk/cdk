@@ -213,4 +213,10 @@ public class NNChemModelTest extends AbstractChemModelTest {
         ringSet.addAtomContainer(chemObject.getBuilder().newInstance(IRing.class));
         Assert.assertFalse(listener.getChanged());
     }
+    @Test public void testNotifyChanged_SetProperty() {
+        NNChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
+    }
+    @Test public void testNotifyChanged_RemoveProperty() {
+        NNChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
+    }
 }
