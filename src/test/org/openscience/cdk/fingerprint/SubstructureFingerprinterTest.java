@@ -28,13 +28,13 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import java.util.BitSet;
 
 /**
  * @cdk.module test-fingerprint
@@ -86,6 +86,23 @@ public class SubstructureFingerprinterTest extends AbstractFingerprinterTest {
         Assert.assertTrue(fp.get(0));
         Assert.assertTrue(fp.get(1));
         Assert.assertFalse(fp.get(100));
+    }
+
+    /**
+     * @cdk.bug 2871303
+     *
+     * While this test fails, Daylight says that the
+     * SMARTS pattern used for vinylogous ester should
+     * match benzaldehyde twice. So according to the
+     * supplied definition this answer is actually correct.
+     */
+    @Test
+    public void testVinylogousEster() throws Exception {
+        String benzaldehyde = "c1ccccc1C=O";
+        IFingerprinter fprinter = new SubstructureFingerprinter();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        BitSet fp = fprinter.getFingerprint(sp.parseSmiles(benzaldehyde));
+        Assert.assertFalse("Bit 136 (vinylogous ester) is set to true", fp.get(136));
     }
 }
 
