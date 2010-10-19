@@ -21,12 +21,16 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -1147,4 +1151,27 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
       	  Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
       	  Assert.assertEquals("C5H13NO2", MolecularFormulaManipulator.getString(ff));
       }
+
+    /**
+     * @cdk.bug 3071473
+     */
+    @Test
+    public void testFromMol() throws CDKException {
+        String filename = "data/mdl/formulatest.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = reader.read(new ChemFile());
+        Assert.assertNotNull(chemFile);
+        List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
+        IAtomContainer mol = mols.get(0);
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder ha = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
+        ha.addImplicitHydrogens(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+
+        IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
+        String formula2 = MolecularFormulaManipulator.getString(molecularFormula);
+        Assert.assertTrue(formula2.equals("C35H64N3O21P3S"));
+    }
 }
