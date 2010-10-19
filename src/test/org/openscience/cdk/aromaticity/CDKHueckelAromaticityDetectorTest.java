@@ -907,5 +907,33 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         }
     }
 
+    /**
+     * @cdk.bug 2853035
+     */
+    @Test
+    public void testBug2853035() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C(=O)c1cnn2ccccc12");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getSymbol().equals("N")) {
+                Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+                List<IBond> conbonds = mol.getConnectedBondsList(atom);
+                for (IBond bond : conbonds) {
+                    if (bond.getOrder().equals(IBond.Order.SINGLE)) continue;
+                    Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                }
+            }
+        }
+        SpanningTree st = new SpanningTree(mol);
+        IRingSet ringSet = st.getAllRings();
+        for (IAtomContainer ring : ringSet.atomContainers()) {
+            for (IBond bond : ring.bonds()) {
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+            }
+        }
+    }
+
 }
 
