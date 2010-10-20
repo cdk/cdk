@@ -64,6 +64,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="charges"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="diff"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="smsd"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="iordf"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="signature"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-qm"/><param name="module" value="qm"/></antcall>
       <!-- the test modules -->
@@ -92,6 +93,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-smsd"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-log4j"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-signature"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-iordf"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"

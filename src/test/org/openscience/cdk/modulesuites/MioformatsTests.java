@@ -35,6 +35,7 @@ import org.openscience.cdk.io.formats.AlchemyFormatTest;
 import org.openscience.cdk.io.formats.BGFFormatTest;
 import org.openscience.cdk.io.formats.BSFormatTest;
 import org.openscience.cdk.io.formats.CACheFormatTest;
+import org.openscience.cdk.io.formats.CDKOWLFormatTest;
 import org.openscience.cdk.io.formats.CIFFormatTest;
 import org.openscience.cdk.io.formats.CMLFormatTest;
 import org.openscience.cdk.io.formats.CMLRSSFormatTest;
@@ -134,6 +135,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     CacaoCartesianFormatTest.class,
     CacaoInternalFormatTest.class,
     CACheFormatTest.class,
+    CDKOWLFormatTest.class,
     Chem3D_Cartesian_1FormatTest.class,
     Chem3D_Cartesian_2FormatTest.class,
     ChemDrawFormatTest.class,

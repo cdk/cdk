@@ -30,6 +30,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -50,6 +51,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import javax.vecmath.Point2d;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author steinbeck
@@ -869,6 +871,67 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                 "Atom is expected to be aromatic: " + atom,
                 atom.getFlag(CDKConstants.ISAROMATIC)
             );
+        }
+    }
+
+    /**
+     * @cdk.bug 3001616
+     */
+    @Test
+    public void test3001616() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("OC(=O)N1C=NC2=CC=CC=C12");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getSymbol().equals("N")) {
+                Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+                List<IBond> conbonds = mol.getConnectedBondsList(atom);
+                if (conbonds.size() == 2) {
+                    Assert.assertTrue(conbonds.get(0).getFlag(CDKConstants.ISAROMATIC));
+                    Assert.assertTrue(conbonds.get(1).getFlag(CDKConstants.ISAROMATIC));
+                } else if (conbonds.size() == 3) {
+                    for (IBond bond : conbonds) {
+                        if (bond.getOrder().equals(IBond.Order.SINGLE)) continue;
+                        Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                    }
+                }
+            }
+        }
+        SpanningTree st = new SpanningTree(mol);
+        IRingSet ringSet = st.getAllRings();
+        for (IAtomContainer ring : ringSet.atomContainers()) {
+            for (IBond bond : ring.bonds()) {
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+            }
+        }
+    }
+
+    /**
+     * @cdk.bug 2853035
+     */
+    @Test
+    public void testBug2853035() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C(=O)c1cnn2ccccc12");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getSymbol().equals("N")) {
+                Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+                List<IBond> conbonds = mol.getConnectedBondsList(atom);
+                for (IBond bond : conbonds) {
+                    if (bond.getOrder().equals(IBond.Order.SINGLE)) continue;
+                    Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+                }
+            }
+        }
+        SpanningTree st = new SpanningTree(mol);
+        IRingSet ringSet = st.getAllRings();
+        for (IAtomContainer ring : ringSet.atomContainers()) {
+            for (IBond bond : ring.bonds()) {
+                Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+            }
         }
     }
 

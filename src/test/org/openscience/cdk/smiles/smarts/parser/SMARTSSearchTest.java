@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -40,6 +37,9 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
@@ -1627,6 +1627,18 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(1, results[1]);
     }
 
-
+    /**
+     * @cdk.bug 2871303
+     * <p/>
+     * Note that this test passes, and really indicates that
+     * the SMARTS below is not a correct one for vinylogous
+     * esters
+     */
+    @Test
+    public void testVinylogousEster() throws Exception {
+        int[] results = match("[#6X3](=[OX1])[#6X3]=,:[#6X3][#6;!$(C=[O,N,S])]", "c1ccccc1C=O");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(2, results[1]);
+    }
 }
 

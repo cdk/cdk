@@ -531,7 +531,7 @@
             list="io,structgen"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="pdb,smiles,sdg,inchi,libiocml"/>
+            list="pdb,smiles,sdg,inchi,sinchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="control,extra,reaction,pdbcml,libiomd"/>
@@ -546,7 +546,7 @@
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="forcefield,qsarionpot"/>
+            list="forcefield,qsarionpot,iordf"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="builder3d,builder3dtools"/>
@@ -563,13 +563,13 @@
         	      test-valencycheck,test-smarts,test-standard,test-reaction,
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
-                  test-diff,test-charges,test-inchi,test-formula,
+                  test-diff,test-charges,test-inchi,test-sinchi,test-formula,
                   test-render,test-ioformats,test-log4j"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-data,test-qsaratomic,test-qsarbond,
                   test-pdb,test-smiles,test-extra,test-atomtype,
-                  test-structgen"/>
+                  test-structgen,test-iordf"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-qsarmolecular,test-builder3d,test-datadebug,
@@ -630,6 +630,7 @@
                     <includesfile name="${metainf}/formula.libdepends"/>
                     <includesfile name="${metainf}/isomorphism.libdepends"/>
                     <includesfile name="${metainf}/qm.libdepends"/>
+                    <includesfile name="${metainf}/iordf.libdepends"/>
                     <includesfile name="${metainf}/signature.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
@@ -677,6 +678,7 @@
                     <include name="cdk-isomorphism.jar"/>
                     <include name="cdk-ionpot.jar"/>
                     <include name="cdk-smsd.jar"/>
+                    <include name="cdk-iordf.jar"/>
                     <include name="cdk-signature.jar"/>
                     <include name="cdk-qm.jar"/>
                 </fileset>
@@ -1058,7 +1060,7 @@
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
-                      ioformats,log4j,smsd,signature"/>
+                      ioformats,log4j,smsd,signature,iordf"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

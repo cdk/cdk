@@ -104,4 +104,22 @@ public class NNChemObjectTestHelper {
         chemObject.setID("Changed");
         Assert.assertFalse(listener.getChanged());
     }
+
+    public static void testNotifyChanged_SetProperty(IChemObject chemObject) {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        chemObject.addListener(listener);
+
+        chemObject.setProperty("Changed", "Yes");
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    public static void testNotifyChanged_RemoveProperty(IChemObject chemObject) {
+        chemObject.setProperty("Changed", "Yes");
+
+        NNChemObjectListener listener = new NNChemObjectListener();
+        chemObject.addListener(listener);
+
+        chemObject.removeProperty("Changed");
+        Assert.assertFalse(listener.getChanged());
+    }
 }

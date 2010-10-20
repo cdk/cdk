@@ -5,7 +5,7 @@
 	<classpathentry excluding="**/*.class|**/*.java" including="*.javafiles" kind="src" path="build"/>
 	<classpathentry kind="src" path="src/test"/>
 	<classpathentry exported="true" kind="lib" path="jar/jgrapht-0.6.0.jar" sourcepath="cdksrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jar/jniinchi-0.5.jar" sourcepath="cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="jar/jniinchi-0.7.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/vecmath1.2-1.14.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/xom-1.1.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/jama-1.0.2.jar" sourcepath="cdksrc.zip"/>
@@ -19,7 +19,16 @@
 	<classpathentry exported="true" kind="lib" path="develjar/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="jar/cmlxom-2.5-b1.jar"/>
 	<classpathentry kind="lib" path="develjar/ojdcheck.jar"/>
+	<classpathentry kind="lib" path="develjar/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="develjar/groovy.jar"/>
+	<classpathentry kind="lib" path="develjar/antlr.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="jar/signatures-1.0.jar"/>
+	<classpathentry kind="lib" path="jar/jena/jena.jar"/>
+	<classpathentry kind="lib" path="jar/jena/slf4j-simple-1.5.0.jar"/>
+	<classpathentry kind="lib" path="jar/jena/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="jar/jena/slf4j-api-1.5.6.jar"/>
+	<classpathentry kind="lib" path="jar/jena/iri.jar"/>
+	<classpathentry kind="lib" path="jar/jena/icu4j_3_4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

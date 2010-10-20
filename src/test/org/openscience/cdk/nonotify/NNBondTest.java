@@ -27,7 +27,6 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.AbstractBondTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -157,5 +156,11 @@ public class NNBondTest extends AbstractBondTest {
     }
     @Test public void testSetNotification_true() {
         NNChemObjectTestHelper.testSetNotification_true(newChemObject());
+    }
+    @Test public void testNotifyChanged_SetProperty() {
+        NNChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
+    }
+    @Test public void testNotifyChanged_RemoveProperty() {
+        NNChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
 }
