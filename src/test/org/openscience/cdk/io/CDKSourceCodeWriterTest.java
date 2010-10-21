@@ -62,7 +62,7 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
         CDKSourceCodeWriter sourceWriter = new CDKSourceCodeWriter(writer);
         sourceWriter.write(molecule);
         String output = writer.toString();
-        Assert.assertTrue(output.indexOf("IAtom a1 = mol.getBuilder().newInstance(IAtom.class,\"C\")") != -1);
+        Assert.assertTrue(output.indexOf("IAtom a1 = builder.newInstance(IAtom.class,\"C\")") != -1);
 
         GroovyShell shell = new GroovyShell();
         shell.evaluate(

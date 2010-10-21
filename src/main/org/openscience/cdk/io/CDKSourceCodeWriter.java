@@ -46,6 +46,7 @@ import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.tools.DataFeatures;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -79,6 +80,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     
     private BooleanIOSetting write2DCoordinates;
     private BooleanIOSetting write3DCoordinates;
+    private StringIOSetting builder;
 
     /**
      * Constructs a new CDKSourceCodeWriter.
@@ -182,10 +184,14 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         }
     }
 
-    public void writeMolecule(IMolecule molecule) throws Exception {
+    private void writeMolecule(IMolecule molecule) throws Exception {
         writer.write("{");
         writer.newLine();
-        writer.write("  IMolecule mol = new Molecule();");
+        writer.write("  IChemObjectBuilder builder = ");
+        writer.write(builder.getSetting());
+        writer.write(".getInstance();");
+        writer.newLine();
+        writer.write("  IMolecule mol = builder.newInstance(IMolecule.class);");
         writer.newLine();
         IDCreator.createIDs(molecule);
         writeAtoms(molecule);
@@ -194,10 +200,14 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         writer.newLine();
     }
 
-    public void writeAtomContainer(IAtomContainer molecule) throws Exception {
+    private void writeAtomContainer(IAtomContainer molecule) throws Exception {
         writer.write("{");
         writer.newLine();
-        writer.write("  IAtomContainer mol = new AtomContainer();");
+        writer.write("  IChemObjectBuilder builder = ");
+        writer.write(builder.getSetting());
+        writer.write(".getInstance();");
+        writer.newLine();
+        writer.write("  IAtomContainer mol = builder.newInstance(IAtomContainer.class);");
         writer.newLine();
         IDCreator.createIDs(molecule);
         writeAtoms(molecule);
@@ -206,16 +216,16 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         writer.newLine();
     }
 
-    public void writeAtom(IAtom atom) throws Exception {
+    private void writeAtom(IAtom atom) throws Exception {
     	if (atom instanceof IPseudoAtom) {
     		writer.write("  IPseudoAtom " + atom.getID() +
-    		    " = mol.getBuilder().newInstance(IPseudoAtom.class);");
+    		    " = builder.newInstance(IPseudoAtom.class);");
     		writer.newLine();
     		writer.write("  atom.setLabel(\"" + ((IPseudoAtom)atom).getLabel() + "\");");
     		writer.newLine();
     	} else {
     		writer.write("  IAtom " + atom.getID() +
-    		    " = mol.getBuilder().newInstance(IAtom.class,\"" +
+    		    " = builder.newInstance(IAtom.class,\"" +
     		    atom.getSymbol() + "\");");
     		writer.newLine();
     	}
@@ -239,9 +249,9 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         }
     }
     
-    public void writeBond(IBond bond) throws Exception {
+    private void writeBond(IBond bond) throws Exception {
         writer.write("  IBond " + bond.getID() + 
-            " = mol.getBuilder().newInstance(IBond.class," + 
+            " = builder.newInstance(IBond.class," + 
                      bond.getAtom(0).getID() + ", " +
                      bond.getAtom(1).getID() + ", IBond.Order." +
                      bond.getOrder() + ");");
@@ -268,17 +278,23 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 		write3DCoordinates = new BooleanIOSetting("write3DCoordinates", IOSetting.LOW,
 	        "Should 3D coordinates be added?", 
 		    "true");
-	}
-    
+
+        builder = new StringIOSetting("builder", IOSetting.LOW,
+            "Which IChemObjectBuilder should be used?", 
+            "DefaultChemObjectBuilder");
+    }
+
     private void customizeJob() {
         fireIOSettingQuestion(write2DCoordinates);
         fireIOSettingQuestion(write3DCoordinates);
+        fireIOSettingQuestion(builder);
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[2];
+        IOSetting[] settings = new IOSetting[3];
         settings[0] = write2DCoordinates;
         settings[1] = write3DCoordinates;
+        settings[2] = builder;
         return settings;
     }
 
