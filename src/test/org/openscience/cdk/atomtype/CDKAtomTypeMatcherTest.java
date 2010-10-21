@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -1100,6 +1101,42 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
 
         String[] expectedTypes = {"H", "P.ine", "H", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/HO3P/c1-4(2)3/h(H-,1,2,3)/p+1
+     */
+    @Test public void testPhosphorousAcid() throws Exception {
+        IMolecule mol = new Molecule();
+        IChemObjectBuilder builder = mol.getBuilder();
+        IAtom a1 = builder.newInstance(IAtom.class,"P");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a6);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.DOUBLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a2, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a3, a6, IBond.Order.SINGLE);
+        mol.addBond(b5);
+
+        String[] expectedTypes = {
+            "P.anium", "O.sp3", "O.sp3", "O.sp2", "H", "H"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 

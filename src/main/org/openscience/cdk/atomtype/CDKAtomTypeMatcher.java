@@ -907,8 +907,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             // no idea how to deal with this yet
             return null;
         } else if (neighborcount == 3) {
-            IAtomType type = getAtomType("P.ine");
-            if (isAcceptable(atom, atomContainer, type)) return type;
+            if (atom.getFormalCharge() != null &
+                atom.getFormalCharge().intValue() == 1) {
+                IAtomType type = getAtomType("P.anium");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else {
+                IAtomType type = getAtomType("P.ine");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         } else if (neighborcount == 2) {
             if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
                 IAtomType type = getAtomType("P.irane");
