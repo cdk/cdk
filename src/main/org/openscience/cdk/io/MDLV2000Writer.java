@@ -61,15 +61,31 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- * Writes MDL molfiles, which contains a single molecule.
+ * Writes MDL molfiles, which contains a single molecule (see {@cdk.cite DAL92}).
  * For writing a MDL molfile you can this code:
  * <pre>
- * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
- * writer.write((Molecule)molecule);
+ * MDLV2000Writer writer = new MDLV2000Writer(
+ *   new FileWriter(new File("output.mol"))
+ * );
+ * writer.write((IMolecule)molecule);
  * writer.close();
  * </pre>
  *
- * See {@cdk.cite DAL92}.
+ * <p>The writer has two IO settings: one for writing 2D coordinates, even if
+ * 3D coordinates are given for the written data; the second writes aromatic
+ * bonds as bond type 4, which is, strictly speaking, a query bond type, but
+ * my many tools used to reflect aromaticity. The full IO setting API is
+ * explained in CDK News {@cdk.cite WILLIGHAGEN2004}. One programmatic option
+ * to set the option for writing 2D coordinates looks like:
+ * <pre>
+ * Properties customSettings = new Properties();
+ * customSettings.setProperty(
+ *  "ForceWriteAs2DCoordinates", "true"
+ * );
+ * PropertiesListener listener =
+ *   new PropertiesListener(customSettings);
+ * writer.addChemObjectIOListener(listener);
+ * </pre>
  *
  * @cdk.module  io
  * @cdk.githash
