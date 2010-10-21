@@ -3288,5 +3288,41 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test public void testForDuplicateDefinitions() {
     	super.testForDuplicateDefinitions();
     }
-    
+
+    /**
+     * @cdk.inchi InChI=1S/CH2N2/c1-3-2/h1H2
+     */
+    @Test
+    public void testAzoCompound() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"N");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+        IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"N");
+        a2.setFormalCharge(-1);
+        mol.addAtom(a2);
+        IAtom a3 = mol.getBuilder().newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = mol.getBuilder().newInstance(IAtom.class,"H");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = mol.getBuilder().newInstance(IAtom.class,"H");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+        IBond b3 = mol.getBuilder().newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = mol.getBuilder().newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+
+        String[] expectedTypes = {
+            "N.plus.sp1", "N.minus.sp2", "C.sp2", "H", "H"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
 }
