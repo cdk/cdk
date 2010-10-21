@@ -886,6 +886,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("S.onyl");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
+            int doubleBondedSulphurs = countAttachedDoubleBonds(atomContainer, atom, "S");
+            if (doubleBondedSulphurs == 1 &&
+                doubleBondedOxygens == 1) {
+                IAtomType type = getAtomType("S.thionyl");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
             IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
             if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
                 IAtomType type = getAtomType("S.anyl");
@@ -1520,12 +1526,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	int neighborcount = neighbors.size();
     	int doubleBondedAtoms = 0;
     	for (int i=neighborcount-1;i>=0;i--) {
-    		if (neighbors.get(i).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-    			IBond bond =  neighbors.get(i);
+            IBond bond =  neighbors.get(i);
+    		if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
     			if (bond.getAtomCount() == 2 && bond.contains(atom)) {
     				if (symbol != null) {
-    					if (bond.getAtom(0).getSymbol().equals(symbol) ||
-    							bond.getAtom(1).getSymbol().equals(symbol)) {
+    				    // if other atom is a sulphur
+    					if ((bond.getAtom(0) != atom &&
+    					     bond.getAtom(0).getSymbol().equals(symbol)) ||
+    						(bond.getAtom(1) != atom &&
+    						 bond.getAtom(1).getSymbol().equals(symbol))) {
     						doubleBondedAtoms++;
     					}
     				} else {
