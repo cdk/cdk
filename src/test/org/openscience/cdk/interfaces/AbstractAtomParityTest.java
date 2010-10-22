@@ -33,7 +33,7 @@ import org.junit.Test;
  *
  * @see org.openscience.cdk.AtomParity
  */
-public abstract class AbstractAtomParityTest {
+public abstract class AbstractAtomParityTest extends AbstractCDKObjectTest {
 
     private static IChemObjectBuilder builder;
 

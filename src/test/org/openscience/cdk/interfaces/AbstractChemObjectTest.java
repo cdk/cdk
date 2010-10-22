@@ -29,7 +29,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.diff.ChemObjectDiff;
 
 /**
@@ -39,31 +38,8 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  * @cdk.module  test-interfaces
  * @cdk.created 2001-08-09
  */
-public abstract class AbstractChemObjectTest extends CDKTestCase {
+public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
-    private static ITestObjectBuilder builder;
-
-    /**
-     * Sets the {@link ITestObjectBuilder} that constructs new test objects with
-     * {@link #newChemObject()}.
-     * 
-     * @param builder ITestChemObject that instantiates new test objects
-     */
-    public static void setTestObjectBuilder(ITestObjectBuilder builder) {
-        AbstractChemObjectTest.builder = builder;
-    }
-
-    public static IChemObject newChemObject() {
-        return AbstractChemObjectTest.builder.newTestObject();
-    }
-
-    @Test public void testGetBuilder() {
-    	IChemObject chemObject = newChemObject();
-    	Object object = chemObject.getBuilder();
-    	Assert.assertNotNull(object);
-    	Assert.assertTrue(object instanceof IChemObjectBuilder);
-    }
-    	
     @Test public void testSetProperty_Object_Object() {
         IChemObject chemObject = newChemObject();
         String cDescription = new String("description");
