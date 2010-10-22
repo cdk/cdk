@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 /**
  * @cdk.module test-data
  */
-public class LigancyFourChiralityTest extends CDKTestCase {
+public class TetrahedralChiralityTest extends CDKTestCase {
 
     private static IMolecule molecule;
     private static IAtom[] ligands;
