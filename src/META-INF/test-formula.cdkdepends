@@ -10,3 +10,4 @@ cdk-extra.jar
 cdk-smiles.jar
 cdk-valencycheck.jar
 cdk-io.jar
+cdk-testdata.jar
