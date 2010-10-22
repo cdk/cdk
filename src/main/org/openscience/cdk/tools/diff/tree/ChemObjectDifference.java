@@ -37,6 +37,7 @@ public class ChemObjectDifference extends AbstractDifferenceList implements IDif
 
     private String name;
     
+    @TestMethod("testToString")
     public ChemObjectDifference(String name) {
         this.name = name;
     }

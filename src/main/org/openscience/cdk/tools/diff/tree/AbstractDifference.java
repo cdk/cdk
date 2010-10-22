@@ -21,6 +21,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Difference between two IChemObjects.
@@ -31,6 +32,7 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.tools.diff.tree.AbstractDifferenceTest")
 public abstract class AbstractDifference implements IDifference {
 
+    @TestMethod("testConstructor")
     protected AbstractDifference() {}
-    
+
 }
