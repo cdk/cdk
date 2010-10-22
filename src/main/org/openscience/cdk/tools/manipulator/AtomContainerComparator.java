@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
-public class AtomContainerComparator implements Comparator {
+public class AtomContainerComparator implements Comparator<IAtomContainer> {
   
   /** Configure LoggingTool */
   private ILoggingTool logger =
@@ -87,7 +87,7 @@ public class AtomContainerComparator implements Comparator {
    *         to, or greater than the second.
    */
     @TestMethod("testCompare_Object_Object")
-  public int compare(Object o1, Object o2) {
+  public int compare(IAtomContainer o1, IAtomContainer o2) {
     // Check for nulls
     if (o1 == null && o2 == null)
       return 0;
