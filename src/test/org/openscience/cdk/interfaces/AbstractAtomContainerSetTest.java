@@ -25,6 +25,7 @@ import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
 
 /**
  * Checks the functionality of {@link IAtomContainerSet} implementations.
@@ -32,6 +33,31 @@ import org.junit.Test;
  * @cdk.module test-interfaces
  */
 public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTest {
+
+    /**
+     * @cdk.bug 3093241
+     */
+    @Test
+    public void testSortAtomContainers_Comparator_Null() {
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IChemObjectBuilder builder = som.getBuilder();
+        IAtomContainer con1 = builder.newInstance(IAtomContainer.class);
+        con1.addAtom(builder.newInstance(IAtom.class, "C"));
+        con1.addAtom(builder.newInstance(IAtom.class, "C"));
+        IAtomContainer con2 = builder.newInstance(IAtomContainer.class);
+        con2.addAtom(builder.newInstance(IAtom.class, "C"));
+        som.addAtomContainer(con1);
+        som.addAtomContainer(con2);
+        Assert.assertNotNull(som.getAtomContainer(0));
+        Assert.assertNotNull(som.getAtomContainer(1));
+
+        AtomContainerComparator comparator = new AtomContainerComparator();
+        som.sortAtomContainers(comparator);
+        Assert.assertNotNull(som.getAtomContainer(0));
+        Assert.assertEquals(1, som.getAtomContainer(0).getAtomCount());
+        Assert.assertNotNull(som.getAtomContainer(1));
+        Assert.assertEquals(2, som.getAtomContainer(1).getAtomCount());
+    }
 
     @Test public void testGetAtomContainerCount() {
         IAtomContainerSet som = (IAtomContainerSet)newChemObject();
