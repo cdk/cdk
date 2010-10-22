@@ -39,7 +39,13 @@ import org.openscience.cdk.tools.diff.tree.Point3dDifference;
  */
 @TestClass("org.openscience.cdk.tools.diff.AtomDiffTest")
 public class AtomDiff {
-    
+
+    /**
+     * Overwrite the default public constructor because this class is not
+     * supposed to be instantiated.
+     */
+    private AtomDiff() {}
+
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
     	IDifference diff = difference(first, second);

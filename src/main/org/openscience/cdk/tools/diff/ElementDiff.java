@@ -37,7 +37,13 @@ import org.openscience.cdk.tools.diff.tree.StringDifference;
  */
 @TestClass("org.openscience.cdk.tools.diff.ElementDiffTest")
 public class ElementDiff {
-    
+
+    /**
+     * Overwrite the default public constructor because this class is not
+     * supposed to be instantiated.
+     */
+    private ElementDiff() {}
+
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
         IDifference difference = difference(first, second);
