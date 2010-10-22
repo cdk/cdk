@@ -59,6 +59,7 @@ public class OWLAtomTypeReader {
      * 
      * @param input The Reader to read the IAtomType's from.
      */
+    @TestMethod("testAtomTypeReader_Reader")
     public OWLAtomTypeReader(Reader input) {
         this.init();
         this.input = input;

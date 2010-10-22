@@ -63,6 +63,7 @@ public class AtomTypeReader {
      * 
      * @param input The Reader to read the IAtomType's from.
      */
+    @TestMethod("testAtomTypeReader_Reader")
     public AtomTypeReader(Reader input) {
         this.init();
         this.input = input;

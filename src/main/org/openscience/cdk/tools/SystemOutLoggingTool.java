@@ -53,6 +53,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
      *
      * @param classInst Class from which the log messages originate
      */
+    @TestMethod("testLoggingTool_Class")
     public SystemOutLoggingTool(Class<?> classInst) {
         this.classname = classInst.getName();
         doDebug = false;
