@@ -81,6 +81,16 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     }
 
     @Test(expected=IllegalArgumentException.class)
+    public void testNewInstance_Class_arrayObject() throws Exception {
+        // throw random stuff; it should fail
+        IChemObjectBuilder builder = rootObject.getBuilder();
+        builder.newInstance(
+            IAtom.class,
+            new Object[2]
+        );
+    }
+
+    @Test(expected=IllegalArgumentException.class)
     public void testIncorrectNumberOf() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         builder.newInstance(
