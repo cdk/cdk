@@ -22,28 +22,31 @@
  */
 package org.openscience.cdk.geometry.cip;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * Subclass of {@link Ligand} to which no further recursion must be applied.
- *
  * @cdk.module cip
- * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.ImplicitHydrogenLigandTest")
-public class ImplicitHydrogenLigand extends TerminalLigand {
+public class VisitedAtoms {
 
-    private static final IAtom IMMUTABLE_HYDROGEN = new ImmutableHydrogen();
+    List<IAtom> visitedItems;
 
-    @TestMethod("testConstructorAndGetMethods")
-    public ImplicitHydrogenLigand(IAtomContainer container, 
-        VisitedAtoms visitedAtoms, IAtom centralAtom) {
-        super(container, visitedAtoms, centralAtom,
-            IMMUTABLE_HYDROGEN
-        );
+    public VisitedAtoms() {
+        visitedItems = new ArrayList<IAtom>();
     }
-    
+
+    public boolean isVisited(IAtom item) {
+        return visitedItems.contains(item);
+    }
+
+    public void visited(IAtom atom) {
+        visitedItems.add(atom);
+    }
+
+    public void visited(VisitedAtoms visitedAtoms) {
+        visitedItems.addAll(visitedAtoms.visitedItems);
+    }
 }

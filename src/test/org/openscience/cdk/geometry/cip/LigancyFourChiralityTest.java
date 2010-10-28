@@ -59,16 +59,16 @@ public class LigancyFourChiralityTest extends CDKTestCase {
         molecule.addBond(1, 3, Order.SINGLE);
         molecule.addBond(1, 4, Order.SINGLE);
         ILigand ligand1 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(4)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4)
         );
         ILigand ligand2 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(3)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3)
         );
         ILigand ligand3 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(2)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2)
         );
         ILigand ligand4 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(0)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
         ligands = new ILigand[] {
             ligand1, ligand2, ligand3, ligand4

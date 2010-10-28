@@ -56,5 +56,20 @@ public interface ILigand {
      * @return the ligand atom
      */
     public IAtom getLigandAtom();
-    
+
+    /**
+     * Returns a list of visitedAtoms.
+     *
+     * @return a {@link VisitedAtoms} list with visited atoms
+     */
+    public VisitedAtoms getVisitedAtoms();
+
+    /**
+     * Returns a true if the atom has been visited before.
+     *
+     * @return true if the {@link IAtom} is the chiral atom, or part of the
+     *              ligand
+     */
+    public boolean isVisited(IAtom atom);
+
 }

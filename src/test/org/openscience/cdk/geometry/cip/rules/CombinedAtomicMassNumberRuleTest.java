@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.geometry.cip.Ligand;
+import org.openscience.cdk.geometry.cip.VisitedAtoms;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -52,7 +53,7 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
     @Test
     public void testCompare_Identity(){
         ILigand ligand = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(0)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
         Assert.assertEquals(0, rule.compare(ligand, ligand));
@@ -61,10 +62,10 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
     @Test
     public void testCompare(){
         ILigand ligand1 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(0)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
         ILigand ligand2 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(2)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2)
         );
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
         Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
@@ -74,16 +75,16 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
     @Test
     public void testOrder(){
         ILigand ligand1 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(4)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4)
         );
         ILigand ligand2 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(3)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3)
         );
         ILigand ligand3 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(2)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2)
         );
         ILigand ligand4 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(0)
+            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
         List<ILigand> ligands = new ArrayList<ILigand>();
         ligands.add(ligand1);

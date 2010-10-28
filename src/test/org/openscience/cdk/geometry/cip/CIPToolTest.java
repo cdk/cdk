@@ -65,17 +65,18 @@ public class CIPToolTest extends CDKTestCase {
     @BeforeClass
     public static void setup() throws Exception {
         molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
+        VisitedAtoms visitedAtoms = new VisitedAtoms();
         ILigand ligand1 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(4)
+            molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(4)
         );
         ILigand ligand2 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(3)
+            molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(3)
         );
         ILigand ligand3 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(2)
+            molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(2)
         );
         ILigand ligand4 = new Ligand(
-            molecule, molecule.getAtom(1), molecule.getAtom(0)
+            molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(0)
         );
         ligands = new ILigand[] {
             ligand1, ligand2, ligand3, ligand4
@@ -175,7 +176,7 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testDefineLigand() {
-        ILigand ligand = CIPTool.defineLigand(molecule, 1, 2);
+        ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 1, 2);
         Assert.assertEquals(molecule, ligand.getAtomContainer());
         Assert.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());        
         Assert.assertEquals(molecule.getAtom(2), ligand.getLigandAtom());
@@ -187,18 +188,34 @@ public class CIPToolTest extends CDKTestCase {
     @Test
     public void testGetLigandLigands() throws Exception {
         IMolecule molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
-        ILigand ligand = CIPTool.defineLigand(molecule, 3, 1);
+        ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(2, sideChains.length);
-        ligand = CIPTool.defineLigand(molecule, 3, 4);
+        ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 4);
         sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(1, sideChains.length);
-        ligand = CIPTool.defineLigand(molecule, 3, 6);
+        ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(3, sideChains.length);
-        ligand = CIPTool.defineLigand(molecule, 3, 10);
+        ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 10);
         sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(0, sideChains.length);
+    }
+
+    /**
+     * Tests if it returns the right number of ligands, for single bonds only.
+     */
+    @Test
+    public void testGetLigandLigands_VisitedTracking() throws Exception {
+        IMolecule molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
+        ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
+        ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
+        for (ILigand ligand2 : sideChains) {
+            Assert.assertNotSame(
+                ligand2.getVisitedAtoms(),
+                ligand.getVisitedAtoms()
+            );
+        }
     }
 
     /**
@@ -207,16 +224,16 @@ public class CIPToolTest extends CDKTestCase {
     @Test
     public void testGetLigandLigands_DoubleTriple() throws Exception {
         IMolecule molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)[H]");
-        ILigand ligand = CIPTool.defineLigand(molecule, 3, 1);
+        ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(2, sideChains.length);
-        ligand = CIPTool.defineLigand(molecule, 3, 4);
+        ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 4);
         sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(3, sideChains.length);
-        ligand = CIPTool.defineLigand(molecule, 3, 6);
+        ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(3, sideChains.length);
-        ligand = CIPTool.defineLigand(molecule, 3, 9);
+        ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 9);
         sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(0, sideChains.length);
     }
@@ -224,7 +241,7 @@ public class CIPToolTest extends CDKTestCase {
     @Test
     public void testDefineLigand_ImplicitHydrogen() throws Exception {
         IMolecule molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)");
-        ILigand ligand = CIPTool.defineLigand(molecule, 3, CIPTool.HYDROGEN);
+        ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, CIPTool.HYDROGEN);
         Assert.assertTrue(ligand instanceof ImplicitHydrogenLigand);
     }
 

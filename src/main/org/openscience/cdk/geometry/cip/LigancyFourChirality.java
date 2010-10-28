@@ -78,8 +78,9 @@ public class LigancyFourChirality {
         this.chiralAtom = cdkChirality.getChiralAtom();
         IAtom[] ligandAtoms = cdkChirality.getLigands();
         this.ligands = new ILigand[ligandAtoms.length];
+        VisitedAtoms visitedAtoms = new VisitedAtoms();
         for (int i=0; i<ligandAtoms.length; i++) {
-            this.ligands[i] = new Ligand(container, chiralAtom, ligandAtoms[i]);
+            this.ligands[i] = new Ligand(container, visitedAtoms, chiralAtom, ligandAtoms[i]);
         }
         this.stereo = cdkChirality.getStereo();
     }

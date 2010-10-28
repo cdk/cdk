@@ -41,12 +41,17 @@ public class Ligand implements ILigand {
     private IAtomContainer container;
     private IAtom centralAtom;
     private IAtom ligandAtom;
+    private VisitedAtoms visitedAtoms;
 
     @TestMethod("testConstructorAndGetMethods")
-    public Ligand(IAtomContainer container, IAtom centralAtom, IAtom ligandAtom) {
+    public Ligand(IAtomContainer container, VisitedAtoms visitedAtoms,
+            IAtom centralAtom, IAtom ligandAtom) {
         this.container = container;
         this.centralAtom = centralAtom;
         this.ligandAtom = ligandAtom;
+        this.visitedAtoms = new VisitedAtoms();
+        this.visitedAtoms.visited(visitedAtoms);
+        this.visitedAtoms.visited(centralAtom);
     }
 
     /**
@@ -79,5 +84,15 @@ public class Ligand implements ILigand {
     public IAtom getLigandAtom() {
         return ligandAtom;
     }
-    
+
+    @TestMethod("testVisitedTracking")
+    public VisitedAtoms getVisitedAtoms() {
+        return visitedAtoms;
+    }
+
+    @TestMethod("testVisitedTracking")
+    public boolean isVisited(IAtom atom) {
+        return visitedAtoms.isVisited(atom);
+    }
+
 }

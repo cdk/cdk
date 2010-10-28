@@ -158,9 +158,10 @@ public class CIPTool {
         int ligand1, int ligand2, int ligand3, int ligand4,
         Stereo stereo) {
         int[] atomIndices = {ligand1, ligand2, ligand3, ligand4};
+        VisitedAtoms visitedAtoms = new VisitedAtoms();
         ILigand[] ligands = new ILigand[4];
         for (int i=0; i<4; i++) {
-            ligands[i] = defineLigand(container, chiralAtom, atomIndices[i]);
+            ligands[i] = defineLigand(container, visitedAtoms, chiralAtom, atomIndices[i]);
         }
         return new LigancyFourChirality(container.getAtom(chiralAtom), ligands, stereo);
     }
@@ -178,14 +179,18 @@ public class CIPTool {
      * @return           the created {@link ILigand}
      */
     @TestMethod("testDefineLigand")
-    public static ILigand defineLigand(IAtomContainer container, int chiralAtom, int ligandAtom) {
+    public static ILigand defineLigand(IAtomContainer container,
+            VisitedAtoms visitedAtoms, int chiralAtom, int ligandAtom) {
         if (ligandAtom == HYDROGEN) {
             return new ImplicitHydrogenLigand(
-                container,
+                container, visitedAtoms,
                 container.getAtom(chiralAtom)
             );
         } else {
-            return new Ligand(container, container.getAtom(chiralAtom), container.getAtom(ligandAtom));
+            return new Ligand(
+                container, visitedAtoms,
+                container.getAtom(chiralAtom), container.getAtom(ligandAtom)
+            );
         }
     }
 
@@ -204,6 +209,7 @@ public class CIPTool {
         IAtomContainer container = ligand.getAtomContainer();
         IAtom ligandAtom = ligand.getLigandAtom();
         IAtom centralAtom = ligand.getCentralAtom();
+        VisitedAtoms visitedAtoms = ligand.getVisitedAtoms();
         List<IBond> bonds = container.getConnectedBondsList(ligandAtom);
         // duplicate ligands according to bond order, following the CIP rules
         List<ILigand> ligands = new ArrayList<ILigand>();
@@ -213,14 +219,27 @@ public class CIPTool {
                 int duplication = getDuplication(bond.getOrder()) - 1;
                 if (duplication > 0) {
                     for (int i=1; i<=duplication; i++) {
-                        ligands.add(new TerminalLigand(container, ligandAtom, centralAtom));
+                        ligands.add(new TerminalLigand(
+                            container, visitedAtoms, ligandAtom, centralAtom
+                        ));
                     }
                 }
             } else {
                 int duplication = getDuplication(bond.getOrder());
-                ligands.add(new Ligand(container, ligandAtom, bond.getConnectedAtom(ligandAtom)));
+                IAtom connectedAtom = bond.getConnectedAtom(ligandAtom);
+                if (visitedAtoms.isVisited(connectedAtom)) {
+                    ligands.add(new TerminalLigand(
+                        container, visitedAtoms, ligandAtom, connectedAtom
+                    ));
+                } else {
+                    ligands.add(new Ligand(
+                        container, visitedAtoms, ligandAtom, connectedAtom
+                    ));
+                }
                 for (int i=2; i<=duplication; i++) {
-                    ligands.add(new TerminalLigand(container, ligandAtom, bond.getConnectedAtom(ligandAtom)));
+                    ligands.add(new TerminalLigand(
+                        container, visitedAtoms, ligandAtom, connectedAtom
+                    ));
                 }
             }
         }

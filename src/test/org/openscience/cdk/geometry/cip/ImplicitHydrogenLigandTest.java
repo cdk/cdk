@@ -40,7 +40,7 @@ public class ImplicitHydrogenLigandTest extends CDKTestCase {
         IMolecule molecule = smiles.parseSmiles("ClC(Br)(I)");
 
         ILigand ligand = new ImplicitHydrogenLigand(
-            molecule, molecule.getAtom(1)
+            molecule, new VisitedAtoms(), molecule.getAtom(1)
         );
         Assert.assertNotNull(ligand);
         Assert.assertEquals(molecule, ligand.getAtomContainer());
