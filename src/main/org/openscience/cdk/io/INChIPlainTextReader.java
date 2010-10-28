@@ -141,9 +141,9 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      * @param  object type of requested IChemObject
      * @return the content in a ChemFile object
      */
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (IChemObject)readChemFile((IChemFile)object);
+            return (T)readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }

@@ -137,7 +137,7 @@ public class CIFReader extends DefaultChemObjectReader {
      *
      * @return the content in a ChemFile object
      */
-    public IChemObject read(IChemObject object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             IChemFile cf = (IChemFile)object;
             try {
@@ -145,7 +145,7 @@ public class CIFReader extends DefaultChemObjectReader {
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input.");
             }
-            return cf;
+            return (T)cf;
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }

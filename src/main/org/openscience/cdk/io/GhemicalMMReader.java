@@ -115,9 +115,9 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
 		return false;
 	}
 
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemModel) {
-            return (IChemObject) readChemModel((IChemModel)object);
+            return (T) readChemModel((IChemModel)object);
         } else if (object instanceof IChemFile) {
         	IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
             sequence.addChemModel((IChemModel)this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));

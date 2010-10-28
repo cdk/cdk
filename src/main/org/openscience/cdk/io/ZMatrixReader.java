@@ -111,10 +111,10 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    * @param     object  IChemObject that types the class to return.
    * @throws    CDKException when a IChemObject is requested that cannot be read.
    */
-  public IChemObject read(IChemObject object) throws CDKException 
+  public <T extends IChemObject> T read(T object) throws CDKException
   {
     if (object instanceof IChemFile) 
-      return readChemFile((IChemFile)object);
+      return (T)readChemFile((IChemFile)object);
     else 
       throw new CDKException("Only ChemFile objects can be read.");
   }

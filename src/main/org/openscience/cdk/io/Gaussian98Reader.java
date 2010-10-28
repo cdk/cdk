@@ -152,7 +152,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         return false;
     }
 
-    public IChemObject read(IChemObject object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         customizeJob();
 
         if (object instanceof IChemFile) {
@@ -165,7 +165,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                         exception
                 );
             }
-            return file;
+            return (T)file;
         } else {
             throw new CDKException("Reading of a " + object.getClass().getName() +
                     " is not supported.");

@@ -135,9 +135,9 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @see IChemFile
      */
     @TestMethod("testReading,testReadingSmiFile_1,testReadingSmiFile_2,testReadingSmiFile_3")
-    public IChemObject read(IChemObject object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IMoleculeSet) {
-            return readMoleculeSet((IMoleculeSet)object);
+            return (T)readMoleculeSet((IMoleculeSet)object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
             IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
@@ -147,7 +147,7 @@ public class SMILESReader extends DefaultChemObjectReader {
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
-            return file;
+            return (T)file;
         } else {
             throw new CDKException("Only supported is reading of MoleculeSet objects.");
         }

@@ -102,10 +102,10 @@ public class CrystClustReader extends DefaultChemObjectReader {
 		return false;
 	}
 
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             IChemFile cf = readChemFile((IChemFile)object);
-            return cf;
+            return (T)cf;
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }
