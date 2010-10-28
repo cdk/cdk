@@ -8,3 +8,4 @@ cdk-smiles.jar
 cdk-data.jar
 cdk-nonotify.jar
 cdk-valencycheck.jar
+cdk-io.jar

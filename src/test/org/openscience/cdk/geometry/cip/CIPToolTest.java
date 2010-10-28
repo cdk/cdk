@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.geometry.cip;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,14 +40,18 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.StereoTool;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * @cdk.module test-cip
@@ -252,6 +257,37 @@ public class CIPToolTest extends CDKTestCase {
         ring.addStereoElement(stereoCenter);
         SmilesGenerator generator = new SmilesGenerator();
         CIPTool.getCIPChirality(ring, stereoCenter);
+    }
+
+    @Test
+    public void testOla28() throws Exception {
+        String filename = "data/cml/mol28.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile file = reader.read(new NNChemFile());
+        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(file).get(0);
+
+        for (IAtom atom : mol.atoms()) {
+            List<IAtom> neighbors = mol.getConnectedAtomsList(atom);
+            if (neighbors.size() == 4) {
+                System.out.println("Atom " + mol.getAtomNumber(atom));
+                Stereo stereo = StereoTool.getStereo(
+                    neighbors.get(0),
+                    neighbors.get(1),
+                    neighbors.get(2),
+                    neighbors.get(3)
+                );
+                ITetrahedralChirality stereoCenter =
+                    new TetrahedralChirality(
+                        mol.getAtom(0),
+                        neighbors.toArray(new IAtom[]{}),
+                        stereo
+                    );
+                CIP_CHIRALITY chirality = 
+                    CIPTool.getCIPChirality(mol, stereoCenter);
+                System.out.println("chirality: " + chirality);
+            }
+        }
     }
 
     /**
