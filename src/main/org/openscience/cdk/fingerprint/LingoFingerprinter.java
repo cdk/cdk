@@ -40,6 +40,10 @@ import java.util.regex.Pattern;
 /**
  * An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}.
  *
+ * While the current implementation converts ring closure symbols to 0's
+ * it does not convert 2-letter element symbols to single letters (ala
+ * OpenEye).
+ *
  * @author Rajarshi Guha
  * @cdk.module standard
  * @cdk.keyword fingerprint
@@ -76,15 +80,12 @@ public class LingoFingerprinter implements IFingerprinter {
     @TestMethod("testFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         String smiles = refactorSmnile(gen.createSMILES(atomContainer));
-        System.out.println("smiels = " + smiles);
         Map<String, Integer> map = new HashMap<String,Integer>();
         for (int i = 0; i < smiles.length()-q+1; i++) {
           String subsmi = smiles.substring(i, i+q);
-            System.out.println(subsmi);
             if (map.containsKey(subsmi)) map.put(subsmi, map.get(subsmi)+1);
             else map.put(subsmi, 1);
         }
-        System.out.println("");
         return map;
     }
 
