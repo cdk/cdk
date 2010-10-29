@@ -32,8 +32,10 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.BitSet;
+import java.util.Map;
 
 /**
  * {@link IFingerprinter} that gives a bit set which has a size equal to the number
@@ -419,6 +421,10 @@ public class SubstructureFingerprinter implements IFingerprinter {
             if (status) fingerPrint.set(i, true);
         }
         return fingerPrint;
+    }
+
+    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+        throw new NotImplementedException();
     }
 
     @TestMethod("testSize")

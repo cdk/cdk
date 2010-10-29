@@ -24,10 +24,11 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+
+import java.util.BitSet;
+import java.util.Map;
 
 /**
  * Interface for fingerprint calculators.
@@ -47,6 +48,15 @@ public interface IFingerprinter {
 	 * @throws CDKException TODO
 	 */
 	public BitSet getFingerprint(IAtomContainer container) throws CDKException;
+
+    /**
+     * Returns the raw representation of the fingerprint for the given IAtomContainer.
+     *
+     * @param container IAtomContainer for which the fingerprint should be calculated.
+     * @return the raw fingerprint
+     * @throws CDKException
+     */
+    public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException;
 	
 	/**
 	 * Returns the size of the fingerprints calculated.

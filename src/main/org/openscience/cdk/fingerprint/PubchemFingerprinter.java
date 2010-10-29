@@ -35,8 +35,10 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.BitSet;
+import java.util.Map;
 
 /**
  * Generates a Pubchem fingerprint for a molecule.
@@ -125,6 +127,10 @@ public class PubchemFingerprinter implements IFingerprinter {
             if (isBitOn(i)) fp.set(i);
         }
         return fp;
+    }
+
+    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+        throw new NotImplementedException();
     }
 
     /**

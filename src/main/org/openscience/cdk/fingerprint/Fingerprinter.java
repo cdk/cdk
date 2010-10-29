@@ -39,6 +39,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -196,6 +197,10 @@ public class Fingerprinter implements IFingerprinter {
                   throws CDKException {
 		return getFingerprint(container, null);
 	}
+
+    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+        throw new NotImplementedException();
+    }
 
     /**
      * Get all paths of lengths 0 to the specified length.

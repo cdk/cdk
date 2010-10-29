@@ -32,9 +32,11 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.BitSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Generates an extended fingerprint for a given {@link IAtomContainer}, that
@@ -97,6 +99,10 @@ public class ExtendedFingerprinter implements IFingerprinter {
     public BitSet getFingerprint(IAtomContainer container) 
                   throws CDKException {
         return this.getFingerprint(container,null,null);
+    }
+
+    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+        throw new NotImplementedException();
     }
 
     /**
