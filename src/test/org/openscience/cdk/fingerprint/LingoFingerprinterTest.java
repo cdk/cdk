@@ -1,8 +1,8 @@
 /* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
- * 
- * Contact: cdk-devel@lists.sourceforge.net
+ * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
+ *
+ * Contact: rajarshi.guha@gmail.com
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License

@@ -1077,5 +1077,16 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
 
+   <bibtex:entry id="Vidal2005">
+        <bibtex:article>
+            <bibtex:author>Vidal, D. and Thormann, M. and Pons, M.</bibtex:author>
+            <bibtex:title>LINGO, an Efficient Holographic Text Based Method To Calculate Biophysical Properties and Intermolecular Similarities</bibtex:title>
+            <bibtex:journal>J. Chem. Inf. Model.</bibtex:journal>
+            <bibtex:year>2005</bibtex:year>
+            <bibtex:volume>45</bibtex:volume>
+            <bibtex:pages>386-393</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+
 
 </bibtex:file>
