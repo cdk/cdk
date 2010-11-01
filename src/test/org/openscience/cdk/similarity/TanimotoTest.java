@@ -30,17 +30,19 @@
 
 package org.openscience.cdk.similarity;
 
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.BitSet;
+import java.util.Map;
 
 /**
  * @cdk.module test-fingerprint
@@ -73,7 +75,18 @@ public class TanimotoTest extends CDKTestCase
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
 		if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
 	}
-	
+
+    @Test public void testTanimoto4() throws Exception {
+        Molecule mol1 = MoleculeFactory.makeIndole();
+        Molecule mol2 = MoleculeFactory.makeIndole();
+        LingoFingerprinter fingerprinter = new LingoFingerprinter();
+        Map<String, Integer> feat1 = fingerprinter.getRawFingerprint(mol1);
+        Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);
+        float tanimoto = Tanimoto.calculate(feat1, feat2);
+        Assert.assertEquals(1.0, tanimoto, 0.001);
+
+    }
+
         @Test public void testTanimoto3() throws java.lang.Exception
         {
             double[] f1 = {1,2,3,4,5,6,7};
