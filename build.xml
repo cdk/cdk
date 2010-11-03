@@ -531,7 +531,7 @@
             list="io,structgen"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="pdb,smiles,sdg,inchi,sinchi,libiocml"/>
+            list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="control,extra,reaction,pdbcml,libiomd"/>
@@ -563,7 +563,7 @@
         	      test-valencycheck,test-smarts,test-standard,test-reaction,
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
-                  test-diff,test-charges,test-inchi,test-sinchi,test-formula,
+                  test-diff,test-charges,test-inchi,test-formula,
                   test-render,test-ioformats,test-log4j"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
