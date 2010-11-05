@@ -1,8 +1,7 @@
-/* $Revision$ $Author$ $Date$
- *
+/* 
  * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
- * Contact: rajarshi.guha@gmail.com
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -39,7 +38,7 @@ import java.util.regex.Pattern;
 
 /**
  * An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}.
- *
+ * <p>
  * While the current implementation converts ring closure symbols to 0's
  * it does not convert 2-letter element symbols to single letters (ala
  * OpenEye).
@@ -79,7 +78,7 @@ public class LingoFingerprinter implements IFingerprinter {
 
     @TestMethod("testFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
-        String smiles = refactorSmnile(gen.createSMILES(atomContainer));
+        String smiles = refactorSmiles(gen.createSMILES(atomContainer));
         Map<String, Integer> map = new HashMap<String,Integer>();
         for (int i = 0; i < smiles.length()-q+1; i++) {
           String subsmi = smiles.substring(i, i+q);
@@ -94,7 +93,7 @@ public class LingoFingerprinter implements IFingerprinter {
         return -1;
     }
 
-    private String refactorSmnile(String smiles) {
+    private String refactorSmiles(String smiles) {
         Matcher matcher = ringClosurePattern.matcher(smiles);
         return matcher.replaceAll("0");        
     }

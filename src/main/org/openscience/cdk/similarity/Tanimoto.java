@@ -70,9 +70,12 @@ import java.util.TreeSet;
 public class Tanimoto 
 {
 
+    private Tanimoto() {
+    }
+    
     /**
      * Evaluates Tanimoto coefficient for two bit sets.
-     *
+     * <p>
      * @param bitset1 A bitset (such as a fingerprint) for the first molecule
      * @param bitset2 A bitset (such as a fingerprint) for the second molecule
      * @return The Tanimoto coefficient
@@ -94,7 +97,7 @@ public class Tanimoto
     
     /**
      * Evaluates the continuous Tanimoto coefficient for two real valued vectors.
-     *
+     * <p>
      * @param features1 The first feature vector
      * @param features2 The second feature vector
      * @return The continuous Tanimoto coefficient
@@ -122,7 +125,7 @@ public class Tanimoto
 
     /**
      * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
-     *
+     * <p>
      * Note that feature/count type fingerprints may not be of the same length.
      * 
      * @param features1 The first feature map

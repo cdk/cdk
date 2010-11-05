@@ -1,8 +1,8 @@
-/* $Revision$ $Author$ $Date$
+/*
  *
  * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
- * Contact: rajarshi.guha@gmail.com
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -39,8 +39,6 @@ import java.util.Map;
  */
 public class LingoSimilarityTest extends CDKTestCase {
 
-    boolean standAlone = false;
-
     @Test
     public void testLingoSim() throws Exception {
         Molecule mol1 = MoleculeFactory.makeIndole();
@@ -49,8 +47,7 @@ public class LingoSimilarityTest extends CDKTestCase {
         Map<String, Integer> bs1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> bs2 = fingerprinter.getRawFingerprint(mol2);
         float lingosim = LingoSimilarity.calculate(bs1, bs2);
-        if (standAlone) System.out.println("LingoSimilarity similarity: " + lingosim);
-        if (!standAlone) Assert.assertEquals(1.0, lingosim, 0.01);
+        Assert.assertEquals(1.0, lingosim, 0.01);
     }
 
 

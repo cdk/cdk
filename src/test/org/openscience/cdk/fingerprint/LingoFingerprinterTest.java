@@ -1,8 +1,7 @@
-/* $Revision$ $Author$ $Date$    
- * 
+/* 
  * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
- * Contact: rajarshi.guha@gmail.com
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -40,7 +39,7 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
     boolean standAlone = false;
 
     public IFingerprinter getFingerprinter() {
-        return new Fingerprinter();
+        return new LingoFingerprinter();
     }
 
     @Test

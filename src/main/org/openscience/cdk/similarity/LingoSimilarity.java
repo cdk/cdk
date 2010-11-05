@@ -2,7 +2,7 @@
  *
  * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
- * Contact: rajarshi.guha@gmail.com
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -33,6 +33,9 @@ import java.util.TreeSet;
 /**
  * A class to evaluate the similarity between two LINGO's as described in {@cdk.cite Vidal2005}.
  *
+ * The similarity calculation is a variant of the Tanimoto coefficient and hence its
+ * value ranges from 0 to 1
+ * 
  * @author Rajarshi Guha
  * @cdk.githash
  * @cdk.keyword lingo
@@ -41,6 +44,19 @@ import java.util.TreeSet;
  */
 @TestClass("org.openscience.cdk.similarity.LingoTest")
 public class LingoSimilarity {
+
+    private LingoSimilarity() {        
+    }
+
+    /**
+     * Evaluate the LINGO similarity between two key,value sty;e fingerprints.
+     *
+     * The value will range from 0.0 to 1.0.
+     * 
+     * @param features1
+     * @param features2
+     * @return
+     */
     @TestMethod("testLingoSim")
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {
         TreeSet<String> keys = new TreeSet<String>(features1.keySet());

@@ -76,7 +76,7 @@ public class TanimotoTest extends CDKTestCase
 		if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
 	}
 
-    @Test public void testTanimoto4() throws Exception {
+    @Test public void testExactMatch() throws Exception {
         Molecule mol1 = MoleculeFactory.makeIndole();
         Molecule mol2 = MoleculeFactory.makeIndole();
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
