@@ -129,6 +129,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         return fp;
     }
 
+    /** {@inheritDoc} */
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new NotImplementedException();
     }

@@ -423,6 +423,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
         return fingerPrint;
     }
 
+    /** {@inheritDoc} */
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new NotImplementedException();
     }

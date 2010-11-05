@@ -41,11 +41,12 @@ import java.util.Map;
 public interface IFingerprinter {
 
 	/**
-	 * Returns the fingerprint for the given IAtomContainer.
+	 * Returns the fingerprint for the given {@link IAtomContainer}.
 	 * 
-	 * @param  container IAtomContainer for which the fingerprint should be calculated.
+	 * @param  container {@link IAtomContainer} for which the fingerprint should be calculated.
 	 * @return           the fingerprint
-	 * @throws CDKException TODO
+	 * @throws CDKException may be thrown if there is an error during aromaticity detection
+     * or (for key based fingerprints) if there is a SMARTS parsing error
 	 */
 	public BitSet getFingerprint(IAtomContainer container) throws CDKException;
 

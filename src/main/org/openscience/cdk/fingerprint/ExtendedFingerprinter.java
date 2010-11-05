@@ -101,6 +101,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
         return this.getFingerprint(container,null,null);
     }
 
+    /** {@inheritDoc} */
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new NotImplementedException();
     }

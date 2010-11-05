@@ -198,6 +198,7 @@ public class Fingerprinter implements IFingerprinter {
 		return getFingerprint(container, null);
 	}
 
+    /** {@inheritDoc} */   
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new NotImplementedException();
     }
