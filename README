@@ -110,8 +110,9 @@ party libraries that code depends on.
 
 To get started using the CDK, you may be interested in the following websites which contain
 examples and tutorials:
-* http://www.chemistry-development-kit.org
-* http://blue.chem.psu.edu/~rajarshi/code/java
+
+* http://pele.farmbio.uu.se/planetcdk/
+* http://rguha.net/code/java/
 * http://www.redbrick.dcu.ie/~noel/CDKJython.html
 
 Further examples can also be found in issues of the CDK News:
