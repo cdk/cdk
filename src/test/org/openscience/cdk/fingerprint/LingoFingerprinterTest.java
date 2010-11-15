@@ -32,7 +32,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import java.util.Map;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-smiles
  */
 public class LingoFingerprinterTest extends AbstractFingerprinterTest {
 

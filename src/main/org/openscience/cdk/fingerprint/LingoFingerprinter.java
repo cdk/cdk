@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
  *
  * @author Rajarshi Guha
  * @cdk.module standard
- * @cdk.keyword fingerprint
+ * @cdk.keyword smiles
  * @cdk.keyword hologram
  */
 @TestClass("org.openscience.cdk.fingerprint.LingoFingerprinterTest")
