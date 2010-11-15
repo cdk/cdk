@@ -30,7 +30,6 @@ import org.openscience.cdk.config.fragments.EStateFragments;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.BitSet;
 import java.util.Map;
@@ -90,7 +89,7 @@ public class EStateFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @TestMethod("testGetSize")

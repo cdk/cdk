@@ -39,7 +39,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -200,7 +199,7 @@ public class Fingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */   
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     /**

@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.BitSet;
 import java.util.List;
@@ -103,7 +102,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     /**
