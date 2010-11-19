@@ -108,7 +108,7 @@ public class AminoAcids {
      * 
      * @return aminoAcids, a HashMap containing the amino acids as AminoAcids.
      */
-    public static AminoAcid[] createAAs() {
+    public synchronized static AminoAcid[] createAAs() {
     	if (aminoAcids != null) {
             return aminoAcids;
         }
