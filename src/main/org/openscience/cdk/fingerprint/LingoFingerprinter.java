@@ -28,7 +28,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.BitSet;
 import java.util.HashMap;
@@ -44,8 +43,8 @@ import java.util.regex.Pattern;
  * OpenEye).
  *
  * @author Rajarshi Guha
- * @cdk.module standard
- * @cdk.keyword smiles
+ * @cdk.module smiles
+ * @cdk.keyword fingerprint
  * @cdk.keyword hologram
  */
 @TestClass("org.openscience.cdk.fingerprint.LingoFingerprinterTest")
@@ -73,7 +72,7 @@ public class LingoFingerprinter implements IFingerprinter {
     }
 
     public BitSet getFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @TestMethod("testFingerprint")
