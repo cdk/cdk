@@ -25,27 +25,61 @@ package org.openscience.cdk.geometry.cip;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
+ * Helper class for the {@link CIPTool} to keep track of which atoms have
+ * already been visited.
+ *
  * @cdk.module cip
  */
+@TestClass("org.openscience.cdk.geometry.cip")
 public class VisitedAtoms {
 
-    List<IAtom> visitedItems;
+    /**
+     * {@link List} to hold the visited {@link IAtom}s.
+     */
+    private List<IAtom> visitedItems;
 
+    /**
+     * Creates a new empty list of visited {@link IAtom}s.
+     */
+    @TestMethod("testConstructor")
     public VisitedAtoms() {
         visitedItems = new ArrayList<IAtom>();
     }
 
-    public boolean isVisited(IAtom item) {
-        return visitedItems.contains(item);
+    /**
+     * Returns true if the given atom already has been visited.
+     *
+     * @param  atom {@link IAtom} which may have been visited
+     * @return      true if the {@link IAtom} was visited
+     */
+    @TestMethod("testVisiting")
+    public boolean isVisited(IAtom atom) {
+        return visitedItems.contains(atom);
     }
 
+    /**
+     * Marks the given atom as visited.
+     *
+     * @param atom {@link IAtom} that is now marked as visited
+     */
+    @TestMethod("testVisiting")
     public void visited(IAtom atom) {
         visitedItems.add(atom);
     }
 
+    /**
+     * Adds all atoms from the <code>visitedAtoms</code> list to the current
+     * list.
+     *
+     * @param visitedAtoms the {@link VisitedAtoms} from which all atoms are
+     *                     added
+     */
+    @TestMethod("testAddedVisitedAtoms")
     public void visited(VisitedAtoms visitedAtoms) {
         visitedItems.addAll(visitedAtoms.visitedItems);
     }

@@ -33,6 +33,7 @@ import org.openscience.cdk.geometry.cip.ImplicitHydrogenLigandTest;
 import org.openscience.cdk.geometry.cip.LigancyFourChiralityTest;
 import org.openscience.cdk.geometry.cip.LigandTest;
 import org.openscience.cdk.geometry.cip.TerminalLigandTest;
+import org.openscience.cdk.geometry.cip.VisitedAtomsTest;
 import org.openscience.cdk.geometry.cip.rules.AtomicNumberRuleTest;
 import org.openscience.cdk.geometry.cip.rules.CIPLigandRuleTest;
 import org.openscience.cdk.geometry.cip.rules.CombinedAtomicMassNumberRuleTest;
@@ -56,6 +57,7 @@ import org.openscience.cdk.geometry.cip.rules.MassNumberRuleTest;
     CIPLigandRuleTest.class,
     MassNumberRuleTest.class,
     CombinedAtomicMassNumberRuleTest.class,
-    CIPSMILESTest.class
+    CIPSMILESTest.class,
+    VisitedAtomsTest.class
 })
 public class McipTests {}
