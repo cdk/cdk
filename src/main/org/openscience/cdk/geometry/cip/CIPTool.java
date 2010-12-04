@@ -108,7 +108,8 @@ public class CIPTool {
 
     /**
      * Checks if each next {@link ILigand} is different from the previous
-     * one according to the {@link CIPLigandRule}.
+     * one according to the {@link CIPLigandRule}. It assumes that the input
+     * is sorted based on that rule.
      *
      * @param ligands array of {@link ILigand} to check
      * @return true, if all ligands are different
