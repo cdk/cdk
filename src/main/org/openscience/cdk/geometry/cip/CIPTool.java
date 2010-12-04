@@ -35,11 +35,25 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.StereoTool;
 
 /**
  * Tool to help determine the R,S and stereochemistry definitions of a subset of the
  * CIP rules {@cdk.cite Cahn1966}. The used set up sub rules are specified in the
  * {@link CIPLigandRule} class.
+ *
+ * <p>Basic use starts from a {@link ITetrahedralChirality} and therefore
+ * assumes atoms with four neighbors:
+ * <pre>
+ * IAtom[] ligandAtoms =
+ *   mol.getConnectedAtomsList(centralAtom).toArray(new IAtom[4]);
+ * ITetrahedralChirality tetraStereo = new TetrahedralChirality(
+ *   centralAtom, ligandAtoms, Stereo.ANTI_CLOCKWISE
+ * );
+ * CIP_CHIRALITY cipChirality = CIPTool.getCIPChirality(mol, tetraStereo);
+ * </pre>
+ * The {@link org.openscience.cdk.interfaces.IBond.Stereo} value can be
+ * reconstructed from 3D coordinates with the {@link StereoTool}. 
  *
  * @cdk.module cip
  * @cdk.githash
