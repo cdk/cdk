@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.cip.LigancyFourChiralityTest")
-public class LigancyFourChirality {
+class LigancyFourChirality {
 
     private IAtom chiralAtom;
     private ILigand[] ligands;

@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.cip.rules.AtomicNumberRuleTest")
-public class AtomicNumberRule implements ISequenceSubRule<ILigand> {
+class AtomicNumberRule implements ISequenceSubRule<ILigand> {
 
     /** {@inheritDoc}} */
     @Override

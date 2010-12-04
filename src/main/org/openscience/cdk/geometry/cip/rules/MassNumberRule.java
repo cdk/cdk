@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.cip.rules.MassNumberRuleTest")
-public class MassNumberRule implements ISequenceSubRule<ILigand> {
+class MassNumberRule implements ISequenceSubRule<ILigand> {
 
     ILoggingTool logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
     IsotopeFactory factory;

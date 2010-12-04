@@ -37,7 +37,7 @@ import org.openscience.cdk.geometry.cip.ILigand;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.cip.rules.CombinedAtomicMassNumberRuleTest")
-public class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
+class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
 
     MassNumberRule massNumberRule = new MassNumberRule();
     AtomicNumberRule atomicNumberRule = new AtomicNumberRule();

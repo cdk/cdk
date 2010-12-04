@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.cip.ImmutableHydrogenTest")
-public class ImmutableHydrogen implements IAtom {
+class ImmutableHydrogen implements IAtom {
 
     private static final String SYMBOL = "H";
 
