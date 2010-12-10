@@ -50,7 +50,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
  * hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
  *
- * Returns a single value named <i>nHBAcc</i>.
+ * Returns a single value named <i>nHBDon</i>.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
