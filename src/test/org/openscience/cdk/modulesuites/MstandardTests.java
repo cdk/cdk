@@ -83,6 +83,7 @@ import org.openscience.cdk.tools.HOSECodeGeneratorTest;
 import org.openscience.cdk.tools.IDCreatorTest;
 import org.openscience.cdk.tools.LonePairElectronCheckerTest;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulatorTest;
+import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenterTest;
 import org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulatorTest;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulatorTest;
@@ -96,9 +97,6 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingSetManipulatorTest;
 import org.openscience.cdk.tools.manipulator.RingSizeComparatorTest;
-import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenterTest;
-import org.openscience.cdk.tools.periodictable.PeriodicTableElementTest;
-import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
 import org.openscience.cdk.validate.ProblemMarkerTest;
 
 /**
@@ -186,8 +184,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     CDKHueckelAromaticityDetectorTest.class,
     HOSECodeGeneratorTest.class,
     LonePairElectronCheckerTest.class ,
-    PeriodicTableElementTest.class,
-    PeriodicTableTest.class,
     StereoToolTest.class
 
 })
