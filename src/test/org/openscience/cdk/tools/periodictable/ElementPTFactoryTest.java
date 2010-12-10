@@ -31,7 +31,7 @@ import org.openscience.cdk.CDKTestCase;
 /**
  * Checks the functionality of the ElementPTFactory
  *
- * @cdk.module test-standard
+ * @cdk.module test-core
  */
 public class ElementPTFactoryTest extends CDKTestCase
 {

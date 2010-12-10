@@ -27,7 +27,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-core
  */
 public class PeriodicTableElementTest extends CDKTestCase {
 

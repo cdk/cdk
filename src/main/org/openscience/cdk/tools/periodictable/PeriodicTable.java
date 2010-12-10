@@ -46,7 +46,7 @@ import java.util.Map;
  * @cdk.keyword periodic table
  * @cdk.keyword radius, vanderwaals 
  * @cdk.keyword electronegativity
- * @cdk.module  standard
+ * @cdk.module  core
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableTest")

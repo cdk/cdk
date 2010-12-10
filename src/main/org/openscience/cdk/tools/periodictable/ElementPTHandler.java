@@ -48,7 +48,7 @@ import java.util.List;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     standard
+ * @cdk.module     core
  * @cdk.githash
  */
 class ElementPTHandler extends DefaultHandler 
