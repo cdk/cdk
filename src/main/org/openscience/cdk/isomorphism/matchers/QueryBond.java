@@ -28,6 +28,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 
 
 /**
@@ -142,9 +143,9 @@ public abstract class QueryBond implements IQueryBond{
      * @return An Iterator to atoms participating in this query bond
      * @see #setAtoms
      */
-    public Iterable<IQueryAtom> atoms() {
-        return new Iterable<IQueryAtom>() {
-            public Iterator<IQueryAtom> iterator() {
+    public Iterable<IAtom> atoms() {
+        return new Iterable<IAtom>() {
+            public Iterator<IAtom> iterator() {
                 return new AtomsIterator();
             }
         };
@@ -153,7 +154,7 @@ public abstract class QueryBond implements IQueryBond{
     /**
      * The inner Iterator class.
      */
-    private class AtomsIterator implements Iterator<IQueryAtom> {
+    private class AtomsIterator implements Iterator<IAtom> {
 
         private int pointer = 0;
 
