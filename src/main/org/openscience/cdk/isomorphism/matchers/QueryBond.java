@@ -29,17 +29,18 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 
 
 /**
- * Implements the concept of a "query bond" between two or more atoms. 
+ * Implements the concept of a "query bond" between two or more atoms.
  * Query bonds can be used to capture types such as "Single or Double" or "Any".
  *
  * @cdk.module isomorphism
  * @cdk.githash
  * @cdk.created 2010-12-16
  */
-public abstract class QueryBond implements IQueryBond{
+public abstract class QueryBond extends QueryChemObject implements IQueryBond{
  
     /**
      * The bond order of this query bond.
@@ -54,7 +55,7 @@ public abstract class QueryBond implements IQueryBond{
     /**
      * A list of atoms participating in this query bond.
      */
-    protected IQueryAtom[] atoms = null;
+    protected IAtom[] atoms = null;
 
     /**
      * A descriptor the stereochemical orientation of this query bond.
@@ -76,7 +77,7 @@ public abstract class QueryBond implements IQueryBond{
      * @param atom1 the first Atom in the query bond
      * @param atom2 the second Atom in the query bond
      */
-    public QueryBond(IQueryAtom atom1, IQueryAtom atom2) {
+    public QueryBond(IAtom atom1, IAtom atom2) {
         this(atom1, atom2, IQueryBond.Order.SINGLE, IQueryBond.Stereo.NONE);
     }
 
@@ -88,17 +89,17 @@ public abstract class QueryBond implements IQueryBond{
      * @param atom2 the second Atom in the query bond
      * @param order the query bond order
      */
-    public QueryBond(IQueryAtom atom1, IQueryAtom atom2, Order order) {
+    public QueryBond(IAtom atom1, IAtom atom2, Order order) {
         this(atom1, atom2, order, IQueryBond.Stereo.NONE);
     }
 
     /**
      * Constructs a multi-center query bond, with undefined order and no stereo information.
      *
-     * @param atoms An array of IQueryAtom containing the atoms constituting the query bond
+     * @param atoms An array of IAtom containing the atoms constituting the query bond
      */
-    public QueryBond(IQueryAtom[] atoms) {
-        this.atoms = new IQueryAtom[atoms.length];
+    public QueryBond(IAtom[] atoms) {
+        this.atoms = new IAtom[atoms.length];
         System.arraycopy(atoms, 0, this.atoms, 0, atoms.length);
         atomCount = this.atoms.length;
     }
@@ -106,11 +107,11 @@ public abstract class QueryBond implements IQueryBond{
     /**
      * Constructs a multi-center query bond, with a specified order and no stereo information.
      *
-     * @param atoms An array of IQueryAtom containing the atoms constituting the query bond
+     * @param atoms An array of IAtom containing the atoms constituting the query bond
      * @param order The order of the query bond
      */
-    public QueryBond(IQueryAtom[] atoms, Order order) {
-        this.atoms = new IQueryAtom[atoms.length];
+    public QueryBond(IAtom[] atoms, Order order) {
+        this.atoms = new IAtom[atoms.length];
         System.arraycopy(atoms, 0, this.atoms, 0, atoms.length);
         atomCount = this.atoms.length;
         this.order = order;
@@ -126,8 +127,8 @@ public abstract class QueryBond implements IQueryBond{
      * @param order  the query bond order
      * @param stereo a descriptor the stereochemical orientation of this query bond
      */
-    public QueryBond(IQueryAtom atom1, IQueryAtom atom2, Order order, IQueryBond.Stereo stereo) {
-        atoms = new IQueryAtom[2];
+    public QueryBond(IAtom atom1, IAtom atom2, Order order, IQueryBond.Stereo stereo) {
+        atoms = new IAtom[2];
         atoms[0] = atom1;
         atoms[1] = atom2;
         this.order = order;
@@ -162,7 +163,7 @@ public abstract class QueryBond implements IQueryBond{
             return pointer < atomCount;
         }
 
-        public IQueryAtom next() {
+        public IAtom next() {
             ++pointer;
             return atoms[pointer - 1];
         }
@@ -178,7 +179,7 @@ public abstract class QueryBond implements IQueryBond{
      * @param atoms An array of atoms that forms this query bond
      * @see #atoms
      */
-    public void setAtoms(IQueryAtom[] atoms) {
+    public void setAtoms(IAtom[] atoms) {
         this.atoms = atoms;
         atomCount = atoms.length;
         notifyChanged();
@@ -202,7 +203,7 @@ public abstract class QueryBond implements IQueryBond{
      * @return The atom at the specified position, null if there are no atoms in the query bond
      * @see #setAtom
      */
-    public IQueryAtom getAtom(int position) {
+    public IAtom getAtom(int position) {
         if (atoms == null) return null;
         else return atoms[position];
     }
@@ -218,13 +219,13 @@ public abstract class QueryBond implements IQueryBond{
      * If called for a multi-center query bond, then the next atom in the
      * atom list is returned. This is probably not what is expected and
      * hence the user should instead call
-     * {@link #getConnectedAtoms(org.openscience.cdk.interfaces.IQueryAtom)}
+     * {@link #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)}
      *
      * @param atom The atom the query bond partner is searched of
      * @return the connected atom or null  if the atom is not part of the query bond
-     * @see #getConnectedAtoms(org.openscience.cdk.interfaces.IQueryAtom)
+     * @see #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)
      */
-    public IQueryAtom getConnectedAtom(IQueryAtom atom) {
+    public IAtom getConnectedAtom(IAtom atom) {
         if (atoms[0] == atom) {
             return atoms[1];
         } else if (atoms[1] == atom) {
@@ -242,11 +243,11 @@ public abstract class QueryBond implements IQueryBond{
      *
      * @param atom The atom whose partners are to be searched for
      * @return An array of the connected atoms, null if the atom is not part of the query bond
-     * @see #getConnectedAtom(org.openscience.cdk.interfaces.IQueryAtom)
+     * @see #getConnectedAtom(org.openscience.cdk.interfaces.IAtom)
      */
-    public IQueryAtom[] getConnectedAtoms(IQueryAtom atom) {
+    public IAtom[] getConnectedAtoms(IAtom atom) {
         boolean atomIsInBond = false;
-        for (IQueryAtom localAtom : atoms) {
+        for (IAtom localAtom : atoms) {
             if (localAtom == atom) {
                 atomIsInBond = true;
                 break;
@@ -254,11 +255,11 @@ public abstract class QueryBond implements IQueryBond{
         }
         if (!atomIsInBond) return null;
 
-        List<IQueryAtom> conAtoms = new ArrayList<IQueryAtom>();
-        for (IQueryAtom localAtom : atoms) {
+        List<IAtom> conAtoms = new ArrayList<IAtom>();
+        for (IAtom localAtom : atoms) {
             if (localAtom != atom) conAtoms.add(localAtom);
         }
-        return conAtoms.toArray(new IQueryAtom[]{});        
+        return conAtoms.toArray(new IAtom[]{});        
     }
 
 
@@ -268,9 +269,9 @@ public abstract class QueryBond implements IQueryBond{
      * @param atom The atom to be tested if it participates in this query bond
      * @return true if the atom participates in this query bond
      */
-    public boolean contains(IQueryAtom atom) {
+    public boolean contains(IAtom atom) {
         if (atoms == null) return false;
-        for (IQueryAtom localAtom : atoms) {
+        for (IAtom localAtom : atoms) {
             if (localAtom == atom) return true;
         }
         return false;
@@ -284,7 +285,7 @@ public abstract class QueryBond implements IQueryBond{
      * @param position The position in this query bond where the atom is to be inserted
      * @see #getAtom
      */
-    public void setAtom(IQueryAtom atom, int position) {
+    public void setAtom(IAtom atom, int position) {
         if (atoms[position] == null && atom != null) atomCount++;
         if (atoms[position] != null && atom == null) atomCount--;
         atoms[position] = atom;
@@ -352,7 +353,7 @@ public abstract class QueryBond implements IQueryBond{
     public Point2d get2DCenter() {
         double xOfCenter = 0;
         double yOfCenter = 0;
-        for (IQueryAtom atom : atoms) {
+        for (IAtom atom : atoms) {
             xOfCenter += atom.getPoint2d().x;
             yOfCenter += atom.getPoint2d().y;
         }
@@ -371,7 +372,7 @@ public abstract class QueryBond implements IQueryBond{
         double xOfCenter = 0;
         double yOfCenter = 0;
         double zOfCenter = 0;
-        for (IQueryAtom atom : atoms) {
+        for (IAtom atom : atoms) {
             xOfCenter += atom.getPoint3d().x;
             yOfCenter += atom.getPoint3d().y;
             zOfCenter += atom.getPoint3d().z;
@@ -391,7 +392,7 @@ public abstract class QueryBond implements IQueryBond{
     public boolean compare(Object object) {
         if (object instanceof IQueryBond) {
             QueryBond queryBond = (QueryBond) object;
-            for (IQueryAtom atom : atoms) {
+            for (IAtom atom : atoms) {
                 if (!queryBond.contains(atom)) {
                     return false;
                 }
@@ -409,9 +410,9 @@ public abstract class QueryBond implements IQueryBond{
      * @param query bond The query bond which is checked to be connect with this one
      * @return true if the query bonds share an atom, otherwise false
      */
-    public boolean isConnectedTo(IQueryBond queryBond) {
-        for (IQueryAtom atom : atoms) {
-            if (queryBond.contains(atom)) return true;
+    public boolean isConnectedTo(IBond bond) {
+        for (IAtom atom : atoms) {
+            if (bond.contains(atom)) return true;
         }
         return false;
     }
@@ -427,10 +428,10 @@ public abstract class QueryBond implements IQueryBond{
         QueryBond clone = (QueryBond) super.clone();
         // clone all the Atoms
         if (atoms != null) {
-            clone.atoms = new IQueryAtom[atoms.length];
+            clone.atoms = new IAtom[atoms.length];
             for (int f = 0; f < atoms.length; f++) {
                 if (atoms[f] != null) {
-                    clone.atoms[f] = (IQueryAtom) ( atoms[f]).clone();
+                    clone.atoms[f] = (IAtom) ( atoms[f]).clone();
                 }
             }
         }
@@ -460,6 +461,33 @@ public abstract class QueryBond implements IQueryBond{
         resultString.append(')');
         return resultString.toString();
     }
+
+    //From ElectronContainer
+    /** Number of electrons in the ElectronContainer. */
+    protected Integer electronCount;
+    
+    /**
+     * Returns the number of electrons in this bond
+     * @return The number of electrons in this electron container.
+     * @see     #setElectronCount
+     */
+    public Integer getElectronCount()
+    {
+        return this.electronCount;
+    }
+
+
+    /**
+     * Sets the number of electrons in this bond
+     * @param   electronCount The number of electrons in this electron container.
+     * @see     #getElectronCount
+     */
+    public void setElectronCount(Integer electronCount)
+    {
+        this.electronCount = electronCount;
+        notifyChanged();
+    }
+
 
  
  

@@ -23,18 +23,17 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
  * <code>IQueryBond</code> that matches IBond object only based on bond order, and
  * disregarding any aromaticity flag.
- * 
+ *
  * @cdk.module  isomorphism
  * @cdk.githash
  */
-public class OrderQueryBondOrderOnly extends Bond implements IQueryBond {
+public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
 
     private static final long serialVersionUID = 2292654937621883661L;
 

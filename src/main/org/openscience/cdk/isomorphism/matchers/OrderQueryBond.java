@@ -23,15 +23,15 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKConstants;
 
 /**
  * @cdk.module isomorphism
  * @cdk.githash
  */
-public class OrderQueryBond extends org.openscience.cdk.Bond implements IQueryBond {
+public class OrderQueryBond extends QueryBond implements IQueryBond {
 
     private static final long serialVersionUID = 2292654937621883661L;
 
