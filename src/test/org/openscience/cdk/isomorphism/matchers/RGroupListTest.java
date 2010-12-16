@@ -36,7 +36,7 @@ import org.openscience.cdk.exception.CDKException;
  * Checks the functionality of the {@link org.openscience.cdk.isomorphism.matchers.RGroupList},
  * in particular setting valid 'occurrence' strings.
  *
- * @cdk.module test-extra
+ * @cdk.module test-isomorphism
  */
 public class RGroupListTest extends CDKTestCase {
 
