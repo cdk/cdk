@@ -1,10 +1,5 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *                     2010  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,6 +20,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtom;
 
@@ -44,8 +40,7 @@ public class InverseSymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom im
 
     private static final long serialVersionUID = -6570190504347822438L;
     
-    private HashSet symbols = new HashSet();
-
+    private Set<String> symbols = new HashSet<String>();
 
     /**
      *  Constructor for the InverseSymbolSetQueryAtom object
@@ -100,7 +95,7 @@ public class InverseSymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom im
      *
      *@return    The symbol Set
      */
-    public HashSet getSymbolSet() {
+    public Set<String> getSymbolSet() {
         return symbols;
     }
 
