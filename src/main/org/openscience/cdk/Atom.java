@@ -119,7 +119,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
      * @param elementSymbol The String describing the element for the Atom
      */
     public Atom(String elementSymbol) {
-        this(new Element(elementSymbol, PeriodicTable.getAtomicNumber(elementSymbol)));      
+        this(new Element(elementSymbol, PeriodicTable.getAtomicNumber(elementSymbol)));
+        this.formalCharge = 0;
     }
 
     /**
