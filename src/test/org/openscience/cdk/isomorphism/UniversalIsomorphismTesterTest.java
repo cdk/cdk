@@ -29,6 +29,7 @@
 package org.openscience.cdk.isomorphism;
 
 import java.io.InputStream;
+import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,11 +37,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -49,11 +49,11 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
@@ -68,8 +68,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.util.BitSet;
 /**
  * @cdk.module test-standard
  * @cdk.require java1.4+
@@ -114,12 +112,12 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 
         AnyAtom a2 = new AnyAtom();
 
-        Bond b1 = new OrderQueryBond(a1, a2, IBond.Order.SINGLE);
+        IBond b1 = new OrderQueryBond(a1, a2, IBond.Order.SINGLE);
 
         IQueryAtom a3 = new SymbolQueryAtom();
         a3.setSymbol("C");
 
-        Bond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE);
+        IBond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE);
         query.addAtom(a1);
         query.addAtom(a2);
         query.addAtom(a3);

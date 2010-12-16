@@ -33,7 +33,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -108,12 +107,12 @@ public class CDKMCSTest extends CDKTestCase {
 
         AnyAtom a2 = new AnyAtom();
 
-        Bond b1 = new OrderQueryBond(a1, a2, IBond.Order.SINGLE);
+        IBond b1 = new OrderQueryBond(a1, a2, IBond.Order.SINGLE);
 
         IQueryAtom a3 = new SymbolQueryAtom();
         a3.setSymbol("C");
 
-        Bond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE);
+        IBond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE);
         query.addAtom(a1);
         query.addAtom(a2);
         query.addAtom(a3);
