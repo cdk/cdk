@@ -154,6 +154,12 @@ public abstract class QueryAtom implements IQueryAtom {
      */
     private boolean[] flags;
 
+    public QueryAtom(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public QueryAtom() {}
+
     /**
      *  Sets the partial charge of this atom.
      *
