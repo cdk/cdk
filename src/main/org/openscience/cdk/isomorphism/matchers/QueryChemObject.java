@@ -20,13 +20,13 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.ArrayList;
+import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -142,7 +142,7 @@ public class QueryChemObject {
             List<IChemObjectListener> listeners = lazyChemObjectListeners();
             for (Object listener : listeners) {
                 ((IChemObjectListener) listener).stateChanged(
-                        new ChemObjectChangeEvent(this)
+                        new QueryChemObjectChangeEvent(this)
                 );
             }
         }
@@ -353,5 +353,16 @@ public class QueryChemObject {
      public Object clone() throws CloneNotSupportedException {
          // TODO Auto-generated method stub
          return super.clone();
+     }
+
+     class QueryChemObjectChangeEvent extends EventObject
+     implements IChemObjectChangeEvent {
+
+        private static final long serialVersionUID = 8060005185140623245L;
+
+        /** {@inheritDoc} */
+         public QueryChemObjectChangeEvent(Object source) {
+             super(source);
+         }
      }
 }
