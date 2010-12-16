@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module  isomorphism
  * @cdk.githash
  */
-public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryAtom {
+public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
     
     private static final long serialVersionUID = -5774610415273279451L;
     private String ID;

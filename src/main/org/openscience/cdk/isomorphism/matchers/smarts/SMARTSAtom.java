@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -25,6 +20,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
 /**
  * Abstract smarts atom.
@@ -33,7 +29,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS 
  */
-public abstract class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements
+public abstract class SMARTSAtom extends QueryAtom implements
         IQueryAtom {
 
     public SMARTSAtom() {

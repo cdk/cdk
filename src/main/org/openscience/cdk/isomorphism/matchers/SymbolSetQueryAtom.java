@@ -25,6 +25,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtom;
 
@@ -44,7 +45,7 @@ public class SymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implement
 
     private static final long serialVersionUID = 7539577277779603551L;
     
-    private HashSet symbols = new HashSet();
+    private Set<String> symbols = new HashSet<String>();
 
     /**
      *  Constructor for the SymbolSetQueryAtom object
@@ -99,7 +100,7 @@ public class SymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implement
      *
      *@return    The symbol Set
      */
-    public HashSet getSymbolSet() {
+    public Set<String> getSymbolSet() {
         return symbols;
     }
 

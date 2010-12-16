@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *@see           SymbolSetQueryAtom
  *@cdk.module    isomorphism
  */
-public class InverseSymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implements IQueryAtom {
+public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = -6570190504347822438L;
     
