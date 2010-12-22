@@ -62,6 +62,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+
 /**
  * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
  * is read into a {@link IChemSequence} of {@link IChemModel}'s. Each IChemModel will contain one
@@ -82,7 +87,7 @@ import java.util.StringTokenizer;
  *
  * <p>RGroups which are saved in the MDL molfile as R#, are renamed according to their appearance,
  * e.g. the first R# is named R1. With PseudAtom.getLabel() "R1" is returned (instead of R#).
- * This is introduced due to the SAR table generation procedure of Scitegics PipelinePilot.  
+ * This is introduced due to the SAR table generation procedure of Scitegics PipelinePilot.
  *
  * @cdk.module io
  * @cdk.githash
@@ -185,7 +190,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         } else if (object instanceof IChemModel) {
             return (T)readChemModel((IChemModel)object);
 		} else if (object instanceof IMolecule) {
-			return (T)readMolecule((IMolecule)object);
+			return (T)readAtomContainer((IMolecule)object);
 		} else {
 			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}
@@ -196,9 +201,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         if (setOfMolecules == null) {
             setOfMolecules = chemModel.getBuilder().newInstance(IMoleculeSet.class);
         }
-        IMolecule m = readMolecule(chemModel.getBuilder().newInstance(IMolecule.class));
-		if (m != null) {
-			setOfMolecules.addMolecule(m);
+        IAtomContainer m = readAtomContainer(chemModel.getBuilder().newInstance(IMolecule.class));
+		if (m != null && m instanceof IMolecule) {
+			setOfMolecules.addMolecule((IMolecule)m);
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         return chemModel;
@@ -214,9 +219,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         
         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
 		IMoleculeSet setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
-		IMolecule m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
-		if (m != null) {
-			setOfMolecules.addMolecule(m);
+		IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IMolecule.class));
+		if (m != null && m instanceof IMolecule ) {
+			setOfMolecules.addMolecule((IMolecule)m);
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
@@ -232,10 +237,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // reading mol files
 		str = new String(line);
 		if (str.equals("$$$$")) {
-		    m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
+		    m = readAtomContainer(chemFile.getBuilder().newInstance(IMolecule.class));
 		    
-		    if (m != null) {
-			setOfMolecules.addMolecule(m);
+		    if (m != null && m instanceof IMolecule) {
+			setOfMolecules.addMolecule((IMolecule)m);
 			
 			chemModel.setMoleculeSet(setOfMolecules);
 			chemSequence.addChemModel(chemModel);
@@ -341,12 +346,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
 
 	/**
-	 *  Read a Molecule from a file in MDL sd format
+	 *  Read an IAtomContainer from a file in MDL sd format
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
-	private IMolecule readMolecule(IMolecule molecule) throws CDKException {
+	private IAtomContainer readAtomContainer(IMolecule molecule) throws CDKException {
         logger.debug("Reading new molecule");
+	    IAtomContainer outputContainer=null;
         int linecount = 0;
         int atoms = 0;
         int bonds = 0;
@@ -363,6 +369,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         double totalX = 0.0;
         double totalY = 0.0;
         double totalZ = 0.0;
+        String title=null;
+        String remark=null;
         //int[][] conMat = new int[0][0];
         //String help;
         IAtom atom;
@@ -385,14 +393,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 return molecule;
             }
             if (line.length() > 0) {
-                molecule.setProperty(CDKConstants.TITLE, line);
+                title = line; 
             }
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
             if (line.length() > 0) {
-                molecule.setProperty(CDKConstants.REMARK, line);
+                remark = line;
             }
             
             logger.info("Reading rest of file");
@@ -422,10 +430,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
 
             atoms = Integer.parseInt(line.substring(0, 3).trim());
+		    List<IAtom> atomList = new ArrayList<IAtom>();
+
             logger.debug("Atomcount: " + atoms);
             bonds = Integer.parseInt(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + bonds);
-            
+            List<IBond> bondList = new ArrayList<IBond>();
+
             // read ATOM block
             logger.info("Reading atom block");
       	    atomsByLinePosition = new ArrayList<IAtom>();
@@ -584,26 +595,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 	double shift=Double.parseDouble(line.substring(79,87).trim());
                 	atom.setProperty("second shift", shift);
                 }
-                
-                molecule.addAtom(atom);
+                atomList.add(atom);
                 atomsByLinePosition.add(atom);
             }
             
             // convert to 2D, if totalZ == 0
             if (totalX == 0.0 && totalY == 0.0 && totalZ == 0.0) {
                 logger.info("All coordinates are 0.0");
-                if (molecule.getAtomCount()==1){
-                    molecule.getAtom(0).setPoint2d(new Point2d(x,y));
+                if(atomList.size()==1) {
+                    atomList.get(0).setPoint2d(new Point2d(x,y));              
                 }else{
-                    for (IAtom atomToUpdate : molecule.atoms()) {
+                    for (IAtom atomToUpdate : atomList) {
                         atomToUpdate.setPoint3d(null);
                     }
                 }
             } else if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                Iterator<IAtom> atomsToUpdate = molecule.atoms().iterator();
-                while (atomsToUpdate.hasNext()) {
-                    IAtom atomToUpdate = atomsToUpdate.next();
+                for (IAtom atomToUpdate : atomList) {
                     Point3d p3d = atomToUpdate.getPoint3d();
                     if (p3d != null) {
                         atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
@@ -614,6 +622,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             
             // read BOND block
             logger.info("Reading bond block");
+		    int queryBondCount=0;
             for (int f = 0; f < bonds; f++) {
                 line = input.readLine(); linecount++;
                 atom1 = Integer.parseInt(line.substring(0, 3).trim());
@@ -654,8 +663,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
                 }
                 // interpret CTfile's special bond orders
-                IAtom a1 = molecule.getAtom(atom1 - 1);
-                IAtom a2 = molecule.getAtom(atom2 - 1);
+                IAtom a1 = atomList.get(atom1 - 1);
+                IAtom a2 = atomList.get(atom2 - 1);
                 IBond newBond = null;
                 if (order >= 1 && order <= 3) {
                     IBond.Order cdkOrder = IBond.Order.SINGLE;
@@ -679,12 +688,37 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     a2.setFlag(CDKConstants.ISAROMATIC, true);
                 }
                 else {
-                    throw new CDKException 
-                        ("Detected 'query bond type ' (value="+order +")."+
-                         " Could not create regular molecule.");
+                    queryBondCount++;
+                    newBond = new CTFileQueryBond();
+                    IAtom[] bondAtoms = {a1,a2};
+                    newBond.setAtoms(bondAtoms);
+                    newBond.setOrder(null);
+                    CTFileQueryBond.Type queryBondType=null;
+                    switch (order) {
+                        case 5: queryBondType = CTFileQueryBond.Type.SINGLE_OR_DOUBLE; break;
+                        case 6: queryBondType = CTFileQueryBond.Type.SINGLE_OR_AROMATIC; break;
+                        case 7: queryBondType = CTFileQueryBond.Type.DOUBLE_OR_AROMATIC; break;
+                        case 8: queryBondType = CTFileQueryBond.Type.ANY;  break;
+                    }
+                    ((CTFileQueryBond)newBond).setType(queryBondType);
+                    newBond.setStereo(stereo);
                 }
+                bondList.add((newBond));
+            }
 
-                molecule.addBond(newBond);
+            if(queryBondCount==0)          
+                outputContainer = molecule;
+            else {
+                outputContainer = new QueryAtomContainer();
+            }
+
+            outputContainer.setProperty(CDKConstants.TITLE, title);
+            outputContainer.setProperty(CDKConstants.REMARK, remark);
+            for(IAtom at : atomList) {
+                outputContainer.addAtom(at);
+            }
+            for(IBond bnd : bondList) {
+                outputContainer.addBond(bnd);
             }
             
             // read PROPERTY block
@@ -697,7 +731,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         linecount, 0, 0
                     );
                 }
-		if (line.startsWith("M  END")) break;
+                if (line.startsWith("M  END")) break;
                 
                 boolean lineRead = false;
                 if (line.startsWith("M  CHG")) {
@@ -710,7 +744,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         int atomNumber = Integer.parseInt(token.trim());
                         token = st.nextToken();
                         int charge = Integer.parseInt(token.trim());
-                        molecule.getAtom(atomNumber - 1).setFormalCharge(charge);
+                        outputContainer.getAtom(atomNumber - 1).setFormalCharge(charge);
                     }
                 }  else if (line.matches("^A    \\d+")) {
             		// Reads the pseudo atom property from the mol file
@@ -724,7 +758,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 					for (int i = 0; i < aliasArray.length; i++) {
 						alias += aliasArray[i];
 					}
-					IAtom aliasAtom = molecule.getAtom(aliasAtomNumber);
+					IAtom aliasAtom = outputContainer.getAtom(aliasAtomNumber);
 					IAtom newPseudoAtom = molecule.getBuilder().newInstance(IPseudoAtom.class,alias);
 					if(aliasAtom.getPoint2d() != null) {
 						newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
@@ -732,8 +766,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 					if(aliasAtom.getPoint3d() != null) {
 						newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
 					}
-					molecule.addAtom(newPseudoAtom);
-					List<IBond> bondsOfAliasAtom = molecule.getConnectedBondsList(aliasAtom);
+					outputContainer.addAtom(newPseudoAtom);
+					List<IBond> bondsOfAliasAtom = outputContainer.getConnectedBondsList(aliasAtom);
 					
 					for (int i = 0; i < bondsOfAliasAtom.size(); i++) {
 						IBond bondOfAliasAtom = bondsOfAliasAtom.get(i);
@@ -741,10 +775,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 						IBond newBond = bondOfAliasAtom.getBuilder().newInstance(IBond.class); 
 						newBond.setAtoms(new IAtom[] {connectedToAliasAtom, newPseudoAtom});
 						newBond.setOrder(bondOfAliasAtom.getOrder());
-						molecule.addBond(newBond);
-						molecule.removeBond(aliasAtom, connectedToAliasAtom);
+						outputContainer.addBond(newBond);
+						outputContainer.removeBond(aliasAtom, connectedToAliasAtom);
 					}
-					molecule.removeAtom(aliasAtom);
+					outputContainer.removeAtom(aliasAtom);
 					RGroupCounter++;
 
                 } else if (line.startsWith("M  ISO")) {
@@ -756,7 +790,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             int atomNumber = Integer.parseInt(st.nextToken().trim());
                             int absMass = Integer.parseInt(st.nextToken().trim());
                             if (absMass != 0) { 
-                                IAtom isotope = molecule.getAtom(atomNumber - 1);
+                                IAtom isotope = outputContainer.getAtom(atomNumber - 1);
                                 isotope.setMassNumber(absMass);
                             }
                         }
@@ -779,11 +813,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             int atomNumber = Integer.parseInt(st.nextToken().trim());
                             int spinMultiplicity = Integer.parseInt(st.nextToken().trim());
                             if (spinMultiplicity > 1) {
-                                IAtom radical = molecule.getAtom(atomNumber - 1);
+                                IAtom radical = outputContainer.getAtom(atomNumber - 1);
                                 for (int j=2; j <= spinMultiplicity; j++) {
                                     // 2 means doublet -> one unpaired electron
                                     // 3 means triplet -> two unpaired electron
-                                    molecule.addSingleElectron(molecule.getBuilder().newInstance(ISingleElectron.class,radical));
+                                    outputContainer.addSingleElectron(molecule.getBuilder().newInstance(ISingleElectron.class,radical));
                                 }
                             }
                         }
@@ -806,7 +840,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         String atomName = input.readLine();
                         
                         // convert Atom into a PseudoAtom
-                        IAtom prevAtom = molecule.getAtom(atomNumber - 1);
+                        IAtom prevAtom = outputContainer.getAtom(atomNumber - 1);
                         IPseudoAtom pseudoAtom = molecule.getBuilder().newInstance(IPseudoAtom.class,atomName);
                         if (prevAtom.getPoint2d() != null) {
                             pseudoAtom.setPoint2d(prevAtom.getPoint2d());
@@ -841,7 +875,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
                 if (line.startsWith("V  ")) {
                     Integer atomNumber = new Integer(line.substring(3,6).trim());
-                    IAtom atomWithComment = molecule.getAtom(atomNumber - 1);
+                    IAtom atomWithComment = outputContainer.getAtom(atomNumber - 1);
                     atomWithComment.setProperty(CDKConstants.COMMENT, line.substring(7));
                 }
                 
@@ -870,7 +904,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 exception
             );
 		}
-		return molecule;
+		return  outputContainer;
 	}
     
     private void fixHydrogenIsotopes(IMolecule molecule,IsotopeFactory isotopeFactory) {

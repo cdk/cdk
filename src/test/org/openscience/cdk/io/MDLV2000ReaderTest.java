@@ -24,9 +24,19 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.InputStream;
+import java.io.StringReader;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -43,19 +53,13 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -689,17 +693,6 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         );
     }
 
-    @Test(expected=CDKException.class)
-    public void testQueryBondTypes() throws Exception {
-        String filename = "data/mdl/queryBondTypes.mol";
-        logger.info("Testing: " + filename);
-        
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        
-        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        reader.read(new ChemFile());
-    }
-
     /**
      * Tests numbering of R# elements according to RGP line.
      * @throws Exception
@@ -824,7 +817,6 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Molecule molOne=null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = (Molecule)reader.read(new Molecule());
-        System.out.println(molOne.getAtomCount());
         Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
         Assert.assertNotNull(molOne.getAtom(0).getPoint3d());
     }
@@ -873,6 +865,52 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             if(atom.getSymbol().equals("H") && atom.getMassNumber()!=null && atom.getMassNumber()==3)
                 tritiumCount++;
         Assert.assertEquals(1, tritiumCount);
+    }
+
+    /**
+     * Tests a molfile with 'query' bond types (in this case bond type == 8 (any)).
+     */
+    @Test
+    public void testQueryBondType8() throws Exception {
+        String filename = "data/mdl/iridiumCoordination.chebi52748.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer atc = reader.read(new Molecule());
+
+        int queryBondCount = 0;
+        for (IAtom atom : atc.atoms()) {
+            if (atom.getSymbol().equals("Ir")) {
+                for (IBond bond : atc.getConnectedBondsList(atom)) {
+                    if (bond instanceof CTFileQueryBond) {
+                        queryBondCount++;
+                        Assert.assertTrue(((CTFileQueryBond)bond).getType() == CTFileQueryBond.Type.ANY);
+                        Assert.assertEquals(bond.getOrder(), null);
+                    }
+                }
+            }
+        }
+        Assert.assertTrue("Expecting three 'query' bond types to 'Ir'", queryBondCount == 3);
+    }
+
+    /**
+     * Tests a molfile with 'query' bond types (in this case bond type == 6).
+     */
+    @Test
+    public void testQueryBondType6() throws Exception {
+        String filename = "data/mdl/chebi.querybond.51736.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer atc = reader.read(new Molecule());
+        int queryBondCount = 0;
+
+        for (IBond bond : atc.bonds()) {
+            if (bond instanceof CTFileQueryBond) {
+                queryBondCount++;
+                Assert.assertTrue(((CTFileQueryBond)bond).getType() == CTFileQueryBond.Type.SINGLE_OR_AROMATIC);
+                Assert.assertEquals(bond.getOrder(), null);
+            }
+        }
+        Assert.assertTrue("Expecting six 'query' bond types", queryBondCount == 6);
     }
 
 }
