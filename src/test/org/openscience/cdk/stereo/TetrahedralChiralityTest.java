@@ -113,6 +113,16 @@ public class TetrahedralChiralityTest extends CDKTestCase {
             Assert.assertEquals(ligands[i], chirality.getLigands()[i]);
         }
     }
+
+    @Test
+    public void testToString() {
+        TetrahedralChirality chirality = new TetrahedralChirality(
+            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
+        );
+        String stringRepr = chirality.toString();
+        Assert.assertNotSame(0, stringRepr.length());
+        Assert.assertFalse(stringRepr.contains("\n"));
+    }
 }
 
 
