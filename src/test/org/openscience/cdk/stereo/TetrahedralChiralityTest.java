@@ -63,7 +63,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testLigancyFourChirality_IAtom_arrayIAtom_ILigancyFourChirality_STEREO() {
+    public void testTetrahedralChirality_IAtom_arrayIAtom_ITetrahedralChirality_Stereo() {
         TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
@@ -104,7 +104,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetLigandAtoms() {
+    public void testGetLigands() {
         TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
