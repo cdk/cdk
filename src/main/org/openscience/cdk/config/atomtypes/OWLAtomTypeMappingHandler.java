@@ -48,6 +48,7 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
     /**
      * Constructs a new OWLAtomTypeMappingHandler.
      */
+    @TestMethod("testOWLAtomTypeMappingHandler")
     public OWLAtomTypeMappingHandler() {}
 
     /**
