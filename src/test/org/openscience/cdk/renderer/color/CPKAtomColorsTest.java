@@ -30,6 +30,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module test-render
@@ -40,8 +41,19 @@ public class CPKAtomColorsTest extends CDKTestCase {
 		CPKAtomColors colors = new CPKAtomColors();
 		Assert.assertNotNull(colors);
 		Assert.assertEquals(Color.WHITE, colors.getAtomColor(new Atom("H")));
-		Assert.assertEquals(new Color(0xFFC0CB), colors.getAtomColor(new Atom("He")));
+		Assert.assertEquals(
+			new Color(0xFFC0CB), colors.getAtomColor(new Atom("He"))
+		);
 	}
 
+	@Test public void testGetDefaultAtomColor() {
+		CPKAtomColors colors = new CPKAtomColors();
+
+		Assert.assertNotNull(colors);
+		IAtom imaginary = new Atom("Ix");
+		Assert.assertEquals(
+			Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE)
+		);
+	}
 }
 

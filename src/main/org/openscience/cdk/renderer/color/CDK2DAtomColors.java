@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,10 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.renderer.color;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 import java.awt.*;
@@ -34,6 +30,7 @@ import java.awt.*;
  * @cdk.module render
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.color.CDK2DAtomColorsTest")
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
     private static final long serialVersionUID = 6712994043820219426L;
@@ -47,10 +44,27 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
     private final static Color DEFAULT        = Color.black;
     
-    public Color getAtomColor(IAtom a) {
-        return getAtomColor(a, DEFAULT);
+    /**
+     * Returns the CDK 2D color for the given atom's element.
+     *
+     * @param atom         IAtom to get a color for
+     * @return             the atom's color according to this coloring scheme.
+     */
+    @TestMethod("testGetAtomColor")
+    public Color getAtomColor(IAtom atom) {
+        return getAtomColor(atom, DEFAULT);
     }
     
+    /**
+     * Returns the CDK 2D color for the given atom's element, or
+     * defaults to the given color if no color is defined.
+     *
+     * @param atom         IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define
+     *                     a color for the passed IAtom
+     * @return             the atom's color according to this coloring scheme.
+     */
+    @TestMethod("testGetDefaultAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         int atomnumber = 0;
