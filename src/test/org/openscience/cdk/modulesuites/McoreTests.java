@@ -52,6 +52,7 @@ import org.openscience.cdk.tools.LoggingToolFactoryTest;
 import org.openscience.cdk.tools.SystemOutLoggingToolTest;
 import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
 import org.openscience.cdk.tools.periodictable.ElementPTFactoryTest;
+import org.openscience.cdk.tools.periodictable.ElementPTReaderTest;
 import org.openscience.cdk.tools.periodictable.PeriodicTableElementTest;
 import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
 
@@ -85,6 +86,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     PeriodicTableElementTest.class,
     PeriodicTableTest.class,
     ElementPTFactoryTest.class,
+    ElementPTReaderTest.class,
 
     // the CDK atom typer
     CDKAtomTypeMatcherTest.class,
