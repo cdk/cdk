@@ -64,7 +64,10 @@ public class QueryChemObject {
     private boolean[] flags;
 
     public QueryChemObject() {
-        super();
+        flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+        chemObjectListeners = null;
+        properties = null;
+        identifier = null;
     }
 
     /**
