@@ -37,12 +37,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -178,6 +180,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
      * @throws CDKException
      */
     private RGroupQuery parseRGFile(RGroupQuery rGroupQuery) throws CDKException {
+        IChemObjectBuilder defaultChemObjectBuilder = DefaultChemObjectBuilder.getInstance();
         String line = "";
         int lineCount = 0;
         String eol = System.getProperty("line.separator");
@@ -253,7 +256,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
             //Let MDL reader process $CTAB block of the root structure.
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ISimpleChemObjectReader.Mode.STRICT);
-            IMolecule root = (IMolecule)reader.read(rGroupQuery.getBuilder().newInstance(IMolecule.class));
+            IMolecule root = reader.read(defaultChemObjectBuilder.newInstance(IMolecule.class));
             rGroupQuery.setRootStructure(root);
             List<IAtom> atomsByLinePosition = reader.getAtomsByLinePosition();
 
@@ -376,7 +379,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     String groupStr = sb.toString();
                     reader = new MDLV2000Reader
                         (new StringReader(groupStr), ISimpleChemObjectReader.Mode.STRICT);
-                    IMolecule group = (IMolecule)reader.read(rGroupQuery.getBuilder().newInstance(IMolecule.class));
+                    IMolecule group = reader.read(defaultChemObjectBuilder.newInstance(IMolecule.class));
                     atomsByLinePosition = reader.getAtomsByLinePosition();
                     RGroup rGroup = new RGroup();
                     rGroup.setGroup(group);
