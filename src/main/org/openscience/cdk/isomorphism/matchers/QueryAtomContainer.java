@@ -1017,23 +1017,19 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     public void addAtom(IAtom atom)
     {
-        if (atom instanceof IQueryAtom) {
-            if (contains(atom))
-            {
-                return;
-            }
-
-            if (atomCount + 1 >= atoms.length)
-            {
-                growAtomArray();
-            }
-            atom.addListener(this);
-            atoms[atomCount] = atom;
-            atomCount++;
-            notifyChanged();
-        } else {
-            throw new IllegalArgumentException("Atom is not of type QueryAtom");
+        if (contains(atom))
+        {
+            return;
         }
+
+        if (atomCount + 1 >= atoms.length)
+        {
+            growAtomArray();
+        }
+        atom.addListener(this);
+        atoms[atomCount] = atom;
+        atomCount++;
+        notifyChanged();
     }
 
 
@@ -1043,18 +1039,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *@param  bond  The bond to added to this container
      */
     public void addBond(IBond bond) {
-        if (bond instanceof IQueryBond) {
-            if (bond instanceof IQueryBond) {
-                if (bondCount >= bonds.length) growBondArray();
-                bonds[bondCount] = bond;
-                ++bondCount;
-                notifyChanged();
-            } else {
-                throw new IllegalArgumentException("Bond is not of type QueryBond");
-            }
-        } else {
-            throw new IllegalArgumentException("Bond is not of type QueryBond");
-        }
+        if (bondCount >= bonds.length) growBondArray();
+        bonds[bondCount] = bond;
+        ++bondCount;
+        notifyChanged();
     }
 
     /**
