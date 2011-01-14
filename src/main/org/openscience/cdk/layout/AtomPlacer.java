@@ -463,7 +463,6 @@ public class AtomPlacer
     @TestMethod("emptyAtomsListTest,triangleTest")
     public void populatePolygonCorners(List<IAtom> atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
     {
-        IAtom connectAtom = null;
         double angle = startAngle;
         double newX;
         double newY;
@@ -492,24 +491,25 @@ public class AtomPlacer
             logger.debug("  newX:", newX);
             logger.debug("  newY:", newY);
             points.addElement(new Point2d(newX, newY));
-
-      if (logger.isDebugEnabled())
-      try
-            {
-                logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2d());
-            } catch (Exception exc)
-            {
-                //nothing to catch here. This is just for logging
-            }
-        }
+		}
 
         for (int i = 0; i < atomsToDraw.size(); i++)
         {
-            connectAtom = (IAtom) atomsToDraw.get(i);
+            IAtom connectAtom = atomsToDraw.get(i);
             connectAtom.setPoint2d((Point2d) points.elementAt(i));
             connectAtom.setFlag(CDKConstants.ISPLACED, true);
+            
+            if (logger.isDebugEnabled() && connectAtom != null) {
+                try {
+                    logger.debug("populatePolygonCorners->connectAtom: "
+                            + (molecule.getAtomNumber(connectAtom) + 1)
+                            + " placed at " + connectAtom.getPoint2d());
+                } catch (Exception exc) {
+                    // nothing to catch here. This is just for logging
+                }
+            }
         }
-
+        
     }
 
     /**
