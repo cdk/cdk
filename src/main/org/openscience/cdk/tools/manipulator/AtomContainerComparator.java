@@ -37,6 +37,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -160,10 +161,17 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
   private double getMolecularWeight(IAtomContainer atomContainer) throws CDKException {
       double mw = 0.0;
       try {
-          for (IAtom atom : atomContainer.atoms()) {
-              if (!atom.getSymbol().equals("H"))
-                  mw += IsotopeFactory.getInstance(atomContainer.getBuilder()).getMajorIsotope(atom.getSymbol()).getExactMass();
-          }
+            final IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(atomContainer.getBuilder());
+
+            for (IAtom atom : atomContainer.atoms()) {
+                if (!atom.getSymbol().equals("H")) {
+                    final IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+
+                    if (majorIsotope != null && majorIsotope.getExactMass() != null) {
+                        mw += majorIsotope.getExactMass().doubleValue();
+                    }
+                }
+            }
       } catch (IOException e) {
           throw new CDKException(e.getMessage(), e);
       }

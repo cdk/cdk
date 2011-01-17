@@ -28,9 +28,12 @@ import java.util.Comparator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
@@ -64,6 +67,22 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 		// Assert.assert correct comparison
 		Assert.assertEquals("null <-> null", 0, comparator.compare(null, null));
 	}
+
+    @Test
+    public void testCompare_Atom_PseudoAtom() {
+        // Instantiate the comparator
+        Comparator<IAtomContainer> comparator = new AtomContainerComparator();
+
+        IAtomContainer atomContainer1 = new AtomContainer();
+        
+        atomContainer1.addAtom(new Atom("C"));
+
+        IAtomContainer atomContainer2 = new AtomContainer();
+        
+        atomContainer2.addAtom(new PseudoAtom("*"));
+
+        Assert.assertEquals(atomContainer1 + " <-> " + atomContainer2, 1, comparator.compare(atomContainer1, atomContainer2));
+    }
 
     @Test
     public void testCompare_IAtomContainer_Null() {
