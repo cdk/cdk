@@ -120,7 +120,7 @@ public class SMARTSQueryTool {
     private List<List<Integer>> matchingAtoms = null;
 
     // a simplistic cache to store parsed SMARTS queries
-    final int MAX_ENTRIES = 20;
+    private int MAX_ENTRIES = 20;
     Map<String, QueryAtomContainer> cache = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1, .75F, true) {
         public boolean removeEldestEntry(Map.Entry eldest) {
             return size() > MAX_ENTRIES;
@@ -134,6 +134,15 @@ public class SMARTSQueryTool {
         } catch (TokenMgrError error) {
             throw new CDKException("Error parsing SMARTS", error);
         }
+    }
+
+    /**
+     * Set the maximum size of the query cache.
+     *
+     * @param maxEntries The maximum number of entries
+     */
+    public void setQueryCacheSize(int maxEntries) {
+        MAX_ENTRIES = maxEntries;
     }
 
     /**
