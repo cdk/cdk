@@ -107,11 +107,6 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
     
     private IRenderer<IMoleculeSet> moleculeSetRenderer;
 
-	/**
-	 * Generators specific to reactions
-	 */
-	private List<IGenerator<IReaction>> reactionGenerators;
-	
     /**
      * A renderer that generates diagrams using the specified
      * generators and manages fonts with the supplied font manager.
@@ -136,7 +131,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         for (IGenerator<IReaction> generator : reactionGenerators) {
             rendererModel.registerParameters(generator);
         }
-        this.reactionGenerators = reactionGenerators;
+        this.generators = reactionGenerators;
         this.setup();
 	}
 	
@@ -231,7 +226,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
     public IRenderingElement generateDiagram(IReaction reaction) {
 	    ElementGroup diagram = new ElementGroup();
 	    
-	    for (IGenerator<IReaction> generator : this.reactionGenerators) {
+	    for (IGenerator<IReaction> generator : this.generators) {
 	        diagram.add(generator.generate(reaction, rendererModel));
 	    }
 
@@ -242,7 +237,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
 	}
 
 	public List<IGenerator<IReaction>> getGenerators(){
-	    return new ArrayList<IGenerator<IReaction>>(reactionGenerators);
+	    return new ArrayList<IGenerator<IReaction>>(generators);
 	}
 
 }
