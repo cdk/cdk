@@ -123,6 +123,9 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
      */
 	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
         this.fontManager = fontManager;
+        for (IGenerator<IAtomContainer> generator : generators) {
+            rendererModel.registerParameters(generator);
+        }
         moleculeSetRenderer = new MoleculeSetRenderer(generators, fontManager);
     }
 	
