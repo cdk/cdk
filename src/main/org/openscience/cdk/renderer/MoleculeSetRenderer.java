@@ -37,9 +37,9 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
+import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
-import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
@@ -221,10 +221,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
 
         // setup and draw
         this.setupTransformNatural(totalBounds);
-        ElementGroup diagram = new ElementGroup();
-        for (IAtomContainer molecule : moleculeSet.molecules()) {
-            diagram.add(atomContainerRenderer.generateDiagram(molecule));
-        }
+        IRenderingElement diagram = this.generateDiagram(moleculeSet);
         this.paint(drawVisitor, diagram);
 
         return this.convertToDiagramBounds(totalBounds);
@@ -256,12 +253,16 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
         this.setupTransformToFit(bounds, totalBounds,
         		AverageBondLengthCalculator.calculateAverageBondLength(molecules), resetCenter);
 
+        IRenderingElement diagram = this.generateDiagram(molecules);
+        this.paint(drawVisitor, diagram);
+    }
+
+    public IRenderingElement generateDiagram(IMoleculeSet molecules) {
         ElementGroup diagram = new ElementGroup();
         for (IAtomContainer molecule : molecules.molecules()) {
             diagram.add(atomContainerRenderer.generateDiagram(molecule));
         }
-
-        this.paint(drawVisitor, diagram);
+        return diagram;
     }
 
 	public Rectangle calculateDiagramBounds(IMoleculeSet moleculeSet) {
