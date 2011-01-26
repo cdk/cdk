@@ -117,6 +117,9 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
      */
 	public MoleculeSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
         this.fontManager = fontManager;
+        for (IGenerator<IAtomContainer> generator : generators) {
+            rendererModel.registerParameters(generator);
+        }
         atomContainerRenderer = new AtomContainerRenderer(generators, fontManager);
         this.setup();
     }
