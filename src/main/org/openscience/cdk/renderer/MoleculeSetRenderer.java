@@ -23,6 +23,8 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -121,6 +123,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
             rendererModel.registerParameters(generator);
         }
         atomContainerRenderer = new AtomContainerRenderer(generators, fontManager);
+        this.generators = Collections.emptyList();
         this.setup();
     }
 	
@@ -284,8 +287,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
 	}
 
     public List<IGenerator<IMoleculeSet>> getGenerators() {
-        // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<IGenerator<IMoleculeSet>>(generators);
     }
    
 }
