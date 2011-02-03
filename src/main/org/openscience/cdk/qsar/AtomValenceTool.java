@@ -21,10 +21,10 @@
  */
 package org.openscience.cdk.qsar;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This class returns the valence of an atom.
@@ -41,8 +41,15 @@ public class AtomValenceTool {
 
     public static int getValence(IAtom atom) {
         if (valencesTable == null) {
-            valencesTable = new HashMap<String,Integer>();
+            valencesTable = new HashMap<String, Integer>();
             valencesTable.put("H", 1);
+            valencesTable.put("He", 8);
+            valencesTable.put("Ne", 8);
+            valencesTable.put("Ar", 8);
+            valencesTable.put("Kr", 8);
+            valencesTable.put("Xe", 8);
+            valencesTable.put("Hg", 2);
+            valencesTable.put("Rn", 8);
             valencesTable.put("Li", 1);
             valencesTable.put("Be", 2);
             valencesTable.put("B", 3);
