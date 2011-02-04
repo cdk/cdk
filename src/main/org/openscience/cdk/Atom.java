@@ -24,13 +24,13 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IElement;
+import java.io.Serializable;
 
 /**
  * Represents the idea of an chemical atom.
@@ -119,7 +119,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
      * @param elementSymbol The String describing the element for the Atom
      */
     public Atom(String elementSymbol) {
-        super(elementSymbol);      
+        this(new Element(elementSymbol, PeriodicTable.getAtomicNumber(elementSymbol)));
+        this.formalCharge = 0;
     }
 
     /**
@@ -214,7 +215,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
          *
-         * @see    #getHydrogenCount
+         * @see    #getImplicitHydrogenCount
          */
         public void setImplicitHydrogenCount(Integer hydrogenCount) {
         	this.hydrogenCount = hydrogenCount;
@@ -226,7 +227,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @return    The hydrogen count of this atom.
          *
-         * @see       #setHydrogenCount
+         * @see       #setImplicitHydrogenCount
          */
         public Integer getImplicitHydrogenCount() {
         	return this.hydrogenCount;

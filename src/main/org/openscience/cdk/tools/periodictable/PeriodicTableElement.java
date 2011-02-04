@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author        Miguel Rojas
  * @cdk.created   May 8, 2005
  * @cdk.keyword   element
- * @cdk.module    standard
+ * @cdk.module    core
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableElementTest")

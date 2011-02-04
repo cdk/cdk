@@ -145,25 +145,25 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
      * @return                                     The IChemObject read
      * @exception  CDKException
      */
-     public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
          if (object instanceof IReaction) {
-             return (IChemObject) readReaction(object.getBuilder());
+             return (T) readReaction(object.getBuilder());
          } else if (object instanceof IReactionSet) {
              IReactionSet reactionSet = object.getBuilder().newInstance(IReactionSet.class);
              reactionSet.addReaction(readReaction(object.getBuilder()));
-             return reactionSet;
+             return (T)reactionSet;
          } else if (object instanceof IChemModel) {
              IChemModel model = object.getBuilder().newInstance(IChemModel.class);
              IReactionSet reactionSet = object.getBuilder().newInstance(IReactionSet.class);
              reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setReactionSet(reactionSet);
-             return model;
+             return (T)model;
          } else if (object instanceof IChemFile) {
              IChemFile chemFile = object.getBuilder().newInstance(IChemFile.class);
              IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
              sequence.addChemModel((IChemModel)read(object.getBuilder().newInstance(IChemModel.class)));
              chemFile.addChemSequence(sequence);
-             return chemFile;
+             return (T)chemFile;
          } else {
              throw new CDKException("Only supported are Reaction and ChemModel, and not " +
                  object.getClass().getName() + "."

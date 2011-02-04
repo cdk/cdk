@@ -24,6 +24,18 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="Cahn1966">
+    <bibtex:article>
+      <bibtex:author>Cahn, R.S. and Ingold, C. and Prelog, V.</bibtex:author>
+      <bibtex:title>Specification of Molecular Chirality</bibtex:title>
+      <bibtex:journal>Angew. Chem. Int. Ed.</bibtex:journal>
+      <bibtex:year>1966</bibtex:year>
+      <bibtex:volume>5</bibtex:volume>
+      <bibtex:number>4</bibtex:number>
+      <bibtex:pages>385-415</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Moreau1980">
     <bibtex:article>
       <bibtex:author>Moreau G. and Broto P.</bibtex:author>
@@ -1088,5 +1100,26 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
 
+    <bibtex:entry id="WEGNER2006">
+        <bibtex:thesis>
+            <bibtex:author>Wegner, J. K.</bibtex:author>
+            <bibtex:title>Data Mining und Graph Mining auf molekularen Graphen - Cheminformatik und molekulare Kodierungen f\"{u}r ADME/Tox QSAR Analysen</bibtex:title>
+            <bibtex:year>2006</bibtex:year>
+            <bibtex:isbn>3832513795</bibtex:isbn>
+            <bibtex:school>University of T{\"u}bingen</bibtex:school>
+        </bibtex:thesis>
+    </bibtex:entry>
+
+  <bibtex:entry id="WILLIGHAGEN2004">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
+      <bibtex:title>Customizing file IO</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>2-4</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
 
 </bibtex:file>

@@ -123,9 +123,9 @@ public class HINReader extends DefaultChemObjectReader {
      *
      * @see org.openscience.cdk.ChemFile
      */
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return readChemFile((IChemFile)object);
+            return (T)readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }

@@ -26,7 +26,7 @@ CDK library.
 2. Compiling
 
 Compiling and jar-ing the software is done with Jakarta's 
-Ant (http://jakarta.apache.org/ant/) 1.7.1 or better and Java 1.5.0 or better:
+Ant (http://jakarta.apache.org/ant/) 1.7.1 or better and Java 1.6.0 or better:
 
 cdk/$ ls build.xml
 build.xml
@@ -36,7 +36,7 @@ cdk/$ ant
 creates a number of .jar files in the 'dist' directory corresponding to subsets of the CDK
 functionality. For convenience, one large .jar file containing everything can be created using the
 target 'dist-large' (using the command "ant dist-large"). This is also created in dist/jar and is
-typically named something like 'cdk-cvs-20060303.jar'.
+typically named something like 'cdk-1.2.7.jar'.
 
 2.1 Creating the JavaDoc documentation for the API
 
@@ -55,7 +55,7 @@ cdk/$ firefox doc/api/index.html
 
 3. Running tests
 
-IMPORTANT: this requires the SVN or Git version of the sources.
+IMPORTANT: this requires the Git version of the sources.
 
 After you compiled the code, you can do "ant test-all" to run the test suite of non-interactive, automated
 tests. You might need to copy an appropriate junit.jar into your $ANT_HOME/lib
@@ -68,8 +68,7 @@ Tests run: 1065, Failures: 7, Errors: 1, Time elapsed: 27,55 sec
 
 As you can see, the vast majority of tests ran successfully, but that there
 are failures and errors. The $CDK_HOME/reports/results.txt file contains
-information about the outcome of the tests. Some tests might fail intentionally
-to mark know issues in CDK.
+information about the outcome of the tests.
 
 There are also run interactive tests, like the Controller2DTest. In order to try them, you can edit the "run"
 target in the build.xml file to look like this:

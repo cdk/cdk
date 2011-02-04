@@ -31,11 +31,6 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class SystemOutLoggingToolTest extends CDKTestCase {
 
-	@Test public void testLoggingTool_Object() throws Exception {
-	    ILoggingTool logger = new SystemOutLoggingTool(this.getClass());
-		Assert.assertNotNull(logger);
-	}
-
 	@Test public void testLoggingTool_Class() throws Exception {
 	    ILoggingTool logger = new SystemOutLoggingTool(this.getClass());
 		Assert.assertNotNull(logger);

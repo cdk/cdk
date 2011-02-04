@@ -112,10 +112,10 @@ public class CTXReader extends DefaultChemObjectReader {
 		return false;
 	}
 
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
         	file = (IChemFile)object;
-            return readChemFile();
+            return (T)readChemFile();
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }

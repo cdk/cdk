@@ -33,6 +33,7 @@
       <!-- the other modules -->
       <antcall target="test-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="test-module"><param name="module" value="core"/></antcall>
+      <antcall target="test-module"><param name="module" value="cip"/></antcall>
       <antcall target="test-module"><param name="module" value="standard"/></antcall>
       <antcall target="test-module"><param name="module" value="atomtype"/></antcall>
       <antcall target="test-module"><param name="module" value="io"/></antcall>
@@ -61,6 +62,7 @@
       <antcall target="test-module"><param name="module" value="signature"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="module" value="test-core"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-cip"/></antcall>
       <antcall target="test-module"><param name="module" value="test-interfaces"/></antcall>
       <antcall target="test-module"><param name="module" value="test-data"/></antcall>
       <antcall target="test-module"><param name="module" value="test-datadebug"/></antcall>

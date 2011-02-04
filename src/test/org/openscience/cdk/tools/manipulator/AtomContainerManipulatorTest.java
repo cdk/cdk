@@ -70,6 +70,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         ac = MoleculeFactory.makeAlphaPinene();
     }
 
+    @Test
+    public void testExtractSubstructure() throws CloneNotSupportedException {
+        IAtomContainer source = MoleculeFactory.makeEthylCyclohexane();
+        IAtomContainer ringSubstructure = 
+            AtomContainerManipulator.extractSubstructure(source, 0, 1, 2, 3, 4, 5);
+        Assert.assertEquals(6, ringSubstructure.getAtomCount());
+        Assert.assertEquals(6, ringSubstructure.getBondCount());
+    }
 
     @Test
     public void testGetTotalHydrogenCount_IAtomContainer() throws IOException, ClassNotFoundException, CDKException {

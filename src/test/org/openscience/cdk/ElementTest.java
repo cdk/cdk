@@ -63,7 +63,7 @@ public class ElementTest extends AbstractElementTest {
         Assert.assertEquals("C", e.getSymbol());
     }
     
-    @Test public void testElement_String_int() {
+    @Test public void testElement_String_Integer() {
         IElement e = new Element("H", 1);
         Assert.assertEquals("H", e.getSymbol());
         Assert.assertEquals(1, e.getAtomicNumber().intValue());

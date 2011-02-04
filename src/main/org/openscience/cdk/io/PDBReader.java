@@ -178,7 +178,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * @exception   CDKException  
 	 *
 	 */
-	public IChemObject read(IChemObject oObj) throws CDKException {
+	public <T extends IChemObject> T read(T oObj) throws CDKException {
 		if (oObj instanceof IChemFile) {
 			if (pdbFactory == null) {
 				try {
@@ -189,7 +189,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					throw new CDKException("Could not setup list of PDB atom types! " + exception.getMessage(), exception);
 				}
 			}
-			return readChemFile((IChemFile)oObj);
+			return (T)readChemFile((IChemFile)oObj);
 		} else {
 			throw new CDKException("Only supported is reading of ChemFile objects.");
 		}

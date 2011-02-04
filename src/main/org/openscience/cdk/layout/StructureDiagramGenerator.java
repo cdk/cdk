@@ -240,10 +240,10 @@ public class StructureDiagramGenerator
 	 *  This method uses generateCoordinates, but it removes the hydrogens first,
 	 *  lays out the structuren and then adds them again.
 	 *
-	 *  @throws  java.lang.Exception  if an error occurs
+	 *  @throws  CDKException  if an error occurs
 	 *  @see     #generateCoordinates
 	 */
-	public void generateExperimentalCoordinates() throws java.lang.Exception
+	public void generateExperimentalCoordinates() throws CDKException
 	{
 		generateExperimentalCoordinates(new Vector2d(0, 1));
 	}
@@ -254,9 +254,9 @@ public class StructureDiagramGenerator
 	 * coordinates for the hydrogens are calculated.
 	 *
 	 * @param firstBondVector the vector of the first bond to lay out
-	 * @throws java.lang.Exception if an error occurs
+	 * @throws CDKException if an error occurs
 	 */
-	public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
+	public void generateExperimentalCoordinates(Vector2d firstBondVector) throws CDKException {
 		// first make a shallow copy: Atom/Bond references are kept
 		IMolecule original = molecule;
 		IMolecule shallowCopy = molecule.getBuilder().newInstance(IMolecule.class,molecule);
@@ -286,9 +286,9 @@ public class StructureDiagramGenerator
 	 *  your molecule back.
 	 *
 	 *  @param  firstBondVector          The vector of the first bond to lay out
-	 *  @throws  java.lang.Exception     if an error occurs
+	 *  @throws CDKException             if an error occurs
 	 */
-	public void generateCoordinates(Vector2d firstBondVector) throws java.lang.Exception
+	public void generateCoordinates(Vector2d firstBondVector) throws CDKException
 	{
 		int safetyCounter = 0;
 		/*
@@ -462,9 +462,9 @@ public class StructureDiagramGenerator
 	 *  StructurDiagramGenerator, call the generateCoordinates() method and get
 	 *  your molecule back.
 	 *
-	 *  @throws java.lang.Exception if an error occurs
+	 *  @throws CDKException if an error occurs
 	 */
-	public void generateCoordinates() throws java.lang.Exception
+	public void generateCoordinates() throws CDKException
 	{
 		generateCoordinates(new Vector2d(0, 1));
 	}
@@ -478,9 +478,9 @@ public class StructureDiagramGenerator
 	 * @param firstBondVector A vector giving the placement for the first bond
 	 * @param rs The connected RingSet for which the layout is to be
 	 *           done
-	 * @throws java.lang.Exception if an error occurs
+	 * @throws CDKException if an error occurs
 	 */
-	private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) throws Exception
+	private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) throws CDKException
 	{
 		IAtomContainer sharedAtoms;
 		Vector2d ringCenterVector;
@@ -496,7 +496,7 @@ public class StructureDiagramGenerator
 			 * Find mapped substructures
 			 */
 			for (Iterator<IAtomContainer> substructureIterator = mappedSubstructures.atomContainers().iterator(); substructureIterator.hasNext(); ) {
-				IAtomContainer substructure = (IAtomContainer) substructureIterator.next();
+				IAtomContainer substructure = substructureIterator.next();
 				boolean substructureMapped = false;
 				for (Iterator<IAtomContainer> ringSetIterator = rs.atomContainers().iterator(); ringSetIterator.hasNext() && !substructureMapped; ) {
 					IRing ring = (IRing) ringSetIterator.next();
@@ -541,7 +541,7 @@ public class StructureDiagramGenerator
 		 */
 		if (!ring.getFlag(CDKConstants.ISPLACED))
 		{
-			sharedAtoms = placeFirstBond((IBond) ring.getBond(i), firstBondVector);
+			sharedAtoms = placeFirstBond(ring.getBond(i), firstBondVector);
 			/*
 			 *  Call the method which lays out the new ring.
 			 */
@@ -581,7 +581,7 @@ public class StructureDiagramGenerator
 	 * that have already been laid out. Starts at the first bond with unplaced
 	 * neighbours and stops when a ring is encountered.
 	 *
-	 * @throws org.openscience.cdk.exception.CDKException if an error occurs
+	 * @throws CDKException if an error occurs
 	 */
 	private void handleAliphatics() throws CDKException
 	{
@@ -665,9 +665,9 @@ public class StructureDiagramGenerator
 	 *  of this ring. Then moves and rotates the laid out ring to match the position
 	 *  of its attachment bond to the rest of the molecule.
 	 *
-	 *  @throws java.lang.Exception if an error occurs
+	 *  @throws CDKException if an error occurs
 	 */
-	private void layoutNextRingSystem() throws Exception
+	private void layoutNextRingSystem() throws CDKException
 	{
 		logger.debug("Start of layoutNextRingSystem()");
 

@@ -51,6 +51,10 @@ import org.openscience.cdk.tools.DataFeaturesTest;
 import org.openscience.cdk.tools.LoggingToolFactoryTest;
 import org.openscience.cdk.tools.SystemOutLoggingToolTest;
 import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
+import org.openscience.cdk.tools.periodictable.ElementPTFactoryTest;
+import org.openscience.cdk.tools.periodictable.ElementPTReaderTest;
+import org.openscience.cdk.tools.periodictable.PeriodicTableElementTest;
+import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -79,6 +83,10 @@ import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
     OWLAtomTypeHandlerTest.class,
     IsotopeReaderTest.class,
     IsotopeHandlerTest.class,        
+    PeriodicTableElementTest.class,
+    PeriodicTableTest.class,
+    ElementPTFactoryTest.class,
+    ElementPTReaderTest.class,
 
     // the CDK atom typer
     CDKAtomTypeMatcherTest.class,

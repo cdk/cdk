@@ -52,7 +52,8 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(CDKBasedAtomTypeConfigurator.class);
-    
+
+    @TestMethod("testCDKBasedAtomTypeConfigurator")
     public CDKBasedAtomTypeConfigurator() {
     }
 

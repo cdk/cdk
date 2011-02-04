@@ -135,9 +135,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 		return false;
 	}
 
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IMolecule) {
-            return readMolecule(object.getBuilder());
+            return (T)readMolecule(object.getBuilder());
         }
         return null;
     }

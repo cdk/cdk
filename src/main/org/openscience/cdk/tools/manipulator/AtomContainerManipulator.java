@@ -29,6 +29,7 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,39 @@ import org.openscience.cdk.interfaces.IStereoElement;
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerManipulatorTest")
 public class AtomContainerManipulator {
+    
+    /**
+     * Extract a substructure from an atom container, in the form of a new 
+     * cloned atom container with only the atoms with indices in atomIndices and
+     * bonds that connect these atoms.
+     * <p/>
+     * Note that this may result in a disconnected atom container. 
+     * 
+     * @param atomContainer the source container to extract from
+     * @param atomIndices the indices of the substructure
+     * @return a cloned atom container with a substructure of the source
+     * @throws CloneNotSupportedException if the source container cannot be cloned
+     */
+    @TestMethod("testExtractSubstructure")
+    public static IAtomContainer extractSubstructure(
+            IAtomContainer atomContainer, int... atomIndices) throws CloneNotSupportedException {
+        IAtomContainer substructure = (IAtomContainer) atomContainer.clone();
+        int numberOfAtoms = substructure.getAtomCount();
+        IAtom[] atoms = new IAtom[numberOfAtoms];
+        for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++) {
+            atoms[atomIndex] = substructure.getAtom(atomIndex);
+        }
+        
+        Arrays.sort(atomIndices);
+        for (int index = 0; index < numberOfAtoms; index++) {
+            if (Arrays.binarySearch(atomIndices, index) < 0) {
+                IAtom atom = atoms[index];
+                substructure.removeAtomAndConnectedElectronContainers(atom);
+            }
+        }
+        
+        return substructure;
+    }
 
 	/**
 	 * Returna an atom in an atomcontainer identified by id

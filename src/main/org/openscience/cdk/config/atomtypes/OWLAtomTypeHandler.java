@@ -58,6 +58,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
      * 
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
+    @TestMethod("testAtomTypeHandler_IChemObjectBuilder")
     public OWLAtomTypeHandler(IChemObjectBuilder build) {
         builder = build;
     }

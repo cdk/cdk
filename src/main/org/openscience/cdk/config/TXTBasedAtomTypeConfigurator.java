@@ -56,6 +56,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     private String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
     private InputStream ins = null;
     
+    @TestMethod("testTXTBasedAtomTypeConfigurator")
 	public TXTBasedAtomTypeConfigurator() {
 	}
 

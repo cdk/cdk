@@ -145,15 +145,15 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      * @return                                     The IChemObject read
      * @exception  CDKException
      */
-     public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
          if (object instanceof IChemFile) {
-        	 return readChemFile((IChemFile)object);
+        	 return (T)readChemFile((IChemFile)object);
          } else if (object instanceof IChemModel) {
-        	 return readChemModel((IChemModel)object);
+        	 return (T)readChemModel((IChemModel)object);
          } else if (object instanceof IReactionSet) {
-             return readReactionSet((IReactionSet)object);
+             return (T)readReactionSet((IReactionSet)object);
          } else if (object instanceof IReaction) {
-             return readReaction(object.getBuilder());
+             return (T)readReaction(object.getBuilder());
          } else {
              throw new CDKException("Only supported are Reaction, ReactionSet, ChemModel and ChemFile, and not " +
                  object.getClass().getName() + "."

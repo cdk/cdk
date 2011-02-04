@@ -80,6 +80,7 @@ public class AtomTypeHandler extends DefaultHandler {
      * 
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
+    @TestMethod("testAtomTypeHandler_IChemObjectBuilder")
     public AtomTypeHandler(IChemObjectBuilder build) {
         builder = build;
     }

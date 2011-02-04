@@ -110,6 +110,7 @@
     <target name="ojdcheck" depends="compileDocTests">
       <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="cip"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="data"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="datadebug"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="nonotify"/></antcall>

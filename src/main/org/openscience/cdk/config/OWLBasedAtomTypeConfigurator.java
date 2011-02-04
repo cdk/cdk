@@ -45,7 +45,8 @@ public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     private InputStream ins = null;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
-    
+
+    @TestMethod("testCDKBasedAtomTypeConfigurator")
     public OWLBasedAtomTypeConfigurator() {
     }
 

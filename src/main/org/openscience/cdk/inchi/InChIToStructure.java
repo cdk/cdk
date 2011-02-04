@@ -123,7 +123,7 @@ protected JniInchiInputInchi input;
      * @param options
      * @throws CDKException
      */
-    protected InChIToStructure(String inchi, IChemObjectBuilder builder, List options) throws CDKException {
+    protected InChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
         try {
             input = new JniInchiInputInchi(inchi, options);
         } catch (JniInchiException jie) {

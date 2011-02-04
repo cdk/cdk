@@ -36,7 +36,13 @@ import org.openscience.cdk.tools.diff.tree.IDifferenceList;
  */
 @TestClass("org.openscience.cdk.tools.diff.LonePairDiffTest")
 public class LonePairDiff {
-    
+
+    /**
+     * Overwrite the default public constructor because this class is not
+     * supposed to be instantiated.
+     */
+    private LonePairDiff() {}
+
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
     	IDifference diff = difference(first, second);

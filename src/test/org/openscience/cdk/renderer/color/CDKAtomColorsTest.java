@@ -46,5 +46,14 @@ public class CDKAtomColorsTest extends CDKTestCase {
 		Assert.assertEquals(Color.darkGray, colors.getAtomColor(helium));
 	}
 
+	@Test public void testGetDefaultAtomColor() {
+		CDKAtomColors colors = new CDKAtomColors();
+
+		Assert.assertNotNull(colors);
+		IAtom imaginary = new Atom("Ix");
+		Assert.assertEquals(
+			Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE)
+		);
+	}
 }
 

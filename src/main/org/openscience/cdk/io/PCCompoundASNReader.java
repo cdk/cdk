@@ -117,10 +117,10 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 		return false;
 	}
 
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
         	try {
-        		return (IChemObject)readChemFile((IChemFile)object);
+        		return (T)readChemFile((IChemFile)object);
         	} catch (IOException e) {
         		throw new CDKException("An IO Exception occured while reading the file.", e);
         	} catch (CDKException e) {

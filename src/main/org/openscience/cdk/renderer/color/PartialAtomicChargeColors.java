@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,12 +15,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -40,14 +36,33 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.githash
  * @cdk.keyword atom coloring, partial charges
  */
+@TestClass("org.openscience.cdk.renderer.color.PartialAtomicChargeColorsTest")
 public class PartialAtomicChargeColors implements IAtomColorer {
 
+    /**
+     * Returns the a color reflecting the given atom's partial charge.
+     *
+     * @param atom         IAtom to get a color for
+     * @return             the color for the given atom.
+     */
+    @TestMethod("testGetAtomColor")
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, Color.white);
     }
     
+    /**
+     * Returns the a color reflecting the given atom's partial charge, or
+     * defaults to the given color if no color is defined.
+     *
+     * @param atom         IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define
+     *                     a color for the passed IAtom
+     * @return             the color for the given atom.
+     */
+    @TestMethod("testGetDefaultAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
+        if (atom.getCharge() == null) return defaultColor;
         double charge = atom.getCharge();
         if (charge > 0.0) {
             if (charge < 1.0) {

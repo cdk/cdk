@@ -80,4 +80,16 @@ public class TetrahedralChirality implements ITetrahedralChirality {
         return DefaultChemObjectBuilder.getInstance();
     }
 
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Tetrahedral{").append(this.hashCode()).append(", ");
+        builder.append(this.getStereo()).append(", ");
+        builder.append("c:").append(this.getChiralAtom()).append(", ");
+        IAtom[] ligands = this.getLigands();
+        for (int i=0; i<ligands.length; i++) {
+            builder.append(i+1).append(":").append(ligands[i]).append(", ");
+        }
+        builder.append("}");
+        return builder.toString();
+    }
 }

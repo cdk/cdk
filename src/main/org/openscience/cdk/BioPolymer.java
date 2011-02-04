@@ -139,7 +139,10 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	public int getMonomerCount() {
 		Iterator<String> keys = strands.keySet().iterator();
 		int number = 0;
-		
+
+        if (!keys.hasNext()) // no strands
+            return super.getMonomerCount();
+
 		while(keys.hasNext())	{
 			Strand tmp = (Strand)strands.get(keys.next());	// Cast exception?!
 			number += (tmp.getMonomers()).size() - 1;
@@ -194,7 +197,10 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	public Collection<String> getMonomerNames() {
 		Iterator<String> keys = strands.keySet().iterator();
 		Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
-		
+
+        if (!keys.hasNext()) // no strands
+            return super.getMonomerNames();
+
 		while(keys.hasNext())	{
 			Strand oStrand = (Strand)strands.get(keys.next());
 			monomers.putAll(oStrand.getMonomers());

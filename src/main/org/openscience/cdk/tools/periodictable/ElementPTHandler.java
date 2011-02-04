@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.tools.periodictable;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -48,9 +50,10 @@ import java.util.List;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     standard
+ * @cdk.module     core
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.tools.periodictable.ElementPTReaderTest")
 class ElementPTHandler extends DefaultHandler 
 {
 	private final int SCALAR_UNSET = 0;
@@ -74,6 +77,7 @@ class ElementPTHandler extends DefaultHandler
 	public String currentElement;
 	public String dictRef;
 	
+    @TestMethod("testReading")
 	public ElementPTHandler() 
 	{
 	}
@@ -83,6 +87,7 @@ class ElementPTHandler extends DefaultHandler
 	*
 	* @return A Vector object with all isotopes
 	*/
+    @TestMethod("testReading")
 	public List<PeriodicTableElement> getElements() 
 	{
 		return elements;
@@ -90,6 +95,7 @@ class ElementPTHandler extends DefaultHandler
 
 	// SAX Parser methods
 
+    @TestMethod("testReading")
 	public void startDocument() 
 	{
 		elements = new ArrayList<PeriodicTableElement>();
@@ -97,6 +103,7 @@ class ElementPTHandler extends DefaultHandler
 		elementType = null;
 	}
 
+    @TestMethod("testReading")
 	public void endElement(String uri, String local, String raw) {
 		logger.debug("end element: ", raw);
 		if ("elementType".equals(local)) 
@@ -145,6 +152,7 @@ class ElementPTHandler extends DefaultHandler
 		currentChars = "";
 	}
 
+    @TestMethod("testReading")
 	public void startElement(String uri, String local, 
                              String raw, Attributes atts) 
 	{
@@ -198,6 +206,7 @@ class ElementPTHandler extends DefaultHandler
 				
 	}
 	
+    @TestMethod("testReading")
 	public void characters(char chars[], int start, int length) 
 	{
 		logger.debug("character data");

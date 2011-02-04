@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk.tools.periodictable;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
@@ -47,9 +49,10 @@ import java.util.List;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     standard
+ * @cdk.module     core
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.tools.periodictable.ElementPTReaderTest")
 class ElementPTReader {
 
     private XMLReader parser;
@@ -63,6 +66,7 @@ class ElementPTReader {
      *
      * @param input Reader with the XML source
      */
+    @TestMethod("testReading")
     public ElementPTReader(Reader input) {
         this.init();
         this.input = input;
@@ -122,6 +126,7 @@ class ElementPTReader {
      * @return a Vector of Isotope's. Returns an empty vector is some reading error
      *         occured.
      */
+    @TestMethod("testReading")
     public List<org.openscience.cdk.tools.periodictable.PeriodicTableElement> readElements() {
         List<PeriodicTableElement> elements = new ArrayList<org.openscience.cdk.tools.periodictable.PeriodicTableElement>();
         try {

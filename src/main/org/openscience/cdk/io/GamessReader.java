@@ -186,10 +186,10 @@ public class GamessReader extends DefaultChemObjectReader {
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)
 	 * @see org.openscience.cdk.io.ChemObjectReader#read(org.openscience.cdk.ChemObject)
 	 */
-	public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
 		if (object instanceof IChemFile) {
 			try {
-				return (IChemObject) readChemFile((IChemFile)object);
+				return (T) readChemFile((IChemFile)object);
 			} catch (IOException e) {
 				return null;
 			}

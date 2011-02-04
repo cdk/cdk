@@ -70,6 +70,7 @@ public class IsotopeReader {
      * @param input   InputStream with the XML source
      * @param builder The {@link IChemObjectBuilder} used to create new IIsotope's.
      */
+    @TestMethod("testIsotopeReader_InputStream_IChemObjectBuilder")
     public IsotopeReader(InputStream input, IChemObjectBuilder builder) {
         this.init();
         this.input = input;

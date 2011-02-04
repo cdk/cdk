@@ -37,6 +37,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -57,7 +58,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
-public class AtomContainerComparator implements Comparator {
+public class AtomContainerComparator implements Comparator<IAtomContainer> {
   
   /** Configure LoggingTool */
   private ILoggingTool logger =
@@ -87,7 +88,7 @@ public class AtomContainerComparator implements Comparator {
    *         to, or greater than the second.
    */
     @TestMethod("testCompare_Object_Object")
-  public int compare(Object o1, Object o2) {
+  public int compare(IAtomContainer o1, IAtomContainer o2) {
     // Check for nulls
     if (o1 == null && o2 == null)
       return 0;
@@ -160,10 +161,17 @@ public class AtomContainerComparator implements Comparator {
   private double getMolecularWeight(IAtomContainer atomContainer) throws CDKException {
       double mw = 0.0;
       try {
-          for (IAtom atom : atomContainer.atoms()) {
-              if (!atom.getSymbol().equals("H"))
-                  mw += IsotopeFactory.getInstance(atomContainer.getBuilder()).getMajorIsotope(atom.getSymbol()).getExactMass();
-          }
+            final IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(atomContainer.getBuilder());
+
+            for (IAtom atom : atomContainer.atoms()) {
+                if (!atom.getSymbol().equals("H")) {
+                    final IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+
+                    if (majorIsotope != null && majorIsotope.getExactMass() != null) {
+                        mw += majorIsotope.getExactMass().doubleValue();
+                    }
+                }
+            }
       } catch (IOException e) {
           throw new CDKException(e.getMessage(), e);
       }

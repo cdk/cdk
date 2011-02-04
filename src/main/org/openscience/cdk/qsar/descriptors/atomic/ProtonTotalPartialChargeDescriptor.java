@@ -160,7 +160,6 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
         protonPartialCharge.add(localAtom.getCharge());
         for (IAtom neighboor : neighboors) {
-            System.out.println("neighboor.getSymbol() = " + neighboor.getSymbol());
             if (neighboor.getSymbol().equals("H")) {
                 protonPartialCharge.add(neighboor.getCharge());
             }

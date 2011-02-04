@@ -184,16 +184,27 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetString_IMolecularFormula_arrayString_boolean")
     public static String getString(IMolecularFormula formula, String[] orderElements, boolean setOne) {
-        String stringMF = "";
+        StringBuffer stringMF = new StringBuffer();
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
+
+        // collect elements in a map - since different isotopes of the
+        // same element will get repeated in the formula
+        List<String> elemSet = new ArrayList<String>();
         for (IIsotope isotope : isotopesList) {
-            int elemCount = getElementCount(formula, isotope);
-            if (elemCount == 1 && !setOne)
-                stringMF = stringMF + isotope.getSymbol();
-            else
-                stringMF = stringMF + isotope.getSymbol() + getElementCount(formula, isotope);
+            String symbol = isotope.getSymbol();
+            if (!elemSet.contains(symbol)) elemSet.add(symbol);
         }
-        return stringMF;
+
+        for (String elem : elemSet) {
+            int count = 0;
+            for (IIsotope isotope : formula.isotopes()) {
+                if (isotope.getSymbol().equals(elem)) count += formula.getIsotopeCount(isotope);
+            }
+            stringMF.append(elem);
+            if (!(count == 1 && !setOne))
+                stringMF.append(count);
+        }
+        return stringMF.toString();
     }
 	
 	/**
@@ -612,7 +623,7 @@ public class MolecularFormulaManipulator {
 		 for (IIsotope isotope : formula.isotopes()) {
 			try {
 				IIsotope isotope2 = IsotopeFactory.getInstance(formula.getBuilder()).getMajorIsotope(isotope.getSymbol());
-				mass += isotope2.getAtomicNumber() * formula.getIsotopeCount(isotope);
+				mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

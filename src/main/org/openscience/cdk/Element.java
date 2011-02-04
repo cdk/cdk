@@ -104,7 +104,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   symbol  The element symbol of this element.
      * @param   atomicNumber  The atomicNumber of this element.
      */
-    public Element(String symbol, int atomicNumber) {
+    public Element(String symbol, Integer atomicNumber) {
         this(symbol);
         this.atomicNumber = atomicNumber;
     }

@@ -159,9 +159,9 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
      * @return IChemObject read from file
      * @param object class must be of type RGroupQuery
      */
-    public IChemObject read(IChemObject object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof RGroupQuery) {
-            return parseRGFile((RGroupQuery)object);
+            return (T)parseRGFile((RGroupQuery)object);
         } else {
             throw new CDKException
                ("Reader only supports "+RGroupQuery.class.getName()+" objects");

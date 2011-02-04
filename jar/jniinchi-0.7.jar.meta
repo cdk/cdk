@@ -20,7 +20,7 @@ Library=Apache Log4J
 
 [jniinchi-0.7.jar/META-INF/jniinchi/1.6]
 Library=InChI Software
-Version=1.02
+Version=1.03
 #Copyright=
 License=GNU LGPL
 #LicenseURL=

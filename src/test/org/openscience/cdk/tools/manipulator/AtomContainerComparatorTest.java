@@ -28,9 +28,12 @@ import java.util.Comparator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
@@ -66,6 +69,22 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 	}
 
     @Test
+    public void testCompare_Atom_PseudoAtom() {
+        // Instantiate the comparator
+        Comparator<IAtomContainer> comparator = new AtomContainerComparator();
+
+        IAtomContainer atomContainer1 = new AtomContainer();
+        
+        atomContainer1.addAtom(new Atom("C"));
+
+        IAtomContainer atomContainer2 = new AtomContainer();
+        
+        atomContainer2.addAtom(new PseudoAtom("*"));
+
+        Assert.assertEquals(atomContainer1 + " <-> " + atomContainer2, 1, comparator.compare(atomContainer1, atomContainer2));
+    }
+
+    @Test
     public void testCompare_IAtomContainer_Null() {
 		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
@@ -75,41 +94,6 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 
 		// Assert.assert correct comparison
 		Assert.assertEquals("cycloPentane <-> null", 1, comparator.compare(cycloPentane, null));
-    }
-
-    @Test
-    public void testCompare_IAtomContainer_Object() {
-		// Create some IAtomContainers
-		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
-		
-		// Instantiate the comparator
-		Comparator comparator = new AtomContainerComparator();
-
-		Object object = new Object();
-		Assert.assertEquals("cycloPentane <-> object", 1, comparator.compare(cycloPentane, object));
-    }
-
-    @Test
-    public void testCompare_Object_Object() {
-		// Instantiate the comparator
-		Comparator comparator = new AtomContainerComparator();
-
-		Object object = new Object();
-		Assert.assertEquals("object <-> object", 0, comparator.compare(object, object));
-    }
-
-    @Test
-    public void testCompare_Object_IAtomContainer() {
-		// Create some IAtomContainers
-		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
-
-		// Instantiate the comparator
-		Comparator comparator = new AtomContainerComparator();
-
-		Object object = new Object();
-		Assert.assertEquals("object <-> cycloPentane", -1, comparator.compare(object, cycloPentane));
     }
 
 	@Test

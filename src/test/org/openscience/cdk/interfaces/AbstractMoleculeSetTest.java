@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -478,4 +479,19 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertEquals(2.0, som.getMultiplier(0), 0.00001);
     }
 
+    @Test
+    public void testSortAtomContainers_Comparator() {
+        IAtomContainerSet som = (IMoleculeSet)newChemObject();
+        IMolecule ac1 = som.getBuilder().newInstance(IMolecule.class);
+        IMolecule ac2 = som.getBuilder().newInstance(IMolecule.class);
+        som.addAtomContainer(ac1);
+        som.addAtomContainer(ac2);
+        som.sortAtomContainers(new Comparator<IAtomContainer>() {
+            @Override
+            public int compare(IAtomContainer o1, IAtomContainer o2) {
+                return 0;
+            }
+        });
+        Assert.assertEquals(2, som.getAtomContainerCount());
+    }
 }

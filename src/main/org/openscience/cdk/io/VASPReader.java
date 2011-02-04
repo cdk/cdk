@@ -133,7 +133,7 @@ public class VASPReader extends DefaultChemObjectReader {
 		return false;
 	}
 
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             IChemFile cf = (IChemFile)object;
             try {
@@ -145,7 +145,7 @@ public class VASPReader extends DefaultChemObjectReader {
                 logger.debug(exception);
                 throw new CDKException(error, exception);
             }
-            return cf;
+            return (T)cf;
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }

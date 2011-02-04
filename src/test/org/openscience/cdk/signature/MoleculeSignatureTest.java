@@ -29,6 +29,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -40,6 +41,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import signature.AbstractVertexSignature;
 
 /**
  * @cdk.module test-signature
@@ -298,14 +301,40 @@ public class MoleculeSignatureTest extends CDKTestCase {
         benzene.addBond(4, 5, IBond.Order.SINGLE);
         benzene.addBond(5, 0, IBond.Order.DOUBLE);
         
-        MoleculeSignature signature = new MoleculeSignature(benzene); 
+        MoleculeSignature signature = new MoleculeSignature(benzene);
         String carbonSignature = signature.signatureStringForVertex(0);
         for (int i = 1; i < 6; i++) {
             String carbonSignatureI = signature.signatureStringForVertex(i);
             Assert.assertEquals(carbonSignature, carbonSignatureI);
         }
     }
-    
+
+    @Test
+    public void getAromaticEdgeLabelTest() {
+        IAtomContainer benzeneRing = builder.newInstance(IAtomContainer.class);
+        for (int i = 0; i < 6; i++) {
+            benzeneRing.addAtom(builder.newInstance(IAtom.class, "C"));
+        }
+        for (int i = 0; i < 6; i++) {
+            IAtom a = benzeneRing.getAtom(i);
+            IAtom b = benzeneRing.getAtom((i + 1) % 6);
+            IBond bond = builder.newInstance(IBond.class, a, b);
+            benzeneRing.addBond(bond);
+            bond.setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        
+        MoleculeSignature molSignature = new MoleculeSignature(benzeneRing);
+        System.out.println(""+ molSignature.toFullString());
+        List<AbstractVertexSignature> signatures = molSignature.getVertexSignatures();
+        for (AbstractVertexSignature signature : signatures) {
+            for (int i = 0; i < 6; i++) {
+                Assert.assertEquals("Failed for " + i,
+                    "p",
+                    ((AtomSignature)signature).getEdgeLabel(i, (i + 1) % 6));
+            }
+        }
+    }
+
     @Test
     public void cyclobuteneTest() {
         String expectedA = "[C]([C]([C,0])=[C]([C,0]))";

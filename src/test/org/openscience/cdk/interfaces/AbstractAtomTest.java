@@ -55,14 +55,14 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     /**
      * Method to test the get/setHydrogenCount() methods.
      */
-    @Test public void testSetHydrogenCount_Integer() {
+    @Test public void testSetImplicitHydrogenCount_Integer() {
         Integer count = 1;
 
         IAtom a = (IAtom)newChemObject();
         a.setImplicitHydrogenCount(count);
         Assert.assertEquals(count, a.getImplicitHydrogenCount());
     }
-    @Test public void testGetHydrogenCount() {
+    @Test public void testGetImplicitHydrogenCount() {
     	// should be null by default
     	IAtom a = (IAtom)newChemObject();
     	Assert.assertNull(a.getImplicitHydrogenCount());

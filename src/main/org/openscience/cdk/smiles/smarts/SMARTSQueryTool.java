@@ -20,12 +20,6 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -50,11 +44,17 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * This class provides a easy to use wrapper around SMARTS matching
- * functionality. <p/> User code that wants to do SMARTS matching should use
- * this rather than using SMARTSParser (and UniversalIsomorphismTester)
- * directly. Example usage would be
+ * This class provides a easy to use wrapper around SMARTS matching functionality. <p/> User code that wants to do
+ * SMARTS matching should use this rather than using SMARTSParser (and UniversalIsomorphismTester) directly. Example
+ * usage would be
  * <p/>
  * <pre>
  * SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
@@ -69,60 +69,36 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *    }
  * }
  * </pre>
- * <h3>Unsupported Features</h3>
- * <ul>
- * <li>Component level grouping
- * <li>Stereochemistry
- * <li>Reaction support
- * </ul>
+ * <h3>Unsupported Features</h3> <ul> <li>Component level grouping <li>Stereochemistry <li>Reaction support </ul>
  * <h3>SMARTS Extensions</h3>
- *
- * Currently the CDK supports the following SMARTS symbols, that are not described
- * in the Daylight specification. However they are supported by other packages and
- * are noted as such.
- *
- * <table border=1 cellpadding=3>
- * <thead>
- * <tr>
- * <th>Symbol</th><th>Meaning</th><th>Default</th><th>Notes</th>
- * </tr>
- * </thead>
- * <tbody>
- * <tr>
- * <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be specified and must be a number between
- *  1 and 18. This symbol is supported by the MOE SMARTS implementation</td>
- * <tr>
- * <td>#X</td><td>Any non-carbon heavy element</td><td>None</td><td>This
- * symbol is supported by the MOE SMARTS implementation</td>
- * </tr>
- * <tr>
- * <td>^x</td><td>Any atom with the a specified hybridization state</td><td>None</td><td>x must be specified and
- * should be between 1 and 8 (inclusive), corresponding to SP1, SP2, SP3, SP3D1, SP3D2
- * SP3D3, SP3D4 and SP3D5. Supported by the OpenEye SMARTS implementation</td>
- * </tr>
- * </tbody>
- * </table>
- *
- * <h3>Notes</h3>
- * <ul>
- * <li>As <a href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</a>
- * by Craig James the <code>h&lt;n&gt;</code> SMARTS pattern should not be used. It was included in the Daylight spec for
- * backwards compatibility. To match hydrogens, use the <code>H&lt;n&gt;</cod> pattern.</li>
- * <li>The wild card pattern (<code>*</code>) will not match hydrogens (explicit or implicit) unless an isotope is specified.
- * In other words, <code>*</code> gives two hits against <code>C[2H]</code> but 1 hit against
- * <code>C[H]</code>. This also means that
- * it gives no hits against <code>[H][H]</code>. This is contrary to what is shown by Daylights
- * <a href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</a> service, but is based on this
- * <a href="https://sourceforge.net/mailarchive/message.php?msg_name=4964FF9D.3040004%40emolecules.com">discussion</a>.
- * A work around to get <code>*</code> to match <code>[H][H]</code> is to write it in the form <code>[1H][1H]</code>.
- * <p>
- * It's not entirely clear what the behavior of * should be with respect to hydrogens.
- * it is possible that the code will be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</li>
- * <li>The {@link org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector} only considers single rings and
- * two fused non-spiro rings. As a result, it does not properly detect aromaticity in polycyclic systems such
- * as <code>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</code>. Thus SMARTS patterns that depend on proper
- * aromaticity detection may not work correctly in such polycyclic systems</li>
- * </ul>
+ * <p/>
+ * Currently the CDK supports the following SMARTS symbols, that are not described in the Daylight specification.
+ * However they are supported by other packages and are noted as such.
+ * <p/>
+ * <table border=1 cellpadding=3> <thead> <tr> <th>Symbol</th><th>Meaning</th><th>Default</th><th>Notes</th> </tr>
+ * </thead> <tbody> <tr> <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be specified and must be a
+ * number between 1 and 18. This symbol is supported by the MOE SMARTS implementation</td> <tr> <td>#X</td><td>Any
+ * non-carbon heavy element</td><td>None</td><td>This symbol is supported by the MOE SMARTS implementation</td> </tr>
+ * <tr> <td>^x</td><td>Any atom with the a specified hybridization state</td><td>None</td><td>x must be specified and
+ * should be between 1 and 8 (inclusive), corresponding to SP1, SP2, SP3, SP3D1, SP3D2 SP3D3, SP3D4 and SP3D5. Supported
+ * by the OpenEye SMARTS implementation</td> </tr> </tbody> </table>
+ * <p/>
+ * <h3>Notes</h3> <ul> <li>As <a href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</a>
+ * by Craig James the <code>h&lt;n&gt;</code> SMARTS pattern should not be used. It was included in the Daylight spec
+ * for backwards compatibility. To match hydrogens, use the <code>H&lt;n&gt;</cod> pattern.</li> <li>The wild card
+ * pattern (<code>*</code>) will not match hydrogens (explicit or implicit) unless an isotope is specified. In other
+ * words, <code>*</code> gives two hits against <code>C[2H]</code> but 1 hit against <code>C[H]</code>. This also means
+ * that it gives no hits against <code>[H][H]</code>. This is contrary to what is shown by Daylights <a
+ * href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</a> service, but is based on this <a
+ * href="https://sourceforge.net/mailarchive/message.php?msg_name=4964FF9D.3040004%40emolecules.com">discussion</a>. A
+ * work around to get <code>*</code> to match <code>[H][H]</code> is to write it in the form <code>[1H][1H]</code>.
+ * <p/>
+ * It's not entirely clear what the behavior of * should be with respect to hydrogens. it is possible that the code will
+ * be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</li> <li>The {@link
+ * org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector} only considers single rings and two fused non-spiro
+ * rings. As a result, it does not properly detect aromaticity in polycyclic systems such as
+ * <code>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</code>. Thus SMARTS patterns that depend on proper aromaticity
+ * detection may not work correctly in such polycyclic systems</li> </ul>
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
@@ -136,12 +112,20 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest")
 public class SMARTSQueryTool {
     private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
+            LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
     private String smarts;
     private IAtomContainer atomContainer = null;
     private QueryAtomContainer query = null;
 
     private List<List<Integer>> matchingAtoms = null;
+
+    // a simplistic cache to store parsed SMARTS queries
+    private int MAX_ENTRIES = 20;
+    Map<String, QueryAtomContainer> cache = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1, .75F, true) {
+        public boolean removeEldestEntry(Map.Entry eldest) {
+            return size() > MAX_ENTRIES;
+        }
+    };
 
     public SMARTSQueryTool(String smarts) throws CDKException {
         this.smarts = smarts;
@@ -150,6 +134,15 @@ public class SMARTSQueryTool {
         } catch (TokenMgrError error) {
             throw new CDKException("Error parsing SMARTS", error);
         }
+    }
+
+    /**
+     * Set the maximum size of the query cache.
+     *
+     * @param maxEntries The maximum number of entries
+     */
+    public void setQueryCacheSize(int maxEntries) {
+        MAX_ENTRIES = maxEntries;
     }
 
     /**
@@ -176,23 +169,18 @@ public class SMARTSQueryTool {
 
 
     /**
-     * Perform a SMARTS match and check whether the query is present in the
-     * target molecule. <p/> This function simply checks whether the query
-     * pattern matches the specified molecule. However the function will also,
-     * internally, save the mapping of query atoms to the target molecule
-     * <p>
-     * <b>Note</b>: This method performs a simple caching scheme, by comparing the current
-     * molecule to the previous molecule by reference. If you repeatedly match
-     * different SMARTS on the same molecule, this method will avoid initializing (
-     * ring perception, aromaticity etc.) the
-     * molecule each time. If however, you modify the molecule between such multiple
-     * matchings you should use the other form of this method to force initialization.
+     * Perform a SMARTS match and check whether the query is present in the target molecule. <p/> This function simply
+     * checks whether the query pattern matches the specified molecule. However the function will also, internally, save
+     * the mapping of query atoms to the target molecule
+     * <p/>
+     * <b>Note</b>: This method performs a simple caching scheme, by comparing the current molecule to the previous
+     * molecule by reference. If you repeatedly match different SMARTS on the same molecule, this method will avoid
+     * initializing ( ring perception, aromaticity etc.) the molecule each time. If however, you modify the molecule
+     * between such multiple matchings you should use the other form of this method to force initialization.
      *
      * @param atomContainer The target moleculoe
-     * @return true if the pattern is found in the target molecule, false
-     *         otherwise
-     * @throws CDKException if there is an error in ring, aromaticity or isomorphism
-     *                      perception
+     * @return true if the pattern is found in the target molecule, false otherwise
+     * @throws CDKException if there is an error in ring, aromaticity or isomorphism perception
      * @see #getMatchingAtoms()
      * @see #countMatches()
      * @see #matches(org.openscience.cdk.interfaces.IAtomContainer, boolean)
@@ -202,22 +190,19 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Perform a SMARTS match and check whether the query is present in the
-     * target molecule. <p/> This function simply checks whether the query
-     * pattern matches the specified molecule. However the function will also,
-     * internally, save the mapping of query atoms to the target molecule
+     * Perform a SMARTS match and check whether the query is present in the target molecule. <p/> This function simply
+     * checks whether the query pattern matches the specified molecule. However the function will also, internally, save
+     * the mapping of query atoms to the target molecule
      *
-     * @param atomContainer The target moleculoe
-     * @param forceInitialization If true, then the molecule is initialized (ring perception, aromaticity etc).
-     * If false, the molecule is only initialized if it is different (in terms of object reference)
-     * than one supplied in a previous call to this method.
-     * @return true if the pattern is found in the target molecule, false
-     *         otherwise
-     * @throws CDKException if there is an error in ring, aromaticity or isomorphism
-     *                      perception
+     * @param atomContainer       The target moleculoe
+     * @param forceInitialization If true, then the molecule is initialized (ring perception, aromaticity etc). If
+     *                            false, the molecule is only initialized if it is different (in terms of object
+     *                            reference) than one supplied in a previous call to this method.
+     * @return true if the pattern is found in the target molecule, false otherwise
+     * @throws CDKException if there is an error in ring, aromaticity or isomorphism perception
      * @see #getMatchingAtoms()
      * @see #countMatches()
-     * @see #matches(org.openscience.cdk.interfaces.IAtomContainer) 
+     * @see #matches(org.openscience.cdk.interfaces.IAtomContainer)
      */
     @TestMethod("testQueryTool, testQueryToolSingleAtomCase, testQuery")
     public boolean matches(IAtomContainer atomContainer, boolean forceInitialization) throws CDKException {
@@ -228,7 +213,7 @@ public class SMARTSQueryTool {
             this.atomContainer = atomContainer;
             initializeMolecule();
         }
-        
+
         // First calculate the recursive smarts
         initializeRecursiveSmarts(this.atomContainer);
 
@@ -254,10 +239,8 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Returns the number of times the pattern was found in the target molecule.
-     * <p/> This function should be called after
-     * {@link #matches(org.openscience.cdk.interfaces.IAtomContainer)}. If not,
-     * the results may be undefined.
+     * Returns the number of times the pattern was found in the target molecule. <p/> This function should be called
+     * after {@link #matches(org.openscience.cdk.interfaces.IAtomContainer)}. If not, the results may be undefined.
      *
      * @return The number of times the pattern was found in the target molecule
      */
@@ -267,9 +250,8 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Get the atoms in the target molecule that match the query pattern. <p/>
-     * Since there may be multiple matches, the return value is a List of List
-     * objects. Each List object contains the indices of the atoms in the target
+     * Get the atoms in the target molecule that match the query pattern. <p/> Since there may be multiple matches, the
+     * return value is a List of List objects. Each List object contains the indices of the atoms in the target
      * molecule, that match the query pattern
      *
      * @return A List of List of atom indices in the target molecule
@@ -280,10 +262,9 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Get the atoms in the target molecule that match the query pattern. <p/>
-     * Since there may be multiple matches, the return value is a List of List
-     * objects. Each List object contains the unique set of indices of the atoms in the target
-     * molecule, that match the query pattern
+     * Get the atoms in the target molecule that match the query pattern. <p/> Since there may be multiple matches, the
+     * return value is a List of List objects. Each List object contains the unique set of indices of the atoms in the
+     * target molecule, that match the query pattern
      *
      * @return A List of List of atom indices in the target molecule
      */
@@ -319,17 +300,15 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Prepare the target molecule for analysis. <p/> We perform ring perception
-     * and aromaticity detection and set up the appropriate properties. Right
-     * now, this function is called each time we need to do a query and this is
+     * Prepare the target molecule for analysis. <p/> We perform ring perception and aromaticity detection and set up
+     * the appropriate properties. Right now, this function is called each time we need to do a query and this is
      * inefficient.
      *
-     * @throws CDKException if there is a problem in ring perception or aromaticity
-     *                      detection, which is usually related to a timeout in the ring
-     *                      finding code.
+     * @throws CDKException if there is a problem in ring perception or aromaticity detection, which is usually related
+     *                      to a timeout in the ring finding code.
      */
     private void initializeMolecule() throws CDKException {
-        // Code copied from 
+        // Code copied from
         // org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
         Map<String, Integer> valencesTable = new HashMap<String, Integer>();
         valencesTable.put("H", 1);
@@ -463,9 +442,9 @@ public class SMARTSQueryTool {
 
     /**
      * Initializes recursive smarts atoms in the query.
-     *
-     * We loop over the SMARTS atoms in the query and associate the
-     * target molecule with each of the SMARTS atoms that need it
+     * <p/>
+     * We loop over the SMARTS atoms in the query and associate the target molecule with each of the SMARTS atoms that
+     * need it
      *
      * @param atomContainer
      * @throws CDKException
@@ -498,7 +477,11 @@ public class SMARTSQueryTool {
 
     private void initializeQuery() throws CDKException {
         matchingAtoms = null;
-        query = SMARTSParser.parse(smarts);
+        query = cache.get(smarts);
+        if (query == null) {
+            query = SMARTSParser.parse(smarts);
+            cache.put(smarts, query);
+        }
     }
 
 

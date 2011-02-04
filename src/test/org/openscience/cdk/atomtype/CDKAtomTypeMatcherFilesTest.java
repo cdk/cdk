@@ -61,6 +61,27 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testOla28() throws Exception {
+        String filename = "data/cml/mol28.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+
+        // test the resulting ChemFile content
+        Assert.assertNotNull(chemFile);
+        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "F",
+            "C.sp2", "C.sp2", "C.sp2", "O.sp2", "C.sp3",
+            "C.sp3", "C.sp3", "N.plus", "C.sp3", "C.sp3",
+            "C.sp3", "C.sp3", "C.sp3", "C.sp2", "O.sp3",
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            "Cl"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testSmilesFiles() throws Exception {
         CDKAtomTypeMatcher atomTypeMatcher =
             CDKAtomTypeMatcher.getInstance(

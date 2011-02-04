@@ -37,7 +37,8 @@ import java.util.List;
 public abstract class AbstractDifferenceList implements IDifferenceList {
 
     protected List<IDifference> differences;
-    
+
+    @TestMethod("testConstructor")
     protected AbstractDifferenceList() {
         differences = new ArrayList<IDifference>();
     }

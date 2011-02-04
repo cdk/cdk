@@ -31,6 +31,7 @@ import javax.vecmath.Point3d;
 import net.sf.jniinchi.INCHI_BOND_STEREO;
 import net.sf.jniinchi.INCHI_BOND_TYPE;
 import net.sf.jniinchi.INCHI_KEY;
+import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_PARITY;
 import net.sf.jniinchi.INCHI_RADICAL;
 import net.sf.jniinchi.INCHI_RET;
@@ -117,7 +118,7 @@ public class InChIGenerator {
      * @throws org.openscience.cdk.exception.CDKException if there is an
      * error during InChI generation
      */
-    @TestMethod("testGetInchiFromChlorineAtom,testGetInchiFromLithiumIontestGetInchiFromChlorine37Atom")
+    @TestMethod("testGetInchiFromChlorineAtom,testGetInchiFromLithiumIontest,GetInchiFromChlorine37Atom")
     protected InChIGenerator(IAtomContainer atomContainer) throws CDKException {
         try {
             input = new JniInchiInput("");
@@ -159,7 +160,7 @@ public class InChIGenerator {
      * @param options           List of INCHI_OPTION.
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, List options) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> options) throws CDKException {
         try {
             input = new JniInchiInput(options);
             generateInchiFromCDKAtomContainer(atomContainer);
@@ -399,7 +400,7 @@ public class InChIGenerator {
     public String getInchiKey() throws CDKException {
         JniInchiOutputKey key;
         try {
-            key = JniInchiWrapper.getInChIKey(output.getInchi());
+            key = JniInchiWrapper.getInchiKey(output.getInchi());
             if (key.getReturnStatus() == INCHI_KEY.OK) {
                 return key.getKey();
             } else {

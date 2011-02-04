@@ -1,5 +1,4 @@
-/* 
- * Copyright (C) 2009  Mark Rijnbeek <mark_rynbeek@users.sf.net>
+/* Copyright (C) 2009  Mark Rijnbeek <mark_rynbeek@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -16,7 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.renderer.color;
 
@@ -85,10 +83,13 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
     
     /**
      * Returns the Rasmol color for the given atom's element.
-     * @param a IAtom to get a color for
+     * 
+     * @param atom IAtom to get a color for
+     * @return     the atom's color according to this coloring scheme.
      */
-    public Color getAtomColor(IAtom a) {
-        return getAtomColor(a, DEFAULT);
+    @TestMethod("testGetAtomColor")
+    public Color getAtomColor(IAtom atom) {
+        return getAtomColor(atom, DEFAULT);
     }
 
     /**
@@ -98,8 +99,9 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
      * @param atom         IAtom to get a color for
      * @param defaultColor Color returned if this scheme does not define
      *                     a color for the passed IAtom
+     * @return             the atom's color according to this coloring scheme.
      */
-    @TestMethod("testGetAtomColor")
+    @TestMethod("testGetDefaultAtomColor")
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         String symbol = atom.getSymbol();

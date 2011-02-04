@@ -130,17 +130,17 @@ public class ShelXReader extends DefaultChemObjectReader {
      *
      * @return the content in a ChemFile object
      */
-    public IChemObject read(IChemObject object) throws CDKException {
+	public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             try {
-                return readChemFile((IChemFile)object);
+                return (T)readChemFile((IChemFile)object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage(), e);
             }
         } else if (object instanceof ICrystal) {
             try {
-                return readCrystal((ICrystal)object);
+                return (T)readCrystal((ICrystal)object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage(), e);

@@ -114,11 +114,11 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         return false;
     }
 
-    public IChemObject read(IChemObject object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemSequence) {
-            return readChemSequence((IChemSequence) object);
+            return (T)readChemSequence((IChemSequence) object);
         } else if (object instanceof IChemFile) {
-            return readChemFile((IChemFile) object);
+            return (T)readChemFile((IChemFile) object);
         } else {
             throw new CDKException("Object " + object.getClass().getName() + " is not supported");
         }

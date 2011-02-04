@@ -46,7 +46,7 @@ import java.util.Map;
  * @cdk.keyword periodic table
  * @cdk.keyword radius, vanderwaals 
  * @cdk.keyword electronegativity
- * @cdk.module  standard
+ * @cdk.module  core
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableTest")
@@ -150,6 +150,12 @@ public class PeriodicTable {
         }
     }
 
+    /** 
+     * Get the Van der Waals radius for the element in question.
+     *
+     * @param symbol The symbol of the element
+     * @return the van der waals radius
+     */
     @TestMethod("testTable")
     public static Double getVdwRadius(String symbol) {
         initialize();
@@ -230,6 +236,12 @@ public class PeriodicTable {
         else return element.getPaulingEneg();
     }
 
+    /*
+     * Get the symbol for the specified atomic number.
+     *
+     * @param atomicNumber the atomic number of the element
+     * @return the corresponding symbol
+     */
     @TestMethod("testTable")
     public static String getSymbol(int atomicNumber) {
         initialize();
@@ -238,6 +250,11 @@ public class PeriodicTable {
         else return element.getSymbol();
     }
 
+    /**
+     * Return the number of elements currently considered in the periodic table.
+     *
+     * @return the number of elements in the periodic table
+     */
     @TestMethod("testTable")
     public static int getElementCount() {
         initialize();

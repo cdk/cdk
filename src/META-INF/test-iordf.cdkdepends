@@ -13,4 +13,5 @@ cdk-test.jar
 cdk-test-io.jar
 cdk-datadebug.jar
 cdk-testdata.jar
+cdk-isomorphism.jar
 cdk-iordf.jar

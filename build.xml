@@ -525,13 +525,13 @@
         <foreach target="compile-module" param="module" trim="yes"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="datadebug,nonotify,isomorphism,atomtype,render,valencycheck,
-                  formula"/>
+                  formula,cip"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="io,structgen"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="pdb,smiles,sdg,inchi,sinchi,libiocml"/>
+            list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="control,extra,reaction,pdbcml,libiomd"/>
@@ -563,8 +563,8 @@
         	      test-valencycheck,test-smarts,test-standard,test-reaction,
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
-                  test-diff,test-charges,test-inchi,test-sinchi,test-formula,
-                  test-render,test-ioformats,test-log4j"/>
+                  test-diff,test-charges,test-inchi,test-formula,
+                  test-render,test-ioformats,test-log4j,test-cip"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-data,test-qsaratomic,test-qsarbond,
@@ -606,6 +606,7 @@
                     <includesfile name="${metainf}/datadebug.libdepends"/>
                     <includesfile name="${metainf}/data.libdepends"/>
                     <includesfile name="${metainf}/extra.libdepends"/>
+                    <includesfile name="${metainf}/cip.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libiocml.libdepends"/>
                     <includesfile name="${metainf}/nonotify.libdepends"/>
@@ -641,6 +642,7 @@
                     <include name="cdk-builder3dtools.jar"/>
                     <include name="cdk-charges.jar"/>
                     <include name="cdk-core.jar"/>
+                    <include name="cdk-cip.jar"/>
                     <include name="cdk-log4j.jar"/>
                     <include name="cdk-dict.jar"/>
                     <include name="cdk-diff.jar"/>
@@ -715,6 +717,7 @@
                     <include name="cdk-charges.jar"/>
                     <include name="cdk-log4j.jar"/>
                     <include name="cdk-core.jar"/>
+                    <include name="cdk-cip.jar"/>
                     <include name="cdk-control.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
@@ -808,6 +811,7 @@
                     <includesfile name="${metainf}/test-render.libdepends"/>
                     <includesfile name="${metainf}/test-log4j.libdepends"/>
                     <includesfile name="${metainf}/test-signature.libdepends"/>
+                    <includesfile name="${metainf}/test-cip.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-test-annotation.jar"/>
@@ -842,6 +846,7 @@
                     <include name="cdk-test-render.jar"/>
                     <include name="cdk-test-log4j.jar"/>
                     <include name="cdk-test-signature.jar"/>
+                    <include name="cdk-test-cip.jar"/>
                 </fileset>
             </unjar>
 
@@ -1060,7 +1065,7 @@
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
-                      ioformats,log4j,smsd,signature,iordf"/>
+                      ioformats,log4j,smsd,signature,iordf,cip"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

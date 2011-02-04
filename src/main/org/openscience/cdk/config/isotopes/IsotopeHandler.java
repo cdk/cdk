@@ -74,6 +74,7 @@ public class IsotopeHandler extends DefaultHandler {
      *
      * @param builder The IChemObjectBuilder used to create new IIsotope's.
      */
+    @TestMethod("testIsotopeHandler_IChemObjectBuilder")
     public IsotopeHandler(IChemObjectBuilder builder) {
         this.builder = builder;
     }

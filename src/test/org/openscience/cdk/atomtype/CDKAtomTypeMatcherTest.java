@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -771,7 +772,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {"S.2", "C.sp2", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
+
     @Test public void testSulphuricAcid() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -790,6 +791,35 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
 
         String[] expectedTypes = {"O.sp2", "S.onyl", "O.sp2", "O.sp3", "O.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/CH4O2S2/c1-5(2,3)4/h1H3,(H,2,3,4)
+     */
+    @Test public void testThioSulphonate() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"S");
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.DOUBLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+
+        String[] expectedTypes = {"S.thionyl", "S.2", "O.sp3", "O.sp2", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1100,6 +1130,42 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
 
         String[] expectedTypes = {"H", "P.ine", "H", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/HO3P/c1-4(2)3/h(H-,1,2,3)/p+1
+     */
+    @Test public void testPhosphorousAcid() throws Exception {
+        IMolecule mol = new Molecule();
+        IChemObjectBuilder builder = mol.getBuilder();
+        IAtom a1 = builder.newInstance(IAtom.class,"P");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a6);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.DOUBLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a2, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a3, a6, IBond.Order.SINGLE);
+        mol.addBond(b5);
+
+        String[] expectedTypes = {
+            "P.anium", "O.sp3", "O.sp3", "O.sp2", "H", "H"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -3288,5 +3354,41 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test public void testForDuplicateDefinitions() {
     	super.testForDuplicateDefinitions();
     }
-    
+
+    /**
+     * @cdk.inchi InChI=1S/CH2N2/c1-3-2/h1H2
+     */
+    @Test
+    public void testAzoCompound() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"N");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+        IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"N");
+        a2.setFormalCharge(-1);
+        mol.addAtom(a2);
+        IAtom a3 = mol.getBuilder().newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = mol.getBuilder().newInstance(IAtom.class,"H");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = mol.getBuilder().newInstance(IAtom.class,"H");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+        IBond b3 = mol.getBuilder().newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = mol.getBuilder().newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+
+        String[] expectedTypes = {
+            "N.plus.sp1", "N.minus.sp2", "C.sp2", "H", "H"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
 }

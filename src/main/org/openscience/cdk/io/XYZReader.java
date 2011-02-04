@@ -127,9 +127,9 @@ public class XYZReader extends DefaultChemObjectReader {
      * @see IChemFile
      */
     @TestMethod("testViagra")
-    public IChemObject read(IChemObject object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (IChemObject)readChemFile((IChemFile)object);
+            return (T)readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
