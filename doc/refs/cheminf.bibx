@@ -1110,5 +1110,16 @@ Method </bibtex:title>
       <bibtex:pages>2-4</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+   
+  <bibtex:entry id="Thalheim2010">
+        <bibtex:article>
+            <bibtex:author>Thalheim, T. and Vollmer, A. and Ebert, R. and Kuehne, R. and Schuurmann, G.</bibtex:author>
+            <bibtex:title>Tautomer Identification and Tautomer Structure Generation Based on the InChI Code</bibtex:title>
+            <bibtex:journal>J. Chem. Inf. Model.</bibtex:journal>
+            <bibtex:year>2010</bibtex:year>
+            <bibtex:volume>50</bibtex:volume>
+            <bibtex:pages>1223-1232</bibtex:pages>
+        </bibtex:article>
+   </bibtex:entry>
 
 </bibtex:file>
