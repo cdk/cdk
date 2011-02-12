@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@presidency.com>
+ * Copyright (C) 2004-2007  Rajarshi Guha <rajarshi.guha@gmail.com>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -53,7 +53,7 @@ import java.util.StringTokenizer;
  * @cdk.module io
  * @cdk.githash
  *
- * @author  Rajarshi Guha <rajarshi@presidency.com>
+ * @author  Rajarshi Guha <rajarshi.guha@gmail.com>
  * @cdk.created 2004-01-27
  *
  * @cdk.keyword file format, HIN 
@@ -160,6 +160,8 @@ public class HINReader extends DefaultChemObjectReader {
         String info;
 
         StringTokenizer tokenizer;
+        List<String> aroringText = new ArrayList<String>();
+        List<IMolecule> mols = new ArrayList<IMolecule>();
 
         try {
             String line;
@@ -255,27 +257,50 @@ public class HINReader extends DefaultChemObjectReader {
                     if (!isConnected(m, s, e))
                         m.addBond(file.getBuilder().newInstance(IBond.class,s, e, bo));
                 }
-                setOfMolecules.addMolecule(m);
+                mols.add(m);
 
                 // we may not get a 'mol N' immediately since
                 // the aromaticring keyword might be present
                 // and doesn't seem to be located within the molecule
-                // block
+                // block. However, if we do see this keyword we save this
+                // since it can contain aromatic specs for any molecule
+                // listed in the file
+                //
+                // The docs do not explicitly state the the keyword comes
+                // after *all* molecules. So we save and then reprocess
+                // all the molecules in a second pass
                 while (true) {
                     line = input.readLine();
                     if (line == null || line.startsWith("mol")) break;
+                    if (line.startsWith("aromaticring")) aroringText.add(line.trim());                    
                 }
             }
-
-            // got all the molecule in the HIN file (hopefully!)
-            chemModel.setMoleculeSet(setOfMolecules);
-            chemSequence.addChemModel(chemModel);
-            file.addChemSequence(chemSequence);
 
         } catch (IOException e) {
             // FIXME: should make some noise now
             file = null;
         }
+
+        if (aroringText.size() > 0) { // process aromaticring annotations
+            for (String line : aroringText) {
+                String[] toks = line.split(" ");
+                int natom = Integer.parseInt(toks[1]);
+                int n = 0;
+                for (int i = 2; i < toks.length; i += 2) {
+                    int molnum = Integer.parseInt(toks[i]); // starts from 1
+                    int atnum = Integer.parseInt(toks[i+1]); // starts from 1
+                    mols.get(molnum-1).getAtom(atnum-1).setFlag(CDKConstants.ISAROMATIC, true);
+                    n++;
+                }
+                assert n == natom;
+            }
+        }
+
+        for (IMolecule mol : mols) setOfMolecules.addMolecule(mol);
+        chemModel.setMoleculeSet(setOfMolecules);
+        chemSequence.addChemModel(chemModel);
+        file.addChemSequence(chemSequence);
+
         return file;
     }
 

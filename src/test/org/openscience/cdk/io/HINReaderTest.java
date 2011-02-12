@@ -30,8 +30,10 @@ package org.openscience.cdk.io;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -133,7 +135,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         String filename = "data/hin/connectivity1.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
-        IChemFile content = (IChemFile) reader.read(new ChemFile());
+        IChemFile content = reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
         Assert.assertEquals(57, ac.getAtomCount());
@@ -148,9 +150,45 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         String filename = "data/hin/bug2984581.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
-        IChemFile content = (IChemFile) reader.read(new ChemFile());
+        IChemFile content = reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         Assert.assertEquals(1, cList.size());
-        IAtomContainer ac = cList.get(0);        
+    }
+
+    /**
+     * @cdk.bug 2984581
+     * @throws Exception
+     */
+    @Test
+    public void testReadAromaticRingsKeyword() throws Exception {
+        String filename = "data/hin/arorings.hin";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new HINReader(ins);
+        IChemFile content = reader.read(new ChemFile());
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        Assert.assertEquals(1, cList.size());
+
+        IAtomContainer mol = cList.get(0);
+        Assert.assertTrue(mol.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(1).getFlag(CDKConstants.ISAROMATIC));
+
+        Assert.assertTrue(mol.getAtom(7).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(12).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(11).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(10).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(9).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
+
+        // make sure that only the phenyl C's were marked as aromatic
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getSymbol().equals("C"))
+                Assert.assertTrue(atom.getSymbol()+" (index "+mol.getAtomNumber(atom)+") was wrongly marked as aromatic",
+                        atom.getFlag(CDKConstants.ISAROMATIC));
+        }
+
     }
 }
