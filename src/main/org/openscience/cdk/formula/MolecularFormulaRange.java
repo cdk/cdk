@@ -222,7 +222,7 @@ public class MolecularFormulaRange implements Cloneable {
 	 */
 	private boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
 		
-		if(isotopeOne.getSymbol() != isotopeTwo.getSymbol() )
+		if(!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol()) )
 			return false;
 		if(isotopeOne.getNaturalAbundance() != isotopeTwo.getNaturalAbundance() )
 			return false;
