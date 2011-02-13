@@ -25,18 +25,19 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -220,7 +221,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	{
 		if (properties == null)
 		{
-			properties = new HashMap<Object, Object>();
+			properties = new LinkedHashMap<Object, Object>();
 		}
 		return properties;
 	}
