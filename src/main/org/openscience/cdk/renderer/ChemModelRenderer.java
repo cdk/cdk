@@ -120,6 +120,9 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
      */
 	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
         this.fontManager = fontManager;
+        for (IGenerator<IAtomContainer> generator : generators) {
+            rendererModel.registerParameters(generator);
+        }
         moleculeSetRenderer = new MoleculeSetRenderer(generators, fontManager);
         reactionSetRenderer = new ReactionSetRenderer(generators, fontManager);
         this.setup();
