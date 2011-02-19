@@ -121,6 +121,11 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         molecule.getAtom(0).setValency(1);
         molecule.getAtom(1).setValency(0);
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
+        Properties customSettings = new Properties();
+        customSettings.setProperty("WriteQueryFormatValencies", "true");
+        mdlWriter.addChemObjectIOListener(
+            new PropertiesListener(customSettings)
+        );
         mdlWriter.write(molecule);
         String output = writer.toString();
         Assert.assertTrue(output.indexOf("0  0  0  0  0  1  0  0  0  0  0  0") != -1);

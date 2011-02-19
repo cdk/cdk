@@ -99,8 +99,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private BooleanIOSetting forceWriteAs2DCoords;
     
+    // The next two options are MDL Query format options, not really
+    // belonging to the MDLV2000 format, and will be removed when
+    // a MDLV2000QueryWriter is written.
+    
     /* Should aromatic bonds be written as bond type 4? If true, this makes the output a query file. */
     private BooleanIOSetting writeAromaticBondTypes;
+
+    /* Should atomic valencies be written in the Query format. */
+    private BooleanIOSetting writeQueryFormatValencies;
 
     private BufferedWriter writer;
     
@@ -316,16 +323,22 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         		line += formatMDLString(container.getAtom(f).getSymbol(), 3);
         	}
         	line += " 0  0  0  0  0";
-        	//valence 0 is defined as 15 in mol files
-        	if(atom.getValency()==(Integer)CDKConstants.UNSET)
-        		line += formatMDLInt(0, 3);
-        	else if(atom.getValency()==0)
-        		line += formatMDLInt(15, 3);
-        	else
-        		line += formatMDLInt(atom.getValency(), 3);
-        	line += "  0  0  0";
-        	
-        	if (container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null) {
+        	if (writeQueryFormatValencies.isSet() &&
+        	    atom.getValency() != (Integer)CDKConstants.UNSET) {
+        	    // valence 0 is defined as 15 in mol files - but this writer
+                // does not handle Query files.
+        	    if(atom.getValency()==0)
+        	        line += formatMDLInt(15, 3);
+        	    else
+        	        line += formatMDLInt(atom.getValency(), 3);
+        	} else {
+                // Since this field is a query field we ignore by default the valence of
+                // the atom and just set this field to 0
+        	    line += formatMDLInt(0, 3);
+        	}
+            line += "  0  0  0";
+
+            if (container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null) {
         	    int value = ((Integer)container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue();
         	    line += formatMDLInt(value, 3);
        	    } else {
@@ -555,18 +568,25 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             "Should aromatic bonds be written as bond type 4?",
             "false"
         );
+        writeQueryFormatValencies = new BooleanIOSetting(
+             "WriteQueryFormatValencies",
+             IOSetting.LOW,
+             "Should valencies be written in the MDL Query format?",
+             "false"
+        );
     }
 
     public void customizeJob() {
         fireIOSettingQuestion(forceWriteAs2DCoords);
         fireIOSettingQuestion(writeAromaticBondTypes);
-
+        fireIOSettingQuestion(writeQueryFormatValencies);
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[2];
+        IOSetting[] settings = new IOSetting[3];
         settings[0] = forceWriteAs2DCoords;
         settings[1] = writeAromaticBondTypes;
+        settings[2] = writeQueryFormatValencies;
         return settings;
     }
 }
