@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKConstants;
 
 /**
  * @cdk.module isomorphism
@@ -48,10 +48,10 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements IQueryBo
             return true;
         } else if (this.getFlag(CDKConstants.ISAROMATIC) && 
         		   bond.getFlag(CDKConstants.ISAROMATIC)) {
-            // or both are aromatic
+            return true;
         } // else
         return false;
-    };
+    };                                                           
 
     public void setAtoms(IAtom[] atoms) {
         if (atoms.length > 0 && atoms[0] instanceof IQueryAtom) {
