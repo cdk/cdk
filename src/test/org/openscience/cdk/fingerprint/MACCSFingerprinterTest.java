@@ -1,7 +1,5 @@
-/* $Revision: 10903 $ $Author: egonw $ $Date: 2008-05-07 09:48:07 -0400 (Wed, 07 May 2008) $    
- * 
- * Copyright (C) 2008 Rajarshi Guha
- *               2009 Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2008 Rajarshi Guha
+ *               2009,2011 Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * Contact: rajarshi@users.sourceforge.net
@@ -41,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-fingerprint
  */
-public class MACCSFingerprinterTest extends AbstractFingerprinterTest {
+public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);

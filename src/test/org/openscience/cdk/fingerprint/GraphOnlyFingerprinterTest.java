@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$    
- * 
- * Copyright (C) 1997-2009  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 1997-2009,2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -44,7 +42,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module test-standard
  */
-public class GraphOnlyFingerprinterTest extends AbstractFingerprinterTest {
+public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
 	private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(FingerprinterTest.class);

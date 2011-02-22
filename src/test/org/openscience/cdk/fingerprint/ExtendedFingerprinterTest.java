@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$    
- * 
- * Copyright (C) 1997-2009  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 1997-2009,2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -51,7 +49,7 @@ import org.openscience.cdk.tools.diff.AtomContainerDiff;
 /**
  * @cdk.module test-fingerprint
  */
-public class ExtendedFingerprinterTest extends AbstractFingerprinterTest {
+public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 	
 	public IFingerprinter getFingerprinter() {
 		return new ExtendedFingerprinter();

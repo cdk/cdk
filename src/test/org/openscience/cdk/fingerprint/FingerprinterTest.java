@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$    
- * 
- * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 1997-2007,2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -53,7 +51,7 @@ import java.util.BitSet;
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterTest extends AbstractFingerprinterTest {
+public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
 	boolean standAlone = false;
 	private static ILoggingTool logger =
