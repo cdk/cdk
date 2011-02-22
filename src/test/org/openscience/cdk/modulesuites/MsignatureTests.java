@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.SignatureCoverageTest;
+import org.openscience.cdk.fingerprint.SignatureFingerprinterTest;
 import org.openscience.cdk.signature.AtomSignatureTest;
 import org.openscience.cdk.signature.MoleculeFromSignatureBuilderTest;
 import org.openscience.cdk.signature.MoleculeSignatureTest;
@@ -40,6 +41,7 @@ import org.openscience.cdk.signature.SignatureQuotientGraphTest;
     OrbitTest.class,
     MoleculeSignatureTest.class,
     MoleculeFromSignatureBuilderTest.class,
-    AtomSignatureTest.class
+    AtomSignatureTest.class,
+    SignatureFingerprinterTest.class
 })
 public class MsignatureTests {}
