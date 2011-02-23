@@ -11,3 +11,4 @@ cdk-extra.jar
 cdk-test.jar
 cdk-signature.jar
 cdk-core.jar
+cdk-fingerprint.jar
