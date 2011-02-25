@@ -75,7 +75,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
     public void generateElementTest() {
         IAtom atom = super.builder.newInstance(IAtom.class, "C");
         atom.setPoint2d(new Point2d(2, 3));
-        atom.setHydrogenCount(0);
+        atom.setImplicitHydrogenCount(0);
         int alignment = 1;
         AtomSymbolElement element = 
             generator.generateElement(atom, alignment, model);
@@ -83,7 +83,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         Assert.assertEquals(atom.getPoint2d().y, element.yCoord);
         Assert.assertEquals(atom.getSymbol(), element.text);
         Assert.assertEquals((int)atom.getFormalCharge(), element.formalCharge);
-        Assert.assertEquals((int)atom.getHydrogenCount(), element.hydrogenCount);
+        Assert.assertEquals((int)atom.getImplicitHydrogenCount(), element.hydrogenCount);
         Assert.assertEquals(alignment, element.alignment);
         Assert.assertEquals(generator.getAtomColor(atom), element.color);
     }
