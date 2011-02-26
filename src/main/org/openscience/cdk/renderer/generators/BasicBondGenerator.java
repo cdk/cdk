@@ -314,7 +314,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         Point2d point2 = bond.getAtom(1).getPoint2d();
         Color color = this.getColorForBond(bond, model);
         double bondWidth = this.getWidthForBond(bond, model);
-		double bondDistance = model.get(BondDistance.class) /
+		double bondDistance = (Double)model.get(BondDistance.class) /
         model.getParameter(Scale.class).getValue();
         if (type == IBond.Order.SINGLE) {
             return new LineElement(point1.x, point1.y, point2.x, point2.y, bondWidth, color);

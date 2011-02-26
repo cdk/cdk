@@ -253,7 +253,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     @TestMethod("invisibleHydrogenTest")
     public boolean invisibleHydrogen(IAtom atom, RendererModel model) {
-        return isHydrogen(atom) && !model.get(ShowExplicitHydrogens.class);
+        return isHydrogen(atom) && !(Boolean)model.get(ShowExplicitHydrogens.class);
     }
 
     /**
@@ -406,7 +406,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         if (connectedBondCount < 1)
             return true;
 
-		if (model.get(ShowEndCarbons.class) && connectedBondCount == 1)
+		if ((Boolean)model.get(ShowEndCarbons.class) && connectedBondCount == 1)
 			return true;
 
         if (carbonAtom.getProperty(ProblemMarker.ERROR_MARKER) != null)
@@ -428,7 +428,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 	protected Color getAtomColor(IAtom atom, RendererModel model) {
 	    Color atomColor = model.get(AtomColor.class);
 	    if ((boolean)model.get(ColorByType.class)) {
-	        atomColor = model.get(AtomColorer.class).getAtomColor(atom);
+	        atomColor = ((IAtomColorer)model.get(AtomColorer.class)).getAtomColor(atom);
         }
         return atomColor;
     }
