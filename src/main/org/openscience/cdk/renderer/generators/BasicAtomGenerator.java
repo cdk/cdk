@@ -182,6 +182,14 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         return atom != null && atom.getPoint2d() != null;   
     }
 
+    public boolean isHydrogen(IAtom atom) {
+    	return "H".equals(atom.getSymbol());
+    }
+
+    public boolean isCarbon(IAtom atom) {
+    	return "C".equals(atom.getSymbol());
+    }
+
     /**
      * Checks an atom to see if it is an 'invisible hydrogen' - that is, it
      * is a) an (explicit) hydrogen, and b) explicit hydrogens are set to off.
@@ -208,8 +216,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     @TestMethod("invisibleCarbonTest")
     public boolean invisibleCarbon(
             IAtom atom, IAtomContainer atomContainer, RendererModel model) {
-        return atom.getSymbol().equals("C") 
-            && !showCarbon(atom, atomContainer, model);
+        return isCarbon(atom) && !showCarbon(atom, atomContainer, model);
     }
 
     /**
@@ -290,7 +297,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
             return new RectangleElement(
                     p.x - r, p.y - r, d, d, true, getAtomColor(atom));
         } else {
-            return new OvalElement(p.x, p.y, r, true, getAtomColor(atom));
+            return new OvalElement(p.x, p.y, r, true, getAtomColor(atom, model));
         }
     }
 

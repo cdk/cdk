@@ -85,7 +85,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         Assert.assertEquals((int)atom.getFormalCharge(), element.formalCharge);
         Assert.assertEquals((int)atom.getImplicitHydrogenCount(), element.hydrogenCount);
         Assert.assertEquals(alignment, element.alignment);
-        Assert.assertEquals(generator.getAtomColor(atom), element.color);
+        Assert.assertEquals(generator.getAtomColor(atom, model), element.color);
     }
 
     @Test
@@ -232,7 +232,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         IAtomContainer singleAtom = makeSingleAtom("O");
         model.set(AtomColor.class, testColor);
         model.set(ColorByType.class, false);
-        generator.getAtomColor(singleAtom.getAtom(0));
+        generator.getAtomColor(singleAtom.getAtom(0), model);
         
         List<IRenderingElement> elements = 
             getAllSimpleElements(generator, singleAtom);
