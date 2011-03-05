@@ -1234,6 +1234,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == +2)) {
     			IAtomType type = getAtomType("Co.2plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
+    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +3)) {
+    			IAtomType type = getAtomType("Co.3plus");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
             } else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
                     atom.getFormalCharge() == 0)) {
                 IAtomType type = getAtomType("Co.metallic");
