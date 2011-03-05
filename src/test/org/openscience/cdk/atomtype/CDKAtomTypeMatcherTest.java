@@ -35,6 +35,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,8 +45,10 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNAtom;
+import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -3288,6 +3291,25 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {"P.ine"};
 
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.bug 3190151
+     */
+    public void testPine() throws Exception {
+    	IAtom atomP = new NNAtom(Elements.PHOSPHORUS);
+    	IAtomType atomTypeP = new NNAtomType(Elements.PHOSPHORUS);
+    	AtomTypeManipulator.configure(atomP, atomTypeP);
+
+    	IAtomContainer ac = atomP.getBuilder().newAtomContainer();
+    	ac.addAtom(atomP);
+    	IAtomType type = null;
+    	for (IAtom atom : ac.atoms()) {
+    		type = CDKAtomTypeMatcher.getInstance(
+    				ac.getBuilder()
+    			).findMatchingAtomType(ac, atom);
+    		Assert.assertNotNull(type);
+    	}
     }
 
     @Test public void countTestedAtomTypes() {
