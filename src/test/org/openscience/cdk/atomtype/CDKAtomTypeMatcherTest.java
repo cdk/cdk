@@ -1,7 +1,5 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- *               2007  Rajarshi Guha
+/* Copyright (C) 2007-2011  Egon Willighagen <egonw@users.sf.net>
+ *               2007       Rajarshi Guha
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -1551,6 +1549,13 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
         expectedTypes = new String[]{"Co.2plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        mol = new Molecule();
+        atom = new Atom("Co");
+        atom.setFormalCharge(+3);
+        mol.addAtom(atom);
+        expectedTypes = new String[]{"Co.3plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new Molecule();
