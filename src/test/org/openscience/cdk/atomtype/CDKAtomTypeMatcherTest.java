@@ -38,11 +38,12 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
@@ -3344,6 +3345,18 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         // option one: new Integer()
         atom.setFormalCharge(new Integer(-1));
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.bug 3190151
+     */
+    public void testP() throws Exception {
+    	IAtom atomP = new NNAtom("P");
+    	IAtomContainer mol = new Molecule();
+    	mol.addAtom(atomP);
+        String[] expectedTypes = {"P.ine"};
+
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
