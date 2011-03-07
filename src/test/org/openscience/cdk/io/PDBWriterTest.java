@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 import javax.vecmath.Point3d;
@@ -39,11 +41,17 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * TestCase for the PDBWriter class.
@@ -79,7 +87,6 @@ public class PDBWriterTest extends ChemObjectIOTest {
     	writer.close();
     	
 		String output = sWriter.toString();
-		System.out.println(output);
 		Assert.assertNotNull(output);
 		Assert.assertTrue(output.length() > 0);
 		
@@ -114,7 +121,6 @@ public class PDBWriterTest extends ChemObjectIOTest {
     	writer.close();
     	
 		String output = sWriter.toString();
-		System.out.println(output);
 		Assert.assertNotNull(output);
 		Assert.assertTrue(output.length() > 0);
 		
@@ -130,5 +136,126 @@ public class PDBWriterTest extends ChemObjectIOTest {
 		
 		// can't do further testing as the PDBReader does not read
 		// Crystal structures :(
+    }
+    
+    private IMolecule singleAtomMolecule() {
+        return singleAtomMolecule("");    
+    }
+    
+    private IMolecule singleAtomMolecule(String id) {
+        return singleAtomMolecule(id, null);
+    }
+    
+    private IMolecule singleAtomMolecule(String id, Integer formalCharge) {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C", new Point3d(0.0, 0.0, 0.0)); 
+        mol.addAtom(atom);
+        mol.setID(id);
+        if (formalCharge != null) {
+            atom.setFormalCharge(formalCharge);
+        }
+        return mol;
+    }
+    
+    private IMolecule singleBondMolecule() {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));
+        mol.addAtom(new Atom("O", new Point3d(1.0, 1.0, 1.0)));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        return mol;
+    }
+    
+    private String getAsString(IMolecule mol) throws CDKException, IOException {
+        StringWriter stringWriter = new StringWriter();
+        PDBWriter writer = new PDBWriter(stringWriter);
+        writer.writeMolecule(mol);
+        writer.close();
+        return stringWriter.toString();
+    }
+    
+    private String[] getAsStringArray(IMolecule mol) throws CDKException, IOException {
+        return getAsString(mol).split(System.getProperty("line.separator"));
+    }
+        
+    @Test
+    public void writeAsHET() throws CDKException, IOException {
+        IMolecule mol = singleAtomMolecule();
+        StringWriter stringWriter = new StringWriter();
+        PDBWriter writer = new PDBWriter(stringWriter);
+        writer.getIOSettings()[0].setSetting("true");
+        writer.writeMolecule(mol);
+        writer.close();
+        String asString = stringWriter.toString();
+        Assert.assertTrue(asString.indexOf("HETATM") != -1);
+    }
+    
+    @Test
+    public void writeAsATOM() throws CDKException, IOException {
+        IMolecule mol = singleAtomMolecule();
+        StringWriter stringWriter = new StringWriter();
+        PDBWriter writer = new PDBWriter(stringWriter);
+        writer.getIOSettings()[0].setSetting("false");
+        writer.writeMolecule(mol);
+        writer.close();
+        String asString = stringWriter.toString();
+        Assert.assertTrue(asString.indexOf("ATOM") != -1);
+    }
+    
+    @Test
+    public void writeMolID() throws CDKException, IOException {
+        IMolecule mol = singleAtomMolecule("ZZZ");
+        Assert.assertTrue(getAsString(mol).indexOf("ZZZ") != -1);
+    }
+    
+    @Test
+    public void writeNullMolID() throws CDKException, IOException {
+        IMolecule mol = singleAtomMolecule(null);
+        Assert.assertTrue(getAsString(mol).indexOf("MOL") != -1);
+    }
+    
+    @Test
+    public void writeEmptyStringMolID() throws CDKException, IOException {
+        IMolecule mol = singleAtomMolecule("");
+        Assert.assertTrue(getAsString(mol).indexOf("MOL") != -1);
+    }
+
+    @Test
+    public void writeChargedAtom() throws CDKException, IOException {
+        IMolecule mol = singleAtomMolecule("", 1);
+        String[] lines = getAsStringArray(mol);
+        Assert.assertTrue(lines[lines.length - 2].endsWith("+1"));
+    }
+    
+    @Test
+    public void writeMoleculeWithBond() throws CDKException, IOException {
+        IMolecule mol = singleBondMolecule();
+        String[] lines = getAsStringArray(mol);
+        String lastLineButTwo = lines[lines.length - 3];
+        String lastLineButOne = lines[lines.length - 2];
+        Assert.assertEquals("CONECT    1    2", lastLineButTwo);
+        Assert.assertEquals("CONECT    2    1", lastLineButOne);
+    }
+    
+    private void setCoordinatesToZero(IMolecule mol) {
+        for (IAtom atom : mol.atoms()) {
+            atom.setPoint3d(new Point3d(0.0, 0.0, 0.0));
+        }
+    }
+    
+    @Test
+    public void molfactoryRoundtripTest() throws Exception {
+        IMolecule original = MoleculeFactory.makePyrrole();
+        setCoordinatesToZero(original);
+        StringWriter stringWriter = new StringWriter();
+        PDBWriter writer = new PDBWriter(stringWriter);
+        writer.writeMolecule(original);
+        writer.close();
+        String output = stringWriter.toString();
+        PDBReader reader = new PDBReader(new StringReader(output));
+        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IMolecule reconstructed = 
+            chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
+        Assert.assertEquals(original.getAtomCount(), reconstructed.getAtomCount());
+        Assert.assertEquals(original.getBondCount(), reconstructed.getBondCount());
     }
 }
