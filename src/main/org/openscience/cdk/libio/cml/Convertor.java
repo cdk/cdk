@@ -101,7 +101,7 @@ public class Convertor {
         LoggingToolFactory.createLoggingTool(Convertor.class);
 
     private final static String CUSTOMIZERS_LIST = "libio-cml-customizers.set";
-    private static Map<String, ICMLCustomizer> customizers = null;
+    private Map<String, ICMLCustomizer> customizers = null;
 
     private boolean useCMLIDs;
     private String prefix;
