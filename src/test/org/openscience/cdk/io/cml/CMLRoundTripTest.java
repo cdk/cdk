@@ -31,6 +31,7 @@ import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
@@ -249,9 +250,8 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(CDKConstants.UNSET, roundTrippedAtom.getImplicitHydrogenCount());
     }
 
-    @Test public void testAtomPartialCharge() throws Exception {
-        if (true) return;
-        Assert.fail("Have to figure out how to store partial charges in CML2");
+    @Ignore("Have to figure out how to store partial charges in CML2")
+    public void testAtomPartialCharge() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         double partialCharge = 0.5;
@@ -265,9 +265,8 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(atom.getCharge(), roundTrippedAtom.getCharge(), 0.0001);
     }
     
-    @Test public void testAtomStereoParity() throws Exception {
-        if (true) return;
-        Assert.fail("Have to figure out how to store atom parity in CML2");
+    @Ignore("Have to figure out how to store atom parity in CML2")
+    public void testAtomStereoParity() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         int stereo = CDKConstants.STEREO_ATOM_PARITY_PLUS;
