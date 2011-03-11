@@ -99,7 +99,7 @@ public class Convertor {
     private LoggingTool logger;
 
     private final static String CUSTOMIZERS_LIST = "libio-cml-customizers.set";
-    private static Map<String, ICMLCustomizer> customizers = null;
+    private Map<String, ICMLCustomizer> customizers = null;
 
     private boolean useCMLIDs;
     /** specify if the IMolecule object need to put identify or reference definition*/

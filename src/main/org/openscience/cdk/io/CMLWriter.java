@@ -124,7 +124,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     
     private LoggingTool logger;
     
-    private static List<ICMLCustomizer> customizers = null;
+    private List<ICMLCustomizer> customizers = null;
 
     /**
      * Constructs a new CMLWriter class. Output will be stored in the Writer
