@@ -36,6 +36,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="log4j"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="standard"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="atomtype"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="dict"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="io"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="extra"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="formula"/></antcall>
@@ -74,6 +75,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-interfaces"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-data"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-datadebug"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-dict"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-nonotify"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-extra"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-forcefield"/></antcall>
