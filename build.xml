@@ -1063,7 +1063,7 @@
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
             <foreach target="test-module" param="module" trim="true"
-                list="core,data,datadebug,diff,nonotify,atomtype,standard,
+                list="core,data,datadebug,dict,diff,nonotify,atomtype,standard,
                       io,builder3d,forcefield,valencycheck,charges,reaction,
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
