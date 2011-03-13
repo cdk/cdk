@@ -1640,5 +1640,21 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(2, results[1]);
     }
+
+    /**
+     * Check that bond order query respects aromaticity.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testBondOrderQueryKekuleVsSmiles() throws Exception {
+        int[] results = match("[#6]=[#6]", "c1ccccc1c2ccccc2");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+
+        results = match("[#6]=[#6]", "C1=C(C=CC=C1)C2=CC=CC=C2");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+    }
 }
 

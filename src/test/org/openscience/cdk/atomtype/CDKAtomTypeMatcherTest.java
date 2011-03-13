@@ -1,7 +1,5 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- *               2007  Rajarshi Guha
+/* Copyright (C) 2007-2011  Egon Willighagen <egonw@users.sf.net>
+ *               2007       Rajarshi Guha
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -35,17 +33,21 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNAtom;
+import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -1616,6 +1618,13 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
         expectedTypes = new String[]{"Co.2plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        mol = new Molecule();
+        atom = new Atom("Co");
+        atom.setFormalCharge(+3);
+        mol.addAtom(atom);
+        expectedTypes = new String[]{"Co.3plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new Molecule();
@@ -3345,6 +3354,37 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         // option one: new Integer()
         atom.setFormalCharge(new Integer(-1));
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.bug 3190151
+     */
+    public void testP() throws Exception {
+    	IAtom atomP = new NNAtom("P");
+    	IAtomContainer mol = new Molecule();
+    	mol.addAtom(atomP);
+        String[] expectedTypes = {"P.ine"};
+
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.bug 3190151
+     */
+    public void testPine() throws Exception {
+    	IAtom atomP = new NNAtom(Elements.PHOSPHORUS);
+    	IAtomType atomTypeP = new NNAtomType(Elements.PHOSPHORUS);
+    	AtomTypeManipulator.configure(atomP, atomTypeP);
+
+    	IAtomContainer ac = atomP.getBuilder().newInstance(IAtomContainer.class);
+    	ac.addAtom(atomP);
+    	IAtomType type = null;
+    	for (IAtom atom : ac.atoms()) {
+    		type = CDKAtomTypeMatcher.getInstance(
+    				ac.getBuilder()
+    			).findMatchingAtomType(ac, atom);
+    		Assert.assertNotNull(type);
+    	}
     }
 
     @Test public void countTestedAtomTypes() {

@@ -48,10 +48,10 @@ public class OrderQueryBond extends QueryBond implements IQueryBond {
             return true;
         } else if (this.getFlag(CDKConstants.ISAROMATIC) && 
         		   bond.getFlag(CDKConstants.ISAROMATIC)) {
-            // or both are aromatic
+            return true;
         } // else
         return false;
-    };
+    };                                                           
 
     public void setAtoms(IAtom[] atoms) {
         if (atoms.length > 0 && atoms[0] instanceof IQueryAtom) {

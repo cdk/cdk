@@ -54,9 +54,14 @@ public class OrderQueryBond extends SMARTSBond {
 	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
 	 */
     public boolean matches(IBond bond) {
-        if (getOrder() == IBond.Order.SINGLE) {
-            return !bond.getFlag(CDKConstants.ISAROMATIC) && getOrder() == bond.getOrder();
-        } else return getOrder() == bond.getOrder();
+        if (bond.getFlag(CDKConstants.ISAROMATIC) ^ getFlag(CDKConstants.ISAROMATIC)) return false;
+
+        // we check for both bonds being aromatic - but the query will
+        // never come in as aromatic (since there is a separate aromatic
+        // query bond). But no harm in checking
+        if (bond.getFlag(CDKConstants.ISAROMATIC) && getFlag(CDKConstants.ISAROMATIC)) return true;
+
+        return bond.getOrder() == getOrder();
     }
 
     /* (non-Javadoc)

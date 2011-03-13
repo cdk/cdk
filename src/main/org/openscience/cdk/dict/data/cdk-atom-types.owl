@@ -1227,6 +1227,13 @@
     <at:piBondCount>0</at:piBondCount>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="Co.3plus">
+    <at:formalCharge>3</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="Co.metallic">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Co"/>

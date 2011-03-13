@@ -76,7 +76,7 @@ public class AcidicGroupCountDescriptor implements IMolecularDescriptor {
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidGroupCount",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit"

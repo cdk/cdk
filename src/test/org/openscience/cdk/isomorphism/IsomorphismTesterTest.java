@@ -28,9 +28,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Checks the functionality of the IsomorphismTester
@@ -146,4 +152,29 @@ public class IsomorphismTesterTest extends CDKTestCase
 		Assert.assertTrue(it.isIsomorphic(pinene_2, pinene_1));
 		Assert.assertFalse(it.isIsomorphic(pinene_2, pinene_non));
 	}
+
+    @Test
+    public void testBiphenyl() throws Exception {
+
+        //get the biphenyl as aromatic smiles
+        SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        IMolecule biphenyl_aromaticsmiles = parser.parseSmiles("c1ccccc1c2ccccc2");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_aromaticsmiles);
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(biphenyl_aromaticsmiles.getBuilder());
+        hAdder.addImplicitHydrogens(biphenyl_aromaticsmiles);
+        CDKHueckelAromaticityDetector.detectAromaticity(biphenyl_aromaticsmiles);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_aromaticsmiles);
+
+
+        //get the biphenyl as Kekule smiles
+        IMolecule biphenyl_kekulesmiles = parser.parseSmiles("C1=C(C=CC=C1)C2=CC=CC=C2");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_kekulesmiles);
+        hAdder = CDKHydrogenAdder.getInstance(biphenyl_kekulesmiles.getBuilder());
+        hAdder.addImplicitHydrogens(biphenyl_kekulesmiles);
+        CDKHueckelAromaticityDetector.detectAromaticity(biphenyl_kekulesmiles);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_kekulesmiles);
+
+
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));      
+    }
 }

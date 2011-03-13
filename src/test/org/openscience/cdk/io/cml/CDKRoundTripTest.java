@@ -34,8 +34,9 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomDiff;
 
@@ -46,11 +47,13 @@ public class CDKRoundTripTest extends CDKTestCase {
 
     private static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     
+    private static Convertor convertor = new Convertor(false, "");
+
     @Test public void testIElement_Symbol() throws Exception {
         IMolecule mol = builder.newInstance(IMolecule.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -60,7 +63,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setAtomicNumber(6);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -70,7 +73,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setNaturalAbundance(99.);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -80,7 +83,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setExactMass(12.);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -90,7 +93,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setMassNumber(13);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -100,7 +103,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setAtomTypeName("C.sp3");
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -110,7 +113,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setMaxBondOrder(IBond.Order.TRIPLE);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -120,7 +123,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setBondOrderSum(4.);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -130,7 +133,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFormalCharge(+1);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -140,7 +143,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFormalNeighbourCount(4);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -150,7 +153,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setHybridization(IAtomType.Hybridization.SP3);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -160,7 +163,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setCovalentRadius(1.5d);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -170,7 +173,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setValency(4);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -180,7 +183,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setCharge(0.3);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -190,7 +193,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setImplicitHydrogenCount(4);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -200,7 +203,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint2d(new Point2d(1.0, 2.0));
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -210,7 +213,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint3d(new Point3d(1.0, 2.0, 3.0));
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -220,7 +223,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFractionalPoint3d(new Point3d(1.0, 2.0, 3.0));
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -232,7 +235,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         atom.setPoint3d(new Point3d(-1.0, -2.0, -3.0));
         atom.setFractionalPoint3d(new Point3d(1.0, 2.0, 3.0));
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
@@ -242,7 +245,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setStereoParity(-1);
         mol.addAtom(atom);
-        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }

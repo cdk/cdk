@@ -275,6 +275,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
         
         IIsotope carb = builder.newInstance(IIsotope.class,"C");
+        IIsotope cl = builder.newInstance(IIsotope.class, "Cl");
         IIsotope h1 = builder.newInstance(IIsotope.class,"H");
         IIsotope h2 = builder.newInstance(IIsotope.class,"H");
         h2.setExactMass(2.0004);
@@ -283,6 +284,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope( h1 , 0, 10);
     	
         Assert.assertTrue(mfRange.contains(carb));
+        Assert.assertFalse(mfRange.contains(cl));
         Assert.assertTrue(mfRange.contains(h1));
         Assert.assertFalse(mfRange.contains(h2));
     }

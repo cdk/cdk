@@ -540,7 +540,7 @@
             list="charges,smarts,signature"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="qm,qsar,ionpot,fingerprint,pcore,smsd"/>
+            list="qm,qsar,ionpot,fingerprint,pcore,smsd,tautomer"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
@@ -576,7 +576,7 @@
         	      test-nonotify"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-qsarprotein,test-qsarionpot,test-smsd"/>
+            list="test-qsarprotein,test-qsarionpot,test-smsd,test-tautomer"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-signature"/>
@@ -683,6 +683,7 @@
                     <include name="cdk-iordf.jar"/>
                     <include name="cdk-signature.jar"/>
                     <include name="cdk-qm.jar"/>
+                    <include name="cdk-tautomer.jar"/>
                 </fileset>
             </unjar>
 
@@ -753,6 +754,7 @@
                     <include name="cdk-formula.jar"/>
 		    <include name="cdk-atomtype.jar"/>
                     <include name="cdk-signature.jar"/>
+                    <include name="cdk-tautomer.jar"/>
                 </fileset>
             </unjar>
 
@@ -846,7 +848,8 @@
                     <include name="cdk-test-render.jar"/>
                     <include name="cdk-test-log4j.jar"/>
                     <include name="cdk-test-signature.jar"/>
-                    <include name="cdk-test-cip.jar"/>
+		    <include name="cdk-test-cip.jar"/>
+                    <include name="cdk-test-tautomer.jar"/>
                 </fileset>
             </unjar>
 
@@ -1060,12 +1063,12 @@
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
             <foreach target="test-module" param="module" trim="true"
-                list="core,data,datadebug,diff,nonotify,atomtype,standard,
+                list="core,data,datadebug,dict,diff,nonotify,atomtype,standard,
                       io,builder3d,forcefield,valencycheck,charges,reaction,
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
-                      ioformats,log4j,smsd,signature,iordf,cip"/>
+                      ioformats,log4j,smsd,signature,iordf,cip,tautomer"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

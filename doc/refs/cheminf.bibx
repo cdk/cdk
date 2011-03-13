@@ -223,6 +223,19 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="FLO62">
+    <bibtex:article>
+      <bibtex:author>Floyd, R.W.</bibtex:author>
+      <bibtex:title>Algorithm 97: Shortest path</bibtex:title>
+      <bibtex:journal>Commun. ACM</bibtex:journal>
+      <bibtex:year>1962</bibtex:year>
+      <bibtex:volume>5</bibtex:volume>
+      <bibtex:number>6</bibtex:number>
+      <bibtex:pages>345</bibtex:pages>
+      <bibtex:doi>10.1145/367766.368168</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="GH82">
     <bibtex:article>
       <bibtex:author>Gasteiger, J. and  Hutchings, M.G.</bibtex:author>
@@ -1121,5 +1134,16 @@ Method </bibtex:title>
       <bibtex:pages>2-4</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+   
+  <bibtex:entry id="Thalheim2010">
+        <bibtex:article>
+            <bibtex:author>Thalheim, T. and Vollmer, A. and Ebert, R. and Kuehne, R. and Schuurmann, G.</bibtex:author>
+            <bibtex:title>Tautomer Identification and Tautomer Structure Generation Based on the InChI Code</bibtex:title>
+            <bibtex:journal>J. Chem. Inf. Model.</bibtex:journal>
+            <bibtex:year>2010</bibtex:year>
+            <bibtex:volume>50</bibtex:volume>
+            <bibtex:pages>1223-1232</bibtex:pages>
+        </bibtex:article>
+   </bibtex:entry>
 
 </bibtex:file>

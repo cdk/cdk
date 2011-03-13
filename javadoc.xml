@@ -116,6 +116,7 @@
       <antcall target="ojdcheck-module"><param name="module" value="nonotify"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="standard"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="atomtype"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="dict"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="io"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="ioformats"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="iordf"/></antcall>
@@ -131,6 +132,7 @@
       <antcall target="ojdcheck-module"><param name="module" value="smiles"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="smarts"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="sdg"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="tautomer"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="forcefield"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="pdb"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="qsar"/></antcall>

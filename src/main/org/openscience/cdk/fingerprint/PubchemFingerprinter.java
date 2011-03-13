@@ -105,7 +105,7 @@ public class PubchemFingerprinter implements IFingerprinter {
     }
 
     /**
-     * Calculate 881 bit Pubchem fingperprint for a molecule.
+     * Calculate 881 bit Pubchem fingerprint for a molecule.
      * <p/>
      * See 
      * <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">here</a>
