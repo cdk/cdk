@@ -3376,7 +3376,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	IAtomType atomTypeP = new NNAtomType(Elements.PHOSPHORUS);
     	AtomTypeManipulator.configure(atomP, atomTypeP);
 
-    	IAtomContainer ac = atomP.getBuilder().newAtomContainer();
+    	IAtomContainer ac = atomP.getBuilder().newInstance(IAtomContainer.class);
     	ac.addAtom(atomP);
     	IAtomType type = null;
     	for (IAtom atom : ac.atoms()) {
