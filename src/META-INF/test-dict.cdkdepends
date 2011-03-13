@@ -1,3 +1,5 @@
 cdk-annotation.jar
 cdk-dict.jar
 cdk-test.jar
+cdk-interfaces.jar
+cdk-core.jar
