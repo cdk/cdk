@@ -223,6 +223,19 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="FLO62">
+    <bibtex:article>
+      <bibtex:author>Floyd, R.W.</bibtex:author>
+      <bibtex:title>Algorithm 97: Shortest path</bibtex:title>
+      <bibtex:journal>Commun. ACM</bibtex:journal>
+      <bibtex:year>1962</bibtex:year>
+      <bibtex:volume>5</bibtex:volume>
+      <bibtex:number>6</bibtex:number>
+      <bibtex:pages>345</bibtex:pages>
+      <bibtex:doi>10.1145/367766.368168</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="GH82">
     <bibtex:article>
       <bibtex:author>Gasteiger, J. and  Hutchings, M.G.</bibtex:author>

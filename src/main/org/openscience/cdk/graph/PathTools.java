@@ -69,7 +69,8 @@ public class PathTools {
 
 
     /**
-     * All-Pairs-Shortest-Path computation based on Floyds algorithm. Takes an nxn
+     * All-Pairs-Shortest-Path computation based on Floyd's
+     * algorithm {@cdk.cite FLO62}. It takes an nxn
      * matrix C of edge costs and produces an nxn matrix A of lengths of shortest
      * paths.
      *
@@ -111,7 +112,8 @@ public class PathTools {
     }
 
     /**
-     * All-Pairs-Shortest-Path computation based on Floyds algorithm Takes an nxn
+     * All-Pairs-Shortest-Path computation based on Floyd's
+     * algorithm {@cdk.cite FLO62}. It takes an nxn
      * matrix C of edge costs and produces an nxn matrix A of lengths of shortest
      * paths.
      *
