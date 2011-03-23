@@ -82,6 +82,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author      Bradley Smith <bradley@baysmith.com>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
+ * @author      Gilleain Torrance <gilleain.torrance@gmail.com>
  * @cdk.created 2001-08-06
  * @cdk.keyword file format, PDB
  * @cdk.bug     1714141
