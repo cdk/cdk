@@ -913,9 +913,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             // no idea how to deal with this yet
             return null;
         } else if (neighborcount == 3) {
+        	int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
             if (atom.getFormalCharge() != null &
                 atom.getFormalCharge().intValue() == 1) {
                 IAtomType type = getAtomType("P.anium");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (doubleBonds == 1) {
+            	IAtomType type = getAtomType("P.ate");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             } else {
                 IAtomType type = getAtomType("P.ine");
