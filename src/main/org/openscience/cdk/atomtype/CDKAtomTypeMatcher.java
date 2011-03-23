@@ -915,6 +915,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (hasOneSingleElectron(atomContainer, atom)) {
             // no idea how to deal with this yet
             return null;
+        } else if (neighborcount == 0) {
+            if (atom.getFormalCharge() == null ||
+                atom.getFormalCharge().intValue() == 0) {
+                IAtomType type = getAtomType("P.ine");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         } else if (neighborcount == 3) {
         	int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
             if (atom.getFormalCharge() != null &
