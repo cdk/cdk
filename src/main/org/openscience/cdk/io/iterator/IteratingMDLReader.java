@@ -156,6 +156,8 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
                     logger.debug("MDL file part read: ", buffer);
                     ISimpleChemObjectReader reader = factory.createReader(currentFormat);
                     reader.setReader(new StringReader(buffer.toString()));
+                    reader.setErrorHandler(this.errorHandler);
+                    reader.setReaderMode(this.mode);
                     if (currentFormat instanceof MDLV2000Format) {
                         reader.addChemObjectIOListener(this);
                         ((MDLV2000Reader)reader).customizeJob();
