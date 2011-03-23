@@ -111,7 +111,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
     }
 
     /**
-     * Contructs a new IteratingMDLReader that can read Molecule from a given InputStream.
+     * Constructs a new IteratingMDLReader that can read Molecule from a given InputStream.
      *
      * @param  in  The InputStream to read from
      * @param builder The builder
