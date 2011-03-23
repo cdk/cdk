@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomType;
@@ -3325,4 +3326,62 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	super.testForDuplicateDefinitions();
     }
     
+    /**
+     * @cdk.bug   3141611
+     * @cdk.inchi InChI=1S/CH5O2P/c1-4(2)3/h4H,1H3,(H,2,3)
+     */
+    @Test
+    public void testMethylphosphinicAcid() throws Exception {
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    	IMolecule mol = builder.newMolecule();
+    	IAtom a1 = builder.newAtom("P");
+    	a1.setFormalCharge(0);
+    	mol.addAtom(a1);
+    	IAtom a2 = builder.newAtom("O");
+    	a2.setFormalCharge(0);
+    	mol.addAtom(a2);
+    	IAtom a3 = builder.newAtom("O");
+    	a3.setFormalCharge(0);
+    	mol.addAtom(a3);
+    	IAtom a4 = builder.newAtom("C");
+    	a4.setFormalCharge(0);
+    	mol.addAtom(a4);
+    	IAtom a5 = builder.newAtom("H");
+    	a5.setFormalCharge(0);
+    	mol.addAtom(a5);
+    	IAtom a6 = builder.newAtom("H");
+    	a6.setFormalCharge(0);
+    	mol.addAtom(a6);
+    	IAtom a7 = builder.newAtom("H");
+    	a7.setFormalCharge(0);
+    	mol.addAtom(a7);
+    	IAtom a8 = builder.newAtom("H");
+    	a8.setFormalCharge(0);
+    	mol.addAtom(a8);
+    	IAtom a9 = builder.newAtom("H");
+    	a9.setFormalCharge(0);
+    	mol.addAtom(a9);
+    	IBond b1 = builder.newBond(a1, a2, IBond.Order.SINGLE);
+    	mol.addBond(b1);
+    	IBond b2 = builder.newBond(a1, a3, IBond.Order.DOUBLE);
+    	mol.addBond(b2);
+    	IBond b3 = builder.newBond(a1, a4, IBond.Order.SINGLE);
+    	mol.addBond(b3);
+    	IBond b4 = builder.newBond(a1, a5, IBond.Order.SINGLE);
+    	mol.addBond(b4);
+    	IBond b5 = builder.newBond(a2, a9, IBond.Order.SINGLE);
+    	mol.addBond(b5);
+    	IBond b6 = builder.newBond(a4, a6, IBond.Order.SINGLE);
+    	mol.addBond(b6);
+    	IBond b7 = builder.newBond(a4, a7, IBond.Order.SINGLE);
+    	mol.addBond(b7);
+    	IBond b8 = builder.newBond(a4, a8, IBond.Order.SINGLE);
+    	mol.addBond(b8);
+
+        String[] expectedTypes = {
+       		"P.ate", "O.sp3", "O.sp2", "C.sp3", "H", "H", "H", "H", "H"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
 }
