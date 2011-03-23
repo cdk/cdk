@@ -917,6 +917,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
         } else if (neighborcount == 3) {
+        	int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
+            if (doubleBonds == 1) {
+            	IAtomType type = getAtomType("P.ate");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
             IAtomType type = getAtomType("P.ine");
             if (isAcceptable(atom, atomContainer, type)) return type;
         } else if (neighborcount == 2) {
