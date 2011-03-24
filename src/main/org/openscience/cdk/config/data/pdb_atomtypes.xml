@@ -379,27 +379,27 @@
   <atomType id="TRP.O"   ><atom elementType="O"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.4</scalar></atomType>
   <atomType id="TRP.OXT" ><atom elementType="O"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.4</scalar></atomType>
 
-  <atomType id="TYR.H"  ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.HA" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.1HB"><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.2HB"><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.3HB"><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.HD1"><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.HD2"><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.HE1"><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.HE2"><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.HH" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
-  <atomType id="TYR.C"  ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.7</scalar></atomType>
-  <atomType id="TYR.CA" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
-  <atomType id="TYR.CB" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
-  <atomType id="TYR.CG" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
-  <atomType id="TYR.CD1"><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
-  <atomType id="TYR.CD2"><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
-  <atomType id="TYR.CE1"><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
-  <atomType id="TYR.CE2"><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
-  <atomType id="TYR.CZ" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.8</scalar></atomType>
-  <atomType id="TYR.N"  ><atom elementType="N"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.7</scalar></atomType>
-  <atomType id="TYR.O"  ><atom elementType="O"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.4</scalar></atomType>
+  <atomType id="TYR.H"   ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.HA"  ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.1HB" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.2HB" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.3HB" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.HD1" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.HD2" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.HE1" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.HE2" ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.HH"  ><atom elementType="H"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.2</scalar></atomType>
+  <atomType id="TYR.C"   ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.7</scalar></atomType>
+  <atomType id="TYR.CA"  ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
+  <atomType id="TYR.CB"  ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
+  <atomType id="TYR.CG"  ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
+  <atomType id="TYR.CD1" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
+  <atomType id="TYR.CD2" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
+  <atomType id="TYR.CE1" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
+  <atomType id="TYR.CE2" ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.9</scalar></atomType>
+  <atomType id="TYR.CZ"  ><atom elementType="C"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.8</scalar></atomType>
+  <atomType id="TYR.N"   ><atom elementType="N"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.7</scalar></atomType>
+  <atomType id="TYR.O"   ><atom elementType="O"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.4</scalar></atomType>
   <atomType id="TYR.OH"  ><atom elementType="O"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.4</scalar></atomType>
   <atomType id="TYR.OXT" ><atom elementType="O"/><scalar dataType="xsd:double" dictRef="emboss:vdwrad">1.4</scalar></atomType>
         
