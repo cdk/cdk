@@ -74,7 +74,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
             LoggingToolFactory.createLoggingTool(Mol2Reader.class);
 
     /**
-     * Contructs a new MDLReader that can read Molecule from a given Reader.
+     * Constructs a new MDLReader that can read Molecule from a given Reader.
      *
      * @param in The Reader to read from
      */

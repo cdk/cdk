@@ -3359,6 +3359,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     /**
      * @cdk.bug 3190151
      */
+    @Test
     public void testP() throws Exception {
     	IAtom atomP = new NNAtom("P");
     	IAtomContainer mol = new Molecule();
@@ -3371,6 +3372,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     /**
      * @cdk.bug 3190151
      */
+    @Test
     public void testPine() throws Exception {
     	IAtom atomP = new NNAtom(Elements.PHOSPHORUS);
     	IAtomType atomTypeP = new NNAtomType(Elements.PHOSPHORUS);

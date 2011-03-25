@@ -68,7 +68,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting useAromaticityFlag;
 
     /**
-     * Contructs a new SMILESWriter that can write a list of SMILES to a Writer
+     * Constructs a new SMILESWriter that can write a list of SMILES to a Writer
      *
      * @param   out  The Writer to write to
      */
@@ -110,7 +110,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Contructs a new SMILESWriter that can write an list of SMILES to a given OutputStream
+     * Constructs a new SMILESWriter that can write an list of SMILES to a given OutputStream
      *
      * @param   out  The OutputStream to write to
      */

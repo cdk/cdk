@@ -79,7 +79,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     private IMolecule nextMolecule;
     
     /**
-     * Contructs a new IteratingSMILESReader that can read Molecule from a given Reader.
+     * Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
      * @param builder The builder to use
@@ -93,7 +93,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     }
 
     /**
-     * Contructs a new IteratingSMILESReader that can read Molecule from a given InputStream.
+     * Constructs a new IteratingSMILESReader that can read Molecule from a given InputStream.
      *
      * This method will use @link{DefaultChemObjectBuilder} to build the actual molecules
      *
@@ -105,7 +105,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     }
 
     /**
-     * Contructs a new IteratingSMILESReader that can read Molecule from a given InputStream and IChemObjectBuilder.
+     * Constructs a new IteratingSMILESReader that can read Molecule from a given InputStream and IChemObjectBuilder.
      *
      * @param in      The input stream
      * @param builder The builder
