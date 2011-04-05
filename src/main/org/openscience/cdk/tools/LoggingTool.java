@@ -163,8 +163,8 @@ public class LoggingTool implements ILoggingTool {
               toSTDOUT = true;
             }
           } catch (Exception e) {
-            logger.debug("guessed what happened: security exception thrown by applet runner");
-            logger.debug("  therefore, do not debug");
+            System.err.println("Could not read the System property used to determine " +
+            		               "if logging should be turned on. So continuing without logging.");
           }
         }
     }
