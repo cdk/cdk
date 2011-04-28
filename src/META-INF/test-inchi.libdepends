@@ -1,5 +1,5 @@
-vecmath1.2-1.14.jar
-xom-1.1.jar
+vecmath*.jar
+xom*.jar
 jniinchi-0.7.jar
 cmlxom-2.5-b1.jar
-log4j.jar
+log4j*.jar

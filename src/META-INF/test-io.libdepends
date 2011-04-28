@@ -1,6 +1,6 @@
 jgrapht-0.6.0.jar
 cmlxom-2.5-b1.jar
-log4j.jar
-vecmath1.2-1.14.jar
-xom-1.1.jar
+log4j*.jar
+vecmath*.jar
+xom*.jar
 xpp3-1.1.4c.jar
