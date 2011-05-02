@@ -87,7 +87,7 @@ public class Tanimoto
         float _bitset1_cardinality = bitset1.cardinality();
         float _bitset2_cardinality = bitset2.cardinality();
         if (bitset1.size() != bitset2.size()) {
-            throw new CDKException("Bisets must have the same bit length");
+            throw new CDKException("Bitsets must have the same bit length");
         }
         BitSet one_and_two = (BitSet)bitset1.clone();
         one_and_two.and(bitset2);
