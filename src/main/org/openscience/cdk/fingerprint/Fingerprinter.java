@@ -59,7 +59,8 @@ import java.util.Set;
  *
  *  A fingerprint is generated for an AtomContainer with this code: <pre>
  *   Molecule molecule = new Molecule();
- *   BitSet fingerprint = Fingerprinter.getFingerprint(molecule);
+ *   IFingerprinter fingerprinter = new Fingerprinter();
+ *   BitSet fingerprint = fingerprinter.getFingerprint(molecule);
  *   fingerprint.size(); // returns 1024 by default
  *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
