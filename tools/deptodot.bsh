@@ -114,6 +114,8 @@ class Sanatizer {
         cleaned.append('_');
       } else if (string.charAt(i) == '*') {
         cleaned.append('_');
+      } else if (string.charAt(i) == '/') {
+        cleaned.append('_');
       } else {
         cleaned.append(string.charAt(i));
       }

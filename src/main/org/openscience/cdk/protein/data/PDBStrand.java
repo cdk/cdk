@@ -54,7 +54,7 @@ public class PDBStrand extends Strand {
 	List sequentialListOfMonomers;
 	
 	/**
-	 * Contructs a new Polymer to store the Monomers.
+	 * Constructs a new Polymer to store the Monomers.
 	 */	
 	public PDBStrand() {
 		super();

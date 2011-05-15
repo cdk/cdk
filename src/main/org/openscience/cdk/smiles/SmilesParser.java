@@ -38,6 +38,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -262,9 +263,13 @@ public class SmilesParser {
                 try {
                     IAtomType type = matcher.findMatchingAtomType(molecule, atom);
                     AtomTypeManipulator.configure(atom, type);
-                } catch (Exception e) {
-                    System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
+                } catch (NoSuchAtomTypeException exception) {
+                		logger.warn("Cannot percieve atom type for the ", i, "th atom: ", atom.getSymbol());
                     atom.setAtomTypeName("X");
+                } catch (Exception exception) {
+                		logger.error("Caught unexpected Exception during atom typing.");
+                	    logger.debug(exception);
+                		atom.setAtomTypeName("X");
                 }
             }
             this.addImplicitHydrogens(molecule);

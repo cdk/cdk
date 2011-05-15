@@ -158,8 +158,27 @@
                 <includesfile name="${build}/${module}.javafiles"/>
             </fileset>
         </copy>
-        <javadoc private="false" public="true">
-            <classpath refid="project.class.path" />
+
+        <!-- check for availability for meta info files -->
+        <available file="${metainf}/${module}.cdkdepends" property="module.cdkdepends.present"/>
+        <available file="${metainf}/${module}.libdepends" property="module.libdepends.present"/>
+        <available file="${metainf}/${module}.devellibdepends" property="module.devellibdepends.present"/>
+
+    	<javadoc private="false" public="true">
+        	<classpath>
+        	    <fileset dir="${lib}" >
+        	        <exclude name="**/*" unless="module.libdepends.present" />
+        	        <includesfile name="${metainf}/${module}.libdepends" if="module.libdepends.present" />
+        	    </fileset>
+        	    <fileset dir="${devellib}">
+        	        <exclude name="**/*" unless="module.devellibdepends.present" />
+        	        <includesfile name="${metainf}/${module}.devellibdepends" if="module.devellibdepends.present" />
+                </fileset>
+        	    <fileset dir="${dist}/jar">
+        	        <exclude name="**/*" unless="module.cdkdepends.present" />
+        	        <includesfile name="${metainf}/${module}.cdkdepends" if="module.cdkdepends.present" />
+        	    </fileset>
+        	</classpath>
 
             <doclet name="com.github.ojdcheck.OpenJavaDocCheck"
                     path="develjar/ojdcheck.jar:src/main">

@@ -63,9 +63,10 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
- * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
- * is read into a {@link IChemSequence} of {@link IChemModel}'s. Each IChemModel will contain one
- * Molecule.
+ * Reads a content from MDL molfiles and SD files. 
+ * It can read a {@link IMolecule) or {@link IChemModel} from an MDL molfile, and
+ * a {@link IChemFile} from a SD file, with a {@link IChemSequence} of
+ * {@link IChemModel}'s, where each IChemModel will contain one IMolecule.
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
  * formal charges. From the Bond block it reads the bonds and the orders.
@@ -124,7 +125,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 	}
 
 	/**
-	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
+	 *  Constructs a new MDLReader that can read Molecule from a given Reader.
 	 *
 	 *@param  in  The Reader to read from
 	 */

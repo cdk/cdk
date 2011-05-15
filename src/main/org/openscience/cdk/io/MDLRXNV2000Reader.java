@@ -76,7 +76,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
 
     /**
-     * Contructs a new MDLReader that can read Molecule from a given Reader.
+     * Constructs a new MDLReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
      */

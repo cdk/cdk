@@ -108,7 +108,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	/**
 	 *
-	 * Contructs a new PDBReader that can read Molecules from a given
+	 * Constructs a new PDBReader that can read Molecules from a given
 	 * InputStream.
 	 *
 	 * @param oIn  The InputStream to read from
@@ -120,7 +120,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	/**
 	 *
-	 * Contructs a new PDBReader that can read Molecules from a given
+	 * Constructs a new PDBReader that can read Molecules from a given
 	 * Reader.
 	 *
 	 * @param oIn  The Reader to read from

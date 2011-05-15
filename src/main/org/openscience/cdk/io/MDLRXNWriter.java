@@ -85,7 +85,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 
     
     /**
-     * Contructs a new MDLWriter that can write an array of 
+     * Constructs a new MDLWriter that can write an array of 
      * Molecules to a Writer.
      *
      * @param   out  The Writer to write to
@@ -103,7 +103,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Contructs a new MDLWriter that can write an array of
+     * Constructs a new MDLWriter that can write an array of
      * Molecules to a given OutputStream.
      *
      * @param   output  The OutputStream to write to
