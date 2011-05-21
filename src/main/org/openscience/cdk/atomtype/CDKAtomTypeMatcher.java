@@ -878,6 +878,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             } else if (doubleBondedAtoms == 3) {
                 IAtomType type = getAtomType("S.trioxide");
                 if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (doubleBondedAtoms == 0) {
+                IAtomType type = getAtomType("S.anyl");
+                if (isAcceptable(atom, atomContainer, type)) return type;
             }
          } else if (neighborcount == 4) {
             // count the number of double bonded oxygens
