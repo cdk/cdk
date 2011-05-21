@@ -128,6 +128,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBeryllium(atomContainer, atom);
         } else if ("Se".equals(atom.getSymbol())) {
             type = perceiveSelenium(atomContainer, atom);
+        } else if ("Te".equals(atom.getSymbol())) {
+            type = perceiveTellurium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
@@ -172,6 +174,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
 		return null;
 	}
+
+    private IAtomType perceiveTellurium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+        if (!isCharged(atom) && maxBondOrder == IBond.Order.SINGLE && atomContainer.getConnectedAtomsCount(atom) <= 2) {
+            IAtomType type = getAtomType("Te.3");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
 
 	private IAtomType perceiveBorons(IAtomContainer atomContainer, IAtom atom)
 		throws CDKException {
