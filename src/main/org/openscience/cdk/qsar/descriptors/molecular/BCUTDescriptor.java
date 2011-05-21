@@ -24,7 +24,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -310,9 +309,9 @@ public class BCUTDescriptor implements IMolecularDescriptor {
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         int counter;
-        Molecule molecule;
+        IAtomContainer molecule;
         try {
-            molecule = (Molecule) container.clone();
+            molecule = (IAtomContainer) container.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
             return getDummyDescriptorValue(new CDKException("Error occured during clone " + e));
