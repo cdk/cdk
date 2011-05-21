@@ -158,4 +158,14 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
             Assert.assertNotNull(type.getAtomTypeName());
         }
     }
+
+    @Test public void test4Sulphur() throws Exception {
+        String smiles = "Br.Br.CS(CCC(N)C#N)C[C@H]1OC([C@H](O)[C@@H]1O)n2cnc3c(N)ncnc23";
+
+        IMolecule mol = smilesParser.parseSmiles(smiles);
+        IAtomType[] types = atomTypeMatcher.findMatchingAtomType(mol);
+        for (IAtomType type : types) {
+            Assert.assertNotNull(type.getAtomTypeName());
+        }
+    }
 }
