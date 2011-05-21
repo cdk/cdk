@@ -3318,6 +3318,33 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	}
     }
 
+    /**
+     * @cdk.inchi InChI=1S/H2Te/h1H2
+     */
+    @Test
+    public void testTellane() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newMolecule();
+        IAtom a1 = builder.newAtom("Te");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newAtom("H");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newAtom("H");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newBond(a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newBond(a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+
+        String[] expectedTypes = {
+            "Te.3", "H", "H"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
@@ -3383,5 +3410,5 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-
+    
 }
