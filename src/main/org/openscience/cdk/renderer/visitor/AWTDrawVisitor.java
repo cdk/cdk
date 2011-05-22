@@ -55,10 +55,11 @@ import org.openscience.cdk.renderer.elements.WedgeLineElement;
 import org.openscience.cdk.renderer.elements.path.Type;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.font.IFontManager;
-import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
-import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator.WedgeWidth;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasing;
+import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ArrowHeadWidth;
 
 
@@ -522,7 +523,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
-        if (rendererModel.getParameter(UseAntiAliasing.class)
+        if ((boolean)rendererModel.getParameter(UseAntiAliasing.class)
             .getValue()) {
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
