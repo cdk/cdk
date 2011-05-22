@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
- * An abstract selection of chem objects.
+ * An abstract selection of {@link IChemObject}s.
  * 
  * @author Arvid
  * @cdk.module renderbasic
@@ -38,20 +38,27 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public abstract class AbstractSelection implements IChemObjectSelection {
 
+	/**
+	 * Static implementation of an empty selection.
+	 */
     public static IChemObjectSelection EMPTY_SELECTION = new AbstractSelection() {
 
+    	/** {@inheritDoc} */
         public IAtomContainer getConnectedAtomContainer() {
             return null;
         }
 
+    	/** {@inheritDoc} */
         public boolean isFilled() {
             return false;
         }
 
+    	/** {@inheritDoc} */
         public boolean contains(IChemObject obj) {
             return false;
         }
 
+    	/** {@inheritDoc} */
         public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
             return Collections.emptySet();
         }
@@ -63,13 +70,12 @@ public abstract class AbstractSelection implements IChemObjectSelection {
         // TODO Auto-generated method stub
 
     }
-
     
     /**
-     * Utility method to add a chemobject to an atom container.
+     * Utility method to add an {@link IChemObject} to an {@link IAtomContainer}.
      * 
-     * @param ac the atom container to add to 
-     * @param item the chem object to add
+     * @param ac the {@link IAtomContainer} to add to 
+     * @param item the {@link IChemObject} to add
      */
     protected void addToAtomContainer(IAtomContainer ac, IChemObject item) {
         if (item instanceof IAtomContainer) {

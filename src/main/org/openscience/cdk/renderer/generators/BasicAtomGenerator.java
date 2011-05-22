@@ -53,69 +53,92 @@ import org.openscience.cdk.validate.ProblemMarker;
 @TestClass("org.openscience.cdk.renderer.generators.BasicAtomGeneratorTest")
 public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
+	/** Class to hold the color by which atom labels are drawn.
+	 *  This color is overwritten by the {@link IAtomColorer}. */
     public static class AtomColor extends
     AbstractGeneratorParameter<Color> {
+    	/** Returns the default value: Color.BLACK. */
         public Color getDefault() {
             return Color.BLACK;
         }
     }
 
-    /** The default atom color */
+    /** The default atom color. */
     private IGeneratorParameter<Color> atomColor = new AtomColor();
 
+    /** {@link IAtomColorer} used to draw elements. */
     public static class AtomColorer extends
     AbstractGeneratorParameter<IAtomColorer> {
+    	/** Returns the default value: {@link CDK2DAtomColors}. */
         public IAtomColorer getDefault() {
             return new CDK2DAtomColors();
         }
     }
 
-    /** Converter between atoms and colors */
+    /** Converter between atoms and colors. */
     private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
 
+    /** Boolean property that triggers atoms to be colored by type
+     *  when set to true. */
     public static class ColorByType extends
     AbstractGeneratorParameter<Boolean> {
+    	/** Returns the default value: true. */
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
     }
 
-    /** If true, colors atoms by their type */
+    /** If true, colors atoms by their type. */
     private IGeneratorParameter<Boolean> colorByType = new ColorByType();
 
+    /** Boolean property that triggers explicit hydrogens to be
+     *  drawn if set to true. */
     public static class ShowExplicitHydrogens extends
     AbstractGeneratorParameter<Boolean> {
+    	/** Returns the default value: true. */
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
     }
 
-    /** If true, explicit hydrogens are displayed*/
+    /** If true, explicit hydrogens are displayed. */
     private IGeneratorParameter<Boolean> showExplicitHydrogens =
         new ShowExplicitHydrogens();
 
+    /** Magic number with unknown units that defines the radius
+     *  around an atom, e.g. used for highlighting atoms. */
     public static class AtomRadius extends
     AbstractGeneratorParameter<Double> {
+    	/** Returns the default value: 0.8. */
         public Double getDefault() {
             return 8.0;
         }
     }
 
-    /** The atom radius on screen */
+    /** The atom radius on screen. */
     private IGeneratorParameter<Double> atomRadius = new AtomRadius();
 
+    /** Boolean parameters that will cause atoms to be drawn as
+     *  filled shapes when set to true. The actual used shape used
+     *  is defined by the {@link CompactShape} parameter. */
     public static class CompactAtom extends
     AbstractGeneratorParameter<Boolean> {
+    	/** Returns the default value: false. */
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
 
-    /** If true, atoms are displayed as 'compact' symbols, not text */
+    /** If true, atoms are displayed as 'compact' symbols, not text. */
     private IGeneratorParameter<Boolean> isCompact = new CompactAtom();
 
+    /** Determines whether structures should be drawn as Kekule structures, thus
+     * giving each carbon element explicitly, instead of not displaying the
+     * element symbol. Example C-C-C instead of /\.
+     */
     public static class KekuleStructure extends
     AbstractGeneratorParameter<Boolean> {
+    	/** Returns the default value: false. */
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -134,19 +157,30 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     public enum Shape { OVAL, SQUARE };
 
+    /**
+     * Shape to be used when drawing atoms in compact mode,
+     * as defined by the {@link CompactAtom} parameter.
+     */
     public static class CompactShape extends
     AbstractGeneratorParameter<Shape> {
+    	/** Returns the default value: Shape.SQUARE. */
         public Shape getDefault() {
             return Shape.SQUARE;
         }
     }
 
-    /** The compact shape used to display atoms when isCompact is true */
+    /** The compact shape used to display atoms when isCompact is true. */
     private IGeneratorParameter<Shape> compactShape = new CompactShape();
 
+    /** Boolean parameters that will show carbons with only one
+     * (non-hydrogen) neighbor to be drawn with an element symbol.
+     *  This setting overwrites and is used in combination with
+     *  the {@link KekuleStructure} parameter.
+     */
     public static class ShowEndCarbons extends
     AbstractGeneratorParameter<Boolean> {
-        public Boolean getDefault() {
+    	/** Returns the default value: false. */
+    	public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }

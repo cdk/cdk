@@ -65,6 +65,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class BondWidth extends
     AbstractGeneratorParameter<Double> {
+    	/** Returns the default value: 1.0. */
         public Double getDefault() {
             return 1.0;
         }
@@ -76,6 +77,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class BondDistance extends
     AbstractGeneratorParameter<Double> {
+    	/** Returns the default value: 2.0. */
         public Double getDefault() {
             return 2.0;
         }
@@ -87,6 +89,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class DefaultBondColor extends
     AbstractGeneratorParameter<Color> {
+    	/** Returns the default value: Color.BLACK. */
         public Color getDefault() {
             return Color.BLACK;
         }
@@ -98,6 +101,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class BondLength extends
     AbstractGeneratorParameter<Double> {
+    	/** Returns the default value: 40.0. */
         public Double getDefault() {
             return 40.0;
         }
@@ -108,6 +112,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * The width on screen of the fat end of a wedge bond.
      */
     public static class WedgeWidth extends AbstractGeneratorParameter<Double> {
+    	/** Returns the default value: 2.0. */
         public Double getDefault() {
             return 2.0;
         }
@@ -119,6 +124,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class TowardsRingCenterProportion extends
     AbstractGeneratorParameter<Double> {
+    	/** Returns the default value: 0.15. */
         public Double getDefault() {
             return 0.15;
         }
@@ -130,7 +136,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
 
     /**
-     * Necessary for calculating inner-ring bond elements
+     * Necessary for calculating inner-ring bond elements.
      */
     protected IRingSet ringSet;
 

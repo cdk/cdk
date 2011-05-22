@@ -26,7 +26,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
- * A selection of some atoms and bonds from an atom container or chem model.
+ * A selection of some atoms and bonds from an {@link IAtomContainer} or
+ * {@link IChemModel}.
  *
  * @author maclean
  * @cdk.module render
