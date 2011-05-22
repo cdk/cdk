@@ -28,7 +28,6 @@ import java.util.Map;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -336,10 +335,10 @@ public class WHIMDescriptor implements IMolecularDescriptor {
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         double sum = 0.0;
-        Molecule ac;
+        IAtomContainer ac;
 
         try {
-            ac = (Molecule) container.clone();
+            ac = (IAtomContainer) container.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
