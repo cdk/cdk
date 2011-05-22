@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,24 +28,17 @@ import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
-import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point3d;
 
 /**
  * Tests for molecular descriptors.
@@ -318,6 +309,20 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
                 );
             }
         }
+    }
+
+    @Test
+    public void testImplementationIndependence() throws Exception {
+        IMolecule water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
+        IMolecule water2 = someoneBringMeSomeWater(NoNotificationChemObjectBuilder.getInstance());
+
+        IDescriptorResult v1 = descriptor.calculate(water1).getValue();
+        IDescriptorResult v2 = descriptor.calculate(water2).getValue();
+
+        String errorMessage = "(" + descriptor.getClass().toString() +
+            ") The descriptor does not give the same results depending on " +
+            "the actual IChemObject implementation set (data, nonotify).";
+        assertEqualOutput(v1, v2, errorMessage);
     }
 
     @Ignore
