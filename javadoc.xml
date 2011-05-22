@@ -12,7 +12,11 @@
     <property name="doxygen.dir" value="doc/doxygen" />
 
     <property name="pathtojava3d" value="" />
+
+    <!-- directories -->
     <property name="build" value="build" />
+    <property name="lib" value="jar" />
+    <property name="devellib" value="develjar" />
 
 	<!-- Used in the html task to properly link to java library classes -->
 	<property name="javaURL" value="http://java.sun.com/j2se/1.5.0/docs/api/"/>
@@ -173,11 +177,7 @@
         	    <fileset dir="${devellib}">
         	        <exclude name="**/*" unless="module.devellibdepends.present" />
         	        <includesfile name="${metainf}/${module}.devellibdepends" if="module.devellibdepends.present" />
-                </fileset>
-        	    <fileset dir="${dist}/jar">
-        	        <exclude name="**/*" unless="module.cdkdepends.present" />
-        	        <includesfile name="${metainf}/${module}.cdkdepends" if="module.cdkdepends.present" />
-        	    </fileset>
+                    </fileset>
         	</classpath>
 
             <doclet name="com.github.ojdcheck.OpenJavaDocCheck"
