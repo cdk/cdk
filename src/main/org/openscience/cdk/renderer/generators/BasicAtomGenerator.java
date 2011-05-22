@@ -314,7 +314,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
             IAtomContainer atomContainer, IAtom atom, RendererModel model) {
         if (!canDraw(atom, atomContainer, model)) {
             return null;
-	    } else if ((boolean)model.get(CompactAtom.class)) {
+	    } else if ((Boolean)model.get(CompactAtom.class)) {
             return this.generateCompactElement(atom, model);
         } else {
             int alignment = 0;
@@ -395,7 +395,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     public boolean showCarbon(
             IAtom carbonAtom, IAtomContainer container, RendererModel model) {
 
-		if ((boolean)model.get(KekuleStructure.class))
+		if ((Boolean)model.get(KekuleStructure.class))
             return true;
 
         if (carbonAtom.getFormalCharge() != 0)
@@ -427,7 +427,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     @TestMethod("getAtomColorTest")
 	protected Color getAtomColor(IAtom atom, RendererModel model) {
 	    Color atomColor = model.get(AtomColor.class);
-	    if ((boolean)model.get(ColorByType.class)) {
+	    if ((Boolean)model.get(ColorByType.class)) {
 	        atomColor = ((IAtomColorer)model.get(AtomColorer.class)).getAtomColor(atom);
         }
         return atomColor;
