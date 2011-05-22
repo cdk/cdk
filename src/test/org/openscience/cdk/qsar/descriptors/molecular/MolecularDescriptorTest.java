@@ -62,7 +62,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     public void testCalculate_IAtomContainer() {
         IAtomContainer mol = null;
         try {
-            mol = someoneBringMeSomeWater();
+            mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail("Error in generating the test molecule");
@@ -83,7 +83,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 
     @Test
     public void testCalculate_NoModifications() throws Exception {
-        IAtomContainer mol = someoneBringMeSomeWater();
+        IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         IAtomContainer clone = (IAtomContainer)mol.clone();
         descriptor.calculate(mol);
         String diff = AtomContainerDiff.diff(clone, mol); 
@@ -100,7 +100,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 	 */
     @Test
     public void testLabels() throws Exception {
-        IAtomContainer mol = someoneBringMeSomeWater();
+        IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         
         DescriptorValue v = descriptor.calculate(mol);
         Assert.assertNotNull(v);
@@ -140,7 +140,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
      */
      @Test
     public void testNamesConsistency() throws Exception {
-        IAtomContainer mol = someoneBringMeSomeWater();
+        IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
 
         String[] names1 = descriptor.getDescriptorNames();
         DescriptorValue v = descriptor.calculate( mol);
@@ -161,7 +161,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     		result
     	);
     	
-    	IAtomContainer mol = someoneBringMeSomeWater();
+    	IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         DescriptorValue v = descriptor.calculate(mol);
         
     	Assert.assertTrue(
@@ -329,13 +329,13 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         }
     }
 
-    private IMolecule someoneBringMeSomeWater() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+    private IMolecule someoneBringMeSomeWater(IChemObjectBuilder builder) throws Exception {
+        IMolecule mol = builder.newMolecule();
+        IAtom c1 = builder.newAtom("O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h1 = builder.newAtom("H");
         h1.setPoint3d(new Point3d(1.0, 0.0, 0.0));
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = builder.newAtom("H");
         h2.setPoint3d(new Point3d(-1.0, 0.0, 0.0));
         mol.addAtom(c1);
         mol.addAtom(h1);
