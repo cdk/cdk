@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -322,6 +323,23 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         String errorMessage = "(" + descriptor.getClass().toString() +
             ") The descriptor does not give the same results depending on " +
             "the actual IChemObject implementation set (data, nonotify).";
+        assertEqualOutput(v1, v2, errorMessage);
+    }
+
+    @Test
+    public void testAtomContainerHandling() throws Exception {
+        IMolecule water1 = someoneBringMeSomeWater(
+            DefaultChemObjectBuilder.getInstance()
+        );
+     // creates an AtomContainer with the atoms / bonds from water1
+        IAtomContainer water2 = new AtomContainer(water1);
+
+        IDescriptorResult v1 = descriptor.calculate(water1).getValue();
+        IDescriptorResult v2 = descriptor.calculate(water2).getValue();
+
+        String errorMessage = "(" + descriptor.getClass().toString() +
+            ") The descriptor does not give the same results depending on " +
+            "it being passed an IMolecule or an IAtomContainer.";
         assertEqualOutput(v1, v2, errorMessage);
     }
 
