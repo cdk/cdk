@@ -72,7 +72,7 @@ public class InChITautomerGenerator {
      * @throws CDKException
      * @throws CloneNotSupportedException
      */
-    @TestMethod("test_withJniInchi")
+    @TestMethod("test_withJniInchi,testAdenine")
     public List<IAtomContainer> getTautomers(IAtomContainer molecule) throws CDKException, CloneNotSupportedException { 
 
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(molecule);
