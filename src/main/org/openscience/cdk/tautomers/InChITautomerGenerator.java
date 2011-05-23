@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
  * Algorithm described in {@cdk.cite Thalheim2010}.
  * <br>
- * <B>Provide your input molecules in Kekule form.</B></br>
+ * <B>Provide your input molecules in Kekule form, and make sure atom type are perceived.</B></br>
  * When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See the
  * {@link InChITautomerGeneratorTest test case}.
  * @author Mark Rijnbeek
