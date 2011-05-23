@@ -22,11 +22,10 @@
 */
 package org.openscience.cdk.fingerprint;
 
-public class BitSetFingerprintTest extends AbstractBitFingerprintTest {
+public class IntArrayFingerprintTest extends AbstractBitFingerprintTest {
 
-	public BitSetFingerprintTest()
-			throws Exception {
-		super(BitSetFingerprint.class);
+	public IntArrayFingerprintTest() throws Exception {
+		super(IntArrayFingerprint.class);
 	}
 
 }

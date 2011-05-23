@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
