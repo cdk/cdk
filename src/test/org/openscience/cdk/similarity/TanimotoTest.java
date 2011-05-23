@@ -58,8 +58,8 @@ public class TanimotoTest extends CDKTestCase
 	    IAtomContainer mol1 = MoleculeFactory.makeIndole();
 	    IAtomContainer mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
-		BitSet bs1 = fingerprinter.getFingerprint(mol1);
-		BitSet bs2 = fingerprinter.getFingerprint(mol2);
+		BitSet bs1 = fingerprinter.getBitFingerprint(mol1).asBitSet();
+		BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
 		if (!standAlone) Assert.assertEquals(0.3939, tanimoto, 0.01);
@@ -70,8 +70,8 @@ public class TanimotoTest extends CDKTestCase
 	    IAtomContainer mol1 = MoleculeFactory.makeIndole();
 	    IAtomContainer mol2 = MoleculeFactory.makeIndole();
 		Fingerprinter fingerprinter = new Fingerprinter();
-		BitSet bs1 = fingerprinter.getFingerprint(mol1);
-		BitSet bs2 = fingerprinter.getFingerprint(mol2);
+		BitSet bs1 = fingerprinter.getBitFingerprint(mol1).asBitSet();
+		BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
 		if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
@@ -109,10 +109,10 @@ public class TanimotoTest extends CDKTestCase
     		IAtomContainer molecule3 = sp.parseSmiles(smiles3);
     		IAtomContainer molecule4 = sp.parseSmiles(smiles4);
     		Fingerprinter fingerprinter = new Fingerprinter(1024, 6);
-    		BitSet bs1 = fingerprinter.getFingerprint(molecule1);
-    		BitSet bs2 = fingerprinter.getFingerprint(molecule2);
-    		BitSet bs3 = fingerprinter.getFingerprint(molecule3);
-    		BitSet bs4 = fingerprinter.getFingerprint(molecule4);
+    		BitSet bs1 = fingerprinter.getBitFingerprint(molecule1).asBitSet();
+    		BitSet bs2 = fingerprinter.getBitFingerprint(molecule2).asBitSet();
+    		BitSet bs3 = fingerprinter.getBitFingerprint(molecule3).asBitSet();
+    		BitSet bs4 = fingerprinter.getBitFingerprint(molecule4).asBitSet();
     		float tanimoto1 = Tanimoto.calculate(bs1, bs2);
     		float tanimoto2 = Tanimoto.calculate(bs1, bs3);
     		float tanimoto3 = Tanimoto.calculate(bs1, bs4);

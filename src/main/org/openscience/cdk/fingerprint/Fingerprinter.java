@@ -60,7 +60,7 @@ import java.util.Set;
  *  A fingerprint is generated for an AtomContainer with this code: <pre>
  *   Molecule molecule = new Molecule();
  *   IFingerprinter fingerprinter = new Fingerprinter();
- *   BitSet fingerprint = fingerprinter.getFingerprint(molecule);
+ *   IBitFingerprint fingerprint = fingerprinter.getBitFingerprint(molecule);
  *   fingerprint.size(); // returns 1024 by default
  *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
@@ -161,8 +161,8 @@ public class Fingerprinter implements IFingerprinter {
      * @return A {@link BitSet} representing the fingerprint
      */
 
-    @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container, 
+    @TestMethod("testgetBitFingerprint_IAtomContainer")
+    public IBitFingerprint getBitFingerprint(IAtomContainer container, 
                                  AllRingsFinder ringFinder) 
                   throws CDKException {
 		int position = -1;
@@ -183,7 +183,7 @@ public class Fingerprinter implements IFingerprinter {
             bitSet.set(position);
         }
 
-        return bitSet;
+        return new BitSetFingerprint(bitSet);
 	}
 
 
@@ -192,10 +192,10 @@ public class Fingerprinter implements IFingerprinter {
 	 *
 	 *@param container The AtomContainer for which a Fingerprint is generated
 	 */
-    @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container) 
+    @TestMethod("testgetBitFingerprint_IAtomContainer")
+    public IBitFingerprint getBitFingerprint(IAtomContainer container) 
                   throws CDKException {
-		return getFingerprint(container, null);
+		return getBitFingerprint(container, null);
 	}
 
     /** {@inheritDoc} */   
@@ -326,6 +326,12 @@ public class Fingerprinter implements IFingerprinter {
     @TestMethod("testGetSize")
 	public int getSize() {
 		return size;
+	}
+
+	@Override
+	public ICountFingerprint getCountFingerprint(IAtomContainer container)
+			throws CDKException {
+		throw new UnsupportedOperationException();
 	}
 
 }

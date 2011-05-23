@@ -36,7 +36,7 @@ import java.util.BitSet;
  */
 public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    public IFingerprinter getFingerprinter() {
+    public IFingerprinter getBitFingerprinter() {
         return new SubstructureFingerprinter();
     }
 
@@ -53,7 +53,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("c1ccccc1CCC");
-        BitSet fp = printer.getFingerprint(mol1);
+        IBitFingerprint fp = printer.getBitFingerprint(mol1);
 		Assert.assertNotNull(fp);
 
         Assert.assertTrue(fp.get(0));
@@ -61,7 +61,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Assert.assertFalse(fp.get(2));
 
         mol1 = sp.parseSmiles("C=C=C");
-        fp = printer.getFingerprint(mol1);
+        fp = printer.getBitFingerprint(mol1);
 		Assert.assertNotNull(fp);
         Assert.assertFalse(fp.get(0));
         Assert.assertFalse(fp.get(1));
@@ -75,7 +75,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("c1ccccc1CCC");
-        BitSet fp = printer.getFingerprint(mol1);
+        IBitFingerprint fp = printer.getBitFingerprint(mol1);
         Assert.assertNotNull(fp);
         Assert.assertTrue(fp.get(273));
         Assert.assertTrue(fp.get(0));
@@ -96,7 +96,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         String benzaldehyde = "c1ccccc1C=O";
         IFingerprinter fprinter = new SubstructureFingerprinter();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        BitSet fp = fprinter.getFingerprint(sp.parseSmiles(benzaldehyde));
+        IBitFingerprint fp = fprinter.getBitFingerprint(sp.parseSmiles(benzaldehyde));
         Assert.assertFalse("Bit 136 (vinylogous ester) is set to true", fp.get(136));
     }
 

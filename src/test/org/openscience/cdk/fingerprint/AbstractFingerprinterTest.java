@@ -29,7 +29,7 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class AbstractFingerprinterTest extends CDKTestCase {
 
-    public IFingerprinter getFingerprinter() {
+    public IFingerprinter getBitFingerprinter() {
         throw new IllegalAccessError("This method should be overwritten " +
         "by subclasses unit tests");
     };

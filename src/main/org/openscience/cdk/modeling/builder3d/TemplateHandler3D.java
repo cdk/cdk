@@ -201,7 +201,7 @@ public class TemplateHandler3D {
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
         IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(ringSystems);
-        BitSet ringSystemFingerprint = new HybridizationFingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
+        BitSet ringSystemFingerprint = new HybridizationFingerprinter().getBitFingerprint(ringSystemAnyBondAnyAtom).asBitSet();
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
         for (int i = 0; i < fingerprintData.size(); i++) {

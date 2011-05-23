@@ -55,7 +55,7 @@ import java.util.Map;
  * A fingerprint is generated for an AtomContainer with this code: <pre>
  *   Molecule molecule = new Molecule();
  *   PubchemFingerprinter fprinter = new PubchemFingerprinter();
- *   BitSet fingerprint = fprinter.getFingerprint(molecule);
+ *   BitSet fingerprint = fprinter.getBitFingerprint(molecule);
  *   fprinter.getSize(); // returns 881
  *   fingerprint.length(); // returns the highest set bit
  * </pre>
@@ -108,17 +108,17 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @return the fingerprint
      * @throws CDKException if there is an error during substructure 
      * searching or atom typing
-     * @see #getFingerprintAsBytes()
+     * @see #getBitFingerprintAsBytes()
      */
     @TestMethod("testFingerprint")
-    public BitSet getFingerprint(IAtomContainer atomContainer) 
+    public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) 
                   throws CDKException {
         generateFp(atomContainer);
         BitSet fp = new BitSet(FP_SIZE);
         for (int i = 0; i < FP_SIZE; i++) {
             if (isBitOn(i)) fp.set(i);
         }
-        return fp;
+        return new BitSetFingerprint(fp);
     }
 
     /** {@inheritDoc} */
@@ -337,12 +337,12 @@ public class PubchemFingerprinter implements IFingerprinter {
      * Returns the fingerprint generated for a molecule as a byte[].
      * <p/>
      * Note that this should be immediately called after calling
-     * {@link #getFingerprint(org.openscience.cdk.interfaces.IAtomContainer)}
+     * {@link #getBitFingerprint(org.openscience.cdk.interfaces.IAtomContainer)}
      *
      * @return The fingerprint as a byte array
-     * @see #getFingerprint(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see #getBitFingerprint(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    public byte[] getFingerprintAsBytes() {
+    public byte[] getBitFingerprintAsBytes() {
         return m_bits;
     }
 
@@ -2374,5 +2374,11 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 880;
         if (cs.countSubstructure("Br[#6]1[#6](Br)[#6][#6][#6]1") > 0) fp[b >> 3] |= MASK[b % 8];
     }
+
+	@Override
+	public ICountFingerprint getCountFingerprint(IAtomContainer container)
+			throws CDKException {
+		throw new UnsupportedOperationException();
+	}
 
 }

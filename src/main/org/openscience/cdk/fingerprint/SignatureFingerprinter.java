@@ -63,8 +63,8 @@ public class SignatureFingerprinter implements IFingerprinter {
     }
 
     @TestMethod("testUnsupportedMethod")
-    public BitSet getFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new UnsupportedOperationException();
+    public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
+    		return new IntArrayFingerprint(getRawFingerprint(atomContainer));
     }
 
     @TestMethod("testFingerprint")
@@ -87,5 +87,11 @@ public class SignatureFingerprinter implements IFingerprinter {
     public int getSize() {
         return -1;
     }
+
+	@Override
+	public ICountFingerprint getCountFingerprint(IAtomContainer container)
+			throws CDKException {
+		return new IntArrayCountFingerprint(getRawFingerprint(container));
+	}
 
 }

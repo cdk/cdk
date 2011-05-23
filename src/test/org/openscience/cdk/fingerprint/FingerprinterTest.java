@@ -56,7 +56,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 	private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
-	public IFingerprinter getFingerprinter() {
+	public IFingerprinter getBitFingerprinter() {
 	    return new Fingerprinter();
 	}
 
@@ -64,9 +64,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 	    IAtomContainer mol1 = MoleculeFactory.makeIndole();
 	    IAtomContainer mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
-		BitSet bs1 = fingerprinter.getFingerprint(mol1);
+		IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
 		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33, bs1.cardinality());
-		BitSet bs2 = fingerprinter.getFingerprint(mol2);
+		IBitFingerprint bs2 = fingerprinter.getBitFingerprint(mol2);
 		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
 	}
 
@@ -82,12 +82,12 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		Assert.assertEquals(3, fingerprinter.getSearchDepth());
 	}
 
-	@Test public void testGetFingerprint_IAtomContainer() throws java.lang.Exception
+	@Test public void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
 
 		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getFingerprint(mol);
+		IBitFingerprint bs = fingerprinter.getBitFingerprint(mol);
 		Assert.assertNotNull(bs);
 		Assert.assertEquals(fingerprinter.getSize(), bs.size());
 	}
@@ -98,9 +98,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		Assert.assertNotNull(fingerprinter);
 
 		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getFingerprint(mol);
+		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 
@@ -110,9 +110,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		Assert.assertNotNull(fingerprinter);
 
 		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getFingerprint(mol);
+		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 
@@ -122,9 +122,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		Assert.assertNotNull(fingerprinter);
 
 		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getFingerprint(mol);
+		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 
@@ -132,7 +132,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     Fingerprinter fingerprinter = new Fingerprinter(1024,7);
     Assert.assertNotNull(fingerprinter);
     IAtomContainer mol = MoleculeFactory.makeIndole();
-    BitSet bs = fingerprinter.getFingerprint(mol);
+    BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
     Assert.assertEquals(994, bs.length()); // highest set bit
     Assert.assertEquals(1024, bs.size()); // actual bit set size
   }
@@ -153,10 +153,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         IAtomContainer product = reaction.getProducts().getAtomContainer(0);
 
         Fingerprinter fingerprinter = new Fingerprinter(64*26,8);
-            BitSet bs1 = fingerprinter.getFingerprint(reactant);
-        Assert.assertNotNull(bs1);
-        BitSet bs2 = fingerprinter.getFingerprint(product);
-        Assert.assertNotNull(bs2);
+        Assert.assertNotNull(fingerprinter.getBitFingerprint(reactant));
+        Assert.assertNotNull(fingerprinter.getBitFingerprint(product));
 	}
 
     @Test
@@ -170,8 +168,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         Fingerprinter fingerprinter = new Fingerprinter();
-        BitSet bs1 = fingerprinter.getFingerprint(mol);
-        Assert.assertNotNull(bs1);
+        Assert.assertNotNull(fingerprinter.getBitFingerprint(mol));
     }
 
     /**
@@ -184,8 +181,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         IAtomContainer propylAmine = makePropylAmine();
 
         Fingerprinter fp = new Fingerprinter();
-        BitSet b1 = fp.getFingerprint(butane);
-        BitSet b2 = fp.getFingerprint(propylAmine);
+        BitSet b1 = fp.getBitFingerprint(butane).asBitSet();
+        BitSet b2 = fp.getBitFingerprint(propylAmine).asBitSet();
 
         Assert.assertFalse("butane should not be a substructure of propylamine", FingerprinterTool.isSubset(b2, b1));
     }
@@ -194,12 +191,12 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     public void testBondPermutation() throws CDKException {
         IAtomContainer pamine = makePropylAmine();
         Fingerprinter fp = new Fingerprinter();
-        BitSet bs1 = fp.getFingerprint(pamine);
+        IBitFingerprint bs1 = fp.getBitFingerprint(pamine);
 
         AtomContainerBondPermutor acp = new AtomContainerBondPermutor(pamine);
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
-            BitSet bs2 = fp.getFingerprint(container);
+            IBitFingerprint bs2 = fp.getBitFingerprint(container);
             Assert.assertTrue(bs1.equals(bs2));
         }
     }
@@ -208,12 +205,12 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     public void testAtomPermutation() throws CDKException {
         IAtomContainer pamine = makePropylAmine();
         Fingerprinter fp = new Fingerprinter();
-        BitSet bs1 = fp.getFingerprint(pamine);
+        IBitFingerprint bs1 = fp.getBitFingerprint(pamine);
 
         AtomContainerAtomPermutor acp = new AtomContainerAtomPermutor(pamine);
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
-            BitSet bs2 = fp.getFingerprint(container);
+            IBitFingerprint bs2 = fp.getBitFingerprint(container);
             Assert.assertTrue(bs1.equals(bs2));
         }
     }
@@ -222,12 +219,12 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     public void testBondPermutation2() throws CDKException {
         IAtomContainer pamine = MoleculeFactory.makeCyclopentane();
         Fingerprinter fp = new Fingerprinter();
-        BitSet bs1 = fp.getFingerprint(pamine);
+        IBitFingerprint bs1 = fp.getBitFingerprint(pamine);
 
         AtomContainerBondPermutor acp = new AtomContainerBondPermutor(pamine);
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
-            BitSet bs2 = fp.getFingerprint(container);
+            IBitFingerprint bs2 = fp.getBitFingerprint(container);
             Assert.assertTrue(bs1.equals(bs2));
         }
     }
@@ -236,12 +233,12 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     public void testAtomPermutation2() throws CDKException {
         IAtomContainer pamine = MoleculeFactory.makeCyclopentane();
         Fingerprinter fp = new Fingerprinter();
-        BitSet bs1 = fp.getFingerprint(pamine);
+        IBitFingerprint bs1 = fp.getBitFingerprint(pamine);
 
         AtomContainerAtomPermutor acp = new AtomContainerAtomPermutor(pamine);
         while (acp.hasNext()) {
             IAtomContainer container = acp.next();
-            BitSet bs2 = fp.getFingerprint(container);
+            IBitFingerprint bs2 = fp.getBitFingerprint(container);
             Assert.assertTrue(bs1.equals(bs2));
         }
     }

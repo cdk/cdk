@@ -38,7 +38,7 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
 
     boolean standAlone = false;
 
-    public IFingerprinter getFingerprinter() {
+    public IFingerprinter getBitFingerprinter() {
         return new LingoFingerprinter();
     }
 

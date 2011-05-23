@@ -71,7 +71,7 @@ public class LingoFingerprinter implements IFingerprinter {
         this.q = q;
     }
 
-    public BitSet getFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+    public IBitFingerprint getBitFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
@@ -96,5 +96,11 @@ public class LingoFingerprinter implements IFingerprinter {
         Matcher matcher = ringClosurePattern.matcher(smiles);
         return matcher.replaceAll("0");        
     }
+
+	@Override
+	public ICountFingerprint getCountFingerprint(IAtomContainer container)
+			throws CDKException {
+		throw new UnsupportedOperationException();
+	}
 
 }

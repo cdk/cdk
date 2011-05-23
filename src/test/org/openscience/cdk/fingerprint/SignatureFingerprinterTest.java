@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
 
-    public IFingerprinter getFingerprinter() {
+    public IFingerprinter getBitFingerprinter() {
         return new SignatureFingerprinter();
     }
 

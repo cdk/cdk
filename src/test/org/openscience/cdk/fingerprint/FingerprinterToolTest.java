@@ -51,9 +51,9 @@ public class FingerprinterToolTest extends CDKTestCase
 		Fingerprinter fingerprinter = new Fingerprinter();
 		
 		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getFingerprint(mol);
+		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 
@@ -62,9 +62,9 @@ public class FingerprinterToolTest extends CDKTestCase
 		Fingerprinter fingerprinter = new Fingerprinter();
 		
 		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getFingerprint(mol);
+		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
 		List l=FingerprinterTool.listDifferences(bs1, bs);
 		Assert.assertEquals(l.size(),19);
 	}

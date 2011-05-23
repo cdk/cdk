@@ -77,7 +77,7 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
 	}
 
     @TestMethod("testFingerPrint,testFingerprint")
-    public BitSet getFingerprint(IAtomContainer container, int size) throws Exception {
+    public BitSet getBitFingerprint(IAtomContainer container, int size) throws Exception {
 		int[] hashes = findPathes(container, super.getSearchDepth());
 		BitSet bitSet = new BitSet(size);
         for (int hash : hashes) {

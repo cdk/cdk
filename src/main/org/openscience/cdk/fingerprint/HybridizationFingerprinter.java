@@ -301,5 +301,20 @@ public class HybridizationFingerprinter implements IFingerprinter {
     public Map<String, Integer> getRawFingerprint(IAtomContainer container) {
         throw new UnsupportedOperationException();
     }
+
+	@Override
+	public IBitFingerprint getBitFingerprint(IAtomContainer container)
+			throws CDKException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ICountFingerprint getCountFingerprint(IAtomContainer container)
+			throws CDKException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 

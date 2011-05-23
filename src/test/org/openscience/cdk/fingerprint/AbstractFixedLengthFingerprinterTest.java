@@ -52,9 +52,9 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer substructure = (IAtomContainer)reader.read(new AtomContainer());
 
-        IFingerprinter fingerprinter = getFingerprinter();
-        BitSet superBS = fingerprinter.getFingerprint(superstructure);
-        BitSet subBS = fingerprinter.getFingerprint(substructure);
+        IFingerprinter fingerprinter = getBitFingerprinter();
+        BitSet superBS = fingerprinter.getBitFingerprint(superstructure).asBitSet();
+        BitSet subBS = fingerprinter.getBitFingerprint(substructure).asBitSet();
         boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
         Assert.assertTrue(isSubset);
     }
@@ -74,9 +74,9 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer substructure = (IAtomContainer)reader.read(new AtomContainer());
 
-        IFingerprinter fingerprinter = getFingerprinter();
-        BitSet superBS = fingerprinter.getFingerprint(superstructure);
-        BitSet subBS = fingerprinter.getFingerprint(substructure);
+        IFingerprinter fingerprinter = getBitFingerprinter();
+        BitSet superBS = fingerprinter.getBitFingerprint(superstructure).asBitSet();
+        BitSet subBS = fingerprinter.getBitFingerprint(substructure).asBitSet();
         boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
         Assert.assertTrue(isSubset);
     }
@@ -98,9 +98,9 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer superstructure = reader.read(new AtomContainer());
 
-        IFingerprinter fingerprinter = getFingerprinter();
-        BitSet superBS = fingerprinter.getFingerprint(superstructure);
-        BitSet subBS = fingerprinter.getFingerprint(substructure);
+        IFingerprinter fingerprinter = getBitFingerprinter();
+        BitSet superBS = fingerprinter.getBitFingerprint(superstructure).asBitSet();
+        BitSet subBS = fingerprinter.getBitFingerprint(substructure).asBitSet();
         boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
         Assert.assertTrue(isSubset);
     }
@@ -122,9 +122,9 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure2 = (IAtomContainer)reader.read(new AtomContainer());
 
-        IFingerprinter fingerprinter = getFingerprinter();
-        BitSet superBS = fingerprinter.getFingerprint(structure2);
-        BitSet subBS = fingerprinter.getFingerprint(structure1);
+        IFingerprinter fingerprinter = getBitFingerprinter();
+        BitSet superBS = fingerprinter.getBitFingerprint(structure2).asBitSet();
+        BitSet subBS = fingerprinter.getBitFingerprint(structure1).asBitSet();
         boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
         Assert.assertTrue(isSubset);
     }
@@ -147,9 +147,9 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure2 = (IAtomContainer)reader.read(new AtomContainer());
 
-        IFingerprinter fingerprinter = getFingerprinter();
-        BitSet bs1 = fingerprinter.getFingerprint(structure1);
-        BitSet bs2 = fingerprinter.getFingerprint(structure2);
+        IFingerprinter fingerprinter = getBitFingerprinter();
+        BitSet bs1 = fingerprinter.getBitFingerprint(structure1).asBitSet();
+        BitSet bs2 = fingerprinter.getBitFingerprint(structure2).asBitSet();
         // now we do the boolean XOR on the two bitsets, leading
         // to a bitset that has all the bits set to "true" which differ
         // between the two original bitsets

@@ -44,7 +44,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
 
-    public IFingerprinter getFingerprinter() {
+    public IFingerprinter getBitFingerprinter() {
         return new MACCSFingerprinter();
     }
 
@@ -70,9 +70,9 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         CDKHueckelAromaticityDetector.detectAromaticity(mol2);
         CDKHueckelAromaticityDetector.detectAromaticity(mol3);
 
-        BitSet bs1 = printer.getFingerprint(mol1);
-        BitSet bs2 = printer.getFingerprint(mol2);
-        BitSet bs3 = printer.getFingerprint(mol3);
+        BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
+        BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
+        BitSet bs3 = printer.getBitFingerprint(mol3).asBitSet();
 
         Assert.assertEquals(166, printer.getSize());
 
@@ -104,9 +104,9 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         CDKHueckelAromaticityDetector.detectAromaticity(mol2);
         CDKHueckelAromaticityDetector.detectAromaticity(mol3);
 
-        BitSet bs1 = printer.getFingerprint(mol1);
-        BitSet bs2 = printer.getFingerprint(mol2);
-        BitSet bs3 = printer.getFingerprint(mol3);
+        BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
+        BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
+        BitSet bs3 = printer.getBitFingerprint(mol3).asBitSet();
 
         Assert.assertFalse(bs1.get(124));
         Assert.assertFalse(bs2.get(124));

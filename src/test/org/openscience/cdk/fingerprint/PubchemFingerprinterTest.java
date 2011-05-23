@@ -52,7 +52,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
     SmilesParser parser;
 
-    public IFingerprinter getFingerprinter() {
+    public IFingerprinter getBitFingerprinter() {
         return new PubchemFingerprinter();
     }
 
@@ -87,8 +87,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHueckelAromaticityDetector.detectAromaticity(mol1);
         CDKHueckelAromaticityDetector.detectAromaticity(mol2);
 
-        BitSet bs1 = printer.getFingerprint(mol1);
-        BitSet bs2 = printer.getFingerprint(mol2);
+        BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
+        BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
 
         Assert.assertEquals(881, printer.getSize());
 
@@ -112,9 +112,9 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHueckelAromaticityDetector.detectAromaticity(mol2);
         CDKHueckelAromaticityDetector.detectAromaticity(mol3);
 
-        BitSet bs1 = printer.getFingerprint(mol1);
-        BitSet bs2 = printer.getFingerprint(mol2);
-        BitSet bs3 = printer.getFingerprint(mol3);
+        BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
+        BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
+        BitSet bs3 = printer.getBitFingerprint(mol3).asBitSet();
 
         Assert.assertTrue(FingerprinterTool.isSubset(bs1, bs2));
         Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs3));
@@ -136,7 +136,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
         IFingerprinter printer = new PubchemFingerprinter();
-        BitSet fp = printer.getFingerprint(mol);
+        BitSet fp = printer.getBitFingerprint(mol).asBitSet();
         BitSet ref = PubchemFingerprinter.decode("AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
         Assert.assertEquals(ref, fp);
@@ -158,7 +158,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
         IFingerprinter printer = new PubchemFingerprinter();
-        BitSet fp = printer.getFingerprint(mol);
+        BitSet fp = printer.getBitFingerprint(mol).asBitSet();
         BitSet ref = PubchemFingerprinter.decode("AAADceB+AAAAAAAAAAAAAAAAAAAAAAAAAAA8YMGCAAAAAAAB1AAAHAAAAAAADAjBHgQwgJMMEACgAyRiRACCgCAhAiAI2CA4ZJgIIOLAkZGEIAhggADIyAcQgMAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
         Assert.assertEquals(ref, fp);
@@ -180,7 +180,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
           CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
           IFingerprinter printer = new PubchemFingerprinter();
-          BitSet fp = printer.getFingerprint(mol);
+          BitSet fp = printer.getBitFingerprint(mol).asBitSet();
           BitSet ref = PubchemFingerprinter.decode("AAADccBzMAAGAAAAAAAAAAAAAAAAAAAAAAA8QAAAAAAAAAABwAAAHgIYCAAADA6BniAwzpJqEgCoAyTyTASChCAnJiIYumGmTtgKJnLD1/PEdQhkwBHY3Qe82AAOIAAAAAAAAABAAAAAAAAAAAAAAAAAAA==");
 
           Assert.assertEquals(ref, fp);
@@ -197,7 +197,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         IFingerprinter printer = new PubchemFingerprinter();
-        BitSet fp = printer.getFingerprint(mol);
+        BitSet fp = printer.getBitFingerprint(mol).asBitSet();
         BitSet ref = PubchemFingerprinter.decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
         Assert.assertEquals(ref, fp);

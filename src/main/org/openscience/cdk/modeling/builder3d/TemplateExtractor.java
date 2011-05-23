@@ -36,6 +36,9 @@ import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.fingerprint.BitSetFingerprint;
+import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
@@ -381,7 +384,7 @@ public class TemplateExtractor {
 		IteratingSDFReader imdl=null;
 		//QueryAtomContainer query=null;
 		IAtomContainer query = null;
-		List<BitSet> data = new ArrayList<BitSet>();
+		List<IBitFingerprint> data = new ArrayList<IBitFingerprint>();
 		try {
 			System.out.print("Read data file in ...");
 			imdl = new IteratingSDFReader(fin, builder);
@@ -406,10 +409,10 @@ public class TemplateExtractor {
 			try {
 				long time = -System.currentTimeMillis();
 				if (anyAtom || anyAtomAnyBond){
-					data.add(fingerPrinter.getFingerprint(query));
+					data.add(fingerPrinter.getBitFingerprint(query));
 					fingerprintCounter=fingerprintCounter+1;
 				} else {
-					data.add(fingerPrinter.getFingerprint(query));
+					data.add(fingerPrinter.getBitFingerprint(query));
 					fingerprintCounter = fingerprintCounter + 1;
 				}
 				time += System.currentTimeMillis();
@@ -427,7 +430,7 @@ public class TemplateExtractor {
 				// OK, just adds a fingerprint with all ones, so that any
 				// structure will match this template, and leave it up
 				// to substructure match to figure things out
-				BitSet allOnesFingerprint = new BitSet(fingerPrinter.getSize());
+				IBitFingerprint allOnesFingerprint = new BitSetFingerprint(fingerPrinter.getSize());
 				for (int i=0; i<fingerPrinter.getSize(); i++) {
 					allOnesFingerprint.set(i, true);
 				}

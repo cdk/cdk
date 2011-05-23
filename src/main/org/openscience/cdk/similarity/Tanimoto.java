@@ -50,8 +50,8 @@ import java.util.TreeSet;
  *  We assume that you have two structures stored in cdk.Molecule objects.
  *  A tanimoto coefficient can then be calculated like:
  *  <pre>
- *   BitSet fingerprint1 = Fingerprinter.getFingerprint(molecule1);
- *   BitSet fingerprint2 = Fingerprinter.getFingerprint(molecule2);
+ *   BitSet fingerprint1 = Fingerprinter.getBitFingerprint(molecule1);
+ *   BitSet fingerprint2 = Fingerprinter.getBitFingerprint(molecule2);
  *   float tanimoto_coefficient = Tanimoto.calculate(fingerprint1, fingerprint2);
  *  </pre>
  *

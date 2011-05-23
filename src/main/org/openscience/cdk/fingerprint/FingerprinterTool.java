@@ -55,9 +55,9 @@ public class FingerprinterTool {
 	 *
 	 *  Example: <pre>
 	 *  Molecule mol = MoleculeFactory.makeIndole();
-	 *  BitSet bs = Fingerprinter.getFingerprint(mol);
+	 *  BitSet bs = Fingerprinter.getBitFingerprint(mol);
 	 *  Molecule frag1 = MoleculeFactory.makePyrrole();
-	 *  BitSet bs1 = Fingerprinter.getFingerprint(frag1);
+	 *  BitSet bs1 = Fingerprinter.getBitFingerprint(frag1);
 	 *  if (Fingerprinter.isSubset(bs, bs1)) {
 	 *      System.out.println("Pyrrole is subset of Indole.");
 	 *  }

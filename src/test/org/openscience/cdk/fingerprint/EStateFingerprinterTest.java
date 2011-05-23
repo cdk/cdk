@@ -40,7 +40,7 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
 	private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
 
-	public IFingerprinter getFingerprinter() {
+	public IFingerprinter getBitFingerprinter() {
 		return new EStateFingerprinter();
 	}
 
@@ -55,14 +55,14 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
 		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IFingerprinter printer = new EStateFingerprinter();
 
-		BitSet bs1 = printer.getFingerprint(parser.parseSmiles("C=C-C#N"));
-		BitSet bs2 = printer.getFingerprint(parser.parseSmiles("C=CCC(O)CC#N"));
+		IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
+		IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("C=CCC(O)CC#N"));
 
         Assert.assertEquals(79,printer.getSize());
         
         Assert.assertTrue(bs1.get(7));
         Assert.assertTrue(bs1.get(10));
-        Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
+        Assert.assertTrue(FingerprinterTool.isSubset(bs2.asBitSet(), bs1.asBitSet()));
     }
 
 }

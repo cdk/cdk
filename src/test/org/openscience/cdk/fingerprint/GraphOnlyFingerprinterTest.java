@@ -48,7 +48,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
 	private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
-	public IFingerprinter getFingerprinter() {
+	public IFingerprinter getBitFingerprinter() {
 		return new GraphOnlyFingerprinter();
 	}
 
@@ -57,9 +57,9 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
 		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IFingerprinter printer = new GraphOnlyFingerprinter();
 		
-		BitSet bs1 = printer.getFingerprint(parser.parseSmiles("C=C-C#N"));
+		IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
 		System.out.println("----");
-		BitSet bs2 = printer.getFingerprint(parser.parseSmiles("CCCN"));
+		IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("CCCN"));
 		
 		Assert.assertEquals(bs1, bs2);
 	}
@@ -72,7 +72,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
 
 	/**
 	 * This basic test case shows that some molecules will not be considered
-	 * as a subset of each other by Fingerprint.isSubset(), for the getFingerprint(),
+	 * as a subset of each other by Fingerprint.isSubset(), for the getBitFingerprint(),
 	 * despite the fact that they are a sub graph of each other according to the
 	 * UniversalIsomorphismTester.isSubgraph().
 	 *
@@ -92,8 +92,8 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
     	IAtomContainer mol2 = createMolecule(ethanolamine);
     	Assert.assertTrue("SubGraph does NOT match", new UniversalIsomorphismTester().isSubgraph(mol1, mol2));
 
-    	BitSet bs1 = printer.getFingerprint((IAtomContainer) mol1.clone());
-    	BitSet bs2 = printer.getFingerprint((IAtomContainer) mol2.clone());
+    	BitSet bs1 = printer.getBitFingerprint((IAtomContainer) mol1.clone()).asBitSet();
+    	BitSet bs2 = printer.getBitFingerprint((IAtomContainer) mol2.clone()).asBitSet();
 
     	Assert.assertTrue("Subset (with fingerprint) does NOT match", FingerprinterTool.isSubset(bs1, bs2));
 
