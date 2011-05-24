@@ -34,7 +34,7 @@ public interface IBitFingerprint {
 	/**
 	 * @return the number of bits set to true in the fingerprint.
 	 */
-	public long cardinality();
+	public int cardinality();
 	
 	/**
 	 * @return the size of the fingerprint.

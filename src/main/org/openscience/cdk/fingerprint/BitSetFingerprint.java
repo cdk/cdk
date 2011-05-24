@@ -44,7 +44,7 @@ public class BitSetFingerprint implements IBitFingerprint {
 	}
 
 	@Override
-	public long cardinality() {
+	public int cardinality() {
 		return bitset.cardinality();
 	}
 

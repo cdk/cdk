@@ -64,7 +64,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 	}
 
 	@Override
-	public long cardinality() {
+	public int cardinality() {
 		return trueBits.length;
 	}
 
