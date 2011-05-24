@@ -127,12 +127,17 @@ public class SMARTSQueryTool {
         }
     };
 
-    public SMARTSQueryTool(String smarts) throws CDKException {
+    /**
+     * @param smarts
+     *
+     * @throws IllegalArgumentException if the SMARTS string can not be handled
+     */
+    public SMARTSQueryTool(String smarts) {
         this.smarts = smarts;
         try {
             initializeQuery();
         } catch (TokenMgrError error) {
-            throw new CDKException("Error parsing SMARTS", error);
+            throw new IllegalArgumentException("Error parsing SMARTS", error);
         }
     }
 
@@ -475,7 +480,7 @@ public class SMARTSQueryTool {
         }
     }
 
-    private void initializeQuery() throws CDKException {
+    private void initializeQuery() {
         matchingAtoms = null;
         query = cache.get(smarts);
         if (query == null) {

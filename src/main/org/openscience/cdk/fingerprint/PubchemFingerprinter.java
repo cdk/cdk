@@ -91,16 +91,7 @@ public class PubchemFingerprinter implements IFingerprinter {
 
     private byte[] m_bits;
 
-    private static SMARTSQueryTool sqt;
-
     public PubchemFingerprinter() {
-        try {
-            sqt = new SMARTSQueryTool("C");
-        } catch (CDKException e) {
-            // bad practice but, the above initialization
-            // will never fail so we don't bother throwing
-            // the exception
-        }
         m_bits = new byte[(FP_SIZE + 7) >> 3];
     }
 
@@ -308,9 +299,11 @@ public class PubchemFingerprinter implements IFingerprinter {
 
     static class CountSubstructures {
         private IAtomContainer mol;
+        private SMARTSQueryTool sqt;
 
         public CountSubstructures(IAtomContainer m) {
             mol = m;
+            sqt = new SMARTSQueryTool("C");
         }
 
         public int countSubstructure(String smarts) throws CDKException {
