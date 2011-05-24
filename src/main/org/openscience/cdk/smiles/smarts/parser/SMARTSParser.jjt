@@ -82,7 +82,7 @@ public class SMARTSParser {
 	 * This method parses a Smarts String and returns an instance of 
 	 * <code>QueryAtomContainer</code>
 	 */
-	public static QueryAtomContainer parse(String smarts) throws CDKException {
+	public static QueryAtomContainer parse(String smarts) {
         QueryAtomContainer container = null;
         StringReader reader = new StringReader(smarts);
         try {
@@ -92,7 +92,7 @@ public class SMARTSParser {
             	= new org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor();
             container = (QueryAtomContainer)start.jjtAccept(visitor, null);
         } catch (ParseException exception) {
-            throw new CDKException("The string " + smarts + " is not a valid" +
+            throw new IllegalArgumentException("The string " + smarts + " is not a valid" +
               " SMARTS string: " + exception.getMessage(), exception);
         }
         return container;	
