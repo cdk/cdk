@@ -975,7 +975,7 @@
                 <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
                </copy>
-                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/data/">
+                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/config/data/">
                         <fileset dir="${src}/main/org/openscience/cdk/config/data/"
                                  includes="*" />
                 </copy>
