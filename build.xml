@@ -942,7 +942,7 @@
                 <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
                </copy>
-                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/data/">
+                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/config/data/">
                         <fileset dir="${src}/main/org/openscience/cdk/config/data/"
                                  includes="*" />
                 </copy>
@@ -952,7 +952,7 @@
                 <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/">
                   <fileset dir="${src}/main/org/openscience/cdk/dict/data/" includes="*.owl"/>
                 </copy>
-                <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/"/>
+                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/qsar/model/data/"/>
                 <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/qsar/model/data/">
                     <fileset dir="${src}/main/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
                 </copy>
