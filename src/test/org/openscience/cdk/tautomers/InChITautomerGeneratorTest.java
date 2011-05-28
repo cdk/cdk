@@ -23,16 +23,18 @@
 package org.openscience.cdk.tautomers;
 
 import java.io.StringReader;
-
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -157,6 +159,78 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         
         List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(molecule); // InChI will be calculated      
         Assert.assertEquals(5, tautomers.size());
+    }
+
+    @Test
+    public void testAdenine() throws CDKException, CloneNotSupportedException {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"N");
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"N");
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"N");
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"N");
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"N");
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a7);
+        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a8);
+        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a9);
+        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a10);
+        IAtom a11 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a11);
+        IAtom a12 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a12);
+        IAtom a13 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a13);
+        IAtom a14 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a14);
+        IAtom a15 = builder.newInstance(IAtom.class,"H");
+        mol.addAtom(a15);
+        IBond b1 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a9, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a11, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a2, a7, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a2, a9, IBond.Order.DOUBLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a3, a7, IBond.Order.DOUBLE);
+        mol.addBond(b6);
+        IBond b7 = builder.newInstance(IBond.class,a3, a10, IBond.Order.SINGLE);
+        mol.addBond(b7);
+        IBond b8 = builder.newInstance(IBond.class,a4, a8, IBond.Order.SINGLE);
+        mol.addBond(b8);
+        IBond b9 = builder.newInstance(IBond.class,a4, a10, IBond.Order.DOUBLE);
+        mol.addBond(b9);
+        IBond b10 = builder.newInstance(IBond.class,a5, a8, IBond.Order.SINGLE);
+        mol.addBond(b10);
+        IBond b11 = builder.newInstance(IBond.class,a5, a14, IBond.Order.SINGLE);
+        mol.addBond(b11);
+        IBond b12 = builder.newInstance(IBond.class,a5, a15, IBond.Order.SINGLE);
+        mol.addBond(b12);
+        IBond b13 = builder.newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
+        mol.addBond(b13);
+        IBond b14 = builder.newInstance(IBond.class,a6, a8, IBond.Order.DOUBLE);
+        mol.addBond(b14);
+        IBond b15 = builder.newInstance(IBond.class,a9, a12, IBond.Order.SINGLE);
+        mol.addBond(b15);
+        IBond b16 = builder.newInstance(IBond.class,a10, a13, IBond.Order.SINGLE);
+        mol.addBond(b16);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+
+        List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(mol);
+        Assert.assertEquals(8, tautomers.size());
     }
 
 }

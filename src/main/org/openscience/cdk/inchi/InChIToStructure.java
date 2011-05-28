@@ -38,6 +38,8 @@ import net.sf.jniinchi.JniInchiStereo0D;
 import net.sf.jniinchi.JniInchiWrapper;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -80,6 +82,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module inchi
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.inchi.InChIToStructureTest")
 public class InChIToStructure {
 
 protected JniInchiInputInchi input;
@@ -93,6 +96,7 @@ protected JniInchiInputInchi input;
      * @param inchi
      * @throws CDKException
      */
+    @TestMethod("testConstructor_String_IChemObjectBuilder")
     protected InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
         try {
             input = new JniInchiInputInchi(inchi, "");
@@ -266,6 +270,7 @@ protected JniInchiInputInchi input;
      * Returns generated molecule.
      * @return An AtomContainer object
      */
+    @TestMethod("testGetAtomContainer")
     public IAtomContainer getAtomContainer() {
         return(molecule);
     }
@@ -276,6 +281,7 @@ protected JniInchiInputInchi input;
      * InChI has been generated, in all other cases InChI generation
      * has failed.
      */
+    @TestMethod("testGetReturnStatus_EOF")
     public INCHI_RET getReturnStatus() {
         return(output.getReturnStatus());
     }

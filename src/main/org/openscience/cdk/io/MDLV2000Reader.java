@@ -68,9 +68,10 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 
 /**
- * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
- * is read into a {@link IChemSequence} of {@link IChemModel}'s. Each IChemModel will contain one
- * Molecule.
+ * Reads a content from MDL molfiles and SD files. 
+ * It can read a {@link IMolecule) or {@link IChemModel} from an MDL molfile, and
+ * a {@link IChemFile} from a SD file, with a {@link IChemSequence} of
+ * {@link IChemModel}'s, where each IChemModel will contain one IMolecule.
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
  * formal charges. From the Bond block it reads the bonds and the orders.

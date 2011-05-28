@@ -28,8 +28,8 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -37,17 +37,17 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -3389,6 +3389,33 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	}
     }
 
+    /**
+     * @cdk.inchi InChI=1S/H2Te/h1H2
+     */
+    @Test
+    public void testTellane() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Te");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"H");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"H");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+
+        String[] expectedTypes = {
+            "Te.3", "H", "H"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
@@ -3433,4 +3460,62 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.bug   3141611
+     * @cdk.inchi InChI=1S/CH5O2P/c1-4(2)3/h4H,1H3,(H,2,3)
+     */
+    @Test
+    public void testMethylphosphinicAcid() throws Exception {
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    	IMolecule mol = builder.newInstance(IMolecule.class);
+    	IAtom a1 = builder.newInstance(IAtom.class,"P");
+    	a1.setFormalCharge(0);
+    	mol.addAtom(a1);
+    	IAtom a2 = builder.newInstance(IAtom.class,"O");
+    	a2.setFormalCharge(0);
+    	mol.addAtom(a2);
+    	IAtom a3 = builder.newInstance(IAtom.class,"O");
+    	a3.setFormalCharge(0);
+    	mol.addAtom(a3);
+    	IAtom a4 = builder.newInstance(IAtom.class,"C");
+    	a4.setFormalCharge(0);
+    	mol.addAtom(a4);
+    	IAtom a5 = builder.newInstance(IAtom.class,"H");
+    	a5.setFormalCharge(0);
+    	mol.addAtom(a5);
+    	IAtom a6 = builder.newInstance(IAtom.class,"H");
+    	a6.setFormalCharge(0);
+    	mol.addAtom(a6);
+    	IAtom a7 = builder.newInstance(IAtom.class,"H");
+    	a7.setFormalCharge(0);
+    	mol.addAtom(a7);
+    	IAtom a8 = builder.newInstance(IAtom.class,"H");
+    	a8.setFormalCharge(0);
+    	mol.addAtom(a8);
+    	IAtom a9 = builder.newInstance(IAtom.class,"H");
+    	a9.setFormalCharge(0);
+    	mol.addAtom(a9);
+    	IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+    	mol.addBond(b1);
+    	IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+    	mol.addBond(b2);
+    	IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+    	mol.addBond(b3);
+    	IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+    	mol.addBond(b4);
+    	IBond b5 = builder.newInstance(IBond.class,a2, a9, IBond.Order.SINGLE);
+    	mol.addBond(b5);
+    	IBond b6 = builder.newInstance(IBond.class,a4, a6, IBond.Order.SINGLE);
+    	mol.addBond(b6);
+    	IBond b7 = builder.newInstance(IBond.class,a4, a7, IBond.Order.SINGLE);
+    	mol.addBond(b7);
+    	IBond b8 = builder.newInstance(IBond.class,a4, a8, IBond.Order.SINGLE);
+    	mol.addBond(b8);
+
+        String[] expectedTypes = {
+       		"P.ate", "O.sp3", "O.sp2", "C.sp3", "H", "H", "H", "H", "H"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
 }

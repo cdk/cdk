@@ -24,6 +24,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.InchiCoverageTest;
 import org.openscience.cdk.inchi.InChIGeneratorTest;
+import org.openscience.cdk.inchi.InChIToStructureTest;
 
 /**
  * TestSuite that runs all the sample tests for the CDK module inchi.
@@ -33,6 +34,7 @@ import org.openscience.cdk.inchi.InChIGeneratorTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     InchiCoverageTest.class,
-    InChIGeneratorTest.class
+    InChIGeneratorTest.class,
+    InChIToStructureTest.class
 })
 public class MinchiTests {}

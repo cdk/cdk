@@ -20,34 +20,26 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
-import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point3d;
 
 /**
  * Tests for molecular descriptors.
@@ -87,7 +79,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     public void testCalculate_IAtomContainer() {
         IAtomContainer mol = null;
         try {
-            mol = someoneBringMeSomeWater();
+            mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail("Error in generating the test molecule");
@@ -108,7 +100,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 
     @Test
     public void testCalculate_NoModifications() throws Exception {
-        IAtomContainer mol = someoneBringMeSomeWater();
+        IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         IAtomContainer clone = (IAtomContainer)mol.clone();
         descriptor.calculate(mol);
         String diff = AtomContainerDiff.diff(clone, mol); 
@@ -125,7 +117,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 	 */
     @Test
     public void testLabels() throws Exception {
-        IAtomContainer mol = someoneBringMeSomeWater();
+        IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         
         DescriptorValue v = descriptor.calculate(mol);
         Assert.assertNotNull(v);
@@ -165,7 +157,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
      */
      @Test
     public void testNamesConsistency() throws Exception {
-        IAtomContainer mol = someoneBringMeSomeWater();
+        IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
 
         String[] names1 = descriptor.getDescriptorNames();
         DescriptorValue v = descriptor.calculate( mol);
@@ -186,7 +178,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     		result
     	);
     	
-    	IAtomContainer mol = someoneBringMeSomeWater();
+    	IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         DescriptorValue v = descriptor.calculate(mol);
         
     	Assert.assertTrue(
@@ -223,25 +215,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IDescriptorResult v2 = descriptor.calculate(methane2).getValue();
 
         String errorMessage = "("+descriptor.getClass().toString()+") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
-        if (v1 instanceof IntegerResult) {
-            Assert.assertEquals(errorMessage, ((IntegerResult)v1).intValue(), ((IntegerResult)v2).intValue());
-        } else if (v1 instanceof DoubleResult) {
-            Assert.assertEquals(errorMessage, ((DoubleResult)v1).doubleValue(), ((DoubleResult)v2).doubleValue(), 0.00001);
-        } else if (v1 instanceof BooleanResult) {
-            Assert.assertEquals(errorMessage, ((BooleanResult)v1).booleanValue(), ((BooleanResult)v2).booleanValue());
-        } else if (v1 instanceof DoubleArrayResult) {
-            DoubleArrayResult da1 = (DoubleArrayResult)v1;
-            DoubleArrayResult da2 = (DoubleArrayResult)v2;
-            for (int i=0; i<da1.length(); i++) {
-                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i), 0.00001);
-            }
-        } else if (v1 instanceof IntegerArrayResult) {
-            IntegerArrayResult da1 = (IntegerArrayResult)v1;
-            IntegerArrayResult da2 = (IntegerArrayResult)v2;
-            for (int i=0; i<da1.length(); i++) {
-                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i));
-            }
-        }
+        assertEqualOutput(v1, v2, errorMessage);
     }
 
     @Test
@@ -289,25 +263,84 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IDescriptorResult v2 = descriptor.calculate(ethane2).getValue();
 
         String errorMessage = "(" + descriptor.getClass().toString() + ") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+        assertEqualOutput(v1, v2, errorMessage);
+    }
+
+    /**
+     * Checks that the results of the first and the second descriptor results
+     * are identical.
+     *
+     * @param v1           first {@link IDescriptorResult}
+     * @param v2           second {@link IDescriptorResult}
+     * @param errorMessage error message to report when the results are not the same
+     */
+    private void assertEqualOutput(IDescriptorResult v1, IDescriptorResult v2,
+            String errorMessage) {
         if (v1 instanceof IntegerResult) {
-            Assert.assertEquals(errorMessage, ((IntegerResult) v1).intValue(), ((IntegerResult) v2).intValue());
+            Assert.assertEquals(errorMessage,
+                ((IntegerResult) v1).intValue(),
+                ((IntegerResult) v2).intValue()
+            );
         } else if (v1 instanceof DoubleResult) {
-            Assert.assertEquals(errorMessage, ((DoubleResult) v1).doubleValue(), ((DoubleResult) v2).doubleValue(), 0.00001);
+            Assert.assertEquals(errorMessage,
+                ((DoubleResult) v1).doubleValue(),
+                ((DoubleResult) v2).doubleValue(),
+                0.00001
+            );
         } else if (v1 instanceof BooleanResult) {
-            Assert.assertEquals(errorMessage, ((BooleanResult) v1).booleanValue(), ((BooleanResult) v2).booleanValue());
+            Assert.assertEquals(errorMessage,
+                ((BooleanResult) v1).booleanValue(),
+                ((BooleanResult) v2).booleanValue()
+            );
         } else if (v1 instanceof DoubleArrayResult) {
             DoubleArrayResult da1 = (DoubleArrayResult) v1;
             DoubleArrayResult da2 = (DoubleArrayResult) v2;
             for (int i = 0; i < da1.length(); i++) {
-                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i), 0.00001);
+                Assert.assertEquals(errorMessage,
+                    da1.get(i), da2.get(i),
+                    0.00001
+                );
             }
         } else if (v1 instanceof IntegerArrayResult) {
             IntegerArrayResult da1 = (IntegerArrayResult) v1;
             IntegerArrayResult da2 = (IntegerArrayResult) v2;
             for (int i = 0; i < da1.length(); i++) {
-                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i));
+                Assert.assertEquals(errorMessage,
+                    da1.get(i), da2.get(i)
+                );
             }
         }
+    }
+
+    @Test
+    public void testImplementationIndependence() throws Exception {
+        IMolecule water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
+        IMolecule water2 = someoneBringMeSomeWater(NoNotificationChemObjectBuilder.getInstance());
+
+        IDescriptorResult v1 = descriptor.calculate(water1).getValue();
+        IDescriptorResult v2 = descriptor.calculate(water2).getValue();
+
+        String errorMessage = "(" + descriptor.getClass().toString() +
+            ") The descriptor does not give the same results depending on " +
+            "the actual IChemObject implementation set (data, nonotify).";
+        assertEqualOutput(v1, v2, errorMessage);
+    }
+
+    @Test
+    public void testAtomContainerHandling() throws Exception {
+        IMolecule water1 = someoneBringMeSomeWater(
+            DefaultChemObjectBuilder.getInstance()
+        );
+     // creates an AtomContainer with the atoms / bonds from water1
+        IAtomContainer water2 = new AtomContainer(water1);
+
+        IDescriptorResult v1 = descriptor.calculate(water1).getValue();
+        IDescriptorResult v2 = descriptor.calculate(water2).getValue();
+
+        String errorMessage = "(" + descriptor.getClass().toString() +
+            ") The descriptor does not give the same results depending on " +
+            "it being passed an IMolecule or an IAtomContainer.";
+        assertEqualOutput(v1, v2, errorMessage);
     }
 
     @Ignore
@@ -333,34 +366,16 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IDescriptorResult v2 = descriptor.calculate(ethane2).getValue();
 
         String errorMessage = "("+descriptor.getClass().toString()+") The descriptor does not give the same results depending on whether bond order or atom type are considered.";
-        if (v1 instanceof IntegerResult) {
-            Assert.assertEquals(errorMessage, ((IntegerResult)v1).intValue(), ((IntegerResult)v2).intValue());
-        } else if (v1 instanceof DoubleResult) {
-            Assert.assertEquals(errorMessage, ((DoubleResult)v1).doubleValue(), ((DoubleResult)v2).doubleValue(), 0.00001);
-        } else if (v1 instanceof BooleanResult) {
-            Assert.assertEquals(errorMessage, ((BooleanResult)v1).booleanValue(), ((BooleanResult)v2).booleanValue());
-        } else if (v1 instanceof DoubleArrayResult) {
-            DoubleArrayResult da1 = (DoubleArrayResult)v1;
-            DoubleArrayResult da2 = (DoubleArrayResult)v2;
-            for (int i=0; i<da1.length(); i++) {
-                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i), 0.00001);
-            }
-        } else if (v1 instanceof IntegerArrayResult) {
-            IntegerArrayResult da1 = (IntegerArrayResult)v1;
-            IntegerArrayResult da2 = (IntegerArrayResult)v2;
-            for (int i=0; i<da1.length(); i++) {
-                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i));
-            }
-        }
+        assertEqualOutput(v1, v2, errorMessage);
     }
 
-    private IMolecule someoneBringMeSomeWater() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
-        IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+    private IMolecule someoneBringMeSomeWater(IChemObjectBuilder builder) throws Exception {
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom c1 = builder.newInstance(IAtom.class,"O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
-        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+        IAtom h1 = builder.newInstance(IAtom.class,"H");
         h1.setPoint3d(new Point3d(1.0, 0.0, 0.0));
-        IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+        IAtom h2 = builder.newInstance(IAtom.class,"H");
         h2.setPoint3d(new Point3d(-1.0, 0.0, 0.0));
         mol.addAtom(c1);
         mol.addAtom(h1);

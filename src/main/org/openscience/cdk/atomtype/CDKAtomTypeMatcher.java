@@ -128,6 +128,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBeryllium(atomContainer, atom);
         } else if ("Se".equals(atom.getSymbol())) {
             type = perceiveSelenium(atomContainer, atom);
+        } else if ("Te".equals(atom.getSymbol())) {
+            type = perceiveTellurium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
@@ -172,6 +174,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
 		return null;
 	}
+
+    private IAtomType perceiveTellurium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+        if (!isCharged(atom) && maxBondOrder == IBond.Order.SINGLE && atomContainer.getConnectedAtomsCount(atom) <= 2) {
+            IAtomType type = getAtomType("Te.3");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
 
 	private IAtomType perceiveBorons(IAtomContainer atomContainer, IAtom atom)
 		throws CDKException {
@@ -877,6 +888,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             } else if (doubleBondedAtoms == 3) {
                 IAtomType type = getAtomType("S.trioxide");
                 if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (doubleBondedAtoms == 0) {
+                IAtomType type = getAtomType("S.anyl");
+                if (isAcceptable(atom, atomContainer, type)) return type;
             }
          } else if (neighborcount == 4) {
             // count the number of double bonded oxygens
@@ -912,10 +926,20 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (hasOneSingleElectron(atomContainer, atom)) {
             // no idea how to deal with this yet
             return null;
+        } else if (neighborcount == 0) {
+            if (atom.getFormalCharge() == null ||
+                atom.getFormalCharge().intValue() == 0) {
+                IAtomType type = getAtomType("P.ine");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         } else if (neighborcount == 3) {
+        	int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
             if (atom.getFormalCharge() != null &
                 atom.getFormalCharge().intValue() == 1) {
                 IAtomType type = getAtomType("P.anium");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (doubleBonds == 1) {
+            	IAtomType type = getAtomType("P.ate");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             } else {
                 IAtomType type = getAtomType("P.ine");

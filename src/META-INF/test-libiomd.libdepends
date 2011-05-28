@@ -1,4 +1,4 @@
-vecmath1.2-1.14.jar
-log4j.jar
+vecmath*.jar
+log4j*.jar
 cmlxom-2.5-b1.jar
-xom-1.1.jar
+xom*.jar

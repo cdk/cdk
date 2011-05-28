@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -57,6 +58,26 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {
             "C.sp2", "N.sp2", "C.sp2", "N.sp3", "C.sp2", "N.sp2",
             "O.sp3", "C.sp2", "C.sp2", "C.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.bug 3141611
+     */
+    @Test public void testBug3141611() throws Exception {
+        String filename = "data/mdl/error.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+
+        // test the resulting ChemFile content
+        Assert.assertNotNull(chemFile);
+        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+
+        String[] expectedTypes = {
+            "C.sp3", "C.sp2", "O.sp2", "C.sp3", "C.sp3", "C.sp3",
+            "C.sp3", "P.ate", "O.sp2", "O.minus"
         };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }

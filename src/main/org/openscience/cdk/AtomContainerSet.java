@@ -70,7 +70,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	/**  Constructs an empty AtomContainerSet. */
 	public AtomContainerSet() {
 		atomContainerCount = 0;
-		atomContainers = new AtomContainer[growArraySize];
+		atomContainers = new IAtomContainer[growArraySize];
 		multipliers = new Double[growArraySize];
 	}
 
@@ -322,7 +322,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 */
 	protected void growAtomContainerArray() {
 		growArraySize = atomContainers.length;
-		AtomContainer[] newatomContainers = new AtomContainer[atomContainers.length + growArraySize];
+		IAtomContainer[] newatomContainers = new IAtomContainer[atomContainers.length + growArraySize];
 		System.arraycopy(atomContainers, 0, newatomContainers, 0, atomContainers.length);
 		atomContainers = newatomContainers;
 		Double[] newMultipliers = new Double[multipliers.length + growArraySize];
@@ -367,7 +367,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 */
 	public Object clone() throws CloneNotSupportedException {
 		AtomContainerSet clone = (AtomContainerSet)super.clone();
-		clone.atomContainers = new AtomContainer[atomContainerCount];
+		clone.atomContainers = new IAtomContainer[atomContainerCount];
 		clone.atomContainerCount = 0;
 		for (int i = 0; i < atomContainerCount; i++) {
 		    clone.addAtomContainer((IAtomContainer)atomContainers[i].clone());

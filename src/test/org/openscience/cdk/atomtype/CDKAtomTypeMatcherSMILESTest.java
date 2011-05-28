@@ -21,6 +21,7 @@ package org.openscience.cdk.atomtype;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -158,4 +159,22 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
             Assert.assertNotNull(type.getAtomTypeName());
         }
     }
+
+    @Test public void test4Sulphur() throws Exception {
+        String smiles = "Br.Br.CS(CCC(N)C#N)C[C@H]1OC([C@H](O)[C@@H]1O)n2cnc3c(N)ncnc23";
+
+        IMolecule mol = smilesParser.parseSmiles(smiles);
+        IAtomType[] types = atomTypeMatcher.findMatchingAtomType(mol);
+        for (IAtomType type : types) {
+            Assert.assertNotNull(type.getAtomTypeName());
+        }
+    }
+    
+    @Test public void testTellaneLike() throws Exception {
+        String smiles = "Clc1cccc(N2CCN(CCCCNC(=O)C3=Cc4ccccc4[Te]3)CC2)c1Cl";
+        IMolecule mol = smilesParser.parseSmiles(smiles);
+        for (IAtom atom : mol.atoms())
+            Assert.assertNotSame("X", atom.getAtomTypeName());
+    }
+    
 }
