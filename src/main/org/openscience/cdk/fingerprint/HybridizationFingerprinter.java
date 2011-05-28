@@ -295,5 +295,11 @@ public class HybridizationFingerprinter implements IFingerprinter {
 		return size;
 	}
 
+    @Override
+    public Map<String, Integer> getRawFingerprint(IAtomContainer container)
+            throws CDKException {
+        throw new UnsupportedOperationException();
+    }
+
 }
 
