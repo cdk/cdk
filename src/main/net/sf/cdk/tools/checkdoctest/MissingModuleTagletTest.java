@@ -79,4 +79,10 @@ public class MissingModuleTagletTest implements IClassDocTester {
         return Priority.WARNING;
     }
 
+	@Override
+	public String getURL() {
+		// There is not web page yet
+		return null;
+	}
+
 }
