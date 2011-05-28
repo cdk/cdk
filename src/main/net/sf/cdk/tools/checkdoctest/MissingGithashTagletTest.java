@@ -78,4 +78,10 @@ public class MissingGithashTagletTest implements IClassDocTester {
         return Priority.MINOR_ERROR;
     }
 
+	@Override
+	public String getURL() {
+		// There is not web page yet
+		return null;
+	}
+
 }

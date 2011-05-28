@@ -96,4 +96,10 @@ public class IncorrectBugNumberTagletTest implements IClassDocTester {
         return Priority.ERROR;
     }
 
+	@Override
+	public String getURL() {
+		// There is not web page yet
+		return null;
+	}
+
 }
