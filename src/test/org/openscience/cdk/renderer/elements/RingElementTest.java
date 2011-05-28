@@ -1,4 +1,4 @@
-/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -22,28 +22,20 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
-import java.util.ArrayList;
-
-import javax.vecmath.Point2d;
 
 import org.junit.BeforeClass;
 
 /**
  * @cdk.module test-renderbasic
  */
-public class PathElementTest extends AbstractElementTest {
+public class RingElementTest extends AbstractElementTest {
 
-	@SuppressWarnings("serial")
 	@BeforeClass
 	public static void setup() {
-		IRenderingElement element = new PathElement(
-			new ArrayList<Point2d>() {{
-				add(new Point2d(0,0));
-				add(new Point2d(1,1));
-			}},
-			Color.orange
+		IRenderingElement element = new RingElement(
+			3, 4, 5, Color.orange
 		);
 		setRenderingElement(element);
 	}
-	
+
 }

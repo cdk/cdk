@@ -23,6 +23,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -38,6 +39,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module renderbasic
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.generators.BasicSceneGeneratorTest")
 public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
 	/**

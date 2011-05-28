@@ -80,6 +80,7 @@ public class WedgeLineElement extends LineElement {
      * @param direction the direction of the thickness
      * @param color the color of the wedge
      */
+    @TestMethod("testConstructor_LineElement")
     public WedgeLineElement(LineElement element, boolean dashed,
             Direction direction, Color color) {
         this(direction == Direction.toFirst ? element.x2 : element.x1,

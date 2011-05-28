@@ -31,13 +31,13 @@ import org.junit.Test;
  */
 public abstract class AbstractElementTest {
 
-	private IRenderingElement element;
+	private static IRenderingElement element;
 	
-	protected void setRenderingElement(IRenderingElement element) {
-		this.element = element;	
+	protected static void setRenderingElement(IRenderingElement renderingElement) {
+		element = renderingElement;	
 	}
 
-	class MockVisitor implements IRenderingVisitor {
+	public class MockVisitor implements IRenderingVisitor {
 
 		boolean isVisited = false;
 
@@ -50,7 +50,12 @@ public abstract class AbstractElementTest {
 			// TODO Auto-generated method stub
 		}
 	};
-	
+
+	@Test
+	public void testConstructor() {
+		Assert.assertNotNull(element);
+	}
+
 	@Test
 	public void testAccept() {
 		MockVisitor visitor = new MockVisitor();

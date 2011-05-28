@@ -24,6 +24,7 @@ package org.openscience.cdk.renderer.generators;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -38,6 +39,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * @cdk.module renderbasic
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.generators.BasicGeneratorTest")
 public class BasicGenerator implements IGenerator<IAtomContainer> {
 
     /** Holder for various parameters, such as background color */

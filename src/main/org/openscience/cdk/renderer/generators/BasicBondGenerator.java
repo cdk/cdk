@@ -28,6 +28,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,6 +58,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module renderbasic
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.generators.BasicBondGeneratorTest")
 public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     // FIXME: bond width should be defined in world, not screen coordinates

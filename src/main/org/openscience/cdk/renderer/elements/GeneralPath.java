@@ -26,6 +26,8 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.Color;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.renderer.elements.path.PathElement;
 
 /**
@@ -35,6 +37,7 @@ import org.openscience.cdk.renderer.elements.path.PathElement;
  * @cdk.module renderbasic
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.elements.GeneralPathTest")
 public class GeneralPath implements IRenderingElement{
 
     /** The color of the path. */
@@ -49,12 +52,14 @@ public class GeneralPath implements IRenderingElement{
      * @param elements the elements that make up the path
      * @param color the color of the path
      */
+    @TestMethod("testConstructor")
     public GeneralPath(List<PathElement> elements, Color color) {
         this.elements = elements;
         this.color = color;
     }
 
     /** {@inheritDoc} */
+    @TestMethod("testAccept")
     public void accept( IRenderingVisitor v ) {
         v.visit( this );
     }
