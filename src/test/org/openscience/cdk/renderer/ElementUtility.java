@@ -116,18 +116,18 @@ public class ElementUtility implements IDrawVisitor {
 	public String toString(IRenderingElement element) {
 		if (element instanceof LineElement) {
 			LineElement e = (LineElement) element;
-			String p1 = toString(e.x1, e.y1);
-			String p2 = toString(e.x2, e.y2);
-			String p1T = toString(transformPoint(e.x1, e.y1));
-			String p2T = toString(transformPoint(e.x2, e.y2));
+			String p1 = toString(e.firstPointX, e.firstPointY);
+			String p2 = toString(e.secondPointX, e.secondPointY);
+			String p1T = toString(transformPoint(e.firstPointX, e.firstPointY));
+			String p2T = toString(transformPoint(e.secondPointX, e.secondPointY));
 			String lineFormat = "Line [%s, %s] -> [%s, %s]\n";
 			return String.format(lineFormat, p1, p2, p1T, p2T);
 		} else if (element instanceof OvalElement) {
 			OvalElement e = (OvalElement) element;
 			double r = e.radius;
-			String c = toString(e.x, e.y, r);
-			String p1 = toString(transformPoint(e.x - r, e.y - r));
-			String p2 = toString(transformPoint(e.x + r, e.y + r));
+			String c = toString(e.xCoord, e.yCoord, r);
+			String p1 = toString(transformPoint(e.xCoord - r, e.yCoord - r));
+			String p2 = toString(transformPoint(e.xCoord + r, e.yCoord + r));
 			return String.format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
 		} else if (element instanceof AtomSymbolElement) {
 		    AtomSymbolElement e = (AtomSymbolElement) element;

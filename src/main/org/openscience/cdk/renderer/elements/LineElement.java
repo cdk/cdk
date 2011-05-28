@@ -31,16 +31,16 @@ import org.openscience.cdk.annotations.TestMethod;
 public class LineElement implements IRenderingElement {
 
     /** The x-coordinate of the first point. **/
-    public final double x1;
+    public final double firstPointX;
     
     /** The y-coordinate of the first point. **/
-    public final double y1;
+    public final double firstPointY;
     
     /** The x-coordinate of the second point. **/
-    public final double x2;
+    public final double secondPointX;
     
     /** The y-coordinate of the second point. **/
-    public final double y2;
+    public final double secondPointY;
     
     /** The width of the line. **/
     public final double width;
@@ -51,28 +51,30 @@ public class LineElement implements IRenderingElement {
     /**
      * Make a line element. 
      * 
-     * @param x1 x-coordinate of the first point
-     * @param y2 y-coordinate of the first point
-     * @param x2 x-coordinate of the second point
-     * @param y2 y-coordinate of the second point
+     * @param firstPointX x-coordinate of the first point
+     * @param secondPointY y-coordinate of the first point
+     * @param secondPointX x-coordinate of the second point
+     * @param secondPointY y-coordinate of the second point
      * @param width the width of the line
      * @param color the color of the line
      */
     @TestMethod("testConstructor")
     public LineElement(
-          double x1, double y1, double x2, double y2, double width, Color color) {
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+          double firstPointX, double firstPointY,
+          double secondPointX, double secondPointY,
+          double width, Color color) {
+        this.firstPointX = firstPointX;
+        this.firstPointY = firstPointY;
+        this.secondPointX = secondPointX;
+        this.secondPointY = secondPointY;
         this.width = width;
         this.color = color;
     }
 
     /** {@inheritDoc} **/
 	@TestMethod("testAccept")
-    public void accept(IRenderingVisitor v) {
-        v.visit(this);
+    public void accept(IRenderingVisitor visitor) {
+        visitor.visit(this);
     }
 
     /**

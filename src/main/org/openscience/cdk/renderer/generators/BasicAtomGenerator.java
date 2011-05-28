@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -206,10 +204,10 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @TestMethod("testSingleBond,testSquare")
-    public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+    public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup elementGroup = new ElementGroup();
-        for (IAtom atom : ac.atoms()) {
-            elementGroup.add(this.generate(ac, atom, model));
+        for (IAtom atom : container.atoms()) {
+            elementGroup.add(this.generate(container, atom, model));
         }
         return elementGroup;
     }
@@ -279,12 +277,12 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * c) an invisible carbon.
      *
      * @param atom the atom to check
-     * @param ac the atom container the atom is part of
+     * @param container the atom container the atom is part of
      * @param model the renderer model
      * @return true if the atom should be drawn
      */
     @TestMethod("canDrawTest")
-    public boolean canDraw(IAtom atom, IAtomContainer ac, RendererModel model) {
+    public boolean canDraw(IAtom atom, IAtomContainer container, RendererModel model) {
         // don't draw atoms without coordinates
         if (!hasCoordinates(atom)) {
             return false;
@@ -296,7 +294,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         }
 
         // don't draw invisible carbons 
-        if (invisibleCarbon(atom, ac, model)) {
+        if (invisibleCarbon(atom, container, model)) {
             return false;
         }
 
@@ -343,15 +341,17 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     @TestMethod("ovalShapeTest,squareShapeTest")
     public IRenderingElement generateCompactElement(
             IAtom atom, RendererModel model) {
-        Point2d p = atom.getPoint2d();
-	    double r = model.get(AtomRadius.class) /
+        Point2d point = atom.getPoint2d();
+	    double radius = (Double)model.get(AtomRadius.class) /
         model.getParameter(Scale.class).getValue();
-        double d = 2 * r;
+        double distance = 2 * radius;
 	    if (model.get(CompactShape.class) == Shape.SQUARE) {
             return new RectangleElement(
-    	            p.x - r, p.y - r, d, d, true, getAtomColor(atom,model));
+    	        point.x - radius, point.y - radius,
+    	        distance, distance, true, getAtomColor(atom,model));
         } else {
-            return new OvalElement(p.x, p.y, r, true, getAtomColor(atom, model));
+            return new OvalElement(point.x, point.y, radius, true,
+            		getAtomColor(atom, model));
         }
     }
 
@@ -385,7 +385,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * Checks a carbon atom to see if it should be shown.
      * 
      * @param carbonAtom the carbon atom to check
-     * @param ac the atom container
+     * @param container the atom container
      * @param model the renderer model
      * @return true if the carbon should be shown 
      */
@@ -393,7 +393,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
                 "showCarbon_SingleCarbonTest,showCarbon_ShowEndCarbonsTest," +
                 "showCarbon_ErrorMarker,showCarbon_ConnectedSingleElectrons")
     public boolean showCarbon(
-            IAtom carbonAtom, IAtomContainer ac, RendererModel model) {
+            IAtom carbonAtom, IAtomContainer container, RendererModel model) {
 
 		if ((boolean)model.get(KekuleStructure.class))
             return true;
@@ -401,7 +401,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         if (carbonAtom.getFormalCharge() != 0)
             return true;
 
-        int connectedBondCount = ac.getConnectedBondsList(carbonAtom).size(); 
+        int connectedBondCount = container.getConnectedBondsList(carbonAtom).size(); 
         
         if (connectedBondCount < 1)
             return true;
@@ -412,7 +412,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         if (carbonAtom.getProperty(ProblemMarker.ERROR_MARKER) != null)
             return true;
 
-        if (ac.getConnectedSingleElectronsCount(carbonAtom) > 0)
+        if (container.getConnectedSingleElectronsCount(carbonAtom) > 0)
             return true;
 
         return false;

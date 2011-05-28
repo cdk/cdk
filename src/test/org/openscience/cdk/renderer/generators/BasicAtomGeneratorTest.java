@@ -352,7 +352,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         // test that the endpoints are distinct
         OvalElement ovalA = (OvalElement) elements.get(0);
         OvalElement ovalB = (OvalElement) elements.get(1);
-        Assert.assertNotSame(0, distance(ovalA.x, ovalA.y, ovalB.x, ovalB.y));
+        Assert.assertNotSame(0, distance(ovalA.xCoord, ovalA.yCoord, ovalB.xCoord, ovalB.yCoord));
     }
 
     @Test

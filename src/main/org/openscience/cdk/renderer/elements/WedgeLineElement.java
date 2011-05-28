@@ -83,10 +83,10 @@ public class WedgeLineElement extends LineElement {
     @TestMethod("testConstructor_LineElement")
     public WedgeLineElement(LineElement element, boolean dashed,
             Direction direction, Color color) {
-        this(direction == Direction.toFirst ? element.x2 : element.x1,
-             direction == Direction.toFirst ? element.y2 : element.y1,
-             direction == Direction.toFirst ? element.x1 : element.x2,
-             direction == Direction.toFirst ? element.y1 : element.y2,
+        this(direction == Direction.toFirst ? element.secondPointX : element.firstPointX,
+             direction == Direction.toFirst ? element.secondPointY : element.firstPointY,
+             direction == Direction.toFirst ? element.firstPointX : element.secondPointX,
+             direction == Direction.toFirst ? element.firstPointY : element.secondPointY,
              element.width, dashed, direction, color);
     }
 

@@ -144,12 +144,12 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         Point2d modelScreenCenter
             = this.toScreenCoordinates(modelBounds.getCenterX(),
                                        modelBounds.getCenterY());
-        double w = (scale * zoom * modelBounds.getWidth()) + (2 * margin);
-        double h = (scale * zoom * modelBounds.getHeight()) + (2 * margin);
-        return new Rectangle((int) (modelScreenCenter.x - w / 2),
-                             (int) (modelScreenCenter.y - h / 2),
-                             (int) w,
-                             (int) h);
+        double width = (scale * zoom * modelBounds.getWidth()) + (2 * margin);
+        double height = (scale * zoom * modelBounds.getHeight()) + (2 * margin);
+        return new Rectangle((int) (modelScreenCenter.x - width / 2),
+                             (int) (modelScreenCenter.y - height / 2),
+                             (int) width,
+                             (int) height);
     }
 
     /**
@@ -186,23 +186,23 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     /**
      * Set the position of the center of the model.
      * 
-     * @param x the x-coordinate of the model center
-     * @param y the y-coordinate of the model center
+     * @param modelX the x-coordinate of the model center
+     * @param modelY the y-coordinate of the model center
      */
-    public void setModelCenter(double x, double y) {
-        this.modelCenter = new Point2d(x, y);
+    public void setModelCenter(double modelX, double modelY) {
+        this.modelCenter = new Point2d(modelX, modelY);
         setup();
     }
 
     /**
      * Set the point on the screen to draw the diagram.
      * 
-     * @param x the x-coordinate of the point to draw at
-     * @param y the y-coordinate of the point to draw at
+     * @param modelX the x-coordinate of the point to draw at
+     * @param modelY the y-coordinate of the point to draw at
      */
 
-    public void setDrawCenter(double x, double y) {
-        this.drawCenter = new Point2d(x, y);
+    public void setDrawCenter(double modelX, double modelY) {
+        this.drawCenter = new Point2d(modelX, modelY);
         setup();
     }
 
@@ -256,11 +256,11 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     /**
      * Move the draw center by dx and dy.
      *
-     * @param dx the x shift
-     * @param dy the y shift
+     * @param shiftX the x shift
+     * @param shiftY the y shift
      */
-    public void shiftDrawCenter(double dx, double dy) {
-        drawCenter.set(drawCenter.x + dx, drawCenter.y + dy);
+    public void shiftDrawCenter(double shiftX, double shiftY) {
+        drawCenter.set(drawCenter.x + shiftX, drawCenter.y + shiftY);
         setup();
     }
 
@@ -296,11 +296,11 @@ public abstract class AbstractRenderer<T extends IChemObject> {
                              double diagramWidth,
                              double diagramHeight) {
 
-        double m = rendererModel.getParameter(Margin.class).getValue();
+        double margin = rendererModel.getParameter(Margin.class).getValue();
 
         // determine the zoom needed to fit the diagram to the screen
-        double widthRatio  = drawWidth  / (diagramWidth  + (2 * m));
-        double heightRatio = drawHeight / (diagramHeight + (2 * m));
+        double widthRatio  = drawWidth  / (diagramWidth  + (2 * margin));
+        double heightRatio = drawHeight / (diagramHeight + (2 * margin));
 
         double zoom = Math.min(widthRatio, heightRatio);
 
@@ -385,15 +385,15 @@ public abstract class AbstractRenderer<T extends IChemObject> {
 
         int dx = 0;
         int dy = 0;
-        int w = screenBounds.width;
-        int h = screenBounds.height;
+        int width = screenBounds.width;
+        int height = screenBounds.height;
 
         if (leftOverlap > 0) {
             dx = leftOverlap;
         }
 
         if (rightOverlap > 0) {
-            w += rightOverlap;
+            width += rightOverlap;
         }
 
         if (topOverlap > 0) {
@@ -401,14 +401,14 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         }
 
         if (bottomOverlap > 0) {
-            h += bottomOverlap;
+            height += bottomOverlap;
         }
 
         if (dx != 0 || dy != 0) {
             this.shiftDrawCenter(dx, dy);
         }
 
-        return new Rectangle(dx, dy, w, h);
+        return new Rectangle(dx, dy, width, height);
     }
 
     /**
@@ -419,28 +419,28 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      * @return the bounds in screen space of the drawn diagram
      */
     protected Rectangle convertToDiagramBounds(Rectangle2D modelBounds) {
-        double cx = modelBounds.getCenterX();
-        double cy = modelBounds.getCenterY();
-        double mw = modelBounds.getWidth();
-        double mh = modelBounds.getHeight();
+        double xCenter = modelBounds.getCenterX();
+        double yCenter = modelBounds.getCenterY();
+        double modelWidth = modelBounds.getWidth();
+        double modelHeight = modelBounds.getHeight();
 
         double scale = rendererModel.getParameter(Scale.class).getValue();
         double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
         
-        Point2d mc = this.toScreenCoordinates(cx, cy);
+        Point2d screenCoord = this.toScreenCoordinates(xCenter, yCenter);
 
         // special case for 0 or 1 atoms
-        if (mw == 0 && mh == 0) {
-            return new Rectangle((int)mc.x, (int)mc.y, 0, 0);
+        if (modelWidth == 0 && modelHeight == 0) {
+            return new Rectangle((int)screenCoord.x, (int)screenCoord.y, 0, 0);
         }
 
         double margin = rendererModel.getParameter(Margin.class).getValue();
-        int w = (int) ((scale * zoom * mw) + (2 * margin));
-        int h = (int) ((scale * zoom * mh) + (2 * margin));
-        int x = (int) (mc.x - w / 2);
-        int y = (int) (mc.y - h / 2);
+        int width = (int) ((scale * zoom * modelWidth) + (2 * margin));
+        int height = (int) ((scale * zoom * modelHeight) + (2 * margin));
+        int xCoord = (int) (screenCoord.x - width / 2);
+        int yCoord = (int) (screenCoord.y - height / 2);
 
-        return new Rectangle(x, y, w, h);
+        return new Rectangle(xCoord, yCoord, width, height);
     }
 
     /**

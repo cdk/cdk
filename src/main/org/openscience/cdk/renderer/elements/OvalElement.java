@@ -35,10 +35,10 @@ import org.openscience.cdk.annotations.TestMethod;
 public class OvalElement implements IRenderingElement {
 
     /** The x-coordinate of the center of the oval. **/
-    public final double x;
+    public final double xCoord;
 
     /** The y-coordinate of the center of the oval. **/
-    public final double y;
+    public final double yCoord;
 
     /** The radius of the oval. **/
     public final double radius;        // TODO : width AND height
@@ -52,39 +52,39 @@ public class OvalElement implements IRenderingElement {
     /**
      * Make an oval with a default radius of 10.
      * 
-     * @param x the x-coordinate of the center of the oval
-     * @param y the y-coordinate of the center of the oval
+     * @param xCoord the x-coordinate of the center of the oval
+     * @param yCoord the y-coordinate of the center of the oval
      * @param color the color of the oval
      */
     @TestMethod("testConstructor")
-    public OvalElement(double x, double y, Color color) {
-        this(x, y, 10, color);
+    public OvalElement(double xCoord, double yCoord, Color color) {
+        this(xCoord, yCoord, 10, color);
     }
 
     /**
      * Make an oval with the supplied radius.
      * 
-     * @param x the x-coordinate of the center of the oval
-     * @param y the y-coordinate of the center of the oval
+     * @param xCoord the x-coordinate of the center of the oval
+     * @param yCoord the y-coordinate of the center of the oval
      * @param radius the radius of the oval
      * @param color the color of the oval
      */
-    public OvalElement(double x, double y, double radius, Color color) {
-        this(x, y, radius, true, color);
+    public OvalElement(double xCoord, double yCoord, double radius, Color color) {
+        this(xCoord, yCoord, radius, true, color);
     }
 
     /**
      * Make an oval with a particular fill and color.
      * 
-     * @param x the x-coordinate of the center of the oval
-     * @param y the y-coordinate of the center of the oval
+     * @param xCoord the x-coordinate of the center of the oval
+     * @param yCoord the y-coordinate of the center of the oval
      * @param radius the radius of the oval
      * @param fill if true, fill the oval when drawing
      * @param color the color of the oval
      */
-    public OvalElement(double x, double y, double radius, boolean fill, Color color) {
-        this.x = x;
-        this.y = y;
+    public OvalElement(double xCoord, double yCoord, double radius, boolean fill, Color color) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
         this.radius = radius;
         this.fill = fill;
         this.color = color;
@@ -92,7 +92,7 @@ public class OvalElement implements IRenderingElement {
 
     /** {@inheritDoc} **/
 	@TestMethod("testAccept")
-    public void accept(IRenderingVisitor v) {
-        v.visit(this);
+    public void accept(IRenderingVisitor visitor) {
+        visitor.visit(this);
     }
 }

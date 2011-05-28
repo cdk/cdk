@@ -137,7 +137,7 @@ public abstract class AbstractGeneratorTest {
 	 */
 	public static double length(LineElement line) {
 		return 
-			AbstractGeneratorTest.distance(line.x1, line.y1, line.x2, line.y2);
+			AbstractGeneratorTest.distance(line.firstPointX, line.firstPointY, line.secondPointX, line.secondPointY);
 	}
 	
 	/**
@@ -166,15 +166,15 @@ public abstract class AbstractGeneratorTest {
 		for (IRenderingElement element : elements) {
 			if (element instanceof OvalElement) {
 				OvalElement o = (OvalElement) element;
-				centerX += o.x;
-				centerY += o.y;
+				centerX += o.xCoord;
+				centerY += o.yCoord;
 				counter++;
 			} else if (element instanceof LineElement) {
 				LineElement l = (LineElement) element;
-				centerX += l.x1;
-				centerX += l.x2;
-				centerY += l.y1;
-				centerY += l.y2;
+				centerX += l.firstPointX;
+				centerX += l.secondPointX;
+				centerY += l.firstPointY;
+				centerY += l.secondPointY;
 				counter += 2;
 			}
 		}

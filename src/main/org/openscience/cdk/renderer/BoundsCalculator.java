@@ -114,8 +114,8 @@ public class BoundsCalculator {
     public static Rectangle2D calculateBounds(IMoleculeSet moleculeSet) {
         Rectangle2D totalBounds = new Rectangle2D.Double();
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
-            IAtomContainer ac = moleculeSet.getAtomContainer(i);
-            Rectangle2D acBounds = calculateBounds(ac);
+            IAtomContainer container = moleculeSet.getAtomContainer(i);
+            Rectangle2D acBounds = calculateBounds(container);
             if (totalBounds.isEmpty()) {
                 totalBounds = acBounds;
             } else {
@@ -147,15 +147,15 @@ public class BoundsCalculator {
         double ymax = Double.NEGATIVE_INFINITY;
 
         for (IAtom atom : atomContainer.atoms()) {
-            Point2d p = atom.getPoint2d();
-            xmin = Math.min(xmin, p.x);
-            xmax = Math.max(xmax, p.x);
-            ymin = Math.min(ymin, p.y);
-            ymax = Math.max(ymax, p.y);
+            Point2d point = atom.getPoint2d();
+            xmin = Math.min(xmin, point.x);
+            xmax = Math.max(xmax, point.x);
+            ymin = Math.min(ymin, point.y);
+            ymax = Math.max(ymax, point.y);
         }
-        double w = xmax - xmin;
-        double h = ymax - ymin;
-        return new Rectangle2D.Double(xmin, ymin, w, h);
+        double width = xmax - xmin;
+        double height = ymax - ymin;
+        return new Rectangle2D.Double(xmin, ymin, width, height);
     }
 
 }

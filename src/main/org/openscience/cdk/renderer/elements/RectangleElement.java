@@ -35,10 +35,10 @@ import org.openscience.cdk.annotations.TestMethod;
 public class RectangleElement implements IRenderingElement {
     
     /** The x-coordinate of the center of the rectangle. **/
-    public final double x;
+    public final double xCoord;
     
     /** The y-coordinate of the center of the rectangle. **/
-    public final double y;
+    public final double yCoord;
     
     /** The width of the rectangle. **/
     public final double width;
@@ -56,37 +56,39 @@ public class RectangleElement implements IRenderingElement {
     /**
      * Make a rectangle from two opposite corners (x1, y1) and (x2, y2).
      * 
-     * @param x1 the x-coordinate of the first point
-     * @param y1 the y-coordinate of the first point
-     * @param x2 the x-coordinate of the second point
-     * @param y2 the y-coordinate of the second point
+     * @param xCoord1 the x-coordinate of the first point
+     * @param yCoord1 the y-coordinate of the first point
+     * @param xCoord2 the x-coordinate of the second point
+     * @param yCoord2 the y-coordinate of the second point
      * @param color the color of the rectangle
      */
     @TestMethod("testConstructor")
     public RectangleElement(
-            double x1, double y1, double x2, double y2, Color color) {
+            double xCoord1, double yCoord1,
+            double xCoord2, double yCoord2,
+            Color color) {
         
-        this(x1, y1, x2 - x1, y2 - y1, false, color);
+        this(xCoord1, yCoord1, xCoord2 - xCoord1, yCoord2 - yCoord1, false, color);
     }
     
     /**
      * Make a rectangle centered on (x, y).
      * 
-     * @param x x-coordinate of the center of the rectangle
-     * @param y y-coordinate of the center of the rectangle
+     * @param xCoord x-coordinate of the center of the rectangle
+     * @param yCoord y-coordinate of the center of the rectangle
      * @param width width of the rectangle
      * @param height height of the rectangle
      * @param filled if true, the rectangle is drawn as filled
      * @param color the color of the rectangle
      */
-    public RectangleElement(double x,
-                            double y, 
+    public RectangleElement(double xCoord,
+                            double yCoord, 
                             double width,
                             double height,
                             boolean filled,
                             Color color) {
-        this.x = x;
-        this.y = y;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
         this.width = width;
         this.height = height;
         this.filled = filled;
@@ -95,8 +97,8 @@ public class RectangleElement implements IRenderingElement {
     
     /** {@inheritDoc }**/
     @TestMethod("testAccept")
-    public void accept(IRenderingVisitor v) {
-        v.visit(this);
+    public void accept(IRenderingVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

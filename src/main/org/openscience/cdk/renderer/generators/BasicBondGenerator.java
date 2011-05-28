@@ -248,15 +248,15 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** {@inheritDoc} */
-    public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+    public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
-        this.ringSet = this.getRingSet(ac);
+        this.ringSet = this.getRingSet(container);
 
         //Sort the ringSet consistently to ensure consistent rendering.
         //If this is omitted, the bonds may 'tremble'.
         ringSet.sortAtomContainers(new AtomContainerComparatorBy2DCenter());
 
-        for (IBond bond : ac.bonds()) {
+        for (IBond bond : container.bonds()) {
             group.add(this.generate(bond, model));
         }
         return group;
@@ -309,28 +309,28 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
             return null;
 
         // is object right? if not replace with a good one
-        Point2d p1 = bond.getAtom(0).getPoint2d();
-        Point2d p2 = bond.getAtom(1).getPoint2d();
+        Point2d point1 = bond.getAtom(0).getPoint2d();
+        Point2d point2 = bond.getAtom(1).getPoint2d();
         Color color = this.getColorForBond(bond, model);
         double bondWidth = this.getWidthForBond(bond, model);
 		double bondDistance = model.get(BondDistance.class) /
         model.getParameter(Scale.class).getValue();
         if (type == IBond.Order.SINGLE) {
-            return new LineElement(p1.x, p1.y, p2.x, p2.y, bondWidth, color);
+            return new LineElement(point1.x, point1.y, point2.x, point2.y, bondWidth, color);
         } else {
             ElementGroup group = new ElementGroup();
             switch (type) {
             case DOUBLE:
-                createLines(p1, p2, bondWidth, bondDistance, color, group);
+                createLines(point1, point2, bondWidth, bondDistance, color, group);
                 break;
             case TRIPLE:
-                createLines(p1, p2, bondWidth, bondDistance * 2, color, group);
+                createLines(point1, point2, bondWidth, bondDistance * 2, color, group);
                 group.add(new LineElement(
-                        p1.x, p1.y, p2.x, p2.y, bondWidth, color));
+                        point1.x, point1.y, point2.x, point2.y, bondWidth, color));
                 break;
             case QUADRUPLE:
-                createLines(p1, p2, bondWidth, bondDistance, color, group);
-                createLines(p1, p2, bondWidth, bondDistance * 4, color, group);
+                createLines(point1, point2, bondWidth, bondDistance, color, group);
+                createLines(point1, point2, bondWidth, bondDistance * 4, color, group);
             default:
                 break;
             }
@@ -338,34 +338,34 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-    private void createLines(Point2d p1, Point2d p2, double width, double dist,
-            Color c, ElementGroup group) {
-        double[] out = generateDistanceData(p1, p2, dist);
+    private void createLines(Point2d point1, Point2d point2, double width, double dist,
+            Color color, ElementGroup group) {
+        double[] out = generateDistanceData(point1, point2, dist);
         LineElement l1 =
-            new LineElement(out[0], out[1], out[4], out[5], width, c);
+            new LineElement(out[0], out[1], out[4], out[5], width, color);
         LineElement l2 =
-            new LineElement(out[2], out[3], out[6], out[7], width, c);
+            new LineElement(out[2], out[3], out[6], out[7], width, color);
         group.add(l1);
         group.add(l2);
     }
 
-    private double[] generateDistanceData(Point2d p1, Point2d p2, double dist) {
+    private double[] generateDistanceData(Point2d point1, Point2d point2, double dist) {
         Vector2d normal = new Vector2d();
-        normal.sub(p2, p1);
+        normal.sub(point2, point1);
         normal = new Vector2d(-normal.y, normal.x);
         normal.normalize();
         normal.scale(dist);
 
         Point2d line1p1 = new Point2d();
         Point2d line1p2 = new Point2d();
-        line1p1.add(p1, normal);
-        line1p2.add(p2, normal);
+        line1p1.add(point1, normal);
+        line1p2.add(point2, normal);
 
         normal.negate();
         Point2d line2p1 = new Point2d();
         Point2d line2p2 = new Point2d();
-        line2p1.add(p1, normal);
-        line2p2.add(p2, normal);
+        line2p1.add(point1, normal);
+        line2p2.add(point2, normal);
 
         return new double[] { 
                 line1p1.x, line1p1.y, line2p1.x, line2p1.y,
