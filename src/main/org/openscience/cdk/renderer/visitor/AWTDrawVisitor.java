@@ -162,8 +162,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
         
         this.g.setColor(line.color);
-        int[] a = this.transformPoint(line.x1, line.y1);
-        int[] b = this.transformPoint(line.x2, line.y2);
+        int[] a = this.transformPoint(line.firstPointX, line.firstPointY);
+        int[] b = this.transformPoint(line.secondPointX, line.secondPointY);
         this.g.drawLine(a[0], a[1], b[0], b[1]);
         
         this.g.setStroke(savedStroke);
@@ -175,13 +175,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         int diameter = scaleX(oval.radius * 2);
  
         if (oval.fill) {
-        	this.g.fillOval(transformX(oval.x) - radius,
-                        transformY(oval.y) - radius,
+        	this.g.fillOval(transformX(oval.xCoord) - radius,
+                        transformY(oval.yCoord) - radius,
                         diameter,
                         diameter );
         } else { 
-        	this.g.drawOval(transformX(oval.x) - radius,
-                        transformY(oval.y) - radius,
+        	this.g.drawOval(transformX(oval.xCoord) - radius,
+                        transformY(oval.yCoord) - radius,
                         diameter,
                         diameter );
         }
@@ -221,15 +221,15 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public void visit(WedgeLineElement wedge) {
         // make the vector normal to the wedge axis
         Vector2d normal = 
-            new Vector2d(wedge.y1 - wedge.y2, wedge.x2 - wedge.x1);
+            new Vector2d(wedge.firstPointY - wedge.secondPointY, wedge.secondPointX - wedge.firstPointX);
         normal.normalize();
         normal.scale(
                 rendererModel.getParameter(WedgeWidth.class).getValue() 
                 / rendererModel.getParameter(Scale.class).getValue());  
         
         // make the triangle corners
-        Point2d vertexA = new Point2d(wedge.x1, wedge.y1);
-        Point2d vertexB = new Point2d(wedge.x2, wedge.y2);
+        Point2d vertexA = new Point2d(wedge.firstPointX, wedge.firstPointY);
+        Point2d vertexB = new Point2d(wedge.secondPointX, wedge.secondPointY);
         Point2d vertexC = new Point2d(vertexB);
         vertexB.add(normal);
         vertexC.sub(normal);
@@ -331,9 +331,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
     
     public void visit(RectangleElement rectangle) {
-        int[] p1 = this.transformPoint(rectangle.x, rectangle.y);
+        int[] p1 = this.transformPoint(rectangle.xCoord, rectangle.yCoord);
         int[] p2 = this.transformPoint(
-                rectangle.x + rectangle.width, rectangle.y + rectangle.height);
+                rectangle.xCoord + rectangle.width, rectangle.yCoord + rectangle.height);
         this.g.setColor(rectangle.color);
         if (rectangle.filled) {
             this.g.fillRect(p1[0], p1[1], p2[0] - p1[0], p2[1] - p1[1]);
