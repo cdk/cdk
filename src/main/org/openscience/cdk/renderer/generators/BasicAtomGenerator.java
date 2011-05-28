@@ -57,7 +57,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 	 *  This color is overwritten by the {@link IAtomColorer}. */
     public static class AtomColor extends
     AbstractGeneratorParameter<Color> {
-    	/** Returns the default value: Color.BLACK. */
+    	/** Returns the default value.
+    	 * @return {@link Color}.BLACK */
         public Color getDefault() {
             return Color.BLACK;
         }
@@ -69,7 +70,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     /** {@link IAtomColorer} used to draw elements. */
     public static class AtomColorer extends
     AbstractGeneratorParameter<IAtomColorer> {
-    	/** Returns the default value: {@link CDK2DAtomColors}. */
+    	/** Returns the default value.
+    	 * @return {@link CDK2DAtomColors} */
         public IAtomColorer getDefault() {
             return new CDK2DAtomColors();
         }
@@ -82,7 +84,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      *  when set to true. */
     public static class ColorByType extends
     AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value: true. */
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.TRUE */
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -95,7 +98,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      *  drawn if set to true. */
     public static class ShowExplicitHydrogens extends
     AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value: true. */
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.TRUE */
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -109,7 +113,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      *  around an atom, e.g. used for highlighting atoms. */
     public static class AtomRadius extends
     AbstractGeneratorParameter<Double> {
-    	/** Returns the default value: 0.8. */
+    	/** Returns the default value.
+    	 * @return 8.0 */
         public Double getDefault() {
             return 8.0;
         }
@@ -123,7 +128,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      *  is defined by the {@link CompactShape} parameter. */
     public static class CompactAtom extends
     AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value: false. */
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.FALSE */
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -138,7 +144,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     public static class KekuleStructure extends
     AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value: false. */
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.FALSE */
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -153,7 +160,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * When atoms are selected or in compact mode, they will
-     * be covered by a shape determined by this enumeration
+     * be covered by a shape determined by this enumeration.
      */
     public enum Shape { OVAL, SQUARE };
 
@@ -163,7 +170,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     public static class CompactShape extends
     AbstractGeneratorParameter<Shape> {
-    	/** Returns the default value: Shape.SQUARE. */
+    	/** Returns the default value.
+    	 * @return Shape.SQUARE */
         public Shape getDefault() {
             return Shape.SQUARE;
         }
@@ -179,7 +187,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     public static class ShowEndCarbons extends
     AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value: false. */
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.FALSE */
     	public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -216,10 +225,22 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         return atom != null && atom.getPoint2d() != null;   
     }
 
+    /**
+     * Determines if the atom is a hydrogen.
+     *
+     * @param  atom {@link IAtom} to be tested
+     * @return      true, if the atom is a hydrogen, and false, otherwise.
+     */
     public boolean isHydrogen(IAtom atom) {
     	return "H".equals(atom.getSymbol());
     }
 
+    /**
+     * Determines if the atom is a carbon.
+     *
+     * @param  atom {@link IAtom} to be tested
+     * @return      true, if the atom is a carbon, and false, otherwise.
+     */
     public boolean isCarbon(IAtom atom) {
     	return "C".equals(atom.getSymbol());
     }

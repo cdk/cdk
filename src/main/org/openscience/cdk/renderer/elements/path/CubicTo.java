@@ -33,13 +33,13 @@ import javax.vecmath.Point2d;
  */
 public class CubicTo extends PathElement {
 
-    /** first control point in the cubic */
+    /** first control point in the cubic. */
     public final Point2d cp1;
     
-    /** second control point in the cubic */
+    /** second control point in the cubic. */
     public final Point2d cp2;
     
-    /** end point of the cubic */
+    /** end point of the cubic. */
     public final Point2d ep;
 
     /**

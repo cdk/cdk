@@ -40,29 +40,43 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  */
 public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
+	/**
+	 * Determines if tooltips are to be shown.
+	 */
     public static class ShowTooltip extends 
     AbstractGeneratorParameter<Boolean> {
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.FALSE */
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
     private ShowTooltip showTooltip = new ShowTooltip();
 
+    /**
+     * Determines if the molecule's title is depicted.
+     */
     public static class ShowMoleculeTitle extends 
     AbstractGeneratorParameter<Boolean> {
-        public Boolean getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.FALSE */
+    	public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
     private ShowMoleculeTitle showMoleculeTitle = new ShowMoleculeTitle();
 
+    /**
+     * If true, the scale is set such that the diagram
+     * fills the whole screen. */
     public static class FitToScreen extends 
     AbstractGeneratorParameter<Boolean> {
-        public Boolean getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.FALSE */
+    	public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
-    /** If true, the scale is set such that the diagram fills the whole screen*/
     private FitToScreen fitToScreen = new FitToScreen();
 
     /**
@@ -72,66 +86,104 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
      */
     public static class Scale extends
     AbstractGeneratorParameter<Double> {
-        public Double getDefault() {
+    	/** Returns the default value.
+    	 * @return 1.0 */
+    	public Double getDefault() {
             return 1.0;
         }
     }
     private IGeneratorParameter<Double> scale = new Scale();	
 
+    /**
+     * The background color of the drawn image.
+     */
     public static class BackgroundColor extends
     AbstractGeneratorParameter<Color> {
-        public Color getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link Color}.WHITE */
+    	public Color getDefault() {
             return Color.WHITE;
         }
     }
     private IGeneratorParameter<Color> backgroundColor = new BackgroundColor();
 
+    /**
+     * The foreground color, with which objects are drawn.
+     */
     public static class ForegroundColor extends
     AbstractGeneratorParameter<Color> {
-        public Color getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link Color}.BLACK*/
+    	public Color getDefault() {
             return Color.BLACK;
         }
     }
     private IGeneratorParameter<Color> foregroundColor = new ForegroundColor();
 
+    /**
+     * If set to true, uses anti-aliasing for drawing. Anti-aliasing makes
+     * drawing slower, but at lower resolutions it makes drawings look more
+     * smooth.
+     */
     public static class UseAntiAliasing extends
     AbstractGeneratorParameter<Boolean> {
-        public Boolean getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.TRUE */
+    	public Boolean getDefault() {
             return Boolean.TRUE;
         }
     }
     private IGeneratorParameter<Boolean> useAntiAliasing = new UseAntiAliasing();
 
     /**
-     * Area on each of the four margins to keep white.
+     * Area on each of the four margins to keep empty.
      */
     public static class Margin extends
     AbstractGeneratorParameter<Double> {
-        public Double getDefault() {
+    	/** Returns the default value.
+    	 * @return 10.0 */
+    	public Double getDefault() {
             return 10.0;
         }
     }
     private IGeneratorParameter<Double> margin = new Margin();
 
+    /** The font style to use for text. */
     public static class UsedFontStyle extends
     AbstractGeneratorParameter<FontStyle> {
-        public FontStyle getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link FontStyle}.NORMAL */
+    	public FontStyle getDefault() {
             return FontStyle.NORMAL;
         }
     }
     private IGeneratorParameter<FontStyle> fontStyle = new UsedFontStyle();
 
+    /**
+     * Font to use for text.
+     */
     public static class FontName extends
     AbstractGeneratorParameter<String> {
-        public String getDefault() {
+    	/** Returns the default value.
+    	 * @return Arial */
+    	public String getDefault() {
             return "Arial";
         }
     }
     private IGeneratorParameter<String> fontName = new FontName();
 
+    /**
+     * The zoom factor which is a user oriented parameter allowing the
+     * user to zoom in on parts of the molecule. When the zoom is 1.0,
+     * then the molecule is depicted in its normal coordinates.
+     * 
+     * @see Scale
+     */
     public static class ZoomFactor extends
     AbstractGeneratorParameter<Double> {
-        public Double getDefault() {
+    	/** Returns the default value.
+    	 * @return 1.0 */
+    	public Double getDefault() {
             return 1.0;
         }
     }

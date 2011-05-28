@@ -55,15 +55,22 @@ public class RingGenerator extends BasicBondGenerator {
      */
     public static class ShowAromaticity extends
     AbstractGeneratorParameter<Boolean> {
-        public Boolean getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.TRUE */
+    	public Boolean getDefault() {
             return Boolean.TRUE;
         }
     }
     private IGeneratorParameter<Boolean> showAromaticity = new ShowAromaticity();
 
+    /**
+     * Depicts aromaticity of rings in the original CDK style.
+     */
     public static class CDKStyleAromaticity extends
     AbstractGeneratorParameter<Boolean> {
-        public Boolean getDefault() {
+    	/** Returns the default value.
+    	 * @return {@link Boolean}.FALSE */
+    	public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
@@ -75,7 +82,9 @@ public class RingGenerator extends BasicBondGenerator {
      */
     public static class RingProportion extends
     AbstractGeneratorParameter<Double> {
-        public Double getDefault() {
+    	/** Returns the default value.
+    	 * @return 0.35 */
+    	public Double getDefault() {
             return 0.35;
         }
     }

@@ -133,6 +133,12 @@ public class PathBuilder {
         add( new Close() );
     }
 
+    /**
+     * Sets the color if this path.
+     * 
+     * @param  color the new {@link Color}.
+     * @return       returns itself.
+     */
     public PathBuilder color( Color color ) {
     	this.color = color;
     	return this;

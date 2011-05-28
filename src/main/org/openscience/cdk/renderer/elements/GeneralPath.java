@@ -40,7 +40,7 @@ public class GeneralPath implements IRenderingElement{
     /** The color of the path. */
     public final Color color;
 
-    /** The elements in the path */
+    /** The elements in the path. */
     public final List<PathElement> elements;
 
     /**

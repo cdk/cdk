@@ -65,7 +65,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class BondWidth extends
     AbstractGeneratorParameter<Double> {
-    	/** Returns the default value: 1.0. */
+    	/** Returns the default value.
+    	 * @return 1.0 */
         public Double getDefault() {
             return 1.0;
         }
@@ -77,7 +78,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class BondDistance extends
     AbstractGeneratorParameter<Double> {
-    	/** Returns the default value: 2.0. */
+    	/** Returns the default value.
+    	 * @return 2.0. */
         public Double getDefault() {
             return 2.0;
         }
@@ -89,7 +91,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class DefaultBondColor extends
     AbstractGeneratorParameter<Color> {
-    	/** Returns the default value: Color.BLACK. */
+    	/** Returns the default value.
+    	 * @return Color.BLACK */
         public Color getDefault() {
             return Color.BLACK;
         }
@@ -101,7 +104,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class BondLength extends
     AbstractGeneratorParameter<Double> {
-    	/** Returns the default value: 40.0. */
+    	/** Returns the default value.
+    	 * @return 40.0 */
         public Double getDefault() {
             return 40.0;
         }
@@ -112,7 +116,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * The width on screen of the fat end of a wedge bond.
      */
     public static class WedgeWidth extends AbstractGeneratorParameter<Double> {
-    	/** Returns the default value: 2.0. */
+    	/** Returns the default value.
+    	 * @return 2.0 */
         public Double getDefault() {
             return 2.0;
         }
@@ -124,7 +129,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public static class TowardsRingCenterProportion extends
     AbstractGeneratorParameter<Double> {
-    	/** Returns the default value: 0.15. */
+    	/** Returns the default value.
+    	 * @return 0.15 */
         public Double getDefault() {
             return 0.15;
         }

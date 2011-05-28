@@ -35,16 +35,17 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.renderer.elements.PathElementTest")
 public class PathElement implements IRenderingElement {
 
-    /** The points that make up the path **/
+    /** The points that make up the path. **/
     public final List<Point2d> points;
     
-    /** The color of the path **/
+    /** The color of the path. **/
     public final Color color;
     
     /**
-     * Make a path from the list of points
-     * @param points
-     * @param color
+     * Make a path from the list of points.
+     *
+     * @param points points defining the path
+     * @param color  color of the path
      */
     @TestMethod("testConstructor")
     public PathElement(List<Point2d> points, Color color) {

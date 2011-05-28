@@ -34,10 +34,10 @@ import javax.vecmath.Point2d;
  */
 public class QuadTo extends PathElement {
 
-    /** control point of the curve */
+    /** control point of the curve. */
     public final Point2d cp;
     
-    /** end point of the curve */
+    /** end point of the curve. */
     public final Point2d ep;
 
     /**

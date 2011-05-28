@@ -26,22 +26,22 @@ import java.awt.Color;
  */
 public class LineElement implements IRenderingElement {
 
-    /** The x-coordinate of the first point **/
+    /** The x-coordinate of the first point. **/
     public final double x1;
     
-    /** The y-coordinate of the first point **/
+    /** The y-coordinate of the first point. **/
     public final double y1;
     
-    /** The x-coordinate of the second point **/
+    /** The x-coordinate of the second point. **/
     public final double x2;
     
-    /** The y-coordinate of the second point **/
+    /** The y-coordinate of the second point. **/
     public final double y2;
     
-    /** The width of the line **/
+    /** The width of the line. **/
     public final double width;
     
-    /** The color of the line **/
+    /** The color of the line. **/
     public final Color color;
 
     /**
@@ -71,7 +71,6 @@ public class LineElement implements IRenderingElement {
 
     /**
      * The type of the line.
-     *
      */
     public enum LineType {
         SINGLE(1), DOUBLE(2), TRIPLE(3), QUADRUPLE(4);
@@ -82,6 +81,11 @@ public class LineElement implements IRenderingElement {
             this.n = n;
         }
 
+        /**
+         * Returns the count for this line type.
+         *
+         * @return the count for this line type.
+         */
         public int count() {
             return n;
         }

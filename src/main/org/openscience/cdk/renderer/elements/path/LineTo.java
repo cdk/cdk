@@ -34,7 +34,7 @@ import javax.vecmath.Point2d;
  */
 public class LineTo extends PathElement {
 
-    /** The point to make a line to */
+    /** The point to make a line to. */
     public final Point2d point;
 
     /**
