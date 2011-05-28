@@ -66,13 +66,13 @@ public class DistanceSearchVisitor implements IRenderingVisitor {
 
 	public void visitLine(LineElement lineElement) {
 		// FIXME
-		int xx = (int)(0.5 * (lineElement.x1 - lineElement.x2));
-		int yy = (int)(0.5 * (lineElement.y1 - lineElement.y2));
+		int xx = (int)(0.5 * (lineElement.firstPointX - lineElement.secondPointX));
+		int yy = (int)(0.5 * (lineElement.firstPointY - lineElement.secondPointY));
 		this.check(lineElement, xx, yy);
 	}
 
 	public void visitOval(OvalElement ovalElement) {
-		this.check(ovalElement, ovalElement.x, ovalElement.y);
+		this.check(ovalElement, ovalElement.xCoord, ovalElement.yCoord);
 	}
 
 	public void visitText(TextElement textElement) {
