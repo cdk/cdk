@@ -52,21 +52,21 @@ public class PrintVisitor implements IRenderingVisitor {
 
 	public void visitLine(LineElement lineElement) {
 		System.out.println("Line [" 
-		        + lineElement.x1 
+		        + lineElement.firstPointX 
 		        + " " 
-		        + lineElement.y1 
+		        + lineElement.firstPointY 
 		        + "]-["
-				+ lineElement.x2 
+				+ lineElement.secondPointX 
 				+ " " 
-				+ lineElement.y2
+				+ lineElement.secondPointY
 				+"]");
 	}
 
 	public void visitOval(OvalElement ovalElement) {
 		System.out.println("Oval ["
-		        + ovalElement.x 
+		        + ovalElement.xCoord 
 		        + "," 
-		        + ovalElement.y 
+		        + ovalElement.yCoord 
 		        + " " 
 		        + ovalElement.radius
 		        + "]");
