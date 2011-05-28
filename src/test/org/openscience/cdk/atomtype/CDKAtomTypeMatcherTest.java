@@ -28,8 +28,8 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -37,17 +37,17 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -3395,19 +3395,19 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testTellane() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule mol = builder.newMolecule();
-        IAtom a1 = builder.newAtom("Te");
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Te");
         a1.setFormalCharge(0);
         mol.addAtom(a1);
-        IAtom a2 = builder.newAtom("H");
+        IAtom a2 = builder.newInstance(IAtom.class,"H");
         a2.setFormalCharge(0);
         mol.addAtom(a2);
-        IAtom a3 = builder.newAtom("H");
+        IAtom a3 = builder.newInstance(IAtom.class,"H");
         a3.setFormalCharge(0);
         mol.addAtom(a3);
-        IBond b1 = builder.newBond(a1, a2, IBond.Order.SINGLE);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = builder.newBond(a1, a3, IBond.Order.SINGLE);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
 
         String[] expectedTypes = {
