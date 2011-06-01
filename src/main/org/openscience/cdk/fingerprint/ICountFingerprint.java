@@ -36,8 +36,20 @@ public interface ICountFingerprint {
 	public long size();
 	
 	/**
-	 * @param index the index of the bin to return the number of hits for.
-	 * @return the count for the bin with index <code>index</code>.
+	 * @return the number of populated bins
 	 */
-	public int get(int index);
+	public int numOfPopulatedbins();
+	
+	/**
+	 * @param index the index of the bin to return the number of hits for.
+	 * @return the count for the bin with given index.
+	 */
+	public int getCount(int index);
+	
+	/**
+	 * @param index the index of the bin to return the hash for.
+	 * @return the hash for the bin with the given index.
+	 */
+	public int getHash(int index);
+	
 }

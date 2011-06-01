@@ -33,6 +33,10 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 	private int[] hitHashes;
 	private int[] numOfHits;
 	
+	private IntArrayCountFingerprint() {
+		
+	}
+	
 	public IntArrayCountFingerprint(Map<String, Integer> rawFingerprint) {
 		Map<Integer, Integer> hashedFP = new HashMap<Integer, Integer>();
 		for ( String key : rawFingerprint.keySet() ) {
@@ -51,6 +55,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 		for ( int key : keys ) {
 			hitHashes[i] = key;
 			numOfHits[i] = hashedFP.get(key);
+			i++;
 		}
 	}
 	
@@ -60,9 +65,17 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 	}
 
 	@Override
-	public int get(int index) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getCount(int index) {
+		return numOfHits[index];
 	}
 
+	@Override
+	public int getHash(int index) {
+		return hitHashes[index];
+	}
+
+	@Override
+	public int numOfPopulatedbins() {
+		return hitHashes.length;
+	}
 }

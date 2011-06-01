@@ -37,7 +37,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.ICountFingerprint;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.fingerprint.SignatureFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -156,5 +159,30 @@ public class TanimotoTest extends CDKTestCase
 	    			           tanimoto > 0 && tanimoto < 1 );
     }
 
+    	
+    @Test public void testICountFingerprintComparison() throws Exception {
+        Molecule mol1 = MoleculeFactory.makeIndole();
+        Molecule mol2 = MoleculeFactory.makeIndole();
+        SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
+        ICountFingerprint fp1 = fingerprinter.getCountFingerprint(mol1);
+        ICountFingerprint fp2 = fingerprinter.getCountFingerprint(mol2);
+        float tanimoto = Tanimoto.calculate(fp1, fp2);
+        Assert.assertEquals(1.0, tanimoto, 0.001);
+
+    }
+    
+    @Test public void compareCountFingerprintAndRawFingerprintTanimoto() throws CDKException {
+    		Molecule mol1 = MoleculeFactory.make123Triazole();
+    		Molecule mol2 = MoleculeFactory.makeImidazole();
+    		SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
+    		ICountFingerprint countFp1 = fingerprinter.getCountFingerprint(mol1);
+    		ICountFingerprint countFp2 = fingerprinter.getCountFingerprint(mol2);
+    		Map<String, Integer> feat1 = fingerprinter.getRawFingerprint(mol1);
+    		Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);
+    		float rawTanimoto = Tanimoto.calculate(feat1, feat2);
+    		double countTanimoto = Tanimoto.calculate(countFp1, countFp2);
+    		Assert.assertEquals(rawTanimoto, countTanimoto, 0.001);
+    }
+    
 }
 

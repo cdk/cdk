@@ -32,6 +32,10 @@ package org.openscience.cdk.similarity;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
+import org.openscience.cdk.fingerprint.ICountFingerprint;
+import org.openscience.cdk.fingerprint.IntArrayCountFingerprint;
+import org.openscience.cdk.fingerprint.IntArrayFingerprint;
 
 import java.util.BitSet;
 import java.util.Map;
@@ -95,6 +99,30 @@ public class Tanimoto
         return _common_bit_count/(_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
     }
     
+    
+    /**
+     * Evaluates Tanimoto coefficient for two <code>IBitFingerprint</code>.
+     * <p>
+     * @param fingerprint1 fingerprint for the first molecule
+     * @param fingerprint2 fingerprint for the second molecule
+     * @return The Tanimoto coefficient
+     * @throws IllegalArgumentException if bitsets are not of the same length
+     */
+    public static float calculate( IBitFingerprint fingerprint1, 
+                                   IBitFingerprint fingerprint2 ) {
+        if (fingerprint1.size() != fingerprint2.size()) {
+            throw new IllegalArgumentException(
+                          "Fingerprints must have the same size" );
+        }
+        float cardinality1 = fingerprint1.cardinality();
+        float cardinality2 = fingerprint2.cardinality();
+        IBitFingerprint one_and_two = new IntArrayFingerprint(fingerprint1);
+        one_and_two.and(fingerprint2);
+        float cardinalityCommon = one_and_two.cardinality();
+        return cardinalityCommon / 
+               (cardinality1 + cardinality2 - cardinalityCommon);
+    }
+    
     /**
      * Evaluates the continuous Tanimoto coefficient for two real valued vectors.
      * <p>
@@ -126,7 +154,9 @@ public class Tanimoto
     /**
      * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
      * <p>
-     * Note that feature/count type fingerprints may not be of the same length.
+     * Note that feature/count type fingerprints may be of different length.
+     * 
+     * Uses Tanimoto method from 10.1021/ci800326z
      * 
      * @param features1 The first feature map
      * @param features2 The second feature map
@@ -139,14 +169,52 @@ public class Tanimoto
         double xy = 0., x = 0., y = 0.;
         for (String s : common) {
             int c1 = features1.get(s), c2 = features2.get(s);
-            xy += Math.max(c1, c2);
+            xy += c1 * c2;
         }
         for (Integer c : features1.values()) {
-            x += c;
+            x += c * c;
         }
         for (Integer c : features2.values()) {
-            y += c;
+            y += c * c;
         }
         return (float) (xy / (x + y - xy));
     }
+
+    /**
+     * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
+     * <p>
+     * Note that feature/count type fingerprints may be of different length.
+     * Uses Tanimoto method from 10.1021/ci800326z
+     * 
+     * @param fp1 The first fingerprint
+     * @param fp2 The second fingerprint
+     * @return The Tanimoto coefficient
+     */
+    @TestMethod("testICountFingerprintComparison")
+	public static float calculate( ICountFingerprint fp1, 
+			                       ICountFingerprint fp2 ) {
+		long xy=0, 
+		     x=0, 
+		     y=0;
+		for ( int i= 0; i<fp1.numOfPopulatedbins(); i++ ) {
+			int hash = fp1.getHash(i);
+			for ( int j =0; j<fp2.numOfPopulatedbins(); j++ ) {
+				if ( hash == fp2.getHash(j) ) {
+					xy += fp1.getCount(i) * fp2.getCount(j);
+				}
+			}
+			x += fp1.getCount(i) * fp1.getCount(i);
+		}
+		for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
+			y += fp2.getCount(j) * fp2.getCount(j);
+		}
+		float tanimoto =  ( (float)xy / (x + y - xy) );
+		if ( tanimoto < 0 || tanimoto > 1) {
+			System.out.println("Strange Tanimoto value:" + tanimoto);
+			System.out.println("x=" + x );
+			System.out.println("y=" + y );
+			System.out.println("xy=" + xy );
+		}
+		return tanimoto;
+	}
 }
