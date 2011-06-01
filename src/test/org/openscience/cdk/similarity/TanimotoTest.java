@@ -32,12 +32,15 @@ package org.openscience.cdk.similarity;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
+import org.openscience.cdk.fingerprint.SignatureFingerprinter;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -134,6 +137,26 @@ public class TanimotoTest extends CDKTestCase
     		
     		
     	}
+    	
+    /**
+     * @throws Exception
+     * @cdk.bug 3310138
+     */
+    @Test
+    public void testRawTanimotoBetween0and1() throws Exception {
+        SmilesParser smilesParser
+            = new SmilesParser( NoNotificationChemObjectBuilder.getInstance() );
+        IMolecule mol1 = smilesParser.parseSmiles(
+            "Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
+        IMolecule mol2 = smilesParser.parseSmiles(
+            "CS(=O)(=O)Nc1ccc(Cc2onc(n2)c3ccc(cc3)S(=O)(=O)Nc4ccc(CCNC[C@H](O)c5cccnc5)cc4)cc1");
+	    	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
+	    	Map<String, Integer> fp1 = fingerprinter.getRawFingerprint(mol1);
+	    	Map<String, Integer> fp2 = fingerprinter.getRawFingerprint(mol2);
+	    	float tanimoto = Tanimoto.calculate(fp1, fp2);
+	    	Assert.assertTrue( "Tanimoto expected to be between 0 and 1, was:" + tanimoto, 
+	    			           tanimoto > 0 && tanimoto < 1 );
+    }
 
 }
 
