@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-public class AverageBondLengthCalculator {
+class AverageBondLengthCalculator {
 
     /**
      * Calculate the average bond length for the bonds in a reaction.
