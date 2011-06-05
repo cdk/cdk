@@ -503,9 +503,15 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @return one or more rendering elements
      */
     public IRenderingElement generateBond(IBond bond, RendererModel model) {
-        boolean showExplicitHydrogens = model.getParameter(
-                BasicAtomGenerator.ShowExplicitHydrogens.class
-        ).getValue();
+    	boolean showExplicitHydrogens = true;
+    	if (model.hasParameter(
+    		 BasicAtomGenerator.ShowExplicitHydrogens.class
+    		)) {
+    		showExplicitHydrogens = model.getParameter(
+                    BasicAtomGenerator.ShowExplicitHydrogens.class
+            ).getValue();
+    	}
+
         if (!showExplicitHydrogens && bindsHydrogen(bond)) {
             return null;
         }
