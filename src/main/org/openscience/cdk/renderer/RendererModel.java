@@ -375,6 +375,16 @@ public class RendererModel implements Serializable, Cloneable {
 	}
 
 	/**
+     * Returns true if the passed {@link IGeneratorParameter}s has been
+     * registered.
+     *
+     * @return boolean indicating the parameters is registered
+     */
+    public <T extends IGeneratorParameter<?>> boolean hasParameter(Class<T> param) {
+    	return renderingParameters.containsKey(param.getName());
+    }
+
+    /**
 	 * Returns the {@link IGeneratorParameter} for the active {@link IRenderer}.
 	 * It returns a new instance of it was unregistered.
 	 *
