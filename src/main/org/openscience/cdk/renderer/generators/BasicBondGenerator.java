@@ -455,7 +455,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @param bond the bond to check
      * @return true if its order is double
      */
-    public boolean isDouble(IBond bond) {
+    private boolean isDouble(IBond bond) {
         return bond.getOrder() == IBond.Order.DOUBLE;
     }
 
@@ -465,7 +465,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @param bond the bond to check
      * @return true if its order is single
      */
-    public boolean isSingle(IBond bond) {
+    private boolean isSingle(IBond bond) {
         return bond.getOrder() == IBond.Order.SINGLE;
     }
 
@@ -475,7 +475,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @param bond the bond to check
      * @return true if the bond has stero information
      */
-    public boolean isStereoBond(IBond bond) {
+    private boolean isStereoBond(IBond bond) {
         return bond.getStereo() != IBond.Stereo.NONE
         && bond.getStereo() != (IBond.Stereo)CDKConstants.UNSET
         && bond.getStereo() != IBond.Stereo.E_Z_BY_COORDINATES;
@@ -487,7 +487,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @param bond the bond to check
      * @return true if any atom has an element symbol of "H"
      */
-    public boolean bindsHydrogen(IBond bond) {
+    protected boolean bindsHydrogen(IBond bond) {
         for (int i = 0; i < bond.getAtomCount(); i++) {
             IAtom atom = bond.getAtom(i);
             if ("H".equals(atom.getSymbol()))

@@ -219,7 +219,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @return true if the atom is not null, and it has non-null coordinates
      */
     @TestMethod("hasCoordinatesTest")
-    public boolean hasCoordinates(IAtom atom) {
+    protected boolean hasCoordinates(IAtom atom) {
         return atom != null && atom.getPoint2d() != null;   
     }
 
@@ -229,7 +229,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @param  atom {@link IAtom} to be tested
      * @return      true, if the atom is a hydrogen, and false, otherwise.
      */
-    public boolean isHydrogen(IAtom atom) {
+    protected boolean isHydrogen(IAtom atom) {
     	return "H".equals(atom.getSymbol());
     }
 
@@ -239,7 +239,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @param  atom {@link IAtom} to be tested
      * @return      true, if the atom is a carbon, and false, otherwise.
      */
-    public boolean isCarbon(IAtom atom) {
+    private boolean isCarbon(IAtom atom) {
     	return "C".equals(atom.getSymbol());
     }
 
@@ -252,7 +252,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @return true if this atom should not be shown
      */
     @TestMethod("invisibleHydrogenTest")
-    public boolean invisibleHydrogen(IAtom atom, RendererModel model) {
+    protected boolean invisibleHydrogen(IAtom atom, RendererModel model) {
         return isHydrogen(atom) && !(Boolean)model.get(ShowExplicitHydrogens.class);
     }
 
@@ -266,7 +266,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @return true if this atom should not be shown
      */
     @TestMethod("invisibleCarbonTest")
-    public boolean invisibleCarbon(
+    protected boolean invisibleCarbon(
             IAtom atom, IAtomContainer atomContainer, RendererModel model) {
         return isCarbon(atom) && !showCarbon(atom, atomContainer, model);
     }
@@ -282,7 +282,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @return true if the atom should be drawn
      */
     @TestMethod("canDrawTest")
-    public boolean canDraw(IAtom atom, IAtomContainer container, RendererModel model) {
+    protected boolean canDraw(IAtom atom, IAtomContainer container, RendererModel model) {
         // don't draw atoms without coordinates
         if (!hasCoordinates(atom)) {
             return false;
@@ -392,7 +392,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     @TestMethod("showCarbon_KekuleTest,showCarbon_FormalChargeTest," +
                 "showCarbon_SingleCarbonTest,showCarbon_ShowEndCarbonsTest," +
                 "showCarbon_ErrorMarker,showCarbon_ConnectedSingleElectrons")
-    public boolean showCarbon(
+    protected boolean showCarbon(
             IAtom carbonAtom, IAtomContainer container, RendererModel model) {
 
 		if ((Boolean)model.get(KekuleStructure.class))
