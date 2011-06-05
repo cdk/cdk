@@ -38,13 +38,14 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
-import org.openscience.cdk.renderer.generators.BasicBondGenerator;
-import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactShape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.KekuleStructure;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.Shape;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowEndCarbons;
+import org.openscience.cdk.renderer.generators.BasicBondGenerator;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
+import org.openscience.cdk.renderer.generators.IGenerator;
 
 /**
  * @author     maclean
@@ -86,6 +87,7 @@ public class AtomContainerRendererTest {
 		
 		List<IGenerator<IAtomContainer>> generators =
 			new ArrayList<IGenerator<IAtomContainer>>();
+		generators.add(new BasicSceneGenerator());
 		generators.add(new BasicBondGenerator());
 		BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
 		generators.add(atomGenerator);
