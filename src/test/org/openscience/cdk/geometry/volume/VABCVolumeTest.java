@@ -49,4 +49,11 @@ public class VABCVolumeTest {
         Assert.assertEquals(25.83, volume, 0.04);
     }
 
+    @Test
+    public void testMethaneWithExplicitHydrogens() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("[H]C([H])([H])[H]");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(25.83, volume, 0.04);
+    }
+
 }
