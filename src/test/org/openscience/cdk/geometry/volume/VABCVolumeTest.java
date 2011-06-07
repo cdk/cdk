@@ -70,4 +70,39 @@ public class VABCVolumeTest {
         Assert.assertEquals(77.7403972042667, volume, 0.01);
     }
 
+    @Test
+    public void testAcetonitrile() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("CC#N");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(48.8722707591, volume, 0.01);
+    }
+
+    @Test
+    public void testAceticAcid() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("CC(=O)O");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(58.0924226528555, volume, 0.01);
+    }
+
+    @Test
+    public void testChloroFluoro() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("CC(F)(F)Cl");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(70.4946134235795, volume, 0.01);
+    }
+
+    @Test
+    public void testCS2() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("S=C=S");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(57.5975740402667, volume, 0.01);
+    }
+
+    @Test
+    public void testTriEthylPhosphite() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("CCOP(=O)(OCC)OCC");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(167.320526666244, volume, 0.01);
+    }
+
 }
