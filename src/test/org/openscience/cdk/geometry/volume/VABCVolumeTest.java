@@ -28,6 +28,9 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
+/**
+ * Values in the paper are inaccurate. The spreadsheet from the SI is better.
+ */
 public class VABCVolumeTest {
 
     private static SmilesParser smilesParser;
@@ -39,21 +42,32 @@ public class VABCVolumeTest {
         );
     }
 
-    /**
-     * Test from Table 1 from {@cdk.cite Zhao2003}.
-     */
     @Test
     public void testMethane() throws InvalidSmilesException, CDKException {
         IMolecule methane = smilesParser.parseSmiles("C");
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(25.83, volume, 0.04);
+        Assert.assertEquals(25.8524433266667, volume, 0.01);
     }
 
     @Test
     public void testMethaneWithExplicitHydrogens() throws InvalidSmilesException, CDKException {
         IMolecule methane = smilesParser.parseSmiles("[H]C([H])([H])[H]");
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(25.83, volume, 0.04);
+        Assert.assertEquals(25.8524433266667, volume, 0.01);
+    }
+
+    @Test
+    public void testEthane() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("CC");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(43.1484279525333, volume, 0.01);
+    }
+
+    @Test
+    public void testButane() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("CCCC");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(77.7403972042667, volume, 0.01);
     }
 
 }

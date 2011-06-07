@@ -41,10 +41,14 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 @TestClass("org.openscience.cdk.geometry.volume.VABCVolumeTest")
 public class VABCVolume {
 
+    /**
+     * Values are taken from the spreadsheet where possible. The values in the
+     * paper are imprecise.
+     */
     @SuppressWarnings("serial")
     private static Map<String,Double> bondiiVolumes = new HashMap<String, Double>() {{
-        put("H", 7.24);
-        put("C", 20.58);
+        put("H", 7.2382293504);
+        put("C", 20.5795259250667);
     }};
 
     private static AtomTypeFactory atomTypeList = AtomTypeFactory.getInstance(
