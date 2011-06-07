@@ -105,4 +105,25 @@ public class VABCVolumeTest {
         Assert.assertEquals(167.320526666244, volume, 0.01);
     }
 
+    @Test
+    public void testBenzene() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("c1ccccc1");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(81.1665316528, volume, 0.01);
+    }
+
+    @Test
+    public void testPyrene() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("c1cc2ccc3cccc4ccc(c1)c2c34");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(171.174708305067, volume, 0.01);
+    }
+
+    @Test
+    public void testNicotine() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("CN1CCCC1c2cccnc2");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(159.9875318718, volume, 0.01);
+    }
+
 }

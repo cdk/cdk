@@ -21,13 +21,18 @@ package org.openscience.cdk.geometry.volume;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * Calculates the Vanderwaals volume using the method proposed
@@ -97,7 +102,34 @@ public class VABCVolume {
             totalHCount += hCount;
         }
         sum -= 5.92 * (molecule.getBondCount() + totalHCount);
+
+        boolean[] originalFlags = molecule.getFlags();
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        SSSRFinder ringFinder = new SSSRFinder(molecule);
+        IRingSet ringSet = ringFinder.findSSSR();
+        if (ringSet.getAtomContainerCount() > 0) {
+            int aromRingCount = 0;
+            int nonAromRingCount = 0;
+            for (IAtomContainer ring : ringSet.atomContainers()) {
+                if (ringIsAromatic(ring)) {
+                    aromRingCount++;
+                } else {
+                    nonAromRingCount++;
+                }
+            }
+            molecule.setFlags(originalFlags);
+            sum -= 14.7 * aromRingCount;
+            sum -= 3.8 * nonAromRingCount;
+        }
+
         return sum;
+    }
+
+    private static boolean ringIsAromatic(IAtomContainer ring) {
+        for (IAtom atom : ring.atoms()) {
+            if (!atom.getFlag(CDKConstants.ISAROMATIC)) return false;
+        }
+        return true;
     }
 
 }
