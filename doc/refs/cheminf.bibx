@@ -1124,6 +1124,19 @@ Method </bibtex:title>
     </bibtex:article>
   </bibtex:entry>
    
+  <bibtex:entry id="Zhao2003">
+    <bibtex:article>
+      <bibtex:author>Zhao, Yuan H. and Abraham, Michael H. and Zissimos, Andreas M.</bibtex:author>
+      <bibtex:title>Fast Calculation of van der Waals Volume as a Sum of Atomic and Bond Contributions and Its Application to Drug Compounds</bibtex:title>
+      <bibtex:journal>The Journal of Organic Chemistry</bibtex:journal>
+      <bibtex:year>2003</bibtex:year>
+      <bibtex:volume>68</bibtex:volume>
+      <bibtex:number>19</bibtex:number>
+      <bibtex:pages>7368-7373</bibtex:pages>
+      <bibtex:doi>10.1021/jo034808o</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+   
   <bibtex:entry id="Thalheim2010">
         <bibtex:article>
             <bibtex:author>Thalheim, T. and Vollmer, A. and Ebert, R. and Kuehne, R. and Schuurmann, G.</bibtex:author>
