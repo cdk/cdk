@@ -22,6 +22,7 @@ import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -42,10 +43,10 @@ public class VABCVolumeTest {
      * Test from Table 1 from {@cdk.cite Zhao2003}.
      */
     @Test
-    public void testMethane() throws InvalidSmilesException {
+    public void testMethane() throws InvalidSmilesException, CDKException {
         IMolecule methane = smilesParser.parseSmiles("C");
         double volume = VABCVolume.calculate(methane);
-        Assert.assertEquals(25.83, volume, 0.01);
+        Assert.assertEquals(25.83, volume, 0.04);
     }
 
 }
