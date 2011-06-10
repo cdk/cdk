@@ -23,15 +23,22 @@
 package org.openscience.cdk.fingerprint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
+@TestClass("org.openscience.cdk.fingerprint.IntArrayCountFingerprintTest")
 public class IntArrayCountFingerprint implements ICountFingerprint {
 
-	private int[] hitHashes;
-	private int[] numOfHits;
+	int[] hitHashes;
+	int[] numOfHits;
 	
 	private IntArrayCountFingerprint() {
 		
@@ -77,5 +84,30 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 	@Override
 	public int numOfPopulatedbins() {
 		return hitHashes.length;
+	}
+
+	@Override
+	@TestMethod("testMerge")
+	public void merge(ICountFingerprint fp) {
+		Map<Integer, Integer> newFp = new HashMap<Integer, Integer>();
+		for (int i=0 ; i<hitHashes.length; i++ ) {
+			newFp.put(hitHashes[i], numOfHits[i]);
+		}
+		for (int i=0 ; i<fp.numOfPopulatedbins() ; i++ ) {
+			Integer count = newFp.get( fp.getHash(i) );
+			if ( count == null ) {
+				count = 0;
+			}
+			newFp.put( fp.getHash(i), count + fp.getCount(i) );
+		}
+		List<Integer> keys = new ArrayList<Integer>( newFp.keySet() );
+		Collections.sort(keys);
+		hitHashes = new int[keys.size()];
+		numOfHits = new int[keys.size()];
+		int i = 0;
+		for ( Integer key : keys) {
+			hitHashes[i] = key;
+			numOfHits[i++] = newFp.get(key);
+		}
 	}
 }

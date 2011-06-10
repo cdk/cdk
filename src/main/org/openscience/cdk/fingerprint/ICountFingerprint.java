@@ -51,5 +51,13 @@ public interface ICountFingerprint {
 	 * @return the hash for the bin with the given index.
 	 */
 	public int getHash(int index);
+
+	
+	/**
+	 * Merge all from <code>fp</code> into the current fingerprint.
+	 * 
+	 * @param fp to be merged
+	 */
+	public void merge(ICountFingerprint fp);
 	
 }
