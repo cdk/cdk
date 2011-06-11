@@ -20,11 +20,6 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import static java.util.Collections.sort;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -40,6 +35,10 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
+import java.util.ArrayList;
+import static java.util.Collections.sort;
+import java.util.List;
+
 /**
  * JUnit test routines for the SMARTS substructure search.
  *
@@ -53,7 +52,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
      * @throws CDKException
      * @cdk.bug 2788357
      */
-    @Test(expected = CDKException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testLexicalError() throws Exception {
         SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide");
     }
