@@ -111,7 +111,6 @@
       javacchome="jar"/>
   </target>
 
-      <antcall target="doccheck-module"><param name="module" value="renderawt"/></antcall>
   <target name="ojdcheck" depends="compileDocTests">
       <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>
@@ -153,6 +152,7 @@
       <antcall target="ojdcheck-module"><param name="module" value="diff"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="smsd"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="signature"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="renderawt"/></antcall>
     </target>
 
     <target name="ojdcheck-module">
