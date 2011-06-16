@@ -486,11 +486,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     @TestMethod("testSetRendererModel")
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
-        if ((boolean)rendererModel.getParameter(UseAntiAliasing.class)
-            .getValue()) {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-//            g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
+        if (rendererModel.hasParameter(UseAntiAliasing.class)) {
+        	if ((boolean)rendererModel.getParameter(UseAntiAliasing.class)
+        			.getValue()) {
+        		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        				RenderingHints.VALUE_ANTIALIAS_ON);
+        		// g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
+        	}
         }
     }
 
