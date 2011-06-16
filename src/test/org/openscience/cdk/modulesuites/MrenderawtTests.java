@@ -22,6 +22,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderawtCoverageTest;
+import org.openscience.cdk.renderer.visitor.AWTDrawVisitorTest;
+import org.openscience.cdk.renderer.visitor.AbstractAWTDrawVisitorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>renderawt</code>
@@ -31,6 +33,8 @@ import org.openscience.cdk.coverage.RenderawtCoverageTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	RenderawtCoverageTest.class
+	RenderawtCoverageTest.class,
+	AbstractAWTDrawVisitorTest.class,
+	AWTDrawVisitorTest.class
 })
 public class MrenderawtTests {}

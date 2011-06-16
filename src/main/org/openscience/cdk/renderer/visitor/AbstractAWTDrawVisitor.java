@@ -26,9 +26,13 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * @cdk.module renderawt
  */
+@TestClass("org.openscience.cdk.renderer.visitor.AbstractAWTDrawVisitorTest")
 public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
 	
 	/**
@@ -36,6 +40,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
 	 */
 	protected AffineTransform transform = null;
 	
+	@TestMethod("testTransformPoint")
 	public int[] transformPoint(double x, double y) {
         double[] src = new double[] {x, y};
         double[] dest = new double[2];
@@ -43,6 +48,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
         return new int[] { (int) dest[0], (int) dest[1] };
     }
 
+	@TestMethod("testGetTextBounds")
     protected Rectangle2D getTextBounds(String text, double x, double y,
             Graphics2D g) {
         FontMetrics fm = g.getFontMetrics();
@@ -56,7 +62,8 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
         int[] p = this.transformPoint(x, y);
         return new Rectangle2D.Double(p[0] - w / 2, p[1] - h / 2, w, h);
     }
-    
+
+	@TestMethod("testGetTextBasePoint")
     protected Point getTextBasePoint(String text, double x, double y, 
             Graphics2D g) {
         FontMetrics fm = g.getFontMetrics();
@@ -69,7 +76,8 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
                 (fm.getAscent() - stringBounds.getHeight() / 2));
         return new Point(baseX, baseY);
     }
-    
+
+    @TestMethod("testSetAffineTransformation")
     public void setTransform(AffineTransform transform) {
         this.transform = transform;
     }

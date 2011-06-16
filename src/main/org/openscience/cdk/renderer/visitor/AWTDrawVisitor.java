@@ -39,6 +39,8 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -64,6 +66,7 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 /**
  * @cdk.module renderawt
  */
+@TestClass("org.openscience.cdk.renderer.visitor.AWTDrawVisitorTest")
 public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	
     /**
@@ -88,6 +91,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     private Color backgroundColor;
 	
+    @TestMethod("testConstructor")
 	public AWTDrawVisitor(Graphics2D g) {
 		this.g = g;
 		this.fontManager = null;
@@ -442,6 +446,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
     }
 
+    @TestMethod("testVisit")
     public void visit(IRenderingElement element) {
         Color savedColor = this.g.getColor();
         if (element instanceof ElementGroup)
@@ -473,10 +478,12 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     /**
      * The font manager must be set by any renderer that uses this class! 
      */
+    @TestMethod("testSetFontManager")
     public void setFontManager(IFontManager fontManager) {
         this.fontManager = (AWTFontManager) fontManager;
     }
 
+    @TestMethod("testSetRendererModel")
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
         if ((boolean)rendererModel.getParameter(UseAntiAliasing.class)
@@ -486,4 +493,5 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 //            g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
         }
     }
+
 }
