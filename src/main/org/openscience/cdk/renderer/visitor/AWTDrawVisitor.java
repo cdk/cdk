@@ -40,7 +40,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.renderer.RendererModel;
-import org.openscience.cdk.renderer.elements.ArrowElement;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
@@ -60,7 +59,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasing;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
-import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ArrowHeadWidth;
 
 
 /**
@@ -112,42 +110,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         elementGroup.visitChildren(this);
     }
 
-    public void visit(ArrowElement line) {
-    	double scale = this.rendererModel.getParameter(
-            Scale.class).getValue();
-        Stroke savedStroke = this.g.getStroke();
-        
-        int w = (int) (line.width * scale);
-        if (strokeMap.containsKey(w)) {
-            this.g.setStroke(strokeMap.get(w));
-        } else {
-            BasicStroke stroke = new BasicStroke(w);
-            this.g.setStroke(stroke);
-            strokeMap.put(w, stroke);
-        }
-        
-        this.g.setColor(line.color);
-        int[] a = this.transformPoint(line.x1, line.y1);
-        int[] b = this.transformPoint(line.x2, line.y2);
-        this.g.drawLine(a[0], a[1], b[0], b[1]);
-        double aW = rendererModel.getParameter(
-        	ArrowHeadWidth.class
-        ).getValue() / scale;
-        if(line.direction){
-	        int[] c = this.transformPoint(line.x1-aW, line.y1-aW);
-	        int[] d = this.transformPoint(line.x1-aW, line.y1+aW);
-	        this.g.drawLine(a[0], a[1], c[0], c[1]);
-	        this.g.drawLine(a[0], a[1], d[0], d[1]);
-        }else{
-	        int[] c = this.transformPoint(line.x2+aW, line.y2-aW);
-	        int[] d = this.transformPoint(line.x2+aW, line.y2+aW);
-	        this.g.drawLine(b[0], b[1], c[0], c[1]);
-	        this.g.drawLine(b[0], b[1], d[0], d[1]);
-        }        
-        this.g.setStroke(savedStroke);
-    }
-    
-    
     public void visit(LineElement line) {
         Stroke savedStroke = this.g.getStroke();
         
@@ -492,8 +454,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             visit((WedgeLineElement) element);
         else if (element instanceof LineElement)
             visit((LineElement) element);
-        else if (element instanceof ArrowElement)
-            visit((ArrowElement) element);
         else if (element instanceof OvalElement)
             visit((OvalElement) element);
         else if (element instanceof TextGroupElement)
