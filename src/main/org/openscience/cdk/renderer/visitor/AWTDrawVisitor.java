@@ -102,15 +102,11 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
 	}
 	
-	public void visitElementGroup(ElementGroup elementGroup) {
-		elementGroup.visitChildren(this);
-	}
-	
-    public void visit(ElementGroup elementGroup) {
+    private void visit(ElementGroup elementGroup) {
         elementGroup.visitChildren(this);
     }
 
-    public void visit(LineElement line) {
+    private void visit(LineElement line) {
         Stroke savedStroke = this.g.getStroke();
         
         int w = (int) (line.width * this.rendererModel.getParameter(
@@ -131,7 +127,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.g.setStroke(savedStroke);
     }
 
-    public void visit(OvalElement oval) {
+    private void visit(OvalElement oval) {
         this.g.setColor(oval.color);
         int radius = scaleX(oval.radius);
         int diameter = scaleX(oval.radius * 2);
@@ -167,7 +163,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         return result;
     }
 
-    public void visit(TextElement textElement) {
+    private void visit(TextElement textElement) {
         this.g.setFont(this.fontManager.getFont());
         Point p = this.getTextBasePoint(
                 textElement.text, textElement.xCoord, textElement.yCoord, g);
@@ -180,7 +176,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.g.drawString(textElement.text, p.x, p.y);
     }
     
-    public void visit(WedgeLineElement wedge) {
+    private void visit(WedgeLineElement wedge) {
         // make the vector normal to the wedge axis
         Vector2d normal = 
             new Vector2d(wedge.firstPointY - wedge.secondPointY, wedge.secondPointX - wedge.firstPointX);
@@ -245,7 +241,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.g.setStroke(storedStroke);
     }
     
-    public void visit(AtomSymbolElement atomSymbol) {
+    private void visit(AtomSymbolElement atomSymbol) {
         this.g.setFont(this.fontManager.getFont());
         Point p = 
             super.getTextBasePoint(
@@ -292,7 +288,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         
     }
     
-    public void visit(RectangleElement rectangle) {
+    private void visit(RectangleElement rectangle) {
         int[] p1 = this.transformPoint(rectangle.xCoord, rectangle.yCoord);
         int[] p2 = this.transformPoint(
                 rectangle.xCoord + rectangle.width, rectangle.yCoord + rectangle.height);
@@ -304,7 +300,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
     }
     
-    public void visit(PathElement path) {
+    private void visit(PathElement path) {
         this.g.setColor(path.color);
         for (int i = 1; i < path.points.size(); i++) {
             Point2d point1 = path.points.get(i - 1);
@@ -315,7 +311,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
     }
     
-    public void visit(GeneralPath path) {
+    private void visit(GeneralPath path) {
         this.g.setColor( path.color );
         java.awt.geom.GeneralPath gp = new java.awt.geom.GeneralPath();
         gp.append( getPathIterator( path, transform) , false );
@@ -369,7 +365,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         };
     }
 
-    public void visit(TextGroupElement textGroup) {
+    private void visit(TextGroupElement textGroup) {
         this.g.setFont(this.fontManager.getFont());
         Point p = 
             super.getTextBasePoint(
