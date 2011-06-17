@@ -35,7 +35,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
- * Calculates the Vanderwaals volume using the method proposed
+ * Calculates the Van der Waals volume using the method proposed
  * in {@cdk.cite Zhao2003}. The method is limited to molecules
  * with the following elements: H, C, N, O, F, Cl, Br, I,
  * P, S, As, B, Si, Se, and Te.
