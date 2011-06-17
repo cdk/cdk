@@ -54,6 +54,27 @@ public class VABCVolumeTest {
         IMolecule methane = smilesParser.parseSmiles("Cl[Fe]Cl");
         VABCVolume.calculate(methane);
     }
+    
+    @Test
+    public void testOmeprazol() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("COc2ccc1[nH]c(nc1c2)S(=O)Cc3ncc(C)c(OC)c3C");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(292.23, volume, 0.01);
+    }
+
+    @Test
+    public void testSaccharin() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("O=C1NS(=O)(=O)c2ccccc12");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(139.35, volume, 0.01);
+    }
+
+    @Test
+    public void testAdeforir() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("Nc1ncnc2n(CCOCP(=O)(O)O)cnc12");
+        double volume = VABCVolume.calculate(methane);
+        Assert.assertEquals(199.84, volume, 0.01);
+    }
 
     @Test
     public void testMethaneWithExplicitHydrogens() throws InvalidSmilesException, CDKException {
