@@ -18,7 +18,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @cdk.module test-qsarmolecular
@@ -29,6 +37,19 @@ public class VABCDescriptorTest extends MolecularDescriptorTest {
     public void setUp() throws Exception {
         setDescriptor(VABCDescriptor.class);
     }
+
+    @Test
+    public void testIronChloride() throws InvalidSmilesException, CDKException {
+        IMolecule ironChloride = new SmilesParser(
+             NoNotificationChemObjectBuilder.getInstance()
+        ).parseSmiles("Cl[Fe]Cl");
+        Assert.assertEquals(
+            Double.NaN,
+            ((DoubleResult) descriptor.calculate(ironChloride).getValue()).doubleValue(),
+            0.01
+        );
+    }
+
 
 }
 

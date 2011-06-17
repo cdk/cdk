@@ -49,6 +49,12 @@ public class VABCVolumeTest {
         Assert.assertEquals(25.8524433266667, volume, 0.01);
     }
 
+    @Test(expected=CDKException.class)
+    public void testIronChloride() throws InvalidSmilesException, CDKException {
+        IMolecule methane = smilesParser.parseSmiles("Cl[Fe]Cl");
+        VABCVolume.calculate(methane);
+    }
+
     @Test
     public void testMethaneWithExplicitHydrogens() throws InvalidSmilesException, CDKException {
         IMolecule methane = smilesParser.parseSmiles("[H]C([H])([H])[H]");
