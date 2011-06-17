@@ -36,6 +36,7 @@ import org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinterTest;
 import org.openscience.cdk.geometry.BondToolsTest;
 import org.openscience.cdk.geometry.CrystalGeometryToolsTest;
+import org.openscience.cdk.geometry.volume.VABCVolumeTest;
 import org.openscience.cdk.graph.BFSShortestPathTest;
 import org.openscience.cdk.graph.BiconnectivityInspectorTest;
 import org.openscience.cdk.graph.ConnectivityCheckerTest;
@@ -186,7 +187,7 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     CDKHueckelAromaticityDetectorTest.class,
     HOSECodeGeneratorTest.class,
     LonePairElectronCheckerTest.class ,
-    StereoToolTest.class
-
+    StereoToolTest.class,
+    VABCVolumeTest.class
 })
 public class MstandardTests {}
