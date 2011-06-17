@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
@@ -68,10 +67,7 @@ public class VABCVolume {
         put("Si", 38.7923854248);
     }};
 
-    private static AtomTypeFactory atomTypeList = AtomTypeFactory.getInstance(
-        "org/openscience/cdk/dict/data/cdk-atom-types.owl",
-        NoNotificationChemObjectBuilder.getInstance()
-    );
+    private static AtomTypeFactory atomTypeList = null;
 
     /**
      * Calculates the volume for the given {@link IMolecule}. This methods assumes
@@ -81,6 +77,13 @@ public class VABCVolume {
      * @return          the volume in cubic &Aring;ngstr&ouml;m.
      */
     public static double calculate(IMolecule molecule) throws CDKException {
+        if (atomTypeList == null) {
+            atomTypeList = AtomTypeFactory.getInstance(
+                "org/openscience/cdk/dict/data/cdk-atom-types.owl",
+                molecule.getBuilder() // take whatever we got first
+            );
+        }
+        
         double sum = 0.0;
         int totalHCount = 0;
         for (IAtom atom : molecule.atoms()) {
