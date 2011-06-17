@@ -30,9 +30,7 @@
 
 package org.openscience.cdk.similarity;
 
-import java.util.BitSet;
-import java.util.Map;
-
+import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -41,12 +39,17 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
+import org.openscience.cdk.fingerprint.IntArrayCountFingerprint;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.fingerprint.SignatureFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @cdk.module test-fingerprint
@@ -184,5 +187,19 @@ public class TanimotoTest extends CDKTestCase
     		Assert.assertEquals(rawTanimoto, countTanimoto, 0.001);
     }
     
+    @Test
+    public void testCountMethod1and2() {
+		IntArrayCountFingerprint fp1 = new IntArrayCountFingerprint(
+                                           new HashMap<String, Integer>() {{
+             	                               put("A", 3);
+                                           }}
+            		                       );
+		IntArrayCountFingerprint fp2 = new IntArrayCountFingerprint(
+                                           new HashMap<String, Integer>() {{
+             	                               put("A", 4);
+                                           }}
+                                       );
+		Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001 );
+		Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001 );
+    }
 }
-

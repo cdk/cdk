@@ -208,13 +208,46 @@ public class Tanimoto
 		for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
 			y += fp2.getCount(j) * fp2.getCount(j);
 		}
-		float tanimoto =  ( (float)xy / (x + y - xy) );
-		if ( tanimoto < 0 || tanimoto > 1) {
-			System.out.println("Strange Tanimoto value:" + tanimoto);
-			System.out.println("x=" + x );
-			System.out.println("y=" + y );
-			System.out.println("xy=" + xy );
-		}
-		return tanimoto;
+	    return ( (float)xy / (x + y - xy) );
 	}
+    
+    public static float method1( ICountFingerprint fp1, 
+    		                         ICountFingerprint fp2) {
+    	return calculate(fp1, fp2);
+    }
+    
+    public static float method2( ICountFingerprint fp1,
+    		                         ICountFingerprint fp2) {
+    	
+    		long maxSum = 0,
+    		     minSum = 0;
+    		int i = 0, 
+    		    j = 0;
+    		while ( i < fp1.numOfPopulatedbins() 
+    				|| j < fp2.numOfPopulatedbins() ) {
+    			int hash1 = fp1.getHash(i);
+    			int hash2 = fp2.getHash(j);
+			int count1 = fp1.getCount(i);
+			int count2 = fp2.getCount(j);
+    			
+    			if ( hash1 < hash2) {
+				maxSum += count1;
+    				i++;
+    				continue;
+    			}
+    			if ( hash1 > hash2 ) {
+    				maxSum += count2;
+    				j++;
+    				continue;
+    			}
+    			
+    			if ( hash1 == hash2 ) {
+    				maxSum += Math.max(count1, count2);
+    				minSum += Math.min(count1, count2);
+    				i++;
+    				j++;
+    			}
+    		}
+    		return ((float)minSum) / maxSum;
+    }
 }
