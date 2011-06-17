@@ -30,6 +30,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * Values in the paper are inaccurate. The spreadsheet from the SI is better.
+ *
+ * @cdk.module test-standard
  */
 public class VABCVolumeTest {
 
