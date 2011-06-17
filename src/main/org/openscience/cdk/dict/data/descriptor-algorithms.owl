@@ -2594,6 +2594,7 @@
         <definition rdf:parseType='Literal'>
             Describes the volume of a molecule.
         </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
