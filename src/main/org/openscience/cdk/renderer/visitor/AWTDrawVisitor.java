@@ -87,13 +87,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	private final Map<TextAttribute, Object> map = 
         new Hashtable<TextAttribute, Object>();
 	
-	private final Graphics2D g;
+	private final Graphics2D graphics;
 
     private Color backgroundColor;
 	
     @TestMethod("testConstructor")
-	public AWTDrawVisitor(Graphics2D g) {
-		this.g = g;
+	public AWTDrawVisitor(Graphics2D graphics) {
+		this.graphics = graphics;
 		this.fontManager = null;
 		this.rendererModel = null;
 		
@@ -111,73 +111,73 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     private void visit(LineElement line) {
-        Stroke savedStroke = this.g.getStroke();
+        Stroke savedStroke = this.graphics.getStroke();
         
-        int w = (int) (line.width * this.rendererModel.getParameter(
+        int width = (int) (line.width * this.rendererModel.getParameter(
             	Scale.class).getValue());
-        if (strokeMap.containsKey(w)) {
-            this.g.setStroke(strokeMap.get(w));
+        if (strokeMap.containsKey(width)) {
+            this.graphics.setStroke(strokeMap.get(width));
         } else {
-            BasicStroke stroke = new BasicStroke(w);
-            this.g.setStroke(stroke);
-            strokeMap.put(w, stroke);
+            BasicStroke stroke = new BasicStroke(width);
+            this.graphics.setStroke(stroke);
+            strokeMap.put(width, stroke);
         }
         
-        this.g.setColor(line.color);
-        int[] a = this.transformPoint(line.firstPointX, line.firstPointY);
-        int[] b = this.transformPoint(line.secondPointX, line.secondPointY);
-        this.g.drawLine(a[0], a[1], b[0], b[1]);
+        this.graphics.setColor(line.color);
+        int[] startPoint = this.transformPoint(line.firstPointX, line.firstPointY);
+        int[] endPoint = this.transformPoint(line.secondPointX, line.secondPointY);
+        this.graphics.drawLine(startPoint[0], startPoint[1], endPoint[0], endPoint[1]);
         
-        this.g.setStroke(savedStroke);
+        this.graphics.setStroke(savedStroke);
     }
 
     private void visit(OvalElement oval) {
-        this.g.setColor(oval.color);
+        this.graphics.setColor(oval.color);
         int radius = scaleX(oval.radius);
         int diameter = scaleX(oval.radius * 2);
  
         if (oval.fill) {
-        	this.g.fillOval(transformX(oval.xCoord) - radius,
+        	this.graphics.fillOval(transformX(oval.xCoord) - radius,
                         transformY(oval.yCoord) - radius,
                         diameter,
                         diameter );
         } else { 
-        	this.g.drawOval(transformX(oval.xCoord) - radius,
+        	this.graphics.drawOval(transformX(oval.xCoord) - radius,
                         transformY(oval.yCoord) - radius,
                         diameter,
                         diameter );
         }
     }
     
-    private int scaleX(double x) {
-        return (int) (x*transform.getScaleX());
+    private int scaleX(double xCoord) {
+        return (int) (xCoord*transform.getScaleX());
     }
     
-    private int transformX(double x) {
-        return (int) transform( x, 1 )[0];
+    private int transformX(double xCoord) {
+        return (int) transform( xCoord, 1 )[0];
     }
  
-    private int transformY(double y) {
-        return (int) transform( 1, y )[1];
+    private int transformY(double yCoord) {
+        return (int) transform( 1, yCoord )[1];
     }
  
-    private double[] transform(double x, double y) {
+    private double[] transform(double xCoord, double yCoord) {
         double [] result = new double[2];
-        transform.transform( new double[] {x,y}, 0, result, 0, 1 );
+        transform.transform( new double[] {xCoord,yCoord}, 0, result, 0, 1 );
         return result;
     }
 
     private void visit(TextElement textElement) {
-        this.g.setFont(this.fontManager.getFont());
-        Point p = this.getTextBasePoint(
-                textElement.text, textElement.xCoord, textElement.yCoord, g);
+        this.graphics.setFont(this.fontManager.getFont());
+        Point point = this.getTextBasePoint(
+                textElement.text, textElement.xCoord, textElement.yCoord, graphics);
         Rectangle2D textBounds =
                 this.getTextBounds(
-                        textElement.text, textElement.xCoord, textElement.yCoord, g);
-        this.g.setColor(backgroundColor);
-        this.g.fill(textBounds);
-        this.g.setColor(textElement.color);
-        this.g.drawString(textElement.text, p.x, p.y);
+                        textElement.text, textElement.xCoord, textElement.yCoord, graphics);
+        this.graphics.setColor(backgroundColor);
+        this.graphics.fill(textBounds);
+        this.graphics.setColor(textElement.color);
+        this.graphics.drawString(textElement.text, point.x, point.y);
     }
     
     private void visit(WedgeLineElement wedge) {
@@ -195,7 +195,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         Point2d vertexC = new Point2d(vertexB);
         vertexB.add(normal);
         vertexC.sub(normal);
-        this.g.setColor(wedge.color);
+        this.graphics.setColor(wedge.color);
         if (wedge.isDashed) {
             this.drawDashedWedge(vertexA, vertexB, vertexC);
         } else {
@@ -205,57 +205,57 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     
     private void drawFilledWedge(
             Point2d vertexA, Point2d vertexB, Point2d vertexC) {
-        int[] pB = this.transformPoint(vertexB.x, vertexB.y);
-        int[] pC = this.transformPoint(vertexC.x, vertexC.y);
-        int[] pA = this.transformPoint(vertexA.x, vertexA.y);
+        int[] pointB = this.transformPoint(vertexB.x, vertexB.y);
+        int[] pointC = this.transformPoint(vertexC.x, vertexC.y);
+        int[] pointA = this.transformPoint(vertexA.x, vertexA.y);
         
-        int[] xs = new int[] { pB[0], pC[0], pA[0] };
-        int[] ys = new int[] { pB[1], pC[1], pA[1] };
-        this.g.fillPolygon(xs, ys, 3);
+        int[] xCoords = new int[] { pointB[0], pointC[0], pointA[0] };
+        int[] yCoords = new int[] { pointB[1], pointC[1], pointA[1] };
+        this.graphics.fillPolygon(xCoords, yCoords, 3);
     }
     
     private void drawDashedWedge(
             Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         // store the current stroke
-        Stroke storedStroke = this.g.getStroke();
-        this.g.setStroke(new BasicStroke(1));
+        Stroke storedStroke = this.graphics.getStroke();
+        this.graphics.setStroke(new BasicStroke(1));
         
         // calculate the distances between lines
         double distance = vertexB.distance(vertexA);
         double gapFactor = 0.1;
         double gap = distance * gapFactor;
         double numberOfDashes = distance / gap;
-        double d = 0;
+        double displacement = 0;
         
         // draw by interpolating along the edges of the triangle
         for (int i = 0; i < numberOfDashes; i++) {
-            Point2d p1 = new Point2d();
-            p1.interpolate(vertexA, vertexB, d);
-            Point2d p2 = new Point2d();
-            p2.interpolate(vertexA, vertexC, d);
-            int[] p1T = this.transformPoint(p1.x, p1.y);
-            int[] p2T = this.transformPoint(p2.x, p2.y);
-            this.g.drawLine(p1T[0], p1T[1], p2T[0], p2T[1]);
-            if (distance * (d + gapFactor) >= distance) {
+            Point2d point1 = new Point2d();
+            point1.interpolate(vertexA, vertexB, displacement);
+            Point2d point2 = new Point2d();
+            point2.interpolate(vertexA, vertexC, displacement);
+            int[] p1T = this.transformPoint(point1.x, point1.y);
+            int[] p2T = this.transformPoint(point2.x, point2.y);
+            this.graphics.drawLine(p1T[0], p1T[1], p2T[0], p2T[1]);
+            if (distance * (displacement + gapFactor) >= distance) {
                 break;
             } else {
-                d += gapFactor;
+                displacement += gapFactor;
             }
         }
-        this.g.setStroke(storedStroke);
+        this.graphics.setStroke(storedStroke);
     }
     
     private void visit(AtomSymbolElement atomSymbol) {
-        this.g.setFont(this.fontManager.getFont());
-        Point p = 
+        this.graphics.setFont(this.fontManager.getFont());
+        Point point = 
             super.getTextBasePoint(
-                    atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, g);
+                    atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, graphics);
         Rectangle2D textBounds = 
-            this.getTextBounds(atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, g);
-        this.g.setColor(backgroundColor);
-        this.g.fill(textBounds);
-        this.g.setColor(atomSymbol.color);
-        this.g.drawString(atomSymbol.text, p.x, p.y);
+            this.getTextBounds(atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, graphics);
+        this.graphics.setColor(backgroundColor);
+        this.graphics.fill(textBounds);
+        this.graphics.setColor(atomSymbol.color);
+        this.graphics.drawString(atomSymbol.text, point.x, point.y);
         
         int offset = 10;    // XXX
         String chargeString;
@@ -274,52 +274,52 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             return;
         }
        
-        int x = (int) textBounds.getCenterX();
-        int y = (int) textBounds.getCenterY();
+        int xCoord = (int) textBounds.getCenterX();
+        int yCoord = (int) textBounds.getCenterY();
         if (atomSymbol.alignment == 1) {           // RIGHT
-            this.g.drawString(
-                    chargeString, x + offset, (int)textBounds.getMinY());
+            this.graphics.drawString(
+                    chargeString, xCoord + offset, (int)textBounds.getMinY());
         } else if (atomSymbol.alignment == -1) {   // LEFT
-            this.g.drawString(
-                    chargeString, x - offset, (int)textBounds.getMinY());
+            this.graphics.drawString(
+                    chargeString, xCoord - offset, (int)textBounds.getMinY());
         } else if (atomSymbol.alignment == 2) {    // TOP
-            this.g.drawString(
-                    chargeString, x, y - offset);
+            this.graphics.drawString(
+                    chargeString, xCoord, yCoord - offset);
         } else if (atomSymbol.alignment == -2) {   // BOT
-            this.g.drawString(
-                    chargeString, x, y + offset);
+            this.graphics.drawString(
+                    chargeString, xCoord, yCoord + offset);
         }
         
     }
     
     private void visit(RectangleElement rectangle) {
-        int[] p1 = this.transformPoint(rectangle.xCoord, rectangle.yCoord);
-        int[] p2 = this.transformPoint(
+        int[] point1 = this.transformPoint(rectangle.xCoord, rectangle.yCoord);
+        int[] point2 = this.transformPoint(
                 rectangle.xCoord + rectangle.width, rectangle.yCoord + rectangle.height);
-        this.g.setColor(rectangle.color);
+        this.graphics.setColor(rectangle.color);
         if (rectangle.filled) {
-            this.g.fillRect(p1[0], p1[1], p2[0] - p1[0], p2[1] - p1[1]);
+            this.graphics.fillRect(point1[0], point1[1], point2[0] - point1[0], point2[1] - point1[1]);
         } else {
-            this.g.drawRect(p1[0], p1[1], p2[0] - p1[0], p2[1] - p1[1]);
+            this.graphics.drawRect(point1[0], point1[1], point2[0] - point1[0], point2[1] - point1[1]);
         }
     }
     
     private void visit(PathElement path) {
-        this.g.setColor(path.color);
+        this.graphics.setColor(path.color);
         for (int i = 1; i < path.points.size(); i++) {
             Point2d point1 = path.points.get(i - 1);
             Point2d point2 = path.points.get(i);
-            int[] p1 = this.transformPoint(point1.x, point1.y);
-            int[] p2 = this.transformPoint(point2.x, point2.y);
-            this.g.drawLine(p1[0], p1[1], p2[0], p2[1]);
+            int[] lineStart = this.transformPoint(point1.x, point1.y);
+            int[] lineEnd = this.transformPoint(point2.x, point2.y);
+            this.graphics.drawLine(lineStart[0], lineStart[1], lineEnd[0], lineEnd[1]);
         }
     }
     
     private void visit(GeneralPath path) {
-        this.g.setColor( path.color );
-        java.awt.geom.GeneralPath gp = new java.awt.geom.GeneralPath();
-        gp.append( getPathIterator( path, transform) , false );
-        this.g.draw( gp );
+        this.graphics.setColor( path.color );
+        java.awt.geom.GeneralPath generalPath = new java.awt.geom.GeneralPath();
+        generalPath.append( getPathIterator( path, transform) , false );
+        this.graphics.draw( generalPath );
     }
 
     private static PathIterator getPathIterator(final GeneralPath path,final AffineTransform transform) {
@@ -370,85 +370,85 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     private void visit(TextGroupElement textGroup) {
-        this.g.setFont(this.fontManager.getFont());
-        Point p = 
+        this.graphics.setFont(this.fontManager.getFont());
+        Point point = 
             super.getTextBasePoint(
-                    textGroup.text, textGroup.xCoord, textGroup.yCoord, g);
+                    textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
         Rectangle2D textBounds = 
-            this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, g);
-        this.g.setColor(backgroundColor);
-        this.g.fill(textBounds);
-        this.g.setColor(textGroup.color);
-        this.g.drawString(textGroup.text, p.x, p.y);
+            this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
+        this.graphics.setColor(backgroundColor);
+        this.graphics.fill(textBounds);
+        this.graphics.setColor(textGroup.color);
+        this.graphics.drawString(textGroup.text, point.x, point.y);
         
-        int x = (int) textBounds.getCenterX();
-        int y = (int) textBounds.getCenterY();
-        int x1 = (int) textBounds.getMinX();
-        int y1 = (int) textBounds.getMinY();
-        int x2 = p.x + (int)textBounds.getWidth();
-        int y2 = (int) textBounds.getMaxY();
+        int xCoord = (int) textBounds.getCenterX();
+        int yCoord = (int) textBounds.getCenterY();
+        int xCoord1 = (int) textBounds.getMinX();
+        int yCoord1 = (int) textBounds.getMinY();
+        int xCoord2 = point.x + (int)textBounds.getWidth();
+        int yCoord2 = (int) textBounds.getMaxY();
 
-        int oW = x2 - x1;
-        int oH = y2 - y1;
+        int oWidth = xCoord2 - xCoord1;
+        int oHeight = yCoord2 - yCoord1;
         for (TextGroupElement.Child child : textGroup.children) {
-            int cx;
-            int cy;
+            int childx;
+            int childy;
             
             switch (child.position) {
                 case NE:
-                    cx = x2;
-                    cy = y1;
+                    childx = xCoord2;
+                    childy = yCoord1;
                     break;
                 case N:
-                    cx = x1;
-                    cy = y1;
+                    childx = xCoord1;
+                    childy = yCoord1;
                     break;
                 case NW:
-                    cx = x1 - oW;
-                    cy = y1;
+                    childx = xCoord1 - oWidth;
+                    childy = yCoord1;
                     break;
                 case W:
-                    cx = x1 - oW;
-                    cy = p.y;
+                    childx = xCoord1 - oWidth;
+                    childy = point.y;
                     break;
                 case SW:
-                    cx = x1 - oW;
-                    cy = y1 + oH;
+                    childx = xCoord1 - oWidth;
+                    childy = yCoord1 + oHeight;
                     break;
                 case S:
-                    cx = x1;
-                    cy = y2 + oH;
+                    childx = xCoord1;
+                    childy = yCoord2 + oHeight;
                     break;
                 case SE:
-                    cx = x2;
-                    cy = y2 + oH;
+                    childx = xCoord2;
+                    childy = yCoord2 + oHeight;
                     break;
                 case E:
-                    cx = x2;
-                    cy = p.y;
+                    childx = xCoord2;
+                    childy = point.y;
                     break;
                 default:
-                    cx = x;
-                    cy = y;
+                    childx = xCoord;
+                    childy = yCoord;
                     break;
             }
             
-            this.g.drawString(child.text, cx, cy);
+            this.graphics.drawString(child.text, childx, childy);
             if (child.subscript != null) {
-                Rectangle2D childBounds = getTextBounds(child.text, cx, cy, g);
-                int scx = (int)(cx + (childBounds.getWidth() * 0.75));
-                int scy = (int)(cy + (childBounds.getHeight() / 3));
-                Font f = this.g.getFont();   // TODO : move to font manager
-                Font subscriptFont = f.deriveFont(f.getStyle(), f.getSize() - 2); 
-                this.g.setFont(subscriptFont);
-                this.g.drawString(child.subscript, scx, scy);
+                Rectangle2D childBounds = getTextBounds(child.text, childx, childy, graphics);
+                int scx = (int)(childx + (childBounds.getWidth() * 0.75));
+                int scy = (int)(childy + (childBounds.getHeight() / 3));
+                Font font = this.graphics.getFont();   // TODO : move to font manager
+                Font subscriptFont = font.deriveFont(font.getStyle(), font.getSize() - 2); 
+                this.graphics.setFont(subscriptFont);
+                this.graphics.drawString(child.subscript, scx, scy);
             } 
         }
     }
 
     @TestMethod("testVisit")
     public void visit(IRenderingElement element) {
-        Color savedColor = this.g.getColor();
+        Color savedColor = this.graphics.getColor();
         if (element instanceof ElementGroup)
             visit((ElementGroup) element);
         else if (element instanceof WedgeLineElement)
@@ -472,7 +472,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         else
             System.err.println("Visitor method for "
                     + element.getClass().getName() + " is not implemented");
-        this.g.setColor(savedColor);
+        this.graphics.setColor(savedColor);
     }
 
     /**
@@ -489,7 +489,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         if (rendererModel.hasParameter(UseAntiAliasing.class)) {
         	if ((boolean)rendererModel.getParameter(UseAntiAliasing.class)
         			.getValue()) {
-        		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
         				RenderingHints.VALUE_ANTIALIAS_ON);
         		// g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
         	}

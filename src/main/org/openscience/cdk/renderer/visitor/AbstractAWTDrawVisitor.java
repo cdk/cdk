@@ -41,39 +41,39 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
 	protected AffineTransform transform = null;
 	
 	@TestMethod("testTransformPoint")
-	public int[] transformPoint(double x, double y) {
-        double[] src = new double[] {x, y};
+	public int[] transformPoint(double xCoord, double yCoord) {
+        double[] src = new double[] {xCoord, yCoord};
         double[] dest = new double[2];
         this.transform.transform(src, 0, dest, 0, 1);
         return new int[] { (int) dest[0], (int) dest[1] };
     }
 
 	@TestMethod("testGetTextBounds")
-    protected Rectangle2D getTextBounds(String text, double x, double y,
-            Graphics2D g) {
-        FontMetrics fm = g.getFontMetrics();
-        Rectangle2D bounds = fm.getStringBounds(text, g);
+    protected Rectangle2D getTextBounds(String text, double xCoord, double yCoord,
+            Graphics2D graphics) {
+        FontMetrics fontMetrics = graphics.getFontMetrics();
+        Rectangle2D bounds = fontMetrics.getStringBounds(text, graphics);
         
         double widthPad = 3;
         double heightPad = 1;
         
-        double w = bounds.getWidth() + widthPad;
-        double h = bounds.getHeight() + heightPad;
-        int[] p = this.transformPoint(x, y);
-        return new Rectangle2D.Double(p[0] - w / 2, p[1] - h / 2, w, h);
+        double width = bounds.getWidth() + widthPad;
+        double height = bounds.getHeight() + heightPad;
+        int[] point = this.transformPoint(xCoord, yCoord);
+        return new Rectangle2D.Double(point[0] - width / 2, point[1] - height / 2, width, height);
     }
 
 	@TestMethod("testGetTextBasePoint")
-    protected Point getTextBasePoint(String text, double x, double y, 
-            Graphics2D g) {
-        FontMetrics fm = g.getFontMetrics();
-        Rectangle2D stringBounds = fm.getStringBounds(text, g);
-        int[] p = this.transformPoint(x, y);
-        int baseX = (int) (p[0] - (stringBounds.getWidth() / 2));
+    protected Point getTextBasePoint(String text, double xCoord, double yCoord, 
+            Graphics2D graphics) {
+        FontMetrics fontMetrics = graphics.getFontMetrics();
+        Rectangle2D stringBounds = fontMetrics.getStringBounds(text, graphics);
+        int[] point = this.transformPoint(xCoord, yCoord);
+        int baseX = (int) (point[0] - (stringBounds.getWidth() / 2));
         
         // correct the baseline by the ascent
-        int baseY = (int) (p[1] + 
-                (fm.getAscent() - stringBounds.getHeight() / 2));
+        int baseY = (int) (point[1] + 
+                (fontMetrics.getAscent() - stringBounds.getHeight() / 2));
         return new Point(baseX, baseY);
     }
 
