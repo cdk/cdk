@@ -39,6 +39,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * for registering the {@link IAtomContainerGenerator}s' {@link IGeneratorParameter}s with
  * with the associated {@link RendererModel}.
  *
+ * @author egonw
  * @cdk.module render
  * @cdk.githash
  */

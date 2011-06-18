@@ -531,6 +531,9 @@
             list="io,structgen"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
+            list="renderbasic"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
             list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -541,6 +544,9 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="qm,qsar,ionpot,fingerprint,pcore,smsd,tautomer"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="renderawt"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
@@ -580,6 +586,12 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-signature"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-renderbasic"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-renderawt"/>
     </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
@@ -620,6 +632,7 @@
                     <includesfile name="${metainf}/qsarcml.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
+                    <includesfile name="${metainf}/renderbasic.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
                     <includesfile name="${metainf}/sdg.libdepends"/>
@@ -666,6 +679,7 @@
                     <include name="cdk-qsarcml.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
+                    <include name="cdk-renderbasic.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
                     <include name="cdk-valencycheck.jar"/>
@@ -692,7 +706,7 @@
                 <manifest>
                     <section name="org.openscience.cdk">
                         <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
-                        <attribute name="Specification-Version" value="1.2"/>
+                        <attribute name="Specification-Version" value="1.4"/>
                         <attribute name="Specification-Vendor" value="The CDK Project"/>
                         <attribute name="Implementation-Title" value="org.openscience.cdk"/>
                         <attribute name="Implementation-Version" value="${version}"/>
@@ -859,7 +873,7 @@
                     <attribute name="Main-Class" value="org.openscience.cdk.CDKTests"/>
                     <section name="org.openscience.cdk">
                         <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
-                        <attribute name="Specification-Version" value="1.2"/>
+                        <attribute name="Specification-Version" value="1.4"/>
                         <attribute name="Specification-Vendor" value="The CDK Project"/>
                         <attribute name="Implementation-Title" value="org.openscience.cdk"/>
                         <attribute name="Implementation-Version" value="${version}"/>

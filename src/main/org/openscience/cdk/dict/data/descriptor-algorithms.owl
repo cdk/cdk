@@ -2587,6 +2587,16 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="vabc">
+        <rdfs:label>VABC Volume Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2011-06-17</dc:date>
+        <definition rdf:parseType='Literal'>
+            Describes the volume of a molecule.
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
 
     <Descriptor rdf:ID="ip">
         <rdfs:label>Ionization Potential</rdfs:label>
@@ -2844,6 +2854,21 @@
                 <bibtex:pages>699-701</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="ZHAO2003">
+      <bibtex:entry>
+        <bibtex:article>
+          <bibtex:author>Zhao, Yuan H. and Abraham, Michael H. and Zissimos, Andreas M.</bibtex:author>
+          <bibtex:title>Fast Calculation of van der Waals Volume as a Sum of Atomic and Bond Contributions and Its Application to Drug Compounds</bibtex:title>
+          <bibtex:journal>The Journal of Organic Chemistry</bibtex:journal>
+          <bibtex:year>2003</bibtex:year>
+          <bibtex:volume>68</bibtex:volume>
+          <bibtex:number>19</bibtex:number>
+          <bibtex:pages>7368-7373</bibtex:pages>
+          <bibtex:doi>10.1021/jo034808o</bibtex:doi>
+        </bibtex:article>
+      </bibtex:entry>
     </Reference>
 
     <Reference rdf:ID="TC00">

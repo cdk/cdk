@@ -75,6 +75,33 @@ public class RendererModelTest {
 	}
 
 	@Test
+	public void testHasParameter() {
+		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			@Override
+			public List<IGeneratorParameter<?>> getParameters() {
+				return new ArrayList<IGeneratorParameter<?>>() {{
+					add(someParam);
+				}};
+			}
+			@Override
+			public IRenderingElement generate(IChemObject object,
+					RendererModel model) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		RendererModel model = new RendererModel();
+		Assert.assertFalse(
+			model.hasParameter(SomeParam.class)
+		);
+		model.registerParameters(generator);
+		Assert.assertTrue(
+			model.hasParameter(SomeParam.class)
+		);
+	}
+
+	@Test
 	public void testReturningTheRealParamaterValue() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
