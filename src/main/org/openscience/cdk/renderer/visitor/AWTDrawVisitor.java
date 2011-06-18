@@ -91,7 +91,14 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	private final Graphics2D graphics;
 
     private Color backgroundColor;
-	
+
+    /**
+     * Constructs a new {@link IDrawVisitor} using the AWT widget toolkit,
+     * taking a {@link Graphics2D} object to which the chemical content
+     * is drawn.
+     *
+     * @param graphics {@link Graphics2D} to which will be drawn
+     */
     @TestMethod("testConstructor")
 	public AWTDrawVisitor(Graphics2D graphics) {
 		this.graphics = graphics;
@@ -447,6 +454,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testVisit")
     public void visit(IRenderingElement element) {
         Color savedColor = this.graphics.getColor();
@@ -477,13 +485,17 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     /**
-     * The font manager must be set by any renderer that uses this class! 
+     * The font manager must be set by any renderer that uses this class!
+     * This manager is needed to keep track of fonts of the right size.
+     *
+     * @param fontManager the {@link IFontManager} to be used
      */
     @TestMethod("testSetFontManager")
     public void setFontManager(IFontManager fontManager) {
         this.fontManager = (AWTFontManager) fontManager;
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testSetRendererModel")
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
