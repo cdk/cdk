@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
-*
-*  Copyright (C) 2008 Gilleain Torrance <gilleain.torrance@gmail.com>
+/* Copyright (C) 2008 Gilleain Torrance <gilleain.torrance@gmail.com>
 *
 *  Contact: cdk-devel@list.sourceforge.net
 *
@@ -18,7 +16,6 @@
 *  along with this program; if not, write to the Free Software
 *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-
 package org.openscience.cdk.renderer.visitor;
 
 import java.awt.BasicStroke;
@@ -64,6 +61,10 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 
 /**
+ * Implementation of the {@link IDrawVisitor} interface for the AWT
+ * widget toolkit, allowing molecules to be rendered with toolkits based on
+ * AWT, like the Java reference graphics platform Swing.
+ *
  * @cdk.module renderawt
  */
 @TestClass("org.openscience.cdk.renderer.visitor.AWTDrawVisitorTest")
