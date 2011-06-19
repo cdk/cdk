@@ -20,12 +20,7 @@
  */
 package org.openscience.cdk.charges;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -39,6 +34,10 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Calculation of the polarizability of a molecule by the method of Kang and
@@ -105,7 +104,7 @@ public class Polarizability {
 	@TestMethod("testCalculateKJMeanMolecularPolarizability")
     public double calculateKJMeanMolecularPolarizability(IAtomContainer atomContainer) {
         double polarizabilitiy = 0;
-        Molecule acH = new Molecule(atomContainer);
+        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
         addExplicitHydrogens(acH);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
@@ -128,14 +127,14 @@ public class Polarizability {
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer,IAtom atom,
                                                          int influenceSphereCutOff,
                                                          boolean addExplicitH) {
-        double polarizabilitiy = 0;        
+        double polarizabilitiy = 0;
 
-        Molecule acH;
+        IAtomContainer acH;
         if (addExplicitH) {
-            acH = new Molecule(atomContainer);
+            acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
             addExplicitHydrogens(acH);
         } else {
-            acH = (Molecule) atomContainer;
+            acH = atomContainer;
         }
 
         List<IAtom> startAtom = new ArrayList<IAtom>(1);
@@ -175,12 +174,12 @@ public class Polarizability {
                                                          int[][] distanceMatrix) {
         double polarizabilitiy = 0;
 
-        Molecule acH;
+        IAtomContainer acH;
         if (addExplicitH) {
-            acH = new Molecule(atomContainer);
+            acH = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
             addExplicitHydrogens(acH);
         } else {
-            acH = (Molecule) atomContainer;
+            acH = atomContainer;
         }
 
         List<IAtom> startAtom = new ArrayList<IAtom>(1);
@@ -213,7 +212,7 @@ public class Polarizability {
 	@TestMethod("testCalculateBondPolarizability_IAtomContainer_IBond")
     public double calculateBondPolarizability(IAtomContainer atomContainer, IBond bond) {
         double polarizabilitiy = 0;
-        Molecule acH = new Molecule(atomContainer);
+        IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
         addExplicitHydrogens(acH);
         if (bond.getAtomCount() == 2) {
             polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getAtom(0));
