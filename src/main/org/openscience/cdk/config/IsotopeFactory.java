@@ -122,7 +122,7 @@ public class IsotopeFactory
 	 *
          * @param      builder                 ChemObjectBuilder used to construct the Isotope's
 	 * @return                             The instance value
-	 * @exception  IOException             Description of the Exception
+	 * @exception  IOException  if isotopic data files could not be read.
 	 */
     @TestMethod("testGetInstance_IChemObjectBuilder")
     public static IsotopeFactory getInstance(IChemObjectBuilder builder)
@@ -243,7 +243,7 @@ public class IsotopeFactory
     /**
      *  Returns the most abundant (major) isotope whose symbol equals element.
      *
-     *@param  symbol  Description of the Parameter
+     *@param  symbol  the symbol of the element in question
      *@return         The Major Isotope value
      */
     @TestMethod("testGetMajorIsotope_String")
@@ -371,7 +371,7 @@ public class IsotopeFactory
 	 *  Gets the natural mass of this element, defined as average of masses of isotopes, 
 	 *  weighted by abundance.
 	 *
-	 * @param  element                     Description of the Parameter
+	 * @param  element                     the element in question
 	 * @return                             The natural mass value
 	 */
     @TestMethod("testGetNaturalMass_IElement")
