@@ -46,6 +46,9 @@ package org.openscience.cdk.interfaces;
  */
 public interface IReaction extends IChemObject {
 
+    /**
+     * Permissible reaction directions.
+     */
 	public enum Direction {
 		/** Reaction equilibrium which is (almost) fully on the product side. Often denoted with a forward arrow. */
 		FORWARD,
@@ -272,6 +275,7 @@ public interface IReaction extends IChemObject {
      * Reaction.
      *
      * @param pos Position of Mapping to get.
+     * @return the mapping identified by the specified position
      */
     public IMapping getMapping(int pos);
     

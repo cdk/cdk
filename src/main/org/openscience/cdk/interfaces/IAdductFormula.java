@@ -34,6 +34,7 @@ package org.openscience.cdk.interfaces;
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
+ * @cdk.githash
  */
 public interface IAdductFormula extends IMolecularFormulaSet{
 

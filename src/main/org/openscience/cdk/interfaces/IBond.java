@@ -41,6 +41,10 @@ import javax.vecmath.Point3d;
  */
 public interface IBond extends IElectronContainer {
 
+    /**
+     * A list of permissible bond orders.
+     * 
+     */
 	public enum Order {
 		SINGLE,
 		DOUBLE,
