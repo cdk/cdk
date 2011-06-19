@@ -26,6 +26,7 @@ package org.openscience.cdk.fingerprint;
  * Interface for count fingerprint representations.
  * 
  * @author jonalv
+ * @cdk.module     core
  *
  */
 public interface ICountFingerprint {

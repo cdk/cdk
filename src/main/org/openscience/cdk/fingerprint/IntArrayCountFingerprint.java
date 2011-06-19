@@ -34,6 +34,11 @@ import java.util.Set;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
+/**
+ * @author jonalv
+ * @cdk.module     standard
+ *
+ */
 @TestClass("org.openscience.cdk.fingerprint.IntArrayCountFingerprintTest")
 public class IntArrayCountFingerprint implements ICountFingerprint {
 

@@ -28,6 +28,7 @@ import java.util.BitSet;
  * Interface for bit fingerprint representations.
  * 
  * @author jonalv
+ * @cdk.module     core
  */
 public interface IBitFingerprint {
 
