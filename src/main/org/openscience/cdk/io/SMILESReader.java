@@ -28,13 +28,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -42,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -50,6 +44,13 @@ import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * This Reader reads files which has one SMILES string on each
@@ -78,14 +79,27 @@ public class SMILESReader extends DefaultChemObjectReader {
         LoggingToolFactory.createLoggingTool(SMILESReader.class);
 
     /* 
-     * construct a new reader from a Reader type object
+     * Construct a new reader from a Reader type object.
+     *
+     * By default the {@link DefaultChemObjectBuilder} is used.
      *
      * @param input reader from which input is read
      */
     public SMILESReader(Reader input) {
-        this.input = new BufferedReader(input);
-        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        this(input, DefaultChemObjectBuilder.getInstance());
     }
+
+    /**
+     * Construct a new reader from a Reader and a specified builder object.
+     *
+     * @param input   The Reader object from which to read structures
+     * @param builder the builder
+     */
+    public SMILESReader(Reader input, IChemObjectBuilder builder) {
+        this.input = new BufferedReader(input);
+        sp = new SmilesParser(builder);
+    }
+
 
     public SMILESReader(InputStream input) {
         this(new InputStreamReader(input));
