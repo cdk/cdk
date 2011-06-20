@@ -114,6 +114,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         for (Class anInterface : interfaces) {
             if (IMolecule.class.equals(anInterface)) return true;
         }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 
