@@ -47,6 +47,7 @@ import org.openscience.cdk.io.MDLV2000ReaderTest;
 import org.openscience.cdk.io.MDLV3000ReaderTest;
 import org.openscience.cdk.io.MDLV2000WriterTest;
 import org.openscience.cdk.io.Mol2ReaderTest;
+import org.openscience.cdk.io.Mol2WriterTest;
 import org.openscience.cdk.io.PCCompoundASNReaderTest;
 import org.openscience.cdk.io.PDBWriterTest;
 import org.openscience.cdk.io.PMPReaderTest;
@@ -95,6 +96,7 @@ import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
     MDLRXNV3000ReaderTest.class,
     MDLRXNWriterTest.class,
     Mol2ReaderTest.class,
+    Mol2WriterTest.class,
     PCCompoundASNReaderTest.class,
     PDBWriterTest.class,
     PMPReaderTest.class,
