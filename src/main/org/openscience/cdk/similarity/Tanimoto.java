@@ -225,23 +225,27 @@ public class Tanimoto
     		    j = 0;
     		while ( i < fp1.numOfPopulatedbins() 
     				|| j < fp2.numOfPopulatedbins() ) {
-    			int hash1 = fp1.getHash(i);
-    			int hash2 = fp2.getHash(j);
-			int count1 = fp1.getCount(i);
-			int count2 = fp2.getCount(j);
+    			Integer hash1 = i < fp1.numOfPopulatedbins() ? fp1.getHash(i) 
+    					                                     : null;
+    			Integer hash2 = j < fp2.numOfPopulatedbins() ? fp2.getHash(j) 
+    					                                     : null;
+			Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i) 
+					                                      : null;
+			Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j) 
+					                                      : null;
     			
-    			if ( hash1 < hash2) {
+    			if ( count2 == null || (hash1 != null && hash1 < hash2) ) {
 				maxSum += count1;
     				i++;
     				continue;
     			}
-    			if ( hash1 > hash2 ) {
+    			if ( count1 == null || (hash2 != null && hash1 > hash2 ) ) {
     				maxSum += count2;
     				j++;
     				continue;
     			}
     			
-    			if ( hash1 == hash2 ) {
+    			if ( hash1.equals(hash2) ) {
     				maxSum += Math.max(count1, count2);
     				minSum += Math.min(count1, count2);
     				i++;

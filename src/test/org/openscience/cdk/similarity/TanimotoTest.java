@@ -188,18 +188,26 @@ public class TanimotoTest extends CDKTestCase
     }
     
     @Test
-    public void testCountMethod1and2() {
-		IntArrayCountFingerprint fp1 = new IntArrayCountFingerprint(
-                                           new HashMap<String, Integer>() {{
-             	                               put("A", 3);
-                                           }}
-            		                       );
-		IntArrayCountFingerprint fp2 = new IntArrayCountFingerprint(
-                                           new HashMap<String, Integer>() {{
-             	                               put("A", 4);
-                                           }}
-                                       );
+    public void testCountMethod1and2() throws CDKException {
+    		ICountFingerprint fp1 = new IntArrayCountFingerprint(
+                                    new HashMap<String, Integer>() {{
+             	                        put("A", 3);
+                                    }}
+            		                );
+    		ICountFingerprint fp2 = new IntArrayCountFingerprint(
+                                    new HashMap<String, Integer>() {{
+             	                        put("A", 4);
+                                    }}
+                                );
 		Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001 );
 		Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001 );
+		
+		Molecule mol1 = MoleculeFactory.makeIndole();
+        Molecule mol2 = MoleculeFactory.makeIndole();
+        SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
+        fp1 = fingerprinter.getCountFingerprint(mol1);
+        fp2 = fingerprinter.getCountFingerprint(mol2);
+        Assert.assertEquals(1.0, Tanimoto.method1(fp1, fp2), 0.001);
+        Assert.assertEquals(1.0, Tanimoto.method2(fp1, fp2), 0.001);
     }
 }
