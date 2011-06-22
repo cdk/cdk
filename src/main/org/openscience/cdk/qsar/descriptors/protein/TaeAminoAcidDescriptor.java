@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p/>
  * The TAE descriptors ({@cdk.cite BREN1995} {@cdk.cite BREN1997} {@cdk.cite WHITE2003})
  * are derived from pre-calculated quantum mechanical parameters. This class
- * uses the paramaters for amino acids and thus evaluates a set of 147 descriptors for peptide
+ * uses the parameters for amino acids and thus evaluates a set of 147 descriptors for peptide
  * sequences.
  * <p/>
  * The class expects that it will be supplied an object which implements the {@link IBioPolymer}. Thus ordinary
