@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
@@ -269,7 +268,7 @@ public class IonizationPotentialTool {
 		else
 			results[5] = 0.0;
 		// numberResonance
-		IAtomContainer acR = gRI.getContainer((IMolecule) container, atom);
+		IAtomContainer acR = gRI.getContainer(asMolecule(container), atom);
 		if(acR != null){
 			results[6] = acR.getAtomCount();
 			// numberAromaticAtoms
@@ -485,7 +484,7 @@ public class IonizationPotentialTool {
 	    IReactionProcess reactionNBE  = new ElectronImpactNBEReaction();
 
 		IMoleculeSet setOfReactants = container.getBuilder().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule((IMolecule) container);
+		setOfReactants.addMolecule(asMolecule(container));
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -504,5 +503,13 @@ public class IonizationPotentialTool {
 			return null;
 	}
 
+	private static IMolecule asMolecule(IAtomContainer container) {
+        if (container instanceof IMolecule)
+            return (IMolecule) container;
+
+        return container.getBuilder().newInstance(
+            IMolecule.class, container
+        );
+    }
 
 }
