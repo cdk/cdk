@@ -25,14 +25,14 @@
 package org.openscience.cdk.qsar.descriptors.protein;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.MolecularDescriptorTest;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
@@ -42,12 +42,17 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  * @cdk.module test-qsarprotein
  * 
  */
-public class TaeAminoAcidDescriptorTest extends CDKTestCase {
+public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
 
 	private static IMolecularDescriptor descriptor;
 	
     @BeforeClass public static void setUp() {
     	descriptor = new TaeAminoAcidDescriptor();
+    }
+
+    @Before
+    public void setDescriptor() throws Exception {
+        super.setDescriptor(TaeAminoAcidDescriptor.class);
     }
 
     @Test public void testTaeAminoAcidDescriptor() throws ClassNotFoundException, CDKException, Exception {
