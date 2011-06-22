@@ -37,6 +37,7 @@ import java.util.Set;
 
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -119,6 +120,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.dictref qsar-descriptors:taeAminoAcid
  * @see         IBioPolymer
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest")
 public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
@@ -207,6 +209,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         loadTAEParams();
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
@@ -223,6 +226,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -232,6 +236,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -249,6 +254,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -261,6 +267,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }
@@ -279,7 +286,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @param container Parameter is the atom container which should implement {@link IBioPolymer}.
      * @return A DoubleArrayResult value representing the 147 TAE descriptors     
      */
-
+    @TestMethod("testTaeAminoAcidDescriptor")
     public DescriptorValue calculate(IAtomContainer container) {
         if (TAEParams == null) return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
         if (!(container instanceof IBioPolymer)) return getDummyDescriptorValue(new CDKException("The molecule should be of type IBioPolymer"));
@@ -331,6 +338,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResult();
     }
