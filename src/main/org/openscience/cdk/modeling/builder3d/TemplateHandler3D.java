@@ -164,15 +164,15 @@ public class TemplateHandler3D {
 	 *@param  ringSystems  RingSystems of a molecule 
 	 *@return              The largestRingSet 
 	 */
-	public IRingSet getLargestRingSet(List ringSystems) {
+	public IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
 		IRingSet largestRingSet = null;
 		int atomNumber = 0;
 		IAtomContainer container = null;
 		for (int i = 0; i < ringSystems.size(); i++) {
-			container = getAllInOneContainer((IRingSet) ringSystems.get(i));
+			container = getAllInOneContainer(ringSystems.get(i));
 			if (atomNumber < container.getAtomCount()) {
 				atomNumber = container.getAtomCount();
-				largestRingSet = (IRingSet) ringSystems.get(i);
+				largestRingSet = ringSystems.get(i);
 			}
 		}
 		return largestRingSet;
@@ -180,7 +180,7 @@ public class TemplateHandler3D {
 
 	private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
 		IAtomContainer resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
-		Iterator containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+		Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
 		while (containers.hasNext()) {
 			resultContainer.add((IAtomContainer) containers.next());
 		}
@@ -215,7 +215,7 @@ public class TemplateHandler3D {
                 //we do the exact match with any atom and any bond
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better
-                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
+                    List<RMap> list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
                     boolean flagwritefromsecondbest=false;
                     if ((NumberOfRingAtoms) / list.size() == 1 && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
                     	//so atom and bond count match, could be it's even an exact match,
