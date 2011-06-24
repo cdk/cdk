@@ -1,0 +1,9 @@
+[template.jar]
+Library=ICU - International Components for Unicode
+#Version=
+#Copyright=
+License=MIT-like
+LicenseURL=http://source.icu-project.org/repos/icu/icu/trunk/license.html
+#Download=
+#SourceCode=
+Homepage=http://source.icu-project.org/
