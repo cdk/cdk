@@ -1,6 +1,5 @@
-/* $Revision: 7885 $ $Author: egonw $ $Date: 2007-02-07 21:19:27 +0100 (Wed, 07 Feb 2007) $
- * 
- * Copyright (C) 2004-2007  Christian Hoppe <c.hoppe_@web.de>
+/* Copyright (C) 2004-2007  Christian Hoppe <c.hoppe_@web.de>
+ *                    2011  Egon Willighagen <egonw@users.sf.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -377,8 +376,9 @@ public class TemplateExtractor {
 		AllRingsFinder allRingsFinder = new AllRingsFinder();
 		allRingsFinder.setTimeout(10000); // 10 seconds
 
-		
-		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.DEFAULT_SIZE, Fingerprinter.DEFAULT_SEARCH_DEPTH);
+		IFingerprinter fingerPrinter = new HybridizationFingerprinter(
+		    HybridizationFingerprinter.DEFAULT_SIZE, HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH
+		);
 		IMolecule m = null;
 		IteratingMDLReader imdl=null;
 		//QueryAtomContainer query=null;
