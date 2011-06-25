@@ -415,6 +415,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
     public void setFlags(boolean[] flagsNew){
         flags=flagsNew;
+        notifyChanged();
     }
 
 	/**
