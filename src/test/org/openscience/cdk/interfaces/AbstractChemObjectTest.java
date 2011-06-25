@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.tools.diff.ChemObjectDiff;
 
 /**
@@ -335,6 +336,32 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.addListener(listener);
 
         chemObject.setProperty("Changed", "Yes");
+        Assert.assertNotNull(listener.event);
+    }
+
+    /**
+     * @cdk.bug 2992921
+     */
+    @Test public void testNotifyChanged_SetFlag() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemObject chemObject = newChemObject();
+        chemObject.addListener(listener);
+
+        Assert.assertNull(listener.event);
+        chemObject.setFlag(CDKConstants.DUMMY_POINTER, true);
+        Assert.assertNotNull(listener.event);
+    }
+
+    /**
+     * @cdk.bug 2992921
+     */
+    @Test public void testNotifyChanged_SetFlags() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemObject chemObject = newChemObject();
+        chemObject.addListener(listener);
+
+        Assert.assertNull(listener.event);
+        chemObject.setFlags(new boolean[chemObject.getFlags().length]);
         Assert.assertNotNull(listener.event);
     }
 
