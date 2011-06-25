@@ -126,4 +126,7 @@ public class NNAtomContainerTest extends AbstractAtomContainerTest {
     @Test public void testNotifyChanged_RemoveProperty() {
         NNChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
+    @Test public void testSetAtoms_removeListener() {
+        NNChemObjectTestHelper.testSetAtoms_removeListener(newChemObject());
+    }
 }
