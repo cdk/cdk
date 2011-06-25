@@ -775,9 +775,9 @@ public class SmilesParser {
 					currentSymbol = getElementSymbol(s, position);
 					if (currentSymbol == null)
 					{
-						throw new InvalidSmilesException(
-								"Expected element symbol, found null!"
-								);
+                        throw new InvalidSmilesException(
+                            "Expected element symbol, found " + mychar + "!"
+                        );
 					} else
 					{
 						logger.debug("Found element symbol: ", currentSymbol);
