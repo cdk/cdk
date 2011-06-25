@@ -94,7 +94,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 
     /** {@inheritDoc} */
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
@@ -105,20 +105,14 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 	}
 
     /** {@inheritDoc} */
-    public IChemObject read(IChemObject object) throws CDKException {
-      if (object instanceof IMolecule) {
-        return readMolecule((IMolecule)object);
-      } else {
-        throw new CDKException(
-            "Only supported is reading of IMolecule objects."
-        );
-      }
-    }
+    public <T extends IChemObject> T read(T object) throws CDKException {
+        if (!(object instanceof IMolecule))
+            throw new CDKException(
+                "Only supported is reading of IMolecule objects."
+            );
 
-    // private functions
-
-    private IMolecule readMolecule(IMolecule mol) throws CDKException {
-        return mol;
+        // do the actual parsing
+        return object;
     }
 
     /** {@inheritDoc} */
