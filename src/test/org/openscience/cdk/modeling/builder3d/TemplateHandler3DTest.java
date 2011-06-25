@@ -78,7 +78,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         );
         for(int i=0; i<data.size(); i++){
         	BitSet bs = data.get(i);
-        	Assert.assertEquals(bs,bsmb[i]);
+        	Assert.assertEquals(bsmb[i], bs);
         }		
 	}
 	
