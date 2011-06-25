@@ -374,7 +374,7 @@ public class SmilesParser {
 						{
 							throw new InvalidSmilesException(
 									"Found element which is not a 'organic subset' element. You must " +
-									"use [" + mychar + "].");
+									"use [" + Character.toUpperCase(mychar) + "].");
 						}
 					}
 					addAtomToActiveChiralities(lastNode, atom);
