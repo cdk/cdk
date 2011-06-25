@@ -1,6 +1,5 @@
-/* $Revision: 11555 $ $Author: egonw $ $Date: 2008-07-12 20:31:17 +0200 (Sat, 12 Jul 2008) $
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *                    2011  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@list.sourceforge.net
  *
@@ -55,7 +54,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
 		th3d.mapTemplates(new NNAtomContainer(), 0);
 		Assert.assertEquals(10751, th3d.getTemplateCount());
 	}
-	
+
 	@Test
 	public void testFingerprints() throws Exception{
 		BitSet[] bsmb=new BitSet[10];
@@ -72,9 +71,13 @@ public class TemplateHandler3DTest extends CDKTestCase {
         
 		String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        List data=new TemplateExtractor().makeFingerprintsFromSdf(true,false, new HashMap(), new BufferedReader ( new InputStreamReader ( ins ) ),10);
-        for(int i=0;i<data.size();i++){
-        	BitSet bs=(BitSet) data.get(i);
+        List<BitSet> data= new TemplateExtractor().makeFingerprintsFromSdf(
+            true,false, new HashMap<String,Integer>(),
+            new BufferedReader ( new InputStreamReader ( ins ) ),
+            10
+        );
+        for(int i=0; i<data.size(); i++){
+        	BitSet bs = data.get(i);
         	Assert.assertEquals(bs,bsmb[i]);
         }		
 	}
