@@ -35,6 +35,10 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.formats.CDKOWLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.libio.jena.Convertor;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 /**
  * Reads content from a CDK OWL serialization.
@@ -110,9 +114,15 @@ public class CDKOWLReader extends DefaultChemObjectReader {
             throw new CDKException(
                 "Only supported is reading of IMolecule objects."
             );
+        IMolecule result = (IMolecule)object;
 
         // do the actual parsing
-        return object;
+        Model model = ModelFactory.createDefaultModel();
+        model.read(input, "", "N3");
+
+        IMolecule mol = Convertor.model2Molecule(model, object.getBuilder());
+        result.add(mol);
+        return (T)result;
     }
 
     /** {@inheritDoc} */
