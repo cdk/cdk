@@ -477,6 +477,7 @@ public class RendererModel implements Serializable, Cloneable {
      *
      * @return boolean indicating the parameters is registered
      */
+    @TestMethod("testHasParameter")
     public <T extends IGeneratorParameter<?>> boolean hasParameter(Class<T> param) {
         return renderingParameters.containsKey(param.getName());
     }
