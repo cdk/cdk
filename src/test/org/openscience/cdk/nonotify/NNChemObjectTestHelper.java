@@ -22,6 +22,7 @@
 package org.openscience.cdk.nonotify;
 
 import org.junit.Assert;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -64,6 +65,24 @@ public class NNChemObjectTestHelper {
         listener.reset();
         Assert.assertFalse(listener.getChanged());
         chemObject.setFlag(3, true);
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    public static void testNotifyChanged_SetFlag(IChemObject chemObject) {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        chemObject.addListener(listener);
+
+        Assert.assertFalse(listener.getChanged());
+        chemObject.setFlag(CDKConstants.DUMMY_POINTER, true);
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    public static void testNotifyChanged_SetFlags(IChemObject chemObject) {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        chemObject.addListener(listener);
+
+        Assert.assertFalse(listener.getChanged());
+        chemObject.setFlags(new boolean[chemObject.getFlags().length]);
         Assert.assertFalse(listener.getChanged());
     }
 

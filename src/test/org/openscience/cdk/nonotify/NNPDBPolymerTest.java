@@ -108,6 +108,12 @@ public class NNPDBPolymerTest extends AbstractPDBPolymerTest {
     @Test public void testNotifyChanged() {
         NNChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
+    @Test public void testNotifyChanged_SetFlag() {
+        NNChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
+    }
+    @Test public void testNotifyChanged_SetFlags() {
+        NNChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
+    }
     @Test public void testNotifyChanged_IChemObjectChangeEvent() {
         NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
