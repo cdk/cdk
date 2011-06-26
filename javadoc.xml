@@ -132,6 +132,7 @@
       <antcall target="ojdcheck-module"><param name="module" value="reaction"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="libiocml"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="libiomd"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="log4j"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="builder3d"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="smiles"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="smarts"/></antcall>
@@ -153,6 +154,7 @@
       <antcall target="ojdcheck-module"><param name="module" value="smsd"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="signature"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="renderawt"/></antcall>
+      <antcall target="ojdcheck-module"><param name="module" value="renderbasic"/></antcall>
     </target>
 
     <target name="ojdcheck-module">
