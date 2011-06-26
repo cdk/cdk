@@ -4,7 +4,6 @@ cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
 cdk-io.jar
-cdk-sdg.jar
 cdk-smiles.jar
 cdk-valencycheck.jar
 cdk-signature.jar
