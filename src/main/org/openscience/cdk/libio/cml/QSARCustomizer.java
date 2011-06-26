@@ -1,9 +1,5 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+ *                     2011  Dmitry Katsubo <dmitry.katsubo@gmail.com>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
