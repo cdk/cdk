@@ -1086,7 +1086,8 @@
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
-                      ioformats,log4j,smsd,signature,iordf,cip,tautomer"/>
+                      ioformats,log4j,smsd,signature,iordf,cip,tautomer,
+                      isomorphism,renderbasic,renderawt"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
