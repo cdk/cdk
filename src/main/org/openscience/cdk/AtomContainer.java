@@ -212,8 +212,10 @@ public class AtomContainer extends ChemObject
 	 *@param  atoms  The array of atoms to be assigned to this AtomContainer
 	 *@see           #getAtom
 	 */
-	public void setAtoms(IAtom[] atoms)
-	{
+	public void setAtoms(IAtom[] atoms) {
+	    // unregister this as listener with the old atoms
+	    for (IAtom atom : atoms) atom.removeListener(this);
+
 		this.atoms = atoms;
         for (IAtom atom : atoms) {
             atom.addListener(this);
