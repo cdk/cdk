@@ -214,7 +214,8 @@ public class AtomContainer extends ChemObject
 	 */
 	public void setAtoms(IAtom[] atoms) {
 	    // unregister this as listener with the old atoms
-	    for (IAtom atom : atoms) atom.removeListener(this);
+	    for (IAtom atom : this.atoms)
+	        if (atom != null) atom.removeListener(this);
 
 		this.atoms = atoms;
         for (IAtom atom : atoms) {
