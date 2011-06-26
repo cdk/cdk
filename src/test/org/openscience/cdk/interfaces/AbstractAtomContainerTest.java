@@ -72,9 +72,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         // reset the listener, overwrite the atoms, and change an old atom.
         // if all is well, we should not get a change event this time
-        listener.reset();
-        Assert.assertFalse(listener.changed); // make sure the reset worked
         ac.setAtoms(new IAtom[0]);
+        listener.reset(); // reset here, because the setAtoms() triggers a change even too
+        Assert.assertFalse(listener.changed); // make sure the reset worked
         atoms[1].setAtomTypeName("C.sp2"); // make a change to an old atom
         Assert.assertFalse(listener.changed); // but no change event should happen
     }
