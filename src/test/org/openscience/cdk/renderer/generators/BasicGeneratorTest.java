@@ -64,7 +64,7 @@ public class BasicGeneratorTest extends AbstractGeneratorTest {
 		// nothing should be made
 		IRenderingElement root = generator.generate(singleAtom, model);
 		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(0, elements.size());
+		Assert.assertEquals(1, elements.size());
 	}
 	
 	@Test
