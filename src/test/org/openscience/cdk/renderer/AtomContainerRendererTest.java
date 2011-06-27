@@ -105,7 +105,10 @@ public class AtomContainerRendererTest {
 		renderer.paint(square, visitor);
 		
 		for (IRenderingElement element : visitor.getElements()) {
-			Assert.assertTrue(visitor.toString(element).contains("Line"));
+			Assert.assertTrue(
+			    visitor.toString(element).contains("Line") ||
+			    visitor.toString(element).contains("Oval")
+			);
 		}
 	}
 
