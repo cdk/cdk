@@ -43,7 +43,7 @@ import org.openscience.cdk.renderer.elements.LineElement;
  */
 public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
 	
-    private BasicAtomGenerator generator;
+    private BasicSceneGenerator generator;
 
     @Override
     public Rectangle getCustomCanvas() {
@@ -53,7 +53,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
     @Before
     public void setup() {
         super.setup();
-        this.generator = new BasicAtomGenerator();
+        this.generator = new BasicSceneGenerator();
         model.registerParameters(generator);
     }
 	
@@ -74,11 +74,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
 		// generate the single line element
 		IRenderingElement root = generator.generate(container, model);
 		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(1, elements.size());
-		
-		// test that the endpoints are distinct
-		LineElement line = (LineElement) elements.get(0);
-		Assert.assertNotSame(0, AbstractGeneratorTest.length(line));
+		Assert.assertEquals(0, elements.size());
 	}
 	
 	@Test
@@ -88,7 +84,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
 		// generate all four bonds
 		IRenderingElement root = generator.generate(square, model);
 		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(4, elements.size());
+		Assert.assertEquals(0, elements.size());
 		
 		// test that the center is at the origin
 		Assert.assertEquals(new Point2d(0,0), center(elements));
