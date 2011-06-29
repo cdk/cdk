@@ -801,20 +801,21 @@ public class MolecularFormulaManipulator {
 	}
 
 	/**
-	 * Generate the order of the Elements according probability occurrence.,
-	 * beginning the C, H, O, N, Si, P, S, F, Cl, Br, I, Sn, B, Pb, Tl, Ba, In, Pd,
-	 * Pt, Os, Ag, Zr, Se, Zn, Cu, Ni, Co, Fe, Cr, Ti, Ca, K, Al, Mg, Na, Ce,
-	 * Hg, Au, Ir, Re, W, Ta, Hf, Lu, Yb, Tm, Er, Ho, Dy, Tb, Gd, Eu, Sm, Pm,
-	 * Nd, Pr, La, Cs, Xe, Te, Sb, Cd, Rh, Ru, Tc, Mo, Nb, Y, Sr, Rb, Kr, As,
-	 * Ge, Ga, Mn, V, Sc, Ar, Ne, Be, Li, Tl, Pb, Bi, Po, At, Rn, Fr, Ra, Ac,
-	 * Th, Pa, U, Np, Pu.
+	 * Returns the Elements ordered according to (approximate) probability of occurrence.
 	 * 
-	 * @return  Array with the elements ordered
+	 * <p>This begins with the "elements of life" C, H, O, N, (Si, P, S, F, Cl),
+	 * then continues with the "common" chemical synthesis ingredients, closing off
+	 * with the tail-end of the periodic table in atom-number order and finally
+	 * the generic R-group.
+	 * 
+	 * @return  fixed-order array, namely {@value}
 	 * 
 	 */
-	public static String[] generateOrderEle() {
+	public static String[] generateOrderEle(){
 		return new String[]{
+				// Elements of life
 				"C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
+
 				"Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
 				"Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co",
 				"Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
@@ -822,56 +823,85 @@ public class MolecularFormulaManipulator {
 				"Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
 				"Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh",
 				"Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As",
-				"Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li",
-				"Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac",
-				"Th", "Pa", "U", "Np", "Pu",
-				"R" // Extract object typically from molecular formulas
+				"Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "He", "Be", "Li",
+
+				// rest of periodic table, in atom-number order.
+				"Bi", "Po", "At", "Rn",
+				// row-7 elements (including f-block)
+				"Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
+				"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",
+
+				// The "odd one out": an unspecified R-group
+				"R"
+		};
+
+	}
+	/**
+	 * Returns the Elements in Hill system order for non-carbon-containing formulas
+	 * (i.e. strict alphabetical order, with one-letter elements preceding two-letter elements.)
+	 * The generic R-group is treated specially and comes last.
+	 *
+	 * @return  Elements in Hill system order (strictly alphabetical), with generic R-groups last.
+	 */
+	private static String[] generateOrderEle_Hill_NoCarbons(){
+		return new String[]{
+				"Ac", "Ag", "Al", "Am", "Ar", "As", "At", "Au",
+				"B", "Ba", "Be", "Bh", "Bi", "Bk", "Br",
+				"C", "Ca", "Cd", "Ce", "Cf", "Cl", "Cm", "Cn", "Co", "Cr", "Cs", "Cu",
+				"Db", "Ds", "Dy",
+				"Er", "Es", "Eu",
+				"F", "Fe", "Fm", "Fr",
+				"Ga", "Gd", "Ge",
+				"H", "He", "Hf", "Hg", "Ho", "Hs",
+				"I", "In", "Ir",
+				"K", "Kr",
+				"La", "Li", "Lr", "Lu",
+				"Md", "Mg", "Mn", "Mo", "Mt",
+				"N", "Na", "Nb", "Nd", "Ne", "Ni", "No", "Np",
+				"O", "Os",
+				"P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
+				"Ra", "Rb", "Re", "Rf", "Rg", "Rh", "Rn", "Ru",
+				"S", "Sb", "Sc", "Se", "Sg", "Si", "Sm", "Sn", "Sr",
+				"Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
+				"U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
+				// The "odd one out": an unspecified R-group
+				"R"
 		};
 	}
 
 	/**
-	 * Generate the order of the Elements according Hill system
-	 * when doesn't contain carbons.
-	 *
-	 * @return  Array with the elements ordered
+	 * Returns the Elements in Hill system order for carbon-containing formulas
+	 * (i.e. first carbon and hydrogen, and then the rest of the elements in strict
+	 * alphabetical order, with one-letter elements preceding two-letter elements.)
+	 * The generic R-group is treated specially and comes last.
+	 * 
+	 * @return  Elements in Hill system order with carbons and hydrogens
+	 * 		first (and generic R-groups last).
 	 */
-	private static String[] generateOrderEle_Hill_NoCarbons() {
+	private static String[] generateOrderEle_Hill_WithCarbons(){
 		return new String[]{
-				"Ac", "Ag", "Al", "Ar", "As", "At", "Au",
-				"B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu",
-				"Dy", "Er", "Eu", "F", "Fe", "Fr",
-				"Ga", "Gd", "Ge", "H", "Hf", "Hg", "Ho", "I", "In", "Ir",
-				"K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",
-				"N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
+				"C", "H",
+				"Ac", "Ag", "Al", "Am", "Ar", "As", "At", "Au",
+				"B", "Ba", "Be", "Bh", "Bi", "Bk", "Br",
+				"Ca", "Cd", "Ce", "Cf", "Cl", "Cm", "Cn", "Co", "Cr", "Cs", "Cu",
+				"Db", "Ds", "Dy",
+				"Er", "Es", "Eu",
+				"F", "Fe", "Fm", "Fr",
+				"Ga", "Gd", "Ge",
+				"He", "Hf", "Hg", "Ho", "Hs",
+				"I", "In", "Ir",
+				"K", "Kr",
+				"La", "Li", "Lr", "Lu",
+				"Md", "Mg", "Mn", "Mo", "Mt",
+				"N", "Na", "Nb", "Nd", "Ne", "Ni", "No", "Np",
+				"O", "Os",
 				"P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
-				"Ra", "Rb", "Re", "Rh", "Rn", "Ru",
-				"S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
+				"Ra", "Rb", "Re", "Rf", "Rg", "Rh", "Rn", "Ru",
+				"S", "Sb", "Sc", "Se", "Sg", "Si", "Sm", "Sn", "Sr",
 				"Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
 				"U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
-				"R" // Extract object typically from molecular formulas
-		};
-	}
-
-	/**
-	 * Generate the order of the Elements according Hill system
-	 * when contains carbons.
-	 *
-	 * @return  Array with the elements ordered
-	 */
-	private static String[] generateOrderEle_Hill_WithCarbons() {
-		return new String[]{
-				"C", "H", "Ac", "Ag", "Al", "Ar", "As", "At", "Au",
-				"B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu",
-				"Dy", "Er", "Eu", "F", "Fe", "Fr",
-				"Ga", "Gd", "Ge", "Hf", "Hg", "Ho", "I", "In", "Ir",
-				"K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",
-				"N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
-				"P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
-				"Ra", "Rb", "Re", "Rh", "Rn", "Ru",
-				"S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
-				"Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
-				"U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
-				"R" // Extract object typically from molecular formulas
+				// The "odd one out": an unspecified R-group
+				"R"
 		};
 	}
 
