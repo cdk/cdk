@@ -26,9 +26,11 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -1173,5 +1175,31 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
         String formula2 = MolecularFormulaManipulator.getString(molecularFormula);
         Assert.assertTrue(formula2.equals("C35H64N3O21P3S"));
+    }
+
+    /**
+     * @cdk.bug 3340660
+     */
+    @Test 
+    public void testHelium() {
+        IAtomContainer helium = new Molecule();
+        helium.addAtom(new Atom("He"));
+        
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);
+        Assert.assertNotNull(formula);
+        Assert.assertEquals("He", MolecularFormulaManipulator.getString(formula));
+    }
+
+    /**
+     * @cdk.bug 3340660
+     */
+    @Test 
+    public void testAmericum() {
+        IAtomContainer helium = new Molecule();
+        helium.addAtom(new Atom("Am"));
+        
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);
+        Assert.assertNotNull(formula);
+        Assert.assertEquals("Am", MolecularFormulaManipulator.getString(formula));
     }
 }
