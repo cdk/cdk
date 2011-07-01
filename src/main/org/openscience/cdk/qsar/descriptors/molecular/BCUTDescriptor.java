@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -47,9 +49,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -391,7 +390,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-            diagvalue[counter] = 1.0; molecule.getAtom(i).getCharge();
+            diagvalue[counter] = molecule.getAtom(i).getCharge();
             counter++;
         }
         burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
