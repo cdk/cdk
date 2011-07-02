@@ -63,6 +63,9 @@
                 <fileset dir="jar">
                     <include name="*.jar" />
                 </fileset>
+                <fileset dir="jar/jena">
+                    <include name="*.jar" />
+                </fileset>
                  <dirset dir="src/main">
                      <include name="net/**/*"/>
                  </dirset>
