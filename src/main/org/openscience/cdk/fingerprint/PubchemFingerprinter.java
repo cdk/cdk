@@ -76,7 +76,7 @@ import java.util.BitSet;
  * <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
  * <p/>
  *
- * @cdk.author Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
