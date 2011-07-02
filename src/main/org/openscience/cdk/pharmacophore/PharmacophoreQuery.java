@@ -43,7 +43,7 @@ import java.util.List;
  * @cdk.module pcore
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryTest")
 public class PharmacophoreQuery extends QueryAtomContainer {

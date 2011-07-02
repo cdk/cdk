@@ -80,7 +80,7 @@ import java.util.BitSet;
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.PubchemFingerprinterTest")
 public class PubchemFingerprinter implements IFingerprinter {
