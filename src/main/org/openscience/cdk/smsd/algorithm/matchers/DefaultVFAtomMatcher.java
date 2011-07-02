@@ -141,7 +141,7 @@ public class DefaultVFAtomMatcher implements VFAtomMatcher {
         this.maximumNeighbors = maximum;
     }
 
-    /** {@inheritDoc}
+    /**
      * @param symbol
      */
     public void setSymbol(String symbol) {
