@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
 /**
- * Stereochemistry specification for quadrivalent atoms. See {@link org.openscience.cdk.interfaces.ITetrahedralChirality} for
+ * Stereochemistry specification for quadrivalent atoms. See {@link ITetrahedralChirality} for
  * further details.
  *
  * @cdk.module data
@@ -70,7 +70,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     /**
      * Defines the stereochemistry around the chiral atom. The value depends on the order of ligand atoms.
      *
-     * @return the {@link Stereo} for this stereo element.
+     * @return the {@link ITetrahedralChirality.Stereo} for this stereo element.
      */
     public Stereo getStereo() {
         return stereo;

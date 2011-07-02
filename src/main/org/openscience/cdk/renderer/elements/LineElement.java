@@ -52,7 +52,7 @@ public class LineElement implements IRenderingElement {
      * Make a line element. 
      * 
      * @param firstPointX x-coordinate of the first point
-     * @param secondPointY y-coordinate of the first point
+     * @param firstPointY y-coordinate of the first point
      * @param secondPointX x-coordinate of the second point
      * @param secondPointY y-coordinate of the second point
      * @param width the width of the line

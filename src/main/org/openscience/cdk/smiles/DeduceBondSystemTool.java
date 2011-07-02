@@ -94,7 +94,7 @@ public class DeduceBondSystemTool {
     /**
      * Constructor for the DeduceBondSystemTool object accepting a custom {@link AllRingsFinder}.
      *
-     * @param ringFinger a custom {@link AllRingsFinder}.
+     * @param ringFinder a custom {@link AllRingsFinder}.
      */
     @TestMethod("testConstructors")
     public DeduceBondSystemTool(AllRingsFinder ringFinder) {

@@ -1,9 +1,4 @@
-/* $RCSfile: $
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
+/* Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -38,7 +33,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES
- * parser. Seems to have overlap with, at least, cdk.tools.Normalizer.
+ * parser. Seems to have overlap with, at least, cdk.normalize.Normalizer.
  * 
  * <p>TODO: merge with Normalizer.
  * 
@@ -46,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module extra
  * @cdk.githash
  * 
- * @see        org.openscience.cdk.tools.Normalizer
+ * @see        org.openscience.cdk.normalize.Normalizer
  */
 public class CDKUtilities {
 		

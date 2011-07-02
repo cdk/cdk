@@ -63,8 +63,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
- * Reads a content from MDL molfiles and SD files. 
- * It can read a {@link IMolecule) or {@link IChemModel} from an MDL molfile, and
+ * Reads content from MDL molfiles and SD files. 
+ * It can read a {@link IMolecule} or {@link IChemModel} from an MDL molfile, and
  * a {@link IChemFile} from a SD file, with a {@link IChemSequence} of
  * {@link IChemModel}'s, where each IChemModel will contain one IMolecule.
  *

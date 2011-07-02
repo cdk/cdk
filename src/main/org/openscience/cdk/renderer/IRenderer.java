@@ -36,7 +36,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
  * Interface that all 2D renderers implement. The constructor is responsible
- * for registering the {@link IAtomContainerGenerator}s' {@link IGeneratorParameter}s with
+ * for registering the {@link IGenerator}s' {@link IGeneratorParameter}s with
  * with the associated {@link RendererModel}.
  *
  * @author egonw
@@ -67,7 +67,7 @@ public interface IRenderer<T extends IChemObject> {
 	 * @param screenYTo the screen's y coordinate
 	 * @return          the matching model coordinates
 	 *
-	 * @see #toScreenCoordinates(dhttp://download.eclipse.org/egit/updates/ouble, double)
+	 * @see #toScreenCoordinates(double, double)
 	 */
 	public Point2d toModelCoordinates(double screenXTo, double screenYTo);
 
@@ -102,17 +102,17 @@ public interface IRenderer<T extends IChemObject> {
 	 * 
 	 * @param object the chem object to paint
 	 * @param drawVisitor the class that visits the generated elements  
-	 * @return
+	 * @return the rectangular area where was drawn
 	 */
 	public Rectangle paint(T object, IDrawVisitor drawVisitor);
 	
 	/**
 	 * Paint the chem object within the specified bounds.
 	 * 
-	 * @param reactionSet
-	 * @param drawVisitor
-	 * @param bounds
-	 * @param resetCenter
+	 * @param object       Object to draw
+	 * @param drawVisitor  the visitor to draw to
+	 * @param bounds       the screen bounds between which to draw
+	 * @param resetCenter  a boolean indicating the the drawing center needs to be reset
 	 */
 	public void paint(T object, IDrawVisitor drawVisitor, Rectangle2D bounds, 
 	        boolean resetCenter);
@@ -140,6 +140,11 @@ public interface IRenderer<T extends IChemObject> {
 	 * @return        a rectangle in screen space.
 	 */
 	public Rectangle calculateDiagramBounds(T object);
-	
+
+	/**
+	 * Returns a {@link List} of {@link IGenerator}s for this renderer.
+	 *
+	 * @return the list of generators for this renderer.
+	 */
 	public List<IGenerator<T>> getGenerators();
 }

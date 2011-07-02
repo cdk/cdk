@@ -35,7 +35,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * {@link IDescriptor} that reports the fraction of sp3 carbons to sp2 carbons.
+ * {@link IMolecularDescriptor} that reports the fraction of sp3 carbons to sp2 carbons.
  * <p/>
  * Note that it only considers carbon atoms and rather than use a simple ratio
  * it reports the value of N<sub>sp3</sub>/ (N<sub>sp3</sub> + N<sub>sp2</sub>).
@@ -59,7 +59,7 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
     }
 
     /**
-     * Returns a {@link Map} which specifies which descriptor is implemented by this class.
+     * Returns a {@link DescriptorSpecification} which specifies which descriptor is implemented by this class.
      *
      * @inheritDoc     
      * @return An object containing the descriptor specification
@@ -118,7 +118,7 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
 
 
     /**
-     * Calculate sp3/sp2 hybridization ratio in the supplied {@link org.openscience.cdk.interfaces.IAtomContainer}.
+     * Calculate sp3/sp2 hybridization ratio in the supplied {@link IAtomContainer}.
      *
      * @param container The AtomContainer for which this descriptor is to be calculated.
      * @return The ratio of sp3 to sp2 carbons
@@ -149,12 +149,12 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
      * Returns the specific type of the DescriptorResult object.
      * <p/>
      * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * be obtained from the {@link DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link DescriptorValue} object; this method
      * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * @return an object that implements the {@link IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {

@@ -124,8 +124,8 @@ public class AtomSignature extends AbstractVertexSignature {
      * Create an atom signature for the atom <code>atom</code> and with a
      * maximum height of <code>height</code>.
      * 
-     * @param atomIndex the index of the atom that roots this signature
-     * @param height the maximum height of the signature 
+     * @param atom     the index of the atom that roots this signature
+     * @param height   the maximum height of the signature 
      * @param molecule the molecule to create the signature from
      */
     public AtomSignature(IAtom atom, int height, IAtomContainer molecule) {
@@ -152,7 +152,7 @@ public class AtomSignature extends AbstractVertexSignature {
      * Create an atom signature for the atom <code>atom</code>, with maximum
      * height of <code>height</code>, and using a particular invariant type.
      * 
-     * @param atomIndex the index of the atom that roots this signature
+     * @param atom the index of the atom that roots this signature
      * @param height the maximum height of the signature
      * @param invariantType the type of invariant (int, string, ...)
      * @param molecule the molecule to create the signature from

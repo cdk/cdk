@@ -221,7 +221,7 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Registers rendering parameters from {@link IAtomContainerGenerator}s 
+     * Registers rendering parameters from {@link IGenerator}s 
      * with this model.
      *
      * @param generator
