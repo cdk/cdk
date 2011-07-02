@@ -36,6 +36,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -59,6 +61,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@cdk.module  sdg
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.layout.AtomPlacerTest")
 public class AtomPlacer
 {
 
@@ -96,6 +99,7 @@ public class AtomPlacer
     /**
      *  Constructor for the AtomPlacer object
      */
+    @TestMethod("emptyAtomsListTest,triangleTest")
     public AtomPlacer()
     {
     }
@@ -456,6 +460,7 @@ public class AtomPlacer
      *@param  radius          The radius of the polygon to be populated: bond
      *      length or ring radius
      */
+    @TestMethod("emptyAtomsListTest,triangleTest")
     public void populatePolygonCorners(List<IAtom> atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
     {
         IAtom connectAtom = null;
