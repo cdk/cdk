@@ -316,7 +316,10 @@ public class AtomPlacer3D {
 		}else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
 			dkey = "bond" + id2 + ";" + id1;
 		} else {
-			System.out.println("KEYError:Unknown distance key in pSet: " + id2 + " ;" + id1+" take default bon length:"+DEFAULT_BOND_LENGTH);
+			System.out.println(
+			    "KEYError: Unknown distance key in pSet: " + id2 + ";" + id1 +
+			    " take default bond length: "+DEFAULT_BOND_LENGTH
+			);
 			return DEFAULT_BOND_LENGTH;
 		}
 		return ((Double) (((List) pSet.get(dkey)).get(0))).doubleValue();

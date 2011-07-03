@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.DictCoverageTest;
+import org.openscience.cdk.dict.DictDBReactTest;
 import org.openscience.cdk.dict.DictDBTest;
 
 /**
@@ -36,6 +37,7 @@ import org.openscience.cdk.dict.DictDBTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     DictCoverageTest.class,
-    DictDBTest.class
+    DictDBTest.class,
+    DictDBReactTest.class
 })
 public class MdictTests {}

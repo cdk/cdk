@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+ *                2011  Jonty Lawson <jontyl@users.sourceforge.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -23,7 +22,7 @@ package org.openscience.cdk.renderer.generators;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 import java.awt.Color;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -160,12 +159,19 @@ public class RingGenerator extends BasicBondGenerator {
 
     /** {@inheritDoc} */
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-                new IGeneratorParameter<?>[] {
-                        cdkStyleAromaticity,
-                        showAromaticity,
-                        ringProportion
-                }
-        );
+        // Get our super class's version of things
+        List<IGeneratorParameter<?>> superPars = super.getParameters();
+
+        // Allocate ArrayList with sufficient space for everything.
+        // Note that the number should ideally be the same as the number of entries
+        // that we add here, though this is *only* an efficiency consideration.
+        List<IGeneratorParameter<?>> pars =
+            new ArrayList<IGeneratorParameter<?>>(superPars.size() + 3);
+
+        pars.addAll(superPars);
+        pars.add(cdkStyleAromaticity);
+        pars.add(showAromaticity);
+        pars.add(ringProportion);
+        return pars;
     }
 }

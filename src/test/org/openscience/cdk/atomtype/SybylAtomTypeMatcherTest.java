@@ -29,8 +29,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -182,11 +182,6 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            String refName = refAtom.getAtomTypeName();
-            if (refName.endsWith(".ar")) {
-                refName = refName.substring(0, refName.indexOf(".")) + ".2";
-                refAtom.setAtomTypeName(refName);
-            }
         	Assert.assertEquals(
         		"Perceived atom type does not match atom type in file",
         		refAtom.getAtomTypeName(),
@@ -222,11 +217,6 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            String refName = refAtom.getAtomTypeName();
-            if (refName.endsWith(".ar")) {
-                refName = refName.substring(0, refName.indexOf(".")) + ".2";
-                refAtom.setAtomTypeName(refName);
-            }
 		Assert.assertEquals(
 			"Perceived atom type does not match atom type in file",
 			refAtom.getAtomTypeName(),
@@ -250,11 +240,6 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	IAtom refAtom = refAtoms.next();
-          String refName = refAtom.getAtomTypeName();
-        	if (refName.endsWith(".ar")) {
-        	    refName = refName.substring(0, refName.indexOf(".")) + ".2";
-        	    refAtom.setAtomTypeName(refName);
-        	}
         	Assert.assertEquals(
         		"Perceived atom type does not match atom type in file",
         		refAtom.getAtomTypeName(),

@@ -4,6 +4,27 @@
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-<http://cdk.sf.net/model/molecule/1>
-      a       <cdk:Molecule> .
+<http://example.com/30136842/NNMolecule/5761618>
+      a       cdk:Molecule ;
+      cdk:hasAtom <http://example.com/30136842/NNAtom/12539221> , <http://example.com/30136842/NNAtom/24856323> ;
+      cdk:hasBond <http://example.com/30136842/NNBond/21006994> .
+
+<http://example.com/30136842/NNAtom/12539221>
+      a       cdk:Atom ;
+      cdk:hasAtomicNumber "6" ;
+      cdk:hasFormalCharge "0" ;
+      cdk:symbol "C" .
+
+<http://example.com/30136842/NNAtom/24856323>
+      a       cdk:Atom ;
+      cdk:hasAtomicNumber "6" ;
+      cdk:hasFormalCharge "0" ;
+      cdk:symbol "C" .
+
+<http://example.com/30136842/NNBond/21006994>
+      a       cdk:Bond ;
+      cdk:bindsAtom <http://example.com/30136842/NNAtom/12539221> , <http://example.com/30136842/NNAtom/24856323> ;
+      cdk:hasElectronCount
+              "0" ;
+      cdk:hasOrder cdk:DoubleBond .
 

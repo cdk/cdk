@@ -25,21 +25,24 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the writer MOL2 writer.
@@ -60,10 +63,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() throws Exception {
         Mol2Writer writer = new Mol2Writer();
-        Assert.assertTrue(writer.accepts(ChemFile.class));
-        Assert.assertTrue(writer.accepts(ChemModel.class));
-        Assert.assertTrue(writer.accepts(MoleculeSet.class));
-        Assert.assertTrue(writer.accepts(AtomContainerSet.class));
+        Assert.assertTrue(writer.accepts(Molecule.class));
     }
 
     /**
@@ -125,4 +125,30 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     }
 
 
+    /**
+     * This test just ensures that Mol2Writer does not throw an NPE.
+     *
+     * It does not test whether the output is correct or not.
+     * @throws Exception
+     * @cdk.bug 3315503
+     */
+    @Test
+    public void testMissingAtomType() throws Exception {
+        String filename = "data/mdl/ligand-1a0i.sdf"; 
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IChemFile fileContents = (IChemFile) reader.read(new ChemFile());
+        List<IAtomContainer> molecules = ChemFileManipulator.getAllAtomContainers(fileContents);
+        IAtomContainer mol = molecules.get(0);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+
+        StringWriter writer = new StringWriter();
+        Mol2Writer molwriter = new Mol2Writer(writer);
+        molwriter.write(mol);
+        molwriter.close();
+
+        String mol2file = writer.getBuffer().toString();
+        Assert.assertTrue(mol2file.indexOf("24 R24 -1.209 -18.043 49.44 X") > 0);
+    }
 }

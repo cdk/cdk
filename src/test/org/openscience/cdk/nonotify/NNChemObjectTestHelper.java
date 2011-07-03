@@ -22,6 +22,9 @@
 package org.openscience.cdk.nonotify;
 
 import org.junit.Assert;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
@@ -62,6 +65,24 @@ public class NNChemObjectTestHelper {
         listener.reset();
         Assert.assertFalse(listener.getChanged());
         chemObject.setFlag(3, true);
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    public static void testNotifyChanged_SetFlag(IChemObject chemObject) {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        chemObject.addListener(listener);
+
+        Assert.assertFalse(listener.getChanged());
+        chemObject.setFlag(CDKConstants.DUMMY_POINTER, true);
+        Assert.assertFalse(listener.getChanged());
+    }
+
+    public static void testNotifyChanged_SetFlags(IChemObject chemObject) {
+        NNChemObjectListener listener = new NNChemObjectListener();
+        chemObject.addListener(listener);
+
+        Assert.assertFalse(listener.getChanged());
+        chemObject.setFlags(new boolean[chemObject.getFlags().length]);
         Assert.assertFalse(listener.getChanged());
     }
 
@@ -121,5 +142,33 @@ public class NNChemObjectTestHelper {
 
         chemObject.removeProperty("Changed");
         Assert.assertFalse(listener.getChanged());
+    }
+
+    public static void testSetAtoms_removeListener(IChemObject newChemObject) {
+        IAtomContainer container = (IAtomContainer)newChemObject;
+
+        IAtom[] atoms = new IAtom[4];
+        atoms[0] = container.getBuilder().newInstance(IAtom.class,"C");
+        atoms[1] = container.getBuilder().newInstance(IAtom.class,"C");
+        atoms[2] = container.getBuilder().newInstance(IAtom.class,"C");
+        atoms[3] = container.getBuilder().newInstance(IAtom.class,"O");
+        container.setAtoms(atoms);
+
+        // if an atom changes, the atomcontainer will throw a change event too
+        NNChemObjectListener listener = new NNChemObjectListener();
+        container.addListener(listener);
+        Assert.assertFalse(listener.getChanged());
+
+        // ok, change the atom, and make sure we do get an event
+        atoms[0].setAtomTypeName("C.sp2");
+        Assert.assertFalse(listener.getChanged());
+
+        // reset the listener, overwrite the atoms, and change an old atom.
+        // if all is well, we should not get a change event this time
+        listener.reset();
+        Assert.assertFalse(listener.getChanged()); // make sure the reset worked
+        container.setAtoms(new IAtom[0]);
+        atoms[1].setAtomTypeName("C.sp2"); // make a change to an old atom
+        Assert.assertFalse(listener.getChanged()); // but no change event should happen
     }
 }

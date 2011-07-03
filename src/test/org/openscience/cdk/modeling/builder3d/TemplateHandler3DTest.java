@@ -1,6 +1,5 @@
-/* $Revision: 11555 $ $Author: egonw $ $Date: 2008-07-12 20:31:17 +0200 (Sat, 12 Jul 2008) $
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *                    2011  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@list.sourceforge.net
  *
@@ -55,27 +54,31 @@ public class TemplateHandler3DTest extends CDKTestCase {
 		th3d.mapTemplates(new NNAtomContainer(), 0);
 		Assert.assertEquals(10751, th3d.getTemplateCount());
 	}
-	
+
 	@Test
 	public void testFingerprints() throws Exception{
 		BitSet[] bsmb=new BitSet[10];
-		bsmb[0]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{29, 142, 144, 184, 188, 204, 400, 478, 524, 534, 553, 562, 567, 597, 626, 644, 686, 696, 710, 741, 767, 775, 786, 823, 898, 925, 965, 987, 1000}", "\t ;{, }"));
-		bsmb[1]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{29, 142, 144, 184, 188, 204, 400, 478, 524, 534, 553, 562, 567, 597, 626, 644, 686, 696, 710, 741, 767, 775, 786, 823, 898, 925, 965, 987, 1000}", "\t ;{, }"));
-		bsmb[2]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{27, 29, 134, 137, 148, 164, 180, 184, 212, 273, 278, 305, 330, 361, 379, 400, 409, 441, 486, 491, 504, 524, 547, 562, 567, 643, 648, 686, 688, 694, 696, 710, 741, 743, 775, 786, 815, 823, 840, 848, 852, 855, 857, 864, 866, 898, 916, 925}", "\t ;{, }"));
-		bsmb[3]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{29, 184, 553, 644, 741, 775, 823, 898, 1000}", "\t ;{, }"));
-		bsmb[4]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{27, 29, 32, 48, 136, 142, 144, 148, 180, 184, 188, 204, 212, 273, 278, 305, 330, 361, 366, 379, 400, 430, 441, 478, 486, 524, 534, 547, 553, 562, 567, 597, 626, 643, 644, 645, 648, 686, 688, 694, 696, 710, 741, 743, 767, 775, 786, 815, 823, 840, 852, 855, 857, 866, 898, 906, 916, 925, 965, 974, 987, 1000, 1005}", "\t ;{, }"));
-		bsmb[5]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{29, 184, 553, 644, 741, 775, 823, 898, 1000}", "\t ;{, }"));
-		bsmb[6]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{29, 184, 553, 644, 741, 775, 823, 898, 1000}", "\t ;{, }"));
-		bsmb[7]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{29, 184, 644, 741, 775, 823, 898, 1000}", "\t ;{, }"));
-		bsmb[8]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{27, 29, 134, 137, 148, 164, 180, 184, 212, 273, 278, 305, 330, 361, 379, 400, 409, 441, 486, 491, 504, 524, 547, 562, 567, 643, 648, 686, 688, 694, 696, 710, 741, 743, 775, 786, 815, 823, 840, 848, 852, 855, 857, 864, 866, 898, 916, 925}", "\t ;{, }"));
-		bsmb[9]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{29, 184, 553, 644, 741, 775, 823, 898, 1000}", "\t ;{, }"));		
+		bsmb[0]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{18, 37, 61, 74, 105, 110, 115, 149, 187, 227, 249, 302, 307, 337, 343, 346, 356, 395, 409, 444, 478, 514, 527, 552, 567, 569, 576, 580, 683, 689, 710, 717, 747, 800, 810, 830, 837, 867, 873, 916, 929, 932, 935, 971, 983}", "\t ;{, }"));
+		bsmb[1]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{18, 37, 61, 74, 105, 110, 115, 149, 187, 227, 249, 302, 307, 337, 343, 346, 356, 395, 409, 444, 478, 514, 527, 552, 567, 569, 576, 580, 683, 689, 710, 717, 747, 800, 810, 830, 837, 867, 873, 916, 929, 932, 935, 971, 983}", "\t ;{, }"));
+		bsmb[2]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{18, 42, 72, 92, 175, 184, 225, 227, 231, 246, 252, 271, 278, 280, 289, 298, 307, 308, 322, 349, 356, 360, 391, 395, 415, 424, 444, 467, 498, 500, 502, 520, 532, 541, 543, 552, 563, 567, 569, 571, 610, 614, 629, 654, 673, 692, 697, 700, 711, 717, 731, 747, 761, 778, 783, 800, 810, 818, 830, 837, 842, 863, 867, 873, 879, 882, 883, 913, 916, 932, 935, 971, 983, 1011, 1019, 1020}", "\t ;{, }"));
+		bsmb[3]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{110, 187, 409, 444, 689, 747, 873, 916, 983}", "\t ;{, }"));
+		bsmb[4]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{18, 37, 42, 61, 72, 74, 92, 105, 110, 115, 140, 149, 162, 184, 187, 195, 199, 207, 225, 227, 231, 234, 249, 252, 264, 278, 280, 289, 302, 307, 308, 322, 331, 337, 343, 346, 349, 350, 356, 360, 391, 395, 409, 415, 435, 444, 467, 478, 500, 502, 514, 520, 527, 532, 541, 543, 552, 563, 567, 569, 571, 576, 580, 610, 613, 614, 629, 640, 673, 683, 689, 692, 710, 711, 717, 731, 747, 761, 778, 783, 798, 800, 810, 818, 830, 837, 842, 855, 863, 867, 873, 879, 882, 883, 887, 892, 913, 916, 929, 932, 935, 971, 983, 1016, 1019, 1020}", "\t ;{, }"));
+		bsmb[5]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{110, 187, 409, 444, 689, 747, 873, 916, 983}", "\t ;{, }"));
+		bsmb[6]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{110, 187, 409, 444, 689, 747, 873, 916, 983}", "\t ;{, }"));
+		bsmb[7]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{110, 409, 444, 689, 747, 873, 916, 983}", "\t ;{, }"));
+		bsmb[8]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{18, 42, 72, 92, 175, 184, 225, 227, 231, 246, 252, 271, 278, 280, 289, 298, 307, 308, 322, 349, 356, 360, 391, 395, 415, 424, 444, 467, 498, 500, 502, 520, 532, 541, 543, 552, 563, 567, 569, 571, 610, 614, 629, 654, 673, 692, 697, 700, 711, 717, 731, 747, 761, 778, 783, 800, 810, 818, 830, 837, 842, 863, 867, 873, 879, 882, 883, 913, 916, 932, 935, 971, 983, 1011, 1019, 1020}", "\t ;{, }"));
+		bsmb[9]=(BitSet) TemplateHandler3D.getBitSetFromFile(new StringTokenizer("{110, 187, 409, 444, 689, 747, 873, 916, 983}", "\t ;{, }"));		
         
 		String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        List data=new TemplateExtractor().makeFingerprintsFromSdf(true,false, new HashMap(), new BufferedReader ( new InputStreamReader ( ins ) ),10);
-        for(int i=0;i<data.size();i++){
-        	BitSet bs=(BitSet) data.get(i);
-        	Assert.assertEquals(bs,bsmb[i]);
+        List<BitSet> data= new TemplateExtractor().makeFingerprintsFromSdf(
+            true,false, new HashMap<String,Integer>(),
+            new BufferedReader ( new InputStreamReader ( ins ) ),
+            10
+        );
+        for(int i=0; i<data.size(); i++){
+        	BitSet bs = data.get(i);
+        	Assert.assertEquals(bsmb[i], bs);
         }		
 	}
 	

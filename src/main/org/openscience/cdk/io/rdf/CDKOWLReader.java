@@ -35,6 +35,10 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.formats.CDKOWLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.libio.jena.Convertor;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 /**
  * Reads content from a CDK OWL serialization.
@@ -94,7 +98,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 
     /** {@inheritDoc} */
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
@@ -105,20 +109,20 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 	}
 
     /** {@inheritDoc} */
-    public IChemObject read(IChemObject object) throws CDKException {
-      if (object instanceof IMolecule) {
-        return readMolecule((IMolecule)object);
-      } else {
-        throw new CDKException(
-            "Only supported is reading of IMolecule objects."
-        );
-      }
-    }
+    public <T extends IChemObject> T read(T object) throws CDKException {
+        if (!(object instanceof IMolecule))
+            throw new CDKException(
+                "Only supported is reading of IMolecule objects."
+            );
+        IMolecule result = (IMolecule)object;
 
-    // private functions
+        // do the actual parsing
+        Model model = ModelFactory.createDefaultModel();
+        model.read(input, "", "N3");
 
-    private IMolecule readMolecule(IMolecule mol) throws CDKException {
-        return mol;
+        IMolecule mol = Convertor.model2Molecule(model, object.getBuilder());
+        result.add(mol);
+        return (T)result;
     }
 
     /** {@inheritDoc} */

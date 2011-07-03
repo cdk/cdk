@@ -140,7 +140,7 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
         this.maximumNeighbors = maximum;
     }
 
-    /** {@inheritDoc}
+    /**
      * @param symbol
      */
     public void setSymbol(String symbol) {

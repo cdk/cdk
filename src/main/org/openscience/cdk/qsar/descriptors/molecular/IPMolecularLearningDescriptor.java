@@ -95,7 +95,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ip",
             this.getClass().getName(),
-            "$Id: IPMolecularLearningDescriptor.java 10995 2008-05-14 14:38:21Z miguelrojasch $",
+            "$Id$",
             "The Chemistry Development Kit");
     }
 

@@ -40,6 +40,7 @@ import java.util.Map;
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
+ * @cdk.githash
  */
 public interface IMolecularFormula extends ICDKObject {
 
@@ -47,6 +48,7 @@ public interface IMolecularFormula extends ICDKObject {
 	 * Adds an molecularFormula to this MolecularFormula.
 	 *
 	 * @param  formula  The molecularFormula to be added to this chemObject
+     * @return the new molecular formula
 	 */
 	public IMolecularFormula add(IMolecularFormula formula);
 	
@@ -55,6 +57,7 @@ public interface IMolecularFormula extends ICDKObject {
 	 *
 	 * @param  isotope  The isotope to be added to this MolecularFormula
 	 * @see             #addIsotope(IIsotope, int)
+     * @return the new molecular formula
 	 */
 	public IMolecularFormula addIsotope(IIsotope isotope); 
 	
@@ -64,6 +67,7 @@ public interface IMolecularFormula extends ICDKObject {
 	 * @param  isotope  The isotope to be added to this MolecularFormula
 	 * @param  count    The number of occurrences to add
 	 * @see             #addIsotope(IIsotope)
+     * @return the new molecular formula
 	 */
 	public IMolecularFormula addIsotope(IIsotope isotope, int count);
 	

@@ -77,11 +77,11 @@ import java.util.Map;
  * <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
  * <p/>
  *
- * @cdk.author Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.PubchemFingerprinterTest")
 public class PubchemFingerprinter implements IFingerprinter {
@@ -139,7 +139,7 @@ public class PubchemFingerprinter implements IFingerprinter {
 
         public CountElements(IAtomContainer m) {
             for (int i = 0; i < m.getAtomCount(); i++)
-                ++counts[PeriodicTable.getAtomicNumber(m.getAtom(i).getSymbol())];
+            ++counts[m.getAtom(i).getAtomicNumber()];
         }
 
         public int getCount(int atno) {
@@ -1099,7 +1099,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 264;
         if (cs.countSubstructure("[Li]~[Li]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 265;
-        if (cs.countSubstructure("[Li]~[B]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[Li]~[#5]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 266;
         if (cs.countSubstructure("[Li]~[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 267;
@@ -1125,7 +1125,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 277;
         if (cs.countSubstructure("[#5]~[F]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 278;
-        if (cs.countSubstructure("[#5]~[Si]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#5]~[#14]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 279;
         if (cs.countSubstructure("[#5]~[#15]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 280;
@@ -1151,7 +1151,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 290;
         if (cs.countSubstructure("[#6]~[Al]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 291;
-        if (cs.countSubstructure("[#6]~[Si]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]~[#14]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 292;
         if (cs.countSubstructure("[#6]~[#15]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 293;
@@ -1159,9 +1159,9 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 294;
         if (cs.countSubstructure("[#6]~[Cl]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 295;
-        if (cs.countSubstructure("[#6]~[As]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]~[#33]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 296;
-        if (cs.countSubstructure("[#6]~[Se]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]~[#34]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 297;
         if (cs.countSubstructure("[#6]~[Br]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 298;
@@ -1175,7 +1175,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 302;
         if (cs.countSubstructure("[#7]~[F]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 303;
-        if (cs.countSubstructure("[#7]~[Si]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]~[#14]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 304;
         if (cs.countSubstructure("[#7]~[#15]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 305;
@@ -1195,7 +1195,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 312;
         if (cs.countSubstructure("[#8]~[Al]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 313;
-        if (cs.countSubstructure("[#8]~[Si]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]~[#14]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 314;
         if (cs.countSubstructure("[#8]~[#15]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 315;
@@ -1209,19 +1209,19 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 319;
         if (cs.countSubstructure("[Al]~[Cl]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 320;
-        if (cs.countSubstructure("[Si&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#14&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 321;
-        if (cs.countSubstructure("[Si]~[Si]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#14]~[#14]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 322;
-        if (cs.countSubstructure("[Si]~[Cl]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#14]~[Cl]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 323;
         if (cs.countSubstructure("[#15&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 324;
         if (cs.countSubstructure("[#15]~[#15]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 325;
-        if (cs.countSubstructure("[As&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#33&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 326;
-        if (cs.countSubstructure("[As]~[As]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#33]~[#33]") > 0) fp[b >> 3] |= MASK[b % 8];
 
         /*
         Section 4: Simple atom nearest neighbors.  These bits test for the
@@ -1284,7 +1284,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 353;
         if (cs.countSubstructure("[#6](~[#6])(~[#16])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 354;
-        if (cs.countSubstructure("[#6](~[#6])(~[Si])") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6](~[#6])(~[#14])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 355;
         if (cs.countSubstructure("[#6](~[#6])(:c)") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 356;
@@ -1314,7 +1314,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 368;
         if (cs.countSubstructure("[#6&!H0](~[#16])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 369;
-        if (cs.countSubstructure("[#6&!H0](~[Si])") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6&!H0](~[#14])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 370;
         if (cs.countSubstructure("[#6&!H0]:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 371;
@@ -1406,7 +1406,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 414;
         if (cs.countSubstructure("[#16](~[#6])(~[#8])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 415;
-        if (cs.countSubstructure("[Si](~[#6])(~[#6])") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#14](~[#6])(~[#6])") > 0) fp[b >> 3] |= MASK[b % 8];
 
         /*
         Section 5: Detailed atom neighborhoods - These bits test for the
@@ -1442,7 +1442,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 427;
         if (cs.countSubstructure("[#6](#[#6])(-,:[#6])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 428;
-        if (cs.countSubstructure("[#6H](#[#6])") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6&!H0](#[#6])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 429;
         if (cs.countSubstructure("[#6](#[#7])(-,:[#6])") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 430;
@@ -1519,7 +1519,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 462;
         if (cs.countSubstructure("[#8]-,:[#6]-,:[#6]=,:[#8]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 463;
-        if (cs.countSubstructure("[#7]:[#6]-,:[#16]-[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]:[#6]-,:[#16&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 464;
         if (cs.countSubstructure("[#7]-,:[#6]-,:[#6]=,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 465;
@@ -1549,7 +1549,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 477;
         if (cs.countSubstructure("[#7]-,:[#7]-,:[#6]:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 478;
-        if (cs.countSubstructure("[#16]-,:[#6]=,:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#16]-,:[#6]=,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 479;
         if (cs.countSubstructure("[#16]-,:[#6]-,:[#16]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 480;
@@ -1569,13 +1569,13 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 487;
         if (cs.countSubstructure("[#7]-,:[#6]=,:[#7]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 488;
-        if (cs.countSubstructure("[#7]-,:[#6]=,:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]-,:[#6]=,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 489;
         if (cs.countSubstructure("[#7]-,:[#6]-,:[#16]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 490;
         if (cs.countSubstructure("[#6]-,:[#6]-,:[#6]=,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 491;
-        if (cs.countSubstructure("[#6]-,:[#7]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]-,:[#7]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 492;
         if (cs.countSubstructure("[#7]-,:[#6]:[#8]:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 493;
@@ -1585,7 +1585,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 495;
         if (cs.countSubstructure("[#6]-,:[#7]-,:[#6]:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 496;
-        if (cs.countSubstructure("[#7]:[#7]-,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]:[#7]-,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 497;
         if (cs.countSubstructure("[#8]-,:[#6]:[#6]:[#7]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 498;
@@ -1597,9 +1597,9 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 501;
         if (cs.countSubstructure("[Cl]-,:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 502;
-        if (cs.countSubstructure("[#7]-,:[#6]=,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]-,:[#6]=,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 503;
-        if (cs.countSubstructure("[Cl]-,:[#6]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[Cl]-,:[#6]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 504;
         if (cs.countSubstructure("[#7]:[#6]:[#7]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 505;
@@ -1613,13 +1613,13 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 509;
         if (cs.countSubstructure("[Br]-,:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 510;
-        if (cs.countSubstructure("[#1]-,:[#7]-,:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7&!H0]-,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 511;
-        if (cs.countSubstructure("[#16]=,:[#6]-,:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#16]=,:[#6]-,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 512;
-        if (cs.countSubstructure("[#6]-,:[As]-[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]-,:[#33]-[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 513;
-        if (cs.countSubstructure("[#16]:[#6]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#16]:[#6]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 514;
         if (cs.countSubstructure("[#8]-,:[#7]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 515;
@@ -1635,21 +1635,21 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 520;
         if (cs.countSubstructure("[#6]=,:[#6]-,:[#6]:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 521;
-        if (cs.countSubstructure("[#6]:[#7]-,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]:[#7]-,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 522;
-        if (cs.countSubstructure("[#6]-,:[#7]-,:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]-,:[#7]-,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 523;
         if (cs.countSubstructure("[#7]:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 524;
         if (cs.countSubstructure("[#6]-,:[#6]=,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 525;
-        if (cs.countSubstructure("[As]-,:[#6]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#33]-,:[#6]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 526;
         if (cs.countSubstructure("[Cl]-,:[#6]:[#6]-,:[Cl]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 527;
-        if (cs.countSubstructure("[#6]:[#6]:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]:[#6]:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 528;
-        if (cs.countSubstructure("[#1]-,:[#7]-,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7&!H0]-,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 529;
         if (cs.countSubstructure("[Cl]-,:[#6]-,:[#6]-,:[Cl]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 530;
@@ -1657,7 +1657,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 531;
         if (cs.countSubstructure("[#16]-,:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 532;
-        if (cs.countSubstructure("[#16]-,:[#6]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#16]-,:[#6]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 533;
         if (cs.countSubstructure("[#16]-,:[#6]:[#6]-,:[#7]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 534;
@@ -1671,13 +1671,13 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 538;
         if (cs.countSubstructure("[#7]=,:[#6]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 539;
-        if (cs.countSubstructure("[#7]=,:[#6]-,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]=,:[#6]-,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 540;
-        if (cs.countSubstructure("[#6]-,:[#7]-,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]-,:[#7]-,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 541;
         if (cs.countSubstructure("[#8]-,:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 542;
-        if (cs.countSubstructure("[#8]-,:[#6]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]-,:[#6]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 543;
         if (cs.countSubstructure("[#8]-,:[#6]:[#6]-,:[#7]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 544;
@@ -1685,7 +1685,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 545;
         if (cs.countSubstructure("[#7]-,:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 546;
-        if (cs.countSubstructure("[#7]-,:[#6]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]-,:[#6]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 547;
         if (cs.countSubstructure("[#7]-,:[#6]:[#6]-,:[#7]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 548;
@@ -1707,11 +1707,11 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 556;
         if (cs.countSubstructure("[#6]=,:[#6]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 557;
-        if (cs.countSubstructure("[#7]:[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]:[#6]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 558;
         if (cs.countSubstructure("[#8]=,:[#7]-,:c:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 559;
-        if (cs.countSubstructure("[#8]-,:[#6]-,:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]-,:[#6]-,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 560;
         if (cs.countSubstructure("[#7]-,:[#6]-,:[#7]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 561;
@@ -1735,7 +1735,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 570;
         if (cs.countSubstructure("[#6]:[#6]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 571;
-        if (cs.countSubstructure("[#1]-[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6&!H0]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 572;
         if (cs.countSubstructure("n:c:n:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 573;
@@ -1745,7 +1745,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 575;
         if (cs.countSubstructure("[#8]-,:[#6]-,:[#6]:[#6]-,:[#8]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 576;
-        if (cs.countSubstructure("[#7]=,:[#6]-,:[#6]:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]=,:[#6]-,:[#6]:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 577;
         if (cs.countSubstructure("c:c-,:[#7]-,:c:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 578;
@@ -1767,13 +1767,13 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 586;
         if (cs.countSubstructure("[#6]-,:[#16]-,:[#6]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 587;
-        if (cs.countSubstructure("[#7]-,:[#6]:[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]-,:[#6]:[#6]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 588;
         if (cs.countSubstructure("[#8]=,:[#6]-,:[#6]-,:[#6]=,:[#8]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 589;
         if (cs.countSubstructure("[#6]-,:[#6]:[#6]-,:[#8]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 590;
-        if (cs.countSubstructure("[#6]-,:[#6]:[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]-,:[#6]:[#6]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 591;
         if (cs.countSubstructure("[Cl]-,:[#6]-,:[#6]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 592;
@@ -1827,7 +1827,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 616;
         if (cs.countSubstructure("c:c:n:n:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 617;
-        if (cs.countSubstructure("[#6]-,:[#6]-,:[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]-,:[#6]-,:[#6]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 618;
         if (cs.countSubstructure("c:[#6]-,:[#6]-,:[#6]:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 619;
@@ -1847,7 +1847,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 626;
         if (cs.countSubstructure("[#6]-,:[#8]-,:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 627;
-        if (cs.countSubstructure("[#8]=,:[As]-,:[#6]:c:c") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]=,:[#33]-,:[#6]:c:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 628;
         if (cs.countSubstructure("[#6]-,:[#7]-,:[#6]-,:[#6]:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 629;
@@ -1855,7 +1855,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 630;
         if (cs.countSubstructure("[#8]-,:[#6]:[#6]-,:[#8]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 631;
-        if (cs.countSubstructure("[#8]-,:[#6]:[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]-,:[#6]:[#6]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 632;
         if (cs.countSubstructure("[#6]-,:[#6]-,:[#8]-,:[#6]:c") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 633;
@@ -1863,7 +1863,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 634;
         if (cs.countSubstructure("[#6]-,:[#6]-,:[#6]:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 635;
-        if (cs.countSubstructure("[#7]-,:[#7]-,:[#6]-,:[#7]-[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#7]-,:[#7]-,:[#6]-,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 636;
         if (cs.countSubstructure("[#6]-,:[#7]-,:[#6]-,:[#7]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 637;
@@ -1879,13 +1879,13 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 642;
         if (cs.countSubstructure("[#8]-,:[#6]-,:[#6]-,:[#6]=,:[#8]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 643;
-        if (cs.countSubstructure("[#1]-[#6]-,:[#6]-,:[#7]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6&!H0]-,:[#6]-,:[#7&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 644;
         if (cs.countSubstructure("[#6]-,:[#6]=,:[#7]-,:[#7]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 645;
         if (cs.countSubstructure("[#8]=,:[#6]-,:[#7]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 646;
-        if (cs.countSubstructure("[#8]=,:[#6]-,:[#7]-,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]=,:[#6]-,:[#7]-,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 647;
         if (cs.countSubstructure("[#8]=,:[#6]-,:[#7]-,:[#6]-,:[#7]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 648;
@@ -1919,7 +1919,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 662;
         if (cs.countSubstructure("[#8]-,:[#6]-,:[#6]-,:[#8]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 663;
-        if (cs.countSubstructure("[#8]-,:[#6]-,:[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]-,:[#6]-,:[#6]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 664;
         if (cs.countSubstructure("[#6]-,:[#6]=,:[#6]-,:[#6]=,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 665;
@@ -1927,7 +1927,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 666;
         if (cs.countSubstructure("[#6]=,:[#6]-,:[#6]-,:[#8]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 667;
-        if (cs.countSubstructure("[#6]=,:[#6]-,:[#6]-,:[#8]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#6]=,:[#6]-,:[#6]-,:[#8&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 668;
         if (cs.countSubstructure("[#6]-,:[#6]:[#6]-,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 669;
@@ -1937,7 +1937,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         b = 671;
         if (cs.countSubstructure("[#8]=,:[#6]-,:[#6]=,:[#6]-,:[#6]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 672;
-        if (cs.countSubstructure("[#8]=,:[#6]-,:[#6]=,:[#6]-,:[#1]") > 0) fp[b >> 3] |= MASK[b % 8];
+        if (cs.countSubstructure("[#8]=,:[#6]-,:[#6]=,:[#6&!H0]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 673;
         if (cs.countSubstructure("[#8]=,:[#6]-,:[#6]=,:[#6]-,:[#7]") > 0) fp[b >> 3] |= MASK[b % 8];
         b = 674;

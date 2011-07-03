@@ -30,6 +30,7 @@ package org.openscience.cdk.interfaces;
  * {@link Stereo} then defines the order of the second, third, and fourth ligand to be clockwise or anti-clockwise.
  *
  * @cdk.module interfaces
+ * @cdk.githash
  */
 public interface ITetrahedralChirality extends IStereoElement {
 

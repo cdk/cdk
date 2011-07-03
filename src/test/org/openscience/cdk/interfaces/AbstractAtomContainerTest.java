@@ -49,6 +49,37 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     }
 
     /**
+     * @cdk.bug 2993609
+     */
+    @Test public void testSetAtoms_removeListener() {
+        IAtomContainer ac = (IAtomContainer)newChemObject();
+
+        IAtom[] atoms = new IAtom[4];
+        atoms[0] = ac.getBuilder().newInstance(IAtom.class,"C");
+        atoms[1] = ac.getBuilder().newInstance(IAtom.class,"C");
+        atoms[2] = ac.getBuilder().newInstance(IAtom.class,"C");
+        atoms[3] = ac.getBuilder().newInstance(IAtom.class,"O");
+        ac.setAtoms(atoms);
+
+        // if an atom changes, the atomcontainer will throw a change event too
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        ac.addListener(listener);
+        Assert.assertFalse(listener.changed);
+
+        // ok, change the atom, and make sure we do get an event
+        atoms[0].setAtomTypeName("C.sp2");
+        Assert.assertTrue(listener.changed);
+
+        // reset the listener, overwrite the atoms, and change an old atom.
+        // if all is well, we should not get a change event this time
+        ac.setAtoms(new IAtom[0]);
+        listener.reset(); // reset here, because the setAtoms() triggers a change even too
+        Assert.assertFalse(listener.changed); // make sure the reset worked
+        atoms[1].setAtomTypeName("C.sp2"); // make a change to an old atom
+        Assert.assertFalse(listener.changed); // but no change event should happen
+    }
+
+    /**
      * Only test whether the atoms are correctly cloned.
      */
 	@Test public void testClone() throws Exception {

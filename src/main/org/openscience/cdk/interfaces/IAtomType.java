@@ -21,7 +21,9 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * The base class for atom types. Atom types are typically used to describe the
+ * The base class for atom types.
+ *
+ * Atom types are typically used to describe the
  * behaviour of an atom of a particular element in different environment like 
  * sp<sup>3</sup> hybridized carbon C3, etc., in some molecular modelling 
  * applications.
@@ -36,6 +38,11 @@ package org.openscience.cdk.interfaces;
  */
 public interface IAtomType extends IIsotope {
 
+    /**
+     *
+     * An enum for the different hybridization states.
+     * 
+     */
 	public enum Hybridization {
 	    S,
 	    SP1,     // linear

@@ -25,13 +25,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Stack;
-import java.util.StringTokenizer;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -60,6 +53,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
@@ -374,7 +374,7 @@ public class SmilesParser {
 						{
 							throw new InvalidSmilesException(
 									"Found element which is not a 'organic subset' element. You must " +
-									"use [" + mychar + "].");
+									"use [" + Character.toUpperCase(mychar) + "].");
 						}
 					}
 					addAtomToActiveChiralities(lastNode, atom);
@@ -705,7 +705,11 @@ public class SmilesParser {
 
 	/**
 	 *  Gets the ElementSymbol for an element in the 'organic subset' for which
-	 *  brackets may be omited. <p>
+	 *  brackets may be omited.
+     *
+     * We specifically support the case of aromatic boron (based on the OpenSmiles
+     * specification), though Daylight appears to warn that aromatic boron is
+     * unsual.
 	 *
 	 *  See: <a href="http://www.daylight.com/dayhtml/smiles/smiles-atoms.html">
 	 *  http://www.daylight.com/dayhtml/smiles/smiles-atoms.html</a> .
@@ -721,7 +725,7 @@ public class SmilesParser {
 				return possibleSymbol;
 			}
 		}
-		if ("BCcNnOoFPSsI".indexOf((s.charAt(pos))) >= 0)
+		if ("BbCcNnOoFPSsI".indexOf((s.charAt(pos))) >= 0)
 		{
 			return s.substring(pos, pos + 1);
 		}
@@ -775,9 +779,9 @@ public class SmilesParser {
 					currentSymbol = getElementSymbol(s, position);
 					if (currentSymbol == null)
 					{
-						throw new InvalidSmilesException(
-								"Expected element symbol, found null!"
-								);
+                        throw new InvalidSmilesException(
+                            "Expected element symbol, found " + mychar + "!"
+                        );
 					} else
 					{
 						logger.debug("Found element symbol: ", currentSymbol);

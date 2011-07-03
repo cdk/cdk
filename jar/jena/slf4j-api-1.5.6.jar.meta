@@ -1,0 +1,9 @@
+[template.jar]
+Library=Simple Logging Facade for Java (SLF4J)
+Version=1.5.6
+#Copyright=
+License=MIT
+LicenseURL=http://www.slf4j.org/license.html
+#Download=
+#SourceCode=
+Homepage=http://www.slf4j.org/

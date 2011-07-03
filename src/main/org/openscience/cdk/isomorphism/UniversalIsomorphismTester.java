@@ -658,7 +658,7 @@ public class UniversalIsomorphismTester {
    *
    * @param  l   The list produced by the getMap method.
    * @param  g1  The first atom container. Must not be a {@link IQueryAtomContainer}.
-   * @param  g2  The second one (first and second as in getMap). May be an {@link QueryAtomContainer}.
+   * @param  g2  The second one (first and second as in getMap). May be an {@link IQueryAtomContainer}.
    * @return     A List of {@link List}s of {@link RMap} objects of matching Atoms.
    */
   public static List<List<RMap>> makeAtomsMapsOfBondsMaps(List<List<RMap>> l, IAtomContainer g1, IAtomContainer g2) {

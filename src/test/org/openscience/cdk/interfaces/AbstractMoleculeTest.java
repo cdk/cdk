@@ -49,4 +49,30 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
             Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
+
+    @Test public void testGetLonePairCount_Molecule() {
+        IMolecule acetone = (IMolecule)newChemObject();
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        // add lone pairs on oxygen
+        ILonePair lp1 = acetone.getBuilder().newInstance(ILonePair.class,o);
+        ILonePair lp2 = acetone.getBuilder().newInstance(ILonePair.class,o);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
+        
+        Assert.assertEquals(2, acetone.getLonePairCount());
+    }
 }

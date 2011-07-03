@@ -39,11 +39,11 @@ import java.util.List;
  * we need to be able to support things such as exclusion volumes, which cannot (easily)
  * be represented as atom or bond analogs.
  *
- * @cdk.author Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.module pcore
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
- * @cdk.svnrev $Revision$
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryTest")
 public class PharmacophoreQuery extends QueryAtomContainer {

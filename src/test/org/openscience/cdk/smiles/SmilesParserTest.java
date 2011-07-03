@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -33,18 +30,19 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -55,6 +53,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -1156,7 +1157,7 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testBug1459299() throws Exception {
 		IMolecule mol = sp.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
 		Assert.assertNotNull(mol);
-		Assert.assertEquals(22, mol.getAtomCount());
+		Assert.assertEquals(25, mol.getAtomCount());
 	}
 	
 	/**
@@ -1268,12 +1269,12 @@ public class SmilesParserTest extends CDKTestCase {
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testBug1719287() throws Exception {
-		//                             0  1 23 45
+		//                              01  2  3  4  5 67 8
 		IMolecule mol = sp.parseSmiles("OC(=O)[C@@H](N)CC[S+1](C)C[C@@H](O1)[C@@H](O)[C@@H](O)[C@@H]1n(c3)c(n2)c(n3)c(N)nc2");
 		Assert.assertNotNull(mol);
-		Assert.assertEquals(27, mol.getAtomCount());
-		Assert.assertEquals(29, mol.getBondCount());
-		Assert.assertEquals(1, mol.getAtom(7).getFormalCharge().intValue());
+		Assert.assertEquals(32, mol.getAtomCount());
+		Assert.assertEquals(34, mol.getBondCount());
+		Assert.assertEquals(1, mol.getAtom(8).getFormalCharge().intValue());
 	}
 	
 	/**
@@ -1767,7 +1768,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IMolecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
 		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, mol);		
 		Assert.assertNotNull(mol2);
-		Assert.assertEquals(22, mol2.getAtomCount());
+		Assert.assertEquals(25, mol2.getAtomCount());
 	}
 
     @Test public void testExplicitH() throws Exception {
@@ -2289,6 +2290,16 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(6, countAromaticAtoms(molecule));
         Assert.assertEquals(6, countAromaticBonds(molecule));
 
+    }
+
+    /**
+     * @cdk.bug 3160514
+     */
+    @Test
+    public void testAromaticBoron() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("c1cc2c3cc1.c1cb23cc1");
+        Assert.assertNotNull(mol);
     }
 
     /**

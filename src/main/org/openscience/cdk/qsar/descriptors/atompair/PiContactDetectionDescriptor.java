@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *                    2011  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,7 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atompair;
 
-import org.openscience.cdk.Molecule;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -28,6 +28,7 @@ import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomPairDescriptor;
@@ -155,7 +156,7 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         IAtom clonedFirst = ac.getAtom(atomContainer.getAtomNumber(first));
         IAtom clonedSecond = ac.getAtom(atomContainer.getAtomNumber(first));
 
-        Molecule mol = new Molecule(ac);
+        IMolecule mol = ac.getBuilder().newInstance(IMolecule.class, ac);
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -203,11 +204,11 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
      * @param  ac      AtomContainer
      * @return         The boolean result
      */
-    private boolean isANeighboorsInAnAtomContainer(java.util.List neighs, IAtomContainer ac) {
+    private boolean isANeighboorsInAnAtomContainer(List<IAtom> neighs, IAtomContainer ac) {
         boolean isIn = false;
         int count = 0;
-        for (Object neigh : neighs) {
-            if (ac.contains((IAtom) neigh)) {
+        for (IAtom neigh : neighs) {
+            if (ac.contains(neigh)) {
                 count += 1;
             }
         }

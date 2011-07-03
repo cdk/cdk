@@ -24,8 +24,7 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A PDBAtom is a subclass of a Atom which is supposed to store
- * additional informations about the Atom
+ * A PDBAtom is a subclass of a Atom which is supposed to store additional informations about the Atom.
  *
  * @cdk.module  interfaces
  * @cdk.githash
@@ -37,7 +36,7 @@ package org.openscience.cdk.interfaces;
  */
 public interface IPDBAtom extends IAtom {
     /**
-     * get one entire line from the PDB entry file which describe the IPDBAtom. 
+     * Get one entire line from the PDB entry file which describe the IPDBAtom.
      * It consists of 80 columns. 
      * 
      * @return a String with all information
@@ -45,7 +44,7 @@ public interface IPDBAtom extends IAtom {
 	public String getRecord();
     
 	/**
-     * set one entire line from the PDB entry file which describe the IPDBAtom. 
+     * Set one entire line from the PDB entry file which describe the IPDBAtom.
      * It consists of 80 columns. 
 	 * 
 	 * @param newRecord A String with all information
@@ -171,9 +170,18 @@ public interface IPDBAtom extends IAtom {
     
     public Boolean getOxt();
     public void setOxt(Boolean newOxt);
-    
 
+    /**
+     * Determine whether this is a heteroatom or not.
+     * @return true if the atom is a heteroatom, otherwise false
+     */
     public Boolean getHetAtom();
+
+    /**
+     * Mark the atom as a heteroatom.
+     *
+     * @param newHetAtom if true, the atom will be marked as a heteroatom
+     */
     public void setHetAtom(Boolean newHetAtom);
     
     /**

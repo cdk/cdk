@@ -40,7 +40,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * P, S, As, B, Si, Se, and Te.
  *
  * @cdk.module   standard
- * @cdk.keywords volume, molecular
+ * @cdk.keyword  volume, molecular
  */
 @TestClass("org.openscience.cdk.geometry.volume.VABCVolumeTest")
 public class VABCVolume {

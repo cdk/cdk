@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
 package org.openscience.cdk.dict;
 
@@ -39,8 +34,6 @@ public class DictDBTest extends CDKTestCase {
 
     @Test public void testDictionaryDatabase() {
         DictionaryDatabase db = new DictionaryDatabase();
-        Assert.assertTrue(db.hasDictionary("chemical"));
-        Assert.assertTrue(db.hasDictionary("elements"));
         Assert.assertTrue(db.hasDictionary("descriptor-algorithms"));
         Assert.assertTrue(db.hasDictionary("reaction-processes"));
     }

@@ -462,6 +462,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *  Removes the bond at the given position from the AtomContainer.
 	 *
 	 *@param  position  The position of the bond to be removed.
+     * @return the bond at the given position
 	 */
 	public IBond removeBond(int position);
 	

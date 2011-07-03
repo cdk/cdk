@@ -83,7 +83,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
 				this.getClass().getName(),
-				"$Id: IPAtomicLearningDescriptor.java 10995 2008-05-14 14:38:21Z miguelrojasch $",
+				"$Id$",
 				"The Chemistry Development Kit");
 	}
     /**

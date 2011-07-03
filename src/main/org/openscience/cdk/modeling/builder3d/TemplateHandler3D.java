@@ -1,6 +1,5 @@
-/*  $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+/*  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+ *                     2011  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -39,8 +38,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
+import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -165,15 +164,15 @@ public class TemplateHandler3D {
 	 *@param  ringSystems  RingSystems of a molecule 
 	 *@return              The largestRingSet 
 	 */
-	public IRingSet getLargestRingSet(List ringSystems) {
+	public IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
 		IRingSet largestRingSet = null;
 		int atomNumber = 0;
 		IAtomContainer container = null;
 		for (int i = 0; i < ringSystems.size(); i++) {
-			container = getAllInOneContainer((IRingSet) ringSystems.get(i));
+			container = getAllInOneContainer(ringSystems.get(i));
 			if (atomNumber < container.getAtomCount()) {
 				atomNumber = container.getAtomCount();
-				largestRingSet = (IRingSet) ringSystems.get(i);
+				largestRingSet = ringSystems.get(i);
 			}
 		}
 		return largestRingSet;
@@ -181,7 +180,7 @@ public class TemplateHandler3D {
 
 	private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
 		IAtomContainer resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
-		Iterator containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+		Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
 		while (containers.hasNext()) {
 			resultContainer.add((IAtomContainer) containers.next());
 		}
@@ -201,7 +200,7 @@ public class TemplateHandler3D {
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
         IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(ringSystems);
-        BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
+        BitSet ringSystemFingerprint = new HybridizationFingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
         for (int i = 0; i < fingerprintData.size(); i++) {
@@ -216,7 +215,7 @@ public class TemplateHandler3D {
                 //we do the exact match with any atom and any bond
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better
-                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
+                    List<RMap> list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
                     boolean flagwritefromsecondbest=false;
                     if ((NumberOfRingAtoms) / list.size() == 1 && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
                     	//so atom and bond count match, could be it's even an exact match,

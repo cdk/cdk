@@ -1,9 +1,8 @@
-/*  $RCSfile: $
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C)      2005  Matteo Floris <mfe4@users.sf.net>
+ *                     2006  Kai Hartmann <kaihartmann@users.sf.net>
+ *                     2006  Miguel Rojas-Cherto <miguelrojasch@users.sf.net>
+ *                2005-2008  Egon Willighagen <egonw@users.sf.net>
+ *                2008-2009  Rajarshi Guha <rajarshi@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

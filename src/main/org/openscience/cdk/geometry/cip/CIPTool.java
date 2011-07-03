@@ -101,7 +101,7 @@ public class CIPTool {
      * @param  container    {@link IAtomContainer} to which the <code>stereoCenter</code>
      *                      belongs.
      * @param  stereoCenter Chiral center for which the CIP chirality is to be 
-     *                      determined as {@link TetrahedralChirality} object.
+     *                      determined as {@link ITetrahedralChirality} object.
      * @return A {@link CIP_CHIRALITY} value.
      */
     @TestMethod("testGetCIPChirality_ILigancyFourChirality,testGetCIPChirality_Anti_ILigancyFourChirality")

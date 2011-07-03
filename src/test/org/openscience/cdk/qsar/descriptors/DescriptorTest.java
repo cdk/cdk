@@ -184,6 +184,15 @@ public abstract class DescriptorTest extends CDKTestCase {
     	);
     }
     
+    /**
+     * Tests that the specification no longer gives an empty CVS identifier,
+     * but one based on a repository blob or commit.
+     */
+    @Test public void testGetSpecification_IdentifierNonDefault() {
+        DescriptorSpecification spec = descriptor.getSpecification();
+        Assert.assertNotSame("$Id$", spec.getImplementationIdentifier());
+    }
+    
     @Test public void testSetParameters_arrayObject() throws Exception {
     	Object[] defaultParams = descriptor.getParameters();
     	descriptor.setParameters(defaultParams);

@@ -1,0 +1,9 @@
+[template.jar]
+Library=Apache Commons Logging
+#Version=
+#Copyright=
+License=Apache License 2.0
+LicenseURL=http://www.apache.org/licenses/LICENSE-2.0.txt
+#Download=
+#SourceCode=
+Homepage=http://commons.apache.org/logging/

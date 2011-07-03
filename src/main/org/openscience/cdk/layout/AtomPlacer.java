@@ -36,6 +36,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -59,6 +61,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@cdk.module  sdg
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.layout.AtomPlacerTest")
 public class AtomPlacer
 {
 
@@ -96,6 +99,7 @@ public class AtomPlacer
     /**
      *  Constructor for the AtomPlacer object
      */
+    @TestMethod("emptyAtomsListTest,triangleTest")
     public AtomPlacer()
     {
     }
@@ -456,9 +460,9 @@ public class AtomPlacer
      *@param  radius          The radius of the polygon to be populated: bond
      *      length or ring radius
      */
+    @TestMethod("emptyAtomsListTest,triangleTest")
     public void populatePolygonCorners(List<IAtom> atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
     {
-        IAtom connectAtom = null;
         double angle = startAngle;
         double newX;
         double newY;
@@ -487,24 +491,25 @@ public class AtomPlacer
             logger.debug("  newX:", newX);
             logger.debug("  newY:", newY);
             points.addElement(new Point2d(newX, newY));
-
-      if (logger.isDebugEnabled())
-      try
-            {
-                logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2d());
-            } catch (Exception exc)
-            {
-                //nothing to catch here. This is just for logging
-            }
-        }
+		}
 
         for (int i = 0; i < atomsToDraw.size(); i++)
         {
-            connectAtom = (IAtom) atomsToDraw.get(i);
+            IAtom connectAtom = atomsToDraw.get(i);
             connectAtom.setPoint2d((Point2d) points.elementAt(i));
             connectAtom.setFlag(CDKConstants.ISPLACED, true);
+            
+            if (logger.isDebugEnabled() && connectAtom != null) {
+                try {
+                    logger.debug("populatePolygonCorners->connectAtom: "
+                            + (molecule.getAtomNumber(connectAtom) + 1)
+                            + " placed at " + connectAtom.getPoint2d());
+                } catch (Exception exc) {
+                    // nothing to catch here. This is just for logging
+                }
+            }
         }
-
+        
     }
 
     /**

@@ -219,4 +219,10 @@ public class NNChemModelTest extends AbstractChemModelTest {
     @Test public void testNotifyChanged_RemoveProperty() {
         NNChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
+    @Test public void testNotifyChanged_SetFlag() {
+        NNChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
+    }
+    @Test public void testNotifyChanged_SetFlags() {
+        NNChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
+    }
 }

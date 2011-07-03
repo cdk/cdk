@@ -43,12 +43,16 @@ public interface ICrystal extends IAtomContainer {
     /**
      * Adds the atoms in the AtomContainer as cell content. Symmetry related 
      * atoms should not be added unless P1 space group is used.
+     *
+     * @param container The molecule to add
      */
     public void add(IAtomContainer container);
 
     /**
      * Adds the atom to the crystal. Symmetry related atoms should
      * not be added unless P1 space group is used.
+     *
+     * @param atom the atom to add
      */
     public void addAtom(IAtom atom);
 

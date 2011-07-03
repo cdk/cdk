@@ -633,6 +633,7 @@
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/renderbasic.libdepends"/>
+                    <includesfile name="${metainf}/renderawt.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
                     <includesfile name="${metainf}/sdg.libdepends"/>
@@ -680,6 +681,7 @@
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-renderbasic.jar"/>
+                    <include name="cdk-renderawt.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
                     <include name="cdk-valencycheck.jar"/>
@@ -755,6 +757,8 @@
                     <include name="cdk-qsarcml.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
+                    <include name="cdk-renderbasic.jar"/>
+                    <include name="cdk-renderawt.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
                     <include name="cdk-valencycheck.jar"/>
@@ -1082,7 +1086,8 @@
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
-                      ioformats,log4j,smsd,signature,iordf,cip,tautomer"/>
+                      ioformats,log4j,smsd,signature,iordf,cip,tautomer,
+                      isomorphism,renderbasic,renderawt"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

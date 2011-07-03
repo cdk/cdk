@@ -1,6 +1,5 @@
-/* $Revision: 7885 $ $Author: egonw $ $Date: 2007-02-07 21:19:27 +0100 (Wed, 07 Feb 2007) $
- * 
- * Copyright (C) 2004-2007  Christian Hoppe <c.hoppe_@web.de>
+/* Copyright (C) 2004-2007  Christian Hoppe <c.hoppe_@web.de>
+ *                    2011  Egon Willighagen <egonw@users.sf.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -35,12 +34,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
+import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
@@ -56,8 +56,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 /**
  * Helper class that help setup a template library of CDK's Builder3D.
  * 
- * @author     Christian Hoppe.
- * @cdk.module builder3dtools
+ * @author      Christian Hoppe
+ * @cdk.module  builder3dtools
  * @cdk.githash
  */
 public class TemplateExtractor {
@@ -171,10 +171,10 @@ public class TemplateExtractor {
 		System.out.println("From file:" + dataFile);
 		IMolecule m = null;
 		// RingPartitioner ringPartitioner=new RingPartitioner();
-		List ringSystems = null;
+		List<IRingSet> ringSystems = null;
 		IteratingMDLReader imdl = null;
 
-		HashMap HashRingSystems = new HashMap();
+		HashMap<String,String> hashRingSystems = new HashMap<String,String>();
 		SmilesGenerator smilesGenerator = new SmilesGenerator();
 
 		int counterRings = 0;
@@ -225,7 +225,7 @@ public class TemplateExtractor {
 				for (int i = 0; i < ringSystems.size(); i++) {
 					ringSet = (IRingSet) ringSystems.get(i);
 					ac = builder.newInstance(IAtomContainer.class);
-					Iterator containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+					Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
 					while (containers.hasNext()) {
 						ac.add((IAtomContainer)containers.next());
 					}
@@ -238,7 +238,7 @@ public class TemplateExtractor {
 					key = smilesGenerator.createSMILES(builder.newInstance(IMolecule.class,ac));
 					// System.out.println("OrgKey:"+key+" For
 					// Molecule:"+counter);
-					if (HashRingSystems.containsKey(key)) {
+					if (hashRingSystems.containsKey(key)) {
 						// System.out.println("HAS KEY:ADD");
 						// Vector tmp=(Vector)HashRingSystems.get(key);
 						// tmp.add((AtomContainer)ringSet.getRingSetInAtomContainer());
@@ -251,7 +251,7 @@ public class TemplateExtractor {
 						counterUniqueRings = counterUniqueRings + 1;
 						// Vector rings2=new Vector();
 						// rings2.add((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet));
-						HashRingSystems.put(key, new String("1"));
+						hashRingSystems.put(key, new String("1"));
 						try {
 							// mdlw.write(new Molecule
 							// ((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet)));
@@ -275,7 +275,7 @@ public class TemplateExtractor {
 		System.out.println("READY Molecules:" + counterMolecules
 				+ " RingSystems:" + counterRings + " UniqueRingsSystem:"
 				+ counterUniqueRings);
-		System.out.println("HashtableKeys:" + HashRingSystems.size());
+		System.out.println("HashtableKeys:" + hashRingSystems.size());
 
 		/*
 		 * int c=0; Set keyset = HashRingSystems.keySet(); Iterator
@@ -312,7 +312,7 @@ public class TemplateExtractor {
 		IMolecule m = null;
 		IteratingMDLReader imdl = null;
 		// QueryAtomContainer query=null;
-		List data = new ArrayList();
+		List<String> data = new ArrayList<String>();
 		SmilesGenerator smiles = new SmilesGenerator();
 		try {
 			System.out.println("Start...");
@@ -373,12 +373,14 @@ public class TemplateExtractor {
 		}
 	}
 
-	public List makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond, Map timings, BufferedReader fin, int limit) throws Exception{
+	public List<BitSet> makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond,
+	        Map<String,Integer> timings, BufferedReader fin, int limit) throws Exception {
 		AllRingsFinder allRingsFinder = new AllRingsFinder();
 		allRingsFinder.setTimeout(10000); // 10 seconds
 
-		
-		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.DEFAULT_SIZE, Fingerprinter.DEFAULT_SEARCH_DEPTH);
+		IFingerprinter fingerPrinter = new HybridizationFingerprinter(
+		    HybridizationFingerprinter.DEFAULT_SIZE, HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH
+		);
 		IMolecule m = null;
 		IteratingMDLReader imdl=null;
 		//QueryAtomContainer query=null;
@@ -464,12 +466,12 @@ public class TemplateExtractor {
 	public void makeFingerprintFromRingSystems(String dataFileIn,
 			String dataFileOut, boolean anyAtom, boolean anyAtomAnyBond)
 	throws Exception {
-		Map timings = new HashMap();
+		Map<String,Integer> timings = new HashMap<String,Integer>();
 
 		System.out.println("Start make fingerprint from file:" + dataFileIn
 				+ " ...");
 		BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
-		List data=makeFingerprintsFromSdf(anyAtom, anyAtomAnyBond, timings, fin,-1);
+		List<BitSet> data = makeFingerprintsFromSdf(anyAtom, anyAtomAnyBond, timings, fin,-1);
 		BufferedWriter fout = null;
 		try {
 			fout = new BufferedWriter(new FileWriter(dataFileOut));
@@ -479,7 +481,7 @@ public class TemplateExtractor {
 		}
 		for (int i = 0; i < data.size(); i++) {
 			try {
-				fout.write(((BitSet) data.get(i)).toString());
+				fout.write(data.get(i).toString());
 				fout.newLine();
 			} catch (Exception exc4) {
 			}

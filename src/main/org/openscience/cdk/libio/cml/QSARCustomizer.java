@@ -1,9 +1,5 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+ *                     2011  Dmitry Katsubo <dmitry.katsubo@gmail.com>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -31,9 +27,6 @@ package org.openscience.cdk.libio.cml;
 import java.util.Iterator;
 import java.util.Map;
 
-import nu.xom.Attribute;
-import nu.xom.Element;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -53,6 +46,9 @@ import org.xmlcml.cml.element.CMLMetadataList;
 import org.xmlcml.cml.element.CMLProperty;
 import org.xmlcml.cml.element.CMLPropertyList;
 import org.xmlcml.cml.element.CMLScalar;
+
+import nu.xom.Attribute;
+import nu.xom.Element;
 
 /**
  * Customizer for the libio-cml Convertor to be able to export details for
@@ -118,6 +114,7 @@ public class QSARCustomizer implements ICMLCustomizer {
             scalar.appendChild(buffer.toString());
         } else {
             // logger.error("Could not convert this object to a scalar element: ", value);
+            scalar = new CMLScalar();
             scalar.appendChild(value.toString());
         }
         return scalar;

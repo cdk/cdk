@@ -164,6 +164,12 @@ public class PeriodicTable {
         else return element.getVdwRadius();
     }
 
+    /**
+     * Get the covalent radius for an element.
+     *
+     * @param symbol the symbol of the element
+     * @return the covalent radius
+     */
     @TestMethod("testTable")
     public static Double getCovalentRadius(String symbol) {
         initialize();
@@ -172,6 +178,12 @@ public class PeriodicTable {
         else return element.getCovalentRadius();
     }
 
+    /**
+     * Get the CAS ID for an element.
+     *
+     * @param symbol the symbol of the element
+     * @return the CAS ID
+     */
     @TestMethod("testTable")
     public static String getCASId(String symbol) {
         initialize();
@@ -180,6 +192,12 @@ public class PeriodicTable {
         else return element.getCASid();
     }
 
+    /**
+     * Get the chemical series for an element.
+     *
+     * @param symbol the symbol of the element
+     * @return the chemical series of the element
+     */
     @TestMethod("testTable")
     public static String getChemicalSeries(String symbol) {
         initialize();
@@ -188,6 +206,11 @@ public class PeriodicTable {
         else return element.getChemicalSerie();
     }
 
+    /**
+     * Get the group of the element.
+     * @param symbol the symbol of the element
+     * @return the group
+     */
     @TestMethod("testTable")
     public static Integer getGroup(String symbol) {
         initialize();
@@ -196,6 +219,12 @@ public class PeriodicTable {
         else return element.getGroup();
     }
 
+    /**
+     * Get the name of the element.
+     *
+     * @param symbol the symbol of the element
+     * @return the name of the element
+     */
     @TestMethod("testTable")
     public static String getName(String symbol) {
         initialize();
@@ -204,6 +233,12 @@ public class PeriodicTable {
         else return element.getName();
     }
 
+    /**
+     * Get the period of the element.
+     *
+     * @param symbol the symbol of the element
+     * @return the period
+     */
     @TestMethod("testTable")
     public static Integer getPeriod(String symbol) {
         initialize();
@@ -212,6 +247,12 @@ public class PeriodicTable {
         else return element.getPeriod();
     }
 
+    /**
+     * Get the phase of the element.
+     *
+     * @param symbol the symbol of the element
+     * @return the phase of the element
+     */
     @TestMethod("testTable")
     public static String getPhase(String symbol) {
         initialize();
@@ -220,6 +261,12 @@ public class PeriodicTable {
         else return element.getPhase();
     }
 
+    /**
+     * Get the atomic number of the element.
+     *
+     * @param symbol the symbol of the element
+     * @return the atomic number
+     */
     @TestMethod("testTable")
     public static Integer getAtomicNumber(String symbol) {
         initialize();
@@ -228,6 +275,12 @@ public class PeriodicTable {
         else return element.getAtomicNumber();
     }
 
+    /**
+     * Get the Pauling electronegativity of an element.
+     *
+     * @param symbol the symbol of the element
+     * @return the Pauling electronegativity
+     */
     @TestMethod("testTable")
     public static Double getPaulingElectronegativity(String symbol) {
         initialize();

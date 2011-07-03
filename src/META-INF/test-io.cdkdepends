@@ -20,3 +20,4 @@ cdk-nonotify.jar
 cdk-test.jar
 cdk-testdata.jar
 cdk-isomorphism.jar
+cdk-atomtype.jar

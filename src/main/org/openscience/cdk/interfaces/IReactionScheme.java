@@ -31,6 +31,7 @@ package org.openscience.cdk.interfaces;
  *
  * @author      miguelrojasch <miguelrojasch@yahoo.es>
  * @cdk.module  interfaces
+ * @cdk.githash
  */
 public interface IReactionScheme extends IReactionSet{
 	

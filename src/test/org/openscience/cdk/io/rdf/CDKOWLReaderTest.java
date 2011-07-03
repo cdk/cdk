@@ -61,6 +61,8 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
         IMolecule mol = (IMolecule)reader.read(new NNMolecule());
 
         Assert.assertNotNull(mol);
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
     }
 
 }

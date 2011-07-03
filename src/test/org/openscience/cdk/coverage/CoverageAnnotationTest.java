@@ -105,6 +105,10 @@ abstract public class CoverageAnnotationTest {
 
             if (constructor.getName().startsWith("access$")) {
                 // skip this test
+            } else if (constructor.getAnnotations().length == 0) {
+                // the constructor is private or implicitly defined because the class does not specify
+                // any constructor at all (like CDKConstants)
+                // -> skip this test
             } else if (testMethodAnnotation == null) {
                 // if a method does not have the annotation, it's missing a test
                 System.out.println(className + toString(constructor) + " does not have a test method");

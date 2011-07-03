@@ -811,6 +811,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
     }
 
+    /**
+     * @cdk.bug 2936440
+     */
     @Test public void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "data/mdl/with000coordinate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);

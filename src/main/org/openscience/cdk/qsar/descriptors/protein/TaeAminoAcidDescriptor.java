@@ -37,6 +37,7 @@ import java.util.Set;
 
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,6 +46,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -55,7 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p/>
  * The TAE descriptors ({@cdk.cite BREN1995} {@cdk.cite BREN1997} {@cdk.cite WHITE2003})
  * are derived from pre-calculated quantum mechanical parameters. This class
- * uses the paramaters for amino acids and thus evaluates a set of 147 descriptors for peptide
+ * uses the parameters for amino acids and thus evaluates a set of 147 descriptors for peptide
  * sequences.
  * <p/>
  * The class expects that it will be supplied an object which implements the {@link IBioPolymer}. Thus ordinary
@@ -119,6 +121,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.dictref qsar-descriptors:taeAminoAcid
  * @see         IBioPolymer
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest")
 public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
@@ -207,6 +210,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         loadTAEParams();
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
@@ -223,6 +227,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -232,6 +237,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -249,6 +255,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -261,6 +268,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }
@@ -279,7 +287,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @param container Parameter is the atom container which should implement {@link IBioPolymer}.
      * @return A DoubleArrayResult value representing the 147 TAE descriptors     
      */
-
+    @TestMethod("testTaeAminoAcidDescriptor")
     public DescriptorValue calculate(IAtomContainer container) {
         if (TAEParams == null) return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
         if (!(container instanceof IBioPolymer)) return getDummyDescriptorValue(new CDKException("The molecule should be of type IBioPolymer"));
@@ -331,8 +339,9 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
-        return new DoubleArrayResult();
+        return new DoubleArrayResultType(147);
     }
 
 }
