@@ -22,29 +22,31 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -971,12 +973,17 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 			    "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
 			    "Th", "Pa", "U", "Np", "Pu","R"};
 		
-		String[] listGenerated = MolecularFormulaManipulator.generateOrderEle();
-		Assert.assertEquals(listElements.length,listGenerated.length);
+		String[] arrayGenerated = MolecularFormulaManipulator.generateOrderEle();
+		List<String> listGenerated = Arrays.asList(arrayGenerated);
+		Assert.assertEquals(113,listGenerated.size());
 		
-		for(int i = 0 ; i < listElements.length; i++)
-			Assert.assertEquals(listElements[i],listGenerated[i]);
-		
+		for(int i = 0 ; i < listElements.length; i++) {
+		    String element = listElements[i];
+			Assert.assertTrue(
+			    "Element missing from generateOrderEle: " + element,
+			    listGenerated.contains(element)
+			);
+		}
 	}
 	/**
 	 * A unit test suite for JUnit. Not null.
