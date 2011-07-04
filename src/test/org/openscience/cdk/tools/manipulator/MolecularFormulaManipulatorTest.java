@@ -954,14 +954,14 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
 	/**
-	 * A unit test suite for JUnit. Not null.
-	 *
-	 * @return    The test suite
+	 * Test if the elements-ordered-by-probability are in the expected order.
 	 */
 	@Test 
     public void testGenerateOrderEle() {
 		String[] listElements = new String[]{
+				// Elements of life
 			    "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
+
 			    "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
 			    "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co", 
 			    "Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
@@ -969,9 +969,17 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 			    "Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
 			    "Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh", 
 			    "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", 
-			    "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li", 
-			    "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
-			    "Th", "Pa", "U", "Np", "Pu","R"};
+				"Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "He", "Be", "Li",
+
+				// rest of periodic table, in atom-number order.
+				"Bi", "Po", "At", "Rn",
+				// row-7 elements (including f-block)
+				"Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
+				"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",
+
+				// The "odd one out": an unspecified R-group
+				"R"
+		};
 		
 		String[] arrayGenerated = MolecularFormulaManipulator.generateOrderEle();
 		List<String> listGenerated = Arrays.asList(arrayGenerated);
