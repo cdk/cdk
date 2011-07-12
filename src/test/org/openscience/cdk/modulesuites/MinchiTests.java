@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.InchiCoverageTest;
+import org.openscience.cdk.graph.invariant.InChINumbersToolsTest;
 import org.openscience.cdk.inchi.InChIGeneratorTest;
 import org.openscience.cdk.inchi.InChIToStructureTest;
 
@@ -35,6 +36,7 @@ import org.openscience.cdk.inchi.InChIToStructureTest;
 @SuiteClasses(value={
     InchiCoverageTest.class,
     InChIGeneratorTest.class,
-    InChIToStructureTest.class
+    InChIToStructureTest.class,
+    InChINumbersToolsTest.class
 })
 public class MinchiTests {}
