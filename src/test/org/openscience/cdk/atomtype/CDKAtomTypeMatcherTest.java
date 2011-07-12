@@ -3449,6 +3449,34 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1S/CHP/c1-2/h1H
+     */
+    @Test
+    public void testPhosphide() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"P");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"H");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.TRIPLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+
+        String[] expectedTypes = {
+            "P.ide", "C.sp", "H"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
