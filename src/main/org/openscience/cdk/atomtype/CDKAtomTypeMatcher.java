@@ -947,8 +947,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             }
         } else if (neighborcount == 2) {
             if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-                IAtomType type = getAtomType("P.irane");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (atom.getFormalCharge() != null &
+                    atom.getFormalCharge().intValue() == 1) {
+                    IAtomType type = getAtomType("P.sp1.plus");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else {
+                    IAtomType type = getAtomType("P.irane");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
             } else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
                 IAtomType type = getAtomType("P.ine");
                 if (isAcceptable(atom, atomContainer, type)) return type;
