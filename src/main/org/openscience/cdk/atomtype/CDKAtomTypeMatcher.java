@@ -975,6 +975,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("P.ate");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
+        } else if (neighborcount == 5) {
+            if (atom.getFormalCharge() == null ||
+                atom.getFormalCharge().intValue() == 0) {
+                IAtomType type = getAtomType("P.ane");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         }
     	return null;
     }

@@ -1120,6 +1120,15 @@
     <at:hybridization rdf:resource="&at;planar"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="P.ane">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;P"/>
+    <at:formalNeighbourCount>5</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3d1"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="P.ide">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;P"/>
