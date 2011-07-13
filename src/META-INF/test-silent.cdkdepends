@@ -1,0 +1,7 @@
+cdk-annotation.jar
+cdk-interfaces.jar
+cdk-core.jar
+cdk-silent.jar
+cdk-test.jar
+cdk-test-interfaces.jar
+cdk-diff.jar
