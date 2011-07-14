@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ *                    2011  Thorsten Flügel <thorsten.fluegel@tu-dortmund.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
