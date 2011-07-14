@@ -8,3 +8,4 @@ cdk-standard.jar
 cdk-valencycheck.jar
 cdk-test.jar
 cdk-inchi.jar
+cdk-smiles.jar

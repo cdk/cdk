@@ -1102,6 +1102,15 @@
     <at:hybridization rdf:resource="&at;sp2"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="P.sp1.plus">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;P"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>2</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="P.irane">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;P"/>
@@ -1109,6 +1118,24 @@
     <at:lonePairCount>1</at:lonePairCount>
     <at:piBondCount>1</at:piBondCount>
     <at:hybridization rdf:resource="&at;planar"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="P.ane">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;P"/>
+    <at:formalNeighbourCount>5</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3d1"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="P.ide">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;P"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:lonePairCount>1</at:lonePairCount>
+    <at:piBondCount>2</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp1"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="Na.plus">
@@ -1134,6 +1161,8 @@
     <at:hasElement rdf:resource="&elem;K"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;s"/>
+    <at:lonePairCount>0</at:lonePairCount>
     </at:AtomType>
 
   <at:AtomType rdf:ID="K.metallic">
@@ -1155,14 +1184,18 @@
     <at:hasElement rdf:resource="&elem;Ca"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
-    </at:AtomType>
+    <at:hybridization rdf:resource="&at;s"/>
+    <at:lonePairCount>0</at:lonePairCount>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="Mg.2plus">
     <at:formalCharge>2</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Mg"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
-    </at:AtomType>
+    <at:hybridization rdf:resource="&at;s"/>
+    <at:lonePairCount>0</at:lonePairCount>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="Ni.2plus">
     <at:formalCharge>2</at:formalCharge>
@@ -1183,13 +1216,17 @@
     <at:hasElement rdf:resource="&elem;Al"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
-    </at:AtomType>
+    <at:hybridization rdf:resource="&at;s"/>
+    <at:lonePairCount>0</at:lonePairCount>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="Al">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Al"/>
     <at:formalNeighbourCount>3</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3"/>
+    <at:lonePairCount>0</at:lonePairCount>
     </at:AtomType>
 
   <at:AtomType rdf:ID="Fe.2plus">
@@ -1310,7 +1347,9 @@
     <at:hasElement rdf:resource="&elem;Zn"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
-    </at:AtomType>
+    <at:hybridization rdf:resource="&at;s"/>
+    <at:lonePairCount>0</at:lonePairCount>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="Mn.2plus">
     <at:formalCharge>2</at:formalCharge>
@@ -1324,6 +1363,8 @@
     <at:hasElement rdf:resource="&elem;He"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;s"/>
+    <at:lonePairCount>1</at:lonePairCount>
     </at:AtomType>
 
   <at:AtomType rdf:ID="Ne">
@@ -1338,6 +1379,8 @@
     <at:hasElement rdf:resource="&elem;Ar"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3"/>
+    <at:lonePairCount>4</at:lonePairCount>
     </at:AtomType>
 
   <at:AtomType rdf:ID="Kr">

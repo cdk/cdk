@@ -1,11 +1,11 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* Copyright (C) 2001-2002  Oliver Horlacher <oliver.horlacher@therastrat.com>
+ *                    2002  Christoph Steinbeck <steinbeck@users.sf.net>
+ *          2003-2008,2011  Egon Willighagen <egonw@users.sf.net>
+ *                    2004  Stefan Kuhn <shk3@users.sf.net>
+ *                    2006  Kai Hartmann <kaihartmann@users.sf.net>
+ *               2008-2009  Rajarshi Guha <rajarshi@users.sf.net>
  *
- *  Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) Project
- *
- *  Contact: cdk-devel@lists.sourceforge.net
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -60,10 +60,10 @@ public class InvPair implements java.io.Serializable{
   public InvPair() {
   }
 
-  public InvPair(long c, IAtom a){
-    curr = c;
-    atom = a;
-    a.setProperty(INVARIANCE_PAIR, this);
+  public InvPair(long current, IAtom atom){
+    curr = current;
+    this.atom = atom;
+    atom.setProperty(INVARIANCE_PAIR, this);
   }
 
     @TestMethod("testGetLast")
@@ -104,13 +104,13 @@ public class InvPair implements java.io.Serializable{
     /**
      * Check whether this instance equals another instance.
      *
-     * @param e An instance of InvPair
+     * @param object An instance of InvPair
      * @return true if they are equal, false otherwise
      */
     @TestMethod("testEquals_Object")
-    public boolean equals(Object e) {
-        if (e instanceof InvPair) {
-            InvPair o = (InvPair) e;
+    public boolean equals(Object object) {
+        if (object instanceof InvPair) {
+            InvPair o = (InvPair) object;
 //      logger.debug("Last " + last + "o.last " + o.getLast() + " curr " + curr + " o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
             return (last == o.getLast() && curr == o.getCurr());
         } else {
