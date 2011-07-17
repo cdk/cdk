@@ -85,13 +85,40 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	
 	private final Map<Integer, BasicStroke> strokeMap = 
 	    new HashMap<Integer, BasicStroke>();
-	
+
+	/**
+	 * Returns the current {@link RendererModel}.
+	 *
+	 * @return the current model
+	 */
+	public RendererModel getRendererModel() {
+		return rendererModel;
+	}
+
+	/**
+	 * Returns the current stroke map.
+	 *
+	 * @return a {@link Map} with Integer as keys and {@link BasicStroke}s.
+	 */
+	public Map<Integer, BasicStroke> getStrokeMap() {
+		return strokeMap;
+	}
+
 	private final Map<TextAttribute, Object> map = 
         new Hashtable<TextAttribute, Object>();
 	
 	private final Graphics2D graphics;
 
-    /**
+	/**
+	 * Returns the {@link Graphics2D} for for this visitor.
+	 *
+	 * @return the {@link Graphics2D} object
+	 */
+	public Graphics2D getGraphics() {
+		return graphics;
+	}
+	
+	/**
      * Constructs a new {@link IDrawVisitor} using the AWT widget toolkit,
      * taking a {@link Graphics2D} object to which the chemical content
      * is drawn.
