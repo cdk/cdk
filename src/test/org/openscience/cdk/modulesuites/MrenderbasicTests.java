@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderbasicCoverageTest;
 import org.openscience.cdk.renderer.AtomContainerRendererTest;
+import org.openscience.cdk.renderer.elements.ArrowElementTest;
 import org.openscience.cdk.renderer.elements.AtomSymbolElementTest;
 import org.openscience.cdk.renderer.elements.GeneralPathTest;
 import org.openscience.cdk.renderer.elements.LineElementTest;
@@ -62,6 +63,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGeneratorTest;
 	RingElementTest.class,
 	AtomSymbolElementTest.class,
 	RectangleElementTest.class,
+	ArrowElementTest.class,
 	GeneralPathTest.class,
 	AWTFontManagerTest.class,
 	LineToTest.class,
