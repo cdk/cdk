@@ -1,3 +1,4 @@
+
 /* Copyright (C) 2007-2011  Egon Willighagen <egonw@users.sf.net>
  *               2007       Rajarshi Guha
  *                    2011  Nimish Gopal <nimishg@ebi.ac.uk>
@@ -3707,6 +3708,24 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {
        		"P.ate", "O.sp3", "O.sp2", "C.sp3", "H", "H", "H", "H", "H"
         };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+
+    @Test
+    public void test_Au_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Au");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+      
+        String[] expectedTypes = {"C.sp3", "Au.1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
