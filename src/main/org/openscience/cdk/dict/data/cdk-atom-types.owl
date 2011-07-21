@@ -1000,6 +1000,15 @@
     <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="I.sp3d2.3">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;I"/>
+    <at:formalNeighbourCount>3</at:formalNeighbourCount>
+    <at:lonePairCount>2</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3d2"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="Br">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Br"/>
