@@ -139,6 +139,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Ra".equals(atom.getSymbol())) {
+            type = perceiveRadium(atomContainer, atom);
         } else if ("Au".equals(atom.getSymbol())) {
             type = perceiveGold(atomContainer, atom);
         } else if ("Ag".equals(atom.getSymbol())) {
@@ -1818,6 +1820,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if ((atom.getFormalCharge() != CDKConstants.UNSET
                 && atom.getFormalCharge() == 0) && neighbors == 1) {
             IAtomType type = getAtomType("Au.1");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveRadium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)) {
+            IAtomType type = getAtomType("Ra.neutral");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
