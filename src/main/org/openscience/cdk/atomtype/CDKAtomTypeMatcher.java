@@ -127,6 +127,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBorons(atomContainer, atom);
         } else if ("Be".equals(atom.getSymbol())) {
             type = perceiveBeryllium(atomContainer, atom);
+        } else if ("Cr".equals(atom.getSymbol())) {
+            type = perceiveChromium(atomContainer, atom);
         } else if ("Se".equals(atom.getSymbol())) {
             type = perceiveSelenium(atomContainer, atom);
         } else if ("Te".equals(atom.getSymbol())) {
@@ -1331,6 +1333,48 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return null;
     }
+
+    private IAtomType perceiveChromium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0
+                && atomContainer.getConnectedBondsCount(atom) == 6) {
+            IAtomType type = getAtomType("Cr");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0
+                && atomContainer.getConnectedBondsCount(atom) == 4) {
+            IAtomType type = getAtomType("Cr.4");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 6
+                && atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("Cr.6plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0
+                && atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("Cr.neutral");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if ("Cr".equals(atom.getSymbol())) {
+            if (atom.getFormalCharge() != CDKConstants.UNSET
+                    && atom.getFormalCharge() == 3
+                    && atomContainer.getConnectedBondsCount(atom) == 0) {
+                IAtomType type = getAtomType("Cr.3plus");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            }
+        }
+        return null;
+    }
     private IAtomType perceiveOrganometallicCenters(IAtomContainer atomContainer, IAtom atom) throws CDKException {
     	if ("Hg".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
@@ -1411,14 +1455,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Sc.3minus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("Cr".equals(atom.getSymbol())) {
-    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == 0 &&
-    				atomContainer.getConnectedBondsCount(atom) == 6) {
-    			IAtomType type = getAtomType("Cr");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	}
+    	} 
     	return null;
     }
 

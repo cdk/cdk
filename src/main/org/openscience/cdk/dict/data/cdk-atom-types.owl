@@ -1581,14 +1581,47 @@
     <at:hybridization rdf:resource="&at;octahedral"/>
   </at:AtomType>
 
-  <at:AtomType rdf:ID="Cr">
+  <at:AtomType rdf:ID="Cr.4">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Cr"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>2</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3"/>
+    </at:AtomType> 
+
+    <at:AtomType rdf:ID="Cr.6plus">
+    <at:formalCharge>6</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Cr"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType> 
+
+    <at:AtomType rdf:ID="Cr">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Cr"/>
     <at:formalNeighbourCount>6</at:formalNeighbourCount>
     <at:lonePairCount>0</at:lonePairCount>
     <at:piBondCount>0</at:piBondCount>
     <at:hybridization rdf:resource="&at;octahedral"/>
-  </at:AtomType>
+    </at:AtomType>
+
+    <at:AtomType rdf:ID="Cr.neutral">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Cr"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>
+
+   <at:AtomType rdf:ID="Cr.3plus">
+   <at:formalCharge>3</at:formalCharge>
+   <at:hasElement rdf:resource="&elem;Cr"/>
+   <at:formalNeighbourCount>0</at:formalNeighbourCount>
+   <at:lonePairCount>0</at:lonePairCount>
+   <at:piBondCount>0</at:piBondCount>
+   </at:AtomType>
 
   <at:AtomType rdf:ID="Ti.sp3">
     <at:formalCharge>0</at:formalCharge>
