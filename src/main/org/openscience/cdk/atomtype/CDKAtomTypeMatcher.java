@@ -131,6 +131,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveSelenium(atomContainer, atom);
         } else if ("Te".equals(atom.getSymbol())) {
             type = perceiveTellurium(atomContainer, atom);
+        } else if ("Ba".equals(atom.getSymbol())) {
+            type = perceiveBarium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
@@ -1313,7 +1315,18 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	}
     	return null;
     }
-
+    private IAtomType perceiveBarium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 2)) {
+            IAtomType type = getAtomType("Ba.2plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        }
+        return null;
+    }
     private IAtomType perceiveOrganometallicCenters(IAtomContainer atomContainer, IAtom atom) throws CDKException {
     	if ("Hg".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {

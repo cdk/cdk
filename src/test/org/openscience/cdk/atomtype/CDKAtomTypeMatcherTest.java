@@ -3710,6 +3710,19 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
+
+    @Test
+    public void test_Ba_2plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ba");
+        a1.setFormalCharge(2);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Ba.2plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
     
 
     @Test
