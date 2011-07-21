@@ -1530,13 +1530,24 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (hasOneSingleElectron(atomContainer, atom)) {
             // no idea how to deal with this yet
             return null;
-        } else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-                atom.getFormalCharge() == 0 &&
-                atomContainer.getConnectedBondsCount(atom) <= 4)) {
-            IAtomType type = getAtomType("Si.sp3");
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0) {
+            if (atomContainer.getConnectedBondsCount(atom) == 2) {
+                IAtomType type = getAtomType("Si.2");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (atomContainer.getConnectedBondsCount(atom) == 3) {
+                IAtomType type = getAtomType("Si.3");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (atomContainer.getConnectedBondsCount(atom) == 4) {
+                IAtomType type = getAtomType("Si.sp3");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == -2) {
+            IAtomType type = getAtomType("Si.2minus.6");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
-    	return null;
+        return null;
     }
     
     private IAtomType perceiveManganese(IAtomContainer atomContainer, IAtom atom) throws CDKException {
