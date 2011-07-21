@@ -1494,7 +1494,7 @@
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
   </at:AtomType>
-
+ 
   <at:AtomType rdf:ID="Co.3plus">
     <at:formalCharge>3</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Co"/>
@@ -1508,6 +1508,69 @@
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
   </at:AtomType>
+  
+    <at:AtomType rdf:ID="Co.plus.6">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>6</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Co.plus.2">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType> 
+
+    <at:AtomType rdf:ID="Co.2">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Co.6">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>6</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Co.plus.4">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+     <at:AtomType rdf:ID="Co.4">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Co.plus.5">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>5</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Co.plus.1">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Co.1">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>
 
   <at:AtomType rdf:ID="Cu.plus">
     <at:formalCharge>1</at:formalCharge>
