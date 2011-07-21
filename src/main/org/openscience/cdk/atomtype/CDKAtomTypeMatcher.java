@@ -153,6 +153,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGadolinum(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Br".equals(atom.getSymbol())) {
+            type = perceiveBromine(atomContainer, atom);
         } else if ("V".equals(atom.getSymbol())) {
             type = perceiveVanadium(atomContainer, atom);
         } else if ("Ti".equals(atom.getSymbol())) {
@@ -1323,45 +1325,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private IAtomType perceiveHalogens(IAtomContainer atomContainer, IAtom atom)
     throws CDKException {
-    	if ("Br".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-				if (atomContainer.getConnectedBondsCount(atom) == 0) {
-					if (atom.getFormalCharge() != CDKConstants.UNSET &&
-						atom.getFormalCharge() == +1) {
-						IAtomType type = getAtomType("Br.plus.radical");
-						if (isAcceptable(atom, atomContainer, type)) return type;
-					} else if (atom.getFormalCharge() == CDKConstants.UNSET ||
-							   atom.getFormalCharge() == 0) {
-						IAtomType type = getAtomType("Br.radical");
-						if (isAcceptable(atom, atomContainer, type)) return type;
-					}
-				} else if (atomContainer.getConnectedBondsCount(atom) <= 1) {
-					IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-					if (maxBondOrder == IBond.Order.SINGLE) {
-						IAtomType type = getAtomType("Br.plus.radical");
-						if (isAcceptable(atom, atomContainer, type)) return type;
-					}
-				}
-				return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == -1)) {
-    			IAtomType type = getAtomType("Br.minus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else if (atom.getFormalCharge() == 1) {
-    			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-    			if (maxBondOrder == IBond.Order.DOUBLE) {
-    				IAtomType type = getAtomType("Br.plus.sp2");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
-    			}else if (maxBondOrder == IBond.Order.SINGLE){
-    				IAtomType type = getAtomType("Br.plus.sp3");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
-    			}
-    		} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
-    				atomContainer.getConnectedBondsCount(atom) == 0) {
-    			IAtomType type = getAtomType("Br");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	} else if ("F".equals(atom.getSymbol())) {
+    	if ("F".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
 				if (atomContainer.getConnectedBondsCount(atom) == 0) {
 					if (atom.getFormalCharge() != CDKConstants.UNSET &&
@@ -2307,6 +2271,50 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 && atom.getFormalCharge() == -3
                 && atomContainer.getConnectedBondsCount(atom) == 4) {
             IAtomType type = getAtomType("V.3minus.4");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveBromine(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            if (atomContainer.getConnectedBondsCount(atom) == 0) {
+                if (atom.getFormalCharge() != CDKConstants.UNSET &&
+                        atom.getFormalCharge() == +1) {
+                    IAtomType type = getAtomType("Br.plus.radical");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else if (atom.getFormalCharge() == CDKConstants.UNSET ||
+                        atom.getFormalCharge() == 0) {
+                    IAtomType type = getAtomType("Br.radical");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
+            } else if (atomContainer.getConnectedBondsCount(atom) <= 1) {
+                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+                if (maxBondOrder == IBond.Order.SINGLE) {
+                    IAtomType type = getAtomType("Br.plus.radical");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
+            }
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+                atom.getFormalCharge() == -1)) {
+            IAtomType type = getAtomType("Br.minus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() == 1) {
+            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+            if (maxBondOrder == IBond.Order.DOUBLE) {
+                IAtomType type = getAtomType("Br.plus.sp2");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }else if (maxBondOrder == IBond.Order.SINGLE){
+                IAtomType type = getAtomType("Br.plus.sp3");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        } else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
+                atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("Br");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atomContainer.getConnectedBondsCount(atom) == 3) {
+            IAtomType type = getAtomType("Br.3");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;

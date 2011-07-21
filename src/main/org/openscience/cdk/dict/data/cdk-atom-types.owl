@@ -1089,6 +1089,15 @@
     <at:hybridization rdf:resource="&at;sp2"/>
   </at:AtomType>
 
+    <at:AtomType rdf:ID="Br.3">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Br"/>
+    <at:formalNeighbourCount>3</at:formalNeighbourCount>
+    <at:lonePairCount>1</at:lonePairCount>
+    <at:piBondCount>2</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3"/>
+    </at:AtomType>
+
   <at:AtomType rdf:ID="P.se.3">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;P"/>
