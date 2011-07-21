@@ -135,6 +135,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveRubidium(atomContainer, atom);
         } else if ("Te".equals(atom.getSymbol())) {
             type = perceiveTellurium(atomContainer, atom);
+        } else if ("Cu".equals(atom.getSymbol())) {
+            type = perceiveCopper(atomContainer, atom);
         } else if ("Ba".equals(atom.getSymbol())) {
             type = perceiveBarium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
@@ -1423,15 +1425,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Co.metallic");
                 if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("Cu".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +2)) {
-    			IAtomType type = getAtomType("Cu.2plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
     	} else if ("Pt".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
@@ -1476,6 +1469,39 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             }
     	}
     	return null;
+    }
+    private IAtomType perceiveCopper(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +2)) {
+            IAtomType type = getAtomType("Cu.2plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 1) {
+                IAtomType type = getAtomType("Cu.1");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            } else {
+                IAtomType type01 = getAtomType("Cu.metallic");
+                if (isAcceptable(atom, atomContainer, type01)) {
+                    return type01;
+                }
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +1) {
+            IAtomType type02 = getAtomType("Cu.plus");
+            if (isAcceptable(atom, atomContainer, type02)) {
+                return type02;
+            }
+        }
+        return null;
     }
     private IAtomType perceiveBarium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (hasOneSingleElectron(atomContainer, atom)) {

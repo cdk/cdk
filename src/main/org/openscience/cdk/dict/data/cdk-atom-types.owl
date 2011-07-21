@@ -1418,12 +1418,33 @@
     <at:piBondCount>0</at:piBondCount>
   </at:AtomType>
 
-  <at:AtomType rdf:ID="Cu.2plus">
+  <at:AtomType rdf:ID="Cu.plus">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Cu"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Cu.2plus">
     <at:formalCharge>2</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Cu"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
+
+    <at:AtomType rdf:ID="Cu.metallic">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Cu"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>    
+
+    <at:AtomType rdf:ID="Cu.1">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Cu"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
 
   <at:AtomType rdf:ID="Si.2minus.6">
     <at:formalCharge>-2</at:formalCharge>
