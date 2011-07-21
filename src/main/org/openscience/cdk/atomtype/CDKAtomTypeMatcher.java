@@ -1228,7 +1228,51 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	}
     	return null;
     }
-
+    private IAtomType perceiveArsenic(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +1
+                && atomContainer.getConnectedBondsCount(atom) <= 4)) {
+            IAtomType type = getAtomType("As.plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 4) {
+                IAtomType type = getAtomType("As.5");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            }
+            if (neighbors == 2) {
+                IAtomType type = getAtomType("As.2");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            }
+            IAtomType type = getAtomType("As");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +3)) {
+            IAtomType type = getAtomType("As.3plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == -1)) {
+            IAtomType type = getAtomType("As.minus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        }
+        return null;
+    }
     private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if ("Na".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
@@ -1398,22 +1442,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Sn.sp3");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("As".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +1 &&
-    				atomContainer.getConnectedBondsCount(atom) <= 4)) {
-    			IAtomType type = getAtomType("As.plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == 0 &&
-    				atomContainer.getConnectedBondsCount(atom) <= 3)) {
-    			IAtomType type = getAtomType("As");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	} else if ("Ti".equals(atom.getSymbol())) {
+    	}  else if ("Ti".equals(atom.getSymbol())) {
     		if (atom.getFormalCharge() != CDKConstants.UNSET &&
     			atom.getFormalCharge() == -3 &&
     			atomContainer.getConnectedBondsCount(atom) == 6) {
