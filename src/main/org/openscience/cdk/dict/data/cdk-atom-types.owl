@@ -1317,7 +1317,7 @@
     <at:lonePairCount>0</at:lonePairCount>
   </at:AtomType>
 
-  <at:AtomType rdf:ID="Al">
+    <at:AtomType rdf:ID="Al">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Al"/>
     <at:formalNeighbourCount>3</at:formalNeighbourCount>
@@ -1325,6 +1325,13 @@
     <at:hybridization rdf:resource="&at;sp3"/>
     <at:lonePairCount>0</at:lonePairCount>
     </at:AtomType>
+
+    <at:AtomType rdf:ID="Al.3minus">
+    <at:formalCharge>-3</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Al"/>
+    <at:formalNeighbourCount>6</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType> 
 
   <at:AtomType rdf:ID="Fe.2plus">
     <at:formalCharge>2</at:formalCharge>

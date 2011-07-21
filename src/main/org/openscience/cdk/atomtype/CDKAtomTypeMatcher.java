@@ -143,6 +143,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBarium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
+        } else if ("Al".equals(atom.getSymbol())) {
+            type = perceiveAluminium(atomContainer, atom);
         }  else if ("Ni".equals(atom.getSymbol())) {
             type = perceiveNickel(atomContainer, atom);
         } else if ("Gd".equals(atom.getSymbol())) {
@@ -1562,7 +1564,33 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return null;
     }
-
+    private IAtomType perceiveAluminium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 3) {
+            int connectedBondsCount = atomContainer.getConnectedBondsCount(atom);
+            if (connectedBondsCount == 0) {
+                IAtomType type = getAtomType("Al.3plus");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0
+                && atomContainer.getConnectedBondsCount(atom) == 3) {
+            IAtomType type = getAtomType("Al");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == -3
+                && atomContainer.getConnectedBondsCount(atom) == 6) {
+            IAtomType type = getAtomType("Al.3minus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        }
+        return null;
+    }
     private IAtomType perceiveChromium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (atom.getFormalCharge() != CDKConstants.UNSET
                 && atom.getFormalCharge() == 0
@@ -1642,18 +1670,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			atom.getFormalCharge() == -3 &&
     			atomContainer.getConnectedBondsCount(atom) == 6) {
     			IAtomType type = getAtomType("V.3minus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	} else if ("Al".equals(atom.getSymbol())) {
-    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
-    			atom.getFormalCharge() == 3 &&
-    			atomContainer.getConnectedBondsCount(atom) == 0) {
-    			IAtomType type = getAtomType("Al.3plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
-        		atom.getFormalCharge() == 0 &&
-        		atomContainer.getConnectedBondsCount(atom) == 3){
-    			IAtomType type = getAtomType("Al");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
     	} else if ("Sc".equals(atom.getSymbol())) {
