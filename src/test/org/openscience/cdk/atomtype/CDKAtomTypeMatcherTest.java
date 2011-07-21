@@ -3519,6 +3519,20 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+
+    @Test
+    public void test_Be_neutral() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Be");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Be.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test
     public void test_Cl_2() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
