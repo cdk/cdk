@@ -172,6 +172,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             IAtomType type = getAtomType("Ge");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
+        if (atom.getFormalCharge() == 0 && atomContainer.getConnectedAtomsCount(atom) == 3) {
+            IAtomType type = getAtomType("Ge.3");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
         return null;
     }
 

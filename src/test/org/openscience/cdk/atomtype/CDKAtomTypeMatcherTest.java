@@ -3691,6 +3691,34 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     
 
     @Test
+    public void test_Ge_3() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Ge");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a2, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+      
+      
+        String[] expectedTypes = {"C.sp3", "Ge.3", "C.sp2", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
     public void test_Na_neutral() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IMolecule mol = builder.newInstance(IMolecule.class);
