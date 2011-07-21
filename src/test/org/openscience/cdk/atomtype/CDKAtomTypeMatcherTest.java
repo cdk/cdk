@@ -3711,13 +3711,25 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
     
     @Test
+    public void test_Ag_neutral() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ag");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Ag.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
     public void test_In_3plus() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IMolecule mol = builder.newInstance(IMolecule.class);
         IAtom a1 = builder.newInstance(IAtom.class,"In");
         a1.setFormalCharge(3);
         mol.addAtom(a1);
-      
       
         String[] expectedTypes = {"In.3plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
