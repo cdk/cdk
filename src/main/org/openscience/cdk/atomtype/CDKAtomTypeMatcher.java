@@ -143,6 +143,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBarium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
+        }  else if ("Ni".equals(atom.getSymbol())) {
+            type = perceiveNickel(atomContainer, atom);
         } else if ("Gd".equals(atom.getSymbol())) {
             type = perceiveGadolinum(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
@@ -1644,7 +1646,40 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	} 
     	return null;
     }
-
+    private IAtomType perceiveNickel(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +2)) {
+            IAtomType type = getAtomType("Ni.2plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)
+                && atomContainer.getConnectedAtomsCount(atom) == 2) {
+            IAtomType type = getAtomType("Ni");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)
+                && atomContainer.getConnectedAtomsCount(atom) == 0) {
+            IAtomType type = getAtomType("Ni.metallic");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 1)
+                && atomContainer.getConnectedAtomsCount(atom) == 1) {
+            IAtomType type = getAtomType("Ni.plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        }
+        return null;
+    }
     private IAtomType perceiveNobelGases(IAtomContainer atomContainer, IAtom atom) throws CDKException {
     	if ("He".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {

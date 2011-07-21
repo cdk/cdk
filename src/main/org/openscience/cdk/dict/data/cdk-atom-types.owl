@@ -1287,12 +1287,26 @@
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
 
-  <at:AtomType rdf:ID="Ni">
+    <at:AtomType rdf:ID="Ni">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Ni"/>
     <at:formalNeighbourCount>2</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
+
+    <at:AtomType rdf:ID="Ni.metallic">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Ni"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>
+ 
+    <at:AtomType rdf:ID="Ni.plus">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Ni"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType> 
 
   <at:AtomType rdf:ID="Al.3plus">
     <at:formalCharge>3</at:formalCharge>
