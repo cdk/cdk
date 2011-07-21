@@ -2100,6 +2100,34 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
 
+    private IAtomType perceiveMagnesium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+                    atom.getFormalCharge() == 0)) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 4) {
+                IAtomType type = getAtomType("Mg.neutral");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (neighbors == 2) {
+                IAtomType type = getAtomType("Mg.neutral.2");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (neighbors == 1) {
+                IAtomType type = getAtomType("Mg.neutral.1");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else {
+                IAtomType type = getAtomType("Mg.neutral");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+                atom.getFormalCharge() == +2)) {
+            IAtomType type = getAtomType("Mg.2plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom) {
     	return countAttachedDoubleBonds(container, atom, null);
     }

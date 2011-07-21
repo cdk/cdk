@@ -1259,6 +1259,27 @@
     <at:lonePairCount>0</at:lonePairCount>
   </at:AtomType>
 
+    <at:AtomType rdf:ID="Mg.neutral.2">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Mg"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Mg.neutral.1">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Mg"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:piBondCount>1</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Mg.neutral">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Mg"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>
+
   <at:AtomType rdf:ID="Ni.2plus">
     <at:formalCharge>2</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Ni"/>
