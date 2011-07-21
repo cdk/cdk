@@ -131,6 +131,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveChromium(atomContainer, atom);
         } else if ("Se".equals(atom.getSymbol())) {
             type = perceiveSelenium(atomContainer, atom);
+        } else if ("Mo".equals(atom.getSymbol())) {
+            type = perceiveMolybdenum(atomContainer, atom);
         } else if ("Rb".equals(atom.getSymbol())) {
             type = perceiveRubidium(atomContainer, atom);
         } else if ("Te".equals(atom.getSymbol())) {
@@ -606,7 +608,23 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return null;
     }
-
+    private IAtomType perceiveMolybdenum(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 4) {
+                IAtomType type = getAtomType("Mo.4");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            }
+            IAtomType type1 = getAtomType("Mo.metallic");
+            if (isAcceptable(atom, atomContainer, type1)) {
+                return type1;
+            }
+        }
+        return null;
+    }
     private IAtomType perceiveNitrogens(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         // if hybridization is given, use that
         if (hasOneSingleElectron(atomContainer, atom)) {
