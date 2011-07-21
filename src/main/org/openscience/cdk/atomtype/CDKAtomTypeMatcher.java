@@ -135,6 +135,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("K".equals(atom.getSymbol())) {
+            type = perceivePotassium(atomContainer, atom);
         } else if ("Mn".equals(atom.getSymbol())) {
             type = perceiveManganese(atomContainer, atom);
         } else if ("Na".equals(atom.getSymbol())) {
@@ -1321,19 +1323,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Ni");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("K".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +1)) {
-    			IAtomType type = getAtomType("K.plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-            } else if (atom.getFormalCharge() == CDKConstants.UNSET ||
-                    atom.getFormalCharge() == 0) {
-                IAtomType type = getAtomType("K.metallic");
-                if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
         } else if ("W".equals(atom.getSymbol())) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
@@ -1633,6 +1622,27 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
                 atomContainer.getConnectedBondsCount(atom) == 0) {
             IAtomType type = getAtomType("I");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceivePotassium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+                atom.getFormalCharge() == +1)) {
+            IAtomType type = getAtomType("K.plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() == CDKConstants.UNSET
+                || atom.getFormalCharge() == 0) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 1) {
+                IAtomType type = getAtomType("K.neutral");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+            IAtomType type = getAtomType("K.metallic");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
