@@ -1396,6 +1396,20 @@
     <at:formalNeighbourCount>6</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
   </at:AtomType>
+  
+    <at:AtomType rdf:ID="Pt.2plus.4">
+    <at:formalCharge>2</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Pt"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>
+    
+    <at:AtomType rdf:ID="Pt.2">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Pt"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>
 
   <at:AtomType rdf:ID="Co.2plus">
     <at:formalCharge>2</at:formalCharge>

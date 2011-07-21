@@ -143,6 +143,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Pt".equals(atom.getSymbol())) {
+            type = perceivePlatinum(atomContainer, atom);
         } else if ("Hg".equals(atom.getSymbol())) {
             type = perceiveMercury(atomContainer, atom);
         } else if ("Fe".equals(atom.getSymbol())) {
@@ -1425,25 +1427,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Co.metallic");
                 if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("Pt".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +2)) {
-    			IAtomType type = getAtomType("Pt.2plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-            } else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
-                    atom.getFormalCharge() == 0)) {
-                int neighbors = atomContainer.getConnectedAtomsCount(atom);
-                if (neighbors == 4) {
-                    IAtomType type = getAtomType("Pt.4");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
-                } else if (neighbors == 6) {
-                    IAtomType type = getAtomType("Pt.6");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
-                }
-    		}
     	} else if ("Ni".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
@@ -2030,6 +2013,37 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (isAcceptable(atom, atomContainer, type)) {
                     return type;
                 }
+            }
+        }
+        return null;
+    }
+    
+    private IAtomType perceivePlatinum(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+                atom.getFormalCharge() == +2)) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 4) {
+                IAtomType type = getAtomType("Pt.2plus.4");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else {
+                IAtomType type = getAtomType("Pt.2plus");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        } else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+                atom.getFormalCharge() == 0)) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 2) {
+                IAtomType type = getAtomType("Pt.2");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (neighbors == 4) {
+                IAtomType type = getAtomType("Pt.4");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (neighbors == 6) {
+                IAtomType type = getAtomType("Pt.6");
+                if (isAcceptable(atom, atomContainer, type)) return type;
             }
         }
         return null;
