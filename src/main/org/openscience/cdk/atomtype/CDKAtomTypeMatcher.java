@@ -135,6 +135,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Cl".equals(atom.getSymbol())) {
+            type = perceiveChlorine(atomContainer, atom);
         } else if ("In".equals(atom.getSymbol())) {
             type = perceiveIndium(atomContainer, atom);
         } else if ("Pu".equals(atom.getSymbol())) {
@@ -1065,61 +1067,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private IAtomType perceiveHalogens(IAtomContainer atomContainer, IAtom atom)
     throws CDKException {
-    	if ("Cl".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-
-				if (atomContainer.getConnectedBondsCount(atom) == 0) {
-					if (atom.getFormalCharge() != CDKConstants.UNSET &&
-						atom.getFormalCharge() == +1) {
-						IAtomType type = getAtomType("Cl.plus.radical");
-						if (isAcceptable(atom, atomContainer, type)) return type;
-					} else if (atom.getFormalCharge() == CDKConstants.UNSET ||
-							   atom.getFormalCharge() == 0) {
-						IAtomType type = getAtomType("Cl.radical");
-						if (isAcceptable(atom, atomContainer, type)) return type;
-					}
-				} else if (atomContainer.getConnectedBondsCount(atom) <= 1) {
-					IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-					if (maxBondOrder == IBond.Order.SINGLE) {
-						IAtomType type = getAtomType("Cl.plus.radical");
-						if (isAcceptable(atom, atomContainer, type)) return type;
-					}
-				}
-				return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == -1)) {
-    			IAtomType type = getAtomType("Cl.minus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-        } else if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == 1) {
-    			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-    			if (maxBondOrder == IBond.Order.DOUBLE) {
-    				IAtomType type = getAtomType("Cl.plus.sp2");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
-    			}else if (maxBondOrder == IBond.Order.SINGLE){
-    				IAtomType type = getAtomType("Cl.plus.sp3");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
-    			}
-    		}else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +3) && atomContainer.getConnectedBondsCount(atom) == 4) {
-    			IAtomType type = getAtomType("Cl.perchlorate.charged");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
-    				atomContainer.getConnectedBondsCount(atom) == 0) {
-    			IAtomType type = getAtomType("Cl");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else {
-    			int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
-    			if (atomContainer.getConnectedBondsCount(atom) == 3 &&
-    					doubleBonds == 2) {
-    				IAtomType type = getAtomType("Cl.chlorate");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
-    			} else if (atomContainer.getConnectedBondsCount(atom) == 4 &&
-    					doubleBonds == 3) {
-    				IAtomType type = getAtomType("Cl.perchlorate");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
-    			}
-    		}
-    	} else if ("Br".equals(atom.getSymbol())) {
+    	if ("Br".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
 				if (atomContainer.getConnectedBondsCount(atom) == 0) {
 					if (atom.getFormalCharge() != CDKConstants.UNSET &&
@@ -1716,6 +1664,79 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else {
             IAtomType type = getAtomType("In");
             if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveChlorine(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            if (atomContainer.getConnectedBondsCount(atom) > 1) {
+                if (atom.getFormalCharge() != CDKConstants.UNSET
+                        && atom.getFormalCharge() == +1) {
+                    IAtomType type = getAtomType("Cl.plus.radical");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
+            } else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+                if (maxBondOrder == IBond.Order.SINGLE) {
+                    IAtomType type = getAtomType("Cl.plus.radical");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
+            } else if (atomContainer.getConnectedBondsCount(atom) == 0
+                    && (atom.getFormalCharge() == CDKConstants.UNSET
+                    || atom.getFormalCharge() == 0)) {
+                IAtomType type = getAtomType("Cl.radical");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        } else if (atom.getFormalCharge() == CDKConstants.UNSET
+                || atom.getFormalCharge() == 0) {
+            int neighborcount = atomContainer.getConnectedBondsCount(atom);
+            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+
+            if (maxBondOrder == IBond.Order.DOUBLE) {
+                int neighbor = atomContainer.getConnectedAtomsCount(atom);
+                if (neighbor == 2) {
+                    IAtomType type = getAtomType("Cl.2");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else if (neighbor == 3) {
+                    IAtomType type = getAtomType("Cl.chlorate");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else if (neighbor == 4) {
+                    IAtomType type = getAtomType("Cl.perchlorate");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
+            } else if (neighborcount <= 1) {
+                IAtomType type = getAtomType("Cl");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == -1)) {
+            IAtomType type = getAtomType("Cl.minus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == 1) {
+            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+            if (maxBondOrder == IBond.Order.DOUBLE) {
+                IAtomType type = getAtomType("Cl.plus.sp2");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (maxBondOrder == IBond.Order.SINGLE) {
+                IAtomType type = getAtomType("Cl.plus.sp3");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +3) && atomContainer.getConnectedBondsCount(atom) == 4) {
+            IAtomType type = getAtomType("Cl.perchlorate.charged");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else {
+            int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
+            if (atomContainer.getConnectedBondsCount(atom) == 3
+                    && doubleBonds == 2) {
+                IAtomType type = getAtomType("Cl.chlorate");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (atomContainer.getConnectedBondsCount(atom) == 4
+                    && doubleBonds == 3) {
+                IAtomType type = getAtomType("Cl.perchlorate");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         }
         return null;
     }

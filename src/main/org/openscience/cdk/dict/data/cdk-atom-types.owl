@@ -931,6 +931,15 @@
     <at:piBondCount>2</at:piBondCount>
     <at:hybridization rdf:resource="&at;sp2"/>
   </at:AtomType>
+  
+  <at:AtomType rdf:ID="Cl.2">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Cl"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:lonePairCount>2</at:lonePairCount>
+    <at:piBondCount>1</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="I">
     <at:formalCharge>0</at:formalCharge>
