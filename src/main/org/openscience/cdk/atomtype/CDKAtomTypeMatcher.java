@@ -137,6 +137,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGermanium(atomContainer, atom);
         } else if ("Mn".equals(atom.getSymbol())) {
             type = perceiveManganese(atomContainer, atom);
+        } else if ("Na".equals(atom.getSymbol())) {
+            type = perceiveSodium(atomContainer, atom);
         } else if ("As".equals(atom.getSymbol())) {
             type = perceiveArsenic(atomContainer, atom);
         } else {
@@ -1276,21 +1278,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
     private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Na".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +1)) {
-    			IAtomType type = getAtomType("Na.plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
-    					atom.getFormalCharge() == 0) &&
-    					atomContainer.getConnectedAtomsCount(atom) == 1) {
-    			IAtomType type = getAtomType("Na");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	} else if ("Ca".equals(atom.getSymbol())) {
+        if ("Ca".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
     			return null;
@@ -1604,6 +1592,28 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             IAtomType type = getAtomType("Mn.3plus");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
+        return null;
+    }
+    
+    private IAtomType perceiveSodium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 1)) {
+            IAtomType type = getAtomType("Na.plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if ((atom.getFormalCharge() == CDKConstants.UNSET
+                || atom.getFormalCharge() == 0)
+                && atomContainer.getConnectedAtomsCount(atom) == 1) {
+            IAtomType type = getAtomType("Na");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)
+                && atomContainer.getConnectedAtomsCount(atom) == 0) {
+            IAtomType type = getAtomType("Na.neutral");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } 
         return null;
     }
 
