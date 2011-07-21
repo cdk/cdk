@@ -143,6 +143,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBarium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
+        } else if ("Ru".equals(atom.getSymbol())) {
+            type = perceiveRuthenium(atomContainer, atom);
         } else if ("Zn".equals(atom.getSymbol())) {
             type = perceiveZinc(atomContainer, atom);
         } else if ("Al".equals(atom.getSymbol())) {
@@ -1913,6 +1915,23 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
                 atomContainer.getConnectedBondsCount(atom) == 0) {
             IAtomType type = getAtomType("I");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveRuthenium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0) {
+            IAtomType type = getAtomType("Ru.6");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == -2) {
+            IAtomType type = getAtomType("Ru.2minus.6");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == -3) {
+            IAtomType type = getAtomType("Ru.3minus.6");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
