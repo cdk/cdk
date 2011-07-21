@@ -147,6 +147,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGadolinum(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Sr".equals(atom.getSymbol())) {
+            type = perceiveStrontium(atomContainer, atom);
         } else if ("Pb".equals(atom.getSymbol())) {
             type = perceiveLead(atomContainer, atom);
         } else if ("Tl".equals(atom.getSymbol())) {
@@ -2169,6 +2171,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                    atom.getFormalCharge() == 0 &&
                    atomContainer.getConnectedBondsCount(atom) == 1) {
             IAtomType type = getAtomType("Pb.1");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveStrontium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 2)) {
+            IAtomType type = getAtomType("Sr.2plus");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
