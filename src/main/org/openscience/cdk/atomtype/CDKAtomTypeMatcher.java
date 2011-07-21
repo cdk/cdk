@@ -151,6 +151,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGadolinum(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("V".equals(atom.getSymbol())) {
+            type = perceiveVanadium(atomContainer, atom);
         } else if ("Ti".equals(atom.getSymbol())) {
             type = perceiveTitanium(atomContainer, atom);
         } else if ("Sr".equals(atom.getSymbol())) {
@@ -1665,13 +1667,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Sn.sp3");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("V".equals(atom.getSymbol())) {
-    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
-    			atom.getFormalCharge() == -3 &&
-    			atomContainer.getConnectedBondsCount(atom) == 6) {
-    			IAtomType type = getAtomType("V.3minus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
     	} else if ("Sc".equals(atom.getSymbol())) {
     		if (atom.getFormalCharge() != CDKConstants.UNSET &&
     			atom.getFormalCharge() == -3 &&
@@ -2282,6 +2277,21 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 && atom.getFormalCharge() == 0)
                 && atomContainer.getConnectedBondsCount(atom) == 2) {
             IAtomType type = getAtomType("Ti.2");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveVanadium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() != CDKConstants.UNSET &&
+                atom.getFormalCharge() == -3 &&
+                atomContainer.getConnectedBondsCount(atom) == 6) {
+            IAtomType type = getAtomType("V.3minus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == -3
+                && atomContainer.getConnectedBondsCount(atom) == 4) {
+            IAtomType type = getAtomType("V.3minus.4");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;

@@ -3521,6 +3521,44 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
     
     /**
+     * Vanadate. PDB HET ID : VO4.
+     * 
+     * @cdk.inchi InChI=1S/4O.V/q;3*-1;
+     */
+    @Test
+    public void test_V_3minus_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"V");
+        a1.setFormalCharge(-3);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"O");
+        a2.setFormalCharge(-1);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"O");
+        a3.setFormalCharge(-1);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"O");
+        a4.setFormalCharge(-1);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"O");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.DOUBLE);
+        mol.addBond(b4);
+      
+      
+        String[] expectedTypes = {"V.3minus.4", "O.minus", "O.minus", "O.minus", "O.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
      * Hexafluoroaluminate
      * @cdk.inchi InChI=1S/Al.6FH.3Na/h;6*1H;;;/q+3;;;;;;;3*+1/p-6
      */

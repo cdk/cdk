@@ -1793,6 +1793,15 @@
     <at:piBondCount>0</at:piBondCount>
     <at:hybridization rdf:resource="&at;octahedral"/>
   </at:AtomType>
+  
+  <at:AtomType rdf:ID="V.3minus.4">
+    <at:formalCharge>-3</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;V"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>1</at:piBondCount>
+    <at:hybridization rdf:resource="&at;tetrahedral"/>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="Cr.4">
     <at:formalCharge>0</at:formalCharge>
