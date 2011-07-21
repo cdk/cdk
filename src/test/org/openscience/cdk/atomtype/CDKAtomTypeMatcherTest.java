@@ -3954,6 +3954,51 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
+    
+
+    @Test
+    public void test_Tl_neutral() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Tl");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Tl"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Tl_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Tl");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+      
+      
+        String[] expectedTypes = {"C.sp3", "Tl.1"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Tl_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Tl");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Tl.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @Test
     public void test_Mg_neutral_2() throws Exception {
