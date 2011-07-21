@@ -2085,6 +2085,18 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return null;
     }
+    
+    private IAtomType perceiveGadolinum(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() != CDKConstants.UNSET &&
+            atom.getFormalCharge() == +3 &&
+            atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("Gd.3plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        }
+        return null;
+    }
 
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom) {
     	return countAttachedDoubleBonds(container, atom, null);
