@@ -143,6 +143,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBarium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
+        } else if ("Zn".equals(atom.getSymbol())) {
+            type = perceiveZinc(atomContainer, atom);
         } else if ("Al".equals(atom.getSymbol())) {
             type = perceiveAluminium(atomContainer, atom);
         }  else if ("Ni".equals(atom.getSymbol())) {
@@ -1593,6 +1595,33 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return null;
     }
+    private IAtomType perceiveZinc(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if (atomContainer.getConnectedBondsCount(atom) == 0
+                && (atom.getFormalCharge() != null
+                && atom.getFormalCharge() == 0)) {
+            IAtomType type = getAtomType("Zn.metallic");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atomContainer.getConnectedBondsCount(atom) == 0
+                && (atom.getFormalCharge() != null
+                && atom.getFormalCharge() == 2)) {
+            IAtomType type = getAtomType("Zn.2plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atomContainer.getConnectedBondsCount(atom) == 1
+                && (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)) {
+            IAtomType type = getAtomType("Zn.1");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atomContainer.getConnectedBondsCount(atom) == 2
+                && (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)) {
+            IAtomType type = getAtomType("Zn");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
     private IAtomType perceiveChromium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (atom.getFormalCharge() != CDKConstants.UNSET
                 && atom.getFormalCharge() == 0
@@ -1643,21 +1672,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Po");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("Zn".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if (atomContainer.getConnectedBondsCount(atom) == 2 &&
-    			(atom.getFormalCharge() == CDKConstants.UNSET ||
-    		     atom.getFormalCharge() == 0)) {
-    			IAtomType type = getAtomType("Zn");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else if (atom.getFormalCharge() != CDKConstants.UNSET ||
-      		           atom.getFormalCharge() == 2) {
-      		    IAtomType type = getAtomType("Zn.2plus");
-      		    if (isAcceptable(atom, atomContainer, type)) return type;
-      		}
-    	} else if ("Sn".equals(atom.getSymbol())) {
+    	}  else if ("Sn".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
     			return null;

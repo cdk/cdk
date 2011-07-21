@@ -1653,14 +1653,14 @@
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
 
-  <at:AtomType rdf:ID="Zn">
+ <at:AtomType rdf:ID="Zn">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Zn"/>
     <at:formalNeighbourCount>2</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
 
-  <at:AtomType rdf:ID="Zn.2plus">
+    <at:AtomType rdf:ID="Zn.2plus">
     <at:formalCharge>2</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Zn"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
@@ -1675,6 +1675,20 @@
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>   
+
+    <at:AtomType rdf:ID="Zn.metallic">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Zn"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType>  
+
+    <at:AtomType rdf:ID="Zn.1">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Zn"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:piBondCount>1</at:piBondCount>
+    </at:AtomType> 
 
     <at:AtomType rdf:ID="Mn.2plus">
     <at:formalCharge>2</at:formalCharge>
