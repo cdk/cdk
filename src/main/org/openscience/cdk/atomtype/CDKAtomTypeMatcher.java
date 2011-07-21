@@ -215,6 +215,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (!isCharged(atom) && maxBondOrder == IBond.Order.SINGLE && atomContainer.getConnectedAtomsCount(atom) <= 2) {
             IAtomType type = getAtomType("Te.3");
             if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() == 4) {
+            if (atomContainer.getConnectedAtomsCount(atom) == 0) {
+                IAtomType type = getAtomType("Te.4plus");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         }
         return null;
     }
