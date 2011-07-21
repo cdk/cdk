@@ -134,6 +134,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Mn".equals(atom.getSymbol())) {
+            type = perceiveManganese(atomContainer, atom);
         } else {
             if (type == null) type = perceiveHalogens(atomContainer, atom);
             if (type == null) type = perceiveCommonSalts(atomContainer, atom);
@@ -1294,15 +1296,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Cu.2plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
-    	} else if ("Mn".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +2)) {
-    			IAtomType type = getAtomType("Mn.2plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
     	} else if ("Pt".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
@@ -1543,6 +1536,32 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
     	return null;
+    }
+    
+    private IAtomType perceiveManganese(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != null
+                && atom.getFormalCharge() == 0)) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 2) {
+                IAtomType type02 = getAtomType("Mn.2");
+                if (isAcceptable(atom, atomContainer, type02)) return type02;
+            } else if (neighbors == 0) {
+                IAtomType type03 = getAtomType("Mn.metallic");
+                if (isAcceptable(atom, atomContainer, type03)) return type03;
+            }
+        } else if ((atom.getFormalCharge() != null
+                && atom.getFormalCharge() == +2)) {
+            IAtomType type = getAtomType("Mn.2plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if ((atom.getFormalCharge() != null
+                && atom.getFormalCharge() == +3)) {
+            IAtomType type = getAtomType("Mn.3plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
     }
 
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom) {
