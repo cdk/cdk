@@ -131,6 +131,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveChromium(atomContainer, atom);
         } else if ("Se".equals(atom.getSymbol())) {
             type = perceiveSelenium(atomContainer, atom);
+        } else if ("Rb".equals(atom.getSymbol())) {
+            type = perceiveRubidium(atomContainer, atom);
         } else if ("Te".equals(atom.getSymbol())) {
             type = perceiveTellurium(atomContainer, atom);
         } else if ("Ba".equals(atom.getSymbol())) {
@@ -1224,6 +1226,24 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
 
+    private IAtomType perceiveRubidium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            return null;
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +1) {
+            IAtomType type = getAtomType("Rb.plus");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0) {
+            IAtomType type = getAtomType("Rb.neutral");
+            if (isAcceptable(atom, atomContainer, type)) {
+                return type;
+            }
+        }
+        return null;
+    }
     private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if ("Ca".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
