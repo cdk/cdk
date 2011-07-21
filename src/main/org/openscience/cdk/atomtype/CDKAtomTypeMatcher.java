@@ -147,6 +147,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGadolinum(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Pb".equals(atom.getSymbol())) {
+            type = perceiveLead(atomContainer, atom);
         } else if ("Tl".equals(atom.getSymbol())) {
             type = perceiveThallium(atomContainer, atom);
         } else if ("Sb".equals(atom.getSymbol())) {
@@ -2147,6 +2149,26 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                    atom.getFormalCharge() == 0 &&
                    atomContainer.getConnectedBondsCount(atom) == 1) {
             IAtomType type = getAtomType("Tl.1");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveLead(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() != CDKConstants.UNSET &&
+            atom.getFormalCharge() == 0 &&
+            atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("Pb.neutral");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET &&
+                   atom.getFormalCharge() == 2 &&
+                   atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("Pb.2plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET &&
+                   atom.getFormalCharge() == 0 &&
+                   atomContainer.getConnectedBondsCount(atom) == 1) {
+            IAtomType type = getAtomType("Pb.1");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
