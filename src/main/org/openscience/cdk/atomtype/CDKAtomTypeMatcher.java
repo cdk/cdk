@@ -135,6 +135,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Th".equals(atom.getSymbol())) {
+            type = perceiveThorium(atomContainer, atom);
         } else if ("K".equals(atom.getSymbol())) {
             type = perceivePotassium(atomContainer, atom);
         } else if ("Mn".equals(atom.getSymbol())) {
@@ -143,7 +145,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveSodium(atomContainer, atom);
         } else if ("As".equals(atom.getSymbol())) {
             type = perceiveArsenic(atomContainer, atom);
-        } else {
+        }else {
             if (type == null) type = perceiveHalogens(atomContainer, atom);
             if (type == null) type = perceiveCommonSalts(atomContainer, atom);
             if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
@@ -1239,7 +1241,21 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             }
         }
         return null;
+    }   
+     
+    private IAtomType perceiveThorium(IAtomContainer atomContainer, IAtom atom)
+            throws CDKException {
+        if ("Th".equals(atom.getSymbol())) {
+            if (atom.getFormalCharge() == 0 && atomContainer.getConnectedBondsCount(atom) == 0) {
+                IAtomType type = getAtomType("Th");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            }
+        }
+        return null;
     }
+
     private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if ("Ca".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {

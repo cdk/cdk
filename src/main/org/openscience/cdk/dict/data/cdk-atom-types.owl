@@ -1485,6 +1485,13 @@
     <at:lonePairCount>1</at:lonePairCount>
     </at:AtomType>
 
+    <at:AtomType rdf:ID="Th">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Th"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    </at:AtomType> 
+
   <at:AtomType rdf:ID="Ne">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Ne"/>
