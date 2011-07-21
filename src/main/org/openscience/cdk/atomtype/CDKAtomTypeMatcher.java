@@ -135,6 +135,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Pu".equals(atom.getSymbol())) {
+            type = perceivePlutonium(atomContainer, atom);
         } else if ("Th".equals(atom.getSymbol())) {
             type = perceiveThorium(atomContainer, atom);
         } else if ("K".equals(atom.getSymbol())) {
@@ -1663,6 +1665,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
             IAtomType type = getAtomType("K.metallic");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceivePlutonium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() == 0 && atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("Pu");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
