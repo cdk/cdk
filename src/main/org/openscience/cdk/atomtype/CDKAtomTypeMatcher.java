@@ -1677,6 +1677,27 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return null;
     }
+    
+    private IAtomType perceiveCadmium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (hasOneSingleElectron(atomContainer, atom)) {
+            // no idea how to deal with this yet
+            return null;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == +2)) {
+            IAtomType type = getAtomType("Cd.2plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 0)) {
+            if (atomContainer.getConnectedAtomsCount(atom) == 0) {
+                IAtomType type = getAtomType("Cd.metallic");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (atomContainer.getConnectedAtomsCount(atom) == 2) {
+                IAtomType type = getAtomType("Cd.2");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+        }
+        return null;
+    }
 
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom) {
     	return countAttachedDoubleBonds(container, atom, null);
