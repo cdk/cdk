@@ -1034,6 +1034,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Li");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
+        } else if (neighborcount == 0) {
+            if (atom.getFormalCharge() == CDKConstants.UNSET
+                    || atom.getFormalCharge() == 0) {
+                IAtomType type = getAtomType("Li.neutral");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+            if (atom.getFormalCharge() == CDKConstants.UNSET
+                    || atom.getFormalCharge() == +1) {
+                IAtomType type = getAtomType("Li.plus");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         }
     	return null;
     }

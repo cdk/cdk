@@ -3520,6 +3520,32 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     
 
     @Test
+    public void test_Li_neutral() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Li");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Li.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Li_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Li");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Li.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
     public void test_I_sp3d2_3() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IMolecule mol = builder.newInstance(IMolecule.class);
