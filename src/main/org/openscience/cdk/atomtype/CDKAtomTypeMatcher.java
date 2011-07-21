@@ -135,6 +135,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("In".equals(atom.getSymbol())) {
+            type = perceiveIndium(atomContainer, atom);
         } else if ("Pu".equals(atom.getSymbol())) {
             type = perceivePlutonium(atomContainer, atom);
         } else if ("Th".equals(atom.getSymbol())) {
@@ -1697,6 +1699,23 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Cd.2");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveIndium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (atom.getFormalCharge() == 0 && atomContainer.getConnectedBondsCount(atom) == 3) {
+            IAtomType type = getAtomType("In.3");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() == 3 && atomContainer.getConnectedBondsCount(atom) == 0) {
+            IAtomType type = getAtomType("In.3plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (atom.getFormalCharge() == 0 && atomContainer.getConnectedBondsCount(atom) == 1) {
+            IAtomType type = getAtomType("In.1");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else {
+            IAtomType type = getAtomType("In");
+            if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
     }
