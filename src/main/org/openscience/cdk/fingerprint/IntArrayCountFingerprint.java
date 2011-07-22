@@ -44,6 +44,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 
 	int[] hitHashes;
 	int[] numOfHits;
+	private boolean behaveAsBitFingerprint;
 	
 	private IntArrayCountFingerprint() {
 		
@@ -71,6 +72,20 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 		}
 	}
 	
+	/**
+	 * Create an <code>IntArrayCountFingerprint</code> from a rawFingerprint 
+	 * and if <code>behaveAsBitFingerprint</code> make it only return 0 or 1 
+	 * as count thus behaving like a bit finger print.
+	 * 
+	 * @param rawFingerprint
+	 * @param behaveAsBitFingerprint
+	 */
+	public IntArrayCountFingerprint( Map<String, Integer> rawFingerprint,
+			                         boolean behaveAsBitFingerprint ) {
+		this(rawFingerprint);
+		this.behaveAsBitFingerprint = behaveAsBitFingerprint;
+	}
+	
 	@Override
 	public long size() {
 		return 4294967296l;
@@ -78,6 +93,9 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 
 	@Override
 	public int getCount(int index) {
+		if ( behaveAsBitFingerprint ) {
+			return numOfHits[index] == 0 ? 0 : 1;
+		}
 		return numOfHits[index];
 	}
 
@@ -114,5 +132,10 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 			hitHashes[i] = key;
 			numOfHits[i++] = newFp.get(key);
 		}
+	}
+
+	@Override
+	public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {
+		this.behaveAsBitFingerprint = behaveAsBitFingerprint;
 	}
 }

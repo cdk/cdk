@@ -108,17 +108,17 @@ public class Tanimoto
      * @return The Tanimoto coefficient
      * @throws IllegalArgumentException if bitsets are not of the same length
      */
-    public static float calculate( IBitFingerprint fingerprint1, 
+    public static double calculate( IBitFingerprint fingerprint1, 
                                    IBitFingerprint fingerprint2 ) {
         if (fingerprint1.size() != fingerprint2.size()) {
             throw new IllegalArgumentException(
                           "Fingerprints must have the same size" );
         }
-        float cardinality1 = fingerprint1.cardinality();
-        float cardinality2 = fingerprint2.cardinality();
+        int cardinality1 = fingerprint1.cardinality();
+        int cardinality2 = fingerprint2.cardinality();
         IBitFingerprint one_and_two = new IntArrayFingerprint(fingerprint1);
         one_and_two.and(fingerprint2);
-        float cardinalityCommon = one_and_two.cardinality();
+        double cardinalityCommon = one_and_two.cardinality();
         return cardinalityCommon / 
                (cardinality1 + cardinality2 - cardinalityCommon);
     }

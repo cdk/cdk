@@ -3,8 +3,10 @@ package org.openscience.cdk.fingerprint;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /* Copyright (C) 2011  Jonathan Alvarsson <jonalv@users.sf.net>
 *
@@ -80,10 +82,15 @@ public class IntArrayFingerprint implements IBitFingerprint {
 
 	@Override
 	public void and(IBitFingerprint fingerprint) {
-		//TODO add support for this?
-		throw new UnsupportedOperationException(
-			"AND on IntArrayFingerPrint only supported for other " +
-			"IntArrayFingerPrints for the moment" );
+		if ( fingerprint instanceof IntArrayFingerprint) {
+			and( (IntArrayFingerprint)fingerprint );
+		}
+		else {
+			//TODO add support for this?
+			throw new UnsupportedOperationException(
+				"AND on IntArrayFingerPrint only supported for other " +
+				"IntArrayFingerPrints for the moment" );
+		}
 	}
 	
 	public void and(IntArrayFingerprint fingerprint) {
@@ -93,7 +100,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 		while ( i<trueBits.length && 
 			    j<fingerprint.trueBits.length ) {
 			int local = trueBits[i];
-			int remote = trueBits[i];
+			int remote = fingerprint.trueBits[i];
 			if (local == remote) {
 				tmp.add(local);
 				i++; j++;
@@ -115,14 +122,19 @@ public class IntArrayFingerprint implements IBitFingerprint {
 
 	@Override
 	public void or(IBitFingerprint fingerprint) {
-		//TODO add support for this?
-		throw new UnsupportedOperationException(
-			"OR on IntArrayFingerPrint only supported for other " +
-			"IntArrayFingerPrints for the moment" );
+		if ( fingerprint instanceof IntArrayFingerprint) {
+			or( (IntArrayFingerprint)fingerprint );
+		}
+		else {
+			//TODO add support for this?
+			throw new UnsupportedOperationException(
+				"OR on IntArrayFingerPrint only supported for other " +
+				"IntArrayFingerPrints for the moment" );
+		}
 	}
 	
 	public void or(IntArrayFingerprint fingerprint) {
-		List<Integer> tmp = new ArrayList<Integer>();
+		Set<Integer> tmp = new HashSet<Integer>();
 		for (int i = 0; i < trueBits.length; i++) {
 			tmp.add(trueBits[i]);
 		}
@@ -132,7 +144,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 		trueBits = new int[tmp.size()];
 		int i=0;
 		for ( Integer t : tmp ) {
-			trueBits[i] = t;
+			trueBits[i++] = t;
 		}
 		Arrays.sort(trueBits);
 	}
@@ -151,7 +163,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 	@Override
 	public void set(int index, boolean value) {
 		int i = Arrays.binarySearch(trueBits, index);
-		// bit and index is set to true and shall be set to false
+		// bit at index is set to true and shall be set to false
 		if ( i >= 0 && !value ) {
 			int[] tmp = new int[trueBits.length - 1];
 			System.arraycopy(trueBits, 0, tmp, 0, i);
@@ -160,7 +172,9 @@ public class IntArrayFingerprint implements IBitFingerprint {
 		// bit at index is set to false and shall be set to true
 		else if ( i < 0 && value ){
 			int[] tmp = new int[trueBits.length + 1];
+			System.arraycopy(trueBits, 0, tmp, 0, trueBits.length);
 			tmp[tmp.length-1] = index;
+			trueBits = tmp;
 		}
 		//rest of possible ops are no-ops
 		Arrays.sort(trueBits);

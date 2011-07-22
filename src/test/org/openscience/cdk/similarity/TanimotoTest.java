@@ -38,6 +38,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
 import org.openscience.cdk.fingerprint.IntArrayCountFingerprint;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
@@ -209,5 +210,26 @@ public class TanimotoTest extends CDKTestCase
         fp2 = fingerprinter.getCountFingerprint(mol2);
         Assert.assertEquals(1.0, Tanimoto.method1(fp1, fp2), 0.001);
         Assert.assertEquals(1.0, Tanimoto.method2(fp1, fp2), 0.001);
+    }
+    
+    @Test
+    public void testComparingBitFingerprintAndCountBehavingAsBit() 
+                throws Exception {
+    		Molecule mol1 = MoleculeFactory.make123Triazole();
+		Molecule mol2 = MoleculeFactory.makeImidazole();
+		
+		SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
+		ICountFingerprint countFp1 = fingerprinter.getCountFingerprint(mol1);
+		ICountFingerprint countFp2 = fingerprinter.getCountFingerprint(mol2);
+		countFp1.setBehaveAsBitFingerprint(true);
+		countFp2.setBehaveAsBitFingerprint(true);
+		IBitFingerprint bitFp1 = fingerprinter.getBitFingerprint(mol1);
+		IBitFingerprint bitFp2 = fingerprinter.getBitFingerprint(mol2);
+		double bitTanimoto = Tanimoto.calculate(bitFp1, bitFp2);
+		double countTanimoto1 = Tanimoto.method1(countFp1, countFp2);
+		double countTanimoto2 = Tanimoto.method2(countFp1, countFp2);
+		
+		Assert.assertEquals(countTanimoto1, countTanimoto2, 0.001);
+		Assert.assertEquals(bitTanimoto, countTanimoto1, 0.001);
     }
 }

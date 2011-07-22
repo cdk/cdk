@@ -61,4 +61,11 @@ public interface ICountFingerprint {
 	 */
 	public void merge(ICountFingerprint fp);
 	
+	/**
+	 * Changes behavior, if true is given the count fingerprint will 
+	 * behave as a bit fingerprint and return 0 or 1 for counts.
+	 * 
+	 * @param behaveAsBitFingerprint
+	 */
+	public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint);
 }

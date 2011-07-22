@@ -31,9 +31,11 @@ import static org.junit.Assert.*;
 public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 
 	protected IBitFingerprint bitsetFP;
+	private Class<? extends IBitFingerprint> C;
 	
 	public AbstractBitFingerprintTest(Class<? extends IBitFingerprint> C) 
 	       throws Exception {
+		this.C = C;
 		bitsetFP = C.newInstance();
 	}
 	
@@ -52,15 +54,15 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 		assertTrue( bitsetFP.get(3) );
 	}
 	
-	private IBitFingerprint createFP2() {
-		IBitFingerprint fp = new BitSetFingerprint();
+	private IBitFingerprint createFP2() throws Exception {
+		IBitFingerprint fp = C.newInstance();
 		fp.set(2, true);
 		fp.set(3, true);
 		return fp;
 	}
 	
 	@Test
-	public void testAnd() {
+	public void testAnd() throws Exception {
 		testGetAndSet();
 		bitsetFP.and(createFP2());
 		assertFalse( bitsetFP.get(0) );
@@ -70,7 +72,7 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 	}
 	
 	@Test
-	public void testOr() {
+	public void testOr() throws Exception {
 		testGetAndSet();
 		bitsetFP.or(createFP2());
 		assertFalse( bitsetFP.get(0) );
