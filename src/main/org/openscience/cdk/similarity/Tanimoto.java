@@ -191,7 +191,7 @@ public class Tanimoto
      * @return The Tanimoto coefficient
      */
     @TestMethod("testICountFingerprintComparison")
-	public static float calculate( ICountFingerprint fp1, 
+	public static double calculate( ICountFingerprint fp1, 
 			                       ICountFingerprint fp2 ) {
 		long xy=0, 
 		     x=0, 
@@ -208,15 +208,15 @@ public class Tanimoto
 		for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
 			y += fp2.getCount(j) * fp2.getCount(j);
 		}
-	    return ( (float)xy / (x + y - xy) );
+	    return ( (double)xy / (x + y - xy) );
 	}
     
-    public static float method1( ICountFingerprint fp1, 
+    public static double method1( ICountFingerprint fp1, 
     		                         ICountFingerprint fp2) {
     	return calculate(fp1, fp2);
     }
     
-    public static float method2( ICountFingerprint fp1,
+    public static double method2( ICountFingerprint fp1,
     		                         ICountFingerprint fp2) {
     	
     		long maxSum = 0,
@@ -252,6 +252,6 @@ public class Tanimoto
     				j++;
     			}
     		}
-    		return ((float)minSum) / maxSum;
+    		return ((double)minSum) / maxSum;
     }
 }

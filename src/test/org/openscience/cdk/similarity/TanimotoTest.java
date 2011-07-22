@@ -169,7 +169,7 @@ public class TanimotoTest extends CDKTestCase
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
         ICountFingerprint fp1 = fingerprinter.getCountFingerprint(mol1);
         ICountFingerprint fp2 = fingerprinter.getCountFingerprint(mol2);
-        float tanimoto = Tanimoto.calculate(fp1, fp2);
+        double tanimoto = Tanimoto.calculate(fp1, fp2);
         Assert.assertEquals(1.0, tanimoto, 0.001);
 
     }
