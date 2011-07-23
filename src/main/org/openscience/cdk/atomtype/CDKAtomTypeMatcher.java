@@ -1172,6 +1172,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("F");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+    	} else if ("I".equals(atom.getSymbol())) {
+    	    return perceiveIodine(atomContainer, atom);
     	}
     		
     	return null;
