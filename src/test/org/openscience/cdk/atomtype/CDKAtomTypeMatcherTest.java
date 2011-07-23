@@ -3515,10 +3515,6 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void countTestedAtomTypes() {
-    	super.countTestedAtomTypes(testedAtomTypes);
-    }
-    
     @Test public void testForDuplicateDefinitions() {
     	super.testForDuplicateDefinitions();
     }
@@ -3666,4 +3662,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {"Mn.metallic"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
+
+    /*
+     * This method *must* be the last method in the class.
+     */
+    @Test public void countTestedAtomTypes() {
+        super.countTestedAtomTypes(testedAtomTypes);
+    }
+    
 }
