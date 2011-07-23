@@ -1,5 +1,8 @@
 /* Copyright (C) 2007-2011  Egon Willighagen <egonw@users.sf.net>
  *               2007       Rajarshi Guha
+ *                    2011  Nimish Gopal <nimishg@ebi.ac.uk>
+ *                    2011  Syed Asad Rahman <asad@ebi.ac.uk>
+ *                    2011  Gilleain Torrance <gilleain.torrance@gmail.com>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
