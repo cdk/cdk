@@ -137,6 +137,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGermanium(atomContainer, atom);
         } else if ("Mn".equals(atom.getSymbol())) {
             type = perceiveManganese(atomContainer, atom);
+        } else if ("As".equals(atom.getSymbol())) {
+            type = perceiveArsenic(atomContainer, atom);
         } else {
             if (type == null) type = perceiveHalogens(atomContainer, atom);
             if (type == null) type = perceiveCommonSalts(atomContainer, atom);
