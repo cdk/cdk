@@ -22,6 +22,8 @@
 */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
+
 import org.
 junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -82,7 +84,20 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 	}
 	
 	@Test
-	public void testEquals() {
-		fail("Not yet implemented");
+	public void testEquals() throws Exception {
+		IBitFingerprint fp1 = C.newInstance();
+		IBitFingerprint fp2 = C.newInstance();
+		
+		for ( IBitFingerprint fp : new IBitFingerprint[] {fp1, fp2}) {
+			fp.set(0, true);
+			fp.set(1, false);
+			fp.set(2, true);
+		}
+		assertTrue( "identical fingerprints should be equal", 
+				    fp1.equals(fp2) );
+		assertFalse( "different fingerprints should not be equal", 
+				     bitsetFP.equals(fp1) );
+		assertTrue( "equal fingerprints must have same hashcode",
+				    fp1.hashCode() == fp2.hashCode() );
 	}
 }

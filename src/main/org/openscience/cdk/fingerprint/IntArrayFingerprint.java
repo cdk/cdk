@@ -190,4 +190,24 @@ public class IntArrayFingerprint implements IBitFingerprint {
 	public void set(int i) {
 		set(i, true);
 	}
+
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(trueBits);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IntArrayFingerprint other = (IntArrayFingerprint) obj;
+		if (!Arrays.equals(trueBits, other.trueBits))
+			return false;
+		return true;
+	}
+	
 }

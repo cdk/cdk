@@ -108,4 +108,26 @@ public class BitSetFingerprint implements IBitFingerprint {
 	public void set(int i) {
 		bitset.set(i);
 	}
+
+	@Override
+	public int hashCode() {
+		return bitset.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BitSetFingerprint other = (BitSetFingerprint) obj;
+		if (bitset == null) {
+			if (other.bitset != null)
+				return false;
+		} else if (!bitset.equals(other.bitset))
+			return false;
+		return true;
+	}
 }
