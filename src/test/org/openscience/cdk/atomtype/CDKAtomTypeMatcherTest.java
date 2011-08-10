@@ -4725,6 +4725,38 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * For example PubChem CID 3808730.
+     */
+    @Test
+    public void test_Ag_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ag");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+
+        String[] expectedTypes = {"Ag.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * For example PubChem CID 139654.
+     */
+    @Test
+    public void test_Ag_covalent() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ag");
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Cl");
+        mol.addAtom(a2);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+      
+        String[] expectedTypes = {"Ag.1", "Cl"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test
     public void test_In_3plus() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();

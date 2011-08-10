@@ -2045,7 +2045,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             return null;
         } else if ((atom.getFormalCharge() != CDKConstants.UNSET
                 && atom.getFormalCharge() == 0)) {
+            int neighbors = atomContainer.getConnectedAtomsCount(atom);
+            if (neighbors == 1) {
+                IAtomType type = getAtomType("Ag.1");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
             IAtomType type = getAtomType("Ag.neutral");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                && atom.getFormalCharge() == 1)) {
+            IAtomType type = getAtomType("Ag.plus");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;

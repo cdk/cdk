@@ -2136,7 +2136,21 @@
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
-    
+
+  <at:AtomType rdf:ID="Ag.plus">
+    <at:formalCharge>+1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Ag"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Ag.1">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Ag"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
+
     <at:AtomType rdf:ID="Ge.3">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Ge"/>
