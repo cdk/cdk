@@ -90,11 +90,12 @@ public class IsotopePatternManipulator {
 						intensity = isoContainer.getIntensity();
 					}
 				}
-				if(i == length)
-					isoSort.setMonoIsotope((IsotopeContainer) isoHighest.clone());
-				else
-					isoSort.addIsotope((IsotopeContainer) isoHighest.clone());
-				
+				if(isoHighest != null){
+					if(i == length)
+						isoSort.setMonoIsotope((IsotopeContainer) isoHighest.clone());
+					else
+						isoSort.addIsotope((IsotopeContainer) isoHighest.clone());
+				}
 				listISO.remove(isoHighest);
 				
 			}

@@ -240,5 +240,24 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
 		Assert.assertEquals(abundResults[5], isoPattern.getIsotope(5).getIntensity(), 0.01);
 			
 	}
+	
+	/**
+	 * A unit test for JUnit.
+	 *
+     * @cdk.bug 3273205
+	 * @return    Description of the Return Value
+	 */
+	@Test 
+	public void testCalculateIsotopesMn(){
+    	
+		IMolecularFormula molFor = new MolecularFormula();
+		molFor.addIsotope(builder.newInstance(IIsotope.class,"Mn"),1);
+
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.001);
+		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+			
+		Assert.assertEquals(1, isoPattern.getNumberOfIsotopes());
+		
+	}
 }
 
