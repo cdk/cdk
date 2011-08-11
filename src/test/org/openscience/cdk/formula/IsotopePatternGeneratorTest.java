@@ -242,10 +242,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
 	}
 	
 	/**
-	 * A unit test for JUnit.
-	 *
      * @cdk.bug 3273205
-	 * @return    Description of the Return Value
 	 */
 	@Test 
 	public void testCalculateIsotopesMn(){
