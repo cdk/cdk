@@ -1158,5 +1158,19 @@ Method </bibtex:title>
             <bibtex:pages>1223-1232</bibtex:pages>
         </bibtex:article>
    </bibtex:entry>
+   
+  <bibtex:entry id="RojasCherto2011">
+    <bibtex:article>	
+      <bibtex:author>Rojas-Cherto, Miguel and Kasper, Piotr T and Willighagen, Egon L and Vreeken, R. and Hankemeier, Thomas and Reijmers, Theo</bibtex:author>
+      <bibtex:title>Elemental Composition determination based on MSn</bibtex:title>
+      <bibtex:journal>Bioinformatics</bibtex:journal>
+      <bibtex:year>2011</bibtex:year>
+      <bibtex:volume></bibtex:volume>
+      <bibtex:number></bibtex:number>
+      <bibtex:pages></bibtex:pages>
+      <bibtex:doi>10.1093/bioinformatics/btr409</bibtex:doi>
+    </bibtex:article>
+    
+  </bibtex:entry>
 
 </bibtex:file>

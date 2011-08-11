@@ -176,6 +176,10 @@
 
     	<javadoc private="false" public="true">
         	<classpath>
+        	    <fileset dir="${dist}/jar" >
+        	        <exclude name="**/*" unless="module.cdkdepends.present" />
+        	        <includesfile name="${metainf}/${module}.cdkdepends" if="module.cdkdepends.present" />
+        	    </fileset>
         	    <fileset dir="${lib}" >
         	        <exclude name="**/*" unless="module.libdepends.present" />
         	        <includesfile name="${metainf}/${module}.libdepends" if="module.libdepends.present" />

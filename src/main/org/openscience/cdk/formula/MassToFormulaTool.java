@@ -51,7 +51,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
 /**
  * <p>Tool to determine molecular formula consistent with a given accurate mass. The 
  * molecular formulas are not validate. It only consist in generate combination according
- * object (see MolecularFormulaChecker).
+ * object (see MolecularFormulaChecker). The algorithm is published in Rojas-Cherto M. et.al. 
+ * {@cdk.cite RojasCherto2011}.
  * 
  * <pre>
  *   MassToFormulaTool mf = new MassToFormulaTool();
