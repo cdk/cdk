@@ -44,8 +44,7 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
 
     CombinedAtomicMassNumberRule numberRule = new CombinedAtomicMassNumberRule();
 
-    /** {@inheritDoc}} */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testCompare,testCompare_Identity,testOrder")
     public int compare(ILigand ligand1, ILigand ligand2) {
         int numberComp = numberRule.compare(ligand1, ligand2);

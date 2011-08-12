@@ -36,8 +36,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 @TestClass("org.openscience.cdk.geometry.cip.rules.AtomicNumberRuleTest")
 class AtomicNumberRule implements ISequenceSubRule<ILigand> {
 
-    /** {@inheritDoc}} */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testCompare_Identity,testCompare,testOrder")
     public int compare(ILigand ligand1, ILigand ligand2) {
         return getAtomicNumber(ligand1).compareTo(getAtomicNumber(ligand2));
@@ -48,5 +47,4 @@ class AtomicNumberRule implements ISequenceSubRule<ILigand> {
         if (atomNumber != null) return atomNumber;
         return PeriodicTable.getAtomicNumber(ligand.getLigandAtom().getSymbol());
     }
-    
 }

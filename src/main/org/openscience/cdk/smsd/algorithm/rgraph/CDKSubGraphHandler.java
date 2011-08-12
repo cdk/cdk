@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -78,7 +79,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      * @param source
      * @param target
      */
-    @Override
     @TestMethod("testSet_MolHandler_MolHandler")
     public void set(MolHandler source, MolHandler target) {
         this.source = source.getMolecule();
@@ -90,7 +90,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      * @param source
      * @param target
      */
-    @Override
     @TestMethod("testSet_IQueryAtomContainer_MolHandler")
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         this.source = source;
@@ -243,7 +242,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testGetAllMapping")
     public List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
@@ -251,7 +249,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testGetFirstMapping")
     public Map<Integer, Integer> getFirstMapping() {
         return Collections.unmodifiableMap(firstMCS);
@@ -259,7 +256,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testGetAllAtomMapping")
     public List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
@@ -267,7 +263,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testGetFirstAtomMapping")
     public Map<IAtom, IAtom> getFirstAtomMapping() {
         return Collections.unmodifiableMap(firstAtomMCS);

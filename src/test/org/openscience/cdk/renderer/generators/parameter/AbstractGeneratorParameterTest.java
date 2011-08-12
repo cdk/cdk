@@ -31,7 +31,6 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 public class AbstractGeneratorParameterTest {
 	
 	class MockParameter extends AbstractGeneratorParameter<Boolean> {
-		@Override
 		public Boolean getDefault() {
 			return false;
 		}

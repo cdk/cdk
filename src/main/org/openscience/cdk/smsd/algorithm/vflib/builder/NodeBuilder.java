@@ -25,6 +25,7 @@ package org.openscience.cdk.smsd.algorithm.vflib.builder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
@@ -54,44 +55,32 @@ public class NodeBuilder implements INode {
         this.matcher = matcher;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public int countNeighbors() {
         return neighborsList.size();
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public Iterable<INode> neighbors() {
         return Collections.unmodifiableList(neighborsList);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public VFAtomMatcher getAtomMatcher() {
         return matcher;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public List<IEdge> getEdges() {
         return Collections.unmodifiableList(edgesList);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public void addEdge(EdgeBuilder edge) {
         edgesList.add(edge);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public void addNeighbor(NodeBuilder node) {
         neighborsList.add(node);
     }

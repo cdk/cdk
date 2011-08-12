@@ -175,7 +175,6 @@ public class DefaultVFAtomMatcher implements VFAtomMatcher {
      * @param targetAtom
      * @return
      */
-    @Override
     public boolean matches(TargetProperties targetContainer, IAtom targetAtom) {
         if (smartQueryAtom != null && qAtom == null) {
             if (!smartQueryAtom.matches(targetAtom)) {

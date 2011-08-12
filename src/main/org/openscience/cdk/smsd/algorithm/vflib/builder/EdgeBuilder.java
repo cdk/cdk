@@ -53,23 +53,17 @@ public class EdgeBuilder implements IEdge {
         this.matcher = matcher;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public INode getSource() {
         return source;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public INode getTarget() {
         return target;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public VFBondMatcher getBondMatcher() {
         return matcher;
     }

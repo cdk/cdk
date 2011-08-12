@@ -53,6 +53,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
@@ -85,23 +86,17 @@ public class VFQueryBuilder implements IQuery {
         nodeBondMap = new HashMap<INode, IAtom>();
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public Iterable<IEdge> edges() {
         return Collections.unmodifiableList(edgesList);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public Iterable<INode> nodes() {
         return Collections.unmodifiableList(nodesList);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public INode getNode(int index) {
         return nodesList.get(index);
     }
@@ -122,16 +117,12 @@ public class VFQueryBuilder implements IQuery {
         return null;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public IEdge getEdge(int index) {
         return edgesList.get(index);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public IEdge getEdge(INode source, INode target) {
         if (source == target) {
             return null;
@@ -161,23 +152,17 @@ public class VFQueryBuilder implements IQuery {
         return node;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public IAtom getAtom(INode node) {
         return nodeBondMap.get(node);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public int countNodes() {
         return nodesList.size();
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public int countEdges() {
         return edgesList.size();
     }

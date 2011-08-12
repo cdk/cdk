@@ -53,13 +53,13 @@ public class RendererModelTest {
 	public void testGetRenderingParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
-			@Override
+
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
 			}
-			@Override
+			
 			public IRenderingElement generate(IChemObject object,
 					RendererModel model) {
 				// TODO Auto-generated method stub
@@ -78,13 +78,13 @@ public class RendererModelTest {
 	public void testHasParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
-			@Override
+
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
 			}
-			@Override
+
 			public IRenderingElement generate(IChemObject object,
 					RendererModel model) {
 				// TODO Auto-generated method stub
@@ -105,13 +105,13 @@ public class RendererModelTest {
 	public void testReturningTheRealParamaterValue() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
-			@Override
+
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
 			}
-			@Override
+
 			public IRenderingElement generate(IChemObject object,
 					RendererModel model) {
 				// TODO Auto-generated method stub
@@ -135,13 +135,13 @@ public class RendererModelTest {
 	public void testSetRenderingParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
-			@Override
+
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
 			}
-			@Override
+
 			public IRenderingElement generate(IChemObject object,
 					RendererModel model) {
 				// TODO Auto-generated method stub
@@ -163,13 +163,13 @@ public class RendererModelTest {
 	public void testGetDefaultRenderingParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
-			@Override
+
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
 			}
-			@Override
+
 			public IRenderingElement generate(IChemObject object,
 					RendererModel model) {
 				// TODO Auto-generated method stub
@@ -188,13 +188,13 @@ public class RendererModelTest {
 	public void testGetRenderingParameters() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
-			@Override
+
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
 			}
-			@Override
+
 			public IRenderingElement generate(IChemObject object,
 					RendererModel model) {
 				// TODO Auto-generated method stub
@@ -289,13 +289,13 @@ public class RendererModelTest {
 	}
 
 	class MockSelection implements IChemObjectSelection {
-		@Override public void select(IChemModel chemModel) {}
-		@Override public IAtomContainer getConnectedAtomContainer() {
+		public void select(IChemModel chemModel) {}
+		public IAtomContainer getConnectedAtomContainer() {
 			return null;
 		}
-		@Override public boolean isFilled() { return false; }
-		@Override public boolean contains(IChemObject obj) { return false; }
-		@Override
+		public boolean isFilled() { return false; }
+		public boolean contains(IChemObject obj) { return false; }
+
 		public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
 			return null;
 		}
@@ -315,7 +315,8 @@ public class RendererModelTest {
 
 	class MockListener implements ICDKChangeListener {
 		boolean isChanged = false;
-		@Override public void stateChanged(EventObject event) {
+		
+		public void stateChanged(EventObject event) {
 			isChanged = true;
 		}
 	}

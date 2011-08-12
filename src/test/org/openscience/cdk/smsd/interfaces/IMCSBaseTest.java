@@ -23,14 +23,17 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.List;
 import java.util.Map;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -188,30 +191,24 @@ public class IMCSBaseTest {
 
     public class IMCSBaseImpl implements IMCSBase {
 
-        @Override
         public void set(MolHandler source, MolHandler target) throws CDKException {
         }
 
-        @Override
         public void set(IQueryAtomContainer source, IAtomContainer target) throws CDKException {
         }
 
-        @Override
         public List<Map<IAtom, IAtom>> getAllAtomMapping() {
             return null;
         }
 
-        @Override
         public List<Map<Integer, Integer>> getAllMapping() {
             return null;
         }
 
-        @Override
         public Map<IAtom, IAtom> getFirstAtomMapping() {
             return null;
         }
 
-        @Override
         public Map<Integer, Integer> getFirstMapping() {
             return null;
         }

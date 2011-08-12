@@ -12,9 +12,10 @@ public class SmilesReactionCanoniser
     
     private CanonicalLabellingAdaptor labeller = new CanonicalLabellingAdaptor();
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
     public IReaction getCanonicalReaction(IReaction reaction) {
         return super.labelReaction(reaction, labeller); 
     }
-
 }

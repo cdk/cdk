@@ -53,6 +53,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
@@ -116,7 +117,9 @@ public class RingFilter {
 
     private class RingSizeComparator implements Comparator {
 
-        @Override
+    	/**
+    	 * {@inheritDoc}
+    	 */
         public int compare(Object o1, Object o2) {
             return ((List) o1).size() - ((List) o2).size();
         }

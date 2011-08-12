@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -505,7 +506,6 @@ public class ChemicalFilters {
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
         java.util.Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
 
-            @Override
             public int compare(Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
                 // Return 0 for eAtom match, -1 for less than and +1 for more then (Aceending Order Sort)
                 return (entry.getValue().equals(entry1.getValue()) ? 0 : (entry.getValue() > entry1.getValue() ? 1 : -1));
@@ -526,7 +526,6 @@ public class ChemicalFilters {
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
         java.util.Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
 
-            @Override
             public int compare(Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
                 // Return 0 for eAtom match, -1 for less than and +1 for more then (Decending Order Sort)
                 return (entry.getValue().equals(entry1.getValue()) ? 0

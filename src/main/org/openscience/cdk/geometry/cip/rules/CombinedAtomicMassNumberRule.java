@@ -42,8 +42,7 @@ class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
     MassNumberRule massNumberRule = new MassNumberRule();
     AtomicNumberRule atomicNumberRule = new AtomicNumberRule();
 
-    /** {@inheritDoc}} */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testCompare,testCompare_Identity,testOrder")
     public int compare(ILigand ligand1, ILigand ligand2) {
         int atomicNumberComp = atomicNumberRule.compare(ligand1, ligand2);

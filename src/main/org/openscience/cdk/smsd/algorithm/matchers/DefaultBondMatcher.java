@@ -106,7 +106,6 @@ public class DefaultBondMatcher implements BondMatcher {
      * @param targetBond target bond
      * @return true if bonds match
      */
-    @Override
     public boolean matches(IAtomContainer targetContainer, IBond targetBond) {
         if (this.smartQueryBond != null && queryBond == null) {
             return smartQueryBond.matches(targetBond);

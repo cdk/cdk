@@ -24,8 +24,6 @@ package org.openscience.cdk.geometry.cip.rules;
 
 import java.util.Comparator;
 
-import org.openscience.cdk.geometry.cip.ILigand;
-
 /**
  * Sequence sub rule used in the CIP method to decide which of the two ligands takes
  * precedence {@cdk.cite Cahn1966}. A list ordered based on these rules will be
@@ -46,7 +44,6 @@ public interface ISequenceSubRule<ILigand> extends Comparator<ILigand> {
      * @return 1 if ligand1 is of higher precedence than ligand2, -1 if ligand2 is
      *         of higher precedence than ligan1, and 0 if they have equal precedence 
      */
-    @Override
     public int compare(ILigand ligand1, ILigand ligand2);
     
 }

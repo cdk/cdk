@@ -52,6 +52,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -126,16 +127,13 @@ public class VFMCSMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule targetMolecule graph
      */
-    @Override
     public boolean hasMap(IAtomContainer targetMolecule) {
         IState state = new VFState(query, new TargetProperties(targetMolecule));
         maps.clear();
         return mapFirst(state);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public List<Map<INode, IAtom>> getMaps(IAtomContainer target) {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
@@ -148,7 +146,6 @@ public class VFMCSMapper implements IMapper {
      * @param target
      *
      */
-    @Override
     public Map<INode, IAtom> getFirstMap(IAtomContainer target) {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
@@ -156,9 +153,7 @@ public class VFMCSMapper implements IMapper {
         return maps.isEmpty() ? new HashMap<INode, IAtom>() : maps.get(0);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public int countMaps(IAtomContainer target) {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
@@ -169,7 +164,6 @@ public class VFMCSMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule targetMolecule graph
      */
-    @Override
     public boolean hasMap(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
@@ -179,7 +173,6 @@ public class VFMCSMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule
      */
-    @Override
     public List<Map<INode, IAtom>> getMaps(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
@@ -192,7 +185,6 @@ public class VFMCSMapper implements IMapper {
      * @param targetMolecule
      *
      */
-    @Override
     public Map<INode, IAtom> getFirstMap(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
@@ -203,7 +195,6 @@ public class VFMCSMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule
      */
-    @Override
     public int countMaps(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();

@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sf.cdk.tools.doclets.CDKModuleTaglet;
-
 import com.github.ojdcheck.test.IClassDocTester;
 import com.github.ojdcheck.test.ITestReport;
 import com.github.ojdcheck.test.TestReport;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Tag;
+
+import net.sf.cdk.tools.doclets.CDKModuleTaglet;
 
 /**
  * OpenJavaDocCheck test that warns of a class JavaDoc does not contain
@@ -79,10 +79,11 @@ public class MissingModuleTagletTest implements IClassDocTester {
         return Priority.WARNING;
     }
 
-	@Override
+    /**
+     * {@inheritDoc}
+     */
 	public String getURL() {
 		// There is not web page yet
 		return null;
 	}
-
 }

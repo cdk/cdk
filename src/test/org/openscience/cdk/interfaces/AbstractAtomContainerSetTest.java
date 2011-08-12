@@ -206,7 +206,8 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         }
     }
     
-     @Test public void testClone() throws Exception {
+     @Override
+	@Test public void testClone() throws Exception {
         IAtomContainerSet containerSet = (IAtomContainerSet)newChemObject();
         Object clone = containerSet.clone();
         Assert.assertTrue(clone instanceof IAtomContainerSet);
@@ -234,7 +235,8 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
          Assert.assertEquals(2, clonedSet.getMultiplier(0).intValue());
      }
 
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+    @Override
+	@Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IAtomContainerSet chemObject = (IAtomContainerSet)newChemObject();
         chemObject.addListener(listener);
@@ -312,7 +314,6 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         som.sortAtomContainers(new Comparator<IAtomContainer>() {
-            @Override
             public int compare(IAtomContainer o1, IAtomContainer o2) {
                 return 0;
             }

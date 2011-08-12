@@ -38,9 +38,9 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -295,5 +295,11 @@ public class HybridizationFingerprinter implements IFingerprinter {
 		return size;
 	}
 
+    /**
+     * {@inheritDoc}
+     */
+    public Map<String, Integer> getRawFingerprint(IAtomContainer container) {
+        throw new UnsupportedOperationException();
+    }
 }
 
