@@ -3524,9 +3524,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IMolecule mol = builder.newInstance(IMolecule.class);
         IAtom a1 = builder.newInstance(IAtom.class,"Te");
-        a1.setFormalCharge(0);
+        a1.setFormalCharge(4);
         mol.addAtom(a1);
-      
       
         String[] expectedTypes = {"Te.4plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
