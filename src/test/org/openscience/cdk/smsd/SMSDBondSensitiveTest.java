@@ -64,7 +64,7 @@ public class SMSDBondSensitiveTest {
         sbf.setChemFilters(false, false, false);
         System.out.println("Match " + sbf.getTanimotoSimilarity());
         System.out.println("Match count: " + sbf.getAllAtomMapping().size());
-        Assert.assertEquals(true, sbf.isSubgraph());
+        Assert.assertTrue(sbf.isSubgraph());
         Assert.assertEquals(24, sbf.getAllAtomMapping().size());
     }
 
@@ -92,7 +92,7 @@ public class SMSDBondSensitiveTest {
         Isomorphism sbf = new Isomorphism(Algorithm.VFLibMCS, true);
         sbf.init(Benzene, Benzene, true, true);
         sbf.setChemFilters(true, true, true);
-        Assert.assertEquals(true, sbf.isSubgraph());
+        Assert.assertTrue(sbf.isSubgraph());
 
     }
 
@@ -101,7 +101,7 @@ public class SMSDBondSensitiveTest {
         Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
         sbf.init(Benzene, Benzene, true, true);
         sbf.setChemFilters(false, false, false);
-        Assert.assertEquals(true, sbf.isSubgraph());
+        Assert.assertTrue(sbf.isSubgraph());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class SMSDBondSensitiveTest {
         ebimcs.init(Benzene, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
         Assert.assertEquals(6, ebimcs.getFirstMapping().size());
-        Assert.assertEquals(true, ebimcs.isSubgraph());
+        Assert.assertTrue(ebimcs.isSubgraph());
     }
 
     @Test
@@ -120,12 +120,12 @@ public class SMSDBondSensitiveTest {
         ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
         Assert.assertEquals(6, ebimcs.getFirstMapping().size());
-        Assert.assertEquals(true, ebimcs.isSubgraph());
+        Assert.assertTrue(ebimcs.isSubgraph());
 
         ebimcs = new Isomorphism(Algorithm.CDKMCS, true);
         ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
-        Assert.assertEquals(false, ebimcs.isSubgraph());
+        Assert.assertFalse(ebimcs.isSubgraph());
     }
 
     @Test
@@ -171,7 +171,7 @@ public class SMSDBondSensitiveTest {
         Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
         ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
-        Assert.assertEquals(false, ebimcs.isSubgraph());
+        Assert.assertFalse(ebimcs.isSubgraph());
     }
 
     @Test
@@ -180,7 +180,7 @@ public class SMSDBondSensitiveTest {
         Isomorphism ebimcs3 = new Isomorphism(Algorithm.CDKMCS, true);
         ebimcs3.init(Cyclohexane, Benzene, true, true);
         ebimcs3.setChemFilters(false, false, false);
-        Assert.assertEquals(false, ebimcs3.isSubgraph());
+        Assert.assertFalse(ebimcs3.isSubgraph());
 
         Isomorphism ebimcs4 = new Isomorphism(Algorithm.CDKMCS, true);
         ebimcs4.init(Benzene, Napthalene, true, true);
@@ -190,7 +190,7 @@ public class SMSDBondSensitiveTest {
         Isomorphism ebimcs5 = new Isomorphism(Algorithm.VFLibMCS, true);
         ebimcs5.init(Cyclohexane, Benzene, true, true);
         ebimcs5.setChemFilters(true, true, true);
-        Assert.assertEquals(false, ebimcs5.isSubgraph());
+        Assert.assertFalse(ebimcs5.isSubgraph());
 
         Isomorphism ebimcs6 = new Isomorphism(Algorithm.VFLibMCS, true);
         ebimcs6.init(Benzene, Napthalene, true, true);
@@ -215,7 +215,7 @@ public class SMSDBondSensitiveTest {
         ebimcs1.init(Napthalene, Benzene, true, true);
         ebimcs1.setChemFilters(true, true, true);
         Assert.assertEquals(6, ebimcs1.getAllMapping().size());
-        Assert.assertEquals(false, ebimcs1.isSubgraph());
+        Assert.assertFalse(ebimcs1.isSubgraph());
     }
 
 //    @Test
@@ -276,7 +276,7 @@ public class SMSDBondSensitiveTest {
         comparison.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
 
 //      Get modified Query and Target Molecules as Mappings will correspond to these molecules
-        Assert.assertEquals(true, comparison.isSubgraph());
+        Assert.assertTrue(comparison.isSubgraph());
         Assert.assertEquals(2, comparison.getAllMapping().size());
         Assert.assertEquals(27, comparison.getFirstMapping().size());
 
@@ -324,7 +324,7 @@ public class SMSDBondSensitiveTest {
         comparison.init(source, target, removeHydrogen, true);
         comparison.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
 
-        Assert.assertEquals(true, comparison.isSubgraph());
+        Assert.assertTrue(comparison.isSubgraph());
         Assert.assertEquals(55, comparison.getFirstMapping().size());
 
 
