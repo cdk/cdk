@@ -87,7 +87,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(queryac, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertEquals(true, smsd1.isSubgraph(true));
+        assertTrue(smsd1.isSubgraph(true));
     }
 
     /**
@@ -105,7 +105,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(queryac, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertEquals(true, smsd1.isSubgraph(true));
+        assertTrue(smsd1.isSubgraph(true));
 
     }
 
@@ -124,7 +124,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(queryac, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertEquals(true, smsd1.isSubgraph(true));
+        assertTrue(smsd1.isSubgraph(true));
     }
 
     /**
@@ -150,7 +150,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler mol1 = new MolHandler(query, true, true);
         MolHandler mol2 = new MolHandler(target, true, true);
         smsd1.set(mol1, mol2);
-        assertEquals(true, smsd1.isSubgraph(true));
+        assertTrue(smsd1.isSubgraph(true));
     }
 
     /**
@@ -168,7 +168,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
         MolHandler target = new MolHandler(target1, true, true);
         VFlibSubStructureHandler instance = new VFlibSubStructureHandler();
         instance.set(source, target);
-        assertEquals(true, instance.isSubgraph(true));
+        assertTrue(instance.isSubgraph(true));
     }
 
     /**

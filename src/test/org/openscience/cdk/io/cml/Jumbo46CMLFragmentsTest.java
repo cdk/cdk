@@ -141,7 +141,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder());
-        Assert.assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
     
     @Test public void testBondId() throws Exception {

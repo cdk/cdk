@@ -68,7 +68,6 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals("a1", atom.getID());
     }
     
-    
     @Test public void testAtomId3() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/></molecule>";
         
@@ -209,7 +208,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder());
-        Assert.assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
     
   
@@ -222,7 +221,7 @@ public class CML23FragmentsTest extends CDKTestCase {
       Assert.assertEquals(1, mol.getBondCount());
       org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
       Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond.getOrder());
-      Assert.assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
+      Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
   }
 
   @Test public void testList() throws Exception {
