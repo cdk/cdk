@@ -47,7 +47,7 @@ public class InvPair implements java.io.Serializable{
 
   /** The description used to set the invariance numbers in the atom's property*/
   public final static String INVARIANCE_PAIR = "InvariancePair";
-  public final static String CANONICAL_LABEL = "CanonicalLable";
+  public final static String CANONICAL_LABEL = "CanonicalLabel";
 
   private long last = 0;
 
