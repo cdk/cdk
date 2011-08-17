@@ -141,6 +141,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGallium(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
+        } else if ("Hg".equals(atom.getSymbol())) {
+            type = perceiveMercury(atomContainer, atom);
         } else if ("Ra".equals(atom.getSymbol())) {
             type = perceiveRadium(atomContainer, atom);
         } else if ("Au".equals(atom.getSymbol())) {
@@ -849,6 +851,57 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
     	return count;
     }
+    
+     
+    private IAtomType perceiveMercury(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if ("Hg".equals(atom.getSymbol())) {
+            if (hasOneSingleElectron(atomContainer, atom)) {
+                // no idea how to deal with this yet
+                return null;
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == -1)) {
+                IAtomType type = getAtomType("Hg.minus");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == 2)) {
+                IAtomType type = getAtomType("Hg.2plus");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == +1)) {
+                int neighbors = atomContainer.getConnectedAtomsCount(atom);
+                if (neighbors <= 1) {  
+                    IAtomType type = getAtomType("Hg.plus");
+                    if (isAcceptable(atom, atomContainer, type)) {
+                        return type;
+                    }
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == 0)) {
+                int neighbors = atomContainer.getConnectedAtomsCount(atom);
+                if (neighbors == 2) {
+                    IAtomType type = getAtomType("Hg.2");
+                    if (isAcceptable(atom, atomContainer, type)) {
+                        return type;
+                    }
+                } else if (neighbors == 1) {
+                    IAtomType type = getAtomType("Hg.1");
+                    if (isAcceptable(atom, atomContainer, type)) {
+                        return type;
+                    }
+                } else if (neighbors == 0) {
+                    IAtomType type = getAtomType("Hg.metallic");
+                    if (isAcceptable(atom, atomContainer, type)) {
+                        return type;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
     private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom)
     throws CDKException {
@@ -1403,16 +1456,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
     private IAtomType perceiveOrganometallicCenters(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-    	if ("Hg".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == -1)) {
-    			IAtomType type = getAtomType("Hg.minus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	} else if ("Po".equals(atom.getSymbol())) {
+    	if ("Po".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
     			return null;
