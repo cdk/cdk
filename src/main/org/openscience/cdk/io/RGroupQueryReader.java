@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -180,7 +179,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
      * @throws CDKException
      */
     private RGroupQuery parseRGFile(RGroupQuery rGroupQuery) throws CDKException {
-        IChemObjectBuilder defaultChemObjectBuilder = DefaultChemObjectBuilder.getInstance();
+        IChemObjectBuilder defaultChemObjectBuilder = rGroupQuery.getBuilder();
         String line = "";
         int lineCount = 0;
         String eol = System.getProperty("line.separator");
