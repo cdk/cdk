@@ -231,25 +231,6 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Sets the array of electronContainers of this AtomContainer.
-     *
-     *@param  electronContainers  The array of electronContainers to be assigned to
-     *      this AtomContainer
-     *@see  #getElectronContainers
-     */
-//  public void setElectronContainers(IElectronContainer[] electronContainers)
-//  {
-//      this.electronContainers = electronContainers;
-//      for (int f = 0; f < electronContainers.length; f++)
-//      {
-//          electronContainers[f].addListener(this);    
-//      }
-//      setElectronContainerCount(electronContainers.length);
-//      notifyChanged();
-//  }
-
-
-    /**
      *  Sets the atom at position <code>number</code> in [0,..].
      *
      *@param  number  The position of the atom to be set.
@@ -312,48 +293,6 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         return singleElectrons[number];
     }
     
-    /**
-     * Sets the ElectronContainer at position <code>number</code> in [0,..].
-     *
-     * @param  number            The position of the ElectronContainer to be set.
-     * @param  electronContainer The ElectronContainer to be stored at position <code>number</code>
-     * @see                      #getElectronContainer(int)
-     */
-//  public void setElectronContainer(int number, IElectronContainer electronContainer)
-//  {
-//      electronContainer.addListener(this);
-//      electronContainers[number] = electronContainer;
-//      notifyChanged();
-//  }
-
-
-    /**
-     * Sets the number of electronContainers in this container.
-     *
-     * @param  electronContainerCount  The number of electronContainers in this
-     *                                 container
-     * @see                            #getElectronContainerCount
-     */
-//  public void setElectronContainerCount(int electronContainerCount)
-//  {
-//      this.electronContainerCount = electronContainerCount;
-//      notifyChanged();
-//  }
-
-
-    /**
-     *  Sets the number of atoms in this container.
-     *
-     *@param  atomCount  The number of atoms in this container
-     *@see               #getAtomCount
-     */
-//  public void setAtomCount(int atomCount)
-//  {
-//      this.atomCount = atomCount;
-//      notifyChanged();
-//  }
-
-
     /**
      *  Returns an Iterable for looping over all atoms in this container.
      *
@@ -998,19 +937,6 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
-     *  container.
-     *
-     *@param  atomContainer  AtomContainer with the new ElectronContainers
-     */
-//  public void addElectronContainers(IAtomContainer atomContainer)
-//  {
-//      
-//      notifyChanged();
-//  }
-    
-
-    /**
      *  Adds an atom to this container.
      *
      *@param  atom  The atom to be added to this container
@@ -1563,47 +1489,8 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             }
             clone.addSingleElectron(newSe);
         }
-//      for (int f = 0; f < getElectronContainerCount(); f++) {
-//          electronContainer = this.getElectronContainer(f);
-//          newEC = getBuilder().newElectronContainer();
-//          if (electronContainer instanceof IBond) {
-//              IBond bond = (IBond) electronContainer;
-//              newEC = (IElectronContainer)bond.clone();
-//              newAtoms = new IAtom[bond.getAtomCount()];
-//              for (int g = 0; g < bond.getAtomCount(); g++) {
-//                  newAtoms[g] = clone.getAtom(getAtomNumber(bond.getAtom(g)));
-//              }
-//              ((IBond) newEC).setAtoms(newAtoms);
-//          } else if (electronContainer instanceof ILonePair) {
-//              IAtom atom = ((ILonePair) electronContainer).getAtom();
-//              newEC = (ILonePair)electronContainer.clone();
-//              ((ILonePair) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
-//            } else if (electronContainer instanceof ISingleElectron) {
-//              IAtom atom = ((ISingleElectron) electronContainer).getAtom();
-//                newEC = (ISingleElectron)electronContainer.clone();
-//                ((ISingleElectron) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
-//          } else {
-//              //logger.debug("Expecting EC, got: " + electronContainer.getClass().getName());
-//              newEC = (IElectronContainer) electronContainer.clone();
-//          }
-//          clone.addElectronContainer(newEC);
-//      }
         return clone;
     }
-
-    /**
-     *  Grows the ElectronContainer array by a given size.
-     *
-     *@see    #growArraySize
-     */
-//  protected void growElectronContainerArray()
-//  {
-//      growArraySize = (electronContainers.length < growArraySize) ? growArraySize : electronContainers.length;
-//      IElectronContainer[] newelectronContainers = new IElectronContainer[electronContainers.length + growArraySize];
-//      System.arraycopy(electronContainers, 0, newelectronContainers, 0, electronContainers.length);
-//      electronContainers = newelectronContainers;
-//  }
-
 
     /**
      *  Grows the atom array by a given size.
