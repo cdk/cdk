@@ -44,18 +44,18 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *  A 2D point specifying the location of this atom in a 2D coordinate 
      *  space.
      */
-    protected javax.vecmath.Point2d point2d = (Point2d) CDKConstants.UNSET;
+    protected Point2d point2d = (Point2d) CDKConstants.UNSET;
 
     /**
      *  A 3 point specifying the location of this atom in a 3D coordinate 
      *  space.
      */
-    protected javax.vecmath.Point3d point3d = (Point3d) CDKConstants.UNSET;
+    protected Point3d point3d = (Point3d) CDKConstants.UNSET;
 
     /**
      *  A 3 point specifying the location of this atom in a crystal unit cell.
      */
-    protected javax.vecmath.Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
+    protected Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
 
     /**
      *  The number of implicitly bound hydrogen atoms for this atom.
@@ -190,7 +190,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     *
     * @see    #getPoint2d
     */
-   public void setPoint2d(javax.vecmath.Point2d point2d) {
+   public void setPoint2d(Point2d point2d) {
            this.point2d = point2d;
    notifyChanged();
    }
@@ -203,7 +203,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     *
     * @see    #getPoint3d
     */
-   public void setPoint3d(javax.vecmath.Point3d point3d) {
+   public void setPoint3d(Point3d point3d) {
            this.point3d = point3d;
    notifyChanged();
    }
@@ -216,7 +216,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     * @see    #getFractionalPoint3d
     * @see    org.openscience.cdk.Crystal
     */
-   public void setFractionalPoint3d(javax.vecmath.Point3d point3d) {
+   public void setFractionalPoint3d(Point3d point3d) {
            this.fractionalPoint3d = point3d;
    notifyChanged();
    }
@@ -241,7 +241,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     *
     * @see       #setPoint2d
     */
-   public javax.vecmath.Point2d getPoint2d() {
+   public Point2d getPoint2d() {
            return this.point2d;
    }
    /**
@@ -252,7 +252,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     *
     * @see       #setPoint3d
     */
-   public javax.vecmath.Point3d getPoint3d() {
+   public Point3d getPoint3d() {
            return this.point3d;
    }
 
@@ -265,7 +265,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     * @see       #setFractionalPoint3d
     * @see       org.openscience.cdk.CDKConstants for predefined values.
     */
-   public javax.vecmath.Point3d getFractionalPoint3d() {
+   public Point3d getFractionalPoint3d() {
            return this.fractionalPoint3d;
    }
 
