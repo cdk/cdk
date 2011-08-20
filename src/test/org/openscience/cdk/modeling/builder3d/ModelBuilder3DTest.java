@@ -353,7 +353,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 				if (last.getPoint3d() == null) notCalculatedResults = true;
 			}
 		}
-		Assert.assertEquals(false, notCalculatedResults);
+		Assert.assertFalse(notCalculatedResults);
 	}
 	
     /*

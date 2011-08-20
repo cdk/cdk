@@ -51,11 +51,12 @@ package org.openscience.cdk.smsd.ring;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
@@ -89,8 +90,8 @@ public class HanserRingFinder implements RingFinder {
      * Returns collection of rings
      * @param molecule
      * @return
+     * @see org.openscience.cdk.smsd.ring.RingFinder#findRings(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    @Override
     public Collection<List<IAtom>> findRings(IAtomContainer molecule) {
         rings.clear();
         PathGraph graph = new PathGraph(molecule);
@@ -111,8 +112,8 @@ public class HanserRingFinder implements RingFinder {
      * Returns Ring set based on Hanser Ring Finding method
      * @param molecule
      * @return report collected the rings
+     * @see org.openscience.cdk.smsd.ring.RingFinder#getRingSet(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    @Override
     public IRingSet getRingSet(IAtomContainer molecule) throws CDKException {
 
         Collection<List<IAtom>> cycles = findRings(molecule);

@@ -21,7 +21,9 @@ public class AtomContainerAtomPermutor extends Permutor
         original = atomContainer;
     }
     
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
     public IAtomContainer next() {
         int[] p = super.getNextPermutation();
         return AtomContainerAtomPermutor.permute(p, original);
@@ -89,9 +91,10 @@ public class AtomContainerAtomPermutor extends Permutor
         return permutedContainer;
     }
    
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
     public void remove() {
         // can just increase rank....
     }
-
 }

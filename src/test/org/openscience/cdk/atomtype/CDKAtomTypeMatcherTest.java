@@ -3519,6 +3519,17 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test
+    public void test_Te_4plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Te");
+        a1.setFormalCharge(4);
+        mol.addAtom(a1);
+      
+        String[] expectedTypes = {"Te.4plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @Test
     public void test_Be_neutral() throws Exception {
@@ -3726,6 +3737,19 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
 
     @Test
+    public void test_Ra() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ra");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Ra.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
     public void test_Cr_neutral() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IMolecule mol = builder.newInstance(IMolecule.class);
@@ -3735,6 +3759,32 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
       
       
         String[] expectedTypes = {"Cr.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Rb_neutral() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Rb");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Rb.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Rb_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Rb");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Rb.plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 

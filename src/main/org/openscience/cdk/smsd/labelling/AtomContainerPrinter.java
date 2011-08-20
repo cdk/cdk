@@ -28,8 +28,10 @@ public class AtomContainerPrinter {
             this.firstString = firstString;
             this.lastString = lastString;
         }
-        
-        @Override
+
+    	/**
+    	 * {@inheritDoc}
+    	 */
         public int compareTo(Edge o) {
             if (first < o.first || (first == o.first && last < o.last)) {
                 return -1;
@@ -38,7 +40,8 @@ public class AtomContainerPrinter {
             }
         }
         
-        public String toString() {
+        @Override
+		public String toString() {
             return firstString + first + ":" + lastString + last + "(" + order + ")";
         }
     }

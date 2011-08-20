@@ -73,7 +73,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param source
      * @param target
      */
-    @Override
     @TestMethod("testSet_MolHandler_MolHandler")
     public synchronized void set(MolHandler source, MolHandler target) {
         this.source = source.getMolecule();
@@ -85,7 +84,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param source
      * @param target
      */
-    @Override
     @TestMethod("testSet_IQueryAtomContainer_MolHandler")
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         this.source = source;
@@ -184,7 +182,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testSearchMCS")
     public synchronized List<Map<Integer, Integer>> getAllMapping() {
         return allMCS;
@@ -192,7 +189,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testSearchMCS")
     public synchronized Map<Integer, Integer> getFirstMapping() {
         return firstMCS;
@@ -200,7 +196,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testSearchMCS")
     public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return allAtomMCS;
@@ -208,7 +203,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @Override
     @TestMethod("testSearchMCS")
     public synchronized Map<IAtom, IAtom> getFirstAtomMapping() {
         return atomsMCS;

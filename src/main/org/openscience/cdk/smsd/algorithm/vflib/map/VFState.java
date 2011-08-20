@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -113,9 +114,7 @@ public class VFState implements IState {
         loadCandidates(match);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public void backTrack() {
         if (queryPath.isEmpty() || isGoal()) {
             map.clear();
@@ -130,37 +129,27 @@ public class VFState implements IState {
         }
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public Map<INode, IAtom> getMap() {
         return new HashMap<INode, IAtom>(map);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public boolean hasNextCandidate() {
         return !candidates.isEmpty();
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public boolean isDead() {
         return query.countNodes() > target.getAtomCount();
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public boolean isGoal() {
         return map.size() == query.countNodes();
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public boolean isMatchFeasible(Match match) {
         if (map.containsKey(match.getQueryNode())
                 || map.containsValue(match.getTargetAtom())) {
@@ -175,16 +164,12 @@ public class VFState implements IState {
         return true;
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public Match nextCandidate() {
         return candidates.remove(candidates.size() - 1);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     public IState nextState(Match match) {
         return new VFState(this, match);
     }

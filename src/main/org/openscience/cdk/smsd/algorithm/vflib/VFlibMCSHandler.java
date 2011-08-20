@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -144,7 +145,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param reactant
      * @param product
      */
-    @Override
     @TestMethod("testSet_MolHandler_MolHandler")
     public void set(MolHandler reactant, MolHandler product) {
         mol1 = reactant.getMolecule();
@@ -156,7 +156,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param source
      * @param target
      */
-    @Override
     @TestMethod("testSet_IQueryAtomContainer_MolHandler")
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         queryMol = source;
@@ -172,34 +171,25 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         return false;
     }
 
-    /** {@inheritDoc}
-     *
-     */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testGetAllAtomMapping")
     public List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testGetAllMapping")
     public List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testGetFirstAtomMapping")
     public Map<IAtom, IAtom> getFirstAtomMapping() {
         return Collections.unmodifiableMap(atomsMCS);
     }
 
-    /** {@inheritDoc}
-     */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testGetFirstMapping")
     public Map<Integer, Integer> getFirstMapping() {
         return Collections.unmodifiableMap(firstMCS);

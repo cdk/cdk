@@ -156,7 +156,8 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertNotNull(som.getMolecule(2));
     }
 
-    @Test public void testToString() {
+    @Override
+	@Test public void testToString() {
         IMoleculeSet som = (IMoleculeSet)newChemObject();
         String description = som.toString();
         for (int i=0; i< description.length(); i++) {
@@ -165,7 +166,8 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         }
     }
 
-    @Test public void testClone() throws Exception {
+    @Override
+	@Test public void testClone() throws Exception {
         IMoleculeSet som = (IMoleculeSet)newChemObject();
         Object clone = som.clone();
         Assert.assertTrue(clone instanceof IMoleculeSet);
@@ -183,7 +185,8 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertSame(mol, moleculeSet.getAtomContainer(0));
     }
 
-    @Test public void testCloneDuplication() throws Exception {
+    @Override
+	@Test public void testCloneDuplication() throws Exception {
         IMoleculeSet moleculeSet = (IMoleculeSet)newChemObject();
         moleculeSet.addMolecule(moleculeSet.getBuilder().newInstance(IMolecule.class));
         Object clone = moleculeSet.clone();
@@ -193,7 +196,8 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertEquals(moleculeSet.getMoleculeCount(), clonedSet.getMoleculeCount());
     } 
 
-    @Test public void testCloneMultiplier() throws Exception {
+    @Override
+	@Test public void testCloneMultiplier() throws Exception {
         IMoleculeSet moleculeSet = (IMoleculeSet)newChemObject();
         moleculeSet.addMolecule(moleculeSet.getBuilder().newInstance(IMolecule.class));
         moleculeSet.setMultiplier(moleculeSet.getMolecule(0), 2.0);
@@ -205,7 +209,8 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertEquals(2, clonedSet.getMultiplier(0).intValue());
     }
 
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+    @Override
+	@Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IMoleculeSet chemObject = (IMoleculeSet)newChemObject();
         chemObject.addListener(listener);
@@ -479,7 +484,8 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         Assert.assertEquals(2.0, som.getMultiplier(0), 0.00001);
     }
 
-    @Test
+    @Override
+	@Test
     public void testSortAtomContainers_Comparator() {
         IAtomContainerSet som = (IMoleculeSet)newChemObject();
         IMolecule ac1 = som.getBuilder().newInstance(IMolecule.class);
@@ -487,7 +493,6 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         som.sortAtomContainers(new Comparator<IAtomContainer>() {
-            @Override
             public int compare(IAtomContainer o1, IAtomContainer o2) {
                 return 0;
             }

@@ -13,9 +13,10 @@ public class SignatureReactionCanoniser
     private MoleculeSignatureLabellingAdaptor labeller =
         new MoleculeSignatureLabellingAdaptor();
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
     public IReaction getCanonicalReaction(IReaction reaction) {
         return super.labelReaction(reaction, labeller); 
     }
-
 }

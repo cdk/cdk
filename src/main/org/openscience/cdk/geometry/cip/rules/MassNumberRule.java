@@ -43,8 +43,7 @@ class MassNumberRule implements ISequenceSubRule<ILigand> {
     ILoggingTool logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
     IsotopeFactory factory;
 
-    /** {@inheritDoc}} */
-    @Override
+    /** {@inheritDoc} */
     @TestMethod("testCompare_Identity,testCompare,testOrder")
     public int compare(ILigand ligand1, ILigand ligand2) {
         ensureFactory(ligand1);

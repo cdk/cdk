@@ -131,7 +131,9 @@ public class AbstractReactionLabeller {
         
         Comparator<IMapping> mappingSorter = new Comparator<IMapping>() {
 
-            @Override
+        	/**
+        	 * {@inheritDoc}
+        	 */
             public int compare(IMapping o1, IMapping o2) {
                 IChemObject o10 = o1.getChemObject(0);
                 IChemObject o20 = o2.getChemObject(0);
