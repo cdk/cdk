@@ -73,8 +73,7 @@ public class CDKModuleTaglet implements Taglet {
 
     public String toString(Tag tag) {
         return "<DT><B>Belongs to CDK module: </B><DD>"
-               + "<a href=\"http://pele.farmbio.uu.se/nightly-1.2.x/modules/" + tag.text() + ".html"
-               + tag.text() + "/\">" + tag.text() + "</a></DD>\n";
+               + tag.text() + "</DD>\n";
     }
     
     public String toString(Tag[] tags) {
