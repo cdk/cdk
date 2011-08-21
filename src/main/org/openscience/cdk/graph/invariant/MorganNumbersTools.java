@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ *                    2011  Thorsten Flügel <thorsten.fluegel@tu-dortmund.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -19,6 +18,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.graph.invariant;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -46,27 +49,34 @@ public class MorganNumbersTools {
    */
   @TestMethod("testGetMorganNumbers_IAtomContainer")
   public static long[] getMorganNumbers(IAtomContainer atomContainer) {
-    long[] morganMatrix;
-    long[] tempMorganMatrix;
-    int N = atomContainer.getAtomCount();
-    morganMatrix = new long[N];
-    tempMorganMatrix = new long[N];
-    java.util.List<IAtom> atoms;
-    for (int f = 0; f < N; f++) {
-      morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
-      tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
-    }
-    for (int e = 0; e < N; e++) {
-      for (int f = 0; f < N; f++) {
-        morganMatrix[f] = 0;
-        atoms = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
-          for (IAtom atom : atoms) {
-              morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atom)];
-          }
-      }
-      System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);
-    }
-    return tempMorganMatrix;
+		long[] morganMatrix;
+		long[] tempMorganMatrix;
+		int N = atomContainer.getAtomCount();
+		morganMatrix = new long[N];
+		tempMorganMatrix = new long[N];
+		@SuppressWarnings("unchecked")
+		java.util.List<IAtom>[] atoms = new List[N];
+		@SuppressWarnings("unchecked")
+		Map<IAtom, Integer>[] atomIndices = new HashMap[N];
+		for (int f = 0; f < N; f++) {
+			morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
+			tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
+			atoms[f] = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
+			atomIndices[f] = new HashMap<IAtom, Integer>();
+			for (IAtom atom : atoms[f]) {
+				atomIndices[f].put(atom, atomContainer.getAtomNumber(atom));
+			}
+		}
+		for (int e = 0; e < N; e++) {
+			for (int f = 0; f < N; f++) {
+				morganMatrix[f] = 0;
+				for (IAtom atom : atoms[f]) {
+					morganMatrix[f] += tempMorganMatrix[atomIndices[f].get(atom)];
+				}
+			}
+			System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);
+		}
+		return tempMorganMatrix;
   }
 
 
