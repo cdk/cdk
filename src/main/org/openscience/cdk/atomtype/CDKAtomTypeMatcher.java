@@ -143,6 +143,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveGermanium(atomContainer, atom);
         } else if ("Hg".equals(atom.getSymbol())) {
             type = perceiveMercury(atomContainer, atom);
+        } else if ("Fe".equals(atom.getSymbol())) {
+            type = perceiveIron(atomContainer, atom);
         } else if ("Ra".equals(atom.getSymbol())) {
             type = perceiveRadium(atomContainer, atom);
         } else if ("Au".equals(atom.getSymbol())) {
@@ -852,7 +854,93 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return count;
     }
     
-     
+    private IAtomType perceiveIron(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if ("Fe".equals(atom.getSymbol())) {
+            if (hasOneSingleElectron(atomContainer, atom)) {
+                // no idea how to deal with this yet
+                return null;
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == 0)) {
+                IAtomType type = getAtomType("Fe.metallic");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+                int neighbors = atomContainer.getConnectedAtomsCount(atom);
+                if (neighbors == 2) {
+                    IAtomType type5 = getAtomType("Fe.2");
+                    if (isAcceptable(atom, atomContainer, type5)) {
+                        return type5;
+                    }
+                } else if (neighbors == 3) {
+                    IAtomType type6 = getAtomType("Fe.3");
+                    if (isAcceptable(atom, atomContainer, type6)) {
+                        return type6;
+                    }
+                } else if (neighbors == 4) {
+                    IAtomType type7 = getAtomType("Fe.4");
+                    if (isAcceptable(atom, atomContainer, type7)) {
+                        return type7;
+                    }
+                } else if (neighbors == 5) {
+                    IAtomType type8 = getAtomType("Fe.5");
+                    if (isAcceptable(atom, atomContainer, type8)) {
+                        return type8;
+                    }
+                } else if (neighbors == 6) {
+                    IAtomType type9 = getAtomType("Fe.6");
+                    if (isAcceptable(atom, atomContainer, type9)) {
+                        return type9;
+                    }
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == 2)) {
+                int neighbors = atomContainer.getConnectedAtomsCount(atom);
+                if (neighbors <= 1) {
+                    IAtomType type = getAtomType("Fe.2plus");
+                    if (isAcceptable(atom, atomContainer, type)) {
+                        return type;
+                    }
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == 1)) {
+                int neighbors = atomContainer.getConnectedAtomsCount(atom);
+
+                if (neighbors == 2) {
+                    IAtomType type0 = getAtomType("Fe.plus");
+                    if (isAcceptable(atom, atomContainer, type0)) {
+                        return type0;
+                    }
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == 3)) {
+                IAtomType type1 = getAtomType("Fe.3plus");
+                if (isAcceptable(atom, atomContainer, type1)) {
+                    return type1;
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == -2)) {
+                IAtomType type2 = getAtomType("Fe.2minus");
+                if (isAcceptable(atom, atomContainer, type2)) {
+                    return type2;
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == -3)) {
+                IAtomType type3 = getAtomType("Fe.3minus");
+                if (isAcceptable(atom, atomContainer, type3)) {
+                    return type3;
+                }
+            } else if ((atom.getFormalCharge() != null
+                    && atom.getFormalCharge() == -4)) {
+                IAtomType type4 = getAtomType("Fe.4minus");
+                if (isAcceptable(atom, atomContainer, type4)) {
+                    return type4;
+                }
+            }
+        }
+        return null;
+    }
+
+
     private IAtomType perceiveMercury(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if ("Hg".equals(atom.getSymbol())) {
             if (hasOneSingleElectron(atomContainer, atom)) {
@@ -1319,15 +1407,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() == +2)) {
     			IAtomType type = getAtomType("Mg.2plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	} else if ("Fe".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +2)) {
-    			IAtomType type = getAtomType("Fe.2plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
     	} else if ("Co".equals(atom.getSymbol())) {
