@@ -95,8 +95,9 @@ public class CDKGitTaglet implements Taglet {
     }
 
     private String expand(Tag tag) {
-    	// get the version number
-    	String text = tag.text();
+    	// Tag only returns the file name, not the path (anymore)
+    	if (true)
+    	    return "<a href=\"https://github.com/cdk/cdk/tree/cdk-1.4.x/src/main/org/openscience/cdk\" target=\"_blank\">cdk-1.4.x</a>";
 
     	// create the URL
     	SourcePosition file = tag.position();
