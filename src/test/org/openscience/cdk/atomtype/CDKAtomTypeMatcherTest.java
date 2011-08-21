@@ -1731,6 +1731,47 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         expectedTypes = new String[]{"Al.3plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
      }
+   
+    @Test
+    public void fix_Ca_2() throws Exception {
+        String molName = "Ca_2";
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Ca");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+
+        String[] expectedTypes = {"Ca.2", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void fix_Ca_1() throws Exception {
+        String molName1 = "Ca_1";
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Ca");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+
+        String[] expectedTypes1 = {"Ca.1", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes1, mol);
+    }
 
      @Test public void testCyclopentadienyl() throws Exception {
          IAtomContainer cp = new Molecule();
