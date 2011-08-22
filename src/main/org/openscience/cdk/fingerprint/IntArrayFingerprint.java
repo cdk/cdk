@@ -100,7 +100,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 		while ( i<trueBits.length && 
 			    j<fingerprint.trueBits.length ) {
 			int local = trueBits[i];
-			int remote = fingerprint.trueBits[i];
+			int remote = fingerprint.trueBits[j];
 			if (local == remote) {
 				tmp.add(local);
 				i++; j++;
