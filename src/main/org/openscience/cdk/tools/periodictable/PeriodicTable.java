@@ -1,6 +1,7 @@
 /* $Revision: 9167 $ $Author: rajarshi $ $Date: 2007-10-22 01:26:11 +0200 (Mon, 22 Oct 2007) $
  *
  * Copyright (C) 2008  Rajarshi Guha <rajarshi@users.sf.net>
+ *               2011  Jonathan Alvarsson <jonalv@users.sf.net>
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -52,11 +53,11 @@ import java.util.Map;
 @TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableTest")
 public class PeriodicTable {
     
-    private static boolean isInitialized = false;
-    private static Map<String, PeriodicTableElement> elements;
-    private static Map<Integer, PeriodicTableElement> elementsByNumber;
+    private static volatile boolean isInitialized = false;
+    private static volatile Map<String, PeriodicTableElement> elements;
+    private static volatile Map<Integer, PeriodicTableElement> elementsByNumber;
 
-    private static void initialize() {
+    private synchronized static void initialize() {
         if (isInitialized) return;
 
         ElementPTFactory factory;
