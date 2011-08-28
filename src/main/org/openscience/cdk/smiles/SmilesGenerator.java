@@ -386,7 +386,7 @@ public class SmilesGenerator
 			}
 			//logger.debug("Setting all VISITED flags to false");
 			atom.setFlag(CDKConstants.VISITED, false);
-			if ((Long) atom.getProperty("CanonicalLable") == 1)
+			if ((Long) atom.getProperty(InvPair.CANONICAL_LABEL) == 1)
 			{
 				start = atom;
 			}
@@ -455,8 +455,8 @@ public class SmilesGenerator
 		
 		// remove all CanonicalLable/InvariancePair props
 		for (int k = 0; k < molecule.getAtomCount(); k++) {
-			molecule.getAtom(k).removeProperty("CanonicalLable");
-			molecule.getAtom(k).removeProperty("InvariancePair");
+			molecule.getAtom(k).removeProperty(InvPair.CANONICAL_LABEL);
+			molecule.getAtom(k).removeProperty(InvPair.INVARIANCE_PAIR);
 		}
 		
 		return l.toString();
@@ -655,7 +655,10 @@ public class SmilesGenerator
 				{
 					public int compare(Object o1, Object o2)
 					{
-						return (int) ((Long) ((IAtom) o1).getProperty("CanonicalLable") - (Long) ((IAtom) o2).getProperty("CanonicalLable"));
+						return (int) (
+						    (Long) ((IAtom) o1).getProperty(InvPair.CANONICAL_LABEL) -
+						    (Long) ((IAtom) o2).getProperty(InvPair.CANONICAL_LABEL)
+						);
 					}
 				});
 		}
