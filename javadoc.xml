@@ -17,6 +17,8 @@
     <property name="build" value="build" />
     <property name="lib" value="jar" />
     <property name="devellib" value="develjar" />
+    <property name="dist" value="dist" />
+    <property name="metainf" value="${src}/META-INF" />
 
 	<!-- Used in the html task to properly link to java library classes -->
 	<property name="javaURL" value="http://java.sun.com/j2se/1.5.0/docs/api/"/>
