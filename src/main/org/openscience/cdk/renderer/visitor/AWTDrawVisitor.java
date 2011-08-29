@@ -57,7 +57,6 @@ import org.openscience.cdk.renderer.generators.BasicBondGenerator.WedgeWidth;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasing;
-import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 
 /**
@@ -90,8 +89,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	
 	private final Graphics2D graphics;
 
-    private Color backgroundColor;
-
     /**
      * Constructs a new {@link IDrawVisitor} using the AWT widget toolkit,
      * taking a {@link Graphics2D} object to which the chemical content
@@ -106,12 +103,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 		this.rendererModel = null;
 		
         map.put(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB);
-
-        for (IGeneratorParameter<?> param :
-            new BasicSceneGenerator().getParameters()) {
-            if (param instanceof BasicSceneGenerator.BackgroundColor)
-            this.backgroundColor = (Color)param.getDefault();
-        }
 	}
 	
     private void visit(ElementGroup elementGroup) {
@@ -175,6 +166,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         return result;
     }
 
+    private Color getBackgroundColor() {
+        if (rendererModel == null)
+            return new BasicSceneGenerator.BackgroundColor().getDefault();
+        
+        return rendererModel.getParameter(BasicSceneGenerator.BackgroundColor.class).getValue();
+    }
+
     private void visit(TextElement textElement) {
         this.graphics.setFont(this.fontManager.getFont());
         Point point = this.getTextBasePoint(
@@ -182,7 +180,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         Rectangle2D textBounds =
                 this.getTextBounds(
                         textElement.text, textElement.xCoord, textElement.yCoord, graphics);
-        this.graphics.setColor(backgroundColor);
+        this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(textElement.color);
         this.graphics.drawString(textElement.text, point.x, point.y);
@@ -260,7 +258,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                     atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, graphics);
         Rectangle2D textBounds = 
             this.getTextBounds(atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, graphics);
-        this.graphics.setColor(backgroundColor);
+        this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(atomSymbol.color);
         this.graphics.drawString(atomSymbol.text, point.x, point.y);
@@ -384,7 +382,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                     textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
         Rectangle2D textBounds = 
             this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
-        this.graphics.setColor(backgroundColor);
+        this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(textGroup.color);
         this.graphics.drawString(textGroup.text, point.x, point.y);

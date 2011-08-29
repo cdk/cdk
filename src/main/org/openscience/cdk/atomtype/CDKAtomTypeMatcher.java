@@ -169,7 +169,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveArsenic(atomContainer, atom);
         } else if ("Cd".equals(atom.getSymbol())) {
             type = perceiveCadmium(atomContainer, atom);
-        }else {
+        } else if ("Ca".equals(atom.getSymbol())) {
+            type = perceiveCalcium(atomContainer, atom);
+        } else {
             if (type == null) type = perceiveHalogens(atomContainer, atom);
             if (type == null) type = perceiveCommonSalts(atomContainer, atom);
             if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
@@ -236,6 +238,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	        atomContainer.getConnectedAtomsCount(atom) <= 4) {
 	        IAtomType type = getAtomType("B.minus");
 	        if (isAcceptable(atom, atomContainer, type)) return type;
+	    } else if (atom.getFormalCharge() == +3
+                && atomContainer.getConnectedAtomsCount(atom) == 4) {
+            IAtomType type = getAtomType("B.3plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
 	    } else if (atomContainer.getConnectedAtomsCount(atom) <= 3) {
 	        IAtomType type = getAtomType("B");
 	        if (isAcceptable(atom, atomContainer, type)) return type;
@@ -1391,16 +1397,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
     private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Ca".equals(atom.getSymbol())) {
-    		if (hasOneSingleElectron(atomContainer, atom)) {
-    			// no idea how to deal with this yet
-    			return null;
-    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() == +2)) {
-    			IAtomType type = getAtomType("Ca.2plus");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
-    		}
-    	} else if ("Mg".equals(atom.getSymbol())) {
+        if ("Mg".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
     			return null;
@@ -1980,6 +1977,34 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 && atom.getFormalCharge() == 0)) {
             IAtomType type = getAtomType("Ra.neutral");
             if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+    
+    private IAtomType perceiveCalcium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if ("Ca".equals(atom.getSymbol())) {
+            if (hasOneSingleElectron(atomContainer, atom)) {
+                // no idea how to deal with this yet
+                return null;
+            } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                    && atom.getFormalCharge() == 2 && atomContainer.getConnectedAtomsCount(atom) == 0)) {
+                IAtomType type = getAtomType("Ca.2plus");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                    && atom.getFormalCharge() == 0 && atomContainer.getConnectedAtomsCount(atom) == 2)) {
+                IAtomType type = getAtomType("Ca.2");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            } else if ((atom.getFormalCharge() != CDKConstants.UNSET
+                    && atom.getFormalCharge() == 0 && atomContainer.getConnectedAtomsCount(atom) == 1)) {
+                IAtomType type = getAtomType("Ca.1");
+                if (isAcceptable(atom, atomContainer, type)) {
+                    return type;
+                }
+            }
         }
         return null;
     }
