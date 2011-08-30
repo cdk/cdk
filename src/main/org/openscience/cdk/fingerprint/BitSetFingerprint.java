@@ -47,7 +47,20 @@ public class BitSetFingerprint implements IBitFingerprint {
 		bitset = new BitSet(size);
 	}
 
-	@Override
+	public BitSetFingerprint(IBitFingerprint fingerprint) {
+	    if ( fingerprint instanceof BitSetFingerprint) {
+	        bitset = (BitSet) ((BitSetFingerprint)fingerprint).bitset.clone();
+	    }
+	    else {
+	        BitSet bitSet = new BitSet();
+	        for ( int i=0 ; i<fingerprint.size() ; i++ ) {
+	            bitSet.set( i, fingerprint.get( i ) );
+	        }
+	        this.bitset = bitSet;
+	    }
+    }
+
+    @Override
 	public int cardinality() {
 		return bitset.cardinality();
 	}
