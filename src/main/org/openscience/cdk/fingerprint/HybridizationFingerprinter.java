@@ -135,7 +135,8 @@ public class HybridizationFingerprinter implements IFingerprinter {
 	 *                   generated.
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container) throws CDKException {
+    @Override
+    public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         BitSet bitSet = new BitSet(size);
 
         try {
@@ -153,7 +154,7 @@ public class HybridizationFingerprinter implements IFingerprinter {
             );
         }
 
-        return bitSet;
+        return new BitSetFingerprint( bitSet );
 	}
 
     /**
@@ -303,17 +304,9 @@ public class HybridizationFingerprinter implements IFingerprinter {
     }
 
 	@Override
-	public IBitFingerprint getBitFingerprint(IAtomContainer container)
-			throws CDKException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ICountFingerprint getCountFingerprint(IAtomContainer container)
 			throws CDKException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 }
