@@ -32,6 +32,7 @@ package org.openscience.cdk.similarity;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.BitSetFingerprint;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
 import org.openscience.cdk.fingerprint.IntArrayCountFingerprint;
@@ -116,7 +117,13 @@ public class Tanimoto
         }
         int cardinality1 = fingerprint1.cardinality();
         int cardinality2 = fingerprint2.cardinality();
-        IBitFingerprint one_and_two = new IntArrayFingerprint(fingerprint1);
+        // If the fingerprint is an IntArrayFingeprint that could mean a big 
+        // fingerprint so let's take the safe way out and create a 
+        // new IntArrayfingerprint
+        IBitFingerprint one_and_two 
+            = fingerprint1 instanceof IntArrayFingerprint 
+                ? new IntArrayFingerprint(fingerprint1)
+                : new BitSetFingerprint(fingerprint1);
         one_and_two.and(fingerprint2);
         double cardinalityCommon = one_and_two.cardinality();
         return cardinalityCommon / 
