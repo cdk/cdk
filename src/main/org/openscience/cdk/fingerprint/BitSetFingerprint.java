@@ -143,4 +143,16 @@ public class BitSetFingerprint implements IBitFingerprint {
 			return false;
 		return true;
 	}
+
+    @Override
+    public int[] getSetbits() {
+        int[] result = new int[bitset.cardinality()];
+        int index = 0;
+        for ( int i = 0 ; i<bitset.length() ; i++) {
+            if (bitset.get( i ) ) {
+                result[index++] = i;
+            }
+        }
+        return result;
+    }
 }

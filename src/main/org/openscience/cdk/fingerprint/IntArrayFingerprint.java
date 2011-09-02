@@ -209,5 +209,12 @@ public class IntArrayFingerprint implements IBitFingerprint {
 			return false;
 		return true;
 	}
+
+    @Override
+    public int[] getSetbits() {
+        int[] copy = new int[trueBits.length];
+        System.arraycopy( trueBits, 0, copy, 0, trueBits.length );
+        return copy;
+    }
 	
 }

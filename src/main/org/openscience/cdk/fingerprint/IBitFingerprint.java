@@ -101,4 +101,10 @@ public interface IBitFingerprint {
 	 * @param i
 	 */
 	public void set(int i);
+
+	
+    /**
+     * @return listing of all bits that are set
+     */
+    public int[] getSetbits();
 }
