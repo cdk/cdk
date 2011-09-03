@@ -5281,6 +5281,59 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypesB = {"Fe.3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypesB, mol);
     }
+
+    /**
+     * @cdk.inchi InChI=1S/C8H16S/c1-6-3-8-4-7(6)5-9(8)2/h6-9H,3-5H2,1-2H3/t6-,7-,8+/m0/s1
+     */
+    @Test
+    public void testSulphur4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a7);
+        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a8);
+        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a9);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a8, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b5 = builder.newInstance(IBond.class,a2, a4, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a2, a7, IBond.Order.SINGLE);
+        mol.addBond(b6);
+        IBond b8 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b8);
+        IBond b9 = builder.newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b9);
+        IBond b10 = builder.newInstance(IBond.class,a3, a6, IBond.Order.SINGLE);
+        mol.addBond(b10);
+        IBond b14 = builder.newInstance(IBond.class,a5, a7, IBond.Order.SINGLE);
+        mol.addBond(b14);
+        IBond b15 = builder.newInstance(IBond.class,a5, a9, IBond.Order.SINGLE);
+        mol.addBond(b15);
+
+        String[] expectedTypes = {
+            "S.anyl", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     
     /*
      * This method *must* be the last method in the class.
