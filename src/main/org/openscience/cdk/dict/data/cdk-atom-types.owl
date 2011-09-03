@@ -1935,7 +1935,6 @@
     <at:formalNeighbourCount>4</at:formalNeighbourCount>
     <at:lonePairCount>0</at:lonePairCount>
     <at:piBondCount>1</at:piBondCount>
-    <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType> 
 
     <at:AtomType rdf:ID="Ra.neutral">
