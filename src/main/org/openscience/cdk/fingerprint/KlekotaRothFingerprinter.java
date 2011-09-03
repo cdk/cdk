@@ -1,24 +1,29 @@
-package libpadeldescriptor;
+/*  2004-2007  Yap Chun Wei <yapchunwei@users.sourceforge.net>
+ *       2011 Jonathan Alvarsson <jonalv@users.sourceforge.net>
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  The content of this file is released as public domain.
+ */
+package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 
 /**
- * Make SubstructureFingerprinter in CDK runnable in a separate thread.
- * Klekota J, Roth FP. Chemical substructures that enrich for biological activity. Bioinformatics, 2008;24(21):2518-25.
+ * SMARTS based substructure fingerprint based on <emph>Chemical substructures 
+ * that enrich for biological activity</emph> {@cdk.cite Klekota01112008}.
+ * 
  * Presence of 4860 substructures
  * 
  * @author yapchunwei
+ * @cdk.module fingerprint
+ * @cdk.githash
  */
-public class CDK_KlekotaRothFingerprinter extends CDK_Fingerprint
+public class KlekotaRothFingerprinter extends SubstructureFingerprinter 
 {
-    public CDK_KlekotaRothFingerprinter()
+	
+    public KlekotaRothFingerprinter()
     {
-        super();
-        cdkFingerprinter_ = new SubstructureFingerprinter(smarts);
-        this.setPrefix("KRFP");
-    }
-    
-    private String[] smarts = new String[] {
+    	super( new String[] {
 "[!#1][CH]([!#1])[!#1]",
 "[!#1][CH]([!#1])[CH]([!#1])[!#1]",
 "[!#1][CH]([!#1])[CH]([!#1])C([CH3])([CH3])[CH3]",
@@ -4879,5 +4884,7 @@ public class CDK_KlekotaRothFingerprinter extends CDK_Fingerprint
 "SCCC=O",
 "SCCS",
 "SCCS(=O)=O"
-                                        };
+                                        });
+    }
+
 }
