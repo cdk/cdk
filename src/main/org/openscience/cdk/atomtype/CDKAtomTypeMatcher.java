@@ -143,6 +143,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBarium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
+        } else if ("Gd".equals(atom.getSymbol())) {
+            type = perceiveGadolinum(atomContainer, atom);
         } else if ("Ge".equals(atom.getSymbol())) {
             type = perceiveGermanium(atomContainer, atom);
         } else if ("Sb".equals(atom.getSymbol())) {
