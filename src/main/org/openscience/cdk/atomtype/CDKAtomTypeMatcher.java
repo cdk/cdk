@@ -173,6 +173,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceivePotassium(atomContainer, atom);
         } else if ("Mn".equals(atom.getSymbol())) {
             type = perceiveManganese(atomContainer, atom);
+        } else if ("Mg".equals(atom.getSymbol())) {
+            type = perceiveMagnesium(atomContainer, atom);
         } else if ("Na".equals(atom.getSymbol())) {
             type = perceiveSodium(atomContainer, atom);
         } else if ("As".equals(atom.getSymbol())) {
