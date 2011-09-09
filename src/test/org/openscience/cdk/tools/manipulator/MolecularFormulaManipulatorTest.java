@@ -695,6 +695,15 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 				
 	}
 	
+	@Test
+	public void testGetAtomContainer_String_IChemObjectBuilder() {
+	    String mf = "C2H4";
+	    IAtomContainer atomContainer = 
+	        MolecularFormulaManipulator.getAtomContainer(
+	                mf, DefaultChemObjectBuilder.getInstance());
+	    Assert.assertEquals(6, atomContainer.getAtomCount());
+	}
+	
 	
 	@Test 
     public void testMolecularFormulaIAtomContainer_to_IAtomContainer2(){

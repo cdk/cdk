@@ -801,6 +801,19 @@ public class MolecularFormulaManipulator {
 	}
 
 	/**
+	 * Converts a formula string (like "C2H4") into an atom container with atoms
+	 * but no bonds.
+	 * 
+	 * @param formulaString the formula to convert
+	 * @param builder a chem object builder
+	 * @return atoms wrapped in an atom container
+	 */
+	@TestMethod("testGetAtomContainer_String_IChemObjectBuilder")
+	public static IAtomContainer getAtomContainer(String formulaString, IChemObjectBuilder builder) {
+	    return MolecularFormulaManipulator.getAtomContainer(
+	            MolecularFormulaManipulator.getMolecularFormula(formulaString, builder));
+	}
+	/**
 	 * Returns the Elements ordered according to (approximate) probability of occurrence.
 	 * 
 	 * <p>This begins with the "elements of life" C, H, O, N, (Si, P, S, F, Cl),
