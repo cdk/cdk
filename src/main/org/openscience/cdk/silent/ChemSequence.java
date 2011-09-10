@@ -96,7 +96,6 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 		chemModels[chemModelCount] = chemModel;
 		chemModelCount++;
 		chemModel.addListener(this);
-		notifyChanged();
 	}
 
 	
@@ -112,7 +111,6 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 		}
 		chemModels[chemModelCount - 1] = null;
 		chemModelCount--;
-		notifyChanged();
 	}
 
 	/**
@@ -221,8 +219,5 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(IChemObjectChangeEvent event)
-	{
-		notifyChanged(event);
-	}
+	public void stateChanged(IChemObjectChangeEvent event) {}
 }

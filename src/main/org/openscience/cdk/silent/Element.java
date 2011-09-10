@@ -135,7 +135,6 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      */
     public void setAtomicNumber(Integer atomicNumber) {
         this.atomicNumber = atomicNumber;
-	notifyChanged();
     }
 
     /**
@@ -158,7 +157,6 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
-	notifyChanged();
     }
 
     public String toString() {

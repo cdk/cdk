@@ -99,7 +99,6 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
 	 */
 	public void setAtom(IAtom atom) {
 		this.atom = atom;
-		notifyChanged();
 	}
 
     /**

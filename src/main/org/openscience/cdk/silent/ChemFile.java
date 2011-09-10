@@ -91,7 +91,6 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 		}
 		chemSequences[chemSequenceCount] = chemSequence;
 		chemSequenceCount++;
-		notifyChanged();
 	}
 
     /**
@@ -109,7 +108,6 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 		}
 		chemSequences[chemSequenceCount - 1] = null;
 		chemSequenceCount--;
-		notifyChanged();
 	}
 
 	/**
@@ -234,9 +232,6 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(IChemObjectChangeEvent event)
-	{
-		notifyChanged(event);
-	}
+	public void stateChanged(IChemObjectChangeEvent event) {}
 }
 

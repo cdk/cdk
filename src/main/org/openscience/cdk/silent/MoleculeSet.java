@@ -183,8 +183,5 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(IChemObjectChangeEvent event)
-	{
-		notifyChanged(event);
-	}    
+	public void stateChanged(IChemObjectChangeEvent event) {}
 }

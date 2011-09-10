@@ -96,7 +96,6 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      */
     public void setA(Vector3d newAxis) {
         aAxis = newAxis;
-	notifyChanged();
     }
 
     /**
@@ -120,7 +119,6 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      */
     public void setB(Vector3d newAxis) {
         bAxis = newAxis;
-	notifyChanged();
     }
 
     /**
@@ -144,7 +142,6 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      */
     public void setC(Vector3d newAxis) {
         cAxis = newAxis;
-	notifyChanged();
     }
 
     /**
@@ -179,7 +176,6 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      */
     public void setSpaceGroup(String group) {
         spaceGroup = group;
-	notifyChanged();
     }
 
     /**
@@ -200,7 +196,6 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      */
     public void setZ(Integer value) {
         this.zValue = value;
-	notifyChanged();
     }
 
     /**

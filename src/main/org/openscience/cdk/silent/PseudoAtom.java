@@ -131,7 +131,6 @@ public class PseudoAtom extends Atom
      */
     public void setLabel(String label) {
         this.label = label;
-	notifyChanged();
     }
 
   

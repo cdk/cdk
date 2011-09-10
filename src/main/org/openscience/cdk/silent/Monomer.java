@@ -100,7 +100,6 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 	 */
 	public void setMonomerName(String cMonomerName) {
 		monomerName = cMonomerName;
-		notifyChanged();
 	}
 	
 	/**
@@ -113,7 +112,6 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 	 */
 	public void setMonomerType(String cMonomerType) {
 		monomerType = cMonomerType;
-		notifyChanged();
 	}
 
 	public String toString() {

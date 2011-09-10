@@ -102,9 +102,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
         for (IMolecularFormula mf : formulaSet.molecularFormulas()){
             addMolecularFormula(mf);
         }
-        /*
-		 *  notifyChanged() is called by addAtomContainer()
-		 */
 	}
 
 	/**

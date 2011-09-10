@@ -100,7 +100,6 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 		if (reactionCount + 1 >= reactions.length) growReactionArray();
 		reactions[reactionCount] = reaction;
 		reactionCount++;
-		notifyChanged();
 	}
 
 	/**
@@ -115,7 +114,6 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 		}
 		reactions[reactionCount - 1] = null;
 		reactionCount--;
-		notifyChanged();
 	}
 	
     
@@ -228,7 +226,6 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 			this.reactions[pos] = null;
 		}
 		this.reactionCount = 0;
-		notifyChanged();
 	}
 	
 	public void stateChanged(IChemObjectChangeEvent event) {

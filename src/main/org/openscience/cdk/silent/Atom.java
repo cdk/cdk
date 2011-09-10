@@ -194,7 +194,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          */
         public void setCharge(Double charge) {
         	this.charge = charge;
-        	notifyChanged();
         }
 
         /**
@@ -219,7 +218,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          */
         public void setImplicitHydrogenCount(Integer hydrogenCount) {
         	this.hydrogenCount = hydrogenCount;
-        	notifyChanged();
         }
 
         /**
@@ -244,7 +242,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          */
         public void setPoint2d(javax.vecmath.Point2d point2d) {
                 this.point2d = point2d;
-		notifyChanged();
         }
         /**
          *
@@ -257,7 +254,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          */
         public void setPoint3d(javax.vecmath.Point3d point3d) {
                 this.point3d = point3d;
-		notifyChanged();
         }
         /**
          * Sets a point specifying the location of this
@@ -270,7 +266,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          */
         public void setFractionalPoint3d(javax.vecmath.Point3d point3d) {
                 this.fractionalPoint3d = point3d;
-		notifyChanged();
         }
         /**
          * Sets the stereo parity for this atom.
@@ -282,7 +277,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          */
         public void setStereoParity(Integer stereoParity) {
         	this.stereoParity = stereoParity;
-        	notifyChanged();
         }
 
         /**

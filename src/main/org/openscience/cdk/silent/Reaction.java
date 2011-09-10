@@ -118,7 +118,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void setReactants(IMoleculeSet setOfMolecules) {
         reactants = setOfMolecules;
-	notifyChanged();
     }
 	
     /**
@@ -139,7 +138,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void setProducts(IMoleculeSet setOfMolecules) {
         products = setOfMolecules;
-	notifyChanged();
     }
 	
     /**
@@ -208,7 +206,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void addAgent(IMolecule agent) {
         agents.addAtomContainer(agent);
-	notifyChanged();
     }
 
     /**
@@ -220,7 +217,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void addReactant(IMolecule reactant, Double coefficient) {
         reactants.addAtomContainer(reactant, coefficient);
-	notifyChanged();
     }
     
     /**
@@ -280,7 +276,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public boolean setReactantCoefficient(IMolecule reactant, Double coefficient) {
     	boolean result = reactants.setMultiplier(reactant, coefficient);
-    	notifyChanged();
     	return result;
     }
 	
@@ -295,7 +290,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public boolean setProductCoefficient(IMolecule product, Double coefficient) {
         boolean result = products.setMultiplier(product, coefficient);
-    	notifyChanged();
     	return result;
     }
 	
@@ -331,7 +325,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public boolean setReactantCoefficients(Double[] coefficients) {
         boolean result = reactants.setMultipliers(coefficients);
-    	notifyChanged();
     	return result;
     }
 	
@@ -344,7 +337,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public boolean setProductCoefficients(Double[] coefficients) {
     	boolean result =  products.setMultipliers(coefficients);
-    	notifyChanged();
     	return result;
     }
 	
@@ -356,7 +348,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void setDirection(IReaction.Direction direction) {
 	reactionDirection = direction;
-	notifyChanged();
     }
     
     /**
@@ -381,7 +372,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         if (mappingCount + 1 >= map.length) growMappingArray();
         map[mappingCount] = mapping;
         mappingCount++;
-        notifyChanged();
     }
     
     /**
@@ -397,7 +387,6 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 		}
 		map[mappingCount - 1] = null;
 		mappingCount--;
-		notifyChanged();
 	}
     
     /**

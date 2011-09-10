@@ -217,7 +217,6 @@ public class AtomContainer extends ChemObject
             atom.addListener(this);
         }
 		this.atomCount = atoms.length;
-		notifyChanged();
 	}
 
 	/**
@@ -266,7 +265,6 @@ public class AtomContainer extends ChemObject
 	{
 		atom.addListener(this);
 		atoms[number] = atom;
-		notifyChanged();
 	}
 
 
@@ -996,7 +994,6 @@ public class AtomContainer extends ChemObject
 				addSingleElectron(atomContainer.getSingleElectron(f));
 			}
 		}
-		notifyChanged();
 	}
 
 	/**
@@ -1031,7 +1028,6 @@ public class AtomContainer extends ChemObject
 		atom.addListener(this);
 		atoms[atomCount] = atom;
 		atomCount++;
-		notifyChanged();
 	}
 
 
@@ -1045,7 +1041,6 @@ public class AtomContainer extends ChemObject
 		if (bondCount >= bonds.length) growBondArray();
 		bonds[bondCount] = bond;
 		++bondCount;
-		notifyChanged();
 	}
 
 	/**
@@ -1058,7 +1053,6 @@ public class AtomContainer extends ChemObject
 		if (lonePairCount >= lonePairs.length) growLonePairArray();
 		lonePairs[lonePairCount] = lonePair;
 		++lonePairCount;
-		notifyChanged();
 	}
 	
 	/**
@@ -1071,7 +1065,6 @@ public class AtomContainer extends ChemObject
 		if (singleElectronCount >= singleElectrons.length) growSingleElectronArray();
 		singleElectrons[singleElectronCount] = singleElectron;
 		++singleElectronCount;
-		notifyChanged();
 	}
 	
 	/**
@@ -1129,7 +1122,6 @@ public class AtomContainer extends ChemObject
 		}
 		atoms[atomCount - 1] = null;
 		atomCount--;
-		notifyChanged();
 	}
 	
 	/**
@@ -1163,7 +1155,6 @@ public class AtomContainer extends ChemObject
 		}
 		bonds[bondCount - 1] = null;
 		bondCount--;
-		notifyChanged();
 		return bond;
 	}
 	
@@ -1211,7 +1202,6 @@ public class AtomContainer extends ChemObject
 		}
 		lonePairs[lonePairCount - 1] = null;
 		lonePairCount--;
-		notifyChanged();
 		return lp;
 	}
 	
@@ -1241,7 +1231,6 @@ public class AtomContainer extends ChemObject
 		}
 		singleElectrons[singleElectronCount - 1] = null;
 		singleElectronCount--;
-		notifyChanged();
 		return se;
 	}
 	
@@ -1319,7 +1308,6 @@ public class AtomContainer extends ChemObject
 			}
 			removeAtom(position);
 		}
-		notifyChanged();
 	}
 
 	/**
@@ -1332,7 +1320,6 @@ public class AtomContainer extends ChemObject
 		}
         atoms = new IAtom[growArraySize];
         atomCount = 0;
-		notifyChanged();
 	}
 
 
@@ -1352,7 +1339,6 @@ public class AtomContainer extends ChemObject
 		singleElectrons = new ISingleElectron[growArraySize];
 		lonePairCount = 0;
 		singleElectronCount = 0;
-		notifyChanged();
 	}
 
     /**
@@ -1364,7 +1350,6 @@ public class AtomContainer extends ChemObject
 		}
     	bonds = new IBond[growArraySize];
     	bondCount = 0;
-    	notifyChanged();
     }
 
 	/**
@@ -1713,10 +1698,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(IChemObjectChangeEvent event)
-	{
-		notifyChanged(event);
-	}   
+	public void stateChanged(IChemObjectChangeEvent event) {}
 
 }
 

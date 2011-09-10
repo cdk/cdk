@@ -162,7 +162,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	public void setAtomTypeName(String identifier)
 	{
 		this.identifier = identifier;
-		notifyChanged();
 	}
 
 
@@ -176,7 +175,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	public void setMaxBondOrder(IBond.Order maxBondOrder)
 	{
 		this.maxBondOrder = maxBondOrder;
-		notifyChanged();
 	}
 
 
@@ -190,7 +188,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	public void setBondOrderSum(Double bondOrderSum)
 	{
 		this.bondOrderSum = bondOrderSum;
-		notifyChanged();
 	}
 
 
@@ -241,7 +238,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      */
     public void setFormalCharge(Integer charge) {
     	this.formalCharge = charge;
-    	notifyChanged();
     }
     
     /**
@@ -264,7 +260,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      */
     public void setFormalNeighbourCount(Integer count) {
         this.formalNeighbourCount = count;
-	notifyChanged();
     }
     
     /**
@@ -287,7 +282,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      */
     public void setHybridization(IAtomType.Hybridization hybridization) {
         this.hybridization = hybridization;
-        notifyChanged();
     }
     
     /**
@@ -328,7 +322,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      */
     public void setCovalentRadius(Double radius) {
         this.covalentRadius = radius;
-	notifyChanged();
     }
     
     /**
@@ -351,7 +344,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	public void setValency(Integer valency)
 	{
 		this.electronValency = valency;
-		notifyChanged();
 	}
 
 	/**

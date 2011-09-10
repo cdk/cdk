@@ -108,7 +108,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 			atomContainers[pos] = null;
 		}
 		atomContainerCount = 0;
-		notifyChanged();
 	}
 	
 	
@@ -125,7 +124,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		}
 		atomContainers[atomContainerCount - 1] = null;
 		atomContainerCount--;
-		notifyChanged();
 	}
 
 	/**
@@ -139,7 +137,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		old.removeListener(this);
 		atomContainers[position] = container;
 		container.addListener(this);
-		notifyChanged();
 	}
 	
 	/**
@@ -154,7 +151,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		for (int i = 0; i < atomContainers.length; i++) {
 			if (atomContainers[i] == container) {
 				multipliers[i] = multiplier;
-				notifyChanged();
 				return true;
 			}
 		}
@@ -172,7 +168,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 */
 	public void setMultiplier(int position, Double multiplier) {
 		multipliers[position] = multiplier;
-		notifyChanged();
 	}
 
 	/**
@@ -201,7 +196,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 				multipliers = new Double[atomContainerCount];
 			}
 			System.arraycopy(newMultipliers, 0, multipliers, 0, atomContainerCount);
-			notifyChanged();
 			return true;
 		}
 
@@ -223,7 +217,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		atomContainers[atomContainerCount] = atomContainer;
 		multipliers[atomContainerCount] = multiplier;
 		atomContainerCount++;
-		notifyChanged();
 	}
 
 	/**
@@ -380,9 +373,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 *
 	 * @param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(IChemObjectChangeEvent event) {
-		notifyChanged(event);
-	}
+	public void stateChanged(IChemObjectChangeEvent event) {}
 
 
         /**

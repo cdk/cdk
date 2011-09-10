@@ -79,7 +79,6 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
 	public void setElectronCount(Integer electronCount)
 	{
 		this.electronCount = electronCount;
-		notifyChanged();
 	}
 
     public Object clone() throws CloneNotSupportedException {

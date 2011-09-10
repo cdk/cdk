@@ -203,7 +203,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     public void setAtoms(IAtom[] atoms) {
         this.atoms = atoms;
         atomCount = atoms.length;
-        notifyChanged();
     }
 
 
@@ -310,7 +309,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         if (atoms[position] == null && atom != null) atomCount++;
         if (atoms[position] != null && atom == null) atomCount--;
         atoms[position] = atom;
-        notifyChanged();
     }
 
 
@@ -337,7 +335,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     public void setOrder(Order order) {
         this.order = order;
-        notifyChanged();
     }
 
 
@@ -362,7 +359,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     public void setStereo(IBond.Stereo stereo) {
         this.stereo = stereo;
-        notifyChanged();
     }
 
 

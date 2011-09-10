@@ -104,7 +104,6 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
 	 */
 	public void setAtom(IAtom atom) {
 		this.atom = atom;
-		notifyChanged();
 	}
 
     /**

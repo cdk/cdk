@@ -175,7 +175,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	public void setProperty(Object description, Object property)
 	{
 		lazyProperties().put(description, property);
-		notifyChanged();
 	}
 
 
@@ -192,8 +191,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		if (properties == null) {
             return;
         }
-        if (lazyProperties().remove(description) != null)
-            notifyChanged();
+        lazyProperties().remove(description);
 	}
 
 	/**
@@ -292,7 +290,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	public void setID(String identifier)
 	{
 		this.identifier = identifier;
-		notifyChanged();
 	}
 
 
@@ -306,7 +303,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	public void setFlag(int flag_type, boolean flag_value)
 	{
 		flags[flag_type] = flag_value;
-		notifyChanged();
 	}
 
 
@@ -337,7 +333,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 			Object key = keys.next();
 			lazyProperties().put(key, properties.get(key));
 		}
-		notifyChanged();
 	}
   
   
@@ -349,7 +344,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
     public void setFlags(boolean[] flagsNew){
         flags=flagsNew;
-        notifyChanged();
     }
 
 	/**

@@ -96,7 +96,6 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 		this.setOfMolecules = setOfMolecules;
 		if (this.setOfMolecules != null)
 		    this.setOfMolecules.addListener(this);
-		notifyChanged();
 	}
 
 	
@@ -127,7 +126,6 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 		this.ringSet = ringSet;
 		if (this.ringSet != null)
 		    this.ringSet.addListener(this);
-		notifyChanged();
 	}
 
     /**
@@ -154,7 +152,6 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
         this.crystal = crystal;
         if (this.crystal != null)
             this.crystal.addListener(this);
-        notifyChanged();
     }
 
     /**
@@ -181,7 +178,6 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
         this.setOfReactions = sor;
         if (this.setOfReactions != null)
             this.setOfReactions.addListener(this);
-        notifyChanged();
     }
     
     /**
@@ -247,9 +243,6 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(IChemObjectChangeEvent event)
-	{
-		notifyChanged(event);
-	}
+	public void stateChanged(IChemObjectChangeEvent event) {}
 }
 
