@@ -95,7 +95,6 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 		}
 		chemModels[chemModelCount] = chemModel;
 		chemModelCount++;
-		chemModel.addListener(this);
 	}
 
 	
@@ -105,7 +104,6 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	 * @param  pos  The position of the ChemModel to be removed.
 	 */
 	public void removeChemModel(int pos) {
-		chemModels[pos].removeListener(this);
 		for (int i = pos; i < chemModelCount - 1; i++) {
 			chemModels[i] = chemModels[i + 1];
 		}

@@ -147,19 +147,15 @@ public class AtomContainer extends ChemObject
 
 		for (int f = 0; f < container.getAtomCount(); f++) {
 			atoms[f] = container.getAtom(f);
-			container.getAtom(f).addListener(this);
 		}
 		for (int f = 0; f < this.bondCount; f++) {
 			bonds[f] = container.getBond(f);
-			container.getBond(f).addListener(this);
 		}
 		for (int f = 0; f < this.lonePairCount; f++) {
 			lonePairs[f] = container.getLonePair(f);
-			container.getLonePair(f).addListener(this);
 		}
 		for (int f = 0; f < this.singleElectronCount; f++) {
 			singleElectrons[f] = container.getSingleElectron(f);
-			container.getSingleElectron(f).addListener(this);
 		}
 	}
 
@@ -208,14 +204,7 @@ public class AtomContainer extends ChemObject
 	 *@see           #getAtom
 	 */
 	public void setAtoms(IAtom[] atoms) {
-	    // unregister this as listener with the old atoms
-	    for (IAtom atom : this.atoms)
-	        if (atom != null) atom.removeListener(this);
-
 		this.atoms = atoms;
-        for (IAtom atom : atoms) {
-            atom.addListener(this);
-        }
 		this.atomCount = atoms.length;
 	}
 
@@ -229,9 +218,6 @@ public class AtomContainer extends ChemObject
 	public void setBonds(IBond[] bonds)
 	{
 		this.bonds = bonds;
-        for (IBond bond : bonds) {
-            bond.addListener(this);
-        }
 		this.bondCount = bonds.length;
 	}
 
@@ -263,7 +249,6 @@ public class AtomContainer extends ChemObject
 	 */
 	public void setAtom(int number, IAtom atom)
 	{
-		atom.addListener(this);
 		atoms[number] = atom;
 	}
 
@@ -1025,7 +1010,6 @@ public class AtomContainer extends ChemObject
 		{
 			growAtomArray();
 		}
-		atom.addListener(this);
 		atoms[atomCount] = atom;
 		atomCount++;
 	}
@@ -1115,7 +1099,6 @@ public class AtomContainer extends ChemObject
 	 */
 	public void removeAtom(int position)
 	{
-		atoms[position].removeListener(this);
 		for (int i = position; i < atomCount - 1; i++)
 		{
 			atoms[i] = atoms[i + 1];
@@ -1195,7 +1178,6 @@ public class AtomContainer extends ChemObject
 	public ILonePair removeLonePair(int position)
 	{
 		ILonePair lp = lonePairs[position];
-		lp.removeListener(this);
 		for (int i = position; i < lonePairCount - 1; i++)
 		{
 			lonePairs[i] = lonePairs[i + 1];
@@ -1224,7 +1206,6 @@ public class AtomContainer extends ChemObject
 	public ISingleElectron removeSingleElectron(int position)
 	{
 		ISingleElectron se = singleElectrons[position];
-		se.removeListener(this);
 		for (int i = position; i < singleElectronCount - 1; i++)
 		{
 			singleElectrons[i] = singleElectrons[i + 1];
@@ -1315,9 +1296,6 @@ public class AtomContainer extends ChemObject
 	 */
 	public void removeAllElements() {
 		removeAllElectronContainers();
-        for (int f = 0; f < getAtomCount(); f++) {
-			getAtom(f).removeListener(this);	
-		}
         atoms = new IAtom[growArraySize];
         atomCount = 0;
 	}
@@ -1329,12 +1307,6 @@ public class AtomContainer extends ChemObject
 	public void removeAllElectronContainers()
 	{
 		removeAllBonds();
-		for (int f = 0; f < getLonePairCount(); f++) {
-			getLonePair(f).removeListener(this);	
-		}
-		for (int f = 0; f < getSingleElectronCount(); f++) {
-			getSingleElectron(f).removeListener(this);	
-		}
 		lonePairs = new ILonePair[growArraySize];
 		singleElectrons = new ISingleElectron[growArraySize];
 		lonePairCount = 0;
@@ -1345,9 +1317,6 @@ public class AtomContainer extends ChemObject
      *  Removes all Bonds from this container.
      */
     public void removeAllBonds() {
-    	for (int f = 0; f < getBondCount(); f++) {
-			getBond(f).removeListener(this);	
-		}
     	bonds = new IBond[growArraySize];
     	bondCount = 0;
     }
@@ -1409,7 +1378,6 @@ public class AtomContainer extends ChemObject
 	public void addLonePair(int atomID)
 	{
 		ILonePair lonePair = getBuilder().newInstance(ILonePair.class,atoms[atomID]);
-		lonePair.addListener(this);
 		addLonePair(lonePair);
 		/* no notifyChanged() here because addElectronContainer() does 
 		   it already */
@@ -1423,7 +1391,6 @@ public class AtomContainer extends ChemObject
 	public void addSingleElectron(int atomID)
 	{
 		ISingleElectron singleElectron = getBuilder().newInstance(ISingleElectron.class,atoms[atomID]);
-		singleElectron.addListener(this);
 		addSingleElectron(singleElectron);
 		/* no notifyChanged() here because addSingleElectron() does 
 		   it already */

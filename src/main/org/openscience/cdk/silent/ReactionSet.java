@@ -108,7 +108,6 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	 * @param  pos  The position of the reaction to be removed.
 	 */
 	public void removeReaction(int pos) {
-		reactions[pos].removeListener(this);
 		for (int i = pos; i < reactionCount - 1; i++) {
 			reactions[i] = reactions[i + 1];
 		}

@@ -84,7 +84,6 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	 */
 	public void addChemSequence(IChemSequence chemSequence)
 	{
-		chemSequence.addListener(this);
 		if (chemSequenceCount + 1 >= chemSequences.length)
 		{
 			growChemSequenceArray();
@@ -102,7 +101,6 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
      */
 	public void removeChemSequence(int pos)
 	{
-		chemSequences[pos].removeListener(this);
 		for (int i = pos; i < chemSequenceCount - 1; i++) {
 			chemSequences[i] = chemSequences[i + 1];
 		}
