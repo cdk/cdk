@@ -41,6 +41,7 @@ import org.openscience.cdk.ChemObjectTest;
 import org.openscience.cdk.ChemSequenceTest;
 import org.openscience.cdk.ConformerContainerTest;
 import org.openscience.cdk.CrystalTest;
+import org.openscience.cdk.DefaultChemObjectBuilderTest;
 import org.openscience.cdk.ElectronContainerTest;
 import org.openscience.cdk.ElementTest;
 import org.openscience.cdk.FragmentAtomTest;
@@ -50,9 +51,9 @@ import org.openscience.cdk.MappingTest;
 import org.openscience.cdk.MoleculeSetTest;
 import org.openscience.cdk.MoleculeTest;
 import org.openscience.cdk.MonomerTest;
-import org.openscience.cdk.DefaultChemObjectBuilderTest;
 import org.openscience.cdk.PolymerTest;
 import org.openscience.cdk.PseudoAtomTest;
+import org.openscience.cdk.ReactionSchemeTest;
 import org.openscience.cdk.ReactionSetTest;
 import org.openscience.cdk.ReactionTest;
 import org.openscience.cdk.RingSetTest;
@@ -103,6 +104,7 @@ import org.openscience.cdk.stereo.TetrahedralChiralityTest;
     PolymerTest.class,
     PseudoAtomTest.class,
     ReactionTest.class,
+    ReactionSchemeTest.class,
     RingTest.class,
     RingSetTest.class,
     AtomContainerSetTest.class,
