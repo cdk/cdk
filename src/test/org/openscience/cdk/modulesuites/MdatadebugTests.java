@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.DatadebugCoverageTest;
+import org.openscience.cdk.debug.DebugAdductFormulaTest;
 import org.openscience.cdk.debug.DebugAminoAcidTest;
 import org.openscience.cdk.debug.DebugAtomContainerSetTest;
 import org.openscience.cdk.debug.DebugAtomContainerTest;
@@ -46,6 +47,9 @@ import org.openscience.cdk.debug.DebugElementTest;
 import org.openscience.cdk.debug.DebugFragmentAtomTest;
 import org.openscience.cdk.debug.DebugIsotopeTest;
 import org.openscience.cdk.debug.DebugLonePairTest;
+import org.openscience.cdk.debug.DebugMappingTest;
+import org.openscience.cdk.debug.DebugMolecularFormulaSetTest;
+import org.openscience.cdk.debug.DebugMolecularFormulaTest;
 import org.openscience.cdk.debug.DebugMoleculeSetTest;
 import org.openscience.cdk.debug.DebugMoleculeTest;
 import org.openscience.cdk.debug.DebugMonomerTest;
@@ -55,6 +59,7 @@ import org.openscience.cdk.debug.DebugPDBPolymerTest;
 import org.openscience.cdk.debug.DebugPDBStructureTest;
 import org.openscience.cdk.debug.DebugPolymerTest;
 import org.openscience.cdk.debug.DebugPseudoAtomTest;
+import org.openscience.cdk.debug.DebugReactionSchemeTest;
 import org.openscience.cdk.debug.DebugReactionSetTest;
 import org.openscience.cdk.debug.DebugReactionTest;
 import org.openscience.cdk.debug.DebugRingSetTest;
@@ -91,11 +96,13 @@ import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
     DebugFragmentAtomTest.class,
     DebugIsotopeTest.class,
     DebugLonePairTest.class,
+    DebugMappingTest.class,
     DebugMoleculeTest.class,
     DebugMonomerTest.class,
     DebugPseudoAtomTest.class,
     DebugPolymerTest.class,
     DebugReactionTest.class,
+    DebugReactionSchemeTest.class,
     DebugRingTest.class,
     DebugRingSetTest.class,
     DebugAtomContainerSetTest.class,
@@ -103,6 +110,9 @@ import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
     DebugReactionSetTest.class,
     DebugSingleElectronTest.class,
     DebugStrandTest.class,
+    DebugAdductFormulaTest.class,
+    DebugMolecularFormulaTest.class,
+    DebugMolecularFormulaSetTest.class,
         
     // tests from test.protein.data
     DebugPDBAtomTest.class,
