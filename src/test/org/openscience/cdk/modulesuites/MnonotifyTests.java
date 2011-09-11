@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.NonotifyCoverageTest;
+import org.openscience.cdk.nonotify.NNAdductFormulaTest;
 import org.openscience.cdk.nonotify.NNAminoAcidTest;
 import org.openscience.cdk.nonotify.NNAtomContainerSetTest;
 import org.openscience.cdk.nonotify.NNAtomContainerTest;
@@ -45,6 +46,7 @@ import org.openscience.cdk.nonotify.NNElementTest;
 import org.openscience.cdk.nonotify.NNFragmentAtomTest;
 import org.openscience.cdk.nonotify.NNIsotopeTest;
 import org.openscience.cdk.nonotify.NNLonePairTest;
+import org.openscience.cdk.nonotify.NNMappingTest;
 import org.openscience.cdk.nonotify.NNMolecularFormulaSetTest;
 import org.openscience.cdk.nonotify.NNMolecularFormulaTest;
 import org.openscience.cdk.nonotify.NNMoleculeSetTest;
@@ -93,6 +95,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilderTest;
     NNFragmentAtomTest.class,
     NNIsotopeTest.class,
     NNLonePairTest.class,
+    NNMappingTest.class,
     NNMoleculeTest.class,
     NNMonomerTest.class,
     NNPseudoAtomTest.class,
@@ -106,6 +109,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilderTest;
     NNReactionSchemeTest.class,
     NNSingleElectronTest.class,
     NNStrandTest.class,
+    NNAdductFormulaTest.class,
     NNMolecularFormulaTest.class,
     NNMolecularFormulaSetTest.class,
         
