@@ -95,6 +95,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 
 	public void removeIsotope(IIsotope isotope) {
 	    logger.debug("Removing this isotope: ", isotope);
+	    super.removeIsotope(isotope);
     }
 
 	public void removeProperty(Object description) {
