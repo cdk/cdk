@@ -3519,6 +3519,515 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     		Assert.assertNotNull(type);
     	}
     }
+    
+    @Test
+    public void test_S_sp3d1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.DOUBLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        mol.addBond(b5);
+      
+      
+        String[] expectedTypes = {"S.sp3d1", "C.sp3", "C.sp3", "C.sp2", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_S_inyl_2() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+      
+      
+        String[] expectedTypes = {"S.inyl.2", "C.sp2", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_S_2minus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        a1.setFormalCharge(-2);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"S.2minus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_S_sp3() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+      
+      
+        String[] expectedTypes = {"S.3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_S_sp3_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+      
+      
+        String[] expectedTypes = {"S.sp3.4", "C.sp2", "C.sp2", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * Bromic acid (CHEBI:49382).
+     * 
+     * @cdk.inchi InChI=1S/BrHO3/c2-1(3)4/h(H,2,3,4)
+     */
+    @Test
+    public void test_Br_3() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Br");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"O");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"O");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"O");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+      
+      
+        String[] expectedTypes = {"Br.3", "O.sp2", "O.sp2", "O.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Zn_metallic() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Zn");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Zn.metallic"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Zn_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Zn");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+      
+      
+        String[] expectedTypes = {"Zn.1", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * Vanadate. PDB HET ID : VO4.
+     * 
+     * @cdk.inchi InChI=1S/4O.V/q;3*-1;
+     */
+    @Test
+    public void test_V_3minus_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"V");
+        a1.setFormalCharge(-3);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"O");
+        a2.setFormalCharge(-1);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"O");
+        a3.setFormalCharge(-1);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"O");
+        a4.setFormalCharge(-1);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"O");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.DOUBLE);
+        mol.addBond(b4);
+      
+      
+        String[] expectedTypes = {"V.3minus.4", "O.minus", "O.minus", "O.minus", "O.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * Hexafluoroaluminate
+     * @cdk.inchi InChI=1S/Al.6FH.3Na/h;6*1H;;;/q+3;;;;;;;3*+1/p-6
+     */
+    @Test
+    public void test_Al_3minus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Al");
+        a1.setFormalCharge(-3);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        a7.setFormalCharge(0);
+        mol.addAtom(a7);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a1, a7, IBond.Order.SINGLE);
+        mol.addBond(b6);
+      
+      
+        String[] expectedTypes = {"Al.3minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    
+    @Test
+    public void testSe_sp3d1_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class, a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class, a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+
+        String[] expectedTypes1 = {"Se.sp3d1.4", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes1, mol);
+    }
+
+    @Test
+    public void testSe_sp3_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class, a1, a4, IBond.Order.DOUBLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class, a1, a5, IBond.Order.DOUBLE);
+        mol.addBond(b4);
+
+        String[] expectedTypes = {"Se.sp3.4", "C.sp3", "C.sp3", "C.sp2", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void testSe_sp2_2() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+
+        String[] expectedTypes2 = {"Se.sp2.2", "C.sp2", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes2, mol);
+    }
+
+    @Test
+    public void testSe_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "Se");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+
+        String[] expectedTypes3 = {"C.sp2", "Se.1"};
+        assertAtomTypes(testedAtomTypes, expectedTypes3, mol);
+    }
+
+    @Test
+    public void testSe_3() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+
+        String[] expectedTypes4 = {"Se.3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes4, mol);
+    }
+
+    @Test
+    public void testSe_sp3_3() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "Se");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class, a2, a4, IBond.Order.DOUBLE);
+        mol.addBond(b3);
+
+        String[] expectedTypes5 = {"C.sp3", "Se.sp3.3", "C.sp3", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes5, mol);
+    }
+
+    @Test
+    public void testSe_4plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setFormalCharge(4);
+        mol.addAtom(a1);
+
+        String[] expectedTypes6 = {"Se.4plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes6, mol);
+    }
+
+    @Test
+    public void testSe_plus_3() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "Se");
+        a2.setFormalCharge(1);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class, a2, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+
+        String[] expectedTypes7 = {"C.sp3", "Se.plus.3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes7, mol);
+    }
+
+    @Test
+    public void testSe_5() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class, a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class, a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class, a1, a6, IBond.Order.SINGLE);
+        mol.addBond(b5);
+
+        String[] expectedTypes8 = {"Se.5", "C.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes8, mol);
+    }
+  
 
     /**
      * @cdk.inchi InChI=1S/H2Te/h1H2
@@ -3646,6 +4155,64 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test
+    public void test_Sb_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Sb");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a2, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a2, a5, IBond.Order.DOUBLE);
+        mol.addBond(b4);
+      
+        String[] expectedTypes = {"C.sp3", "Sb.4", "C.sp3", "C.sp3", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Sb_3() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Sb");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+      
+        String[] expectedTypes = {"Sb.3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @Test
     public void test_B_3plus() throws Exception {
@@ -3677,6 +4244,20 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
       
       
         String[] expectedTypes = {"B.3plus", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+
+    @Test
+    public void test_Sr_2plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Sr");
+        a1.setFormalCharge(2);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Sr.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -3896,6 +4477,378 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
+    
+    @Test
+    public void test_Ti_2() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ti");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+      
+      
+        String[] expectedTypes = {"Ti.2", "C.sp2", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    @Test
+    public void test_Ni_metallic() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ni");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Ni.metallic"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Ni_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Ni");
+        a2.setFormalCharge(1);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+      
+      
+        String[] expectedTypes = {"C.sp3", "Ni.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Pb_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Pb");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+      
+      
+        String[] expectedTypes = {"Pb.1", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Pb_2plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Pb");
+        a1.setFormalCharge(2);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Pb.2plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Pb_neutral() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Pb");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Pb.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Tl_neutral() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Tl");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Tl"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Tl_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Tl");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+      
+      
+        String[] expectedTypes = {"C.sp3", "Tl.1"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Tl_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Tl");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Tl.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Mg_neutral_2() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Mg");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+      
+        String[] expectedTypes = {"C.sp3", "Mg.neutral.2", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Mg_neutral_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"Mg");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+      
+      
+        String[] expectedTypes = {"C.sp3", "C.sp3", "Mg.neutral", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Mg_neutral_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Mg");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+      
+      
+        String[] expectedTypes = {"Mg.neutral.1", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Gd_3plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Gd");
+        a1.setFormalCharge(3);
+        mol.addAtom(a1);
+      
+        String[] expectedTypes = {"Gd.3plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Mo_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Mo");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.DOUBLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+      
+      
+        String[] expectedTypes = {"Mo.4", "C.sp2", "C.sp2", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Mo_metallic() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Mo");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Mo.metallic"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+
+    @Test
+    public void test_Pt_2() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Pt");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+      
+      
+        String[] expectedTypes = {"Pt.2", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Pt_2plus_4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Pt");
+        a1.setFormalCharge(2);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+      
+        String[] expectedTypes = {"Pt.2plus.4", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Cu_metallic() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Cu");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Cu.metallic"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Cu_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Cu");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+      
+      
+        String[] expectedTypes = {"Cu.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Cu_1() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Cu");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+      
+      
+        String[] expectedTypes = {"Cu.1", "C.sp3",};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @Test
     public void test_Ra() throws Exception {
@@ -4048,6 +5001,38 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
       
       
         String[] expectedTypes = {"Ag.neutral"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * For example PubChem CID 3808730.
+     */
+    @Test
+    public void test_Ag_plus() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ag");
+        a1.setFormalCharge(1);
+        mol.addAtom(a1);
+
+        String[] expectedTypes = {"Ag.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * For example PubChem CID 139654.
+     */
+    @Test
+    public void test_Ag_covalent() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ag");
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"Cl");
+        mol.addAtom(a2);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+      
+        String[] expectedTypes = {"Ag.1", "Cl"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -4837,6 +5822,232 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypesB = {"Fe.3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypesB, mol);
     }
+
+    /**
+     * @cdk.inchi InChI=1S/C8H16S/c1-6-3-8-4-7(6)5-9(8)2/h6-9H,3-5H2,1-2H3/t6-,7-,8+/m0/s1
+     */
+    @Test
+    public void testSulphur4() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"S");
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a7);
+        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a8);
+        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a9);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a8, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b5 = builder.newInstance(IBond.class,a2, a4, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a2, a7, IBond.Order.SINGLE);
+        mol.addBond(b6);
+        IBond b8 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b8);
+        IBond b9 = builder.newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b9);
+        IBond b10 = builder.newInstance(IBond.class,a3, a6, IBond.Order.SINGLE);
+        mol.addBond(b10);
+        IBond b14 = builder.newInstance(IBond.class,a5, a7, IBond.Order.SINGLE);
+        mol.addBond(b14);
+        IBond b15 = builder.newInstance(IBond.class,a5, a9, IBond.Order.SINGLE);
+        mol.addBond(b15);
+
+        String[] expectedTypes = {
+            "S.anyl", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * One of the ruthenium atom types in ruthenium red (CHEBI:34956).
+     */
+    @Test
+    public void test_Ru_3minus_6() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ru");
+        a1.setFormalCharge(-3);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"N");
+        a2.setFormalCharge(+1);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"N");
+        a3.setFormalCharge(+1);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"N");
+        a4.setFormalCharge(+1);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"N");
+        a5.setFormalCharge(+1);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"N");
+        a6.setFormalCharge(+1);
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"O");
+        a7.setFormalCharge(0);
+        mol.addAtom(a7);
+        IBond b1 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a6, a1, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a7, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b6);
+        
+        String[] expectedTypes = {"Ru.3minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * One of the ruthenium atom types in ruthenium red (CHEBI:34956).
+     */
+    @Test
+    public void test_Ru_2minus_6() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ru");
+        a1.setFormalCharge(-2);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"N");
+        a2.setFormalCharge(+1);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"N");
+        a3.setFormalCharge(+1);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"N");
+        a4.setFormalCharge(+1);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"N");
+        a5.setFormalCharge(+1);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"O");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"O");
+        a7.setFormalCharge(0);
+        mol.addAtom(a7);
+        IBond b1 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a6, a1, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a7, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b6);
+        
+        String[] expectedTypes = {"Ru.2minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3", "O.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test
+    public void test_Ru_10plus_6() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ru");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        a7.setFormalCharge(0);
+        mol.addAtom(a7);
+        IBond b1 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a6, a1, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a7, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b6);
+      
+        String[] expectedTypes = {"Ru.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_Ru_6() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"Ru");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        a7.setFormalCharge(0);
+        mol.addAtom(a7);
+        IBond b1 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a7, a1, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b6);
+      
+        String[] expectedTypes = {"Ru.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
     
     /*
      * This method *must* be the last method in the class.
@@ -4844,5 +6055,5 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test public void countTestedAtomTypes() {
         super.countTestedAtomTypes(testedAtomTypes);
     }
-
+    
 }

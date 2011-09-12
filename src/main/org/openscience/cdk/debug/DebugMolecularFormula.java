@@ -65,7 +65,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 
 	public int getIsotopeCount(IIsotope isotope) {
 	    logger.debug("Getting isotope count for: ", isotope);
-	    return super.getIsotopeCount();
+	    return super.getIsotopeCount(isotope);
     }
 
 	public int getIsotopeCount() {
@@ -95,6 +95,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 
 	public void removeIsotope(IIsotope isotope) {
 	    logger.debug("Removing this isotope: ", isotope);
+	    super.removeIsotope(isotope);
     }
 
 	public void removeProperty(Object description) {
