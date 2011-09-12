@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.graph;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -42,15 +44,16 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.keyword permutation
  * @cdk.module standard
  */
-
+@TestClass("AtomContainerAtomPermutorTest")
 public class AtomContainerAtomPermutor extends AtomContainerPermutor { 
     
     /**
      * A permutor wraps the original atom container, and produces cloned
      * (and permuted!) copies on demand.
      * 
-     * @param atomContainer
+     * @param atomContainer the atom container to permute
      */
+    @TestMethod("constructorTest")
     public AtomContainerAtomPermutor(IAtomContainer atomContainer) {
         super(atomContainer.getAtomCount(), atomContainer);
     }
@@ -61,6 +64,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor {
      * @param permutation the permutation to use
      * @return the 
      */
+    @TestMethod("containerFromPermutationTest")
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {
             IAtomContainer permutedContainer = 
