@@ -24,6 +24,9 @@ package org.openscience.cdk.graph;
 
 import java.util.Random;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * General permutation generator, that uses orderly generation by ranking and
  * unranking. The basic idea is that all permutations of length N can be ordered
@@ -49,6 +52,7 @@ import java.util.Random;
  * @cdk.module     standard
  * 
  */
+@TestClass("PermutorTest")
 public class Permutor {
     
     /**
@@ -77,6 +81,7 @@ public class Permutor {
      * 
      * @param size the size of the permutations to generate
      */
+    @TestMethod("constructorTest")
     public Permutor(int size) {
         this.currentRank = 0;
         this.size = size;
@@ -84,6 +89,7 @@ public class Permutor {
         this.random = new Random();
     }
     
+    @TestMethod("hasNextTest")
     public boolean hasNext() {
         return this.currentRank < this.maxRank;
     }
@@ -93,6 +99,7 @@ public class Permutor {
      * 
      * @param rank the order of the permutation in the list
      */
+    @TestMethod("setRankTest")
     public void setRank(int rank) {
         this.currentRank = rank;
     }
@@ -102,8 +109,19 @@ public class Permutor {
      * 
      * @param permutation the permutation to use, as an int array
      */
+    @TestMethod("setPermutationTest")
     public void setPermutation(int[] permutation) {
         this.currentRank = this.rankPermutationLexicographically(permutation);
+    }
+    
+    /**
+     * Get the current rank.
+     * 
+     * @return the current rank
+     */
+    @TestMethod("getRankTest")
+    public int getRank() {
+        return currentRank;
     }
     
     /**
@@ -123,6 +141,7 @@ public class Permutor {
      * 
      * @return the next permutation
      */
+    @TestMethod("countGeneratedPermutations")
     public int[] getNextPermutation() {
         this.currentRank++;
         return this.getCurrentPermutation();
@@ -133,6 +152,7 @@ public class Permutor {
      * 
      * @return the permutation as an int array
      */
+    @TestMethod("getCurrentPermutationTest")
     public int[] getCurrentPermutation() {
         return this.unrankPermutationLexicographically(currentRank, size);
     }
@@ -142,6 +162,7 @@ public class Permutor {
      *  
      * @return the maximum number of permutations
      */
+    @TestMethod("maxRankTest")
     public int calculateMaxRank() {
         return factorial(size) - 1;
     }
@@ -168,16 +189,18 @@ public class Permutor {
         int rank = 0;
         int n = permutation.length;
         int[] counter = new int[n + 1];
-        System.arraycopy(permutation, 0, counter, 1, n);
+        for (int i = 1; i < permutation.length; i++) {
+            counter[i] = permutation[i - 1] + 1;
+        }
         for (int j = 1; j <= n; j++) {
-            rank = rank + ((counter[j] - 1) * factorial(n - j));
-            for (int i = j + 1; i < n; i++) {
+            rank += (counter[j] - 1) * factorial(n - j);
+            for (int i = j + 1; i <= n; i++) {
                 if (counter[i] > counter[j]) {
                     counter[i]--;
                 }
             }
         }
-        return rank;
+        return rank + 1;
     }
     
     /**
