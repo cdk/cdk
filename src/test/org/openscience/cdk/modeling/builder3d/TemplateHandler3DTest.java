@@ -30,6 +30,7 @@ import java.util.StringTokenizer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -70,13 +71,13 @@ public class TemplateHandler3DTest extends CDKTestCase {
         
 		String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        List<BitSet> data= new TemplateExtractor().makeFingerprintsFromSdf(
+        List<IBitFingerprint> data= new TemplateExtractor().makeFingerprintsFromSdf(
             true,false, new HashMap<String,Integer>(),
             new BufferedReader ( new InputStreamReader ( ins ) ),
             10
         );
         for(int i=0; i<data.size(); i++){
-        	BitSet bs = data.get(i);
+        	IBitFingerprint bs = data.get(i);
         	Assert.assertEquals(bsmb[i], bs);
         }		
 	}
