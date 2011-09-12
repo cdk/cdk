@@ -65,7 +65,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 
 	public int getIsotopeCount(IIsotope isotope) {
 	    logger.debug("Getting isotope count for: ", isotope);
-	    return super.getIsotopeCount();
+	    return super.getIsotopeCount(isotope);
     }
 
 	public int getIsotopeCount() {
