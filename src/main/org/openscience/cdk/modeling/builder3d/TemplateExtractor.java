@@ -372,7 +372,7 @@ public class TemplateExtractor {
 		}
 	}
 
-	public List<BitSet> makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond,
+	public List<IBitFingerprint> makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond,
 	        Map<String,Integer> timings, BufferedReader fin, int limit) throws Exception {
 		AllRingsFinder allRingsFinder = new AllRingsFinder();
 		allRingsFinder.setTimeout(10000); // 10 seconds
@@ -469,7 +469,7 @@ public class TemplateExtractor {
 		System.out.println("Start make fingerprint from file:" + dataFileIn
 				+ " ...");
 		BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
-		List<BitSet> data = makeFingerprintsFromSdf(anyAtom, anyAtomAnyBond, timings, fin,-1);
+		List<IBitFingerprint> data = makeFingerprintsFromSdf(anyAtom, anyAtomAnyBond, timings, fin,-1);
 		BufferedWriter fout = null;
 		try {
 			fout = new BufferedWriter(new FileWriter(dataFileOut));
