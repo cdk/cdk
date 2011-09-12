@@ -41,7 +41,7 @@ import java.util.Random;
  * 
  * <p>The algorithms used are from the book "Combinatorial Generation : 
  * Algorithms, Generation, and Search" (or C.A.G.E.S.) by D.L. Kreher and D.R.
- * Stinson.</p>
+ * Stinson. CRC Press (18 Dec 1998). ISBN-13 : 978-0849339882.</p>
  * 
  * @author         maclean
  * @cdk.created    2009-09-09
