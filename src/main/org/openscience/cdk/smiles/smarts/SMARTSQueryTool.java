@@ -20,6 +20,13 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -43,13 +50,6 @@ import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching functionality. <p/> User code that wants to do
@@ -137,6 +137,8 @@ public class SMARTSQueryTool {
         try {
             initializeQuery();
         } catch (TokenMgrError error) {
+            throw new IllegalArgumentException("Error parsing SMARTS", error);
+        } catch (CDKException error) {
             throw new IllegalArgumentException("Error parsing SMARTS", error);
         }
     }
@@ -480,7 +482,7 @@ public class SMARTSQueryTool {
         }
     }
 
-    private void initializeQuery() {
+    private void initializeQuery() throws CDKException {
         matchingAtoms = null;
         query = cache.get(smarts);
         if (query == null) {
