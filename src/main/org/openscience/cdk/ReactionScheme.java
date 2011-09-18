@@ -25,7 +25,10 @@
 package org.openscience.cdk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IReaction;
@@ -125,6 +128,18 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
 		for (IReaction reaction : reactions()) {
 			clone.addReaction((IReaction)reaction.clone());
 		}
+        // clone the properties
+        if (getProperties() != null) {
+            Map<Object, Object> properties = getProperties();
+            Map<Object, Object> clonedHashtable = new HashMap<Object, Object>();
+            Iterator<Object> keys = properties.keySet().iterator();
+            while (keys.hasNext()) {
+                Object key = keys.next();
+                Object value = properties.get(key);
+                clonedHashtable.put(key, value);
+            }
+            clone.setProperties(clonedHashtable);
+        }
 		
 		return clone;
 	}

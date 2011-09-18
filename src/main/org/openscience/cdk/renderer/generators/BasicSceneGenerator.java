@@ -43,6 +43,22 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
 	/**
+	 * The width of the head of arrows.
+	 *
+	 * @author egonw
+	 */
+    public static class ArrowHeadWidth extends
+    AbstractGeneratorParameter<Double> {
+    	/** Returns the default arrow head width.
+    	 * @return 10.0 */
+    	public Double getDefault() {
+    		return 10.0;
+    	}
+    }
+    private IGeneratorParameter<Double> arrowHeadWidth =
+    	new ArrowHeadWidth();
+
+	/**
 	 * Determines if tooltips are to be shown.
 	 */
     public static class ShowTooltip extends 
@@ -216,7 +232,8 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
                         scale,
                         fitToScreen,
                         showMoleculeTitle,
-                        showTooltip
+                        showTooltip,
+                        arrowHeadWidth
                 }
         );
     }
