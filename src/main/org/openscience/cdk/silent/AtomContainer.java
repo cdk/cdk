@@ -546,7 +546,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public IAtom getLastAtom()
 	{
-		return getAtomCount() > 0 ? (Atom)atoms[getAtomCount() - 1] : null;
+		return getAtomCount() > 0 ? (IAtom)atoms[getAtomCount() - 1] : null;
 	}
 
 
@@ -1530,7 +1530,7 @@ public class AtomContainer extends ChemObject
 		clone.removeAllElements();
         // clone all atoms
 		for (int f = 0; f < getAtomCount(); f++) {
-			clone.addAtom((Atom) getAtom(f).clone());
+			clone.addAtom((IAtom) getAtom(f).clone());
 		}
         // clone bonds
 		IBond bond;
