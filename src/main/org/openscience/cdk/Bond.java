@@ -152,7 +152,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @param stereo a descriptor the stereochemical orientation of this bond
      */
     public Bond(IAtom atom1, IAtom atom2, Order order, IBond.Stereo stereo) {
-        atoms = new Atom[2];
+        atoms = new IAtom[2];
         atoms[0] = atom1;
         atoms[1] = atom2;
         this.order = order;
