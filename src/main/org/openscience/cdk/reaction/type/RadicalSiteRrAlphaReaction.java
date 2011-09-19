@@ -30,9 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Ring;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -43,6 +40,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
@@ -135,15 +133,15 @@ public class RadicalSiteRrAlphaReaction extends ReactionEngine implements IReact
 			throw new CDKException("RadicalSiteRrAlphaReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((Molecule) reactant);
+		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
-			Ring ring = (Ring)ringSet.getAtomContainer(ir);
+			IRing ring = (IRing)ringSet.getAtomContainer(ir);
 			for (int jr = 0; jr < ring.getAtomCount(); jr++) {
 				IAtom aring = ring.getAtom(jr);
 				aring.setFlag(CDKConstants.ISINRING, true);
@@ -161,10 +159,10 @@ public class RadicalSiteRrAlphaReaction extends ReactionEngine implements IReact
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres((Molecule) reactant, atomi, 1, true);
+				hcg.getSpheres((IMolecule) reactant, atomi, 1, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(1);
 				
-				hcg.getSpheres((Molecule) reactant, atomi, 2, true);
+				hcg.getSpheres((IMolecule) reactant, atomi, 2, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(2).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();
@@ -224,10 +222,10 @@ public class RadicalSiteRrAlphaReaction extends ReactionEngine implements IReact
 			IAtom  atomi = atomis.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				
-				hcg.getSpheres((Molecule) reactant, atomi, 1, true);
+				hcg.getSpheres((IMolecule) reactant, atomi, 1, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(1);
 				
-				hcg.getSpheres((Molecule) reactant, atomi, 2, true);
+				hcg.getSpheres((IMolecule) reactant, atomi, 2, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(2).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

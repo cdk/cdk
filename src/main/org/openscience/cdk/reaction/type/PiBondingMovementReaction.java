@@ -28,8 +28,6 @@ package org.openscience.cdk.reaction.type;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -131,7 +129,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 			throw new CDKException("PiBondingMovementReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
@@ -145,7 +143,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 //		}
 		
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((Molecule) reactant);
+		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing) ringSet.getAtomContainer(ir);
 	        
@@ -174,7 +172,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 						continue;
 					
 						
-					IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+					IReaction reaction = reactants.getBuilder().newInstance(IReaction.class);
 					reaction.addReactant(reactant);
 			        
 					IMolecule reactantCloned;
@@ -216,7 +214,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 */
     private void setActiveCenters(IMolecule reactant) throws CDKException {
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((Molecule) reactant);
+		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing) ringSet.getAtomContainer(ir);
 			//only rings with even number of atoms
