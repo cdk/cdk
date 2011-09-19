@@ -36,6 +36,10 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AtomContainerAtomPermutorTest extends CDKTestCase {
     
+    public AtomContainerAtomPermutorTest() {
+        super();
+    }
+    
     @Test
     public void constructorTest() {
         IAtomContainer atomContainer = new AtomContainer();
