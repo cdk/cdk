@@ -645,6 +645,7 @@ public class DescriptorEngine {
         String[] jars;
         if (jarFileNames == null) {
             String classPath = System.getProperty("java.class.path");
+            logger.debug("Dictionary classpath: ", classPath);
             jars = classPath.split(File.pathSeparator);
         } else {
             jars = jarFileNames;
