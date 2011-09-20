@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.Log4jCoverageTest;
 import org.openscience.cdk.tools.LoggingToolTest;
+import org.openscience.cdk.tools.LoggingToolTestDebugTrue;
 
 /**
  * TestSuite that runs the tests for the CDK log4j module.
@@ -34,6 +35,7 @@ import org.openscience.cdk.tools.LoggingToolTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     Log4jCoverageTest.class,
-    LoggingToolTest.class
+    LoggingToolTest.class,
+    LoggingToolTestDebugTrue.class
 })
 public class Mlog4jTests {}

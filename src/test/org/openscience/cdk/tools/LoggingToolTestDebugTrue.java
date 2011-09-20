@@ -25,11 +25,11 @@ import org.junit.Test;
 /**
  * @cdk.module test-log4j
  */
-public class LoggingToolTest extends AbstractLoggingToolTest {
+public class LoggingToolTestDebugTrue extends AbstractLoggingToolTest {
 	
     public LoggingTool getLoggingTool() {
         String originalValue = System.getProperty("cdk.debugging");
-        System.setProperty("cdk.debugging", "false");
+        System.setProperty("cdk.debugging", "true");
         LoggingTool logger = new LoggingTool(this);
         if (originalValue != null)
             System.setProperty("cdk.debugging", originalValue);
