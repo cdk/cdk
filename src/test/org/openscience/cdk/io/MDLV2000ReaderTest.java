@@ -877,4 +877,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1, tritiumCount);
     }
 
+    /**
+     * Test that R-groups at higher atom numbers (>9) are read correctly
+     */
+    @Test public void testRGroupHighAtomNumber() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/brenda_molfile_rgroup.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IMolecule molecule = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        reader.read(molecule);
+        Assert.assertEquals("R", molecule.getAtom(55).getSymbol() );
+    }
 }
