@@ -20,26 +20,37 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point3d;
 
 /**
  * Tests for molecular descriptors.
@@ -341,6 +352,23 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
             ") The descriptor does not give the same results depending on " +
             "it being passed an IMolecule or an IAtomContainer.";
         assertEqualOutput(v1, v2, errorMessage);
+    }
+
+    /**
+     * Descriptors should not throw Exceptions on disconnected structures,
+     * but return NA instead.
+     */
+    @Test
+    public void testDisconnectedStructureHandling() throws Exception {
+        IAtomContainer disconnected = new AtomContainer();
+        IAtom chloride = new Atom("Cl");
+        chloride.setFormalCharge(-1);
+        disconnected.addAtom(chloride);
+        IAtom sodium = new Atom("Na");
+        sodium.setFormalCharge(+1);
+        disconnected.addAtom(sodium);
+
+        IDescriptorResult v1 = descriptor.calculate(disconnected).getValue();
     }
 
     @Ignore
