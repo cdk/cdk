@@ -35,12 +35,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -61,7 +61,7 @@ public class SpanningTreeTest extends CDKTestCase {
     		IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
     		IChemSequence seq = chemFile.getChemSequence(0);
     		IChemModel model = seq.getChemModel(0);
-    		IMolecule azuleneMolecule = model.getMoleculeSet().getMolecule(0);
+    		IAtomContainer azuleneMolecule = model.getMoleculeSet().getAtomContainer(0);
     		Assert.assertEquals(10, azuleneMolecule.getAtomCount());
     		Assert.assertEquals(11, azuleneMolecule.getBondCount());
     		azulene = new SpanningTree(azuleneMolecule);

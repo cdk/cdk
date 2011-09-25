@@ -35,12 +35,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -115,12 +115,12 @@ public class JmolTest extends CDKTestCase {
         Assert.assertEquals(34, seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
+        Assert.assertEquals(1, som.getAtomContainerCount());
 
         // test the molecule
-        IMolecule mol = som.getMolecule(0);
+        IAtomContainer mol = som.getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(mol.getAtomCount(), 25);
         Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -147,10 +147,10 @@ public class JmolTest extends CDKTestCase {
         //logger.debug("NO models: " + seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        Assert.assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+        Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
 
         // test the molecule
-        IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(mol.getAtomCount(), 6);
         Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -176,11 +176,11 @@ public class JmolTest extends CDKTestCase {
         //logger.debug("NO models: " + seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        IMoleculeSet som = model.getMoleculeSet();
-        Assert.assertEquals(1, som.getMoleculeCount());
+        IAtomContainerSet som = model.getMoleculeSet();
+        Assert.assertEquals(1, som.getAtomContainerCount());
 
         // test the molecule
-        IMolecule mol = som.getMolecule(0);
+        IAtomContainer mol = som.getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(mol.getAtomCount(), 6);
         Assert.assertTrue(GeometryTools.has3DCoordinates(mol));

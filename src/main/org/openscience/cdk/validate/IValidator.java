@@ -26,6 +26,7 @@ package org.openscience.cdk.validate;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -36,9 +37,7 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
@@ -62,9 +61,9 @@ public interface IValidator {
     public ValidationReport validateElectronContainer(IElectronContainer subject);
     public ValidationReport validateElement(IElement subject);
     public ValidationReport validateIsotope(IIsotope subject);
-    public ValidationReport validateMolecule(IMolecule subject);
+    public ValidationReport validateMolecule(IAtomContainer subject);
     public ValidationReport validateReaction(IReaction subject);
-    public ValidationReport validateMoleculeSet(IMoleculeSet subject);
+    public ValidationReport validateMoleculeSet(IAtomContainerSet subject);
     public ValidationReport validateReactionSet(IReactionSet subject);
     
 }

@@ -20,25 +20,6 @@
  */
 package org.openscience.cdk.protein;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBioPolymer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.protein.data.PDBAtom;
-import org.openscience.cdk.tools.GridGenerator;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
-
-import javax.vecmath.Point3d;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -49,6 +30,26 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.tools.GridGenerator;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * The detection of pocket and cavities in a bioPolymer is done similar to the program 
@@ -135,8 +136,8 @@ public class ProteinPocketFinder {
 			// Get molecule from ChemFile
 			IChemSequence chemSequence = chemFile.getChemSequence(0);
 			IChemModel chemModel = chemSequence.getChemModel(0);
-			IMoleculeSet setOfMolecules = chemModel.getMoleculeSet();
-			protein = (IBioPolymer) setOfMolecules.getMolecule(0);
+			IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
+			protein = (IBioPolymer) setOfMolecules.getAtomContainer(0);
 		} catch (Exception exc) {
 			logger.error("Could not read BioPolymer from file>"
 					+ biopolymerFile + " due to: " + exc.getMessage());

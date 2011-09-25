@@ -34,14 +34,14 @@ import org.junit.Test;
  */
 public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
 
-    @Test public void testSetMoleculeSet_IMoleculeSet() {
+    @Test public void testSetMoleculeSet_IAtomContainerSet() {
 	    IChemModel chemModel = (IChemModel)newChemObject();
 	    IMoleculeSet crystal = chemModel.getBuilder().newInstance(IMoleculeSet.class);
         chemModel.setMoleculeSet(crystal);
         Assert.assertEquals(crystal, chemModel.getMoleculeSet());
     }
     @Test public void testGetMoleculeSet() {
-    	testSetMoleculeSet_IMoleculeSet();
+    	testSetMoleculeSet_IAtomContainerSet();
     }
     
     @Test public void testSetReactionSet_IReactionSet() {

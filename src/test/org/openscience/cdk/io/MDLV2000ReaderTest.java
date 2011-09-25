@@ -26,7 +26,6 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.io.StringReader;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,6 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -47,6 +45,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -137,10 +136,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
 
-        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals(4, m.getAtomCount());
         Assert.assertEquals(2, m.getBondCount());
@@ -387,10 +386,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
 
-        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals(9, m.getAtomCount());
         Assert.assertEquals(9, m.getBondCount());
@@ -457,8 +456,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = reader.read(new ChemFile());
-        Assert.assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge().intValue());
-        Assert.assertEquals(-1, chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge().intValue());
+        IAtomContainer container = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0); 
+        Assert.assertEquals(1, container.getAtom(6).getFormalCharge().intValue());
+        Assert.assertEquals(-1, container.getAtom(8).getFormalCharge().intValue());
     }
 
     @Test public void testEmptyString() throws Exception {

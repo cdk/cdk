@@ -36,6 +36,8 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
@@ -54,7 +56,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
@@ -65,7 +67,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(3, mol.getAtomCount());
         IAtom atom = mol.getAtom(1);
@@ -76,7 +78,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
@@ -87,7 +89,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
@@ -103,7 +105,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(3, mol.getAtomCount());
         Assert.assertEquals(2, mol.getBondCount());
@@ -120,7 +122,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(3, mol.getAtomCount());
         Assert.assertEquals(2, mol.getBondCount());
@@ -135,7 +137,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
     @Test public void testBondAromatic() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
@@ -148,7 +150,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
@@ -171,7 +173,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
         
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertNotNull(mol.getAtom(0).getPoint2d());
@@ -184,7 +186,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
         
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertNull(mol.getAtom(0).getPoint2d());
@@ -197,7 +199,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
         
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertNull(mol.getAtom(0).getPoint3d());
@@ -211,7 +213,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
           "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
           
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
         
         Assert.assertEquals(3, mol.getAtomCount());
         IAtom atom1 = mol.getAtom(0);
@@ -228,7 +230,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
           "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
           
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
         
         Assert.assertEquals(3, mol.getAtomCount());
         IAtom atom1 = mol.getAtom(0);
@@ -281,7 +283,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals("m1", mol.getID());
     }
@@ -296,11 +298,11 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
     /**
      * Tests whether the file is indeed a single molecule file
      */
-    private org.openscience.cdk.interfaces.IMolecule checkForSingleMoleculeFile(IChemFile chemFile) {
+    private IAtomContainer checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);
     }
     
-    private org.openscience.cdk.interfaces.IMolecule checkForXMoleculeFile(IChemFile chemFile, int numberOfMolecules) {
+    private IAtomContainer checkForXMoleculeFile(IChemFile chemFile, int numberOfMolecules) {
         Assert.assertNotNull(chemFile);
         
         Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
@@ -311,13 +313,13 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
         
-        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
         
-        Assert.assertEquals(moleculeSet.getMoleculeCount(), numberOfMolecules);
-        org.openscience.cdk.interfaces.IMolecule mol = null;
+        Assert.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
+        IAtomContainer mol = null;
         for (int i=0; i<numberOfMolecules; i++) {
-            mol = moleculeSet.getMolecule(i);
+            mol = moleculeSet.getAtomContainer(i);
             Assert.assertNotNull(mol);
         }
         return mol;

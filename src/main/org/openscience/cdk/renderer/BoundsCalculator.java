@@ -28,6 +28,7 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
@@ -51,7 +52,7 @@ public class BoundsCalculator {
      * @return the bounding rectangle of the chem model
      */
     public static Rectangle2D calculateBounds(IChemModel chemModel) {
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
         Rectangle2D totalBounds = null;
         if (moleculeSet != null) {
@@ -111,7 +112,7 @@ public class BoundsCalculator {
      * @param moleculeSet the molecule set to use
      * @return the bounding rectangle of the molecule set
      */
-    public static Rectangle2D calculateBounds(IMoleculeSet moleculeSet) {
+    public static Rectangle2D calculateBounds(IAtomContainerSet moleculeSet) {
         Rectangle2D totalBounds = new Rectangle2D.Double();
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
             IAtomContainer container = moleculeSet.getAtomContainer(i);

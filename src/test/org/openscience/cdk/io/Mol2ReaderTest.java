@@ -27,6 +27,14 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.util.Iterator;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -37,6 +45,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -45,14 +54,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.zip.GZIPInputStream;
 
 /**
  * TestCase for the reading SYBYL mol2 files using a test file.
@@ -96,10 +97,10 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
 
-        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals(12, m.getAtomCount());
         Assert.assertEquals(12, m.getBondCount());

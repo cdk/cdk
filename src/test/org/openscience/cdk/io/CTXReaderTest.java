@@ -36,10 +36,10 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -79,7 +79,7 @@ public class CTXReaderTest extends SimpleChemObjectReaderTest {
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
 
-        IMoleculeSet moleculeSet = model.getMoleculeSet();
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
         Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
 

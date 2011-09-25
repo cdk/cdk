@@ -24,12 +24,24 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.StringTokenizer;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -44,15 +56,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
-
-import javax.vecmath.Point3d;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.StringTokenizer;
 
 /**
  * Reads a molecule from an Mol2 file, such as written by Sybyl.
@@ -134,13 +137,13 @@ public class Mol2Reader extends DefaultChemObjectReader {
     }
 
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
-        IMoleculeSet setOfMolecules = chemModel.getMoleculeSet();
+        IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
         if (setOfMolecules == null) {
             setOfMolecules = chemModel.getBuilder().newInstance(IMoleculeSet.class);
         }
-        IMolecule m = readMolecule(chemModel.getBuilder().newInstance(IMolecule.class));
+        IAtomContainer m = readMolecule(chemModel.getBuilder().newInstance(IMolecule.class));
         if (m != null) {
-            setOfMolecules.addMolecule(m);
+            setOfMolecules.addAtomContainer(m);
         }
         chemModel.setMoleculeSet(setOfMolecules);
         return chemModel;

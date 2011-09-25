@@ -1,9 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
- *
- * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2006-2007,2011  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,7 +19,7 @@
 package org.openscience.cdk.interfaces;
 
 /** 
- * An object containig multiple MoleculeSet and 
+ * An object containing multiple MoleculeSet and 
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
  *
@@ -34,20 +29,20 @@ package org.openscience.cdk.interfaces;
 public interface IChemModel extends IChemObject {
 
 	/**
-	 * Returns the MoleculeSet of this ChemModel.
+	 * Returns the IAtomContainerSet of this ChemModel.
 	 *
-	 * @return   The MoleculeSet of this ChemModel
+	 * @return   The {@link IAtomContainerSet} of this ChemModel
      * @see      #setMoleculeSet
 	 */
-	public IMoleculeSet getMoleculeSet();
+	public IAtomContainerSet getMoleculeSet();
 
 	/**
-	 * Sets the MoleculeSet of this ChemModel.
+	 * Sets the IAtomContainerSet of this ChemModel.
 	 *
 	 * @param   setOfMolecules  the content of this model
      * @see      #getMoleculeSet
 	 */
-	public void setMoleculeSet(IMoleculeSet setOfMolecules);	
+	public void setMoleculeSet(IAtomContainerSet setOfMolecules);	
 
 	/**
 	 * Returns the RingSet of this ChemModel.

@@ -35,11 +35,11 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -87,10 +87,10 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
         Assert.assertNotNull(model);
 
-        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals("1", m.getProperty("E_NSC"));
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
@@ -108,10 +108,10 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1, sequence.getChemModelCount());
         IChemModel model = sequence.getChemModel(0);
         Assert.assertNotNull(model);
-        IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals("B02", m.getProperty("id_no"));
         Assert.assertEquals("2-2", m.getProperty("eductkey"));
@@ -182,10 +182,10 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
 
         IChemModel model = sequence.getChemModel(0);
         Assert.assertNotNull(model);
-        IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals("ola11", m.getProperty("STRUCTURE ID"));
     }
@@ -205,10 +205,10 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         IChemSequence sequence = fileContents.getChemSequence(0);
         IChemModel model = sequence.getChemModel(0);
         Assert.assertNotNull(model);
-        IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals(">1", m.getProperty("IC50_uM"));
     }

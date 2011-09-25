@@ -33,11 +33,12 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -1299,14 +1300,14 @@ public class MoleculeFactory {
     }
 
 
-    public static IMolecule loadMolecule(String inFile)
+    public static IAtomContainer loadMolecule(String inFile)
 	{
 		MDLReader mr = null;
 		ChemFile chemFile = null;
 		IChemSequence chemSequence = null;
 		IChemModel chemModel = null;
-		IMoleculeSet setOfMolecules = null;
-		IMolecule molecule = null;
+		IAtomContainerSet setOfMolecules = null;
+		IAtomContainer molecule = null;
 		try
 		{
 			FileInputStream fis = new FileInputStream(inFile);
@@ -1316,7 +1317,7 @@ public class MoleculeFactory {
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
 			setOfMolecules = chemModel.getMoleculeSet();
-			molecule = setOfMolecules.getMolecule(0);
+			molecule = setOfMolecules.getAtomContainer(0);
 			for (int i = 0; i < molecule.getAtomCount(); i++)
 			{
 				molecule.getAtom(i).setPoint2d(null);

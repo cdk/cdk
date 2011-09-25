@@ -36,8 +36,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,11 +47,11 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -100,7 +100,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
-		IMolecule mol = model.getMoleculeSet().getMolecule(0);
+		IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
 		//MoleculeViewer2D.display(mol, true, false, JFrame.DO_NOTHING_ON_CLOSE,"");
 
 	}
@@ -677,9 +677,11 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 				IChemModel model = (IChemModel)r.read(
 				    NoNotificationChemObjectBuilder
 						.getInstance().newInstance(IChemModel.class));
-				final IMolecule mol = model.getMoleculeSet().getMolecule(0);
-				final IMolecule clone = (IMolecule)mol.clone();
-				new StructureDiagramGenerator(clone).generateCoordinates();
+				final IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
+				final IAtomContainer clone = (IAtomContainer)mol.clone();
+				new StructureDiagramGenerator(
+				    mol.getBuilder().newInstance(IMolecule.class, clone)
+				).generateCoordinates();
 				assertTrue(GeometryTools.has2DCoordinates(clone));
 	}
 

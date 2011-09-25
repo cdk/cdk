@@ -35,11 +35,11 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -108,10 +108,10 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
 
-        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals(9, m.getAtomCount());
         Assert.assertEquals(9, m.getBondCount());

@@ -19,9 +19,15 @@
 
 package org.openscience.cdk.silent;
 
-import org.openscience.cdk.interfaces.*;
-
 import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /** 
  * An object containing multiple MoleculeSet and 
@@ -47,7 +53,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	/**
 	 *  A MoleculeSet.
 	 */
-	protected IMoleculeSet setOfMolecules = null;
+	protected IAtomContainerSet setOfMolecules = null;
 
 	/**
 	 *  A ReactionSet.
@@ -76,7 +82,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #setMoleculeSet
 	 */
-	public IMoleculeSet getMoleculeSet()
+	public IAtomContainerSet getMoleculeSet()
 	{
 		return this.setOfMolecules;
 	}
@@ -89,7 +95,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #getMoleculeSet
 	 */
-	public void setMoleculeSet(IMoleculeSet setOfMolecules)
+	public void setMoleculeSet(IAtomContainerSet setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
 	}

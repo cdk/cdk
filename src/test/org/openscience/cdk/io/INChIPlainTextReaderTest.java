@@ -27,16 +27,18 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.InputStream;
+import java.io.StringReader;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.InputStream;
-import java.io.StringReader;
 
 /**
  * TestCase for the reading INChI plain text files.
@@ -78,9 +80,9 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
-        org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
+        IAtomContainer molecule = moleculeSet.getAtomContainer(0);
         Assert.assertNotNull(molecule);
 
         Assert.assertEquals(11, molecule.getAtomCount());
@@ -100,9 +102,9 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
-        org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
+        IAtomContainer molecule = moleculeSet.getAtomContainer(0);
         Assert.assertNotNull(molecule);
 
         Assert.assertEquals(40, molecule.getAtomCount());

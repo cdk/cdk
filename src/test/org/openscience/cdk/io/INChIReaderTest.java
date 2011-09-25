@@ -35,6 +35,8 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -77,9 +79,9 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
-        org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
+        IAtomContainer molecule = moleculeSet.getAtomContainer(0);
         Assert.assertNotNull(molecule);
 
         Assert.assertEquals(11, molecule.getAtomCount());

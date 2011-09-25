@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -36,7 +37,6 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -181,7 +181,7 @@ public class ValidatorEngine implements IValidator {
         if (reactionSet != null) {
             report.addReport(validateReactionSet(reactionSet));
         }
-        IMoleculeSet moleculeSet = subject.getMoleculeSet();
+        IAtomContainerSet moleculeSet = subject.getMoleculeSet();
         if (moleculeSet != null) {
             report.addReport(validateMoleculeSet(moleculeSet));
         }
@@ -262,7 +262,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
-    public ValidationReport validateMolecule(IMolecule subject) {
+    public ValidationReport validateMolecule(IAtomContainer subject) {
         logger.info("Validating org.openscience.cdk.Molecule");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -294,7 +294,7 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
-    public ValidationReport validateMoleculeSet(IMoleculeSet subject) {
+    public ValidationReport validateMoleculeSet(IAtomContainerSet subject) {
         logger.info("Validating org.openscience.cdk.MoleculeSet");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -305,7 +305,7 @@ public class ValidatorEngine implements IValidator {
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
         for (int i=0; i<subject.getAtomContainerCount(); i++) {
-            report.addReport(validateMolecule(subject.getMolecule(i)));
+            report.addReport(validateMolecule(subject.getAtomContainer(i)));
         }
         return report;
     }

@@ -41,6 +41,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -179,13 +181,13 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
-    	IMoleculeSet setOfMolecules = chemModel.getMoleculeSet();
+        IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
         if (setOfMolecules == null) {
             setOfMolecules = chemModel.getBuilder().newInstance(IMoleculeSet.class);
         }
-        IMolecule m = readMolecule(chemModel.getBuilder().newInstance(IMolecule.class));
+        IAtomContainer m = readMolecule(chemModel.getBuilder().newInstance(IMolecule.class));
 		if (m != null) {
-			setOfMolecules.addMolecule(m);
+			setOfMolecules.addAtomContainer(m);
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         return chemModel;

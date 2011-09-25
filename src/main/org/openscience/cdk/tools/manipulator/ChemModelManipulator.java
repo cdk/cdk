@@ -34,6 +34,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -75,7 +76,7 @@ public class ChemModelManipulator {
         if (crystal != null) {
             count += crystal.getAtomCount();
         }
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
             count += MoleculeSetManipulator.getAtomCount(moleculeSet);
         }
@@ -99,7 +100,7 @@ public class ChemModelManipulator {
         if (crystal != null) {
             count += crystal.getBondCount();
         }
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
             count += MoleculeSetManipulator.getBondCount(moleculeSet);
         }
@@ -127,7 +128,7 @@ public class ChemModelManipulator {
             }
             return;
         }
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
             MoleculeSetManipulator.removeAtomAndConnectedElectronContainers(moleculeSet, atom);
         }
@@ -153,7 +154,7 @@ public class ChemModelManipulator {
             }
             return;
         }
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
             MoleculeSetManipulator.removeElectronContainer(moleculeSet, electrons);
         }
@@ -175,14 +176,14 @@ public class ChemModelManipulator {
         // Add a new molecule either the set of molecules
         IMolecule molecule = chemModel.getBuilder().newInstance(IMolecule.class);
         if (chemModel.getMoleculeSet() != null) {
-            IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+            IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
             for(int i=0;i<moleculeSet.getAtomContainerCount();i++){
             	if(moleculeSet.getAtomContainer(i).getAtomCount()==0){
             		moleculeSet.removeAtomContainer(i);
             		i--;
             	}
             }
-            moleculeSet.addMolecule(molecule);
+            moleculeSet.addAtomContainer(molecule);
         } else {
             IMoleculeSet moleculeSet = chemModel.getBuilder().newInstance(IMoleculeSet.class);
             moleculeSet.addMolecule(molecule);
@@ -222,7 +223,7 @@ public class ChemModelManipulator {
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IAtom atom) {
         IAtomContainer result = null;
         if (chemModel.getMoleculeSet() != null) {
-            IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+            IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
             result = MoleculeSetManipulator.getRelevantAtomContainer(moleculeSet, atom);
             if (result != null) {
                 return result;
@@ -248,7 +249,7 @@ public class ChemModelManipulator {
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IBond bond) {
         IAtomContainer result = null;
         if (chemModel.getMoleculeSet() != null) {
-            IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+            IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
             result = MoleculeSetManipulator.getRelevantAtomContainer(moleculeSet, bond);
             if (result != null) {
                 return result;
@@ -339,7 +340,7 @@ public class ChemModelManipulator {
         if (crystal != null) {
             list.add(crystal);
         }
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
         	list.add(moleculeSet);
         	List<IChemObject> current = MoleculeSetManipulator.getAllChemObjects(moleculeSet);
@@ -366,7 +367,7 @@ public class ChemModelManipulator {
         if (crystal != null) {
             list.addAll(AtomContainerManipulator.getAllIDs(crystal));
         }
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
         	list.addAll(MoleculeSetManipulator.getAllIDs(moleculeSet));
         }

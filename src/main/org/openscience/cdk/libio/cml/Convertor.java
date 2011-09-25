@@ -38,6 +38,7 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -309,7 +310,7 @@ public class Convertor {
         return cdkMoleculeSetToCMLList(moleculeSet, true);
     }
 
-    private CMLMoleculeList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
+    private CMLMoleculeList cdkMoleculeSetToCMLList(IAtomContainerSet moleculeSet, boolean setIDs) {
     	CMLMoleculeList cmlList = new CMLMoleculeList();
         cmlList.setConvention("cdk:moleculeSet");
 
@@ -320,7 +321,7 @@ public class Convertor {
         	cmlList.setId(moleculeSet.getID());
         	
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
-            IAtomContainer container = moleculeSet.getMolecule(i);
+            IAtomContainer container = moleculeSet.getAtomContainer(i);
             if (container instanceof IMolecule) {
                 cmlList.appendChild(
                     cdkMoleculeToCMLMolecule((IMolecule)container, false)

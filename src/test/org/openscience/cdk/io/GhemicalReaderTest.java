@@ -36,6 +36,8 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
@@ -92,10 +94,10 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
         Assert.assertNotNull(model);
         Assert.assertNotNull(model.getMoleculeSet());
-        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals(6, m.getAtomCount());
         Assert.assertEquals(5, m.getBondCount());
@@ -122,10 +124,10 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
 
-        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        IAtomContainerSet som = model.getMoleculeSet();
         Assert.assertNotNull(som);
-        Assert.assertEquals(1, som.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer m = som.getAtomContainer(0);
         Assert.assertNotNull(m);
         Assert.assertEquals(6, m.getAtomCount());
         Assert.assertEquals(5, m.getBondCount());

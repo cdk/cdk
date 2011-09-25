@@ -54,12 +54,12 @@ public class MoleculeSetManipulator {
 	}
 
     @TestMethod("testRemoveAtomAndConnectedElectronContainers_IMoleculeSet_IAtom")
-    public static void removeAtomAndConnectedElectronContainers(IMoleculeSet set, IAtom atom) {
+    public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
         AtomContainerSetManipulator.removeAtomAndConnectedElectronContainers(set, atom);
     }
 
     @TestMethod("testRemoveElectronContainer_IMoleculeSet_IElectronContainer")
-    public static void removeElectronContainer(IMoleculeSet set, IElectronContainer electrons) {
+    public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
         AtomContainerSetManipulator.removeElectronContainer(set, electrons);
     }
     
@@ -69,7 +69,7 @@ public class MoleculeSetManipulator {
      * @return a list containing individual IAtomContainer's
      */
     @TestMethod("testGetAllAtomContainers_IMoleculeSet")
-    public static List<IAtomContainer> getAllAtomContainers(IMoleculeSet set) {
+    public static List<IAtomContainer> getAllAtomContainers(IAtomContainerSet set) {
 		return AtomContainerSetManipulator.getAllAtomContainers(set);
     }
     
@@ -79,7 +79,7 @@ public class MoleculeSetManipulator {
      * @return The total charge on the collection of molecules
 	 */
     @TestMethod("testGetTotalCharge_IMoleculeSet")
-    public static double getTotalCharge(IMoleculeSet set) {
+    public static double getTotalCharge(IAtomContainerSet set) {
 		return AtomContainerSetManipulator.getTotalCharge(set);
 	}
 	
@@ -89,7 +89,7 @@ public class MoleculeSetManipulator {
      * @return The total formal charge on the collection of molecules
 	 */
     @TestMethod("testGetTotalFormalCharge_IMoleculeSet")
-    public static double getTotalFormalCharge(IMoleculeSet set) {
+    public static double getTotalFormalCharge(IAtomContainerSet set) {
 		return AtomContainerSetManipulator.getTotalFormalCharge(set);
 	}
 	
@@ -99,12 +99,12 @@ public class MoleculeSetManipulator {
      * @return the total implicit hydrogen count on the collection of molecules
 	 */
     @TestMethod("testGetTotalHydrogenCount_IMoleculeSet")
-    public static int getTotalHydrogenCount(IMoleculeSet set) {
+    public static int getTotalHydrogenCount(IAtomContainerSet set) {
 		return AtomContainerSetManipulator.getTotalHydrogenCount(set);
 	}
 
     @TestMethod("testGetAllIDs_IMoleculeSet")
-    public static List<String> getAllIDs(IMoleculeSet set) {
+    public static List<String> getAllIDs(IAtomContainerSet set) {
     	List<String> list = new ArrayList<String>();
     	// the ID is set in AtomContainerSetManipulator.getAllIDs()
     	list.addAll(AtomContainerSetManipulator.getAllIDs(set));
@@ -112,22 +112,22 @@ public class MoleculeSetManipulator {
 	}
 
     @TestMethod("testSetAtomProperties_IMoleculeSet_Object_Object")
-    public static void setAtomProperties(IMoleculeSet set, Object propKey, Object propVal) {
+    public static void setAtomProperties(IAtomContainerSet set, Object propKey, Object propVal) {
         AtomContainerSetManipulator.setAtomProperties(set, propKey, propVal);
     }
 
     @TestMethod("testGetRelevantAtomContainer_IMoleculeSet_IAtom")
-    public static IAtomContainer getRelevantAtomContainer(IMoleculeSet moleculeSet, IAtom atom) {
+    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet moleculeSet, IAtom atom) {
         return AtomContainerSetManipulator.getRelevantAtomContainer(moleculeSet, atom);
     }
 
     @TestMethod("testGetRelevantAtomContainer_IMoleculeSet_IBond")
-    public static IAtomContainer getRelevantAtomContainer(IMoleculeSet moleculeSet, IBond bond) {
+    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet moleculeSet, IBond bond) {
         return AtomContainerSetManipulator.getRelevantAtomContainer(moleculeSet, bond);
     }
 
     @TestMethod("testGetAllChemObjects_IMoleculeSet")
-    public static List<IChemObject> getAllChemObjects(IMoleculeSet set) {
+    public static List<IChemObject> getAllChemObjects(IAtomContainerSet set) {
         return AtomContainerSetManipulator.getAllChemObjects(set);
     }
 

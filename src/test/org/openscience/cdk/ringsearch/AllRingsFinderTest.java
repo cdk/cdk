@@ -33,6 +33,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -143,7 +144,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
-		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+		IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
 		ringSet = arf.findAllRings(molecule);
 		Assert.assertEquals(20, ringSet.getAtomContainerCount());
@@ -162,7 +163,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
-		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+		IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
 		ringSet = arf.findAllRings(molecule);
 		// the 1976 value was empirically derived, and might not be accurate
@@ -180,7 +181,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
-		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+		IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
 		ringSet = arf.findAllRings(molecule);
 		Assert.assertEquals(14, ringSet.getAtomContainerCount());
@@ -196,7 +197,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
-		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+		IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
 
 		ringSet = arf.findAllRings(molecule);
 		Assert.assertEquals(3, ringSet.getAtomContainerCount());
@@ -214,7 +215,7 @@ public class AllRingsFinderTest extends CDKTestCase
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
         IChemModel model = seq.getChemModel(0);
-        IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         //logger.debug("Constructed Molecule");
         //logger.debug("Starting AllRingsFinder");
         ringSet = new AllRingsFinder().findAllRings(mol);
@@ -243,7 +244,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
-		IMolecule mol = model.getMoleculeSet().getMolecule(0);
+		IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
 		if (standAlone) System.out.println("Constructed Molecule");
 		if (standAlone) System.out.println("Starting AllRingsFinder");
 		IRingSet ringSet = new AllRingsFinder().findAllRings(mol);
@@ -298,7 +299,7 @@ public class AllRingsFinderTest extends CDKTestCase
       IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
       IChemSequence seq = chemFile.getChemSequence(0);
       IChemModel model = seq.getChemModel(0);
-      IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+      IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
       ringSet = arf.findAllRings(molecule,6);
       Assert.assertEquals(12, ringSet.getAtomContainerCount());
     }
@@ -313,7 +314,7 @@ public class AllRingsFinderTest extends CDKTestCase
       IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
       IChemSequence seq = chemFile.getChemSequence(0);
       IChemModel model = seq.getChemModel(0);
-      IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+      IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
       // there are 5x10 squares (four-rings) in the 5x10 molecule 
       ringSet = arf.findAllRings(molecule,4);
       Assert.assertEquals(50, ringSet.getAtomContainerCount());
@@ -329,7 +330,7 @@ public class AllRingsFinderTest extends CDKTestCase
       IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
       IChemSequence seq = chemFile.getChemSequence(0);
       IChemModel model = seq.getChemModel(0);
-      IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+      IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
       // there are 5x10 four-rings (squares ) = 50
       // there are (9x5) + (4x10) six-rings   = 85
       // combined 135

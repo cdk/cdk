@@ -33,11 +33,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -74,10 +74,10 @@ public class JChemPaintTest extends CDKTestCase {
         //logger.debug("NO models: " + seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        Assert.assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+        Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
 
         // test the molecule
-        IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(4, mol.getAtomCount());
         Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -101,12 +101,12 @@ public class JChemPaintTest extends CDKTestCase {
         Assert.assertEquals(1, seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        IMoleculeSet moleculeSet = model.getMoleculeSet();
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
-        Assert.assertEquals(1, moleculeSet.getMoleculeCount());
+        Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
 
         // test the molecule
-        IMolecule mol = moleculeSet.getMolecule(0);
+        IAtomContainer mol = moleculeSet.getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertTrue(GeometryTools.has3DCoordinates(mol));

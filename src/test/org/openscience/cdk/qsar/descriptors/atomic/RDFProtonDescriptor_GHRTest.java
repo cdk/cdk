@@ -42,8 +42,8 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
-		IMoleculeSet som = model.getMoleculeSet();
-		IMolecule mol = som.getMolecule(0);
+		IAtomContainerSet som = model.getMoleculeSet();
+		IAtomContainer mol = som.getAtomContainer(0);
 
 		RDFProtonDescriptor_GHR descriptor = new RDFProtonDescriptor_GHR();
 		int hNumber =0;

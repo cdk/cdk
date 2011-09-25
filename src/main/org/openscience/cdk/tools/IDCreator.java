@@ -25,13 +25,29 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.manipulator.*;
-
 import java.util.Iterator;
 import java.util.List;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemSequenceManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 
 /**
  * Class that provides methods to give unique IDs to ChemObjects.
@@ -331,7 +347,7 @@ public abstract class IDCreator {
 			createIDsForAtomContainer(crystal, tabuList);
 		}
 		
-    	IMoleculeSet moleculeSet = model.getMoleculeSet();
+		IAtomContainerSet moleculeSet = model.getMoleculeSet();
 		if (moleculeSet != null) {
 				if (policy == OBJECT_UNIQUE_POLICY) {  
 					ATOMCONTAINERSET_COUNT = 0;

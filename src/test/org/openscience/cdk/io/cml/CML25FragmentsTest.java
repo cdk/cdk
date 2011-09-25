@@ -33,11 +33,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 
@@ -67,7 +67,7 @@ public class CML25FragmentsTest extends CDKTestCase {
             "</cml>";
         
         IChemFile chemFile = parseCMLString(cmlString);
-        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
@@ -88,11 +88,11 @@ public class CML25FragmentsTest extends CDKTestCase {
     /**
      * Tests whether the file is indeed a single molecule file
      */
-    private IMolecule checkForSingleMoleculeFile(IChemFile chemFile) {
+    private IAtomContainer checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);
     }
 
-    private IMolecule checkForXMoleculeFile(IChemFile chemFile, int numberOfMolecules) {
+    private IAtomContainer checkForXMoleculeFile(IChemFile chemFile, int numberOfMolecules) {
         Assert.assertNotNull(chemFile);
         
         Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
@@ -103,13 +103,13 @@ public class CML25FragmentsTest extends CDKTestCase {
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
         
-        IMoleculeSet moleculeSet = model.getMoleculeSet();
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
         
-        Assert.assertEquals(moleculeSet.getMoleculeCount(), numberOfMolecules);
-        IMolecule mol = null;
+        Assert.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
+        IAtomContainer mol = null;
         for (int i=0; i<numberOfMolecules; i++) {
-            mol = moleculeSet.getMolecule(i);
+            mol = moleculeSet.getAtomContainer(i);
             Assert.assertNotNull(mol);
         }
         return mol;

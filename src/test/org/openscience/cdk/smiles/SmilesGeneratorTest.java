@@ -34,7 +34,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -766,7 +765,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	    Assert.assertNotNull(seq);
 	    IChemModel model = seq.getChemModel(0);
 	    Assert.assertNotNull(model);
-	    IMolecule mol1 = model.getMoleculeSet().getMolecule(0);
+	    IAtomContainer mol1 = model.getMoleculeSet().getAtomContainer(0);
 	    Assert.assertNotNull(mol1);
 	    
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
@@ -790,7 +789,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IChemFile chemFile = (IChemFile)reader1.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
         IChemModel model = seq.getChemModel(0);
-        IMolecule mol1 = model.getMoleculeSet().getMolecule(0);
+        IAtomContainer mol1 = model.getMoleculeSet().getAtomContainer(0);
 		
 		MDLReader reader2 = new MDLReader(ins2);		
 		Molecule mol2 = (Molecule) reader2.read(new Molecule());
