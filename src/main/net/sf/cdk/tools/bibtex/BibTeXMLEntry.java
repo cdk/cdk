@@ -1,6 +1,4 @@
-/* $Revision: 6707 $ $Author: egonw $ $Date: 2006-07-30 16:38:18 -0400 (Sun, 30 Jul 2006) $
- * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007,2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -65,16 +63,40 @@ public class BibTeXMLEntry {
 				getString(article, "pages", "?-?")
 			);
 		}
-		// b:article
-		results = entry.query("./b:misc", context);
+		// b:thesis
+		results = entry.query("./b:phdthesis", context);
 		for (int i=0; i<results.size(); i++) {
-			Element misc = (Element)results.get(i);
+			Element thesis = (Element)results.get(i);
 			// the obligatory fields
-			return formatMisc(
-				getString(misc, "author", "?Authors?"),
-				getString(misc, "title", "?Title?")
+			return formatThesis(
+				getString(thesis, "author", "?Authors?"),
+				getString(thesis, "title", "?Title?"),
+                getString(thesis, "year", "19??"),
+                getString(thesis, "adress", "?Institute?")
 			);
 		}
+        // b:phdthesis
+        results = entry.query("./b:book", context);
+        for (int i=0; i<results.size(); i++) {
+            Element book = (Element)results.get(i);
+            // the obligatory fields
+            return formatBook(
+                getString(book, "author", "?Authors?"),
+                getString(book, "title", "?Title?"),
+                getString(book, "year", "19??"),
+                getString(book, "publisher", "?Publisher?")
+            );
+        }
+        // b:misc
+        results = entry.query("./b:misc", context);
+        for (int i=0; i<results.size(); i++) {
+            Element misc = (Element)results.get(i);
+            // the obligatory fields
+            return formatMisc(
+                getString(misc, "author", "?Authors?"),
+                getString(misc, "title", "?Title?")
+            );
+        }
 		return "Unknown BibTeXML type: " + ((Element)entry).getAttributeValue("id");
 	}
 
@@ -92,6 +114,22 @@ public class BibTeXMLEntry {
 		return buffer.toString();
 	}
 	
+    protected String formatThesis(String authors, String title, String year, String institute) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(authors).append(", <i>").append(title).append("</i>, ");
+        buffer.append("<b>").append(year).append("</b>, ");
+        buffer.append(institute);
+        return buffer.toString();
+    }
+    
+    protected String formatBook(String authors, String title, String year, String publisher) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(authors).append(", <i>").append(title).append("</i>, ");
+        buffer.append("<b>").append(year).append("</b>, ");
+        buffer.append(publisher);
+        return buffer.toString();
+    }
+    
 	/**
 	 * @param node         Parent for the child.
 	 * @param childElement Localname of the child element.
