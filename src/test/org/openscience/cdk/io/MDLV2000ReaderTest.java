@@ -35,6 +35,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -83,6 +84,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
     	Assert.assertTrue(reader.accepts(Molecule.class));
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     /**

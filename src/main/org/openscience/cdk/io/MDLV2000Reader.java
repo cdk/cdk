@@ -168,7 +168,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
@@ -190,8 +190,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			return (T)readChemFile((IChemFile)object);
         } else if (object instanceof IChemModel) {
             return (T)readChemModel((IChemModel)object);
-		} else if (object instanceof IMolecule) {
-			return (T)readAtomContainer((IMolecule)object);
+		} else if (object instanceof IAtomContainer) {
+			return (T)readAtomContainer((IAtomContainer)object);
 		} else {
 			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}
@@ -351,7 +351,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
-	private IAtomContainer readAtomContainer(IMolecule molecule) throws CDKException {
+	private IAtomContainer readAtomContainer(IAtomContainer molecule) throws CDKException {
         logger.debug("Reading new molecule");
 	    IAtomContainer outputContainer=null;
         int linecount = 0;
@@ -908,7 +908,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 		return  outputContainer;
 	}
     
-    private void fixHydrogenIsotopes(IMolecule molecule,IsotopeFactory isotopeFactory) {
+    private void fixHydrogenIsotopes(IAtomContainer molecule,IsotopeFactory isotopeFactory) {
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atom = atoms.next();
