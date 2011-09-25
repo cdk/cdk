@@ -24,8 +24,7 @@ package org.openscience.cdk.io.rdf;
 
 import java.io.StringWriter;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IBond;

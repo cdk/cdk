@@ -27,8 +27,7 @@ import java.util.Properties;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;

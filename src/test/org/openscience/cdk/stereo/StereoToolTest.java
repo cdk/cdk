@@ -25,8 +25,7 @@ package org.openscience.cdk.stereo;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;

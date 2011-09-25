@@ -24,8 +24,7 @@
  */
 package org.openscience.cdk.io.formats;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**

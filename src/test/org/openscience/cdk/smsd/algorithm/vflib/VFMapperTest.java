@@ -49,7 +49,8 @@ package org.openscience.cdk.smsd.algorithm.vflib;
 
 import java.util.List;
 import java.util.Map;
-import junit.framework.Assert;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;

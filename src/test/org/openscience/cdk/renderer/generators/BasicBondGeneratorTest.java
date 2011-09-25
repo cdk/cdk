@@ -5,14 +5,12 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
-import org.openscience.cdk.renderer.generators.BasicBondGenerator;
 
 /**
  * Test the {@link BasicBondGenerator}.
