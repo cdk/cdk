@@ -109,7 +109,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.keyword file format, CML
  */
-@TestClass("org.openscience.cdk.io.CMLWriterTest")
+@TestClass("org.openscience.cdk.io.CML2WriterTest")
 public class CMLWriter extends DefaultChemObjectWriter {
 
     private OutputStream output;

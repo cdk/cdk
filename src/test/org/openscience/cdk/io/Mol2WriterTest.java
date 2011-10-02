@@ -149,6 +149,6 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         molwriter.close();
 
         String mol2file = writer.getBuffer().toString();
-        Assert.assertTrue(mol2file.indexOf("24 R24 -1.209 -18.043 49.44 X") > 0);
+        Assert.assertTrue(mol2file.contains("-1.209 -18.043 49.44 X"));
     }
 }

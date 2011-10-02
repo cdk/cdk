@@ -214,7 +214,7 @@ public class MakeJavafilesFiles {
 					index = line.indexOf("@cdk.set");
 					String set = "";
 					if (index != -1) {
-						index += 11;
+						index += 8;
 						// skip the first chars
 						while (Character.isWhitespace(line.charAt(index))) index++;
 						while (index < line.length() && 

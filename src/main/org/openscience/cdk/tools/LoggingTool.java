@@ -264,7 +264,11 @@ public class LoggingTool implements ILoggingTool {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
-                result.append(obj.toString());
+                if (obj == null) {
+                    result.append("null");
+                } else {
+                    result.append(obj.toString());
+                }
             }
             debugString(result.toString());
         }

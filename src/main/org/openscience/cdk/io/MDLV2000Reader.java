@@ -747,11 +747,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         int charge = Integer.parseInt(token.trim());
                         outputContainer.getAtom(atomNumber - 1).setFormalCharge(charge);
                     }
-                }  else if (line.matches("^A    \\d+")) {
+                }  else if (line.matches("A\\s{1,4}\\d+")) {
             		// Reads the pseudo atom property from the mol file
                 	
                 	// The atom number of the to replaced atom
-            		int aliasAtomNumber = Integer.parseInt(line.replaceFirst("^A    ", "")) - RGroupCounter;
+            		int aliasAtomNumber = Integer.parseInt(line.replaceFirst("A\\s{1,4}", "")) - RGroupCounter;
             		line = input.readLine(); linecount++;
 					String[] aliasArray = line.split("\\\\");
 					// name of the alias atom like R1 odr R2 etc. 
