@@ -2292,6 +2292,13 @@ public class SmilesParserTest extends CDKTestCase {
 
     }
 
+    @Test public void testPreserveAromaticityAndPerceiveAtomTypes() throws InvalidSmilesException{
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        sp.setPreservingAromaticity(true);
+        IMolecule molecule = sp.parseSmiles("c1ccccc1");
+        Assert.assertNotNull(molecule.getAtom(0).getAtomTypeName());
+    }
+
     /**
      * @cdk.bug 3160514
      */
