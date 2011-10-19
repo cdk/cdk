@@ -53,8 +53,7 @@ import java.util.List;
 /**
  * <p>Prediction of logP based on the atom-type method called XLogP. <b>Requires
  * all hydrogens to be explicit</b>.
- * <p>For description of the methodology see Ref. @cdk.cite{WANG97} and @cdk.cite{WANG00}
- * or <a href="http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html">http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html</a>.
+ * <p>For description of the methodology see Ref. {@cdk.cite WANG97} and {@cdk.cite WANG00}.
  * Actually one molecular factor is missing (presence of para Hs donor pair).
  *
  * <p>This descriptor uses these parameters:
