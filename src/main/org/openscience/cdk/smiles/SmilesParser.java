@@ -254,25 +254,28 @@ public class SmilesParser {
 		    molecule.addStereoElement(l4Chiral);
 		}
 
-        if (!preservingAromaticity ) {
-            // perceive atom types
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-            int i = 0;
-            for (IAtom atom : molecule.atoms()) {
-                i++;
-                try {
-                    IAtomType type = matcher.findMatchingAtomType(molecule, atom);
-                    AtomTypeManipulator.configure(atom, type);
-                } catch (NoSuchAtomTypeException exception) {
-                		logger.warn("Cannot percieve atom type for the ", i, "th atom: ", atom.getSymbol());
+        // perceive atom types
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+        int i = 0;
+        for (IAtom atom : molecule.atoms()) {
+            i++;
+            try {
+                IAtomType type = matcher.findMatchingAtomType(molecule, atom);
+                boolean isAromatic = atom.getFlag(CDKConstants.ISAROMATIC);
+                AtomTypeManipulator.configure(atom, type);
+                atom.setFlag(CDKConstants.ISAROMATIC, isAromatic);
+            } catch (NoSuchAtomTypeException exception) {
+                    logger.warn("Cannot percieve atom type for the ", i, "th atom: ", atom.getSymbol());
+                atom.setAtomTypeName("X");
+            } catch (Exception exception) {
+                    logger.error("Caught unexpected Exception during atom typing.");
+                    logger.debug(exception);
                     atom.setAtomTypeName("X");
-                } catch (Exception exception) {
-                		logger.error("Caught unexpected Exception during atom typing.");
-                	    logger.debug(exception);
-                		atom.setAtomTypeName("X");
-                }
             }
-            this.addImplicitHydrogens(molecule);
+        }
+        this.addImplicitHydrogens(molecule);
+
+        if (!preservingAromaticity ) {
             this.perceiveAromaticity(molecule);
         }
         else  {

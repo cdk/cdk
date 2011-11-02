@@ -31,8 +31,10 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -46,6 +48,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SDFFormat;
+import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.smiles.InvPair;
@@ -69,6 +72,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
     private BooleanIOSetting writerProperties;
+    private Map<String,IOSetting> mdlWriterSettings;
     
     /**
      * Constructs a new SDFWriter that writes to the given {@link Writer}.
@@ -198,6 +202,14 @@ public class SDFWriter extends DefaultChemObjectWriter {
             // write the MDL molfile bits
             StringWriter stringWriter = new StringWriter();
             MDLV2000Writer mdlWriter = new MDLV2000Writer(stringWriter);
+            Properties ioSettings = new Properties();
+            for (String settingName : mdlWriterSettings.keySet()) {
+                ioSettings.put(settingName, mdlWriterSettings.get(settingName).getSetting());
+            }
+            mdlWriter.addChemObjectIOListener(
+                new PropertiesListener(ioSettings)
+            );
+            mdlWriter.customizeJob();
             mdlWriter.write(container);
             mdlWriter.close();
             writer.write(stringWriter.toString());
@@ -246,10 +258,19 @@ public class SDFWriter extends DefaultChemObjectWriter {
           "Should molecular properties be written?", 
           "true"
         );
+        // cache the MDLV2000Writer settings
+        IOSetting[] settings = new MDLV2000Writer().getIOSettings();
+        mdlWriterSettings = new HashMap<String,IOSetting>();
+        for (int i=0; i<settings.length; i++) {
+            mdlWriterSettings.put(settings[i].getName(), settings[i]);
+        }
     }
 
     public void customizeJob() {
         fireIOSettingQuestion(writerProperties);
+        for (IOSetting setting : mdlWriterSettings.values()) {
+            fireIOSettingQuestion(setting);
+        }
     }
 
     public IOSetting[] getIOSettings() {

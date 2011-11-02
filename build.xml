@@ -940,27 +940,21 @@
             <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
             </copy>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/config/data/">
-                        <fileset dir="${src}/main/org/openscience/cdk/config/data/"
-                                 includes="*" />
-                </copy>
-                <copy
-                  file="${src}/main/org/openscience/cdk/dict/data/chemical.xml"
-                  tofile="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/chemical.xml" />
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/">
-                    <fileset dir="${src}/main/org/openscience/cdk/dict/data/" includes="*.owl"/>
-                </copy>
-                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/"/>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/">
-                    <fileset dir="${src}/main/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
-                </copy>
-            <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/"/>
-            <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/">
-                <fileset dir="${src}/main/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
-            </copy>
-                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates"/>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates">
-                    <fileset dir="${src}/main/org/openscience/cdk/layout/templates" includes="*"/>
+                <copy todir="${sourcedist.dir}/${src}/main/">
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/atomtype.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/builder3d.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/core.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/dict.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/extra.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/fingerprint.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/forcefield.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/io.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/log4j.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/pdb.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/qsaratomic.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/qsar.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/qsarmolecular.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/sdg.datafiles" />
                 </copy>
                 <mkdir dir="${sourcedist.dir}/doc/" />
                 <copy todir="${sourcedist.dir}/doc/">
@@ -1004,27 +998,21 @@
                 <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
                </copy>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/config/data/">
-                        <fileset dir="${src}/main/org/openscience/cdk/config/data/"
-                                 includes="*" />
-                </copy>
-                <copy
-                  file="${src}/main/org/openscience/cdk/dict/data/chemical.xml"
-                  tofile="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/chemical.xml" />
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/">
-                  <fileset dir="${src}/main/org/openscience/cdk/dict/data/" includes="*.owl"/>
-                </copy>
-                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/"/>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/forcefield/data/">
-                    <fileset dir="${src}/main/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
-                </copy>
-            <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/"/>
-            <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/">
-                <fileset dir="${src}/main/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
-            </copy>
-                <mkdir dir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates"/>
-                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/layout/templates">
-                    <fileset dir="${src}/main/org/openscience/cdk/layout/templates" includes="*"/>
+                <copy todir="${sourcedist.dir}/${src}/main/">
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/atomtype.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/builder3d.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/core.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/dict.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/extra.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/fingerprint.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/forcefield.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/io.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/log4j.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/pdb.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/qsaratomic.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/qsar.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/qsarmolecular.datafiles" />
+                    <fileset dir="${src}/main/" includesfile="${src}/META-INF/sdg.datafiles" />
                 </copy>
                 <mkdir dir="${sourcedist.dir}/doc/" />
                 <copy todir="${sourcedist.dir}/doc/">

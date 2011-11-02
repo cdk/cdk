@@ -34,16 +34,18 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * TestCase for the writer MDL SD file writer.
@@ -187,5 +189,30 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertTrue(writer.toString().indexOf("toys") != -1);
         Assert.assertTrue(writer.toString().indexOf("r-us") != -1);
         Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
+    }
+
+    /**
+     * @cdk.bug 3392485
+     */
+    @Test
+    public void testIOPropPropagation() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("c1ccccc1CC");
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        StringWriter strWriter = new StringWriter();
+        SDFWriter writer = new SDFWriter(strWriter);
+
+        Properties sdfWriterProps = new Properties();
+        sdfWriterProps.put("WriteAromaticBondTypes", "true");
+        writer.addChemObjectIOListener(
+            new PropertiesListener(sdfWriterProps)
+        );
+        writer.customizeJob();
+        writer.write(mol);
+        writer.close();
+
+        String output = strWriter.toString();
+        Assert.assertTrue(output.contains("4  0  0  0  0"));
     }
 }

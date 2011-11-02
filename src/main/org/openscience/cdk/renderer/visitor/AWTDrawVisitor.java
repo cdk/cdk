@@ -116,6 +116,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         
         int width = (int) (line.width * this.rendererModel.getParameter(
             	Scale.class).getValue());
+        if (width < 1) width = 1;
         if (strokeMap.containsKey(width)) {
             this.graphics.setStroke(strokeMap.get(width));
         } else {
