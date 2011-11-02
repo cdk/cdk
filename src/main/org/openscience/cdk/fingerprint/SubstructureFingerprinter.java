@@ -434,6 +434,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
      * @return SMARTS representation of substructure at
      *         index <code>bitIndex</code>.
      */
+    @TestMethod("testGetSubstructure")
     public String getSubstructure(int bitIndex) {
     	return smarts[bitIndex];
     }
