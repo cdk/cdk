@@ -46,7 +46,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -243,7 +242,7 @@ public class SmilesParser {
 		    TemporaryChiralityStorage chirality = chiralityInfo.get(atom);
 		    logger.debug("Chiral atom found: ", atom);
 		    IAtom[] atoms = chirality.atoms;
-		    ITetrahedralChirality l4Chiral = new TetrahedralChirality(
+		    ITetrahedralChirality l4Chiral = builder.newInstance(ITetrahedralChirality.class,
 		        atom,
 		        new IAtom[]{
 		            atoms[0], atoms[1], atoms[2], atoms[3]
