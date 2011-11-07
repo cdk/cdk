@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -34,6 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -89,7 +88,7 @@ public class RemovingSEofNBMechanism implements IReactionMechanism{
 		List<ILonePair> lps = reactantCloned.getConnectedLonePairsList(reactantCloned.getAtom(posAtom));
 		reactantCloned.removeLonePair(lps.get(lps.size() - 1));
 
-		reactantCloned.addSingleElectron(new SingleElectron(reactantCloned.getAtom(posAtom)));
+		reactantCloned.addSingleElectron(molecule.getBuilder().newInstance(ISingleElectron.class, reactantCloned.getAtom(posAtom)));
 		int charge = reactantCloned.getAtom(posAtom).getFormalCharge();
 		reactantCloned.getAtom(posAtom).setFormalCharge(charge+1);
 
@@ -100,12 +99,12 @@ public class RemovingSEofNBMechanism implements IReactionMechanism{
 		if (type == null)
 			return null;
 		
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+		IReaction reaction = molecule.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
 		
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			IMapping mapping = molecule.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		reaction.addProduct(reactantCloned);

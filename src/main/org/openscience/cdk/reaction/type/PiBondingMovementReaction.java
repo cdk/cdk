@@ -215,7 +215,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((IAtomContainer) reactant);
+		IRingSet ringSet = arf.findAllRings(reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing) ringSet.getAtomContainer(ir);
 			//only rings with even number of atoms

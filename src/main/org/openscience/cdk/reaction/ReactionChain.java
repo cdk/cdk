@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IReaction;
  * in a step of the chain. 
  *
  * @author      miguelrojasch <miguelrojasch@yahoo.es>
- * @cdk.module  reaction
+ * @cdk.module  extra
  */
 @TestClass(value="org.openscience.cdk.reaction.ReactionChainTest")
 public class ReactionChain extends ReactionSet{

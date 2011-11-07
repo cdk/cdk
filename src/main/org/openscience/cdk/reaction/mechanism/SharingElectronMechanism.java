@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -112,12 +111,12 @@ public class SharingElectronMechanism implements IReactionMechanism{
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null) return null;
 		
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
 		
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		reaction.addProduct(reactantCloned);

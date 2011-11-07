@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.LonePair;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -32,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.reaction.IReactionMechanism;
@@ -107,19 +106,19 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
 		
 		charge = atom2C.getFormalCharge();
 		atom2C.setFormalCharge(charge-1);
-		reactantCloned.addLonePair(new LonePair(atom2C));
+		reactantCloned.addLonePair(atom1C.getBuilder().newInstance(ILonePair.class, atom2C));
 		// check if resulting atom type is reasonable: an acceptor atom cannot be charged positive*/
 		atom2C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null) return null;
 		
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+		IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
 		
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		if(bond1.getOrder() != IBond.Order.SINGLE) {

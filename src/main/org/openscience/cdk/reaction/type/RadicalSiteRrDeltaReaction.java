@@ -159,10 +159,10 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 3, true);
+				hcg.getSpheres(reactant, atomi, 3, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(3);
 				
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 4, true);
+				hcg.getSpheres(reactant, atomi, 4, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(4).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();
@@ -222,10 +222,10 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
 			IAtom  atomi = atomis.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 3, true);
+				hcg.getSpheres(reactant, atomi, 3, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(3);
 				
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 4, true);
+				hcg.getSpheres(reactant, atomi, 4, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(4).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

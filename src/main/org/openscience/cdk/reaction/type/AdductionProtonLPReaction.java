@@ -25,7 +25,6 @@
 package org.openscience.cdk.reaction.type;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -130,7 +129,7 @@ public class AdductionProtonLPReaction extends ReactionEngine implements IReacti
 			throw new CDKException("AdductionProtonLPReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IAtomContainer reactant = reactants.getAtomContainer(0);
 		
 		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);

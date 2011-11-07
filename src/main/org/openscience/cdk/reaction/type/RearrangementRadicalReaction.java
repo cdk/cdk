@@ -26,7 +26,6 @@ package org.openscience.cdk.reaction.type;
 
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -132,7 +131,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 			throw new CDKException("RearrangementRadicalReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IAtomContainer reactant = reactants.getAtomContainer(0);
 
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/

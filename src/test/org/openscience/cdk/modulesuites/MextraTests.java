@@ -32,6 +32,7 @@ import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
 import org.openscience.cdk.io.ShelXWriterTest;
 import org.openscience.cdk.iupac.ParserTest;
+import org.openscience.cdk.reaction.ReactionChainTest;
 import org.openscience.cdk.tools.BremserPredictorTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
@@ -56,6 +57,7 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
     BremserPredictorTest.class,
     ParserTest.class,
     ExhaustiveFragmenterTest.class,
+    ReactionChainTest.class,
     MurckoFragmenterTest.class    
 })
 public class MextraTests {}
