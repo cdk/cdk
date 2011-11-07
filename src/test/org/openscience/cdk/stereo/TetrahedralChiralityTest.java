@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 /**
- * @cdk.module test-data
+ * @cdk.module test-core
  */
 public class TetrahedralChiralityTest extends CDKTestCase {
 
@@ -71,10 +71,12 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetBuilder() {
+    public void testBuilder() {
         TetrahedralChirality chirality = new TetrahedralChirality(
             molecule.getAtom(1), ligands, Stereo.CLOCKWISE
         );
+        Assert.assertNull(chirality.getBuilder());
+        chirality.setBuilder(DefaultChemObjectBuilder.getInstance());
         Assert.assertEquals(
             DefaultChemObjectBuilder.getInstance(),
             chirality.getBuilder()

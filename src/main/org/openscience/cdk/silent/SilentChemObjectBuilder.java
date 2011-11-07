@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -51,7 +52,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -65,6 +65,9 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
  * A helper class to instantiate a {@link ICDKObject} for the original CDK
@@ -170,6 +173,18 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
             if (params.length == 1 &&
                 params[0] instanceof IMolecularFormula)
                 return (T)new AdductFormula((IMolecularFormula)params[0]);
+        } else if (clazz.isAssignableFrom(ITetrahedralChirality.class)) {
+            System.out.println(params.length);
+            if (params.length == 3 &&
+                params[0] instanceof IAtom &&
+                params[1] instanceof IAtom[] &&
+                params[2] instanceof Stereo) {
+                TetrahedralChirality chirality = new TetrahedralChirality(
+                    (IAtom)params[0], (IAtom[])params[1], (Stereo)params[2]
+                );
+                chirality.setBuilder(this);
+                return (T)chirality;
+            }
         }
 
 	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));

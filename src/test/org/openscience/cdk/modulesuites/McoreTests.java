@@ -48,6 +48,7 @@ import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
 import org.openscience.cdk.stereo.DoubleBondStereochemistryTest;
+import org.openscience.cdk.stereo.TetrahedralChiralityTest;
 import org.openscience.cdk.tools.DataFeaturesTest;
 import org.openscience.cdk.tools.LoggingToolFactoryTest;
 import org.openscience.cdk.tools.SystemOutLoggingToolTest;
@@ -106,6 +107,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     AdjacencyMatrixTest.class,
     PathToolsTest.class,
     DoubleBondStereochemistryTest.class,
+    TetrahedralChiralityTest.class,
     SpanningTreeTest.class
 })
 public class McoreTests {}

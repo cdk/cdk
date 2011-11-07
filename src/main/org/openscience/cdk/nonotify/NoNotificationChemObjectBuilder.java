@@ -65,6 +65,9 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
  * A helper class to instantiate a {@link IChemObject} for the original CDK
@@ -371,6 +374,18 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
             if (params.length == 1 &&
                     params[0] instanceof IMolecularFormula)
                 return (T)new NNMolecularFormulaSet((IMolecularFormula)params[0]);
+        } else if (clazz.isAssignableFrom(ITetrahedralChirality.class)) {
+            System.out.println(params.length);
+            if (params.length == 3 &&
+                params[0] instanceof IAtom &&
+                params[1] instanceof IAtom[] &&
+                params[2] instanceof Stereo) {
+                TetrahedralChirality chirality = new TetrahedralChirality(
+                    (IAtom)params[0], (IAtom[])params[1], (Stereo)params[2]
+                );
+                chirality.setBuilder(this);
+                return (T)chirality;
+            }
         } else if (clazz.isAssignableFrom(IAdductFormula.class)) {
             if (params.length == 0) return (T)new NNAdductFormula();
             if (params.length == 1 &&
