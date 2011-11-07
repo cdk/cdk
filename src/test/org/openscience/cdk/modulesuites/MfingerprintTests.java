@@ -26,6 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.FingerprintCoverageTest;
 import org.openscience.cdk.fingerprint.EStateFingerprinterTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
+import org.openscience.cdk.fingerprint.KlekotaRothFingerprinterTest;
 import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
 import org.openscience.cdk.fingerprint.PubchemFingerprinterTest;
 import org.openscience.cdk.similarity.DistanceMomentTest;
@@ -47,6 +48,7 @@ import org.openscience.cdk.similarity.TanimotoTest;
     PubchemFingerprinterTest.class,
     DistanceMomentTest.class,
     TanimotoTest.class,
-    LingoSimilarityTest.class
+    LingoSimilarityTest.class,
+    KlekotaRothFingerprinterTest.class
 })
 public class MfingerprintTests {}

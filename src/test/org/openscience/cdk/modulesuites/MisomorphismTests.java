@@ -38,8 +38,8 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     IsomorphismCoverageTest.class,
-    SymbolSetQueryAtomTest.class,
     RGroupListTest.class,
+    SymbolSetQueryAtomTest.class,
     QueryAtomContainerCreatorTest.class
 })
 public class MisomorphismTests {}
