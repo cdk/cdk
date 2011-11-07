@@ -33,6 +33,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -56,7 +57,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/test.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+        IteratingSMILESReader reader = new IteratingSMILESReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -76,7 +79,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/tabs.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+        IteratingSMILESReader reader = new IteratingSMILESReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -96,7 +101,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/tabs.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+        IteratingSMILESReader reader = new IteratingSMILESReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         while (reader.hasNext()) {
 
@@ -112,7 +119,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+        IteratingSMILESReader reader = new IteratingSMILESReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -130,7 +139,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+        IteratingSMILESReader reader = new IteratingSMILESReader(
+            ins, DefaultChemObjectBuilder.getInstance()
+        );
         IResourceFormat format = reader.getFormat();
         Assert.assertTrue(format instanceof SMILESFormat);
     }
@@ -139,7 +150,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     public void testSetReader1() {
         String filename = "data/smiles/test2.smi";
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins1);
+        IteratingSMILESReader reader = new IteratingSMILESReader(
+            ins1, DefaultChemObjectBuilder.getInstance()
+        );
         int molCount = 0;
         while (reader.hasNext()) {
             reader.next();
@@ -160,7 +173,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     public void testRemove() {
         String filename = "data/smiles/test2.smi";
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins1);
+        IteratingSMILESReader reader = new IteratingSMILESReader(
+            ins1, DefaultChemObjectBuilder.getInstance()
+        );
         int molCount = 0;
         while (reader.hasNext()) {
             reader.next();

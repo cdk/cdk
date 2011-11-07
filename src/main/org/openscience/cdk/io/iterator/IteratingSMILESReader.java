@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,7 +30,6 @@ import java.io.Reader;
 import java.util.NoSuchElementException;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -90,18 +84,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     public IteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
         sp = new SmilesParser(builder);
         setReader(in);
-    }
-
-    /**
-     * Constructs a new IteratingSMILESReader that can read Molecule from a given InputStream.
-     *
-     * This method will use @link{DefaultChemObjectBuilder} to build the actual molecules
-     *
-     * @param  in  The InputStream to read from
-     */
-    @TestMethod("testSMILESFileWithNames")
-    public IteratingSMILESReader(InputStream in) {
-        this(new InputStreamReader(in), DefaultChemObjectBuilder.getInstance());
     }
 
     /**
