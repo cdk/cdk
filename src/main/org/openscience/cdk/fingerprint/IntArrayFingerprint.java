@@ -48,6 +48,10 @@ public class IntArrayFingerprint implements IBitFingerprint {
 		Arrays.sort(trueBits);
 	}
 	
+	public IntArrayFingerprint(int[] setBits) {
+	    this.trueBits = setBits;
+	}
+	
 	public IntArrayFingerprint() {
 		trueBits = new int[0];
 	}
