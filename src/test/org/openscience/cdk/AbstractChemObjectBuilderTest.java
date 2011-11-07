@@ -62,6 +62,9 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 /**
  * Checks the functionality of {@link IChemObjectBuilder} implementations.
@@ -664,5 +667,31 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
             builder.newInstance(IMolecularFormula.class)
         );
         Assert.assertNotNull(af);
+    }
+
+    @Test public void testNewTetrahedralChirality() {
+        IChemObjectBuilder builder = rootObject.getBuilder();
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+        molecule.addAtom(builder.newInstance(IAtom.class, "Cl"));
+        molecule.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule.addAtom(builder.newInstance(IAtom.class, "Br"));
+        molecule.addAtom(builder.newInstance(IAtom.class, "I"));
+        molecule.addAtom(builder.newInstance(IAtom.class, "H"));
+        molecule.addBond(0, 1, Order.SINGLE);
+        molecule.addBond(1, 2, Order.SINGLE);
+        molecule.addBond(1, 3, Order.SINGLE);
+        molecule.addBond(1, 4, Order.SINGLE);
+        IAtom[] ligands = new IAtom[] {
+            molecule.getAtom(4),
+            molecule.getAtom(3),
+            molecule.getAtom(2),
+            molecule.getAtom(0)
+        };
+        ITetrahedralChirality chirality = builder.newInstance(
+            ITetrahedralChirality.class,
+            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
+        );
+        Assert.assertNotNull(chirality);
+        Assert.assertEquals(builder, chirality.getBuilder());
     }
 }

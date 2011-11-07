@@ -69,7 +69,6 @@ import org.openscience.cdk.protein.data.PDBAtomTest;
 import org.openscience.cdk.protein.data.PDBMonomerTest;
 import org.openscience.cdk.protein.data.PDBPolymerTest;
 import org.openscience.cdk.protein.data.PDBStructureTest;
-import org.openscience.cdk.stereo.TetrahedralChiralityTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -119,8 +118,6 @@ import org.openscience.cdk.stereo.TetrahedralChiralityTest;
     AdductFormulaTest.class,
     MolecularFormulaSetTest.class,
     MolecularFormulaTest.class,
-    
-    TetrahedralChiralityTest.class,
 
     // test from test.event
     ChemObjectChangeEventTest.class,

@@ -22,7 +22,8 @@
  */
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -31,16 +32,26 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
  * Stereochemistry specification for quadrivalent atoms. See {@link ITetrahedralChirality} for
  * further details.
  *
- * @cdk.module data
+ * @cdk.module core
  *
  * @see org.openscience.cdk.interfaces.ITetrahedralChirality
  */
+@TestClass("org.openscience.cdk.stereo.TetrahedralChiralityTest")
 public class TetrahedralChirality implements ITetrahedralChirality {
 
     private IAtom chiralAtom;
     private IAtom[] ligandAtoms;
     private Stereo stereo;
+    private IChemObjectBuilder builder;
 
+    /**
+     * Constructor to create a new {@link ITetrahedralChirality} implementation instance.
+     * 
+     * @param chiralAtom  The chiral {@link IAtom}.
+     * @param ligandAtoms The ligand atoms around the chiral atom.
+     * @param chirality   The {@link Stereo} chirality.
+     */
+    @TestMethod("testTetrahedralChirality_IAtom_arrayIAtom_ITetrahedralChirality_Stereo")
     public TetrahedralChirality(IAtom chiralAtom, IAtom[] ligandAtoms, Stereo chirality) {
         this.chiralAtom = chiralAtom;
         this.ligandAtoms = ligandAtoms;
@@ -52,6 +63,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      *
      * @return an array of four {@link IAtom}s.
      */
+    @TestMethod("testGetLigands")
     public IAtom[] getLigands() {
         IAtom[] arrayCopy = new IAtom[4];
         System.arraycopy(ligandAtoms, 0, arrayCopy, 0, 4);
@@ -63,6 +75,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      *
      * @return the chiral {@link IAtom}.
      */
+    @TestMethod("testGetChiralAtom")
     public IAtom getChiralAtom() {
         return chiralAtom;
     }
@@ -72,14 +85,34 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      *
      * @return the {@link ITetrahedralChirality.Stereo} for this stereo element.
      */
+    @TestMethod("testGetStereo")
     public Stereo getStereo() {
         return stereo;
     }
 
-    public IChemObjectBuilder getBuilder() {
-        return DefaultChemObjectBuilder.getInstance();
+    /**
+     * Sets a new {@link IChemObjectBuilder}.
+     *
+     * @param builder the new {@link IChemObjectBuilder} to be returned
+     * @see #getBuilder()
+     */
+    @TestMethod("testBuilder")
+    public void setBuilder(IChemObjectBuilder builder) {
+        this.builder = builder;
     }
 
+    /** {@inheritDoc} */
+    @TestMethod("testBuilder")
+    public IChemObjectBuilder getBuilder() {
+        return builder;
+    }
+
+    /**
+     * Returns a {@link String} representation of this chiral element.
+     * 
+     * @return the String representation
+     */
+    @TestMethod("testToString")
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Tetrahedral{").append(this.hashCode()).append(", ");

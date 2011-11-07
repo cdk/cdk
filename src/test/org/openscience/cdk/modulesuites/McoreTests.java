@@ -47,6 +47,7 @@ import org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest;
 import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
+import org.openscience.cdk.stereo.TetrahedralChiralityTest;
 import org.openscience.cdk.tools.DataFeaturesTest;
 import org.openscience.cdk.tools.LoggingToolFactoryTest;
 import org.openscience.cdk.tools.SystemOutLoggingToolTest;
@@ -104,6 +105,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     BondManipulatorTest.class,
     AdjacencyMatrixTest.class,
     PathToolsTest.class,
+    TetrahedralChiralityTest.class,
     SpanningTreeTest.class
 })
 public class McoreTests {}

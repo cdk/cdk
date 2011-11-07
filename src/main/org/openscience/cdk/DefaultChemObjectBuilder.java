@@ -67,10 +67,13 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStructure;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
  * A helper class to instantiate a {@link ICDKObject} for the original CDK
@@ -166,6 +169,18 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
             if (params.length == 0) return (T)new PDBStructure();
         } else if (clazz.isAssignableFrom(IMolecularFormula.class)) {
             if (params.length == 0) return (T)new MolecularFormula();
+        } else if (clazz.isAssignableFrom(ITetrahedralChirality.class)) {
+            System.out.println(params.length);
+            if (params.length == 3 &&
+                params[0] instanceof IAtom &&
+                params[1] instanceof IAtom[] &&
+                params[2] instanceof Stereo) {
+                TetrahedralChirality chirality = new TetrahedralChirality(
+                    (IAtom)params[0], (IAtom[])params[1], (Stereo)params[2]
+                );
+                chirality.setBuilder(this);
+                return (T)chirality;
+            }
         } else if (clazz.isAssignableFrom(IMolecularFormulaSet.class)) {
             if (params.length == 0) return (T)new MolecularFormulaSet();
             if (params.length == 1 &&
