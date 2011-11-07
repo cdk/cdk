@@ -24,12 +24,13 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.AtomContainer;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -67,7 +68,7 @@ public class EquivalentClassPartitioner
 	/**
 	 *  Constructor for the TopologicalEquivalentClass object
 	 */
-	public EquivalentClassPartitioner(AtomContainer atomContainer)
+	public EquivalentClassPartitioner(IAtomContainer atomContainer)
 	{
 		adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 		apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);
@@ -88,7 +89,7 @@ public class EquivalentClassPartitioner
 	 * @param atomContainer 	atoms and bonds of the molecule
 	 * @return 			an array contains the automorphism partition of the molecule
 	 */
-	public int[] getTopoEquivClassbyHuXu(AtomContainer atomContainer) throws NoSuchAtomException
+	public int[] getTopoEquivClassbyHuXu(IAtomContainer atomContainer) throws NoSuchAtomException
 	{
 		 double nodeSequence[]=prepareNode(atomContainer);
 		 nodeMatrix=buildNodeMatrix(nodeSequence);
@@ -106,7 +107,7 @@ public class EquivalentClassPartitioner
 	 * @param atomContainer		atoms and bonds of the molecule
 	 * @return			an array of node identifier
 	 */
-	public double[] prepareNode(AtomContainer atomContainer)
+	public double[] prepareNode(IAtomContainer atomContainer)
 	{
 		java.util.Iterator atoms=atomContainer.atoms().iterator();
 		 double nodeSequence[]=new double[atomContainer.getAtomCount()];

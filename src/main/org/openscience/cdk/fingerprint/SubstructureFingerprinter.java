@@ -426,4 +426,16 @@ public class SubstructureFingerprinter implements IFingerprinter {
         return smarts.length;
     }
 
+    /**
+     * Retrieves the SMARTS representation of a substructure for a given
+     * bit in the fingerprint.
+     *
+     * @param bitIndex
+     * @return SMARTS representation of substructure at
+     *         index <code>bitIndex</code>.
+     */
+    @TestMethod("testGetSubstructure")
+    public String getSubstructure(int bitIndex) {
+    	return smarts[bitIndex];
+    }
 }

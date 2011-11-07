@@ -36,7 +36,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 /**
  * Checks the functionality of the <code>QueryAtomContainerCreator</code>.
  *
- * @cdk.module test-extra
+ * @cdk.module test-isomorphism
  */
 public class QueryAtomContainerCreatorTest extends CDKTestCase {
 	

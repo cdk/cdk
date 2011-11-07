@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module cip
  */
-@TestClass("org.openscience.cdk.geometry.cip")
+@TestClass("org.openscience.cdk.geometry.cip.VisitedAtomsTest")
 public class VisitedAtoms {
 
     /**

@@ -118,7 +118,7 @@ public class InChIGenerator {
      * @throws org.openscience.cdk.exception.CDKException if there is an
      * error during InChI generation
      */
-    @TestMethod("testGetInchiFromChlorineAtom,testGetInchiFromLithiumIontest,GetInchiFromChlorine37Atom")
+    @TestMethod("testGetInchiFromChlorineAtom,testGetInchiFromLithiumIon,testGetStandardInchiFromChlorine37Atom")
     protected InChIGenerator(IAtomContainer atomContainer) throws CDKException {
         try {
             input = new JniInchiInput("");

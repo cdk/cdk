@@ -104,5 +104,12 @@ public class SubstructureFingerprinterTest extends AbstractFingerprinterTest {
         BitSet fp = fprinter.getFingerprint(sp.parseSmiles(benzaldehyde));
         Assert.assertFalse("Bit 136 (vinylogous ester) is set to true", fp.get(136));
     }
+
+    @Test
+    public void testGetSubstructure() throws Exception {
+    	String[] smarts = {"c1ccccc1", "[CX4H3][#6]", "[CX2]#[CX2]"};
+    	SubstructureFingerprinter printer = new SubstructureFingerprinter(smarts);
+    	Assert.assertEquals(printer.getSubstructure(1), smarts[1]);
+    }
 }
 

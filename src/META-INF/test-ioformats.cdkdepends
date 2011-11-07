@@ -9,5 +9,6 @@ cdk-smiles.jar
 cdk-pdb.jar
 cdk-libiocml.jar
 cdk-extra.jar
+cdk-data.jar
 cdk-test.jar
 cdk-testdata.jar
