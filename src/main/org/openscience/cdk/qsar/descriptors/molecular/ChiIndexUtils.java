@@ -19,6 +19,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -45,6 +47,7 @@ import java.util.List;
  * @cdk.module qsarmolecular
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiIndexUtilsTest")
 class ChiIndexUtils {
 
     /**
@@ -193,7 +196,8 @@ class ChiIndexUtils {
      * @return The empirical delta V if it is present in one of the above
      *         environments, -1 otherwise
      */
-    private static double deltavSulphur(IAtom atom, IAtomContainer atomContainer) {
+    @TestMethod("testDeltaVSuplhurSO,testDeltaVSulphurSO2")
+    protected static double deltavSulphur(IAtom atom, IAtomContainer atomContainer) {
         if (!atom.getSymbol().equals("S")) return -1;
 
         // check whether it's a S in S-S
@@ -204,21 +208,14 @@ class ChiIndexUtils {
                 return .89;
         }
 
-        // check whether it's a S in -SO-
-        for (IAtom connectedAtom : connected) {
-            if (connectedAtom.getSymbol().equals("O")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
-                return 1.33;
-        }
-
-        // check whether it's a S in -SO2-
         int count = 0;
         for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("O")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
                 count++;
         }
-        if (count == 2) return 2.67;
+        if (count == 1) return 1.33; // check whether it's a S in -SO-
+        else if (count == 2) return 2.67; // check whether it's a S in -SO2-
 
         return -1;
     }
