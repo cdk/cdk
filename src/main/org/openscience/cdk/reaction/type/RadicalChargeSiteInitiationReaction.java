@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -124,7 +123,7 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
 			throw new CDKException("RadicalChargeSiteInitiationReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IMolecule reactant = reactants.getMolecule(0);
 
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/

@@ -91,7 +91,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	 */
 	public ReactionSet() {
 		reactionCount = 0;
-		reactions = new Reaction[growArraySize];
+		reactions = new IReaction[growArraySize];
 	}
 
 
@@ -133,7 +133,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	 * @return         The Reaction at position <code>number</code>
 	 */
     public IReaction getReaction(int number) {
-        return (Reaction)reactions[number];
+        return reactions[number];
     }
     
 
@@ -180,7 +180,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	 */
 	private void growReactionArray() {
 		growArraySize = reactions.length;
-		Reaction[] newreactions = new Reaction[reactions.length + growArraySize];
+		IReaction[] newreactions = new IReaction[reactions.length + growArraySize];
 		System.arraycopy(reactions, 0, newreactions, 0, reactions.length);
 		reactions = newreactions;
 	}
@@ -217,9 +217,9 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 		ReactionSet clone = (ReactionSet)super.clone();
         // clone the reactions
         clone.reactionCount = this.reactionCount;
-		clone.reactions = new Reaction[clone.reactionCount];
+		clone.reactions = new IReaction[clone.reactionCount];
 		for (int f = 0; f < clone.reactionCount; f++) {
-			clone.reactions[f] = (Reaction)((Reaction)reactions[f]).clone();
+			clone.reactions[f] = (IReaction)((IReaction)reactions[f]).clone();
 		}
 		return clone;
 	}

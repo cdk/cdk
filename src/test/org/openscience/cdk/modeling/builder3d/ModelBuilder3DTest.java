@@ -329,7 +329,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
 			for (Iterator atom = molecules.atoms().iterator(); atom.hasNext();){
-				Atom last = (Atom) atom.next();
+				IAtom last = (IAtom) atom.next();
 				last.setPoint2d(null);
 			}
 		}

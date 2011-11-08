@@ -41,7 +41,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -403,7 +402,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         Molecule mol = reader.read(new Molecule());
-        Assert.assertEquals("R2",((PseudoAtom)mol.getAtom(19)).getLabel());
+        Assert.assertEquals("R2",((IPseudoAtom)mol.getAtom(19)).getLabel());
     }
 
     @Test public void testAliasPropertyGroup() throws Exception {
@@ -413,8 +412,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         Molecule mol = reader.read(new Molecule());
         IAtom atom = mol.getAtom(3);
-        Assert.assertTrue(atom instanceof PseudoAtom);
-        Assert.assertEquals("R1", ((PseudoAtom)atom).getLabel());
+        Assert.assertTrue(atom instanceof IPseudoAtom);
+        Assert.assertEquals("R1", ((IPseudoAtom)atom).getLabel());
     }
 
     /**
@@ -706,15 +705,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         Molecule mol = (Molecule)reader.read(new Molecule());
         for(IBond bond: mol.bonds() ) {
-            PseudoAtom rGroup = null;
+            IPseudoAtom rGroup = null;
             IAtom partner=null;
-            if (bond.getAtom(0) instanceof PseudoAtom )  {
-                rGroup = (PseudoAtom)bond.getAtom(0);
+            if (bond.getAtom(0) instanceof IPseudoAtom )  {
+                rGroup = (IPseudoAtom)bond.getAtom(0);
                 partner = bond.getAtom(1);
             }
             else {
                 partner = bond.getAtom(0);
-                rGroup = (PseudoAtom)bond.getAtom(1);
+                rGroup = (IPseudoAtom)bond.getAtom(1);
             }
             if (partner.getSymbol().equals("N"))  {
                 Assert.assertEquals(rGroup.getLabel(),"R4");
@@ -748,11 +747,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         Molecule mol = (Molecule)reader.read(new Molecule());
         for(IBond bond: mol.bonds() ) {
-            PseudoAtom rGroup = null;
-            if (bond.getAtom(0) instanceof PseudoAtom )  
-                rGroup = (PseudoAtom)bond.getAtom(0);
+            IPseudoAtom rGroup = null;
+            if (bond.getAtom(0) instanceof IPseudoAtom )  
+                rGroup = (IPseudoAtom)bond.getAtom(0);
             else 
-                rGroup = (PseudoAtom)bond.getAtom(1);
+                rGroup = (IPseudoAtom)bond.getAtom(1);
 
             if (bond.getOrder()== IBond.Order.DOUBLE)  {
                 Assert.assertEquals(rGroup.getLabel(),"R32");
