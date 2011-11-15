@@ -24,13 +24,14 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.IOException;
-
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
+
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
  * This class is the interface that all IO readers should implement.
@@ -47,7 +48,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public interface IChemObjectIO {
+public interface IChemObjectIO extends Closeable {
 
     /**
      * Returns the {@link IResourceFormat} class for this IO class.
