@@ -91,6 +91,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	 *
 	 * @return the current model
 	 */
+    @TestMethod("testGetRendererModel")
 	public RendererModel getRendererModel() {
 		return rendererModel;
 	}
@@ -100,6 +101,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	 *
 	 * @return a {@link Map} with Integer as keys and {@link BasicStroke}s.
 	 */
+    @TestMethod("testGetStrokeMap")
 	public Map<Integer, BasicStroke> getStrokeMap() {
 		return strokeMap;
 	}
@@ -114,6 +116,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	 *
 	 * @return the {@link Graphics2D} object
 	 */
+    @TestMethod("testGetGraphics")
 	public Graphics2D getGraphics() {
 		return graphics;
 	}
