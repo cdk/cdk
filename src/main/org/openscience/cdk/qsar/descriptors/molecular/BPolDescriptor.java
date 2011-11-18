@@ -99,7 +99,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
+            "http://semanticscience.org/resource/CHEMINF_001100",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");
