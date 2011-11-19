@@ -137,8 +137,13 @@ public class BoundsCalculator {
         if (atomContainer.getAtomCount() == 0) {
             return new Rectangle2D.Double();
         } else if (atomContainer.getAtomCount() == 1) {
-            Point2d p = atomContainer.getAtom(0).getPoint2d();
-            return new Rectangle2D.Double(p.x, p.y, 0, 0);
+            Point2d point = atomContainer.getAtom(0).getPoint2d();
+            if (point == null) {
+                throw new IllegalArgumentException(
+                    "Cannot calculate bounds when 2D coordinates are missing."
+                );
+            }
+            return new Rectangle2D.Double(point.x, point.y, 0, 0);
         }
 
         double xmin = Double.POSITIVE_INFINITY;
@@ -148,6 +153,11 @@ public class BoundsCalculator {
 
         for (IAtom atom : atomContainer.atoms()) {
             Point2d point = atom.getPoint2d();
+            if (point == null) {
+                throw new IllegalArgumentException(
+                    "Cannot calculate bounds when 2D coordinates are missing."
+                );
+            }
             xmin = Math.min(xmin, point.x);
             xmax = Math.max(xmax, point.x);
             ymin = Math.min(ymin, point.y);
