@@ -26,6 +26,8 @@ import java.awt.geom.Rectangle2D;
 
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -42,6 +44,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * @cdk.module renderbasic
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.BoundsCalculatorTest")
 public class BoundsCalculator {
 
     /**
@@ -50,6 +53,7 @@ public class BoundsCalculator {
      * @param chemModel the chem model to use
      * @return the bounding rectangle of the chem model
      */
+    @TestMethod("testCalculateBounds_IChemModel")
     public static Rectangle2D calculateBounds(IChemModel chemModel) {
         IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
@@ -75,6 +79,7 @@ public class BoundsCalculator {
      * @param reactionSet the reaction set to use
      * @return the bounding rectangle of the reaction set
      */
+    @TestMethod("testCalculateBounds_IReactionSet")
     public static Rectangle2D calculateBounds(IReactionSet reactionSet) {
         Rectangle2D totalBounds = new Rectangle2D.Double();
         for (IReaction reaction : reactionSet.reactions()) {
@@ -94,6 +99,7 @@ public class BoundsCalculator {
      * @param reaction the reaction to use
      * @return the bounding rectangle of the reaction
      */
+    @TestMethod("testCalculateBounds_IReaction")
     public static Rectangle2D calculateBounds(IReaction reaction) {
         // get the participants in the reaction
         IMoleculeSet reactants = reaction.getReactants();
@@ -111,6 +117,7 @@ public class BoundsCalculator {
      * @param moleculeSet the molecule set to use
      * @return the bounding rectangle of the molecule set
      */
+    @TestMethod("testCalculateBounds_IMoleculeSet")
     public static Rectangle2D calculateBounds(IMoleculeSet moleculeSet) {
         Rectangle2D totalBounds = new Rectangle2D.Double();
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
@@ -131,6 +138,7 @@ public class BoundsCalculator {
      * @param atomContainer the atom container to use
      * @return the bounding rectangle of the atom container
      */
+    @TestMethod("testCalculateBounds_IAtomContainer")
     public static Rectangle2D calculateBounds(IAtomContainer atomContainer) {
         // this is essential, otherwise a rectangle
         // of (+INF, -INF, +INF, -INF) is returned!

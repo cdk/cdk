@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderbasicCoverageTest;
 import org.openscience.cdk.renderer.AtomContainerRendererTest;
+import org.openscience.cdk.renderer.BoundsCalculatorTest;
 import org.openscience.cdk.renderer.elements.ArrowElementTest;
 import org.openscience.cdk.renderer.elements.AtomSymbolElementTest;
 import org.openscience.cdk.renderer.elements.GeneralPathTest;
@@ -69,6 +70,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGeneratorTest;
 	LineToTest.class,
 	CubicToTest.class,
 	MoveToTest.class,
-	QuadToTest.class
+	QuadToTest.class,
+	BoundsCalculatorTest.class
 })
 public class MrenderbasicTests {}
