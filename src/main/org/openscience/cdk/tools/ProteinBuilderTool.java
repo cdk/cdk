@@ -104,7 +104,7 @@ public class ProteinBuilderTool {
 
     /**
      * Creates a BioPolymer from a sequence of amino acid as identified by a
-     * the sequence of there one letter codes.
+     * the sequence of their one letter codes.
      *
      * <p>For example:
      * <pre>
