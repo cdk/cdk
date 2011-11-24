@@ -1180,7 +1180,7 @@ Method </bibtex:title>
       <bibtex:volume>24</bibtex:volume> 
       <bibtex:number>21</bibtex:number> 
       <bibtex:pages>2518-2525</bibtex:pages> 
-      <bibtex:year>2008</bibtex:pages> 
+      <bibtex:year>2008</bibtex:year> 
       <bibtex:doi>10.1093/bioinformatics/btn479</bibtex:doi>
       <bibtex:URL>http://bioinformatics.oxfordjournals.org/content/24/21/2518.abstract</bibtex:URL> 
       <bibtex:eprint>http://bioinformatics.oxfordjournals.org/content/24/21/2518.full.pdf+html</bibtex:eprint> 
