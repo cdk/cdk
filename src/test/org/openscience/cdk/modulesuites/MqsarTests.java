@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsarCoverageTest;
 import org.openscience.cdk.qsar.DescriptorExceptionTest;
+import org.openscience.cdk.tools.AtomicPropertiesTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -34,6 +35,7 @@ import org.openscience.cdk.qsar.DescriptorExceptionTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     QsarCoverageTest.class,
-    DescriptorExceptionTest.class
+    DescriptorExceptionTest.class,
+    AtomicPropertiesTest.class
 })
 public class MqsarTests {}
