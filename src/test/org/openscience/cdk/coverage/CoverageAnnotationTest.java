@@ -90,6 +90,7 @@ abstract public class CoverageAnnotationTest {
     private int checkClass(String className) {
         Class coreClass = loadClass(getClassName(className));
         if (coreClass.isInterface()) return 0;
+        if (Modifier.isAbstract(coreClass.getModifiers())) return 0;
 
         int missingTestCount = 0;
         HashMap<String, TestMethod> methodAnnotations = new HashMap<String, TestMethod>();
