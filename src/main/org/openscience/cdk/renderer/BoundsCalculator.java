@@ -119,7 +119,7 @@ public class BoundsCalculator {
      * @return the bounding rectangle of the molecule set
      */
     @TestMethod("testCalculateBounds_IMoleculeSet")
-    public static Rectangle2D calculateBounds(IMoleculeSet moleculeSet) {
+    public static Rectangle2D calculateBounds(IAtomContainerSet moleculeSet) {
         Rectangle2D totalBounds = new Rectangle2D.Double();
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
             IAtomContainer container = moleculeSet.getAtomContainer(i);
