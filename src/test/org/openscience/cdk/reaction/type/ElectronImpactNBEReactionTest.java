@@ -113,7 +113,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		}
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(reactant);
+		setOfReactants.addAtomContainer(reactant);
 		
 		/* initiate */
 		makeSureAtomTypesAreRecognized(reactant);
@@ -165,7 +165,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(reactant);
+		setOfReactants.addAtomContainer(reactant);
 
 		/* initiate */
 		makeSureAtomTypesAreRecognized(reactant);
@@ -211,7 +211,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-       setOfReactants.addMolecule(molecule);
+       setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction(); 
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -279,7 +279,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-       setOfReactants.addMolecule(molecule);
+       setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction(); 
 
@@ -344,7 +344,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-       setOfReactants.addMolecule(molecule);
+       setOfReactants.addAtomContainer(molecule);
 	
        IReactionProcess type  = new ElectronImpactNBEReaction(); 
 
@@ -487,7 +487,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 		
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -499,7 +499,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	private IMoleculeSet getExpectedProducts() {
 		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-        setOfProducts.addMolecule(null);
+        setOfProducts.addAtomContainer(null);
 		return setOfProducts;
 	}
 }

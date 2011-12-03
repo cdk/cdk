@@ -274,7 +274,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             container.addAtom(atom);
         }
         IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
-        moleculeSet.addMolecule(model.getBuilder().newInstance(IMolecule.class,container));
+        moleculeSet.addAtomContainer(model.getBuilder().newInstance(IMolecule.class,container));
         model.setMoleculeSet(moleculeSet);
     }
 

@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * displaced.</p>
  * <pre>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new RearrangementAnion1Reaction();
  *  HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("hasActiveCenter",Boolean.FALSE);;
@@ -296,7 +296,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         lpcheck.saturate(molecule);
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 
 		/* initiate */
 		makeSureAtomTypesAreRecognized(molecule);
@@ -412,7 +412,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -440,7 +440,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 		
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 	/**

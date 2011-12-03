@@ -205,7 +205,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		IMoleculeSet setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
 		IMolecule m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
 		if (m != null) {
-			setOfMolecules.addMolecule(m);
+			setOfMolecules.addAtomContainer(m);
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
@@ -224,7 +224,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		    m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
 		    
 		    if (m != null) {
-			setOfMolecules.addMolecule(m);
+			setOfMolecules.addAtomContainer(m);
 			
 			chemModel.setMoleculeSet(setOfMolecules);
 			chemSequence.addChemModel(chemModel);

@@ -124,7 +124,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         if (object instanceof IMolecule) {
             try {
                 IMoleculeSet som = object.getBuilder().newInstance(IMoleculeSet.class);
-                som.addMolecule((IMolecule) object);
+                som.addAtomContainer((IMolecule) object);
                 writeMolecule(som);
             } catch (Exception ex) {
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);

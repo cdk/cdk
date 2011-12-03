@@ -270,7 +270,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 			e.printStackTrace();
 		}
 		
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -299,13 +299,13 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 7, IBond.Order.SINGLE);
 		molecule.getAtom(0).setFormalCharge(1);
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
         
         /*[H*]*/
 		IMolecule molecule2 = builder.newInstance(IMolecule.class);
 		molecule2.addAtom(new Atom("H"));
         molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
-        setOfProducts.addMolecule(molecule2);
+        setOfProducts.addAtomContainer(molecule2);
 
 		return setOfProducts;
 	}

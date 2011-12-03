@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>It is processed by the HeterolyticCleavageMechanism class</p>
  * <pre>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new HeterolyticCleavageSBReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -169,7 +169,7 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
                 	bondList.add(bondi);
                 	
 					IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
-					moleculeSet.addMolecule(reactant);
+					moleculeSet.addAtomContainer(reactant);
 					IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 					if(reaction == null)
 						continue;

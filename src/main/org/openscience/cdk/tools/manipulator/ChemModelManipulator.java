@@ -186,7 +186,7 @@ public class ChemModelManipulator {
             moleculeSet.addAtomContainer(molecule);
         } else {
             IMoleculeSet moleculeSet = chemModel.getBuilder().newInstance(IMoleculeSet.class);
-            moleculeSet.addMolecule(molecule);
+            moleculeSet.addAtomContainer(molecule);
             chemModel.setMoleculeSet(moleculeSet);
         }
         return molecule;

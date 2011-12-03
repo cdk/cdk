@@ -68,7 +68,7 @@ public class ReactionSchemeManipulator {
                         }
                     }
                     if (!contain)
-                        molSet.addMolecule((IMolecule) (ac));
+                        molSet.addAtomContainer((IMolecule) (ac));
                 }
     		}
         for (IReaction reaction : scheme.reactions()) {
@@ -82,7 +82,7 @@ public class ReactionSchemeManipulator {
                     }
                 }
                 if (!contain)
-                    molSet.addMolecule((IMolecule) (ac));
+                    molSet.addAtomContainer((IMolecule) (ac));
 
             }
         }

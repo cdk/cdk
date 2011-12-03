@@ -350,7 +350,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						atomNumberMap.clear();
 						if (isProteinStructure) {
 							// create bonds and finish the molecule
-							oSet.addMolecule(oBP);
+							oSet.addAtomContainer(oBP);
 							if (useRebondTool.isSet()) {
 							    try {
 							        if(!createBondsWithRebondTool(oBP))	{
@@ -365,7 +365,7 @@ public class PDBReader extends DefaultChemObjectReader {
 							}
 						} else {
 						    createBondsWithRebondTool(molecularStructure);
-							oSet.addMolecule(molecularStructure);
+							oSet.addAtomContainer(molecularStructure);
 						}
 						
 					} else if (cCol.equals("MODEL ")) {

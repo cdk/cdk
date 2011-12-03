@@ -342,7 +342,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
            *  be used as a counter in the nmr reading
            */
         atomCount = molecule.getAtomCount();
-        moleculeSet.addMolecule(molecule);
+        moleculeSet.addAtomContainer(molecule);
         model.setMoleculeSet(moleculeSet);
     }
 

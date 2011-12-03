@@ -149,7 +149,7 @@ public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -192,7 +192,7 @@ public class RadicalSiteRrBetaReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 		
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 	

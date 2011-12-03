@@ -727,7 +727,7 @@ public class CMLCoreModule implements ICMLModule {
 //            cdo.endObject("Molecule");
             if (currentMolecule instanceof IMolecule) {
                 logger.debug("Adding molecule to set");
-                currentMoleculeSet.addMolecule((IMolecule)currentMolecule);
+                currentMoleculeSet.addAtomContainer((IMolecule)currentMolecule);
                 logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
             } else if (currentMolecule instanceof ICrystal) {
                 logger.debug("Adding crystal to chemModel");

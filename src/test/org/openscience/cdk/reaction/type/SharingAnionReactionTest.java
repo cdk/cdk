@@ -176,7 +176,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
         lpcheck.saturate(molecule);
      	
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		
 
 		/* initiate */
@@ -312,7 +312,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -338,7 +338,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
         
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 	/**

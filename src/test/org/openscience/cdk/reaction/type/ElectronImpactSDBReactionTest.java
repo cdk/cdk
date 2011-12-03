@@ -176,7 +176,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 		}
         
 		
-		setOfReactants.addMolecule(reactant);
+		setOfReactants.addAtomContainer(reactant);
 		return setOfReactants;
 	}
 	/**
@@ -188,7 +188,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 	private IMoleculeSet getExpectedProducts() {
 		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-        setOfProducts.addMolecule(null);
+        setOfProducts.addAtomContainer(null);
 		return setOfProducts;
 	}
 }

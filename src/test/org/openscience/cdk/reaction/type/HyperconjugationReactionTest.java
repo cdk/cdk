@@ -94,7 +94,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
 		addExplicitHydrogens(molecule);
 		
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -330,7 +330,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -355,7 +355,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 	     
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 	

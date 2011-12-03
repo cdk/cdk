@@ -222,7 +222,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 		IMoleculeSet setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
 		IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IMolecule.class));
 		if (m != null && m instanceof IMolecule ) {
-			setOfMolecules.addMolecule((IMolecule)m);
+			setOfMolecules.addAtomContainer((IMolecule)m);
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
@@ -241,7 +241,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 		    m = readAtomContainer(chemFile.getBuilder().newInstance(IMolecule.class));
 		    
 		    if (m != null && m instanceof IMolecule) {
-			setOfMolecules.addMolecule((IMolecule)m);
+			setOfMolecules.addAtomContainer((IMolecule)m);
 			
 			chemModel.setMoleculeSet(setOfMolecules);
 			chemSequence.addChemModel(chemModel);

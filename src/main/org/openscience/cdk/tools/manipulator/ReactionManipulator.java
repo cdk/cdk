@@ -143,7 +143,7 @@ public class ReactionManipulator {
         IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
         IMoleculeSet products = reaction.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
-            moleculeSet.addMolecule(products.getMolecule(i));
+            moleculeSet.addAtomContainer(products.getMolecule(i));
         }
         return moleculeSet;
     }
@@ -159,7 +159,7 @@ public class ReactionManipulator {
         IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
-            moleculeSet.addMolecule(reactants.getMolecule(i));
+            moleculeSet.addAtomContainer(reactants.getMolecule(i));
         }
         return moleculeSet;
     }

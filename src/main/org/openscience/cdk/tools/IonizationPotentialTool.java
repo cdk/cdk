@@ -484,7 +484,7 @@ public class IonizationPotentialTool {
 	    IReactionProcess reactionNBE  = new ElectronImpactNBEReaction();
 
 		IMoleculeSet setOfReactants = container.getBuilder().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(asMolecule(container));
+		setOfReactants.addAtomContainer(asMolecule(container));
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();

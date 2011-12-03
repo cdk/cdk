@@ -93,7 +93,7 @@ public class TemplateExtractor {
 			m = (IMolecule) imdl.next();
 			if (m.getAtomCount() > 2) {
 				if (m.getAtom(0).getPoint3d() != null) {
-					som.addMolecule(m);
+					som.addAtomContainer(m);
 				}
 			}
 		}
@@ -122,7 +122,7 @@ public class TemplateExtractor {
 		}
 		System.out.println("READY");
 		while (imdl.hasNext()) {
-			som.addMolecule((IMolecule) imdl.next());
+			som.addAtomContainer((IMolecule) imdl.next());
 		}
 		try {
 			imdl.close();
@@ -151,9 +151,9 @@ public class TemplateExtractor {
 			m = (IMolecule) imdl.next();
 			System.out.println("Atoms:" + m.getAtomCount());
 			IRingSet ringSetM = new SSSRFinder(m).findSSSR();
-			// som.addMolecule(m);
+			// som.addAtomContainer(m);
 			for (int i = 0; i < ringSetM.getAtomContainerCount(); i++) {
-				som.addMolecule(builder.newInstance(IMolecule.class, ringSetM.getAtomContainer(i)));
+				som.addAtomContainer(builder.newInstance(IMolecule.class, ringSetM.getAtomContainer(i)));
 			}
 		}
 		try {
@@ -284,7 +284,7 @@ public class TemplateExtractor {
 		 * while (it.hasNext()) { key=(String)it.next();
 		 * ringSmile=(String)HashRingSystems.get(key);
 		 * System.out.println("HashtableSmile:"+ringSmile+" key:"+key); try{
-		 * som.addMolecule(smileParser.parseSmiles(ringSmile)); }catch
+		 * som.addAtomContainer(smileParser.parseSmiles(ringSmile)); }catch
 		 * (Exception ex5){ System.out.println("Error in som.addmolecule due
 		 * to:"+ex5); } }
 		 */

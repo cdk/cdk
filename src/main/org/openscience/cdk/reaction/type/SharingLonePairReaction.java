@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * 
  * <pre>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new SharingLonePairReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -156,7 +156,7 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
 		                	bondList.add(bondi);
 
 							IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
-							moleculeSet.addMolecule(reactant);
+							moleculeSet.addAtomContainer(reactant);
 							IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 							if(reaction == null)
 								continue;

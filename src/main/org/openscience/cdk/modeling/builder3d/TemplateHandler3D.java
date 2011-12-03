@@ -113,7 +113,7 @@ public class TemplateHandler3D {
         IMolecule molecule;
         while (imdl.hasNext()) {
             molecule = (IMolecule) imdl.next();
-            templates.addMolecule(molecule);
+            templates.addAtomContainer(molecule);
         }
         molecule = null;
         try {

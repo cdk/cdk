@@ -232,14 +232,14 @@ public class StructureResonanceGenerator {
 	public IMoleculeSet getStructures(IMolecule molecule) {
     	int countStructure = 0;
     	IMoleculeSet setOfMol = molecule.getBuilder().newInstance(IMoleculeSet.class);
-		setOfMol.addMolecule(molecule);
+		setOfMol.addAtomContainer(molecule);
 		
 		for(int i = 0 ; i < setOfMol.getAtomContainerCount() ; i++){
 			IMolecule mol = setOfMol.getMolecule(i);
             for (IReactionProcess aReactionsList : reactionsList) {
                 IReactionProcess reaction = aReactionsList;
                 IMoleculeSet setOfReactants = molecule.getBuilder().newInstance(IMoleculeSet.class);
-                setOfReactants.addMolecule(mol);
+                setOfReactants.addAtomContainer(mol);
                 try {
                     IReactionSet setOfReactions = reaction.initiate(setOfReactants, null);
                     if (setOfReactions.getReactionCount() != 0)
@@ -248,7 +248,7 @@ public class StructureResonanceGenerator {
                             {
                                 IMolecule product = setOfReactions.getReaction(k).getProducts().getMolecule(j);
                                 if (!existAC(setOfMol, product)) {
-                                    setOfMol.addMolecule(product);
+                                    setOfMol.addAtomContainer(product);
                                     countStructure++;
                                     if (countStructure > maxStructures)
                                         return setOfMol;

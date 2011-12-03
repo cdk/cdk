@@ -261,7 +261,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                     }
                     
                     IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
-                    moleculeSet.addMolecule(model.getBuilder().newInstance(IMolecule.class,container));
+                    moleculeSet.addAtomContainer(model.getBuilder().newInstance(IMolecule.class,container));
                     model.setMoleculeSet(moleculeSet);
                     
                     return model;

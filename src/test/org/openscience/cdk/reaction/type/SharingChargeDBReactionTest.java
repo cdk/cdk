@@ -259,7 +259,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -286,7 +286,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 	/**

@@ -218,7 +218,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		atom.setFormalCharge(1);
         molecule.addSingleElectron(new SingleElectron(atom));
         
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -239,7 +239,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule1.getAtom(0).setFormalCharge(1);
 		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(0, 4, IBond.Order.SINGLE);
-        setOfProducts.addMolecule(molecule1);
+        setOfProducts.addAtomContainer(molecule1);
         
         IMolecule molecule2 = builder.newInstance(IMolecule.class);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -250,7 +250,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule2.addBond(0, 3, IBond.Order.SINGLE);
         molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
-        setOfProducts.addMolecule(molecule2);
+        setOfProducts.addAtomContainer(molecule2);
         
         return setOfProducts;
 	}

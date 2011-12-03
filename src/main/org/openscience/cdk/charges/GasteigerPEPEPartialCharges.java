@@ -520,7 +520,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 			return null;
 		
 		
-		setOfReactants.addMolecule((IMolecule) ac);
+		setOfReactants.addAtomContainer((IMolecule) ac);
 		
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -537,7 +537,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     			mol.getBond(k).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,false);
     			mol.getBond(k).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,false);
     		}
-    		setOfM2.addMolecule((IMolecule) mol);
+    		setOfM2.addAtomContainer((IMolecule) mol);
     		List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
     	    IParameterReact param2 = new SetReactionCenter();
             param2.setParameter(Boolean.FALSE);

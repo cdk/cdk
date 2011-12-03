@@ -129,7 +129,7 @@ public class PubChemXMLHelper {
     				IMolecule molecule = parseMolecule(parser, builder);
     				if (molecule.getAtomCount() > 0) {
     					// skip empty PC-Compound's
-    					set.addMolecule(molecule);
+    					set.addAtomContainer(molecule);
     				}
     			}
     		}

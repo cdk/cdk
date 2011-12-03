@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * 
  *<pre>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new ElectronImpactNBEReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -145,7 +145,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 				ArrayList<IAtom> atomList = new ArrayList<IAtom>();
 				atomList.add(atom);
 				IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
-				moleculeSet.addMolecule(reactant);
+				moleculeSet.addAtomContainer(reactant);
 				IReaction reaction = mechanism.initiate(moleculeSet, atomList, null);
 				if(reaction == null)
 					continue;

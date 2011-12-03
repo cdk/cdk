@@ -60,7 +60,7 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
             Object object = reader.next();
             Assert.assertNotNull(object);
             Assert.assertTrue(object instanceof IMolecule);
-            set.addMolecule((IMolecule)object);
+            set.addAtomContainer((IMolecule)object);
             molCount++;
         }
 

@@ -59,7 +59,7 @@ public class ChangeEventPropagationTest extends CDKTestCase {
 	mol.addAtom(a1);
 	mol.addAtom(a2);
 	mol.addBond(b1);
-	som.addMolecule(mol);
+	som.addAtomContainer(mol);
 	cm.setMoleculeSet(som);
 	cs.addChemModel(cm);
 	cf.addChemSequence(cs);

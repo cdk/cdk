@@ -178,7 +178,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
                 mol.setProperty("complementSupport", cols[7]);
                 mol.setProperty("atomCount", cols[2]);
                 mol.setProperty("bondCount", cols[3]);
-                molSet.addMolecule(mol);
+                molSet.addAtomContainer(mol);
             } catch (InvalidSmilesException exception) {
                 logger.error("Skipping invalid SMILES: " + cols[1]);
                 logger.debug(exception);

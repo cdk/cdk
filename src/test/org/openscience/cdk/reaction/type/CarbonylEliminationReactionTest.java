@@ -228,7 +228,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -261,8 +261,8 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 		molecule2.addAtom(oxy);
 		molecule2.addBond(0, 1, IBond.Order.TRIPLE);
 
-        setOfProducts.addMolecule(molecule1);
-        setOfProducts.addMolecule(molecule2);
+        setOfProducts.addAtomContainer(molecule1);
+        setOfProducts.addAtomContainer(molecule2);
 		return setOfProducts;
 	}
 }

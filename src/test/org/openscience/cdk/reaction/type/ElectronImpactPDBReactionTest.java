@@ -114,7 +114,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 		}
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(reactant);
+		setOfReactants.addAtomContainer(reactant);
 
 		/* initiate */
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
@@ -162,7 +162,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 		addExplicitHydrogens(reactant);
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(reactant);
+		setOfReactants.addAtomContainer(reactant);
 
 		/* initiate */
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
@@ -209,7 +209,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 		addExplicitHydrogens(reactant);
 			
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(reactant);
+		setOfReactants.addAtomContainer(reactant);
 
 		/* initiate */
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
@@ -360,7 +360,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		
 		return setOfReactants;
 	}
@@ -373,7 +373,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	private IMoleculeSet getExpectedProducts() {
 		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-        setOfProducts.addMolecule(null);
+        setOfProducts.addAtomContainer(null);
 		return setOfProducts;
 	}
 }

@@ -114,7 +114,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavagePBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -209,7 +209,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavagePBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -289,7 +289,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavagePBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -371,7 +371,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavagePBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -436,7 +436,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavagePBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -493,7 +493,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavagePBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -547,7 +547,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		lpcheck.saturate(molecule);
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -682,7 +682,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 		
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -706,7 +706,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.addBond(0, 2, IBond.Order.SINGLE);
         molecule.addBond(0, 3, IBond.Order.SINGLE);
 	    
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 }

@@ -155,7 +155,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
         IMoleculeSet setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
         IMolecule m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
-        if (m != null) setOfMolecules.addMolecule(m);
+        if (m != null) setOfMolecules.addAtomContainer(m);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
@@ -165,7 +165,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
             while (m != null) {
                 m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
                 if (m != null) {
-                    setOfMolecules.addMolecule(m);
+                    setOfMolecules.addAtomContainer(m);
                     chemModel.setMoleculeSet(setOfMolecules);
                     chemSequence.addChemModel(chemModel);
                     setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);

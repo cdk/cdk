@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * displaced.</p>
  * <pre>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new RearrangementLonePairReaction();
  *  HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("hasActiveCenter",Boolean.FALSE);;
@@ -311,7 +311,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -345,7 +345,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 	/**
@@ -399,7 +399,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		IReactionProcess type = new RearrangementLonePairReaction();
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();

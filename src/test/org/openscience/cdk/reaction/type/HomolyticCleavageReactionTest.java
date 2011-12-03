@@ -118,7 +118,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -207,7 +207,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -289,7 +289,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -370,7 +370,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -445,7 +445,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -516,7 +516,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -594,7 +594,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -686,7 +686,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -735,7 +735,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -818,7 +818,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -868,7 +868,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -944,7 +944,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -983,7 +983,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1039,7 +1039,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1090,7 +1090,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1178,7 +1178,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1219,7 +1219,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 	        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 			IParameterReact param = new SetReactionCenter();
@@ -1279,7 +1279,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1321,7 +1321,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 	        IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
-	        setOfReactants.addMolecule(molecule);
+	        setOfReactants.addAtomContainer(molecule);
 			
 			IReactionProcess type  = new HomolyticCleavageReaction(); 
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1477,7 +1477,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		
 		/*has active center*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1633,7 +1633,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		
 		/*has active center*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1707,7 +1707,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setOfReactants.addMolecule(molecule);
+		setOfReactants.addAtomContainer(molecule);
 		
 		return setOfReactants;
 	}
@@ -1720,7 +1720,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	private IMoleculeSet getExpectedProducts() {
 		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-        setOfProducts.addMolecule(null);
+        setOfProducts.addAtomContainer(null);
 		return setOfProducts;
 	}
 }

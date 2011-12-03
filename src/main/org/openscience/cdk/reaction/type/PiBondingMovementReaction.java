@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  even number of atoms. </p>
  *  <p>The reaction don't care if the product are the same in symmetry.</p>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new PiBondingMovementReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);

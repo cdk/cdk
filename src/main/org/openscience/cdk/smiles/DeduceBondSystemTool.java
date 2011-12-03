@@ -623,7 +623,7 @@ public class DeduceBondSystemTool {
 							return mnew; // dont worry about adding to set
 											// just finish
 						} else {
-							som.addMolecule(mnew);
+							som.addAtomContainer(mnew);
 						}
 					}
                 }

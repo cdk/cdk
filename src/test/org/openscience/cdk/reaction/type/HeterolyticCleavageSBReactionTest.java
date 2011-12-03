@@ -118,7 +118,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -231,7 +231,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -339,7 +339,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -439,7 +439,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -526,7 +526,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -610,7 +610,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -687,7 +687,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -841,7 +841,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 		
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -853,7 +853,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 	private IMoleculeSet getExpectedProducts() {
 		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
 
-        setOfProducts.addMolecule(null);
+        setOfProducts.addAtomContainer(null);
 		return setOfProducts;
 	}
 }

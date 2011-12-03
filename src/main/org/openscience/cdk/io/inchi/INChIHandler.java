@@ -97,7 +97,7 @@ public class INChIHandler extends DefaultHandler {
         if ("identifier".equals(local)) {
             if (tautomer != null) {
                 // ok, add tautomer
-                setOfMolecules.addMolecule(tautomer);
+                setOfMolecules.addAtomContainer(tautomer);
                 chemModel.setMoleculeSet(setOfMolecules);
                 chemSequence.addChemModel(chemModel);
             }

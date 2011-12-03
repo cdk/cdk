@@ -71,8 +71,8 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
 		atomInMol2 = new Atom("O");
 		atomInMol2.setImplicitHydrogenCount(2);
 		mol2.addAtom(atomInMol2);
-		som.addMolecule(mol1);
-		som.addMolecule(mol2);
+		som.addAtomContainer(mol1);
+		som.addAtomContainer(mol2);
 	}
 
     @Test
@@ -96,7 +96,7 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
     	mol.addAtom(new Atom("O"));
     	mol.addBond(0, 1, IBond.Order.DOUBLE);
     	IBond bond = mol.getBond(0);
-    	ms.addMolecule(mol);
+    	ms.addAtomContainer(mol);
     	IBond otherBond = new Bond(new Atom(), new Atom());
     	MoleculeSetManipulator.removeElectronContainer(ms, otherBond);
     	Assert.assertEquals(1, MoleculeSetManipulator.getBondCount(ms));
@@ -112,7 +112,7 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
     	mol.addAtom(new Atom("O"));
     	mol.addBond(0, 1, IBond.Order.DOUBLE);
     	IAtom atom = mol.getAtom(0);
-    	ms.addMolecule(mol);
+    	ms.addAtomContainer(mol);
     	IAtom otherAtom = new Atom("O");
     	MoleculeSetManipulator.removeAtomAndConnectedElectronContainers(ms, otherAtom);
     	Assert.assertEquals(1, MoleculeSetManipulator.getBondCount(ms));

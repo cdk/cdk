@@ -225,7 +225,7 @@ public class DebugMoleculeSet extends MoleculeSet
 
 	public void addMolecule(IMolecule molecule) {
 		logger.debug("Adding molecule: ", molecule);
-		super.addMolecule(molecule);
+		super.addAtomContainer(molecule);
 	}
 
 	public void add(IMoleculeSet moleculeSet) {

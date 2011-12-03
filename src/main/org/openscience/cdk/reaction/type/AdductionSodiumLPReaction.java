@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>It is processed by the AdductionLPMechanism class</p>
  * <pre>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new AdductionSodiumLPReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -155,10 +155,10 @@ public class AdductionSodiumLPReaction extends ReactionEngine implements IReacti
 				atomList.add(atomH);
 				
 				IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
-				moleculeSet.addMolecule(reactant);
+				moleculeSet.addAtomContainer(reactant);
 				IMolecule adduct = reactant.getBuilder().newInstance(IMolecule.class);
 				adduct.addAtom(atomH);
-				moleculeSet.addMolecule(adduct);
+				moleculeSet.addAtomContainer(adduct);
 				
 				IReaction reaction = mechanism.initiate(moleculeSet, atomList, null);
 				if(reaction == null)

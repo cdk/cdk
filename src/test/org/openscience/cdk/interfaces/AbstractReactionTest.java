@@ -77,9 +77,9 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
         IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
         IMoleculeSet reactants = reaction.getBuilder().newInstance(IMoleculeSet.class);
-        reactants.addMolecule(sodiumhydroxide);
-        reactants.addMolecule(aceticAcid);
-        reactants.addMolecule(water);
+        reactants.addAtomContainer(sodiumhydroxide);
+        reactants.addAtomContainer(aceticAcid);
+        reactants.addAtomContainer(water);
         reaction.setReactants(reactants);
         Assert.assertEquals(3, reaction.getReactantCount());
         
@@ -120,9 +120,9 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
         IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
         IMoleculeSet products = reaction.getBuilder().newInstance(IMoleculeSet.class);
-        products.addMolecule(sodiumhydroxide);
-        products.addMolecule(aceticAcid);
-        products.addMolecule(water);
+        products.addAtomContainer(sodiumhydroxide);
+        products.addAtomContainer(aceticAcid);
+        products.addAtomContainer(water);
         reaction.setProducts(products);
         Assert.assertEquals(3, reaction.getProductCount());
         

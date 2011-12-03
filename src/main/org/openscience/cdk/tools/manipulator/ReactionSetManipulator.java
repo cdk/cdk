@@ -103,7 +103,7 @@ public class ReactionSetManipulator {
                     }
                 }
                 if (!contain)
-                    moleculeSet.addMolecule((IMolecule) (ac));
+                    moleculeSet.addAtomContainer((IMolecule) (ac));
 
             }
         }

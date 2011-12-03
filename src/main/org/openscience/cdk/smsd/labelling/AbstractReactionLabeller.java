@@ -170,7 +170,7 @@ public class AbstractReactionLabeller {
                 canonicalForm.getBuilder().newInstance(IMolecule.class, canonicalForm); 
             permutationMap.put(
                     canonicalMolecule, labeller.getCanonicalPermutation(product));
-            canonicalProducts.addMolecule(canonicalMolecule);
+            canonicalProducts.addAtomContainer(canonicalMolecule);
         }
         IMoleculeSet canonicalReactants = new MoleculeSet();
         for (IAtomContainer reactant: reaction.getReactants().atomContainers()) {
@@ -181,7 +181,7 @@ public class AbstractReactionLabeller {
                 canonicalForm.getBuilder().newInstance(IMolecule.class, canonicalForm); 
             permutationMap.put(
                     canonicalMolecule, labeller.getCanonicalPermutation(reactant));
-            canonicalReactants.addMolecule(canonicalMolecule);
+            canonicalReactants.addAtomContainer(canonicalMolecule);
         }
         canonReaction.setProducts(canonicalProducts);
         canonReaction.setReactants(canonicalReactants);

@@ -181,7 +181,7 @@ public class SMILESReader extends DefaultChemObjectReader {
 
                 try {
                     IMolecule molecule = sp.parseSmiles(SMILES);
-                    som.addMolecule(molecule);
+                    som.addAtomContainer(molecule);
                     if (name != null) {
                         molecule.setProperty("SMIdbNAME", name);
                     }

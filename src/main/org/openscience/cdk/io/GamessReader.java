@@ -232,7 +232,7 @@ public class GamessReader extends DefaultChemObjectReader {
 				 * The following line do no contain data, so it is ignored.
 				 */
 				this.input.readLine();
-				moleculeSet.addMolecule(this.readCoordinates(
+				moleculeSet.addAtomContainer(this.readCoordinates(
 					file.getBuilder().newInstance(IMolecule.class), GamessReader.BOHR_UNIT
 			    ));
 				//break; //<- stops when the first set of coordinates is found.
@@ -244,7 +244,7 @@ public class GamessReader extends DefaultChemObjectReader {
 				this.input.readLine();
 				this.input.readLine();
 
-				moleculeSet.addMolecule(this.readCoordinates(
+				moleculeSet.addAtomContainer(this.readCoordinates(
 					file.getBuilder().newInstance(IMolecule.class), GamessReader.ANGSTROM_UNIT
 				));
 				//break; //<- stops when the first set of coordinates is found.

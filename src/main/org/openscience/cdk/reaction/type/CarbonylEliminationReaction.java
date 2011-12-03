@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * 
  * <pre>
  *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addMolecule(new Molecule());
+ *  setOfReactants.addAtomContainer(new Molecule());
  *  IReactionProcess type = new CarbonylEliminationReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -163,7 +163,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
 					                	bondList.add(bondj);
 
 										IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
-										moleculeSet.addMolecule(reactant);
+										moleculeSet.addAtomContainer(reactant);
 										IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 										if(reaction == null)
 											continue;

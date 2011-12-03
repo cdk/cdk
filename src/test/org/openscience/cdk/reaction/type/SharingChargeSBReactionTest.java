@@ -281,7 +281,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
 
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -326,8 +326,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
         
-        setOfProducts.addMolecule(expected1);
-        setOfProducts.addMolecule(expected2);
+        setOfProducts.addAtomContainer(expected1);
+        setOfProducts.addAtomContainer(expected2);
         return setOfProducts;
 	}
 	/**
@@ -388,7 +388,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new SharingChargeSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -479,7 +479,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new SharingChargeSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -557,7 +557,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
         IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		
 		IReactionProcess type  = new SharingChargeSBReaction(); 
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();

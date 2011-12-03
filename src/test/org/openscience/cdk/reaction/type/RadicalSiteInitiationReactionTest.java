@@ -223,7 +223,7 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -257,8 +257,8 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         IAtom atom = molecule2.getAtom(0);
         molecule2.addSingleElectron(new SingleElectron(atom));
         
-        setOfProducts.addMolecule(molecule1);
-        setOfProducts.addMolecule(molecule2);
+        setOfProducts.addAtomContainer(molecule1);
+        setOfProducts.addAtomContainer(molecule2);
 		return setOfProducts;
 	}
 	/**

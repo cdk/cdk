@@ -201,7 +201,7 @@ public class XYZReader extends DefaultChemObjectReader {
                     }
                 }
 
-                setOfMolecules.addMolecule(m);
+                setOfMolecules.addAtomContainer(m);
                 chemModel.setMoleculeSet(setOfMolecules);
                 chemSequence.addChemModel(chemModel);
                 line = input.readLine();

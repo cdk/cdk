@@ -109,7 +109,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         
         // reverse process
         IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants2.addMolecule(molecule2);
+		setOfReactants2.addAtomContainer(molecule2);
 		
 		IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
         
@@ -173,7 +173,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         molecule2.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
         molecule2.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER,true);
         IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
-		setOfReactants2.addMolecule(molecule2);
+		setOfReactants2.addAtomContainer(molecule2);
 		
 		IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
         
@@ -302,7 +302,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
         
-        setOfReactants.addMolecule(molecule);
+        setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
@@ -334,7 +334,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 			e.printStackTrace();
 		}
         
-        setOfProducts.addMolecule(molecule);
+        setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 }

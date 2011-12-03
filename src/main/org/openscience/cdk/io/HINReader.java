@@ -296,7 +296,7 @@ public class HINReader extends DefaultChemObjectReader {
             }
         }
 
-        for (IMolecule mol : mols) setOfMolecules.addMolecule(mol);
+        for (IMolecule mol : mols) setOfMolecules.addAtomContainer(mol);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         file.addChemSequence(chemSequence);
