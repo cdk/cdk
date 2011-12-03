@@ -196,7 +196,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param reactant   Molecule added as reactant to this reaction
      * @see   #getReactants
      */
-    public void addReactant(IMolecule reactant) {
+    public void addReactant(IAtomContainer reactant) {
         addReactant(reactant, 1.0);
 	/* notifyChanged() is called by 
 	   addReactant(Molecule reactant, double coefficient) */
@@ -208,7 +208,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param agent   Molecule added as agent to this reaction
      * @see   #getAgents
      */
-    public void addAgent(IMolecule agent) {
+    public void addAgent(IAtomContainer agent) {
         agents.addAtomContainer(agent);
 	notifyChanged();
     }
@@ -220,7 +220,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getReactants
      */
-    public void addReactant(IMolecule reactant, Double coefficient) {
+    public void addReactant(IAtomContainer reactant, Double coefficient) {
         reactants.addAtomContainer(reactant, coefficient);
 	notifyChanged();
     }
@@ -231,7 +231,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param product    Molecule added as product to this reaction
      * @see   #getProducts
      */
-    public void addProduct(IMolecule product) {
+    public void addProduct(IAtomContainer product) {
         this.addProduct(product, 1.0);
 	/* notifyChanged() is called by 
 	addProduct(Molecule product, double coefficient)*/
@@ -244,7 +244,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getProducts
      */
-    public void addProduct(IMolecule product, Double coefficient) {
+    public void addProduct(IAtomContainer product, Double coefficient) {
         products.addAtomContainer(product, coefficient);
 	/* notifyChanged() is called by 
 	   addReactant(Molecule reactant, double coefficient) */
@@ -257,7 +257,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setReactantCoefficient
      */
-    public Double getReactantCoefficient(IMolecule reactant) {
+    public Double getReactantCoefficient(IAtomContainer reactant) {
         return reactants.getMultiplier(reactant);
     }
     
@@ -268,7 +268,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setProductCoefficient
      */
-    public Double getProductCoefficient(IMolecule product) {
+    public Double getProductCoefficient(IAtomContainer product) {
         return products.getMultiplier(product);
     }
 	
@@ -280,7 +280,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getReactantCoefficient
      */
-    public boolean setReactantCoefficient(IMolecule reactant, Double coefficient) {
+    public boolean setReactantCoefficient(IAtomContainer reactant, Double coefficient) {
     	boolean result = reactants.setMultiplier(reactant, coefficient);
     	notifyChanged();
     	return result;
@@ -295,7 +295,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getProductCoefficient
      */
-    public boolean setProductCoefficient(IMolecule product, Double coefficient) {
+    public boolean setProductCoefficient(IAtomContainer product, Double coefficient) {
         boolean result = products.setMultiplier(product, coefficient);
     	notifyChanged();
     	return result;
@@ -473,4 +473,5 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 		}
 		return clone;
 	}
+
 }
