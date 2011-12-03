@@ -123,7 +123,7 @@ public class RearrangementCationReaction extends ReactionEngine implements IReac
 
 		logger.debug("initiate reaction: RearrangementCationReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RearrangementCationReaction only expects one reactant");
 		}
 		if (agents != null) {

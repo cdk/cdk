@@ -65,7 +65,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
-        Assert.assertEquals(8, som.getMoleculeCount());
+        Assert.assertEquals(8, som.getAtomContainerCount());
     }
     
     
@@ -99,7 +99,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
-        Assert.assertEquals(5, som.getMoleculeCount());
+        Assert.assertEquals(5, som.getAtomContainerCount());
     }
     
 }

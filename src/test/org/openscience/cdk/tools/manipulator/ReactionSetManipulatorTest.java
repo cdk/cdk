@@ -71,7 +71,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reactionSet.addReaction(builder.newInstance(IReaction.class)); // 1
 		reactionSet.addReaction(builder.newInstance(IReaction.class)); // 2
 		
-		Assert.assertEquals(0, ReactionSetManipulator.getAllMolecules(reactionSet).getMoleculeCount());
+		Assert.assertEquals(0, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
 		
 	}
     
@@ -87,7 +87,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reaction2.addReactant(molecule);
 		reactionSet.addReaction(reaction2);
 		
-		Assert.assertEquals(3, ReactionSetManipulator.getAllMolecules(reactionSet).getMoleculeCount());
+		Assert.assertEquals(3, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
 		
 	}
 	

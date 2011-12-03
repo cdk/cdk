@@ -42,7 +42,7 @@ import java.util.List;
  * fragments by using code like:
  * <pre>
  *   MoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(disconnectedContainer);
- *   int fragmentCount = fragments.getMoleculeCount();
+ *   int fragmentCount = fragments.getAtomContainerCount();
  * </pre> 
  *
  * @cdk.module standard

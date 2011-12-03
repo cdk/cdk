@@ -123,7 +123,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 
 		logger.debug("initiate reaction: AdductionProtonPBReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("AdductionProtonPBReaction only expects one reactant");
 		}
 		if (agents != null) {

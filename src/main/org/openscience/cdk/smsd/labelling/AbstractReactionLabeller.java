@@ -51,7 +51,7 @@ public class AbstractReactionLabeller {
         Map<IAtom, IAtom> atomAtom = new Hashtable<IAtom, IAtom>();
         IMoleculeSet reactants = reaction.getReactants();
         IMoleculeSet clonedReactants = clone.getReactants();
-        for (int i = 0; i < reactants.getMoleculeCount(); ++i) {
+        for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
             IMolecule mol = reactants.getMolecule(i);
             IMolecule mol2 = clonedReactants.getMolecule(i);
             int[] permutation = permutationMap.get(mol2);
@@ -61,7 +61,7 @@ public class AbstractReactionLabeller {
         }
         IMoleculeSet products = reaction.getProducts();
         IMoleculeSet clonedProducts = clone.getProducts();
-        for (int i = 0; i < products.getMoleculeCount(); ++i) {
+        for (int i = 0; i < products.getAtomContainerCount(); ++i) {
             IMolecule mol = products.getMolecule(i);
             IMolecule mol2 = clonedProducts.getMolecule(i);
             int[] permutation = permutationMap.get(mol2);

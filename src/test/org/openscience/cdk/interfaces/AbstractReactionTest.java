@@ -143,7 +143,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         IReaction reaction = (IReaction)newChemObject();
         IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
         reaction.addAgent(proton);
-        Assert.assertEquals(1, reaction.getAgents().getMoleculeCount());
+        Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
     }
 
     @Test public void testGetReactantCoefficient_IMolecule() {
@@ -239,7 +239,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         reaction.addReactant(sodiumhydroxide);
         reaction.addReactant(aceticAcid);
         reaction.addReactant(water);
-        Assert.assertEquals(3, reaction.getReactants().getMoleculeCount());
+        Assert.assertEquals(3, reaction.getReactants().getAtomContainerCount());
     }
 	
     @Test public void testGetProducts() {    
@@ -250,14 +250,14 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         reaction.addProduct(sodiumhydroxide);
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
-        Assert.assertEquals(3, reaction.getProducts().getMoleculeCount());
+        Assert.assertEquals(3, reaction.getProducts().getAtomContainerCount());
     }
     
     @Test public void testGetAgents() {    
         IReaction reaction = (IReaction)newChemObject();
         IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
         reaction.addAgent(water);
-        Assert.assertEquals(1, reaction.getAgents().getMoleculeCount());
+        Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
     }
     
     @Test public void testSetDirection_IReaction_Direction() {

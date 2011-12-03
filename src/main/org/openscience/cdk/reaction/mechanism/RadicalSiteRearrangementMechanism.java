@@ -70,7 +70,7 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
     @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
 	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
 		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder());
-		if (moleculeSet.getMoleculeCount() != 1) {
+		if (moleculeSet.getAtomContainerCount() != 1) {
 			throw new CDKException("RadicalSiteRearrangementMechanism only expects one IMolecule");
 		}
 		if (atomList.size() != 3) {

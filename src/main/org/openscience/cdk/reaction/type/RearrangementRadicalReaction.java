@@ -124,7 +124,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 
 		logger.debug("initiate reaction: RearrangementRadicalReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RearrangementRadicalReaction only expects one reactant");
 		}
 		if (agents != null) {

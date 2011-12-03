@@ -261,7 +261,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 		reaction.addReactant(builder.newInstance(IMolecule.class));
 		reaction.addProduct(builder.newInstance(IMolecule.class));
 		reaction.addProduct(builder.newInstance(IMolecule.class));
-		Assert.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getMoleculeCount());
+		Assert.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
 	}
 	
 	@Test public void testGetAllProducts_IReaction() {
@@ -271,7 +271,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 		reaction.addReactant(builder.newInstance(IMolecule.class));
 		reaction.addProduct(builder.newInstance(IMolecule.class));
 		reaction.addProduct(builder.newInstance(IMolecule.class));
-		Assert.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getMoleculeCount());
+		Assert.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
 	}
 	
 	@Test public void testGetAllReactants_IReaction() {
@@ -281,7 +281,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 		reaction.addReactant(builder.newInstance(IMolecule.class));
 		reaction.addProduct(builder.newInstance(IMolecule.class));
 		reaction.addProduct(builder.newInstance(IMolecule.class));
-		Assert.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getMoleculeCount());
+		Assert.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
 	}
 
 }

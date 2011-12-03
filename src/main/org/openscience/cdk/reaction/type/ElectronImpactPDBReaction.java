@@ -119,7 +119,7 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
 
         logger.debug("initiate reaction: ElectronImpactPDBReaction");
 
-        if (reactants.getMoleculeCount() != 1) {
+        if (reactants.getAtomContainerCount() != 1) {
             throw new CDKException("ElectronImpactPDBReaction only expects one reactant");
         }
         if (agents != null) {

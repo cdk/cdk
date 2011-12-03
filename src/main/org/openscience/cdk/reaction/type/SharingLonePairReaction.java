@@ -120,7 +120,7 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
 
 		logger.debug("initiate reaction: SharingLonePairReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("SharingLonePairReaction only expects one reactant");
 		}
 		if (agents != null) {

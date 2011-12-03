@@ -120,7 +120,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
 
         logger.debug("initiate reaction: HomolyticCleavageReaction");
 
-        if (reactants.getMoleculeCount() != 1) {
+        if (reactants.getAtomContainerCount() != 1) {
             throw new CDKException("HomolyticCleavageReaction only expects one reactant");
         }
         if (agents != null) {

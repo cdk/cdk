@@ -116,7 +116,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 		logger.debug("initiate reaction: CarbonylEliminationReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("CarbonylEliminationReaction only expects one reactant");
 		}
 		if (agents != null) {

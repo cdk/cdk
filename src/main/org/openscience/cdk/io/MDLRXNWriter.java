@@ -287,7 +287,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 	 */
 	private void writeMoleculeSet(IMoleculeSet som) throws IOException, CDKException {
         
-        for (int i = 0; i < som.getMoleculeCount(); i++) {
+        for (int i = 0; i < som.getAtomContainerCount(); i++) {
         	IMolecule mol = som.getMolecule(i);
             for (int j = 0; j < som.getMultiplier(i); j++) {
                 StringWriter sw = new StringWriter();

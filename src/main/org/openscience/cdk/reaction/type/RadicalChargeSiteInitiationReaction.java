@@ -116,7 +116,7 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 		logger.debug("initiate reaction: RadicalChargeSiteInitiationReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RadicalChargeSiteInitiationReaction only expects one reactant");
 		}
 		if (agents != null) {

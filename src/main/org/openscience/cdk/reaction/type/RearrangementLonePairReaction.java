@@ -122,7 +122,7 @@ public class RearrangementLonePairReaction extends ReactionEngine implements IRe
 
 		logger.debug("initiate reaction: RearrangementLonePairReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RearrangementLonePairReaction only expects one reactant");
 		}
 		if (agents != null) {

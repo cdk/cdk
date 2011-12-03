@@ -219,7 +219,7 @@ public class PDBConvention extends CMLCoreModule {
             	if (currentMolecule instanceof IMolecule) {
                     logger.debug("Adding molecule to set");
                     currentMoleculeSet.addMolecule((IMolecule)currentMolecule);
-                    logger.debug("#mols in set: " + currentMoleculeSet.getMoleculeCount());
+                    logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
                 } else if (currentMolecule instanceof ICrystal) {
                     logger.debug("Adding crystal to chemModel");
                     currentChemModel.setCrystal((ICrystal)currentMolecule);

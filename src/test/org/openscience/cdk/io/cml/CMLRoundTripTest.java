@@ -508,21 +508,21 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertNotNull(roundTrippedReaction);
         IMoleculeSet reactants = roundTrippedReaction.getReactants();
         Assert.assertNotNull(reactants);
-        Assert.assertEquals(1, reactants.getMoleculeCount());
+        Assert.assertEquals(1, reactants.getAtomContainerCount());
         IMolecule roundTrippedReactant = reactants.getMolecule(0);
         Assert.assertEquals("react", roundTrippedReactant.getID());
         Assert.assertEquals(1, roundTrippedReactant.getAtomCount());
         
         IMoleculeSet products = roundTrippedReaction.getProducts();
         Assert.assertNotNull(products);
-        Assert.assertEquals(1, products.getMoleculeCount());
+        Assert.assertEquals(1, products.getAtomContainerCount());
         IMolecule roundTrippedProduct = products.getMolecule(0);
         Assert.assertEquals("product", roundTrippedProduct.getID());
         Assert.assertEquals(1, roundTrippedProduct.getAtomCount());
         
         IMoleculeSet agents = roundTrippedReaction.getAgents();
         Assert.assertNotNull(agents);
-        Assert.assertEquals(1, agents.getMoleculeCount());
+        Assert.assertEquals(1, agents.getAtomContainerCount());
         IMolecule roundTrippedAgent = agents.getMolecule(0);
         Assert.assertEquals("water", roundTrippedAgent.getID());
         Assert.assertEquals(1, roundTrippedAgent.getAtomCount());

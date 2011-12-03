@@ -460,7 +460,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)
         Map<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
-        for (int i = 0; i < reactants.getMoleculeCount(); ++i) {
+        for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
             Molecule mol = (Molecule)((MoleculeSet)reactants).getMolecule(i);
             Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);
             for (int j = 0; j < mol.getAtomCount(); ++j) atomatom.put(mol.getAtom(j), mol2.getAtom(j));

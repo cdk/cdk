@@ -122,7 +122,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 
 		logger.debug("initiate reaction: PiBondingMovementReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("PiBondingMovementReaction only expects one reactant");
 		}
 		if (agents != null) {

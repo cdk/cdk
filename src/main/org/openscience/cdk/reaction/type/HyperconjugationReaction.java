@@ -119,7 +119,7 @@ public class HyperconjugationReaction extends ReactionEngine implements IReactio
 
 		logger.debug("initiate reaction: HyperconjugationReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("HyperconjugationReaction only expects one reactant");
 		}
 		if (agents != null) {

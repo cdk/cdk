@@ -103,7 +103,7 @@ public class TemplateExtractor {
 			System.out.println("Could not close Reader due to: "
 					+ exc1.getMessage());
 		}
-		System.out.println(som.getMoleculeCount() + " Templates are read in");
+		System.out.println(som.getAtomContainerCount() + " Templates are read in");
 		writeChemModel(som, dataFile, "_CLEAN");
 	}
 
@@ -130,7 +130,7 @@ public class TemplateExtractor {
 			System.out.println("Could not close Reader due to: "
 					+ exc1.getMessage());
 		}
-		System.out.println(som.getMoleculeCount() + " Templates are read in");
+		System.out.println(som.getAtomContainerCount() + " Templates are read in");
 	}
 
 	public void PartitionRingsFromComplexRing(String dataFile) {
@@ -162,7 +162,7 @@ public class TemplateExtractor {
 			System.out.println("Could not close Reader due to: "
 					+ exc1.getMessage());
 		}
-		System.out.println(som.getMoleculeCount() + " Templates are read in");
+		System.out.println(som.getAtomContainerCount() + " Templates are read in");
 		writeChemModel(som, dataFile, "_VERSUCH");
 	}
 
@@ -293,7 +293,7 @@ public class TemplateExtractor {
 	}
 
 	public void writeChemModel(IMoleculeSet som, String file, String endFix) {
-		System.out.println("WRITE Molecules:" + som.getMoleculeCount());
+		System.out.println("WRITE Molecules:" + som.getAtomContainerCount());
 		String molfile = file + endFix;
 		try {
 			FileOutputStream fout = new FileOutputStream(molfile);

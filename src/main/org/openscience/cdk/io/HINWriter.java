@@ -155,7 +155,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         double chrg;
         //boolean writecharge = true;
 
-        for (int molnum = 0; molnum < som.getMoleculeCount(); molnum++) {
+        for (int molnum = 0; molnum < som.getAtomContainerCount(); molnum++) {
 
             IMolecule mol = som.getMolecule(molnum);
 

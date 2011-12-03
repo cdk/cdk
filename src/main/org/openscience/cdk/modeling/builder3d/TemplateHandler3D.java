@@ -259,7 +259,7 @@ public class TemplateHandler3D {
      * @return The templateCount value
      */
     public int getTemplateCount() {
-        return templates.getMoleculeCount();
+        return templates.getAtomContainerCount();
     }
 
 

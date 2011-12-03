@@ -126,7 +126,7 @@ public class RadicalSiteHrDeltaReaction extends ReactionEngine implements IReact
 
 		logger.debug("initiate reaction: RadicalSiteHrDeltaReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RadicalSiteHrDeltaReaction only expects one reactant");
 		}
 		if (agents != null) {

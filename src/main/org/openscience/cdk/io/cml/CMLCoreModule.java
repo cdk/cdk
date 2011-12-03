@@ -333,7 +333,7 @@ public class CMLCoreModule implements ICMLModule {
     		logger.debug("Adding SOR to ChemModel");
     		currentChemModel.setReactionSet(currentReactionSet);
     	}
-    	if (currentMoleculeSet != null && currentMoleculeSet.getMoleculeCount() != 0) {
+    	if (currentMoleculeSet != null && currentMoleculeSet.getAtomContainerCount() != 0) {
     		logger.debug("Adding reaction to MoleculeSet");
     		currentChemModel.setMoleculeSet(currentMoleculeSet);
     	}
@@ -728,7 +728,7 @@ public class CMLCoreModule implements ICMLModule {
             if (currentMolecule instanceof IMolecule) {
                 logger.debug("Adding molecule to set");
                 currentMoleculeSet.addMolecule((IMolecule)currentMolecule);
-                logger.debug("#mols in set: " + currentMoleculeSet.getMoleculeCount());
+                logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
             } else if (currentMolecule instanceof ICrystal) {
                 logger.debug("Adding crystal to chemModel");
                 currentChemModel.setCrystal((ICrystal)currentMolecule);

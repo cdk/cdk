@@ -123,7 +123,7 @@ public class AdductionSodiumLPReaction extends ReactionEngine implements IReacti
 
 		logger.debug("initiate reaction: AdductionSodiumLPReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("AdductionSodiumLPReaction only expects one reactant");
 		}
 		if (agents != null) {

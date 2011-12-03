@@ -126,7 +126,7 @@ public class HeterolyticCleavagePBReaction extends ReactionEngine implements IRe
 
 		logger.debug("initiate reaction: HeterolyticCleavagePBReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("HeterolyticCleavagePBReaction only expects one reactant");
 		}
 		if (agents != null) {

@@ -123,7 +123,7 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
 
 		logger.debug("initiate reaction: SharingChargeSBReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("SharingChargeSBReaction only expects one reactant");
 		}
 		if (agents != null) {

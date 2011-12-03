@@ -125,7 +125,7 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 
 		logger.debug("initiate reaction: RadicalSiteHrGammaReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RadicalSiteHrGammaReaction only expects one reactant");
 		}
 		if (agents != null) {

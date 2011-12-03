@@ -68,7 +68,7 @@ public class AdductionLPMechanism implements IReactionMechanism{
     @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
 	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
 		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder());
-		if (moleculeSet.getMoleculeCount() != 2) {
+		if (moleculeSet.getAtomContainerCount() != 2) {
 			throw new CDKException("AdductionLPMechanism expects two IMolecule's");
 		}
 		if (atomList.size() != 2) {

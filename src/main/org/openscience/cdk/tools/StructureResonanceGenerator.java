@@ -234,7 +234,7 @@ public class StructureResonanceGenerator {
     	IMoleculeSet setOfMol = molecule.getBuilder().newInstance(IMoleculeSet.class);
 		setOfMol.addMolecule(molecule);
 		
-		for(int i = 0 ; i < setOfMol.getMoleculeCount() ; i++){
+		for(int i = 0 ; i < setOfMol.getAtomContainerCount() ; i++){
 			IMolecule mol = setOfMol.getMolecule(i);
             for (IReactionProcess aReactionsList : reactionsList) {
                 IReactionProcess reaction = aReactionsList;
@@ -274,12 +274,12 @@ public class StructureResonanceGenerator {
     	IAtomContainerSet setOfCont = molecule.getBuilder().newInstance(IAtomContainerSet.class);
 		IMoleculeSet setOfMol = getStructures(molecule);
 		
-		if(setOfMol.getMoleculeCount() == 0)
+		if(setOfMol.getAtomContainerCount() == 0)
 			return setOfCont;
 
 		/*extraction of all bonds which has been produced a changes of order*/
 		List<IBond> bondList = new ArrayList<IBond>();
-    	for(int i = 1 ; i < setOfMol.getMoleculeCount() ; i++){
+    	for(int i = 1 ; i < setOfMol.getAtomContainerCount() ; i++){
     		IMolecule mol = setOfMol.getMolecule(i);
     		for(int j = 0; j < mol.getBondCount(); j++){
 				IBond bond = molecule.getBond(j);

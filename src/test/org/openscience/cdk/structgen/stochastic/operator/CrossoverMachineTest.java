@@ -47,7 +47,7 @@ public class CrossoverMachineTest extends CDKTestCase {
         SMILESReader reader = new SMILESReader(ins);
         MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
         Assert.assertEquals("We must have read 99 structures", 99, 
-        	som.getMoleculeCount());
+        	som.getAtomContainerCount());
 		CrossoverMachine cm = new CrossoverMachine();
 		String correctFormula="C10";
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(som.getBuilder());

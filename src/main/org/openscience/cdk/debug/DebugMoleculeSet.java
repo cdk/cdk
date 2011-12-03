@@ -249,8 +249,8 @@ public class DebugMoleculeSet extends MoleculeSet
 	}
 
 	public int getMoleculeCount() {
-		logger.debug("Getting molecule count: ", super.getMoleculeCount());
-		return super.getMoleculeCount();
+		logger.debug("Getting molecule count: ", super.getAtomContainerCount());
+		return super.getAtomContainerCount();
 	}
 
 }

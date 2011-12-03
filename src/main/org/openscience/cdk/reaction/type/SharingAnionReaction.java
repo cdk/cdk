@@ -120,7 +120,7 @@ public class SharingAnionReaction extends ReactionEngine implements IReactionPro
 
 		logger.debug("initiate reaction: SharingAnionReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("SharingAnionReaction only expects one reactant");
 		}
 		if (agents != null) {

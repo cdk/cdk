@@ -125,7 +125,7 @@ public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReacti
 
 		logger.debug("initiate reaction: RadicalSiteHrBetaReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RadicalSiteHrBetaReaction only expects one reactant");
 		}
 		if (agents != null) {

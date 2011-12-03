@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  * and
  *
  * <pre>
- * for (int i=0; i < setOfMolecules.getMoleculeCount(); i++) {
+ * for (int i=0; i < setOfMolecules.getAtomContainerCount(); i++) {
  *    Molecule mol = setOfMolecules.getMolecule(i);
  * }
  * </pre>

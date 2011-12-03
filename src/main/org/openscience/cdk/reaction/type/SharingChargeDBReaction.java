@@ -122,7 +122,7 @@ public class SharingChargeDBReaction extends ReactionEngine implements IReaction
 
 		logger.debug("initiate reaction: SharingChargeDBReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("SharingChargeDBReaction only expects one reactant");
 		}
 		if (agents != null) {

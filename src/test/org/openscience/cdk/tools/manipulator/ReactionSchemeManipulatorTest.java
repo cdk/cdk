@@ -62,7 +62,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reactionScheme.addReaction(reaction1); // 1
 		reactionScheme.addReaction(reaction2); // 2
 		
-		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme).getMoleculeCount());
+		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme).getAtomContainerCount());
 		
 	}
     
@@ -75,7 +75,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reactionScheme.addReaction(reaction1); // 1
 		reactionScheme.addReaction(reaction2); // 2
 		
-		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme, builder.newInstance(IMoleculeSet.class)).getMoleculeCount());
+		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme, builder.newInstance(IMoleculeSet.class)).getAtomContainerCount());
 		
 	}
     
@@ -91,7 +91,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reaction2.addReactant(molecule);
 		reactionScheme.addReaction(reaction2);
 		
-		Assert.assertEquals(3, ReactionSchemeManipulator.getAllMolecules(reactionScheme).getMoleculeCount());
+		Assert.assertEquals(3, ReactionSchemeManipulator.getAllMolecules(reactionScheme).getAtomContainerCount());
 		
 	}
     
@@ -121,7 +121,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reaction11.addProduct(builder.newInstance(IMolecule.class));
 		scheme1.addReaction(reaction11);
 		
-		Assert.assertEquals(5, ReactionSchemeManipulator.getAllMolecules(scheme1).getMoleculeCount());
+		Assert.assertEquals(5, ReactionSchemeManipulator.getAllMolecules(scheme1).getAtomContainerCount());
 		
 	}
     @Test public void testGetAllIDs_IReactionScheme() {

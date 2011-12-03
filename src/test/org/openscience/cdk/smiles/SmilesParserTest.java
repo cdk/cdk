@@ -984,7 +984,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IReaction reaction = sp.parseReactionSmiles(reactionSmiles);
 		Assert.assertEquals(2, reaction.getReactantCount());
 		Assert.assertEquals(2, reaction.getProductCount());
-		Assert.assertEquals(1, reaction.getAgents().getMoleculeCount());
+		Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
 		
 		Assert.assertEquals(1, reaction.getAgents().getMolecule(0).getAtomCount());
 	}

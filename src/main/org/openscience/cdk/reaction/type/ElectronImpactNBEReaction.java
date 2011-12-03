@@ -120,7 +120,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 
 		logger.debug("initiate reaction: ElectronImpactNBEReaction");
 		
-		if (reactants.getMoleculeCount() != 1) {
+		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("ElectronImpactNBEReaction only expects one reactant");
 		}
 		if (agents != null) {
