@@ -66,8 +66,11 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     
     public IRenderingElement generate(
             IAtomContainer ac, IAtom atom, RendererModel model) {
-        boolean drawNumbers = 
-            model.getParameter(WillDrawAtomNumbers.class).getValue(); 
+        boolean drawNumbers = false;
+    	if (model.hasParameter(WillDrawAtomNumbers.class)) {
+            drawNumbers = 
+            	model.getParameter(WillDrawAtomNumbers.class).getValue(); 
+    	}
         if (!hasCoordinates(atom) 
              || invisibleHydrogen(atom, model) 
              || (invisibleCarbon(atom, ac, model) 
