@@ -35,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.helper.FinalMappings;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
@@ -140,7 +140,7 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @return IMolecule Set
      * @throws CDKException 
      */
-    protected IMoleculeSet getUncommon(IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds) throws CDKException {
+    protected IAtomContainerSet getUncommon(IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds) throws CDKException {
         ArrayList<Integer> atomSerialsToDelete = new ArrayList<Integer>();
 
         List<List<CDKRMap>> matches = CDKMCS.getSubgraphAtomsMaps(mol, mcss, shouldMatchBonds);

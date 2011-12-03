@@ -97,10 +97,10 @@ public class ConnectivityChecker
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
     @TestMethod("testPartitionIntoMolecules_IAtomContainer,testPartitionIntoMoleculesKeepsAtomIDs,testPartitionIntoMolecules_IsConnected_Consistency")
-    public static IMoleculeSet partitionIntoMolecules(IAtomContainer atomContainer) {
+    public static IAtomContainerSet partitionIntoMolecules(IAtomContainer atomContainer) {
 		IAtomContainer newContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
 		IMolecule molecule;
-		IMoleculeSet molecules = atomContainer.getBuilder().newInstance(IMoleculeSet.class);
+		IAtomContainerSet molecules = atomContainer.getBuilder().newInstance(IAtomContainerSet.class);
 		List<IAtom> sphere = new ArrayList<IAtom>();
 
         for (IAtom atom : atomContainer.atoms()) {
@@ -125,7 +125,7 @@ public class ConnectivityChecker
 			sphere.add(atom);
 			atom.setFlag(CDKConstants.VISITED, true);
 			PathTools.breadthFirstSearch(newContainer, sphere, molecule);
-			molecules.addMolecule(molecule);
+			molecules.addAtomContainer(molecule);
 			newContainer.remove(molecule);
 		}
 		return molecules;

@@ -32,8 +32,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -73,12 +72,12 @@ public class MoleculeSanityCheck {
             // lets see if we have just two parts if so, we assume its a salt and just work
             // on the larger part. Ideally we should have a check to ensure that the smaller
             //  part is a metal/halogen etc.
-            IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
-            if (fragments.getMoleculeCount() > 2) {
+            IAtomContainerSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
+            if (fragments.getAtomContainerCount() > 2) {
                 System.err.println("More than 2 components. Skipped");
             } else {
-                IMolecule frag1 = fragments.getMolecule(0);
-                IMolecule frag2 = fragments.getMolecule(1);
+                IAtomContainer frag1 = fragments.getAtomContainer(0);
+                IAtomContainer frag2 = fragments.getAtomContainer(1);
                 if (frag1.getAtomCount() > frag2.getAtomCount()) {
                     molecule = frag1;
                 } else {

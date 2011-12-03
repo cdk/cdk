@@ -25,21 +25,29 @@
 package org.openscience.cdk.graph;
 
 
+import java.io.InputStream;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.LonePair;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  *  Checks the functionality of the ConnectivityChecker
@@ -67,9 +75,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
-        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
+		IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
-		Assert.assertEquals(3, moleculeSet.getMoleculeCount());
+		Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
 	}
 
     /**
@@ -83,11 +91,11 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atom2.setID("atom2");
         atomCon.addAtom(atom1);
         atomCon.addAtom(atom2);
-        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
+        IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
-		Assert.assertEquals(2, moleculeSet.getMoleculeCount());
-		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getMolecule(0).getAtom(0);
-		org.openscience.cdk.interfaces.IAtom copy2 = moleculeSet.getMolecule(1).getAtom(0);
+		Assert.assertEquals(2, moleculeSet.getAtomContainerCount());
+		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getAtomContainer(0).getAtom(0);
+		org.openscience.cdk.interfaces.IAtom copy2 = moleculeSet.getAtomContainer(1).getAtom(0);
         
         Assert.assertEquals(atom1.getID(), copy1.getID());
         Assert.assertEquals(atom2.getID(), copy2.getID());
@@ -103,13 +111,13 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
-        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
+		IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
-		Assert.assertEquals(3, moleculeSet.getMoleculeCount());
+		Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
         
-        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
-        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
-        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(2)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(0)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(1)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(2)));
 	}
 
     /**
@@ -135,23 +143,23 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atomCon.add(mol2);
         
         // now partition
-        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
+        IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
-		Assert.assertEquals(2, moleculeSet.getMoleculeCount());
+		Assert.assertEquals(2, moleculeSet.getAtomContainerCount());
         
-        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
-        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(0)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(1)));
         
         // make sure
-        Assert.assertEquals(1, moleculeSet.getMolecule(0).getAtomCount());
-        Assert.assertEquals(1, moleculeSet.getMolecule(0).getElectronContainerCount());
-        Assert.assertEquals(1, moleculeSet.getMolecule(1).getAtomCount());
-        Assert.assertEquals(1, moleculeSet.getMolecule(1).getElectronContainerCount());
+        Assert.assertEquals(1, moleculeSet.getAtomContainer(0).getAtomCount());
+        Assert.assertEquals(1, moleculeSet.getAtomContainer(0).getElectronContainerCount());
+        Assert.assertEquals(1, moleculeSet.getAtomContainer(1).getAtomCount());
+        Assert.assertEquals(1, moleculeSet.getAtomContainer(1).getElectronContainerCount());
         // we don't know which partition contains the LP and which the electron
-        Assert.assertTrue(moleculeSet.getMolecule(0).getConnectedSingleElectronsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
-        		moleculeSet.getMolecule(1).getConnectedSingleElectronsCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
-        Assert.assertTrue(moleculeSet.getMolecule(0).getConnectedLonePairsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
-        		moleculeSet.getMolecule(1).getConnectedLonePairsCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
+        Assert.assertTrue(moleculeSet.getAtomContainer(0).getConnectedSingleElectronsCount(moleculeSet.getAtomContainer(0).getAtom(0)) == 0 ||
+        		moleculeSet.getAtomContainer(1).getConnectedSingleElectronsCount(moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
+        Assert.assertTrue(moleculeSet.getAtomContainer(0).getConnectedLonePairsCount(moleculeSet.getAtomContainer(0).getAtom(0)) == 0 ||
+        		moleculeSet.getAtomContainer(1).getConnectedLonePairsCount(moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
 	}
     
 	/**

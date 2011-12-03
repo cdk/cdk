@@ -33,8 +33,8 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
@@ -193,9 +193,9 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
         IRingSet ringSet = atomContainer.getBuilder().newInstance(IRingSet.class);
         try {
-            IMoleculeSet molecules =
+            IAtomContainerSet molecules =
                 ConnectivityChecker.partitionIntoMolecules(atomContainer);
-            for (IAtomContainer mol : molecules.molecules()) {
+            for (IAtomContainer mol : molecules.atomContainers()) {
                 SSSRFinder sssrf = new SSSRFinder(mol);
                 ringSet.add(sssrf.findSSSR());
             }

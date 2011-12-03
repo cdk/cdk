@@ -25,6 +25,13 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -35,13 +42,13 @@ import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -52,13 +59,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
-
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Stack;
-import java.util.StringTokenizer;
 
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
@@ -196,29 +196,29 @@ public class SmilesParser {
 
 		// add reactants
 		IMolecule reactantContainer = parseSmiles(reactantSmiles);
-		IMoleculeSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
+		IAtomContainerSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
 		for (int i = 0; i < reactantSet.getAtomContainerCount(); i++)
 		{
-			reaction.addReactant(reactantSet.getMolecule(i));
+			reaction.addReactant((IMolecule)reactantSet.getAtomContainer(i));
 		}
 
 		// add reactants
 		if (agentSmiles.length() > 0)
 		{
 			IMolecule agentContainer = parseSmiles(agentSmiles);
-			IMoleculeSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
+			IAtomContainerSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
 			for (int i = 0; i < agentSet.getAtomContainerCount(); i++)
 			{
-				reaction.addAgent(agentSet.getMolecule(i));
+				reaction.addAgent((IMolecule)agentSet.getAtomContainer(i));
 			}
 		}
 
 		// add products
 		IMolecule productContainer = parseSmiles(productSmiles);
-		IMoleculeSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
+		IAtomContainerSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
 		for (int i = 0; i < productSet.getAtomContainerCount(); i++)
 		{
-			reaction.addProduct(productSet.getMolecule(i));
+			reaction.addProduct((IMolecule)productSet.getAtomContainer(i));
 		}
 
 		return reaction;
@@ -1003,7 +1003,7 @@ public class SmilesParser {
 	}
 
 	private void perceiveAromaticity(IMolecule m) {
-		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(m);
+	    IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(m);
 		logger.debug("#mols ", moleculeSet.getAtomContainerCount());
 		for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
 			IAtomContainer molecule = moleculeSet.getAtomContainer(i);

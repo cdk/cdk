@@ -24,6 +24,15 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.Vector;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -36,11 +45,11 @@ import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
@@ -49,15 +58,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
@@ -317,13 +317,13 @@ public class SmilesGenerator
      */
 	public synchronized String createSMILES(IAtomContainer molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
-		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-		if (moleculeSet.getMoleculeCount() > 1)
+	    IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+		if (moleculeSet.getAtomContainerCount() > 1)
 		{
 			StringBuffer fullSMILES = new StringBuffer();
 			for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++)
 			{
-				IMolecule molPart = moleculeSet.getMolecule(i);
+			    IAtomContainer molPart = moleculeSet.getAtomContainer(i);
 				fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(
 				        molPart, chiral, doubleBondConfiguration));
 				if (i < (moleculeSet.getAtomContainerCount() - 1))

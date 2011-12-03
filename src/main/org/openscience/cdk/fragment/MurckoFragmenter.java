@@ -24,6 +24,11 @@
  */
 package org.openscience.cdk.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -34,17 +39,12 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * An implementation of the Murcko fragmenation method {@cdk.cite MURCKO96}.
@@ -177,8 +177,8 @@ public class MurckoFragmenter implements IFragmenter {
         for (IBond bond : bondsToDelete) clone.removeBond(bond);
 
         // at this point, the ring systems are disconnected components
-        IMoleculeSet ringSystems = ConnectivityChecker.partitionIntoMolecules(clone);
-        for (IAtomContainer ringSystem : ringSystems.molecules()) {
+        IAtomContainerSet ringSystems = ConnectivityChecker.partitionIntoMolecules(clone);
+        for (IAtomContainer ringSystem : ringSystems.atomContainers()) {
             if (ringSystem.getAtomCount() < minimumFragmentSize) continue;
             smiles = smilesGenerator.createSMILES(ringSystem);
             ringMap.put(smiles, ringSystem);

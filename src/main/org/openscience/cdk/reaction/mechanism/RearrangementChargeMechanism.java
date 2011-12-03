@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.LonePair;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -33,6 +33,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
@@ -159,9 +160,9 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
 		if(bond2.getOrder() != IBond.Order.SINGLE) {
         	reaction.addProduct(reactantCloned);
         } else{
-	        IMoleculeSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
+            IAtomContainerSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
 			for(int z = 0; z < moleculeSetP.getAtomContainerCount() ; z++){
-				reaction.addProduct(moleculeSetP.getMolecule(z));
+				reaction.addProduct((IMolecule)moleculeSetP.getAtomContainer(z));
 			}
         }
     	

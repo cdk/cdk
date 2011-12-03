@@ -24,20 +24,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +33,20 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This fingerprinter generates 166 bit MACCS keys.
@@ -141,9 +141,9 @@ public class MACCSFingerprinter implements IFingerprinter {
             }
         }
         // bit 166 (*).(*)
-        IMoleculeSet part 
+        IAtomContainerSet part 
             = ConnectivityChecker.partitionIntoMolecules(atomContainer);
-        if (part.getMoleculeCount() > 1)  fingerPrint.set(165,true);
+        if (part.getAtomContainerCount() > 1)  fingerPrint.set(165,true);
 
 
         return fingerPrint;

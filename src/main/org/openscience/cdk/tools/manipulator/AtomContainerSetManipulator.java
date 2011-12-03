@@ -27,6 +27,10 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -36,11 +40,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @cdk.module standard
@@ -74,7 +73,7 @@ public class AtomContainerSetManipulator {
         for (IAtomContainer atomContainer : set.atomContainers()) {
             if (atomContainer.contains(atom)) {
                 atomContainer.removeAtomAndConnectedElectronContainers(atom);
-                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+                IAtomContainerSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
                 if (molecules.getAtomContainerCount() > 1) {
                     set.removeAtomContainer(atomContainer);
                     for (int k = 0; k < molecules.getAtomContainerCount(); k++) {
@@ -91,11 +90,11 @@ public class AtomContainerSetManipulator {
         for (IAtomContainer atomContainer : set.atomContainers()) {
             if (atomContainer.contains(electrons)) {
                 atomContainer.removeElectronContainer(electrons);
-                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+                IAtomContainerSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
                 if (molecules.getAtomContainerCount() > 1) {
                     set.removeAtomContainer(atomContainer);
                     for (int k = 0; k < molecules.getAtomContainerCount(); k++) {
-                        set.addAtomContainer(molecules.getMolecule(k));
+                        set.addAtomContainer(molecules.getAtomContainer(k));
                     }
                 }
                 return;
