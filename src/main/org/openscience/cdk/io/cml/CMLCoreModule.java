@@ -42,13 +42,12 @@ import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
@@ -82,7 +81,7 @@ public class CMLCoreModule implements ICMLModule {
     protected IChemFile currentChemFile;
 	
     protected IAtomContainer currentMolecule;
-    protected IMoleculeSet currentMoleculeSet;
+    protected IAtomContainerSet currentMoleculeSet;
     protected IChemModel currentChemModel;
     protected IChemSequence currentChemSequence;
     protected IReactionSet currentReactionSet;
@@ -312,8 +311,8 @@ public class CMLCoreModule implements ICMLModule {
         // cdo.startDocument();
         currentChemSequence = currentChemFile.getBuilder().newInstance(IChemSequence.class);
         currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
-        currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
-        currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
+        currentMoleculeSet = currentChemFile.getBuilder().newInstance(IAtomContainerSet.class);
+        currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
         atomEnumeration = new HashMap<String, IAtom>();
         moleculeCustomProperty = new ArrayList<String>();
         
@@ -568,8 +567,8 @@ public class CMLCoreModule implements ICMLModule {
             BUILTIN = "";
 //            cdo.startObject("Molecule");
             if (currentChemModel == null) currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
-            if (currentMoleculeSet == null) currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
-            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
+            if (currentMoleculeSet == null) currentMoleculeSet = currentChemFile.getBuilder().newInstance(IAtomContainerSet.class);
+            currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("id")) {
 //                    cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
@@ -625,7 +624,7 @@ public class CMLCoreModule implements ICMLModule {
         				}
         			}
         	} else if (DICTREF.equals("cdk:moleculeSet")) {
-        		currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
+        		currentMoleculeSet = currentChemFile.getBuilder().newInstance(IAtomContainerSet.class);
         		// see if there is an ID attribute
         		for (int i = 0; i < atts.getLength(); i++) {
         			String att = atts.getQName(i);
@@ -633,10 +632,10 @@ public class CMLCoreModule implements ICMLModule {
         				currentMoleculeSet.setID(atts.getValue(i));
         				}
         			}
-        		currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
+        		currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
         	} else {
         		// the old default
-        		currentMoleculeSet = currentChemFile.getBuilder().newInstance(IMoleculeSet.class);
+        		currentMoleculeSet = currentChemFile.getBuilder().newInstance(IAtomContainerSet.class);
         		// see if there is an ID attribute
         		for (int i = 0; i < atts.getLength(); i++) {
         			String att = atts.getQName(i);
@@ -644,7 +643,7 @@ public class CMLCoreModule implements ICMLModule {
         				currentMoleculeSet.setID(atts.getValue(i));
         				}
         			}
-        		currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
+        		currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
         	}
         }else if ("formula".equals(name)){
         	formulaCounter++;
@@ -725,9 +724,9 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("molecule".equals(name)) {
             storeData();
 //            cdo.endObject("Molecule");
-            if (currentMolecule instanceof IMolecule) {
+            if (currentMolecule instanceof IAtomContainer) {
                 logger.debug("Adding molecule to set");
-                currentMoleculeSet.addAtomContainer((IMolecule)currentMolecule);
+                currentMoleculeSet.addAtomContainer(currentMolecule);
                 logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
             } else if (currentMolecule instanceof ICrystal) {
                 logger.debug("Adding crystal to chemModel");

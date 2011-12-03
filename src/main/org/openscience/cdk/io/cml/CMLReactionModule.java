@@ -26,9 +26,8 @@
 package org.openscience.cdk.io.cml;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.xml.sax.Attributes;
@@ -74,7 +73,7 @@ public class CMLReactionModule extends CMLCoreModule {
             		currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
                 currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
         	}
-            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
+            currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
             objectType = "Reactant";
             String id = atts.getValue("id");
             if(id != null) currentMolecule.setID(id);
@@ -90,7 +89,7 @@ public class CMLReactionModule extends CMLCoreModule {
             		currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
                 currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
         	}
-            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
+            currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
             objectType = "Product";
             String id = atts.getValue("id");
             if(id != null) currentMolecule.setID(id);
@@ -106,7 +105,7 @@ public class CMLReactionModule extends CMLCoreModule {
             		currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
                 currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
         	}
-            currentMolecule = currentChemFile.getBuilder().newInstance(IMolecule.class);
+            currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
             objectType = "Agent";
             String id = atts.getValue("id");
             if(id != null) currentMolecule.setID(id);
@@ -146,13 +145,13 @@ public class CMLReactionModule extends CMLCoreModule {
             /* FIXME: this should be when document is closed! */ 
         } else if ("reactant".equals(local)) {
 //            cdo.endObject("Reactant");
-        	currentReaction.addReactant((IMolecule)currentMolecule);
+        	currentReaction.addReactant(currentMolecule);
         } else if ("product".equals(local)) {
 //            cdo.endObject("Product");
-        	currentReaction.addProduct((IMolecule)currentMolecule);
+        	currentReaction.addProduct(currentMolecule);
         } else if ("substance".equals(local)) {
 //            cdo.endObject("Agent");
-        	currentReaction.addAgent((IMolecule)currentMolecule);
+        	currentReaction.addAgent(currentMolecule);
         } else if ("molecule".equals(local)) {
             logger.debug("Storing Molecule");
             //if the current molecule exists in the currentMoleculeSet means that is a reference in these.
@@ -165,14 +164,14 @@ public class CMLReactionModule extends CMLCoreModule {
     }
     
     /**
-     * Get the IMolecule contained in a IMoleculeSet object with a ID.
+     * Get the IAtomContainer contained in a IAtomContainerSet object with a ID.
      * 
-     * @param molSet   The IMoleculeSet
+     * @param molSet   The IAtomContainerSet
      * @param id       The ID the look
-     * @return         The IMolecule with the ID
+     * @return         The IAtomContainer with the ID
      */
-    private IAtomContainer getMoleculeFromID(IMoleculeSet molSet, String id){
-    	for (IAtomContainer mol : molSet.molecules()) {
+    private IAtomContainer getMoleculeFromID(IAtomContainerSet molSet, String id){
+    	for (IAtomContainer mol : molSet.atomContainers()) {
             if (mol.getID().equals(id))
            		return mol;
         }

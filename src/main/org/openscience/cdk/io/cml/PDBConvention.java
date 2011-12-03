@@ -34,10 +34,10 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -216,9 +216,9 @@ public class PDBConvention extends CMLCoreModule {
         	storeData();
             if(xpath.sp == 1){
 //	        	cdo.endObject("Molecule");
-            	if (currentMolecule instanceof IMolecule) {
+            	if (currentMolecule instanceof IAtomContainer) {
                     logger.debug("Adding molecule to set");
-                    currentMoleculeSet.addAtomContainer((IMolecule)currentMolecule);
+                    currentMoleculeSet.addAtomContainer(currentMolecule);
                     logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
                 } else if (currentMolecule instanceof ICrystal) {
                     logger.debug("Adding crystal to chemModel");
