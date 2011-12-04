@@ -21,17 +21,11 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -43,6 +37,13 @@ import org.openscience.cdk.io.formats.MoSSOutputFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * Reader for MoSS output files {@cdk.cite BOR2002} which present the results
@@ -135,10 +136,10 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
      * @return        the content in a {@link IMoleculeSet} object
      */
     public <T extends IChemObject> T read(T object) throws CDKException {
-        if (object instanceof IMoleculeSet) {
-            IMoleculeSet cf = (IMoleculeSet)object;
+        if (object instanceof IAtomContainerSet) {
+            IAtomContainerSet cf = (IAtomContainerSet)object;
             try {
-                cf = readMoleculeSet(cf);
+                cf = readAtomContainerSet(cf);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input.");
             }
@@ -147,9 +148,9 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
             IChemFile chemFile = (IChemFile)object;
             IChemSequence chemSeq = object.getBuilder().newInstance(IChemSequence.class);
             IChemModel chemModel = object.getBuilder().newInstance(IChemModel.class);
-            IMoleculeSet molSet = object.getBuilder().newInstance(IMoleculeSet.class);
+            IAtomContainerSet molSet = object.getBuilder().newInstance(IAtomContainerSet.class);
             try {
-                molSet = readMoleculeSet(molSet);
+                molSet = readAtomContainerSet(molSet);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input.");
             }
@@ -164,8 +165,11 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
 
     /**
      * Read the file content into a {@link IMoleculeSet}.
+     * @param molSet an {@link IAtomContainerSet} to store the structures
+     * @return the {@link IAtomContainerSet} containing the molecules read in
+     * @throws java.io.IOException if there is an error during reading
      */
-    private IMoleculeSet readMoleculeSet(IMoleculeSet molSet) throws IOException {
+    private IAtomContainerSet readAtomContainerSet(IAtomContainerSet molSet) throws IOException {
         SmilesParser parser = new SmilesParser(molSet.getBuilder());
         parser.setPreservingAromaticity(true);
         String line = input.readLine();

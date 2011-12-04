@@ -23,6 +23,20 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.io.formats.HINFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.tools.LoggingToolFactory;
+
+import javax.vecmath.Point3d;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,21 +44,6 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
-
-import javax.vecmath.Point3d;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.formats.HINFormat;
-import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Writer that outputs in the HIN format.
@@ -113,25 +112,25 @@ public class HINWriter extends DefaultChemObjectWriter {
     @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
         Class[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IMolecule.class.equals(interfaces[i])) return true;
-            if (IMoleculeSet.class.equals(interfaces[i])) return true;
+        for (Class anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
+            if (IAtomContainerSet.class.equals(anInterface)) return true;
         }
         return false;
     }
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IAtomContainer) {
             try {
-                IMoleculeSet som = object.getBuilder().newInstance(IMoleculeSet.class);
-                som.addAtomContainer((IMolecule) object);
-                writeMolecule(som);
+                IAtomContainerSet som = object.getBuilder().newInstance(IAtomContainerSet.class);
+                som.addAtomContainer((IAtomContainer) object);
+                writeAtomContainer(som);
             } catch (Exception ex) {
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
             }
-        } else if (object instanceof IMoleculeSet) {
+        } else if (object instanceof IAtomContainerSet) {
             try {
-                writeMolecule((IMoleculeSet) object);
+                writeAtomContainer((IAtomContainerSet) object);
             } catch (IOException ex) {
                 //
             }
@@ -146,8 +145,9 @@ public class HINWriter extends DefaultChemObjectWriter {
      * as well
      *
      * @param som the set of molecules to write
+     * @throws java.io.IOException if there is a problem writing the molecule
      */
-    private void writeMolecule(IMoleculeSet som) throws IOException {
+    private void writeAtomContainer(IAtomContainerSet som) throws IOException {
 
         //int na = 0;
         //String info = "";
@@ -157,7 +157,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
         for (int molnum = 0; molnum < som.getAtomContainerCount(); molnum++) {
 
-            IMolecule mol = som.getMolecule(molnum);
+            IAtomContainer mol = som.getAtomContainer(molnum);
 
             try {
                 String molname = "mol " + (molnum + 1) + " " + mol.getProperty(CDKConstants.TITLE);

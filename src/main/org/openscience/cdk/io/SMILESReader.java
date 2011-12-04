@@ -28,16 +28,10 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -49,6 +43,13 @@ import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * This Reader reads files which has one SMILES string on each
@@ -80,7 +81,6 @@ public class SMILESReader extends DefaultChemObjectReader {
      * Construct a new reader from a Reader and a specified builder object.
      *
      * @param input   The Reader object from which to read structures
-     * @param builder the builder
      */
     public SMILESReader(Reader input) {
         this.input = new BufferedReader(input);   
@@ -138,14 +138,14 @@ public class SMILESReader extends DefaultChemObjectReader {
     public <T extends IChemObject> T read(T object) throws CDKException {
         sp = new SmilesParser(object.getBuilder());
 
-        if (object instanceof IMoleculeSet) {
-            return (T)readMoleculeSet((IMoleculeSet)object);
+        if (object instanceof IAtomContainerSet) {
+            return (T) readAtomContainerSet((IAtomContainerSet) object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
             IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
             IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-            chemModel.setMoleculeSet(readMoleculeSet(
-            	file.getBuilder().newInstance(IMoleculeSet.class)
+            chemModel.setMoleculeSet(readAtomContainerSet(
+                    file.getBuilder().newInstance(IMoleculeSet.class)
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
@@ -164,7 +164,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @param som The set of molecules that came fron the file
      * @return A ChemFile containing the data parsed from input.
      */
-    private IMoleculeSet readMoleculeSet(IMoleculeSet som) {
+    private IAtomContainerSet readAtomContainerSet(IAtomContainerSet som) {
         try {
             String line = input.readLine().trim();
             while (line != null) {

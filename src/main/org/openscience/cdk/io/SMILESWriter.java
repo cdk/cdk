@@ -28,17 +28,11 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -49,6 +43,14 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * Writes the SMILES strings to a plain text file.
@@ -146,9 +148,9 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      */
 	public void write(IChemObject object) throws CDKException {
 		if (object instanceof IMoleculeSet) {
-		    writeMoleculeSet((IMoleculeSet)object);
+		    writeAtomContainerSet((IMoleculeSet) object);
 		} else if (object instanceof IMolecule) {
-		    writeMolecule((IMolecule)object);
+		    writeAtomContainer((IMolecule) object);
 		} else {
 		    throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
 		}
@@ -159,12 +161,12 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   som  MoleculeSet that is written to an OutputStream
 	 */
-	public void  writeMoleculeSet(IMoleculeSet som)
+	public void writeAtomContainerSet(IAtomContainerSet som)
 	{
-		writeMolecule(som.getMolecule(0));
+		writeAtomContainer(som.getAtomContainer(0));
 		for (int i = 1; i <= som.getAtomContainerCount() - 1; i++) {
 			try {
-				writeMolecule(som.getMolecule(i));
+				writeAtomContainer(som.getAtomContainer(i));
 			} catch (Exception exc) {
 			}
 		}
@@ -175,7 +177,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      *
      * @param   molecule  Molecule of which the data is outputted.
      */
-    public void writeMolecule(IMolecule molecule) {
+    public void writeAtomContainer(IAtomContainer molecule) {
         SmilesGenerator sg = new SmilesGenerator();
         sg.setUseAromaticityFlag(useAromaticityFlag.isSet());
         String smiles = "";
