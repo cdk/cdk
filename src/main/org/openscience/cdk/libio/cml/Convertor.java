@@ -387,7 +387,7 @@ public class Convertor {
         
 //      substance
         CMLSubstanceList cmlSubstances = new CMLSubstanceList();
-        Iterator<IAtomContainer> substance = reaction.getAgents().molecules().iterator();
+        Iterator<IAtomContainer> substance = reaction.getAgents().atomContainers().iterator();
         while (substance.hasNext()) {
             CMLSubstance cmlSubstance = new CMLSubstance();
             cmlSubstance.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)substance.next(), false));

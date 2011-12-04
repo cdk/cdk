@@ -537,7 +537,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
         Assert.assertEquals("react", reaction.getReactants().getAtomContainer(0).getID());
         Assert.assertEquals("product", reaction.getProducts().getAtomContainer(0).getID());
-        Assert.assertEquals("water", reaction.getAgents().getMolecule(0).getID());
+        Assert.assertEquals("water", reaction.getAgents().getAtomContainer(0).getID());
     }
     
     /**

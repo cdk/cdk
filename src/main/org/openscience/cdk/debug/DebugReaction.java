@@ -177,7 +177,7 @@ public class DebugReaction extends Reaction
 		super.setProducts(products);
 	}
 
-	public IMoleculeSet getAgents() {
+	public IAtomContainerSet getAgents() {
 		logger.debug("Getting agents: ", super.getAgents());
 		return super.getAgents();
 	}

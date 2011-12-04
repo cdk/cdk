@@ -45,7 +45,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
@@ -519,10 +518,10 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals("product", roundTrippedProduct.getID());
         Assert.assertEquals(1, roundTrippedProduct.getAtomCount());
         
-        IMoleculeSet agents = roundTrippedReaction.getAgents();
+        IAtomContainerSet agents = roundTrippedReaction.getAgents();
         Assert.assertNotNull(agents);
         Assert.assertEquals(1, agents.getAtomContainerCount());
-        IMolecule roundTrippedAgent = agents.getMolecule(0);
+        IAtomContainer roundTrippedAgent = agents.getAtomContainer(0);
         Assert.assertEquals("water", roundTrippedAgent.getID());
         Assert.assertEquals(1, roundTrippedAgent.getAtomCount());
     }

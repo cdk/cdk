@@ -110,7 +110,7 @@ public interface IReaction extends IChemObject {
      * @return A IMoleculeSet containing the agents in this reaction
      * @see    #addAgent
      */
-    public IMoleculeSet getAgents();
+    public IAtomContainerSet getAgents();
     
     /**
      * Returns the mappings between the reactant and the product side.

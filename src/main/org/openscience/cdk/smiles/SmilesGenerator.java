@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -232,10 +231,10 @@ public class SmilesGenerator
 			}
 		}
 		reactionSMILES.append('>');
-		IMoleculeSet agents = reaction.getAgents();
+		IAtomContainerSet agents = reaction.getAgents();
 		for (int i = 0; i < agents.getAtomContainerCount(); i++)
 		{
-			reactionSMILES.append(createSMILES(agents.getMolecule(i)));
+			reactionSMILES.append(createSMILES(agents.getAtomContainer(i)));
 			if (i + 1 < agents.getAtomContainerCount())
 			{
 				reactionSMILES.append('.');

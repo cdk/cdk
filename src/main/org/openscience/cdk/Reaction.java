@@ -70,7 +70,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     protected IAtomContainerSet products;
     /** These are the used solvent, catalysts etc that normally appear above
         the reaction arrow */
-    protected IMoleculeSet agents;
+    protected IAtomContainerSet agents;
     
     protected IMapping[] map;
     protected int mappingCount;
@@ -81,9 +81,9 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * Constructs an empty, forward reaction.
      */
     public Reaction() {
-        this.reactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
-        this.products = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
-        this.agents = new MoleculeSet();
+        this.reactants = getBuilder().newInstance(IAtomContainerSet.class);
+        this.products = getBuilder().newInstance(IAtomContainerSet.class);
+        this.agents = getBuilder().newInstance(IAtomContainerSet.class);
         this.map = new Mapping[growArraySize];
         mappingCount = 0;
         reactionDirection = IReaction.Direction.FORWARD;
@@ -155,7 +155,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return A MoleculeSet containing the agents in this reaction
      * @see    #addAgent
      */
-    public IMoleculeSet getAgents() {
+    public IAtomContainerSet getAgents() {
         return agents;
     }
     

@@ -30,7 +30,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
@@ -313,7 +312,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 	        
 	        IAtomContainerSet reactants = reactionDict.getReactants();
-	        IMoleculeSet agents = reactionDict.getAgents();
+	        IAtomContainerSet agents = reactionDict.getAgents();
 	        IAtomContainerSet products = reactionDict.getProducts();
 	        if(agents.getAtomContainerCount() == 0)
 	        	agents = null;
