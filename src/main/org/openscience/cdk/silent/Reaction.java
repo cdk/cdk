@@ -109,7 +109,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * Returns a MoleculeSet containing the reactants in this reaction.
      *
      * @return A MoleculeSet containing the reactants in this reaction
-     * @see    #setReactants
+     * @see    org.openscience.cdk.interfaces.IReaction#setReactants
      */
     public IAtomContainerSet getReactants() {
         return reactants;
@@ -118,10 +118,11 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     /**
      * Assigns a MoleculeSet to the reactants in this reaction.
      *
+     *
      * @param setOfMolecules The new set of reactants
      * @see   #getReactants
      */
-    public void setReactants(IMoleculeSet setOfMolecules) {
+    public void setReactants(IAtomContainerSet setOfMolecules) {
         reactants = setOfMolecules;
     }
 	
@@ -129,7 +130,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * Returns a MoleculeSet containing the products of this reaction.
      *
      * @return A MoleculeSet containing the products in this reaction
-     * @see    #setProducts
+     * @see    org.openscience.cdk.interfaces.IReaction#setProducts
      */
     public IAtomContainerSet getProducts() {
         return products;
@@ -138,10 +139,11 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 	/**
      * Assigns a MoleculeSet to the products of this reaction.
      *
+     *
      * @param setOfMolecules The new set of products
      * @see   #getProducts
      */
-    public void setProducts(IMoleculeSet setOfMolecules) {
+    public void setProducts(IAtomContainerSet setOfMolecules) {
         products = setOfMolecules;
     }
 	

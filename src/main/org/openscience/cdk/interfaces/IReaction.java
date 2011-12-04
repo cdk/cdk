@@ -83,10 +83,11 @@ public interface IReaction extends IChemObject {
     /**
      * Assigns a IMoleculeSet to the reactants in this reaction.
      *
+     *
      * @param  reactants The new set of reactants
      * @see              #getReactants
      */
-    public void setReactants(IMoleculeSet reactants);
+    public void setReactants(IAtomContainerSet reactants);
 	
     /**
      * Returns a IMoleculeSet containing the products of this reaction.
@@ -99,10 +100,11 @@ public interface IReaction extends IChemObject {
 	/**
      * Assigns a IMoleculeSet to the products of this reaction.
      *
+     *
      * @param products The new set of products
      * @see            #getProducts
      */
-    public void setProducts(IMoleculeSet products);
+    public void setProducts(IAtomContainerSet products);
 	
     /**
      * Returns a IMoleculeSet containing the agents in this reaction.

@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -162,7 +161,7 @@ public class DebugReaction extends Reaction
 		return super.getReactants();
 	}
 
-	public void setReactants(IMoleculeSet reactants) {
+	public void setReactants(IAtomContainerSet reactants) {
 		logger.debug("Setting reactants: ", reactants);
 		super.setReactants(reactants);
 	}
@@ -172,7 +171,7 @@ public class DebugReaction extends Reaction
 		return super.getProducts();
 	}
 
-	public void setProducts(IMoleculeSet products) {
+	public void setProducts(IAtomContainerSet products) {
 		logger.debug("Setting products: ", products);
 		super.setProducts(products);
 	}

@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -56,6 +53,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -986,7 +986,7 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals(2, reaction.getProductCount());
 		Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
 		
-		Assert.assertEquals(1, reaction.getAgents().getMolecule(0).getAtomCount());
+		Assert.assertEquals(1, reaction.getAgents().getAtomContainer(0).getAtomCount());
 	}
 
 
