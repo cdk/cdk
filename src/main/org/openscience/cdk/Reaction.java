@@ -459,22 +459,22 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 	public Object clone() throws CloneNotSupportedException {
 		Reaction clone = (Reaction)super.clone();
         // clone the reactants, products and agents
-        clone.reactants = (MoleculeSet)((MoleculeSet)reactants).clone();
-        clone.agents = (MoleculeSet)((MoleculeSet)agents).clone();
-        clone.products = (MoleculeSet)((MoleculeSet)products).clone();
+        clone.reactants = (IAtomContainerSet) reactants.clone();
+        clone.agents = (IMoleculeSet) agents.clone();
+        clone.products = (IAtomContainerSet) products.clone();
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)
         Map<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
         for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
-            Molecule mol = (Molecule)((MoleculeSet)reactants).getMolecule(i);
-            Molecule mol2 = (Molecule)clone.reactants.getAtomContainer(i);
+            IAtomContainer mol = reactants.getAtomContainer(i);
+            IAtomContainer mol2 = clone.reactants.getAtomContainer(i);
             for (int j = 0; j < mol.getAtomCount(); ++j) atomatom.put(mol.getAtom(j), mol2.getAtom(j));
         }
         
         // clone the maps
 		clone.map = new Mapping[map.length];
 		for (int f = 0; f < mappingCount; f++) {
-			clone.map[f] = new Mapping((ChemObject)atomatom.get(map[f].getChemObject(0)), (ChemObject)atomatom.get(map[f].getChemObject(1)));
+			clone.map[f] = new Mapping(atomatom.get(map[f].getChemObject(0)), atomatom.get(map[f].getChemObject(1)));
 		}
 		return clone;
 	}
