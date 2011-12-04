@@ -23,6 +23,26 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.FingerprinterTool;
+import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point3d;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,27 +53,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
-
-import javax.vecmath.Point3d;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.fingerprint.FingerprinterTool;
-import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Helper class for ModelBuilder3D. Handles templates. This is
@@ -74,14 +73,14 @@ public class TemplateHandler3D {
 	
     IMolecule molecule;
     IRingSet sssr;
-    IMoleculeSet templates = null;
+    IAtomContainerSet templates = null;
     List<BitSet> fingerprintData = null;
     private boolean templatesLoaded = false;
 
     private static TemplateHandler3D self = null;
     
     private TemplateHandler3D() {
-        templates = builder.newInstance(IMoleculeSet.class);
+        templates = builder.newInstance(IAtomContainerSet.class);
         fingerprintData = new ArrayList<BitSet>();
     }
 
@@ -204,7 +203,7 @@ public class TemplateHandler3D {
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
         for (int i = 0; i < fingerprintData.size(); i++) {
-            IAtomContainer template = templates.getMolecule(i);
+            IAtomContainer template = templates.getAtomContainer(i);
             //if the atom count is different, it can't be right anyway
             if (template.getAtomCount() != ringSystems.getAtomCount()) {
                 continue;
@@ -270,7 +269,7 @@ public class TemplateHandler3D {
      *@return The templateAt value
      */
     public IAtomContainer getTemplateAt(int position) {
-        return templates.getMolecule(position);
+        return templates.getAtomContainer(position);
 	}
 }
 
