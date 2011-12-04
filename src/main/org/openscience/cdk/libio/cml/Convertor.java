@@ -25,13 +25,6 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -85,6 +78,13 @@ import org.xmlcml.cml.element.CMLReactionStep;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @cdk.module       libiocml
@@ -368,7 +368,7 @@ public class Convertor {
         
         // reactants
         CMLReactantList cmlReactants = new CMLReactantList();
-        Iterator<IAtomContainer> reactants = reaction.getReactants().molecules().iterator();
+        Iterator<IAtomContainer> reactants = reaction.getReactants().atomContainers().iterator();
         while (reactants.hasNext()) {
             CMLReactant cmlReactant = new CMLReactant();
             cmlReactant.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)reactants.next(), false));
@@ -378,7 +378,7 @@ public class Convertor {
 
         // products
         CMLProductList cmlProducts = new CMLProductList();
-        Iterator<IAtomContainer> products = reaction.getProducts().molecules().iterator();
+        Iterator<IAtomContainer> products = reaction.getProducts().atomContainers().iterator();
         while (products.hasNext()) {
             CMLProduct cmlProduct = new CMLProduct();
             cmlProduct.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)products.next(), false));

@@ -78,7 +78,7 @@ public interface IReaction extends IChemObject {
      * @return A IMoleculeSet containing the reactants in this reaction
      * @see    #setReactants
      */
-    public IMoleculeSet getReactants();
+    public IAtomContainerSet getReactants();
 
     /**
      * Assigns a IMoleculeSet to the reactants in this reaction.
@@ -94,7 +94,7 @@ public interface IReaction extends IChemObject {
      * @return A IMoleculeSet containing the products in this reaction
      * @see    #setProducts
      */
-    public IMoleculeSet getProducts();
+    public IAtomContainerSet getProducts();
     
 	/**
      * Assigns a IMoleculeSet to the products of this reaction.

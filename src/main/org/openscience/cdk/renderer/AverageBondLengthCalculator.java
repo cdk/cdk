@@ -25,7 +25,6 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
@@ -47,7 +46,7 @@ class AverageBondLengthCalculator {
      */
     public static double calculateAverageBondLength(IReaction reaction) {
 
-        IMoleculeSet reactants = reaction.getReactants();
+        IAtomContainerSet reactants = reaction.getReactants();
         double reactantAverage = 0.0;
         if (reactants != null) {
             reactantAverage =
@@ -55,7 +54,7 @@ class AverageBondLengthCalculator {
                 reactants.getAtomContainerCount();
         }
 
-        IMoleculeSet products = reaction.getProducts();
+        IAtomContainerSet products = reaction.getProducts();
         double productAverage = 0.0;
         if (products != null) {
             productAverage =

@@ -18,39 +18,37 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.awt.geom.Rectangle2D;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.awt.geom.Rectangle2D;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -596,7 +594,7 @@ public class GeometryToolsTest extends CDKTestCase {
         react1.addAtom(atom2);
         react1.addBond(0,1, IBond.Order.SINGLE);
         IReaction reaction2 = (IReaction)reaction.clone();
-        IMolecule react2 = reaction2.getReactants().getMolecule(0);
+        IAtomContainer react2 = reaction2.getReactants().getAtomContainer(0);
 
         // shift the second reaction up
         GeometryTools.shiftReactionVertical(
@@ -643,7 +641,7 @@ public class GeometryToolsTest extends CDKTestCase {
         react1.addAtom(atom2);
         react1.addBond(0,1, IBond.Order.SINGLE);
         IReaction reaction2 = (IReaction)reaction.clone();
-        IMolecule react2 = reaction2.getReactants().getMolecule(0);
+        IAtomContainer react2 = reaction2.getReactants().getAtomContainer(0);
 
         // shift the second reaction up
         GeometryTools.shiftReactionVertical(

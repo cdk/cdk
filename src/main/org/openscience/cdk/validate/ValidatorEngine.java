@@ -20,10 +20,6 @@
  */
 package org.openscience.cdk.validate;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -37,11 +33,14 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Engine that performs the validation by traversing the IChemObject
@@ -284,13 +283,13 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        IMoleculeSet reactants = subject.getReactants();
+        IAtomContainerSet reactants = subject.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
-            report.addReport(validateMolecule(reactants.getMolecule(i)));
+            report.addReport(validateMolecule(reactants.getAtomContainer(i)));
         }
-        IMoleculeSet products = subject.getProducts();
+        IAtomContainerSet products = subject.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
-            report.addReport(validateMolecule(products.getMolecule(i)));
+            report.addReport(validateMolecule(products.getAtomContainer(i)));
         }
         return report;
     }

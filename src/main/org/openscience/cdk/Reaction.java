@@ -25,7 +25,12 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 
 import java.io.Serializable;
 import java.util.Hashtable;
@@ -61,8 +66,8 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 
 	protected int growArraySize = 3;
 
-    protected IMoleculeSet reactants;
-    protected IMoleculeSet products;
+    protected IAtomContainerSet reactants;
+    protected IAtomContainerSet products;
     /** These are the used solvent, catalysts etc that normally appear above
         the reaction arrow */
     protected IMoleculeSet agents;
@@ -76,8 +81,8 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * Constructs an empty, forward reaction.
      */
     public Reaction() {
-        this.reactants = new MoleculeSet();
-        this.products = new MoleculeSet();
+        this.reactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        this.products = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         this.agents = new MoleculeSet();
         this.map = new Mapping[growArraySize];
         mappingCount = 0;
@@ -108,7 +113,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return A MoleculeSet containing the reactants in this reaction
      * @see    #setReactants
      */
-    public IMoleculeSet getReactants() {
+    public IAtomContainerSet getReactants() {
         return reactants;
     }
 
@@ -129,7 +134,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return A MoleculeSet containing the products in this reaction
      * @see    #setProducts
      */
-    public IMoleculeSet getProducts() {
+    public IAtomContainerSet getProducts() {
         return products;
     }
     
@@ -462,7 +467,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         Map<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
         for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
             Molecule mol = (Molecule)((MoleculeSet)reactants).getMolecule(i);
-            Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);
+            Molecule mol2 = (Molecule)clone.reactants.getAtomContainer(i);
             for (int j = 0; j < mol.getAtomCount(); ++j) atomatom.put(mol.getAtom(j), mol2.getAtom(j));
         }
         

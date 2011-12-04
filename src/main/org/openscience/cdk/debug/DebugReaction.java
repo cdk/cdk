@@ -20,17 +20,18 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Map;
-
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.util.Map;
 
 /**
  * Debugging data class.
@@ -156,7 +157,7 @@ public class DebugReaction extends Reaction
 		return super.getProductCount();
 	}
 
-	public IMoleculeSet getReactants() {
+	public IAtomContainerSet getReactants() {
 		logger.debug("Getting reactants: ", super.getReactants());
 		return super.getReactants();
 	}
@@ -166,7 +167,7 @@ public class DebugReaction extends Reaction
 		super.setReactants(reactants);
 	}
 
-	public IMoleculeSet getProducts() {
+	public IAtomContainerSet getProducts() {
 		logger.debug("Getting products: ", super.getProducts());
 		return super.getProducts();
 	}

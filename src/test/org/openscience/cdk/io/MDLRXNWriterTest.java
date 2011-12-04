@@ -27,23 +27,22 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Mapping;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.nonotify.NNReactionSet;
-import org.openscience.cdk.Mapping;
+
+import java.io.StringReader;
+import java.io.StringWriter;
 
 /**
  * TestCase for the writer MDL rxn files using one test file.
@@ -133,10 +132,10 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         reader.close();
         
         Assert.assertEquals(2, reaction2.getReactantCount());
-        Assert.assertEquals(1, reaction2.getReactants().getMolecule(0).getAtomCount());
-        Assert.assertEquals(1, reaction2.getReactants().getMolecule(1).getAtomCount());
+        Assert.assertEquals(1, reaction2.getReactants().getAtomContainer(0).getAtomCount());
+        Assert.assertEquals(1, reaction2.getReactants().getAtomContainer(1).getAtomCount());
         Assert.assertEquals(1, reaction2.getProductCount());
-        Assert.assertEquals(1, reaction2.getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, reaction2.getProducts().getAtomContainer(0).getAtomCount());
     }
 
     
@@ -187,10 +186,10 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         reader.close();
 
         Assert.assertEquals(2, reactionSetF.getReactionCount());
-        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(0).getAtomCount());
-        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(1).getAtomCount());
+        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getAtomContainer(0).getAtomCount());
+        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getAtomContainer(1).getAtomCount());
         Assert.assertEquals(1, reactionSetF.getReaction(0).getProductCount());
-        Assert.assertEquals(1, reactionSetF.getReaction(0).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, reactionSetF.getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
     }
     
 }

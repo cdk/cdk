@@ -27,9 +27,6 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -41,6 +38,9 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @cdk.module standard
@@ -187,7 +187,7 @@ public class ReactionSetManipulator {
             IReactionSet reactSet, IAtomContainer molecule) {
         IReactionSet newReactSet = reactSet.getBuilder().newInstance(IReactionSet.class);
     	for (IReaction reaction : reactSet.reactions()) {
-            for(IAtomContainer atomContainer : reaction.getReactants().molecules())
+            for(IAtomContainer atomContainer : reaction.getReactants().atomContainers())
             	if(atomContainer.equals(molecule))
             		newReactSet.addReaction(reaction);
         }
@@ -206,7 +206,7 @@ public class ReactionSetManipulator {
             IReactionSet reactSet, IAtomContainer molecule) {
         IReactionSet newReactSet = reactSet.getBuilder().newInstance(IReactionSet.class);
     	for (IReaction reaction : reactSet.reactions()) {
-            for(IAtomContainer atomContainer : reaction.getProducts().molecules())
+            for(IAtomContainer atomContainer : reaction.getProducts().atomContainers())
             	if(atomContainer.equals(molecule))
             		newReactSet.addReaction(reaction);
         }

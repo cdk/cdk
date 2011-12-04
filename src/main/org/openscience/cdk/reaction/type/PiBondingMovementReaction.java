@@ -25,15 +25,14 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -48,6 +47,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which tries to reproduce the delocalization of electrons
@@ -112,13 +113,14 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
 	 *  from the class tools.HydrogenAdder.
 	 *
-	 *@param  reactants         reactants of the reaction.
-	 *@param  agents            agents of the reaction (Must be in this case null).
-	 *
+     *
 	 *@exception  CDKException  Description of the Exception
-	 */
+
+     * @param  reactants         reactants of the reaction.
+    * @param  agents            agents of the reaction (Must be in this case null).
+     */
     @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
-	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
+	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: PiBondingMovementReaction");
 		
@@ -130,7 +132,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 		}
 		
 		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
-		IMolecule reactant = reactants.getMolecule(0);
+		IAtomContainer reactant = reactants.getAtomContainer(0);
 		
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
@@ -212,7 +214,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 * @param reactant The molecule to set the activity
 	 * @throws CDKException 
 	 */
-    private void setActiveCenters(IMolecule reactant) throws CDKException {
+    private void setActiveCenters(IAtomContainer reactant) throws CDKException {
 		AllRingsFinder arf = new AllRingsFinder();
 		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {

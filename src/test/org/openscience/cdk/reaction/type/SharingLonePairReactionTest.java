@@ -24,10 +24,6 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -35,10 +31,12 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -51,6 +49,10 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * TestSuite that runs a test for the ElectronImpactNBEReactionTest.
@@ -87,7 +89,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new SharingLonePairReaction();
 		
-		IMoleculeSet setOfReactants = getExampleReactants();
+		IAtomContainerSet setOfReactants = getExampleReactants();
         
 		/* initiate */
 		
@@ -104,7 +106,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
         
         
         
-        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         /*C=[O+]*/
         IMolecule molecule2 = getExpectedProducts().getMolecule(0);
         
@@ -122,8 +124,8 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new SharingLonePairReaction();
 		
-		IMoleculeSet setOfReactants = getExampleReactants();
-        IMolecule molecule = setOfReactants.getMolecule(0);
+		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 		
 		/*manually put the center active*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -143,7 +145,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
-        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         
         /*C=[O+]*/
         IMolecule molecule2 = getExpectedProducts().getMolecule(0);
@@ -162,8 +164,8 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new SharingLonePairReaction();
 		
-		IMoleculeSet setOfReactants = getExampleReactants();
-        IMolecule molecule = setOfReactants.getMolecule(0);
+		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -179,7 +181,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        IMolecule reactant = setOfReactions.getReaction(0).getReactants().getMolecule(0);
+        IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
 		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
 		Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
 		Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
@@ -196,8 +198,8 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new SharingLonePairReaction();
 		
-		IMoleculeSet setOfReactants = getExampleReactants();
-        IMolecule molecule = setOfReactants.getMolecule(0);
+		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 		
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -209,7 +211,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
-        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(5,setOfReactions.getReaction(0).getMappingCount());
         
@@ -224,7 +226,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	 * Test to recognize if this IMolecule_1 matches correctly into the CDKAtomTypes.
 	 */
 	@Test public void testAtomTypesMolecule1() throws Exception {
-		IMolecule moleculeTest = getExampleReactants().getMolecule(0);
+		IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
 	}
@@ -242,10 +244,10 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return The IMoleculeSet
 	 */
-	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExampleReactants() {
+		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.getAtom(0).setFormalCharge(1);
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
@@ -294,7 +296,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());

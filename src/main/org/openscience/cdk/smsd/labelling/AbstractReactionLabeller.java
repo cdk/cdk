@@ -1,5 +1,19 @@
 package org.openscience.cdk.smsd.labelling;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Mapping;
+import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,19 +21,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Mapping;
-import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * @cdk.module smsd
@@ -49,21 +50,21 @@ public class AbstractReactionLabeller {
      // create a Map of corresponding atoms for molecules 
      // (key: original Atom, value: clone Atom)
         Map<IAtom, IAtom> atomAtom = new Hashtable<IAtom, IAtom>();
-        IMoleculeSet reactants = reaction.getReactants();
-        IMoleculeSet clonedReactants = clone.getReactants();
+        IAtomContainerSet reactants = reaction.getReactants();
+        IAtomContainerSet clonedReactants = clone.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
-            IMolecule mol = reactants.getMolecule(i);
-            IMolecule mol2 = clonedReactants.getMolecule(i);
+            IAtomContainer mol = reactants.getAtomContainer(i);
+            IAtomContainer mol2 = clonedReactants.getAtomContainer(i);
             int[] permutation = permutationMap.get(mol2);
             for (int j = 0; j < mol.getAtomCount(); ++j) {
                 atomAtom.put(mol.getAtom(j), mol2.getAtom(permutation[j]));
             }
         }
-        IMoleculeSet products = reaction.getProducts();
-        IMoleculeSet clonedProducts = clone.getProducts();
+        IAtomContainerSet products = reaction.getProducts();
+        IAtomContainerSet clonedProducts = clone.getProducts();
         for (int i = 0; i < products.getAtomContainerCount(); ++i) {
-            IMolecule mol = products.getMolecule(i);
-            IMolecule mol2 = clonedProducts.getMolecule(i);
+            IAtomContainer mol = products.getAtomContainer(i);
+            IAtomContainer mol2 = clonedProducts.getAtomContainer(i);
             int[] permutation = permutationMap.get(mol2);
             for (int j = 0; j < mol.getAtomCount(); ++j) {
                 atomAtom.put(mol.getAtom(j), mol2.getAtom(permutation[j]));

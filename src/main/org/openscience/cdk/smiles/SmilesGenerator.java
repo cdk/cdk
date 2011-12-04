@@ -24,15 +24,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -58,6 +49,15 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
@@ -222,10 +222,10 @@ public class SmilesGenerator
 	public synchronized String createSMILES(IReaction reaction) throws CDKException
 	{
 		StringBuffer reactionSMILES = new StringBuffer();
-		IMoleculeSet reactants = reaction.getReactants();
+		IAtomContainerSet reactants = reaction.getReactants();
 		for (int i = 0; i < reactants.getAtomContainerCount(); i++)
 		{
-			reactionSMILES.append(createSMILES(reactants.getMolecule(i)));
+			reactionSMILES.append(createSMILES(reactants.getAtomContainer(i)));
 			if (i + 1 < reactants.getAtomContainerCount())
 			{
 				reactionSMILES.append('.');
@@ -242,10 +242,10 @@ public class SmilesGenerator
 			}
 		}
 		reactionSMILES.append('>');
-		IMoleculeSet products = reaction.getProducts();
+		IAtomContainerSet products = reaction.getProducts();
 		for (int i = 0; i < products.getAtomContainerCount(); i++)
 		{
-			reactionSMILES.append(createSMILES(products.getMolecule(i)));
+			reactionSMILES.append(createSMILES(products.getAtomContainer(i)));
 			if (i + 1 < products.getAtomContainerCount())
 			{
 				reactionSMILES.append('.');

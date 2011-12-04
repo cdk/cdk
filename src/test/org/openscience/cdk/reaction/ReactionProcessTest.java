@@ -20,11 +20,6 @@
  */
 package org.openscience.cdk.reaction;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -32,15 +27,21 @@ import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Tests for IReactionProcess implementations.
@@ -311,9 +312,9 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	        IChemFile chemFile = (IChemFile)reader.read(builder.newInstance(IChemFile.class));
 	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 	        
-	        IMoleculeSet reactants = reactionDict.getReactants();
+	        IAtomContainerSet reactants = reactionDict.getReactants();
 	        IMoleculeSet agents = reactionDict.getAgents();
-	        IMoleculeSet products = reactionDict.getProducts();
+	        IAtomContainerSet products = reactionDict.getProducts();
 	        if(agents.getAtomContainerCount() == 0)
 	        	agents = null;
 	        

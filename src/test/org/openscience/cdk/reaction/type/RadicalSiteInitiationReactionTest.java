@@ -24,10 +24,6 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -36,9 +32,9 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -51,6 +47,10 @@ import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * TestSuite that runs a test for the RearrangementRadicalReactionTest.
@@ -81,9 +81,9 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         IReactionProcess type = new RadicalSiteInitiationReaction();
-		IMoleculeSet setOfReactants = getExampleReactants();
+		IAtomContainerSet setOfReactants = getExampleReactants();
         
 		/* initiate */
 		
@@ -98,19 +98,19 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         
-        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 		
         /*C=C*/
-        IMolecule molecule1 = getExpectedProducts().getMolecule(0);
+        IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
 
 
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
 		
-		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+		IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 		
         /*[C*]*/
-		IMolecule molecule2 = getExpectedProducts().getMolecule(1);
+		IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);
 
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -124,8 +124,8 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new RadicalSiteInitiationReaction();
-		IMoleculeSet setOfReactants = getExampleReactants();
-        IMolecule molecule = setOfReactants.getMolecule(0);
+		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 		
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -143,7 +143,7 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        IMolecule reactant = setOfReactions.getReaction(0).getReactants().getMolecule(0);
+        IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
 		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
 		Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
 		Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
@@ -162,8 +162,8 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new RadicalSiteInitiationReaction();
-		IMoleculeSet setOfReactants = getExampleReactants();
-        IMolecule molecule = setOfReactants.getMolecule(0);
+		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -180,8 +180,8 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
-        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
+        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
         Assert.assertEquals(10,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
@@ -193,15 +193,15 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         
 	}
 	/**
-	 * Get the IMolecule
+	 * Get the IAtomContainer
 	 * 
-	 * @return The IMolecule
+	 * @return The IAtomContainer
 	 * @throws Exception
 	 */
-	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExampleReactants() {
+		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.getAtom(0).setFormalCharge(1);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -229,13 +229,13 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 	/**
 	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
-	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExpectedProducts() {
+		IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
 		/*C=C*/
-        IMolecule molecule1 = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule1 = builder.newInstance(IAtomContainer.class);
         molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(0, 1, IBond.Order.DOUBLE);
@@ -246,7 +246,7 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 		}
 		
         /*[C*]*/
-		IMolecule molecule2 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule2.addBond(0, 1, IBond.Order.SINGLE);
@@ -262,12 +262,12 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 		return setOfProducts;
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
+	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
 	 * 
-	 * @param molecule          The IMolecule to analyze
+	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
+	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws CDKException {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());

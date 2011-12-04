@@ -28,6 +28,21 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -39,21 +54,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.MDLFormat;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 
 
@@ -157,10 +157,10 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IReaction.class.equals(interfaces[i])) return true;
-			if (IReactionSet.class.equals(interfaces[i])) return true;
-		}
+        for (Class anInterface : interfaces) {
+            if (IReaction.class.equals(anInterface)) return true;
+            if (IReactionSet.class.equals(anInterface)) return true;
+        }
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
 		return false;
@@ -176,26 +176,24 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      */
 	public void write(IChemObject object) throws CDKException
 	{
-		if (object instanceof IReactionSet) {
-			writeReactionSet((IReactionSet)object);
-			return;
-		}else if (object instanceof IReaction){
-			
-		    writeReaction((IReaction)object);
-		}else{
-		    throw new CDKException("Only supported is writing ReactionSet, Reaction objects.");
-		}
+        if (object instanceof IReactionSet) {
+            writeReactionSet((IReactionSet) object);
+        } else if (object instanceof IReaction) {
+            writeReaction((IReaction) object);
+        } else {
+            throw new CDKException("Only supported is writing ReactionSet, Reaction objects.");
+        }
 	}
 	/**
 	 *  Writes an array of Reaction to an OutputStream in MDL rdf format.
 	 *
-	 * @param   som  Array of Reactions that is written to an OutputStream
+	 * @param   reactions  Array of Reactions that is written to an OutputStream
 	 */
 	private void writeReactionSet(IReactionSet reactions) throws CDKException{
-		
-		for(Iterator<IReaction> it = reactions.reactions().iterator();it.hasNext();){
-			writeReaction(it.next());
-		}
+
+        for (IReaction iReaction : reactions.reactions()) {
+            writeReaction(iReaction);
+        }
 	}
 	
 	/**
@@ -249,8 +247,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                 it.next().setProperty(CDKConstants.ATOM_ATOM_MAPPING, i+1);
                 i++;
             }
-            writeMoleculeSet(reaction.getReactants());
-            writeMoleculeSet(reaction.getProducts());
+            writeAtomContainerSet(reaction.getReactants());
+            writeAtomContainerSet(reaction.getProducts());
             
             //write sdfields, if any
             if(rdFields!=null){
@@ -285,10 +283,10 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   som  The MoleculeSet that is written to an OutputStream 
 	 */
-	private void writeMoleculeSet(IMoleculeSet som) throws IOException, CDKException {
+	private void writeAtomContainerSet(IAtomContainerSet som) throws IOException, CDKException {
         
         for (int i = 0; i < som.getAtomContainerCount(); i++) {
-        	IMolecule mol = som.getMolecule(i);
+        	IAtomContainer mol = som.getAtomContainer(i);
             for (int j = 0; j < som.getMultiplier(i); j++) {
                 StringWriter sw = new StringWriter();
                 writer.write("$MOL");

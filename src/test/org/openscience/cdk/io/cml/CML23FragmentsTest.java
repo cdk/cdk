@@ -27,9 +27,6 @@
  *  */
 package org.openscience.cdk.io.cml;
 
-import java.io.ByteArrayInputStream;
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -47,6 +44,9 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+
+import java.io.ByteArrayInputStream;
+import java.util.Iterator;
 
 /**
  * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3,
@@ -535,8 +535,8 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, reaction.getReactantCount());
         Assert.assertEquals(1, reaction.getProductCount());
         Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
-        Assert.assertEquals("react", reaction.getReactants().getMolecule(0).getID());
-        Assert.assertEquals("product", reaction.getProducts().getMolecule(0).getID());
+        Assert.assertEquals("react", reaction.getReactants().getAtomContainer(0).getID());
+        Assert.assertEquals("product", reaction.getProducts().getAtomContainer(0).getID());
         Assert.assertEquals("water", reaction.getAgents().getMolecule(0).getID());
     }
     

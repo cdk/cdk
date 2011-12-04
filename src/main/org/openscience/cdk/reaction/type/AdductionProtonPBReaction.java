@@ -24,15 +24,14 @@
  */
 package org.openscience.cdk.reaction.type;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -47,6 +46,9 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which produces a protonation to double bond. 
@@ -113,13 +115,14 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
 	 *  from the class tools.HydrogenAdder.
 	 *
-	 *@param  reactants         reactants of the reaction
-	 *@param  agents            agents of the reaction (Must be in this case null)
-	 *
+     *
 	 *@exception  CDKException  Description of the Exception
-	 */
+
+     * @param  reactants         reactants of the reaction
+    * @param  agents            agents of the reaction (Must be in this case null)
+     */
     @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
-	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
+	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: AdductionProtonPBReaction");
 		
@@ -131,7 +134,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 		}
 		
 		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
-		IMolecule reactant = reactants.getMolecule(0);
+		IAtomContainer reactant = reactants.getAtomContainer(0);
 
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
 		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
@@ -201,7 +204,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 	 * @param reactant The molecule to set the activity
 	 * @throws CDKException 
 	 */
-    private void setActiveCenters(IMolecule reactant) throws CDKException {
+    private void setActiveCenters(IAtomContainer reactant) throws CDKException {
     	if(AtomContainerManipulator.getTotalCharge(reactant) != 0)
 			return;
 		

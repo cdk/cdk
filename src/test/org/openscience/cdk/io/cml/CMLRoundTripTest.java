@@ -24,12 +24,6 @@
  *  */
 package org.openscience.cdk.io.cml;
 
-import java.io.InputStream;
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -65,6 +59,11 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * TestCase for reading CML 2 files using a few test files
@@ -506,17 +505,17 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals("reaction.1", roundTrippedReaction.getID());
         
         Assert.assertNotNull(roundTrippedReaction);
-        IMoleculeSet reactants = roundTrippedReaction.getReactants();
+        IAtomContainerSet reactants = roundTrippedReaction.getReactants();
         Assert.assertNotNull(reactants);
         Assert.assertEquals(1, reactants.getAtomContainerCount());
-        IMolecule roundTrippedReactant = reactants.getMolecule(0);
+        IAtomContainer roundTrippedReactant = reactants.getAtomContainer(0);
         Assert.assertEquals("react", roundTrippedReactant.getID());
         Assert.assertEquals(1, roundTrippedReactant.getAtomCount());
         
-        IMoleculeSet products = roundTrippedReaction.getProducts();
+        IAtomContainerSet products = roundTrippedReaction.getProducts();
         Assert.assertNotNull(products);
         Assert.assertEquals(1, products.getAtomContainerCount());
-        IMolecule roundTrippedProduct = products.getMolecule(0);
+        IAtomContainer roundTrippedProduct = products.getAtomContainer(0);
         Assert.assertEquals("product", roundTrippedProduct.getID());
         Assert.assertEquals(1, roundTrippedProduct.getAtomCount());
         

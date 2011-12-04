@@ -23,11 +23,6 @@
  */
 package org.openscience.cdk.charges;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -53,6 +48,11 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -531,7 +531,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         for(int i = 0; i < setOfReactions.getReactionCount(); i++){
         	type = new HyperconjugationReaction();
     		IMoleculeSet setOfM2 = ac.getBuilder().newInstance(IMoleculeSet.class);
-    		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
+    		IAtomContainer mol= setOfReactions.getReaction(i).getProducts().getAtomContainer(0);
     		for(int k = 0; k < mol.getBondCount(); k++){
     			mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER,false);
     			mol.getBond(k).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,false);
@@ -546,7 +546,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
 			if(setOfReactions2.getReactionCount() > 0){
 				
-			IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
+			IAtomContainer react = setOfReactions2.getReaction(0).getReactants().getAtomContainer(0);
 
 			set.addAtomContainer(react);
 			}

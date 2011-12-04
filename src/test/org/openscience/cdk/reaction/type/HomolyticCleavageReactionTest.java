@@ -24,10 +24,6 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -36,10 +32,12 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -54,6 +52,10 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * TestSuite that runs a test for the HomolyticCleavageReactionTest.
@@ -89,7 +91,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 			//Smiles("CCC")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -135,7 +137,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 	        
 	        //Smiles("C[C*]")
-			IMolecule expected1 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -151,12 +153,12 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			expected1.addBond(1, 5, IBond.Order.SINGLE);
 			expected1.addBond(1, 6, IBond.Order.SINGLE);;
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 			
 			//Smiles("[C*]")
-			IMolecule expected2 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected2 = builder.newInstance(IMolecule.class);
 			expected2.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected2.addSingleElectron(builder.newInstance(ISingleElectron.class,expected2.getAtom(0)));
 			expected2.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -168,7 +170,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
 			lpcheck.saturate(expected2);
-			IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+			IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 	        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
 			Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 		}
@@ -182,7 +184,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testCsp2SingleB() throws Exception {
 			//Smiles("C=CC")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -224,7 +226,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 	        
 	        //Smiles("C=[C*]")
-			IMolecule expected1 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -236,12 +238,12 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			expected1.addBond(0, 3, IBond.Order.SINGLE);
 			expected1.addBond(1, 4, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 			
 			//Smiles("[C*]")
-			IMolecule expected2 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected2 = builder.newInstance(IMolecule.class);
 			expected2.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected2.addSingleElectron(builder.newInstance(ISingleElectron.class,expected2.getAtom(0)));
 			expected2.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -253,7 +255,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
 			lpcheck.saturate(expected2);
 
-	        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+	        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 	        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 	        
@@ -268,7 +270,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testCspSingleB() throws Exception {
 			//Smiles("C#CC")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -306,7 +308,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 	        
 	        //Smiles("C#[C*]")
-			IMolecule expected1 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -314,12 +316,12 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 			expected1.addBond(0, 2, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 			
 			//Smiles("[C*]")
-			IMolecule expected2 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected2 = builder.newInstance(IMolecule.class);
 			expected2.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected2.addSingleElectron(builder.newInstance(ISingleElectron.class,expected2.getAtom(0)));
 			expected2.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -330,7 +332,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			expected2.addBond(0, 3, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
 			lpcheck.saturate(expected2);
-	        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+	        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 	        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 	        
@@ -345,7 +347,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testCsp2DoubleB() throws Exception {
 			//Smiles("CC=C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -387,7 +389,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 	        
 	        //Smiles("C[C*][C*]")
-			IMolecule expected1 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -409,7 +411,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			expected1.addBond(2, 8, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 	        
@@ -424,7 +426,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testCspDoubleB() throws Exception {
 			//Smiles("C=C=C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -462,7 +464,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 	        
 	        //Smiles("C=[C*][C*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -480,7 +482,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected1.addBond(2, 6, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 
@@ -495,7 +497,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testCspTripleB() throws Exception {
 			//Smiles("CC#C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -533,7 +535,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 	        
 	        //Smiles("C[C*]=[C*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -550,7 +552,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected1.addBond(0, 5, IBond.Order.SINGLE);
 	        expected1.addBond(2, 6, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 
@@ -566,7 +568,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNsp3SingleB() throws Exception {
 			//Smiles("CNC")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -611,7 +613,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 	        
 	        //Smiles("C[N*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 	        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -626,13 +628,13 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected1.addBond(1, 5, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 			
 			
 	        //Smiles("[C*]")
-	        IMolecule expected2 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected2 = builder.newInstance(IMolecule.class);
 	        expected2.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected2.addSingleElectron(builder.newInstance(ISingleElectron.class,expected2.getAtom(0)));
 	        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -642,7 +644,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected2.addBond(0, 2, IBond.Order.SINGLE);
 	        expected2.addBond(0, 3, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
-	        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+	        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 	        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 	        
@@ -655,7 +657,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNsp3ChargeSingleB() throws Exception {
 			//Smiles("C[N+]C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.getAtom(1).setFormalCharge(+1);
@@ -711,7 +713,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNsp2SingleB() throws Exception {
 			//Smiles("C=NC")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -752,7 +754,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 
 	        //Smiles("[C*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
 	        expected1.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -762,12 +764,12 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected1.addBond(0, 2, IBond.Order.SINGLE);
 	        expected1.addBond(0, 3, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 	        
 	        //Smiles("C=[N*]")
-			IMolecule expected2 = builder.newInstance(IMolecule.class);
+			IAtomContainer expected2 = builder.newInstance(IMolecule.class);
 			expected2.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected2.addAtom(builder.newInstance(IAtom.class,"N"));
 			expected2.addSingleElectron(builder.newInstance(ISingleElectron.class,expected2.getAtom(1)));
@@ -778,7 +780,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			expected2.addBond(0, 3, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
 			lpcheck.saturate(expected2);
-	        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 	        
@@ -791,7 +793,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNsp2ChargeSingleB() throws Exception {
 			//Smiles("C=[N+]C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.getAtom(1).setFormalCharge(1);
@@ -844,7 +846,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNsp2DoubleB() throws Exception {
 			//Smiles("CN=C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -885,7 +887,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 
 	        //Smiles("C[N*]-[C*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 			expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -905,7 +907,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected1.addBond(2, 7, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 		}
@@ -917,7 +919,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNsp2ChargeDoubleB() throws Exception {
 			//Smiles("C[N+]=C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.getAtom(1).setFormalCharge(+1);
@@ -969,7 +971,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNspTripleB() throws Exception {
 			//Smiles("N#C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(0, 1, IBond.Order.TRIPLE);
@@ -1000,7 +1002,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 
 	        //Smiles("[N*]=[C*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 			expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1010,7 +1012,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected1.addBond(1, 2, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 		}
@@ -1022,7 +1024,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testNspChargeTripleB() throws Exception {
 			//Smiles("[N+]#C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.getAtom(0).setFormalCharge(+1);
@@ -1064,7 +1066,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testOsp2SingleB() throws Exception {
 			//Smiles("COC")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1107,7 +1109,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 
 	        //Smiles("C[O*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 			expected1.addAtom(builder.newInstance(IAtom.class,"O"));
 			expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -1120,12 +1122,12 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			expected1.addBond(0, 4, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 			
 	        //Smiles("[C*]")
-	        IMolecule expected2 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected2 = builder.newInstance(IMolecule.class);
 	        expected2.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected2.addSingleElectron(builder.newInstance(ISingleElectron.class,expected2.getAtom(0)));
 	        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -1135,7 +1137,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected2.addBond(0, 2, IBond.Order.SINGLE);
 	        expected2.addBond(0, 3, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
-	        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+	        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 	        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 		}
@@ -1149,7 +1151,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testOsp2ChargeSingleB() throws Exception {
 			//Smiles("C[O+]C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 			molecule.getAtom(1).setFormalCharge(+1);
@@ -1203,7 +1205,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testOspDoubleB() throws Exception {
 			//Smiles("O=C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -1236,7 +1238,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        // expected products 
 
 	        //Smiles("[O*][C*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"O"));
 	        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
 	        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1248,7 +1250,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected1.addBond(1, 3, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 		}
@@ -1260,7 +1262,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testOspChargeDoubleB() throws Exception {
 			//Smiles("[O+]=C")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 			molecule.getAtom(0).setFormalCharge(+1);
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1303,7 +1305,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testFspSingleB() throws Exception {
 			//Smiles("FC")
-			IMolecule molecule = builder.newInstance(IMolecule.class);
+			IAtomContainer molecule = builder.newInstance(IMolecule.class);
 			molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 			molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 			molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1337,17 +1339,17 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        
 
 	        //Smiles("[F*]")
-	        IMolecule expected1 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected1 = builder.newInstance(IMolecule.class);
 	        expected1.addAtom(builder.newInstance(IAtom.class,"F"));
 	        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
 			lpcheck.saturate(expected1);
-	        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
 	        
 	        //Smiles("[C*]")
-	        IMolecule expected2 = builder.newInstance(IMolecule.class);
+	        IAtomContainer expected2 = builder.newInstance(IMolecule.class);
 	        expected2.addAtom(builder.newInstance(IAtom.class,"C"));
 	        expected2.addSingleElectron(builder.newInstance(ISingleElectron.class,expected2.getAtom(0)));
 	        expected2.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -1357,7 +1359,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        expected2.addBond(0, 2, IBond.Order.SINGLE);
 	        expected2.addBond(0, 3, IBond.Order.SINGLE);
 	        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
-	        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+	        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 	        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
 	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
 		}
@@ -1369,8 +1371,8 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 			IReactionProcess type  = new HomolyticCleavageReaction();
-			IMoleculeSet setOfReactants = getExampleReactants();
-	        IMolecule molecule = setOfReactants.getMolecule(0);
+			IAtomContainerSet setOfReactants = getExampleReactants();
+	        IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 	        
 	        /*manually put the reactive center*/
 			molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -1389,7 +1391,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        Assert.assertEquals(1, setOfReactions.getReactionCount());
 	        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
-	        IMolecule reactant = setOfReactions.getReaction(0).getReactants().getMolecule(0);
+	        IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
 			Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
 			Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
 			Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
@@ -1405,8 +1407,8 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 */
 		@Test public void testMapping() throws Exception {
 			IReactionProcess type  = new HomolyticCleavageReaction();
-			IMoleculeSet setOfReactants = getExampleReactants();
-	        IMolecule molecule = setOfReactants.getMolecule(0);
+			IAtomContainerSet setOfReactants = getExampleReactants();
+	        IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 	        
 			/*automatic search of the center active*/
 			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -1420,7 +1422,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 			
 	        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 	        
-	        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+	        IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
 	        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
 	        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
@@ -1443,7 +1445,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
 		
 		//smiles("CCc1ccc(C=O)cc1")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IMolecule.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1495,9 +1497,9 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
         Assert.assertEquals(2, setOfReactions.getReaction(1).getProductCount());
 
-        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         /*C*/
-        IMolecule molecule2 = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule2 = builder.newInstance(IMolecule.class);
         molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
         molecule2.addBond(0, 1, IBond.Order.SINGLE);
@@ -1509,9 +1511,9 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product));
 		
-		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+		product = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 		/*Cc1ccc(C=O)cc1*/
-		IMolecule molecule3 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule3 = builder.newInstance(IMolecule.class);
 		molecule3.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule3.getAtom(0).setFormalCharge(1);
 		molecule3.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1538,7 +1540,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule3,product));
 		
-		product = setOfReactions.getReaction(1).getProducts().getMolecule(0);
+		product = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         /*CC*/
 		molecule2 = builder.newInstance(IMolecule.class);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1552,7 +1554,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
         
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product));
 
-		product = setOfReactions.getReaction(1).getProducts().getMolecule(1);
+		product = setOfReactions.getReaction(1).getProducts().getAtomContainer(1);
 		/*c1ccc(C=O)cc1*/
 		molecule3 = builder.newInstance(IMolecule.class);
 		molecule3.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1600,7 +1602,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		IMoleculeSet setOfReactants = builder.newInstance(IMoleculeSet.class);
 		
 		//smiles("CCc1ccc(C=O)cc1")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IMolecule.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1647,8 +1649,8 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
-        IMolecule product11 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        IMolecule product12 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+        IAtomContainer product11 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
+        IAtomContainer product12 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 		
 		Assert.assertEquals(20,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
@@ -1656,8 +1658,8 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA2, product12.getAtom(0));
         
-		IMolecule product21 = setOfReactions.getReaction(1).getProducts().getMolecule(0);
-        IMolecule product22 = setOfReactions.getReaction(1).getProducts().getMolecule(1);
+		IAtomContainer product21 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
+        IAtomContainer product22 = setOfReactions.getReaction(1).getProducts().getAtomContainer(1);
 				
 		Assert.assertEquals(20,setOfReactions.getReaction(0).getMappingCount());
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(1), molecule.getAtom(1));
@@ -1667,12 +1669,12 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
         
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
 	 * 
-	 * @param molecule          The IMolecule to analyze
+	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws Exception {
+	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
 
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
@@ -1690,10 +1692,10 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return The IMoleculeSet
 	 */
-	private IMoleculeSet getExampleReactants() {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExampleReactants() {
+		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
-		IMolecule molecule = builder.newInstance(IMolecule.class);//Smiles("C=O")
+		IAtomContainer molecule = builder.newInstance(IMolecule.class);//Smiles("C=O")
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);

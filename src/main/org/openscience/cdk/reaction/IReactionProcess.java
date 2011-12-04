@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.reaction;
 
-import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+
+import java.util.List;
 
 /**
  * Classes that implement this interface are Reactions types.
@@ -84,13 +84,13 @@ public interface IReactionProcess {
      * 
      * Optionally, parameters may be set which can affect the course of the process.
      *
-     * @param reactants   An {@link IMoleculeSet} for which this process should be initiate.
-     * @param agents      An {@link IMoleculeSet} for which this process should be initiate.
-     * 
-     * @throws CDKException if an error occurs during the reaction process. 
-     * See documentation for individual reaction processes
+     *
+     * @param reactants   An {@link org.openscience.cdk.interfaces.IMoleculeSet} for which this process should be initiate.
+     * @param agents      An {@link org.openscience.cdk.interfaces.IMoleculeSet} for which this process should be initiate.
+     * @return the set of reactions.
+     * @throws CDKException if an error occurs during the reaction process. See documentation for individual reaction processes
      */
-    public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException;
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException;
 
     /**
      * Return the IParameterReact if it exists given the class.

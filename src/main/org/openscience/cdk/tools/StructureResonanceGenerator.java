@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -47,6 +44,9 @@ import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
 import org.openscience.cdk.reaction.type.SharingLonePairReaction;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
@@ -246,7 +246,7 @@ public class StructureResonanceGenerator {
                         for (int k = 0; k < setOfReactions.getReactionCount(); k++)
                             for (int j = 0; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount(); j++)
                             {
-                                IMolecule product = setOfReactions.getReaction(k).getProducts().getMolecule(j);
+                                IAtomContainer product = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
                                 if (!existAC(setOfMol, product)) {
                                     setOfMol.addAtomContainer(product);
                                     countStructure++;
