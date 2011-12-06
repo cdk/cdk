@@ -46,8 +46,10 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 	int[] numOfHits;
 	private boolean behaveAsBitFingerprint;
 	
-	private IntArrayCountFingerprint() {
-		
+	public IntArrayCountFingerprint() {
+		hitHashes = new int[0];
+		numOfHits = new int[0];
+		behaveAsBitFingerprint = false;
 	}
 	
 	public IntArrayCountFingerprint(Map<String, Integer> rawFingerprint) {
