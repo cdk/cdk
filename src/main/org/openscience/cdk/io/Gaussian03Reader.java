@@ -40,8 +40,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.Gaussian03Format;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -273,8 +271,8 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }
-        IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
-        moleculeSet.addAtomContainer(model.getBuilder().newInstance(IMolecule.class,container));
+        IAtomContainerSet moleculeSet = model.getBuilder().newInstance(IAtomContainerSet.class);
+        moleculeSet.addAtomContainer(model.getBuilder().newInstance(IAtomContainer.class,container));
         model.setMoleculeSet(moleculeSet);
     }
 

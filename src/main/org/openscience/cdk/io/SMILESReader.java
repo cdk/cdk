@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -119,7 +118,7 @@ public class SMILESReader extends DefaultChemObjectReader {
 		Class[] interfaces = classObject.getInterfaces();
         for (Class anInterface : interfaces) {
             if (IChemFile.class.equals(anInterface)) return true;
-            if (IMoleculeSet.class.equals(anInterface)) return true;
+            if (IAtomContainerSet.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -145,7 +144,7 @@ public class SMILESReader extends DefaultChemObjectReader {
             IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
             IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
             chemModel.setMoleculeSet(readAtomContainerSet(
-                    file.getBuilder().newInstance(IMoleculeSet.class)
+                    file.getBuilder().newInstance(IAtomContainerSet.class)
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);

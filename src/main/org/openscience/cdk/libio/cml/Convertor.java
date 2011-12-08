@@ -25,6 +25,13 @@
  */
 package org.openscience.cdk.libio.cml;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -42,7 +49,6 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -78,13 +84,6 @@ import org.xmlcml.cml.element.CMLReactionStep;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @cdk.module       libiocml
@@ -306,7 +305,7 @@ public class Convertor {
         return reactionList;
     }
 
-    public CMLMoleculeList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet) {
+    public CMLMoleculeList cdkMoleculeSetToCMLList(IAtomContainerSet moleculeSet) {
         return cdkMoleculeSetToCMLList(moleculeSet, true);
     }
 

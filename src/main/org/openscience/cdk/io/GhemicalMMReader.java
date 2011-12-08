@@ -39,13 +39,12 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.GhemicalMMFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -260,8 +259,8 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         container.addBond(bondatomid1[i], bondatomid2[i], bondorder[i]);
                     }
                     
-                    IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
-                    moleculeSet.addAtomContainer(model.getBuilder().newInstance(IMolecule.class,container));
+                    IAtomContainerSet moleculeSet = model.getBuilder().newInstance(IAtomContainerSet.class);
+                    moleculeSet.addAtomContainer(model.getBuilder().newInstance(IAtomContainer.class,container));
                     model.setMoleculeSet(moleculeSet);
                     
                     return model;

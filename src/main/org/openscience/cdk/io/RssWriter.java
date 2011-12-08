@@ -34,8 +34,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.CMLRSSFormat;
@@ -200,9 +198,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      Element root=null;
 		      Convertor convertor=new Convertor(true,null);
 		      object=(IChemObject)list.get(i);
-		      if (object instanceof IMolecule) {
-		      	root = convertor.cdkMoleculeToCMLMolecule((IMolecule)object);
-		      }else if (object instanceof IAtomContainer) {
+		      if (object instanceof IAtomContainer) {
 			     root = convertor.cdkAtomContainerToCMLMolecule((IAtomContainer)object);
 			  } else if (object instanceof ICrystal) {
 		      	root = convertor.cdkCrystalToCMLMolecule((ICrystal)object);
@@ -214,8 +210,8 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      	root = convertor.cdkReactionToCMLReaction((IReaction)object);
 		      } else if (object instanceof IReactionSet) {
 		      	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
-		      } else if (object instanceof IMoleculeSet) {
-		      	root = convertor.cdkMoleculeSetToCMLList((IMoleculeSet)object);
+		      } else if (object instanceof IAtomContainerSet) {
+		      	root = convertor.cdkMoleculeSetToCMLList((IAtomContainerSet)object);
 		      } else if (object instanceof IChemSequence) {
 		      	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
 		      } else if (object instanceof IChemModel) {

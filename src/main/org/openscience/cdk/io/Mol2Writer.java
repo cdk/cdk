@@ -33,10 +33,10 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.SybylAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -112,7 +112,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
         for (Class anInterface : interfaces) {
-            if (IMolecule.class.equals(anInterface)) return true;
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -120,9 +120,9 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IAtomContainer) {
             try {
-                writeMolecule((IMolecule)object);
+                writeMolecule((IAtomContainer)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing Mol2 file: " + ex.getMessage(), ex);
             }
@@ -137,7 +137,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
      * @param mol the Molecule to write
      * @throws java.io.IOException if there is an error during writing
      */
-    public void writeMolecule(IMolecule mol) throws IOException {
+    public void writeMolecule(IAtomContainer mol) throws IOException {
         matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         try {
         	logger.debug("Writing header...");

@@ -46,14 +46,14 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -227,13 +227,13 @@ public class PDBReader extends DefaultChemObjectReader {
 		// initialize all containers
 		IChemSequence oSeq = oFile.getBuilder().newInstance(IChemSequence.class);
 		IChemModel oModel = oFile.getBuilder().newInstance(IChemModel.class);
-		IMoleculeSet oSet = oFile.getBuilder().newInstance(IMoleculeSet.class);
+		IAtomContainerSet oSet = oFile.getBuilder().newInstance(IAtomContainerSet.class);
 		
 		// some variables needed
 		String cCol;
 		PDBAtom oAtom;
 		PDBPolymer oBP = new PDBPolymer();
-		IMolecule molecularStructure = oFile.getBuilder().newInstance(IMolecule.class);
+		IAtomContainer molecularStructure = oFile.getBuilder().newInstance(IAtomContainer.class);
 		StringBuffer cResidue;
 		String oObj;
 		IMonomer oMonomer;
@@ -379,7 +379,7 @@ public class PDBReader extends DefaultChemObjectReader {
 								// setup a new one
 								oBP = new PDBPolymer();
 								oModel = oFile.getBuilder().newInstance(IChemModel.class);
-								oSet = oFile.getBuilder().newInstance(IMoleculeSet.class);						
+								oSet = oFile.getBuilder().newInstance(IAtomContainerSet.class);						
 							}
 						} else {
 							if (molecularStructure.getAtomCount() > 0) {
@@ -388,9 +388,9 @@ public class PDBReader extends DefaultChemObjectReader {
 								oModel.setMoleculeSet(oSet);
 								oSeq.addChemModel(oModel);
 								// setup a new one
-								molecularStructure = oFile.getBuilder().newInstance(IMolecule.class);
+								molecularStructure = oFile.getBuilder().newInstance(IAtomContainer.class);
 								oModel = oFile.getBuilder().newInstance(IChemModel.class);
-								oSet = oFile.getBuilder().newInstance(IMoleculeSet.class);		
+								oSet = oFile.getBuilder().newInstance(IAtomContainerSet.class);		
 							}
 						}
 					} else if ("REMARK".equalsIgnoreCase(cCol)) {						
@@ -422,7 +422,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						    int lineIndex = 6;
 						    int atomFromNumber = -1;
 						    int atomToNumber = -1;
-						    IMolecule molecule = (isProteinStructure)? oBP : molecularStructure;
+						    IAtomContainer molecule = (isProteinStructure)? oBP : molecularStructure;
 						    while (lineIndex + 5 <= cRead.length()) {
 						        String part = cRead.substring(lineIndex, lineIndex + 5).trim();
 						        if (atomFromNumber == -1) {
@@ -508,7 +508,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		return oFile;
 	}
 	
-	private void addBond(IMolecule molecule, int bondAtomNo, int bondedAtomNo) {
+	private void addBond(IAtomContainer molecule, int bondAtomNo, int bondedAtomNo) {
 		IAtom firstAtom = atomNumberMap.get(bondAtomNo);
 		IAtom secondAtom = atomNumberMap.get(bondedAtomNo);
 		if (firstAtom == null) {
@@ -534,7 +534,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		molecule.addBond(bond);
 	}
 	
-	private boolean createBondsWithRebondTool(IMolecule molecule){
+	private boolean createBondsWithRebondTool(IAtomContainer molecule){
 		RebondTool tool = new RebondTool(2.0, 0.5, 0.5);
 		try {
 //			 configure atoms

@@ -204,7 +204,7 @@ public class PathTools {
      *                      that are found during search
      */
     @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IMolecule")
-    public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IMolecule molecule) {
+    public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtomContainer molecule) {
         // logger.debug("Staring partitioning with this ac: " + ac);
         breadthFirstSearch(atomContainer, sphere, molecule, -1);
     }
@@ -222,7 +222,7 @@ public class PathTools {
      */
     @TestMethod("testFindClosestByBond")
     public static IAtom[] findClosestByBond(IAtomContainer atomContainer, IAtom atom, int max) {
-        IMolecule mol = atomContainer.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         List<IAtom> v = new ArrayList<IAtom>();
         v.add(atom);
         breadthFirstSearch(atomContainer, v, mol, max);
@@ -258,7 +258,7 @@ public class PathTools {
      * @param max
      */
     @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IMolecule_int")
-    public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IMolecule molecule, int max) {
+    public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtomContainer molecule, int max) {
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<IAtom>();
         for (IAtom atom : sphere) {

@@ -45,7 +45,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -128,7 +127,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
@@ -136,14 +135,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 	}
 
 	public <T extends IChemObject> T read(T object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IAtomContainer) {
             return (T)readMolecule(object.getBuilder());
         }
         return null;
     }
     
-    public IMolecule readMolecule(IChemObjectBuilder builder) throws CDKException {
-        return builder.newInstance(IMolecule.class,readConnectionTable(builder));
+    public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
+        return builder.newInstance(IAtomContainer.class,readConnectionTable(builder));
     }
     
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
@@ -587,7 +586,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
     @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
-        if (object instanceof IMolecule) {
+        if (object instanceof IAtomContainer) {
             return true;
         }
         return false;

@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -131,7 +130,6 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
@@ -141,16 +139,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     public void write(IChemObject object) throws CDKException {
     	customizeJob();
-        if (object instanceof IMolecule) {
-            try {
-                writeMolecule((IMolecule)object);
-                writer.flush();
-            } catch (Exception ex) {
-                logger.error(ex.getMessage());
-                logger.debug(ex);
-                throw new CDKException("Exception while writing to CDK source code: " + ex.getMessage(), ex);
-            }
-        } else if (object instanceof IAtomContainer) {
+        if (object instanceof IAtomContainer) {
             try {
                 writeAtomContainer((IAtomContainer)object);
                 writer.flush();
@@ -182,22 +171,6 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             writer.write("  mol.addBond(" + bond.getID() + ");");
             writer.newLine();
         }
-    }
-
-    private void writeMolecule(IMolecule molecule) throws Exception {
-        writer.write("{");
-        writer.newLine();
-        writer.write("  IChemObjectBuilder builder = ");
-        writer.write(builder.getSetting());
-        writer.write(".getInstance();");
-        writer.newLine();
-        writer.write("  IMolecule mol = builder.newInstance(IMolecule.class);");
-        writer.newLine();
-        IDCreator.createIDs(molecule);
-        writeAtoms(molecule);
-        writeBonds(molecule);
-        writer.write("}");
-        writer.newLine();
     }
 
     private void writeAtomContainer(IAtomContainer molecule) throws Exception {

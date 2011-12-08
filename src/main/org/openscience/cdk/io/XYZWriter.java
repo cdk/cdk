@@ -37,8 +37,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.FormatStringBuffer;
@@ -115,7 +115,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
@@ -123,9 +123,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IAtomContainer) {
             try {
-                writeMolecule((IMolecule)object);
+                writeMolecule((IAtomContainer)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing XYZ file: " + ex.getMessage(), ex);
             }
@@ -138,7 +138,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * writes a single frame in XYZ format to the Writer.
     * @param mol the Molecule to write
     */
-    public void writeMolecule(IMolecule mol) throws IOException {
+    public void writeMolecule(IAtomContainer mol) throws IOException {
         
         String st = "";
         boolean writecharge = true;

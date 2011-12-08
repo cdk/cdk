@@ -46,8 +46,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -276,8 +274,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @throws CDKException Description of the Exception
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
-        IMoleculeSet moleculeSet = model.getBuilder().newInstance(IMoleculeSet.class);
-        IMolecule molecule = model.getBuilder().newInstance(IMolecule.class);
+        IAtomContainerSet moleculeSet = model.getBuilder().newInstance(IAtomContainerSet.class);
+        IAtomContainer molecule = model.getBuilder().newInstance(IAtomContainer.class);
         String line = input.readLine();
         line = input.readLine();
         line = input.readLine();

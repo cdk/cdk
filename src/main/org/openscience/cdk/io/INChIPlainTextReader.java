@@ -40,12 +40,11 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
@@ -179,8 +178,8 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     );
                     inchiTool.processConnections(connections, parsedContent, -1);
                     
-                    IMoleculeSet moleculeSet = cf.getBuilder().newInstance(IMoleculeSet.class);
-                    moleculeSet.addAtomContainer(cf.getBuilder().newInstance(IMolecule.class,parsedContent));
+                    IAtomContainerSet moleculeSet = cf.getBuilder().newInstance(IAtomContainerSet.class);
+                    moleculeSet.addAtomContainer(cf.getBuilder().newInstance(IAtomContainer.class,parsedContent));
                     IChemModel model = cf.getBuilder().newInstance(IChemModel.class);
                     model.setMoleculeSet(moleculeSet);
                     IChemSequence sequence = cf.getBuilder().newInstance(IChemSequence.class);

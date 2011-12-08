@@ -45,14 +45,13 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
@@ -195,7 +194,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemSequence.class.equals(interfaces[i])) return true;
-			if (IMoleculeSet.class.equals(interfaces[i])) return true;
+			if (IAtomContainerSet.class.equals(interfaces[i])) return true;
 			if (IReactionSet.class.equals(interfaces[i])) return true;
 			if (IReaction.class.equals(interfaces[i])) return true;
 		}
@@ -209,11 +208,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
      */
     public void write(IChemObject object) throws CDKException {
        
-        if (!(object instanceof IMolecule) &&
-            !(object instanceof IAtomContainer) &&
+        if (!(object instanceof IAtomContainer) &&
+            !(object instanceof IAtomContainerSet) &&
             !(object instanceof IReaction) &&
             !(object instanceof IReactionSet) &&
-            !(object instanceof IMoleculeSet) &&
             !(object instanceof IChemSequence) &&
             !(object instanceof IChemModel) &&
             !(object instanceof IChemFile) &&
@@ -242,8 +240,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
         Element root = null;
         if (object instanceof IPDBPolymer) {
         	root = convertor.cdkPDBPolymerToCMLMolecule((IPDBPolymer)object);
-    	} else if (object instanceof IMolecule) {
-    		root = convertor.cdkMoleculeToCMLMolecule((IMolecule)object);
         } else if (object instanceof ICrystal) {
         	root = convertor.cdkCrystalToCMLMolecule((ICrystal)object);
         } else if (object instanceof IAtom) {
@@ -256,8 +252,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     		root = convertor.cdkReactionSchemeToCMLReactionSchemeAndMoleculeList((IReactionScheme)object);
         } else if (object instanceof IReactionSet) {
         	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
-        } else if (object instanceof IMoleculeSet) {
-        	root = convertor.cdkMoleculeSetToCMLList((IMoleculeSet)object);
+        } else if (object instanceof IAtomContainerSet) {
+        	root = convertor.cdkMoleculeSetToCMLList((IAtomContainerSet)object);
         } else if (object instanceof IChemSequence) {
         	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
         } else if (object instanceof IChemModel) {

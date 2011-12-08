@@ -53,8 +53,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -200,11 +198,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
         IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
         if (setOfMolecules == null) {
-            setOfMolecules = chemModel.getBuilder().newInstance(IMoleculeSet.class);
+            setOfMolecules = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
         }
-        IAtomContainer m = readAtomContainer(chemModel.getBuilder().newInstance(IMolecule.class));
-		if (m != null && m instanceof IMolecule) {
-			setOfMolecules.addAtomContainer((IMolecule)m);
+        IAtomContainer m = readAtomContainer(chemModel.getBuilder().newInstance(IAtomContainer.class));
+		if (m != null && m instanceof IAtomContainer) {
+			setOfMolecules.addAtomContainer((IAtomContainer)m);
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         return chemModel;
@@ -219,15 +217,15 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
         
         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-		IMoleculeSet setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
-		IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IMolecule.class));
-		if (m != null && m instanceof IMolecule ) {
-			setOfMolecules.addAtomContainer((IMolecule)m);
+		IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
+		IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
+		if (m != null && m instanceof IAtomContainer ) {
+			setOfMolecules.addAtomContainer((IAtomContainer)m);
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         
-        setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
+        setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
         chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
 		String str;
         try {
@@ -238,15 +236,15 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // reading mol files
 		str = new String(line);
 		if (str.equals("$$$$")) {
-		    m = readAtomContainer(chemFile.getBuilder().newInstance(IMolecule.class));
+		    m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
 		    
-		    if (m != null && m instanceof IMolecule) {
-			setOfMolecules.addAtomContainer((IMolecule)m);
+		    if (m != null && m instanceof IAtomContainer) {
+			setOfMolecules.addAtomContainer((IAtomContainer)m);
 			
 			chemModel.setMoleculeSet(setOfMolecules);
 			chemSequence.addChemModel(chemModel);
 			
-			setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
+			setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
 			chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
 			
 		    }

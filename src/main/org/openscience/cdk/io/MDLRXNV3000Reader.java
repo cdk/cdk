@@ -31,9 +31,9 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -223,8 +223,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                     new StringReader(molFile.toString()),
                     super.mode
                 );
-                IMolecule reactant = (IMolecule)reader.read(
-                  builder.newInstance(IMolecule.class));
+                IAtomContainer reactant = (IAtomContainer)reader.read(
+                  builder.newInstance(IAtomContainer.class));
                   
                 // add reactant
                 reaction.addReactant(reactant);
@@ -256,8 +256,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 // read MDL molfile content
                 MDLV3000Reader reader = new MDLV3000Reader(
                   new StringReader(molFile.toString()));
-                IMolecule product = (IMolecule)reader.read(
-                  builder.newInstance(IMolecule.class));
+                IAtomContainer product = (IAtomContainer)reader.read(
+                  builder.newInstance(IAtomContainer.class));
                   
                 // add product
                 reaction.addProduct(product);

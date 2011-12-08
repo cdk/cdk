@@ -48,8 +48,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -118,7 +116,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
         for (Class anInterface : interfaces) {
             if (IChemModel.class.equals(anInterface)) return true;
             if (IChemFile.class.equals(anInterface)) return true;
-            if (IMolecule.class.equals(anInterface)) return true;
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         return superClass != null && this.accepts(superClass);
@@ -129,8 +127,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
             return (T) readChemFile((IChemFile) object);
         } else if (object instanceof IChemModel) {
             return (T) readChemModel((IChemModel) object);
-        } else if (object instanceof IMolecule) {
-            return (T) readMolecule((IMolecule) object);
+        } else if (object instanceof IAtomContainer) {
+            return (T) readMolecule((IAtomContainer) object);
         } else {
             throw new CDKException("Only supported are ChemFile and Molecule.");
         }
@@ -139,9 +137,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
         IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
         if (setOfMolecules == null) {
-            setOfMolecules = chemModel.getBuilder().newInstance(IMoleculeSet.class);
+            setOfMolecules = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
         }
-        IAtomContainer m = readMolecule(chemModel.getBuilder().newInstance(IMolecule.class));
+        IAtomContainer m = readMolecule(chemModel.getBuilder().newInstance(IAtomContainer.class));
         if (m != null) {
             setOfMolecules.addAtomContainer(m);
         }
@@ -153,22 +151,22 @@ public class Mol2Reader extends DefaultChemObjectReader {
         IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
 
         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-        IMoleculeSet setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
-        IMolecule m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
+        IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
+        IAtomContainer m = readMolecule(chemFile.getBuilder().newInstance(IAtomContainer.class));
         if (m != null) setOfMolecules.addAtomContainer(m);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
-        setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
+        setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
         chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
         try {
             firstLineisMolecule = true;
             while (m != null) {
-                m = readMolecule(chemFile.getBuilder().newInstance(IMolecule.class));
+                m = readMolecule(chemFile.getBuilder().newInstance(IAtomContainer.class));
                 if (m != null) {
                     setOfMolecules.addAtomContainer(m);
                     chemModel.setMoleculeSet(setOfMolecules);
                     chemSequence.addChemModel(chemModel);
-                    setOfMolecules = chemFile.getBuilder().newInstance(IMoleculeSet.class);
+                    setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
                     chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
                 }
             }
@@ -203,7 +201,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
             return true;
         } else if (object instanceof IChemModel) {
             return true;
-        } else if (object instanceof IMolecule) {
+        } else if (object instanceof IAtomContainer) {
             return true;
         }
         return false;
@@ -215,7 +213,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
      *
      * @return The Reaction that was read from the MDL file.
      */
-    private IMolecule readMolecule(IMolecule molecule) throws CDKException {
+    private IAtomContainer readMolecule(IAtomContainer molecule) throws CDKException {
         AtomTypeFactory atFactory = null;
         try {
             atFactory = AtomTypeFactory.getInstance(

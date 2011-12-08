@@ -29,7 +29,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
@@ -76,7 +75,7 @@ public class VABCVolume {
      * @param  molecule {@link IMolecule} to calculate the volume of.
      * @return          the volume in cubic &Aring;ngstr&ouml;m.
      */
-    public static double calculate(IMolecule molecule) throws CDKException {
+    public static double calculate(IAtomContainer molecule) throws CDKException {
         if (atomTypeList == null) {
             atomTypeList = AtomTypeFactory.getInstance(
                 "org/openscience/cdk/dict/data/cdk-atom-types.owl",

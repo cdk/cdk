@@ -26,13 +26,12 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
@@ -156,12 +155,12 @@ public class HINReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) {
         IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-        IMoleculeSet setOfMolecules = file.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
         String info;
 
         StringTokenizer tokenizer;
         List<String> aroringText = new ArrayList<String>();
-        List<IMolecule> mols = new ArrayList<IMolecule>();
+        List<IAtomContainer> mols = new ArrayList<IAtomContainer>();
 
         try {
             String line;
@@ -186,7 +185,7 @@ public class HINReader extends DefaultChemObjectReader {
                     info = getMolName(line);
                     line = input.readLine();
                 }
-                IMolecule m = file.getBuilder().newInstance(IMolecule.class);
+                IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
                 m.setProperty(CDKConstants.TITLE ,info);
 
                 // Each element of cons is an ArrayList of length 3 which stores
@@ -296,7 +295,7 @@ public class HINReader extends DefaultChemObjectReader {
             }
         }
 
-        for (IMolecule mol : mols) setOfMolecules.addAtomContainer(mol);
+        for (IAtomContainer mol : mols) setOfMolecules.addAtomContainer(mol);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         file.addChemSequence(chemSequence);

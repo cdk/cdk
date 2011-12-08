@@ -38,12 +38,12 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
@@ -212,7 +212,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	private IChemFile readChemFile(IChemFile file) throws IOException {
 		IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class); // TODO Answer the question : Is this line needed ?
 		IChemModel model = file.getBuilder().newInstance(IChemModel.class); // TODO Answer the question : Is this line needed ?
-		IMoleculeSet moleculeSet = file.getBuilder().newInstance(IMoleculeSet.class);
+		IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
 		
 		model.setMoleculeSet(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?
@@ -233,7 +233,7 @@ public class GamessReader extends DefaultChemObjectReader {
 				 */
 				this.input.readLine();
 				moleculeSet.addAtomContainer(this.readCoordinates(
-					file.getBuilder().newInstance(IMolecule.class), GamessReader.BOHR_UNIT
+					file.getBuilder().newInstance(IAtomContainer.class), GamessReader.BOHR_UNIT
 			    ));
 				//break; //<- stops when the first set of coordinates is found.
 			} else if (currentReadLine.indexOf(" COORDINATES OF ALL ATOMS ARE (ANGS)") >= 0) {
@@ -245,7 +245,7 @@ public class GamessReader extends DefaultChemObjectReader {
 				this.input.readLine();
 
 				moleculeSet.addAtomContainer(this.readCoordinates(
-					file.getBuilder().newInstance(IMolecule.class), GamessReader.ANGSTROM_UNIT
+					file.getBuilder().newInstance(IAtomContainer.class), GamessReader.ANGSTROM_UNIT
 				));
 				//break; //<- stops when the first set of coordinates is found.
 			}
@@ -270,7 +270,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.GamessReader#input
 	 */
 	//TODO Update method comments with appropriate information.
-	private IMolecule readCoordinates(IMolecule molecule, boolean coordinatesUnits) throws IOException {
+	private IAtomContainer readCoordinates(IAtomContainer molecule, boolean coordinatesUnits) throws IOException {
 		
 		/*
 		 * Coordinates must all be given in angstr???ms.

@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -343,8 +342,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
-                IMolecule reactant = (IMolecule)reader.read(
-                  builder.newInstance(IMolecule.class)
+                IAtomContainer reactant = (IAtomContainer)reader.read(
+                  builder.newInstance(IAtomContainer.class)
                 );
                   
                 // add reactant
@@ -375,8 +374,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                     new StringReader(molFile.toString()),
                     super.mode
                 );
-                IMolecule product = (IMolecule)reader.read(
-                  builder.newInstance(IMolecule.class));
+                IAtomContainer product = (IAtomContainer)reader.read(
+                  builder.newInstance(IAtomContainer.class));
                   
                 // add reactant
                 reaction.addProduct(product);
@@ -395,12 +394,12 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         IAtomContainer reactingSide = builder.newInstance(IAtomContainer.class);
         Iterator molecules = reaction.getReactants().atomContainers().iterator();
         while (molecules.hasNext()) {
-            reactingSide.add((IMolecule)molecules.next());
+            reactingSide.add((IAtomContainer)molecules.next());
         }
         IAtomContainer producedSide = builder.newInstance(IAtomContainer.class);
         molecules = reaction.getProducts().atomContainers().iterator();
         while (molecules.hasNext()) {
-            producedSide.add((IMolecule)molecules.next());
+            producedSide.add((IAtomContainer)molecules.next());
         }
         
         // map the atoms

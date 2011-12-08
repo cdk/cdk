@@ -34,8 +34,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -133,8 +131,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
-			if (IMoleculeSet.class.equals(interfaces[i])) return true;
-			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainerSet.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -147,10 +145,10 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   object  IChemObject of which the data is outputted.
      */
 	public void write(IChemObject object) throws CDKException {
-		if (object instanceof IMoleculeSet) {
-		    writeAtomContainerSet((IMoleculeSet) object);
-		} else if (object instanceof IMolecule) {
-		    writeAtomContainer((IMolecule) object);
+		if (object instanceof IAtomContainerSet) {
+		    writeAtomContainerSet((IAtomContainerSet) object);
+		} else if (object instanceof IAtomContainer) {
+		    writeAtomContainer((IAtomContainer) object);
 		} else {
 		    throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
 		}

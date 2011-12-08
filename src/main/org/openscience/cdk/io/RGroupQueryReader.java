@@ -41,10 +41,10 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.RGroupQueryFormat;
@@ -255,7 +255,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
             //Let MDL reader process $CTAB block of the root structure.
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ISimpleChemObjectReader.Mode.STRICT);
-            IMolecule root = reader.read(defaultChemObjectBuilder.newInstance(IMolecule.class));
+            IAtomContainer root = reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
             rGroupQuery.setRootStructure(root);
             List<IAtom> atomsByLinePosition = reader.getAtomsByLinePosition();
 
@@ -378,7 +378,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     String groupStr = sb.toString();
                     reader = new MDLV2000Reader
                         (new StringReader(groupStr), ISimpleChemObjectReader.Mode.STRICT);
-                    IMolecule group = reader.read(defaultChemObjectBuilder.newInstance(IMolecule.class));
+                    IAtomContainer group = reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
                     atomsByLinePosition = reader.getAtomsByLinePosition();
                     RGroup rGroup = new RGroup();
                     rGroup.setGroup(group);
