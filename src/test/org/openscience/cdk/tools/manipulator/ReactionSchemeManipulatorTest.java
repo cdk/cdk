@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -62,7 +63,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reactionScheme.addReaction(reaction1); // 1
 		reactionScheme.addReaction(reaction2); // 2
 		
-		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme).getAtomContainerCount());
+		Assert.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
 		
 	}
     
@@ -75,7 +76,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reactionScheme.addReaction(reaction1); // 1
 		reactionScheme.addReaction(reaction2); // 2
 		
-		Assert.assertEquals(2, ReactionSchemeManipulator.getAllMolecules(reactionScheme, builder.newInstance(IMoleculeSet.class)).getAtomContainerCount());
+		Assert.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme, builder.newInstance(IMoleculeSet.class)).getAtomContainerCount());
 		
 	}
     
@@ -91,7 +92,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reaction2.addReactant(molecule);
 		reactionScheme.addReaction(reaction2);
 		
-		Assert.assertEquals(3, ReactionSchemeManipulator.getAllMolecules(reactionScheme).getAtomContainerCount());
+		Assert.assertEquals(3, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
 		
 	}
     
@@ -121,7 +122,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reaction11.addProduct(builder.newInstance(IMolecule.class));
 		scheme1.addReaction(reaction11);
 		
-		Assert.assertEquals(5, ReactionSchemeManipulator.getAllMolecules(scheme1).getAtomContainerCount());
+		Assert.assertEquals(5, ReactionSchemeManipulator.getAllAtomContainers(scheme1).getAtomContainerCount());
 		
 	}
     @Test public void testGetAllIDs_IReactionScheme() {
@@ -253,9 +254,9 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reaction11.setID("reaction11");
 		scheme1.addReaction(reaction11);
 
-		ArrayList<IMoleculeSet> listSet = ReactionSchemeManipulator.getMoleculeSet(startMol, finalMol, scheme1);
+		ArrayList<IAtomContainerSet> listSet = ReactionSchemeManipulator.getAtomContainerSet(startMol, finalMol, scheme1);
 		Assert.assertEquals(1, listSet.size());
-		IMoleculeSet moleculeSet = listSet.get(0);
+		IAtomContainerSet moleculeSet = listSet.get(0);
 		Assert.assertEquals("startMol", moleculeSet.getAtomContainer(0).getID());
 		Assert.assertEquals("mitMol", moleculeSet.getAtomContainer(1).getID());
 		Assert.assertEquals("finalMol", moleculeSet.getAtomContainer(2).getID());

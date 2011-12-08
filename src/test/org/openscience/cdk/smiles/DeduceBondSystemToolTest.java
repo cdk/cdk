@@ -29,6 +29,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
@@ -70,7 +71,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	public void testPyrrole() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
@@ -86,7 +87,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     public void testPyrrole_CustomRingFinder() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         
         DeduceBondSystemTool dbst = new DeduceBondSystemTool(
             new AllRingsFinder()
@@ -105,7 +106,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	 * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H 
 	 */
 	@Test public void xtestQuinone() throws Exception {
-		IMolecule enol = new NNMolecule();
+		IAtomContainer enol = new NNMolecule();
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
@@ -175,7 +176,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
 	 */
 	@Test public void xtestPyrrole() throws Exception {
-		IMolecule enol = new NNMolecule();
+		IAtomContainer enol = new NNMolecule();
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
@@ -225,7 +226,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	}
 
 	@Test public void xtestPyridine() throws Exception {
-		IMolecule enol = new NNMolecule();
+		IAtomContainer enol = new NNMolecule();
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
@@ -290,7 +291,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	 * @cdk.bug   1931262
 	 */
 	@Test public void xtestBenzene() throws Exception {
-		IMolecule enol = new NNMolecule();
+		IAtomContainer enol = new NNMolecule();
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);

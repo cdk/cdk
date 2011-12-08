@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 
 import java.io.Serializable;
@@ -462,7 +461,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 		Reaction clone = (Reaction)super.clone();
         // clone the reactants, products and agents
         clone.reactants = (IAtomContainerSet) reactants.clone();
-        clone.agents = (IMoleculeSet) agents.clone();
+        clone.agents = (IAtomContainerSet) agents.clone();
         clone.products = (IAtomContainerSet) products.clone();
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)

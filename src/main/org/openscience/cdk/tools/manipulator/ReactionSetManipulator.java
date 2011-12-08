@@ -31,11 +31,10 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
@@ -87,23 +86,23 @@ public class ReactionSetManipulator {
      * get all Molecules object from a set of Reactions. 
      * 
      * @param set The set of reaction to inspect
-     * @return    The IMoleculeSet
+     * @return    The IAtomContanerSet
      */
     @TestMethod("testGetAllMolecules_IReactionSet")
-    public static IMoleculeSet getAllMolecules(IReactionSet set) {
-    	IMoleculeSet moleculeSet = set.getBuilder().newInstance(IMoleculeSet.class);
+    public static IAtomContainerSet getAllMolecules(IReactionSet set) {
+    	IAtomContainerSet moleculeSet = set.getBuilder().newInstance(IAtomContainerSet.class);
         for (IReaction reaction : set.reactions()) {
-            IMoleculeSet molecules = ReactionManipulator.getAllMolecules(reaction);
-            for (IAtomContainer ac : molecules.molecules()) {
+            IAtomContainerSet molecules = ReactionManipulator.getAllMolecules(reaction);
+            for (IAtomContainer ac : molecules.atomContainers()) {
                 boolean contain = false;
-                for (IAtomContainer atomContainer : moleculeSet.molecules()) {
+                for (IAtomContainer atomContainer : moleculeSet.atomContainers()) {
                     if (atomContainer.equals(ac)) {
                         contain = true;
                         break;
                     }
                 }
                 if (!contain)
-                    moleculeSet.addAtomContainer((IMolecule) (ac));
+                    moleculeSet.addAtomContainer(ac);
 
             }
         }

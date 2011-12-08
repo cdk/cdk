@@ -211,7 +211,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      } else if (object instanceof IReactionSet) {
 		      	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
 		      } else if (object instanceof IAtomContainerSet) {
-		      	root = convertor.cdkMoleculeSetToCMLList((IAtomContainerSet)object);
+		      	root = convertor.cdkAtomContainerSetToCMLList((IAtomContainerSet)object);
 		      } else if (object instanceof IChemSequence) {
 		      	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
 		      } else if (object instanceof IChemModel) {

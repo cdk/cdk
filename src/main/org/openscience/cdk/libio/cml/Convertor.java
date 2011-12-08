@@ -25,13 +25,6 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -84,6 +77,13 @@ import org.xmlcml.cml.element.CMLReactionStep;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @cdk.module       libiocml
@@ -235,7 +235,7 @@ public class Convertor {
             cmlList.appendChild(cdkReactionSetToCMLReactionList(model.getReactionSet(), false));
         }
         if (model.getMoleculeSet() != null) {
-            cmlList.appendChild(cdkMoleculeSetToCMLList(model.getMoleculeSet(), false));
+            cmlList.appendChild(cdkAtomContainerSetToCMLList(model.getMoleculeSet(), false));
         }
 
         return cmlList;
@@ -243,7 +243,7 @@ public class Convertor {
     
     public CMLCml cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(IReactionScheme cdkScheme){
     	CMLCml cml = new CMLCml();
-    	cml.appendChild(cdkMoleculeSetToCMLList(ReactionSchemeManipulator.getAllMolecules(cdkScheme)));
+    	cml.appendChild(cdkAtomContainerSetToCMLList(ReactionSchemeManipulator.getAllAtomContainers(cdkScheme)));
     	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true, true));
     	return cml;
     }
@@ -305,11 +305,11 @@ public class Convertor {
         return reactionList;
     }
 
-    public CMLMoleculeList cdkMoleculeSetToCMLList(IAtomContainerSet moleculeSet) {
-        return cdkMoleculeSetToCMLList(moleculeSet, true);
+    public CMLMoleculeList cdkAtomContainerSetToCMLList(IAtomContainerSet moleculeSet) {
+        return cdkAtomContainerSetToCMLList(moleculeSet, true);
     }
 
-    private CMLMoleculeList cdkMoleculeSetToCMLList(IAtomContainerSet moleculeSet, boolean setIDs) {
+    private CMLMoleculeList cdkAtomContainerSetToCMLList(IAtomContainerSet moleculeSet, boolean setIDs) {
     	CMLMoleculeList cmlList = new CMLMoleculeList();
         cmlList.setConvention("cdk:moleculeSet");
 

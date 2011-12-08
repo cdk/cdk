@@ -26,20 +26,10 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -67,8 +57,17 @@ import org.openscience.cdk.libio.cml.ICMLCustomizer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Serializes a {@link IMoleculeSet} or a {@link IMolecule} object to CML 2 code.
+ * Serializes a {@link IAtomContainerSet} or a {@link IAtomContainer} object to CML 2 code.
  * Chemical Markup Language is an XML-based file format {@cdk.cite PMR99}.
  * Output can be redirected to other Writer objects like {@link StringWriter}
  * and {@link FileWriter}. An example:
@@ -204,7 +203,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     /**
      * Serializes the IChemObject to CML and redirects it to the output Writer.
      *
-     * @param object A Molecule of MoleculeSet object
+     * @param object A Molecule of AtomContaineSet object
      */
     public void write(IChemObject object) throws CDKException {
        
@@ -253,7 +252,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof IReactionSet) {
         	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
         } else if (object instanceof IAtomContainerSet) {
-        	root = convertor.cdkMoleculeSetToCMLList((IAtomContainerSet)object);
+        	root = convertor.cdkAtomContainerSetToCMLList((IAtomContainerSet)object);
         } else if (object instanceof IChemSequence) {
         	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
         } else if (object instanceof IChemModel) {
