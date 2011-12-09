@@ -884,6 +884,24 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(in);
         IMolecule molecule = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
         reader.read(molecule);
-        Assert.assertEquals("R", molecule.getAtom(55).getSymbol() );
+        Assert.assertEquals("R", molecule.getAtom(55).getSymbol());
+    }
+
+    @Test
+    public void testAliasAtomNaming() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAliasAtomNaming.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IMolecule molecule = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        reader.read(molecule);
+
+        IAtom[] atoms = AtomContainerManipulator.getAtomArray(molecule);
+
+
+        for (IAtom atom : atoms) {
+            if (atom instanceof IPseudoAtom) {
+                Assert.assertEquals("R1", ((IPseudoAtom) atom).getLabel());
+            }
+        }
+
     }
 }
