@@ -27,7 +27,6 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -151,7 +150,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
         IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
 
         int isProtonInAromaticSystem = 0;
-        IMolecule mol = atom.getBuilder().newInstance(IMolecule.class,clonedAtomContainer);
+        IAtomContainer mol = atom.getBuilder().newInstance(IAtomContainer.class,clonedAtomContainer);
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

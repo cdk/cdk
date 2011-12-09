@@ -23,7 +23,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.volume.VABCVolume;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -91,15 +90,9 @@ public class VABCDescriptor implements IMolecularDescriptor {
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-        if (!(atomContainer instanceof IMolecule))
-            atomContainer = atomContainer.getBuilder().newInstance(
-                IMolecule.class, atomContainer
-            );
-        IMolecule mol = (IMolecule)atomContainer;
-        
         double volume;
         try {
-            volume = VABCVolume.calculate(mol);
+            volume = VABCVolume.calculate(atomContainer);
         } catch (CDKException exception) {
             return getDummyDescriptorValue(exception);
         }

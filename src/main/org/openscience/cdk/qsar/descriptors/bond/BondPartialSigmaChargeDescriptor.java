@@ -26,7 +26,6 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -146,7 +145,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     	Double originalCharge1 = bond.getAtom(0).getCharge();
     	Double originalCharge2 = bond.getAtom(1).getCharge();
     	if (!isCachedAtomContainer(ac)) {
-    		IMolecule mol = ac.getBuilder().newInstance(IMolecule.class,ac);
+    	    IAtomContainer mol = ac.getBuilder().newInstance(IAtomContainer.class,ac);
         	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
 	        try {
 				peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);

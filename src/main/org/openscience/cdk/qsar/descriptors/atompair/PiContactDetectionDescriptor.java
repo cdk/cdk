@@ -28,7 +28,6 @@ import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomPairDescriptor;
@@ -156,7 +155,7 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         IAtom clonedFirst = ac.getAtom(atomContainer.getAtomNumber(first));
         IAtom clonedSecond = ac.getAtom(atomContainer.getAtomNumber(first));
 
-        IMolecule mol = ac.getBuilder().newInstance(IMolecule.class, ac);
+        IAtomContainer mol = ac.getBuilder().newInstance(IAtomContainer.class, ac);
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
