@@ -77,10 +77,6 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
 	 *         an IMolecule.
 	 */
 	public void addAtomContainer(IAtomContainer atomContainer) {
-	    if (!(atomContainer instanceof IMolecule))
-	        throw new IllegalArgumentException(
-	            "Only IMolecule's can be stored in an IMoleculeSet"
-	        );
 	    super.addAtomContainer(atomContainer);
 	}
 
@@ -94,10 +90,6 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      *         an IMolecule.
      */
     public void addAtomContainer(IAtomContainer atomContainer, double multiplier) {
-        if (!(atomContainer instanceof IMolecule))
-            throw new IllegalArgumentException(
-                "Only IMolecule's can be stored in an IMoleculeSet"
-            );
         super.addAtomContainer(atomContainer, multiplier);
     }
 
