@@ -162,10 +162,10 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres((IMolecule) reactant, atomi, 4, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 4, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(4);
 				
-				hcg.getSpheres((IMolecule) reactant, atomi, 5, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 5, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(5).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

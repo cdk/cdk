@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -32,7 +34,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -47,8 +48,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which tries to reproduce the delocalization of electrons
@@ -145,7 +144,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 //		}
 		
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
+		IRingSet ringSet = arf.findAllRings((IAtomContainer) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing) ringSet.getAtomContainer(ir);
 	        
@@ -177,9 +176,9 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 					IReaction reaction = reactants.getBuilder().newInstance(IReaction.class);
 					reaction.addReactant(reactant);
 			        
-					IMolecule reactantCloned;
+					IAtomContainer reactantCloned;
 					try {
-						reactantCloned = (IMolecule) reactant.clone();
+						reactantCloned = (IAtomContainer) reactant.clone();
 					} catch (CloneNotSupportedException e) {
 						throw new CDKException("Could not clone IMolecule!", e);
 					}
@@ -195,7 +194,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 						
 					}
 					
-					reaction.addProduct((IMolecule) reactantCloned);
+					reaction.addProduct((IAtomContainer) reactantCloned);
 					setOfReactions.addReaction(reaction);
 				}
 				
@@ -216,7 +215,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
+		IRingSet ringSet = arf.findAllRings((IAtomContainer) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing) ringSet.getAtomContainer(ir);
 			//only rings with even number of atoms

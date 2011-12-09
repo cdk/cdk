@@ -25,6 +25,9 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -34,7 +37,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -51,9 +53,6 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>
@@ -141,7 +140,7 @@ public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReacti
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
+		IRingSet ringSet = arf.findAllRings((IAtomContainer) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing)ringSet.getAtomContainer(ir);
 			for (int jr = 0; jr < ring.getAtomCount(); jr++) {
@@ -161,7 +160,7 @@ public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReacti
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres((IMolecule) reactant, atomi, 3, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 3, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();
@@ -218,7 +217,7 @@ public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReacti
 			IAtom  atomi = atomis.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				
-				hcg.getSpheres((IMolecule) reactant, atomi, 3, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 3, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

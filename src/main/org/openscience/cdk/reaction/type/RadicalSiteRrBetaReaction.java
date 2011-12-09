@@ -141,7 +141,7 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((IMolecule) reactant);
+		IRingSet ringSet = arf.findAllRings((IAtomContainer) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing)ringSet.getAtomContainer(ir);
 			for (int jr = 0; jr < ring.getAtomCount(); jr++) {
@@ -161,10 +161,10 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres((IMolecule) reactant, atomi, 2, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 2, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(2);
 				
-				hcg.getSpheres((IMolecule) reactant, atomi, 3, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 3, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

@@ -195,7 +195,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@param  ringsize  Shall the center code have the ring size in it? Only use if you want to have the hose code later, else say false.
 	 *@return An array of {@link List}. The list at i-1 contains the atoms at sphere i as TreeNodes.
 	 **/
-	public List<IAtom>[] getSpheres(IMolecule ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException
+	public List<IAtom>[] getSpheres(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException
 	{
 		ensureIsotopeFactory(ac.getBuilder());
 		centerCode = "";

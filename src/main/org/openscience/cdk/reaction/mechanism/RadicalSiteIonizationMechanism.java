@@ -31,6 +31,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -132,7 +133,7 @@ public class RadicalSiteIonizationMechanism implements IReactionMechanism{
 		
 		IAtomContainerSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
 		for(int z = 0; z < moleculeSetP.getAtomContainerCount() ; z++)
-			reaction.addProduct((IMolecule)moleculeSetP.getAtomContainer(z));
+			reaction.addProduct((IAtomContainer)moleculeSetP.getAtomContainer(z));
     	
 		return reaction;
 	}
