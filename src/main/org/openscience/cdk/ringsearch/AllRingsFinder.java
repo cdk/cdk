@@ -37,7 +37,6 @@ import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -133,7 +132,7 @@ public class AllRingsFinder
         Iterator<IAtomContainer> separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).atomContainers().iterator();
         IRingSet resultSet = atomContainer.getBuilder().newInstance(IRingSet.class);
         while (separateRingSystem.hasNext()) {
-            resultSet.add(findAllRingsInIsolatedRingSystem((IMolecule)separateRingSystem.next(), maxRingSize));
+            resultSet.add(findAllRingsInIsolatedRingSystem((IAtomContainer)separateRingSystem.next(), maxRingSize));
         }
         return resultSet;
   }
