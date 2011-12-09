@@ -141,11 +141,11 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      * @param  number  The position of the Molecule to be returned. 
      * @return         The Molecule at position <code>number</code> . 
      */
-    public IMolecule getMolecule(int number)
-    {
-        return (IMolecule)super.getAtomContainer(number);
+    public IMolecule getMolecule(int number) {
+        IAtomContainer container = super.getAtomContainer(number);
+        if (container instanceof IMolecule) return (IMolecule)container;
+        return getBuilder().newInstance(IMolecule.class, container);
     }
-    
     
     /**
      * Returns the number of Molecules in this Container.
