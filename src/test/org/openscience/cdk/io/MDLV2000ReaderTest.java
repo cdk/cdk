@@ -896,12 +896,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(molecule);
 
-
+        int r1Count = 0;
         for (IAtom atom : atoms) {
             if (atom instanceof IPseudoAtom) {
                 Assert.assertEquals("R1", ((IPseudoAtom) atom).getLabel());
+                r1Count++;
             }
         }
-
+        Assert.assertEquals(2, r1Count);
     }
 }
