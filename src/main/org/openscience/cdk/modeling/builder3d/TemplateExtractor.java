@@ -21,26 +21,14 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
@@ -52,6 +40,18 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Helper class that help setup a template library of CDK's Builder3D.
@@ -71,7 +71,7 @@ public class TemplateExtractor {
 
 	public void cleanDataSet(String dataFile) {
 		IteratingMDLReader imdl = null;
-		IMoleculeSet som = builder.newInstance(IMoleculeSet.class);
+		IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
 		try {
 			System.out.println("Start clean dataset...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
@@ -108,7 +108,7 @@ public class TemplateExtractor {
 
 	public void ReadNCISdfFileAsTemplate(String dataFile) {
 		IteratingMDLReader imdl = null;
-		IMoleculeSet som = builder.newInstance(IMoleculeSet.class);
+		IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
@@ -133,7 +133,7 @@ public class TemplateExtractor {
 
 	public void PartitionRingsFromComplexRing(String dataFile) {
 		IteratingMDLReader imdl = null;
-		IMoleculeSet som = builder.newInstance(IMoleculeSet.class);
+		IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
 		IMolecule m = null;
 		try {
 			System.out.println("Start...");
@@ -290,7 +290,7 @@ public class TemplateExtractor {
 		// writeChemModel(som,dataFile,"_TESTTESTTESTTESTTEST");
 	}
 
-	public void writeChemModel(IMoleculeSet som, String file, String endFix) {
+	public void writeChemModel(IAtomContainerSet som, String file, String endFix) {
 		System.out.println("WRITE Molecules:" + som.getAtomContainerCount());
 		String molfile = file + endFix;
 		try {
@@ -417,7 +417,7 @@ public class TemplateExtractor {
 				// store the time
 				String bin = Integer.toString((int)Math.floor(time/10));
 				if (timings.containsKey(bin)) {
-					timings.put(bin, new Integer((((Integer)timings.get(bin)).intValue()) + 1));
+					timings.put(bin, (timings.get(bin)) + 1);
 				} else {
 					timings.put(bin, new Integer(1));
 				}

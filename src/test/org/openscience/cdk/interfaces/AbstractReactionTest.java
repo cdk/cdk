@@ -27,10 +27,10 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Iterator;
 
 /**
  * TestCase for {@link IReaction} implementations.
@@ -42,23 +42,23 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     @Test public void testGetReactantCount() {
         IReaction reaction = (IReaction)newChemObject();
         Assert.assertEquals(0, reaction.getReactantCount());
-	reaction.addReactant(reaction.getBuilder().newInstance(IMolecule.class));
+	reaction.addReactant(reaction.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertEquals(1, reaction.getReactantCount());
     }
     
     @Test public void testGetProductCount() {
         IReaction reaction = (IReaction)newChemObject();
         Assert.assertEquals(0, reaction.getProductCount());
-	reaction.addProduct(reaction.getBuilder().newInstance(IMolecule.class));
+	reaction.addProduct(reaction.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertEquals(1, reaction.getProductCount());
     }
     
-    @Test public void testAddReactant_IMolecule() {
+    @Test public void testAddReactant_IAtomContainer() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule sodiumhydroxide = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule acetate = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer sodiumhydroxide = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer aceticAcid = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer water = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer acetate = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addReactant(sodiumhydroxide);
         reaction.addReactant(aceticAcid);
         reaction.addReactant(water);
@@ -71,12 +71,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         Assert.assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
-    @Test public void testSetReactants_IMoleculeSet() {
+    @Test public void testSetReactants_IAtomContainerSet() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule sodiumhydroxide = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
-        IMoleculeSet reactants = reaction.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainer sodiumhydroxide = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer aceticAcid = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer water = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainerSet reactants = reaction.getBuilder().newInstance(IAtomContainerSet.class);
         reactants.addAtomContainer(sodiumhydroxide);
         reactants.addAtomContainer(aceticAcid);
         reactants.addAtomContainer(water);
@@ -86,22 +86,22 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         Assert.assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
-    @Test public void testAddReactant_IMolecule_Double() {
+    @Test public void testAddReactant_IAtomContainer_Double() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule sulfate = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer proton = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer sulfate = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addReactant(proton, 2d);
         reaction.addReactant(sulfate, 1d);
         Assert.assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
         Assert.assertEquals(1.0, reaction.getReactantCoefficient(sulfate), 0.00001);
     }
     
-    @Test public void testAddProduct_IMolecule() {
+    @Test public void testAddProduct_IAtomContainer() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule sodiumhydroxide = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule acetate = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer sodiumhydroxide = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer aceticAcid = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer water = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer acetate = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addProduct(sodiumhydroxide);
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
@@ -114,12 +114,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         Assert.assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
-    @Test public void testSetProducts_IMoleculeSet() {
+    @Test public void testSetProducts_IAtomContainerSet() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule sodiumhydroxide = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
-        IMoleculeSet products = reaction.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainer sodiumhydroxide = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer aceticAcid = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer water = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainerSet products = reaction.getBuilder().newInstance(IAtomContainerSet.class);
         products.addAtomContainer(sodiumhydroxide);
         products.addAtomContainer(aceticAcid);
         products.addAtomContainer(water);
@@ -129,52 +129,52 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         Assert.assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
-    @Test public void testAddProduct_IMolecule_Double() {
+    @Test public void testAddProduct_IAtomContainer_Double() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule sulfate = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer proton = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer sulfate = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addProduct(proton, 2.0);
         reaction.addProduct(sulfate, 1.0);
         Assert.assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
         Assert.assertEquals(1.0, reaction.getProductCoefficient(sulfate), 0.00001);
     }
     
-    @Test public void testAddAgent_IMolecule() {
+    @Test public void testAddAgent_IAtomContainer() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer proton = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addAgent(proton);
         Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
     }
 
-    @Test public void testGetReactantCoefficient_IMolecule() {
+    @Test public void testGetReactantCoefficient_IAtomContainer() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer proton = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addReactant(proton, 2.0);
         Assert.assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
         
-        Assert.assertEquals(-1.0, reaction.getReactantCoefficient(reaction.getBuilder().newInstance(IMolecule.class)), 0.00001);
+        Assert.assertEquals(-1.0, reaction.getReactantCoefficient(reaction.getBuilder().newInstance(IAtomContainer.class)), 0.00001);
     }
 
-    @Test public void testGetProductCoefficient_IMolecule() {
+    @Test public void testGetProductCoefficient_IAtomContainer() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer proton = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addProduct(proton, 2.0);
         Assert.assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
 
-        Assert.assertEquals(-1.0, reaction.getProductCoefficient(reaction.getBuilder().newInstance(IMolecule.class)), 0.00001);
+        Assert.assertEquals(-1.0, reaction.getProductCoefficient(reaction.getBuilder().newInstance(IAtomContainer.class)), 0.00001);
     }
     
-	@Test public void testSetReactantCoefficient_IMolecule_Double() {
+	@Test public void testSetReactantCoefficient_IAtomContainer_Double() {
 		IReaction reaction = (IReaction)newChemObject();
-        IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer proton = reaction.getBuilder().newInstance(IAtomContainer.class);
 		reaction.addReactant(proton, 2.0);
 		reaction.setReactantCoefficient(proton, 3.0);
 		Assert.assertEquals(3.0, reaction.getReactantCoefficient(proton), 0.00001);
 	}
 	
-	@Test public void testSetProductCoefficient_IMolecule_Double() {
+	@Test public void testSetProductCoefficient_IAtomContainer_Double() {
 		IReaction reaction = (IReaction)newChemObject();
-        IMolecule proton = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer proton = reaction.getBuilder().newInstance(IAtomContainer.class);
 		reaction.addProduct(proton, 2.0);
 		reaction.setProductCoefficient(proton, 1.0);
 		Assert.assertEquals(1.0, reaction.getProductCoefficient(proton), 0.00001);
@@ -182,8 +182,8 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
 	
 	@Test public void testGetReactantCoefficients() {
         IReaction reaction = (IReaction)newChemObject();
-		IMolecule ed1 = reaction.getBuilder().newInstance(IMolecule.class);
-		IMolecule ed2 = reaction.getBuilder().newInstance(IMolecule.class);
+		IAtomContainer ed1 = reaction.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer ed2 = reaction.getBuilder().newInstance(IAtomContainer.class);
 		reaction.addReactant(ed1, 2d);
 		reaction.addReactant(ed2, 3d);
 		Double[] ec = reaction.getReactantCoefficients();
@@ -194,8 +194,8 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
 	
 	@Test public void testGetProductCoefficients() {
         IReaction reaction = (IReaction)newChemObject();
-		IMolecule pr1 = reaction.getBuilder().newInstance(IMolecule.class);
-		IMolecule pr2 = reaction.getBuilder().newInstance(IMolecule.class);
+		IAtomContainer pr1 = reaction.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer pr2 = reaction.getBuilder().newInstance(IAtomContainer.class);
 		reaction.addProduct(pr1, 1d);
 		reaction.addProduct(pr2, 2d);
 		Double[] pc = reaction.getProductCoefficients();
@@ -206,8 +206,8 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
 	
 	@Test public void testSetReactantCoefficients_arrayDouble() {
         IReaction reaction = (IReaction)newChemObject();
-		IMolecule ed1 = reaction.getBuilder().newInstance(IMolecule.class);
-		IMolecule ed2 = reaction.getBuilder().newInstance(IMolecule.class);
+		IAtomContainer ed1 = reaction.getBuilder().newInstance(IAtomContainer.class);
+		IAtomContainer ed2 = reaction.getBuilder().newInstance(IAtomContainer.class);
 		reaction.addReactant(ed1, 2d);
 		reaction.addReactant(ed2, 3d);
 		Double[] ec = { 1.0, 2.0 };
@@ -221,7 +221,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
 	
 	@Test public void testSetProductCoefficients_arrayDouble() {
         IReaction reaction = (IReaction)newChemObject();
-		IMolecule pr1 = reaction.getBuilder().newInstance(IMolecule.class);
+		IAtomContainer pr1 = reaction.getBuilder().newInstance(IAtomContainer.class);
 		reaction.addProduct(pr1, 1d);
 		Double[] pc = { 2.0 };
 		boolean coeffSet = reaction.setProductCoefficients(pc);
@@ -233,9 +233,9 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
 	
     @Test public void testGetReactants() {
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule sodiumhydroxide = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer sodiumhydroxide = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer aceticAcid = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer water = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addReactant(sodiumhydroxide);
         reaction.addReactant(aceticAcid);
         reaction.addReactant(water);
@@ -244,9 +244,9 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
 	
     @Test public void testGetProducts() {    
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule sodiumhydroxide = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule aceticAcid = reaction.getBuilder().newInstance(IMolecule.class);
-        IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer sodiumhydroxide = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer aceticAcid = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer water = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addProduct(sodiumhydroxide);
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
@@ -255,7 +255,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     
     @Test public void testGetAgents() {    
         IReaction reaction = (IReaction)newChemObject();
-        IMolecule water = reaction.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer water = reaction.getBuilder().newInstance(IAtomContainer.class);
         reaction.addAgent(water);
         Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
     }

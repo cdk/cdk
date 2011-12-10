@@ -1,16 +1,14 @@
 package org.openscience.cdk.smsd.labelling;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -46,7 +44,7 @@ public class AbstractReactionLabeller {
     
     private Map<IAtom, IAtom> atomAtomMap(
             IReaction reaction, IReaction clone, 
-            Map<IMolecule, int[]> permutationMap) {
+            Map<IAtomContainer, int[]> permutationMap) {
      // create a Map of corresponding atoms for molecules 
      // (key: original Atom, value: clone Atom)
         Map<IAtom, IAtom> atomAtom = new Hashtable<IAtom, IAtom>();
@@ -111,7 +109,7 @@ public class AbstractReactionLabeller {
      */
     private void cloneAndSortMappings(
             IReaction reaction, IReaction copyOfReaction, 
-            Map<IMolecule, int[]> permutationMap) {
+            Map<IAtomContainer, int[]> permutationMap) {
         
         // make a lookup for the indices of the atoms in the copy
         final Map<IChemObject, Integer> indexMap = 
@@ -126,8 +124,7 @@ public class AbstractReactionLabeller {
             }
         }
         
-        Map<IAtom, IAtom> atomAtomMap = atomAtomMap(
-                reaction, copyOfReaction, permutationMap);
+        Map<IAtom, IAtom> atomAtomMap = atomAtomMap(reaction, copyOfReaction, permutationMap);
         List<IMapping> map = cloneMappings(reaction, atomAtomMap);
         
         Comparator<IMapping> mappingSorter = new Comparator<IMapping>() {
@@ -160,26 +157,26 @@ public class AbstractReactionLabeller {
         System.out.println("labelling");
         IReaction canonReaction = new Reaction();
         
-        Map<IMolecule, int[]> permutationMap = new HashMap<IMolecule, int[]>();
+        Map<IAtomContainer, int[]> permutationMap = new HashMap<IAtomContainer, int[]>();
         
-        IMoleculeSet canonicalProducts = new MoleculeSet();
+        IAtomContainerSet canonicalProducts = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         for (IAtomContainer product : reaction.getProducts().atomContainers()) {
             IAtomContainer canonicalForm = 
                 labeller.getCanonicalMolecule(product);
             if (fixAtomMappingCastType) { fixAtomMapping(canonicalForm); }
-            IMolecule canonicalMolecule = 
-                canonicalForm.getBuilder().newInstance(IMolecule.class, canonicalForm); 
+            IAtomContainer canonicalMolecule =
+                canonicalForm.getBuilder().newInstance(IAtomContainer.class, canonicalForm);
             permutationMap.put(
                     canonicalMolecule, labeller.getCanonicalPermutation(product));
             canonicalProducts.addAtomContainer(canonicalMolecule);
         }
-        IMoleculeSet canonicalReactants = new MoleculeSet();
+        IAtomContainerSet canonicalReactants =  DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         for (IAtomContainer reactant: reaction.getReactants().atomContainers()) {
             IAtomContainer canonicalForm = 
                 labeller.getCanonicalMolecule(reactant);
             if (fixAtomMappingCastType) { fixAtomMapping(canonicalForm); }
-            IMolecule canonicalMolecule = 
-                canonicalForm.getBuilder().newInstance(IMolecule.class, canonicalForm); 
+            IAtomContainer canonicalMolecule =
+                canonicalForm.getBuilder().newInstance(IAtomContainer.class, canonicalForm);
             permutationMap.put(
                     canonicalMolecule, labeller.getCanonicalPermutation(reactant));
             canonicalReactants.addAtomContainer(canonicalMolecule);

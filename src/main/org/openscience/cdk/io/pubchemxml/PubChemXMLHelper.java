@@ -25,25 +25,24 @@
  */
 package org.openscience.cdk.io.pubchemxml;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.xmlpull.v1.XmlPullParser;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Helper class to parse PubChem XML documents.
@@ -112,8 +111,8 @@ public class PubChemXMLHelper {
   public final static String EL_PROPS_FVAL = "PC-InfoData_value_fval";
   public final static String EL_PROPS_BVAL = "PC-InfoData_value_binary";
 
-    public IMoleculeSet parseCompoundsBlock(XmlPullParser parser) throws Exception {
-    	IMoleculeSet set = builder.newInstance(IMoleculeSet.class);
+    public IAtomContainerSet parseCompoundsBlock(XmlPullParser parser) throws Exception {
+        IAtomContainerSet set = builder.newInstance(IAtomContainerSet.class);
     	// assume the current element is PC-Compounds
     	if (!parser.getName().equals(EL_PCCOMPOUNDS)) {
     		return null;
@@ -151,7 +150,7 @@ public class PubChemXMLHelper {
     			}
     		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
     			if (EL_PCCOMPOUNDS.equals(parser.getName())) {
-    				IMoleculeSet set = parseCompoundsBlock(parser);
+    				IAtomContainerSet set = parseCompoundsBlock(parser);
     				model.setMoleculeSet(set);
     			} else if (EL_PCSUBSTANCE_SID.equals(parser.getName())) {
     				String sid = getSID(parser);

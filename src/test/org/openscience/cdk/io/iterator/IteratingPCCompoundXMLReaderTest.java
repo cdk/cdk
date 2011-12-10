@@ -24,17 +24,17 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @cdk.module test-io
@@ -54,18 +54,18 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
         );
 
         int molCount = 0;
-        IMoleculeSet set = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+        IAtomContainerSet set = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         while (reader.hasNext()) {
 //        	System.out.println("next molecule found");
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IMolecule);
-            set.addAtomContainer((IMolecule)object);
+            Assert.assertTrue(object instanceof IAtomContainer);
+            set.addAtomContainer((IAtomContainer)object);
             molCount++;
         }
 
         Assert.assertEquals(3, molCount);
-        IMolecule first = set.getMolecule(0);
+        IAtomContainer first = set.getAtomContainer(0);
         Assert.assertEquals(8, first.getAtomCount());
         Assert.assertEquals(7, first.getBondCount());
         Assert.assertNotNull(first.getProperty("IUPAC Name (Traditional)"));
