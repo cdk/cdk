@@ -51,7 +51,6 @@ import org.openscience.cdk.debug.DebugLonePairTest;
 import org.openscience.cdk.debug.DebugMappingTest;
 import org.openscience.cdk.debug.DebugMolecularFormulaSetTest;
 import org.openscience.cdk.debug.DebugMolecularFormulaTest;
-import org.openscience.cdk.debug.DebugMoleculeTest;
 import org.openscience.cdk.debug.DebugMonomerTest;
 import org.openscience.cdk.debug.DebugPDBAtomTest;
 import org.openscience.cdk.debug.DebugPDBMonomerTest;
@@ -96,7 +95,6 @@ import org.openscience.cdk.debug.DebugStrandTest;
     DebugIsotopeTest.class,
     DebugLonePairTest.class,
     DebugMappingTest.class,
-    DebugMoleculeTest.class,
     DebugMonomerTest.class,
     DebugPseudoAtomTest.class,
     DebugPolymerTest.class,

@@ -29,7 +29,6 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.silent.ChemModel;
-import org.openscience.cdk.silent.Molecule;
 import org.openscience.cdk.silent.Reaction;
 
 import java.io.StringWriter;
@@ -49,7 +48,7 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
     }
 
     private static IChemObject[] allChemObjectsTypes = {
-        new ChemFile(), new ChemModel(), new Molecule(),
+        new ChemFile(), new ChemModel(),
         new Reaction(), new AtomContainerSet(), new AtomContainer()
     };
 

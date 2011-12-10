@@ -31,9 +31,9 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.debug.DebugAtomContainer;
 import org.openscience.cdk.debug.DebugChemFile;
 import org.openscience.cdk.debug.DebugChemModel;
-import org.openscience.cdk.debug.DebugMolecule;
 import org.openscience.cdk.debug.DebugReaction;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -86,7 +86,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     private static IChemObject[] acceptableDebugChemObjects = {
-        new DebugChemFile(), new DebugChemModel(), new DebugMolecule(),
+        new DebugChemFile(), new DebugChemModel(), new DebugAtomContainer(),
         new DebugReaction()
     };
 

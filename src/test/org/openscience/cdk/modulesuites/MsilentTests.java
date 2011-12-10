@@ -47,7 +47,6 @@ import org.openscience.cdk.silent.IsotopeTest;
 import org.openscience.cdk.silent.LonePairTest;
 import org.openscience.cdk.silent.MolecularFormulaSetTest;
 import org.openscience.cdk.silent.MolecularFormulaTest;
-import org.openscience.cdk.silent.MoleculeTest;
 import org.openscience.cdk.silent.MonomerTest;
 import org.openscience.cdk.silent.PDBAtomTest;
 import org.openscience.cdk.silent.PDBMonomerTest;
@@ -92,7 +91,6 @@ import org.openscience.cdk.silent.StrandTest;
     FragmentAtomTest.class,
     IsotopeTest.class,
     LonePairTest.class,
-    MoleculeTest.class,
     MonomerTest.class,
     PseudoAtomTest.class,
     PolymerTest.class,

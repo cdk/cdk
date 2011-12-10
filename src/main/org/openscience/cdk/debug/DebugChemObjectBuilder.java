@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
@@ -160,18 +159,18 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
                 params[0] instanceof IAtomContainer) {
                 return (T)new DebugCrystal((IAtomContainer)params[0]);
             }
-        } else if (IMolecule.class.isAssignableFrom(clazz)) {
+        } else if (IAtomContainer.class.isAssignableFrom(clazz)) {
             if (params.length == 0) {
-                return (T)new DebugMolecule();
+                return (T)new DebugAtomContainer();
             } else if (params.length == 1 &&
                 params[0] instanceof IAtomContainer) {
-                return (T)new DebugMolecule((IAtomContainer)params[0]);
+                return (T)new DebugAtomContainer((IAtomContainer)params[0]);
             } else if (params.length == 4 &&
                     params[0] instanceof Integer &&
                     params[1] instanceof Integer &&
                     params[2] instanceof Integer &&
                     params[3] instanceof Integer) {
-                return (T)new DebugMolecule(
+                return (T)new DebugAtomContainer(
                     (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
                 );
             }
@@ -189,22 +188,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
                     params[1] instanceof String) {
                 return (T)new DebugRing((Integer)params[0], (String)params[1]);
             }
-        } else if (IAtomContainer.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) {
-                return (T)new DebugAtomContainer();
-            } else if (params.length == 1 &&
-                params[0] instanceof IAtomContainer) {
-                return (T)new DebugAtomContainer((IAtomContainer)params[0]);
-            } else if (params.length == 4 &&
-                    params[0] instanceof Integer &&
-                    params[1] instanceof Integer &&
-                    params[2] instanceof Integer &&
-                    params[3] instanceof Integer) {
-                return (T)new DebugAtomContainer(
-                    (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
-                );
-            }
-        } else if (IAtomType.class.isAssignableFrom(clazz)) {
+        }  else if (IAtomType.class.isAssignableFrom(clazz)) {
             if (params.length == 1) {
                 if (params[0] instanceof String)
                     return (T)new DebugAtomType((String)params[0]);
