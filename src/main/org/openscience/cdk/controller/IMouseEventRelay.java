@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
+/* Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
+ *               2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net or nout@science.uva.nl
  * 
@@ -25,54 +24,99 @@
 package org.openscience.cdk.controller;
 
 /**
+ * Widget toolkit-independent interface to relay for mouse events.
  * 
  * @cdk.module control
  */
 public interface IMouseEventRelay {
+
 	/**
+	 * Event to signal that the left mouse button has been released.
 	 * 
-	 * @param screenCoordX
-	 * @param screenCoordY
+	 * @param screenCoordX the x part of the screen coordinate where the event happened.
+	 * @param screenCoordY the y part of the screen coordinate where the event happened.
 	 */
 	public abstract void mouseClickedUp(int screenCoordX, int screenCoordY);
+
 	/**
+     * Event to signal that the left mouse button has been pushed but not released yet.
 	 * 
-	 * @param screenCoordX
-	 * @param screenCoordY
+     * @param screenCoordX the x part of the screen coordinate where the event happened.
+     * @param screenCoordY the y part of the screen coordinate where the event happened.
 	 */
 	public abstract void mouseClickedDown(int screenCoordX, int screenCoordY);
+
+    /**
+     * Event to signal that the right mouse button has been pushed but not released yet.
+     * 
+     * @param screenCoordX the x part of the screen coordinate where the event happened.
+     * @param screenCoordY the y part of the screen coordinate where the event happened.
+     */
+	public abstract void mouseClickedDownRight(int x, int y);
+
 	/**
+     * Event to signal that the right mouse button has been released.
+     * 
+     * @param screenCoordX the x part of the screen coordinate where the event happened.
+     * @param screenCoordY the y part of the screen coordinate where the event happened.
+     */
+	public abstract void mouseClickedUpRight(int x, int y);
+
+	/**
+     * Event to signal that a mouse button has been double clicked.
 	 * 
-	 * @param screenCoordX
-	 * @param screenCoordY
+     * @param screenCoordX the x part of the screen coordinate where the event happened.
+     * @param screenCoordY the y part of the screen coordinate where the event happened.
 	 */
 	public abstract void mouseClickedDouble(int screenCoordX, int screenCoordY);
+
 	/**
+     * Event to signal that a mouse has been moved to the new coordinates.
 	 * 
-	 * @param screenCoordX
-	 * @param screenCoordY
+     * @param screenCoordX the x part of the latest screen coordinate.
+     * @param screenCoordY the y part of the latest screen coordinate.
 	 */
 	public abstract void mouseMove(int screenCoordX, int screenCoordY);
+
 	/**
 	 * 
-	 * @param screenCoordX
-	 * @param screenCoordY
+     * @param screenCoordX
+     * @param screenCoordY
 	 */
 	public abstract void mouseEnter(int screenCoordX, int screenCoordY);
+
 	/**
 	 * 
-	 * @param screenCoordX
-	 * @param screenCoordY
+     * @param screenCoordX
+     * @param screenCoordY
 	 */
 	public abstract void mouseExit(int screenCoordX, int screenCoordY);
+
 	/**
+     * Event to signal that a mouse has been dragged from one point to
+     * a next.
 	 * 
-	 * @param screenCoordXFrom
-	 * @param screenCoordYFrom
-	 * @param screenCoordXTo
-	 * @param screenCoordYTo
+	 * @param screenCoordXFrom the x part of the screen coordinate dragged from.
+	 * @param screenCoordYFrom the y part of the screen coordinate dragged from.
+	 * @param screenCoordXTo   the x part of the screen coordinate dragged to.
+	 * @param screenCoordYTo   the y part of the screen coordinate dragged to.
 	 */
 	public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo);
 	
+    /**
+     * Event to signal that the mouse wheel has been rotated a certain amount forward.
+     * 
+     * @param rotation an platform-specific amount of rotation of the wheel
+     * @see #mouseWheelMovedBackward(int)
+     */
+	public abstract void mouseWheelMovedForward(int rotation);
+
+	/**
+     * Event to signal that the mouse wheel has been rotated a certain amount backward.
+     * 
+     * @param rotation an platform-specific amount of rotation of the wheel
+     * @see #mouseWheelMovedForward(int)
+     */
+	public abstract void mouseWheelMovedBackward(int rotation);
 	
 }

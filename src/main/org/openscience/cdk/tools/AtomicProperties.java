@@ -27,6 +27,9 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Provides atomic property values for descriptor calculations.
  *
@@ -37,6 +40,7 @@ import java.util.Map;
  * @cdk.module qsar
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.tools.AtomicPropertiesTest")
 public class AtomicProperties {
 
     private static AtomicProperties ap=null;
@@ -72,41 +76,47 @@ public class AtomicProperties {
 		bufferedReader.close();
 	}
 
-
-
+    @TestMethod("testGetVdWVolume")
 	public double getVdWVolume(String symbol) {
 		return htVdWVolume.get(symbol);
 	}
 
+    @TestMethod("testGetNormalizedVdWVolume")
 	public double getNormalizedVdWVolume(String symbol) {
 		return this.getVdWVolume(symbol)/this.getVdWVolume("C");
 	}
 
+    @TestMethod("testGetElectronegativity")
 	public double getElectronegativity(String symbol) {
 		return htElectronegativity.get(symbol);
 	}
 
+    @TestMethod("testGetNormalizedElectronegativity")
 	public double getNormalizedElectronegativity(String symbol) {
 		return this.getElectronegativity(symbol)/this.getElectronegativity("C");
 	}
-	public double getPolarizability(String symbol) {
+
+    @TestMethod("testGetPolarizability")
+    public double getPolarizability(String symbol) {
 		return htPolarizability.get(symbol);
 	}
 
+    @TestMethod("testGetNormalizedPolarizability")
 	public double getNormalizedPolarizability(String symbol) {
 		return this.getPolarizability(symbol)/this.getPolarizability("C");
 	}
 
+    @TestMethod("testGetMass")
     public double getMass(String symbol) {
 		return htMass.get(symbol);
 	}
 
+    @TestMethod("testGetNormalizedMass")
 	public double getNormalizedMass(String symbol) {
 		return this.getMass(symbol)/this.getMass("C");
 	}
 
-
-
+	@TestMethod("testGetInstance")
 	public static AtomicProperties getInstance() throws IOException
 	{
 		if (ap == null) {

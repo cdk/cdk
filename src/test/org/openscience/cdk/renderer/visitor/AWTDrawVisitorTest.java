@@ -71,7 +71,29 @@ public class AWTDrawVisitorTest {
 		Assert.assertNotNull(visitor);
 	}
 
-	@Test
+    @Test
+    public void testGetRendererModel() {
+        Image image = new BufferedImage(
+            100, 100, BufferedImage.TYPE_INT_RGB
+        );
+        Graphics2D g2d = (Graphics2D)image.getGraphics();
+        AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
+        RendererModel model = new RendererModel();
+        visitor.setRendererModel(model);
+        Assert.assertEquals(model, visitor.getRendererModel());
+    }
+
+    @Test
+    public void testGetStrokeMap() {
+        Image image = new BufferedImage(
+            100, 100, BufferedImage.TYPE_INT_RGB
+        );
+        Graphics2D g2d = (Graphics2D)image.getGraphics();
+        AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
+        Assert.assertNotNull(visitor.getStrokeMap());
+    }
+
+    @Test
 	public void testVisit() {
 		Image image = new BufferedImage(
 			100, 100, BufferedImage.TYPE_INT_RGB
@@ -84,4 +106,14 @@ public class AWTDrawVisitorTest {
 		// at least we now know it did not crash...
 		Assert.assertNotNull(visitor);
 	}
+
+    @Test
+    public void testGetGraphics() {
+        Image image = new BufferedImage(
+            100, 100, BufferedImage.TYPE_INT_RGB
+        );
+        Graphics2D g2d = (Graphics2D)image.getGraphics();
+        AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
+        Assert.assertEquals(g2d, visitor.getGraphics());
+    }
 }

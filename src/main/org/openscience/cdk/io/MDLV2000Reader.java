@@ -752,12 +752,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             		int aliasAtomNumber = Integer.parseInt(line.replaceFirst("A\\s{1,4}", "")) - RGroupCounter;
             		line = input.readLine(); linecount++;
 					String[] aliasArray = line.split("\\\\");
-					// name of the alias atom like R1 odr R2 etc. 
+					// name of the alias atom like R1 or R2 etc. 
 					String alias = "";
 					for (int i = 0; i < aliasArray.length; i++) {
 						alias += aliasArray[i];
 					}
 					IAtom aliasAtom = outputContainer.getAtom(aliasAtomNumber);
+                    
+                    // skip if already a pseudoatom
+                    if(aliasAtom instanceof IPseudoAtom){
+                        ((IPseudoAtom) aliasAtom).setLabel(alias);
+                        continue;
+                    }
+
 					IAtom newPseudoAtom = molecule.getBuilder().newInstance(IPseudoAtom.class,alias);
 					if(aliasAtom.getPoint2d() != null) {
 						newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
