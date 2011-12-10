@@ -29,16 +29,15 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
-import org.openscience.cdk.interfaces.IBond.Order;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -345,14 +344,14 @@ public class Convertor {
      * @param builder {@link IChemObjectBuilder} used to create new {@link IChemObject}s.
      * @return a {@link IMolecule} deserialized from the RDF graph.
      */
-    public static IMolecule model2Molecule(Model model,
+    public static IAtomContainer model2Molecule(Model model,
         IChemObjectBuilder builder) {
         ResIterator mols =
             model.listSubjectsWithProperty(RDF.type, CDK.MOLECULE);
-        IMolecule mol = null;
+        IAtomContainer mol = null;
         if (mols.hasNext()) {
             Resource rdfMol = mols.next();
-            mol = builder.newInstance(IMolecule.class);
+            mol = builder.newInstance(IAtomContainer.class);
             Map<Resource,IAtom> rdfToCDKAtomMap = new HashMap<Resource,IAtom>();
             StmtIterator atoms = rdfMol.listProperties(CDK.HASATOM);
             while (atoms.hasNext()) {

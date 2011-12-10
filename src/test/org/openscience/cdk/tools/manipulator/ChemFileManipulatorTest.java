@@ -20,10 +20,17 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -31,7 +38,6 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,12 +54,6 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @cdk.module test-standard
@@ -92,7 +92,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 		atomInMol2 = new Atom("O");
 		atomInMol2.setImplicitHydrogenCount(2);
 		molecule2.addAtom(atomInMol2);
-		moleculeSet = new MoleculeSet();
+		moleculeSet = new AtomContainerSet();
 		moleculeSet.addAtomContainer(molecule1);
 		moleculeSet.addAtomContainer(molecule2);
 		reaction = new Reaction();

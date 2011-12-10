@@ -36,13 +36,11 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -67,13 +65,12 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     	SDFWriter reader = new SDFWriter();
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
-    	Assert.assertTrue(reader.accepts(MoleculeSet.class));
         Assert.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test public void testWrite_IMoleculeSet_Properties_Off() throws Exception {
         StringWriter writer = new StringWriter();
-        IMoleculeSet molSet = new MoleculeSet();
+        IAtomContainerSet molSet = new AtomContainerSet();
         Molecule molecule = new Molecule();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
@@ -110,7 +107,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
     @Test public void testWrite_IMoleculeSet_Properties() throws Exception {
         StringWriter writer = new StringWriter();
-        IMoleculeSet molSet = new MoleculeSet();
+        IAtomContainerSet molSet = new AtomContainerSet();
         Molecule molecule = new Molecule();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
@@ -125,7 +122,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
     @Test public void testWrite_IMoleculeSet_CDKProperties() throws Exception {
         StringWriter writer = new StringWriter();
-        IMoleculeSet molSet = new MoleculeSet();
+        IAtomContainerSet molSet = new AtomContainerSet();
         Molecule molecule = new Molecule();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty(InvPair.CANONICAL_LABEL, "bar");
@@ -141,7 +138,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
     @Test public void testWrite_IMoleculeSet_SingleMolecule() throws Exception {
         StringWriter writer = new StringWriter();
-        IMoleculeSet molSet = new MoleculeSet();
+        IAtomContainerSet molSet = new AtomContainerSet();
         Molecule molecule = new Molecule();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);
@@ -154,7 +151,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
     @Test public void testWrite_IMoleculeSet_Multimolecule() throws Exception {
         StringWriter writer = new StringWriter();
-        IMoleculeSet molSet = new MoleculeSet();
+        IAtomContainerSet molSet = new AtomContainerSet();
         Molecule molecule = new Molecule();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);

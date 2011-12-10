@@ -20,19 +20,18 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.IDCreator;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
-
-import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -94,7 +93,7 @@ public class IDCreatorTest extends CDKTestCase {
 	 * @cdk.bug 1455341
 	 */
 	@Test public void testCallingTwice() {
-		IMoleculeSet molSet = new MoleculeSet();
+	    IAtomContainerSet molSet = new AtomContainerSet();
 		Molecule mol = new Molecule();
         Atom atom0 = new Atom("C");
         Atom atom2 = new Atom("C");

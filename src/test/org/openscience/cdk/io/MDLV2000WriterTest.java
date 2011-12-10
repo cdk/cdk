@@ -24,7 +24,6 @@
 package org.openscience.cdk.io;
 
 import java.io.StringWriter;
-
 import java.util.Properties;
 
 import javax.vecmath.Point2d;
@@ -33,7 +32,6 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -45,12 +43,12 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -264,7 +262,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         IMolecule mol2 = MoleculeFactory.makeAlphaPinene();
         mol2.setProperty(CDKConstants.TITLE,"title2");
         IChemModel model = mol1.getBuilder().newInstance(IChemModel.class);
-        model.setMoleculeSet(mol1.getBuilder().newInstance(IMoleculeSet.class));
+        model.setMoleculeSet(mol1.getBuilder().newInstance(IAtomContainerSet.class));
         model.getMoleculeSet().addAtomContainer(mol1);
         model.getMoleculeSet().addAtomContainer(mol2);
         StringWriter writer = new StringWriter();

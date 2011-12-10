@@ -32,8 +32,10 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -56,7 +58,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
     @Test public void testAccepts() {
     	SMILESReader reader = new SMILESReader();
     	Assert.assertTrue(reader.accepts(ChemFile.class));
-    	Assert.assertTrue(reader.accepts(MoleculeSet.class));
+    	Assert.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test public void testReading() throws Exception {
@@ -64,7 +66,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
-        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(8, som.getAtomContainerCount());
     }
     
@@ -74,11 +76,9 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
-        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        IAtomContainerSet som = reader.read(new AtomContainerSet());
         String name = null;
-        org.openscience.cdk.interfaces.IMolecule thisMol = null;
-	    
-	    thisMol = som.getMolecule(0);
+        IAtomContainer thisMol = som.getAtomContainer(0);
 	    name = ( (String)thisMol.getProperty("SMIdbNAME") ).toString();
 	    Assert.assertEquals("benzene", name);
     }
@@ -88,8 +88,8 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
-        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
-        org.openscience.cdk.interfaces.IMolecule thisMol = som.getMolecule(1);
+        IAtomContainerSet som = reader.read(new AtomContainerSet());
+        IAtomContainer thisMol = som.getAtomContainer(1);
         Assert.assertNull(thisMol.getProperty("SMIdbNAME"));
     }
 
@@ -98,7 +98,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
-        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(5, som.getAtomContainerCount());
     }
     

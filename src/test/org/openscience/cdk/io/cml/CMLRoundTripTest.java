@@ -24,18 +24,24 @@
  *  */
 package org.openscience.cdk.io.cml;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
@@ -58,11 +64,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.InputStream;
-import java.util.Iterator;
 
 /**
  * TestCase for reading CML 2 files using a few test files
@@ -187,7 +188,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      */
     @Test public void testChemModel() throws Exception {
     	ChemModel model = new ChemModel();
-    	MoleculeSet moleculeSet = new MoleculeSet();
+    	IAtomContainerSet moleculeSet = new AtomContainerSet();
         Molecule mol = new Molecule();
         PseudoAtom atom = new PseudoAtom("N");
         mol.addAtom(atom);
@@ -694,7 +695,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testMoleculeSet() throws Exception {
-    	MoleculeSet list = new MoleculeSet();
+        IAtomContainerSet list = new AtomContainerSet();
     	list.addAtomContainer(new Molecule());
     	list.addAtomContainer(new Molecule());
     	IChemModel model = new ChemModel();

@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -51,9 +52,7 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -132,8 +131,6 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
             if (params.length == 0) return (T)new Polymer();
         } else if (IRingSet.class.isAssignableFrom(clazz)) {
             if (params.length == 0) return (T)new RingSet();
-        } else if (IMoleculeSet.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new MoleculeSet();
         } else if (IAtomContainerSet.class.isAssignableFrom(clazz)) {
             if (params.length == 0) return (T)new AtomContainerSet();
         } else if (IAtomContainer.class.isAssignableFrom(clazz)) {

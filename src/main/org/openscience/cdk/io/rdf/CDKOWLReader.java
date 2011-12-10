@@ -30,6 +30,7 @@ import java.io.Reader;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.DefaultChemObjectReader;
@@ -120,7 +121,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
         Model model = ModelFactory.createDefaultModel();
         model.read(input, "", "N3");
 
-        IMolecule mol = Convertor.model2Molecule(model, object.getBuilder());
+        IAtomContainer mol = Convertor.model2Molecule(model, object.getBuilder());
         result.add(mol);
         return (T)result;
     }

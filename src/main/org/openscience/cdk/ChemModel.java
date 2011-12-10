@@ -230,7 +230,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 		ChemModel clone = (ChemModel)super.clone();
         // clone the content
         if (setOfMolecules != null) {
-            clone.setOfMolecules = (MoleculeSet)((MoleculeSet)setOfMolecules).clone();
+            clone.setOfMolecules = (IAtomContainerSet)setOfMolecules.clone();
         } else {
             clone.setOfMolecules = null;
         }

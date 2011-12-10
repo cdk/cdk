@@ -29,9 +29,8 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -76,7 +75,7 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 		reactionScheme.addReaction(reaction1); // 1
 		reactionScheme.addReaction(reaction2); // 2
 		
-		Assert.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme, builder.newInstance(IMoleculeSet.class)).getAtomContainerCount());
+		Assert.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme, builder.newInstance(IAtomContainerSet.class)).getAtomContainerCount());
 		
 	}
     

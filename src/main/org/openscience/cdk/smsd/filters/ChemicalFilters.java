@@ -51,7 +51,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -851,7 +850,7 @@ public class ChemicalFilters {
 
     private int getFragmentCount(IAtomContainer molecule) {
         boolean fragmentFlag = true;
-        IAtomContainerSet fragmentMolSet = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+        IAtomContainerSet fragmentMolSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         int countFrag = 0;
         if (molecule.getAtomCount()
                 > 0) {

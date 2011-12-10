@@ -23,18 +23,21 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
-
-import java.util.List;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * @cdk.module test-standard
@@ -50,7 +53,7 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
 	IAtom atomInMol1 = null;
 	IBond bondInMol1 = null;
 	IAtom atomInMol2 = null;
-	IMoleculeSet som = new MoleculeSet();
+	IAtomContainerSet som = new AtomContainerSet();
 	
 	public MoleculeSetManipulatorTest() {
 		super();
@@ -90,7 +93,7 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
     
     @Test public void testRemoveElectronContainer_IMoleculeSet_IElectronContainer()
     {
-    	IMoleculeSet ms = new MoleculeSet();
+        IAtomContainerSet ms = new AtomContainerSet();
     	IMolecule mol = new Molecule();
     	mol.addAtom(new Atom("O"));
     	mol.addAtom(new Atom("O"));
@@ -106,7 +109,7 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
     
     @Test public void testRemoveAtomAndConnectedElectronContainers_IMoleculeSet_IAtom()
     {
-    	IMoleculeSet ms = new MoleculeSet();
+        IAtomContainerSet ms = new AtomContainerSet();
     	IMolecule mol = new Molecule();
     	mol.addAtom(new Atom("O"));
     	mol.addAtom(new Atom("O"));

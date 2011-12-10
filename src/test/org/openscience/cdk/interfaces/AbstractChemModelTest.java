@@ -36,7 +36,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
 
     @Test public void testSetMoleculeSet_IAtomContainerSet() {
 	    IChemModel chemModel = (IChemModel)newChemObject();
-	    IMoleculeSet crystal = chemModel.getBuilder().newInstance(IMoleculeSet.class);
+	    IAtomContainerSet crystal = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
         chemModel.setMoleculeSet(crystal);
         Assert.assertEquals(crystal, chemModel.getMoleculeSet());
     }
@@ -95,7 +95,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getMoleculeSet());
         
-		model.setMoleculeSet(model.getBuilder().newInstance(IMoleculeSet.class));
+		model.setMoleculeSet(model.getBuilder().newInstance(IAtomContainerSet.class));
         clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getMoleculeSet());
         Assert.assertNotSame(model.getMoleculeSet(), clone.getMoleculeSet());
@@ -139,7 +139,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
         
-        chemObject.setMoleculeSet(chemObject.getBuilder().newInstance(IMoleculeSet.class));
+        chemObject.setMoleculeSet(chemObject.getBuilder().newInstance(IAtomContainerSet.class));
         Assert.assertTrue(listener.changed);
         
         listener.reset();
@@ -178,7 +178,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
 
-        IMoleculeSet molSet = chemObject.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainerSet molSet = chemObject.getBuilder().newInstance(IAtomContainerSet.class);
         chemObject.setMoleculeSet(molSet);
         Assert.assertTrue(listener.changed);
         // reset the listener
@@ -240,7 +240,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
 
-        IMoleculeSet molSet = chemObject.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainerSet molSet = chemObject.getBuilder().newInstance(IAtomContainerSet.class);
         chemObject.setMoleculeSet(molSet);
         Assert.assertTrue(listener.changed);
         // remove the set from the IChemModel

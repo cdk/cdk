@@ -35,9 +35,9 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.cml.MDMoleculeConvention;
@@ -206,7 +206,7 @@ public class MDMoleculeTest extends CDKTestCase {
         CMLWriter cmlWriter = new CMLWriter(writer);
         cmlWriter.registerCustomizer(new MDMoleculeCustomizer());
         try {
-            IMolecule molecule=makeMDBenzene();
+            IAtomContainer molecule = makeMDBenzene();
             cmlWriter.write(molecule);
 
         } catch (Exception exception) {

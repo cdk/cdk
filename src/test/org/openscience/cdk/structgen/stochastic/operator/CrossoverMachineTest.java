@@ -25,12 +25,13 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
@@ -45,7 +46,7 @@ public class CrossoverMachineTest extends CDKTestCase {
         String filename = "data/smiles/c10h16isomers.smi";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
-        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals("We must have read 99 structures", 99, 
         	som.getAtomContainerCount());
 		CrossoverMachine cm = new CrossoverMachine();

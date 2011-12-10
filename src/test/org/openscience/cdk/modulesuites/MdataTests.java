@@ -48,7 +48,6 @@ import org.openscience.cdk.FragmentAtomTest;
 import org.openscience.cdk.IsotopeTest;
 import org.openscience.cdk.LonePairTest;
 import org.openscience.cdk.MappingTest;
-import org.openscience.cdk.MoleculeSetTest;
 import org.openscience.cdk.MoleculeTest;
 import org.openscience.cdk.MonomerTest;
 import org.openscience.cdk.PolymerTest;
@@ -107,7 +106,6 @@ import org.openscience.cdk.protein.data.PDBStructureTest;
     RingTest.class,
     RingSetTest.class,
     AtomContainerSetTest.class,
-    MoleculeSetTest.class,
     ReactionSetTest.class,
     SingleElectronTest.class,
     StrandTest.class,

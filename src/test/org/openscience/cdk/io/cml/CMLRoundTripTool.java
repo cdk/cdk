@@ -64,7 +64,7 @@ public class CMLRoundTripTool extends CDKTestCase {
      */
     public static IAtomContainer roundTripMolecule(Convertor convertor, IMolecule mol) throws Exception {
         String cmlString = "<!-- failed -->";
-        Element cmlDOM = convertor.cdkMoleculeToCMLMolecule(mol);
+        Element cmlDOM = convertor.cdkAtomContainerToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();
         
         IAtomContainer roundTrippedMol = null;

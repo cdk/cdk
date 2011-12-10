@@ -33,10 +33,10 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.exception.CDKException;
@@ -71,7 +71,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertTrue(reader.accepts(ChemModel.class));
     	Assert.assertTrue(reader.accepts(Reaction.class));
 		Assert.assertTrue(reader.accepts(ReactionSet.class));
-		Assert.assertFalse(reader.accepts(MoleculeSet.class));
+		Assert.assertFalse(reader.accepts(AtomContainerSet.class));
 		Assert.assertFalse(reader.accepts(Molecule.class));
     }
 

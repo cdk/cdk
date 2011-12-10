@@ -38,13 +38,13 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -143,7 +143,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) throws Exception {
         IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-        IMoleculeSet moleculeSet = file.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
         molecule = file.getBuilder().newInstance(IMolecule.class);
         atomIDs = new HashMap();
         

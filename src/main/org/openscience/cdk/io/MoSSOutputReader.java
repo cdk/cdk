@@ -21,6 +21,13 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -31,19 +38,11 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MoSSOutputFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
 
 /**
  * Reader for MoSS output files {@cdk.cite BOR2002} which present the results
@@ -121,7 +120,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
     public boolean accepts(Class testClass) {
         Class[] interfaces = testClass.getInterfaces();
         for (int i=0; i<interfaces.length; i++) {
-            if (IMoleculeSet.class.equals(interfaces[i])) return true;
+            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
             if (IChemFile.class.equals(interfaces[i])) return true;
         }
         Class superClass = testClass.getSuperclass();

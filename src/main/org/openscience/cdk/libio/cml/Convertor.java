@@ -25,6 +25,13 @@
  */
 package org.openscience.cdk.libio.cml;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -41,7 +48,6 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -77,13 +83,6 @@ import org.xmlcml.cml.element.CMLReactionStep;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @cdk.module       libiocml
@@ -321,15 +320,9 @@ public class Convertor {
         	
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
             IAtomContainer container = moleculeSet.getAtomContainer(i);
-            if (container instanceof IMolecule) {
-                cmlList.appendChild(
-                    cdkMoleculeToCMLMolecule((IMolecule)container, false)
-                );
-            } else {
-                cmlList.appendChild(
-                    cdkAtomContainerToCMLMolecule(container, false, false)
-                );
-            }
+            cmlList.appendChild(
+                cdkAtomContainerToCMLMolecule(container, false, false)
+            );
         }
         return cmlList;
     }
@@ -370,7 +363,7 @@ public class Convertor {
         Iterator<IAtomContainer> reactants = reaction.getReactants().atomContainers().iterator();
         while (reactants.hasNext()) {
             CMLReactant cmlReactant = new CMLReactant();
-            cmlReactant.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)reactants.next(), false));
+            cmlReactant.addMolecule(cdkAtomContainerToCMLMolecule(reactants.next()));
             cmlReactants.addReactant(cmlReactant);
             
         }
@@ -380,7 +373,7 @@ public class Convertor {
         Iterator<IAtomContainer> products = reaction.getProducts().atomContainers().iterator();
         while (products.hasNext()) {
             CMLProduct cmlProduct = new CMLProduct();
-            cmlProduct.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)products.next(), false));
+            cmlProduct.addMolecule(cdkAtomContainerToCMLMolecule(products.next()));
             cmlProducts.addProduct(cmlProduct);
         }
         
@@ -389,7 +382,7 @@ public class Convertor {
         Iterator<IAtomContainer> substance = reaction.getAgents().atomContainers().iterator();
         while (substance.hasNext()) {
             CMLSubstance cmlSubstance = new CMLSubstance();
-            cmlSubstance.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)substance.next(), false));
+            cmlSubstance.addMolecule(cdkAtomContainerToCMLMolecule(substance.next()));
             cmlSubstances.addSubstance(cmlSubstance);
         }
         if (reaction.getID() != null) 
@@ -473,14 +466,6 @@ public class Convertor {
             cmlMolecule.addAtom(cmlAtom);
        	}
         return cmlMolecule;
-    }
-
-    public CMLMolecule cdkMoleculeToCMLMolecule(IMolecule structure) {
-        return cdkMoleculeToCMLMolecule(structure, true);
-    }
-
-    private CMLMolecule cdkMoleculeToCMLMolecule(IMolecule structure, boolean setIDs) {
-        return cdkAtomContainerToCMLMolecule(structure, setIDs, false);
     }
 
     public CMLMolecule cdkAtomContainerToCMLMolecule(IAtomContainer structure) {

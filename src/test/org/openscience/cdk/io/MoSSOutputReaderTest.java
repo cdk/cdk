@@ -26,8 +26,9 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 
 /**
  * @cdk.module test-smiles
@@ -40,17 +41,17 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
     @Test public void testAccepts() {
         MoSSOutputReader reader = new MoSSOutputReader();
-        Assert.assertTrue(reader.accepts(MoleculeSet.class));
+        Assert.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
     @Test public void testExampleFile_MolReading() throws Exception {
         String filename = "data/moss/TKO.mossoutput";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);
-        MoleculeSet moleculeSet = new MoleculeSet();
+        IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet = reader.read(moleculeSet);
         Assert.assertEquals(19, moleculeSet.getAtomContainerCount());
-        for (IAtomContainer mol : moleculeSet.molecules()) {
+        for (IAtomContainer mol : moleculeSet.atomContainers()) {
             Assert.assertEquals(
                 Integer.valueOf(mol.getProperty("atomCount").toString()).intValue(),
                 mol.getAtomCount()
@@ -65,17 +66,17 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
         String filename = "data/moss/TKO.mossoutput";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);
-        MoleculeSet moleculeSet = new MoleculeSet();
+        IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet = reader.read(moleculeSet);
         Assert.assertEquals(
             5.06,
-            Double.valueOf(moleculeSet.getMolecule(0).getProperty("focusSupport").toString())
+            Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("focusSupport").toString())
                 .doubleValue(),
             0.01
         );
         Assert.assertEquals(
             1.74,
-            Double.valueOf(moleculeSet.getMolecule(0).getProperty("complementSupport").toString())
+            Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("complementSupport").toString())
                 .doubleValue(),
             0.01
         );

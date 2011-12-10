@@ -27,14 +27,14 @@ package org.openscience.cdk.libio.md;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @cdk.module libiomd
  * @cdk.githash
  */
-public class MDMolecule extends Molecule{
+public class MDMolecule extends AtomContainer {
 
 	/**
 	 * 

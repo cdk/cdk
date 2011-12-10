@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -23,12 +18,13 @@
  */
 package org.openscience.cdk.io.inchi;
 
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
@@ -61,7 +57,7 @@ public class INChIHandler extends DefaultHandler {
     private ChemFile chemFile;
     private ChemSequence chemSequence;
     private ChemModel chemModel;
-    private MoleculeSet setOfMolecules;
+    private IAtomContainerSet setOfMolecules;
     private Molecule tautomer;
 
     /** Used to store all chars between two tags */
@@ -85,7 +81,7 @@ public class INChIHandler extends DefaultHandler {
         chemFile = new ChemFile();
         chemSequence = new ChemSequence();
         chemModel = new ChemModel();
-        setOfMolecules = new MoleculeSet();
+        setOfMolecules = new AtomContainerSet();
     }
 
     public void endDocument() {

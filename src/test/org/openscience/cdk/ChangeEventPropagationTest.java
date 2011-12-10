@@ -23,14 +23,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
@@ -51,7 +44,7 @@ public class ChangeEventPropagationTest extends CDKTestCase {
         ChemFile cf = new ChemFile();
 	ChemSequence cs = new ChemSequence();
 	ChemModel cm = new ChemModel();
-	MoleculeSet som = new MoleculeSet();
+	IAtomContainerSet som = new AtomContainerSet();
         Molecule mol = new Molecule();
 	Atom a1 = new Atom("C");
 	Atom a2 = new Atom("C");

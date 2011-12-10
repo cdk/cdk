@@ -28,11 +28,11 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractChemModelTest;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -106,7 +106,7 @@ public class ChemModelTest extends AbstractChemModelTest {
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
 
-        IMoleculeSet molSet = chemObject.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainerSet molSet = chemObject.getBuilder().newInstance(IAtomContainerSet.class);
         chemObject.setMoleculeSet(molSet);
         Assert.assertFalse(listener.getChanged());
         // reset the listener
@@ -168,7 +168,7 @@ public class ChemModelTest extends AbstractChemModelTest {
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
 
-        IMoleculeSet molSet = chemObject.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainerSet molSet = chemObject.getBuilder().newInstance(IAtomContainerSet.class);
         chemObject.setMoleculeSet(molSet);
         Assert.assertFalse(listener.getChanged());
         // remove the set from the IChemModel
