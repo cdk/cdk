@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -56,8 +55,8 @@ import java.util.Iterator;
  * <pre>A-B => [A*] + [B*]</pre>
  * <p>It is processed by the HomolyticCleavageMechanism class</p>
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addAtomContainer(new Molecule());
+ *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new HomolyticCleavageReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -116,7 +115,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
      * @param  reactants         reactants of the reaction.
     * @param  agents            agents of the reaction (Must be in this case null).
      */
-    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
+    @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
     public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
         logger.debug("initiate reaction: HomolyticCleavageReaction");
@@ -152,7 +151,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
             	atomList.add(atom2);
             	ArrayList<IBond> bondList = new ArrayList<IBond>();
             	bondList.add(bondi);
-				IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
+				IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
 				moleculeSet.addAtomContainer(reactant);
 				IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 				if(reaction == null)

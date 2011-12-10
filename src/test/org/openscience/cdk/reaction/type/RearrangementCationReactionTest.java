@@ -35,16 +35,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -83,7 +82,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 		IReactionProcess type = new RearrangementCationReaction();
 		
 		IAtomContainerSet setOfReactants = getExampleReactants();
@@ -230,9 +229,9 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
         Assert.assertEquals(mappedProductA1, product.getAtom(2)); 
 	}
 	/**
-	 * Test to recognize if this IMolecule_1 matches correctly into the CDKAtomTypes.
+	 * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule1() throws Exception{
+	@Test public void testAtomTypesAtomContainer1() throws Exception{
 		IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
 		makeSureAtomTypesAreRecognized(moleculeTest);
@@ -240,9 +239,9 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
 	}
 
 	/**
-	 * Test to recognize if this IMolecule_2 matches correctly into the CDKAtomTypes.
+	 * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule2() throws Exception{
+	@Test public void testAtomTypesAtomContainer2() throws Exception{
 		IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
 		makeSureAtomTypesAreRecognized(moleculeTest);
@@ -251,7 +250,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
 	/**
 	 * get the molecule 1: [C+]-C=C-C
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExampleReactants() {
 		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -277,10 +276,10 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
 	/**
 	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
-	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExpectedProducts() {
+		IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
 		// C=C-[C+]-C
 		IAtomContainer molecule = builder.newInstance(IAtomContainer.class );

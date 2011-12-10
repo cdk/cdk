@@ -25,9 +25,6 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -37,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -54,6 +50,9 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * <p>
  * This reaction could be represented as [A*]-(C)_2-C3[H] => A([H])-(C_2)-[C3*]. Due to 
@@ -61,8 +60,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addAtomContainer(new Molecule());
+ *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RadicalSiteHrAlphaReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -121,7 +120,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
      * @param  reactants         reactants of the reaction.
     * @param  agents            agents of the reaction (Must be in this case null).
      */
-    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
+    @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
 	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RadicalSiteHrAlphaReaction");
@@ -180,7 +179,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 				            	ArrayList<IBond> bondList = new ArrayList<IBond>();
 				            	bondList.add(reactant.getBond(atomh, atoml));
 
-								IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
+								IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
 								moleculeSet.addAtomContainer(reactant);
 								IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 								if(reaction == null)

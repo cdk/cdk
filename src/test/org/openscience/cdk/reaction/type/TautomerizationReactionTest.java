@@ -34,17 +34,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -84,7 +82,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 
 		IReactionProcess type = new TautomerizationReaction();
 		
@@ -104,13 +102,13 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         
-        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
+        IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
         
         // reverse process
-        IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+        IAtomContainerSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		setOfReactants2.addAtomContainer(molecule2);
 		
 		IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
@@ -160,7 +158,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
+        IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -174,7 +172,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         molecule2.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
         molecule2.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
         molecule2.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER,true);
-        IMoleculeSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+        IAtomContainerSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		setOfReactants2.addAtomContainer(molecule2);
 		
 		IReactionSet setOfReactions2 = type.initiate(setOfReactants2, null);
@@ -278,7 +276,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * 
 	 * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
 	 * 
-	 * @return The IMolecule
+	 * @return The IAtomContainer
 	 * @throws CDKException
 	 */
 	private IAtomContainerSet getExampleReactants() {
@@ -311,12 +309,12 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * Get the expected set of molecules.
 	 * 
 	 * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
-	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExpectedProducts() {
+		IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class,"O"));
         molecule.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);

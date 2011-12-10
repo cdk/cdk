@@ -36,17 +36,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -85,7 +83,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 
 		IReactionProcess type = new RearrangementRadicalReaction();
 		
@@ -107,7 +105,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
         
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         /*C=C-[C*]-C*/
-        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
+        IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
         
@@ -149,7 +147,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         
         /*C=C-[C*]-C*/
-        IMolecule molecule2 = getExpectedProducts().getMolecule(0);
+        IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
@@ -228,26 +226,26 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
         Assert.assertEquals(mappedProductA1, product.getAtom(2));   
 	}
 	/**
-	 * Test to recognize if this IMolecule_1 matches correctly into the CDKAtomTypes.
+	 * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule1() throws Exception{
+	@Test public void testAtomTypesAtomContainer1() throws Exception{
 		IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
 	}
 
 	/**
-	 * Test to recognize if this IMolecule_2 matches correctly into the CDKAtomTypes.
+	 * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule2() throws Exception{
-		IMolecule moleculeTest = getExpectedProducts().getMolecule(0);
+	@Test public void testAtomTypesAtomContainer2() throws Exception{
+		IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
 	}
 	/**
 	 * get the molecule 1: [C*]-C=C-C
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExampleReactants() {
 		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -280,12 +278,12 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 	/**
 	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
-	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExpectedProducts() {
+		IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 		//C=C-[C*]-C
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -311,9 +309,9 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 		return setOfProducts;
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
+	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
 	 * 
-	 * @param molecule          The IMolecule to analyze
+	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
 	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {

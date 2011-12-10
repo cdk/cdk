@@ -40,11 +40,11 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import java.util.ArrayList;
@@ -235,7 +235,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 		
 	}
 	/**
-	 * Get the Molecule 
+	 * Get the AtomContainer
 	 * 
 	 * @return The IAtomContainerSetSet
 	 */

@@ -36,17 +36,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -89,9 +87,9 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 		//Smiles("CC=C")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -133,7 +131,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         // expected products 
         
         //Smiles("C[C+][C-]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.getAtom(1).setFormalCharge(+1);
@@ -190,7 +188,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCspDoubleB() throws Exception {
 		//Smiles("C=C=C")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -228,7 +226,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         // expected products 
         
         //Smiles("C=[C+][C-]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.getAtom(1).setFormalCharge(+1);
@@ -270,7 +268,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testCspTripleB() throws Exception {
 		//Smiles("CC#C")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -308,7 +306,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         // expected products 
         
         //Smiles("C[C+]=[C-]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.getAtom(1).setFormalCharge(+1);
@@ -349,7 +347,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testNsp2DoubleB() throws Exception {
 		//Smiles("CN=C")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -390,7 +388,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         // expected products 
 
         //Smiles("C[N-]-[C+]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 		expected1.getAtom(1).setFormalCharge(-1);
@@ -424,7 +422,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testNspTripleB() throws Exception {
 		//Smiles("N#C")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.TRIPLE);
@@ -455,7 +453,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         // expected products 
 
         //Smiles("[N-]=[C+]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 		expected1.getAtom(0).setFormalCharge(-1);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -479,7 +477,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testOspDoubleB() throws Exception {
 		//Smiles("O=C")
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -512,7 +510,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         // expected products 
 
         //Smiles("[O-][C+]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"O"));
 		expected1.getAtom(0).setFormalCharge(-1);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -541,7 +539,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
 		/*C=O*/
-		IMolecule molecule = builder.newInstance(IMolecule.class);//Smiles("C=O")
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);//Smiles("C=O")
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -612,9 +610,9 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(mappedProductA2, product.getAtom(1));
  	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
+	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
 	 * 
-	 * @param molecule          The IMolecule to analyze
+	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
 	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
@@ -667,12 +665,12 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	/**
 	 * Get the example set of molecules.
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExampleReactants() {
 		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -690,12 +688,12 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	/**
 	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
-	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExpectedProducts() {
+		IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 		//Smiles("[C+](H)(H)-[O-]");
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom carbon = builder.newInstance(IAtom.class,"C");
         carbon.setFormalCharge(1);
         molecule.addAtom(carbon);

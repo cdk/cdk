@@ -34,8 +34,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -63,8 +61,8 @@ import java.util.List;
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addAtomContainer(new Molecule());
+ *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RadicalSiteRrGammaReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -124,7 +122,7 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
      * @param  reactants         reactants of the reaction.
     * @param  agents            agents of the reaction (Must be in this case null).
      */
-    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
+    @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
 	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RadicalSiteRrGammaReaction");
@@ -189,7 +187,7 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
 				            	ArrayList<IBond> bondList = new ArrayList<IBond>();
 				            	bondList.add(reactant.getBond(atomR, atoml));
 
-								IMoleculeSet moleculeSet = reactant.getBuilder().newInstance(IMoleculeSet.class);
+								IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
 								moleculeSet.addAtomContainer(reactant);
 								IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
 								if(reaction == null)
@@ -225,10 +223,10 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
 			IAtom  atomi = atomis.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				
-				hcg.getSpheres((IMolecule) reactant, atomi, 4, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 4, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(4);
 				
-				hcg.getSpheres((IMolecule) reactant, atomi, 5, true);
+				hcg.getSpheres((IAtomContainer) reactant, atomi, 5, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(5).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

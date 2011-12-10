@@ -25,8 +25,6 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -49,6 +47,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
+import java.util.Iterator;
+
 /**
  * <p>IReactionProcess which tries to reproduce the delocalization of electrons
  *  which are unsaturated bonds from conjugated rings. Only is allowed those 
@@ -57,8 +57,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  typically from rings without any access or deficiency of charge and have a 
  *  even number of atoms. </p>
  *  <p>The reaction don't care if the product are the same in symmetry.</p>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
- *  setOfReactants.addAtomContainer(new Molecule());
+ *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new PiBondingMovementReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
@@ -118,7 +118,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
      * @param  reactants         reactants of the reaction.
     * @param  agents            agents of the reaction (Must be in this case null).
      */
-    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
+    @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
 	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: PiBondingMovementReaction");
@@ -180,7 +180,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 					try {
 						reactantCloned = (IAtomContainer) reactant.clone();
 					} catch (CloneNotSupportedException e) {
-						throw new CDKException("Could not clone IMolecule!", e);
+						throw new CDKException("Could not clone IAtomContainer!", e);
 					}
 					
 					Iterator<IBond> bondis = ring.bonds().iterator();

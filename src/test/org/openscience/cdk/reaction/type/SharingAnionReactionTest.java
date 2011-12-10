@@ -39,11 +39,11 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -275,7 +275,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 	/**
 	 * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule1() throws Exception{
+	@Test public void testAtomTypesAtomContainer1() throws Exception{
 		IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		
@@ -284,7 +284,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 	/**
 	 * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule2() throws Exception{
+	@Test public void testAtomTypesAtomContainer2() throws Exception{
 		IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
 		

@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 
 import java.util.ArrayList;
@@ -123,8 +122,8 @@ public class ReactionManipulator {
      * @return The IMoleculeSet
      */
     @TestMethod("testGetAllMolecules_IReaction")
-    public static IMoleculeSet getAllMolecules(IReaction reaction) {
-        IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
+    public static IAtomContainerSet getAllMolecules(IReaction reaction) {
+        IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
 
         moleculeSet.add(getAllReactants(reaction));
         moleculeSet.add(getAllProducts(reaction));
@@ -138,8 +137,8 @@ public class ReactionManipulator {
      * @return The IMoleculeSet
      */
     @TestMethod("testGetAllProducts_IReaction")
-    public static IMoleculeSet getAllProducts(IReaction reaction) {
-        IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
+    public static IAtomContainerSet getAllProducts(IReaction reaction) {
+        IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainerSet products = reaction.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
             moleculeSet.addAtomContainer(products.getAtomContainer(i));
@@ -154,8 +153,8 @@ public class ReactionManipulator {
      * @return The IMoleculeSet
      */
     @TestMethod("testGetAllReactants_IReaction")
-    public static IMoleculeSet getAllReactants(IReaction reaction) {
-        IMoleculeSet moleculeSet = reaction.getBuilder().newInstance(IMoleculeSet.class);
+    public static IAtomContainerSet getAllReactants(IReaction reaction) {
+        IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainerSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             moleculeSet.addAtomContainer(reactants.getAtomContainer(i));

@@ -36,17 +36,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -60,8 +58,8 @@ import java.util.List;
  * the negative charge of the atom A, the double bond in position 2 is 
  * displaced.</p>
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
- *  setOfReactants.addAtomContainer(new Molecule());
+ *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+ *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RearrangementAnion1Reaction();
  *  HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("hasActiveCenter",Boolean.FALSE);;
@@ -115,7 +113,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 		IReactionProcess type = new RearrangementAnionReaction();
 		
 		/* [C-]-C=C-C */
@@ -273,7 +271,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 		IReactionProcess type = new RearrangementAnionReaction();
 		
 		/* [F+]=C1-[C-]-C=C-C=C1*/
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		molecule.getAtom(0).setFormalCharge(1);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -316,7 +314,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         IAtomContainer product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
 
         /*[F+]=C1-[C=]-C-[C-]-C=C1*/
-        IMolecule molecule2 = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"F"));
 		molecule2.getAtom(0).setFormalCharge(1);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -346,7 +344,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         /*F=c1ccccc1*/
-        IMolecule molecule3 = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule3 = builder.newInstance(IAtomContainer.class);
         molecule3.addAtom(builder.newInstance(IAtom.class,"F"));
         molecule3.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule3.addBond(0, 1, IBond.Order.SINGLE);
@@ -372,9 +370,9 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         Assert.assertEquals(12,setOfReactions.getReaction(0).getMappingCount());
 	}
 	/**
-	 * Test to recognize if this IMolecule_1 matches correctly into the CDKAtomTypes.
+	 * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule1() throws Exception{
+	@Test public void testAtomTypesAtomContainer1() throws Exception{
 		IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
 		makeSureAtomTypesAreRecognized(moleculeTest);
@@ -382,9 +380,9 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 	}
 
 	/**
-	 * Test to recognize if this IMolecule_2 matches correctly into the CDKAtomTypes.
+	 * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
 	 */
-	@Test public void testAtomTypesMolecule2() throws Exception{
+	@Test public void testAtomTypesAtomContainer2() throws Exception{
 		IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeTest);
 		makeSureAtomTypesAreRecognized(moleculeTest);
@@ -393,7 +391,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 	/**
 	 * get the molecule 1: [C-]-C=C-C
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExampleReactants() {
 		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -420,12 +418,12 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 	/**
 	 * Get the expected set of molecules.
 	 * 
-	 * @return The IMoleculeSet
+	 * @return The IAtomContainerSet
 	 */
-	private IMoleculeSet getExpectedProducts() {
-		IMoleculeSet setOfProducts = builder.newInstance(IMoleculeSet.class);
+	private IAtomContainerSet getExpectedProducts() {
+		IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -446,9 +444,9 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 		return setOfProducts;
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
+	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
 	 * 
-	 * @param molecule          The IMolecule to analyze
+	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
 	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
