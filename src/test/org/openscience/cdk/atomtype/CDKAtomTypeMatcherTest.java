@@ -46,9 +46,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NNAtom;
-import org.openscience.cdk.nonotify.NNAtomType;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.AtomType;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
@@ -2880,7 +2879,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test public void testAllElementsRepresented() throws Exception {
     	AtomTypeFactory factory = AtomTypeFactory.getInstance(
                 "org/openscience/cdk/dict/data/cdk-atom-types.owl",
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
     	Assert.assertTrue("Could not read the atom types", factory.getSize() != 0);
         String errorMessage = "Elements without atom type(s) defined in the XML:";
@@ -3492,7 +3491,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
      */
     @Test
     public void testP() throws Exception {
-    	IAtom atomP = new NNAtom("P");
+    	IAtom atomP = new Atom("P");
     	IAtomContainer mol = new Molecule();
     	mol.addAtom(atomP);
         String[] expectedTypes = {"P.ine"};
@@ -3505,8 +3504,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
      */
     @Test
     public void testPine() throws Exception {
-    	IAtom atomP = new NNAtom(Elements.PHOSPHORUS);
-    	IAtomType atomTypeP = new NNAtomType(Elements.PHOSPHORUS);
+    	IAtom atomP = new Atom(Elements.PHOSPHORUS);
+    	IAtomType atomTypeP = new AtomType(Elements.PHOSPHORUS);
     	AtomTypeManipulator.configure(atomP, atomTypeP);
 
     	IAtomContainer ac = atomP.getBuilder().newInstance(IAtomContainer.class);

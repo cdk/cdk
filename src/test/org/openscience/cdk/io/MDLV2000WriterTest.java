@@ -53,7 +53,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -337,7 +337,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
      * @throws Exception
      */
     @Test public void testAromaticBondType4() throws Exception {
-        SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         String smiles = "c1ccccc1";
         IMolecule benzene = sp.parseSmiles(smiles);
 

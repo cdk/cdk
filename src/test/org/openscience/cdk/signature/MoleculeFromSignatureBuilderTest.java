@@ -28,7 +28,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import signature.AbstractVertexSignature;
 import signature.ColoredTree;
@@ -53,7 +53,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public IAtomContainer reconstruct(String signature) {
         ColoredTree tree = AbstractVertexSignature.parse(signature);
         MoleculeFromSignatureBuilder builder = 
-            new MoleculeFromSignatureBuilder(NoNotificationChemObjectBuilder.getInstance());
+            new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeFromColoredTree(tree);
         return builder.getAtomContainer();
     }
@@ -128,7 +128,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void makeGraphTest() {
         MoleculeFromSignatureBuilder builder = 
             new MoleculeFromSignatureBuilder(
-                    NoNotificationChemObjectBuilder.getInstance());
+                    SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         Assert.assertNotNull(builder.getAtomContainer());
     }
@@ -137,7 +137,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void makeVertexTest() {
         MoleculeFromSignatureBuilder builder = 
             new MoleculeFromSignatureBuilder(
-                    NoNotificationChemObjectBuilder.getInstance());
+                    SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         IAtomContainer product = builder.getAtomContainer();
@@ -148,7 +148,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void makeEdgeTest_singleBond() {
         MoleculeFromSignatureBuilder builder = 
             new MoleculeFromSignatureBuilder(
-                    NoNotificationChemObjectBuilder.getInstance());
+                    SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -164,7 +164,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void makeEdgeTest_doubleBond() {
         MoleculeFromSignatureBuilder builder = 
             new MoleculeFromSignatureBuilder(
-                    NoNotificationChemObjectBuilder.getInstance());
+                    SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -180,7 +180,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void makeEdgeTest_tripleBond() {
         MoleculeFromSignatureBuilder builder = 
             new MoleculeFromSignatureBuilder(
-                    NoNotificationChemObjectBuilder.getInstance());
+                    SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -196,7 +196,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void makeEdgeTest_aromaticBond() {
         MoleculeFromSignatureBuilder builder = 
             new MoleculeFromSignatureBuilder(
-                    NoNotificationChemObjectBuilder.getInstance());
+                    SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -214,7 +214,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
     public void getAtomContainerTest() {
         MoleculeFromSignatureBuilder builder = 
             new MoleculeFromSignatureBuilder(
-                    NoNotificationChemObjectBuilder.getInstance());
+                    SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         Assert.assertNotNull(builder.getAtomContainer());
     }

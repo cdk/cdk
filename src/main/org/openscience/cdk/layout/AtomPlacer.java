@@ -551,7 +551,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.NoSuchAtomException  Description of
      *      the Exception
      */
-    public IAtomContainer getInitialLongestChain(IMolecule molecule) throws CDKException
+    public IAtomContainer getInitialLongestChain(IAtomContainer molecule) throws CDKException
     {
         logger.debug("Start of getInitialLongestChain()");
         double[][] conMat = ConnectionMatrix.getMatrix(molecule);
@@ -608,7 +608,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public IAtomContainer getLongestUnplacedChain(IMolecule molecule, IAtom startAtom) throws CDKException
+    public IAtomContainer getLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom) throws CDKException
     {
         logger.debug("Start of getLongestUnplacedChain.");
         //ConnectivityChecker cc = new ConnectivityChecker();

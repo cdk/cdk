@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaSetManipulator.
@@ -39,7 +39,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 	
-	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 	
 	/**
 	 *  Constructor for the MolecularFormulaSetManipulatorTest object.

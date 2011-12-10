@@ -32,10 +32,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -66,7 +66,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     private IAtomContainer makeEthane() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class,Elements.CARBON));
         container.addAtom(container.getBuilder().newInstance(IAtom.class,Elements.CARBON));
         container.addBond(0, 1, IBond.Order.SINGLE);

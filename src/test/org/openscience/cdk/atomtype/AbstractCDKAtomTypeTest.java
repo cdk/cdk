@@ -22,7 +22,7 @@ package org.openscience.cdk.atomtype;
 
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Helper class that all atom type matcher test classes must implement.
@@ -38,7 +38,7 @@ abstract public class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
 	
 	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
 		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
-		NoNotificationChemObjectBuilder.getInstance()
+		SilentChemObjectBuilder.getInstance()
     );
 
 	public String getAtomTypeListName() {

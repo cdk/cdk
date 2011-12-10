@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -37,7 +37,7 @@ public class AdjacencyMatrixTest extends CDKTestCase {
 	
     @BeforeClass
     public static void getSmilesParser() {
-        sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 	
     @Test

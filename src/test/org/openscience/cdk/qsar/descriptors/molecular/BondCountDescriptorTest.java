@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -41,7 +41,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 public class BondCountDescriptorTest extends MolecularDescriptorTest {
 
-	private static final SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+	private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 	
     public  BondCountDescriptorTest() {}
 

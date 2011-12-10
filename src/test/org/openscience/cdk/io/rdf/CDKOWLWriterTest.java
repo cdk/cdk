@@ -30,8 +30,8 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ChemObjectWriterTest;
-import org.openscience.cdk.nonotify.NNAtom;
-import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.Molecule;
 
 /**
  * TestCase for the {@link CDKOWLWriter}.
@@ -48,9 +48,9 @@ public class CDKOWLWriterTest extends ChemObjectWriterTest {
         StringWriter output = new StringWriter();
         CDKOWLWriter writer = new CDKOWLWriter(output);
 
-        IMolecule mol = new NNMolecule();
-        mol.addAtom(new NNAtom("C"));
-        mol.addAtom(new NNAtom("C"));
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
         mol.addBond(0,1,IBond.Order.DOUBLE);
         writer.write(mol);
         String outputString = output.toString();

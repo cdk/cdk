@@ -38,7 +38,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -50,7 +50,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 	private static SmilesParser parser;
 	
 	@BeforeClass public static void setUp() {
-		parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 	}
 
 	@Test public void testVicinitySampler_sample() throws Exception {

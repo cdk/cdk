@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -40,7 +40,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class CIPSMILESTest extends CDKTestCase {
 
-    static SmilesParser smiles = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test
     public void test() throws Exception {

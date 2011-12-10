@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 
 /**
@@ -41,7 +41,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
 	private final static CDKAtomTypeMatcher matcher;
 	
 	static {
-		builder = NoNotificationChemObjectBuilder.getInstance();
+		builder = SilentChemObjectBuilder.getInstance();
 		matcher = CDKAtomTypeMatcher.getInstance(builder);
 	}
 	

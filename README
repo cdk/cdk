@@ -88,8 +88,8 @@ target in the build.xml file to look like this:
 	</target>
 
 Then, a "ant run" should give you a window where you can add bonds to a given structure.
-Currently, there are more than 2500 test, of which a large part tests the data, datadebug and 
-nonotify classes.
+Currently, there are more than 15000 test, of which a large part tests the data, datadebug and 
+silent classes.
 
 4. Using CDK
 

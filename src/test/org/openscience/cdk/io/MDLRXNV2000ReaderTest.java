@@ -35,7 +35,6 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.nonotify.NNReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -119,7 +118,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename2);
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
         MDLRXNV2000Reader reader2 = new MDLRXNV2000Reader(ins2);
-        IReaction reaction2 = new NNReaction();
+        IReaction reaction2 = new Reaction();
         reaction2 = (IReaction)reader2.read(reaction2);
         reader2.close();
 

@@ -9,6 +9,6 @@ cdk-io.jar
 cdk-inchi.jar
 cdk-tautomer.jar
 cdk-valencycheck.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-test.jar
 

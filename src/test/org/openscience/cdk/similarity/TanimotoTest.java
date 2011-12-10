@@ -40,7 +40,7 @@ import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.fingerprint.SignatureFingerprinter;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -145,7 +145,7 @@ public class TanimotoTest extends CDKTestCase
     @Test
     public void testRawTanimotoBetween0and1() throws Exception {
         SmilesParser smilesParser
-            = new SmilesParser( NoNotificationChemObjectBuilder.getInstance() );
+            = new SmilesParser( SilentChemObjectBuilder.getInstance() );
         IMolecule mol1 = smilesParser.parseSmiles(
             "Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
         IMolecule mol2 = smilesParser.parseSmiles(

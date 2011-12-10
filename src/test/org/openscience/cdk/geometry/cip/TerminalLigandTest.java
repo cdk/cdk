@@ -26,7 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -36,7 +36,7 @@ public class TerminalLigandTest extends CDKTestCase {
 
     @Test
     public void testConstructorAndGetMethods() throws Exception {
-        SmilesParser smiles = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IMolecule molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
 
         ILigand ligand = new TerminalLigand(

@@ -12,7 +12,7 @@ cdk-qsar.jar
 cdk-qsarmolecular.jar
 cdk-qsarcml.jar
 cdk-atomtype.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-pdb.jar
 cdk-pdbcml.jar
 cdk-formula.jar

@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -58,7 +58,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
 
     public InChITautomerGeneratorTest() throws CDKException {
         super();
-        smilesParser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         tautomerGenerator = new InChITautomerGenerator();
     }
 

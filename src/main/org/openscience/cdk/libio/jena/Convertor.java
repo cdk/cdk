@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -67,7 +68,7 @@ public class Convertor {
      * @param molecule {@link IMolecule} to serialize into a RDF graph.
      * @return the RDF graph representing the {@link IMolecule}.
      */
-    public static Model molecule2Model(IMolecule molecule) {
+    public static Model molecule2Model(IAtomContainer molecule) {
         Model model = createCDKModel();
         Resource subject = model.createResource(
             createIdentifier(model, molecule)

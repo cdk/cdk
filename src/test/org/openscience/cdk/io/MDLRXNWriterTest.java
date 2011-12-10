@@ -27,6 +27,9 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,10 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.nonotify.NNReactionSet;
-
-import java.io.StringReader;
-import java.io.StringWriter;
+import org.openscience.cdk.silent.ReactionSet;
 
 /**
  * TestCase for the writer MDL rxn files using one test file.
@@ -112,7 +112,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         water.addAtom(builder.newInstance(IAtom.class,"O"));
         reaction11.addProduct(water);
         
-        IReactionSet reactionSet = new NNReactionSet();
+        IReactionSet reactionSet = new ReactionSet();
         reactionSet.addReaction(reaction11);
         
         // now serialize to MDL RXN

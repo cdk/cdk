@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -242,7 +241,7 @@ public class ForceFieldConfigurator {
 	 *@return                sssrf set
 	 *@exception  CDKException  Problems detecting aromaticity or making hose codes.
 	 */
-	public IRingSet assignAtomTyps(IMolecule molecule) throws CDKException {
+	public IRingSet assignAtomTyps(IAtomContainer molecule) throws CDKException {
 		IAtom atom = null;
 		String hoseCode = "";
 		HOSECodeGenerator hcg = new HOSECodeGenerator();

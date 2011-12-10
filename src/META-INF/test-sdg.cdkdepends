@@ -4,7 +4,7 @@ cdk-core.jar
 cdk-valencycheck.jar
 cdk-standard.jar
 cdk-data.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-io.jar
 cdk-sdg.jar
 cdk-smiles.jar

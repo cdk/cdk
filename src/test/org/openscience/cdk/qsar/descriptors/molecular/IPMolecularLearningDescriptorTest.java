@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 	
 	private SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	/**
 	 *  Constructor for the IPMolecularLearningDescriptorTest object

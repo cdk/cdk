@@ -29,10 +29,9 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NNAtom;
-import org.openscience.cdk.nonotify.NNBond;
-import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.Bond;
 
 /**
  * Test suite for testing deduce-bond-order implementations.
@@ -57,16 +56,16 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>. 
 	 */
 	@Test public void testAcetylene() throws Exception {
-		IMolecule keto = new NNMolecule();
+		IAtomContainer keto = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom1, 1);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom2, 1);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
+		IBond bond1 = new Bond(atom1, atom2);
 		
 		keto.addAtom(atom1);
 		keto.addAtom(atom2);
@@ -83,18 +82,18 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>. 
 	 */
 	@Test public void testKeto() throws Exception {
-		IMolecule keto = new NNMolecule();
+	    IAtomContainer keto = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom1, 3);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom2, 1);
-		IAtom atom3 = new NNAtom(Elements.OXYGEN);
+		IAtom atom3 = new Atom(Elements.OXYGEN);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
 		
 		keto.addAtom(atom1);
 		keto.addAtom(atom2);
@@ -114,19 +113,19 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>. 
 	 */
 	@Test public void testEnol() throws Exception {
-		IMolecule enol = new NNMolecule();
+	    IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom2, 1);
-		IAtom atom3 = new NNAtom(Elements.OXYGEN);
+		IAtom atom3 = new Atom(Elements.OXYGEN);
 		addHydrogens(enol, atom3, 1);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -146,22 +145,22 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>. 
 	 */
 	@Test public void xtestButadiene() throws Exception {
-		IMolecule enol = new NNMolecule();
+	    IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom2, 1);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom3, 1);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom4, 2);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -184,31 +183,31 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>. 
 	 */
 	@Test public void testQuinone() throws Exception {
-		IMolecule enol = new NNMolecule();
+	    IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom2, 1);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom3, 1);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom5, 1);
-		IAtom atom6 = new NNAtom(Elements.CARBON);
+		IAtom atom6 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom6, 1);
-		IAtom atom7 = new NNAtom(Elements.OXYGEN);
-		IAtom atom8 = new NNAtom(Elements.OXYGEN);
+		IAtom atom7 = new Atom(Elements.OXYGEN);
+		IAtom atom8 = new Atom(Elements.OXYGEN);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
-		IBond bond7 = new NNBond(atom7, atom1);
-		IBond bond8 = new NNBond(atom8, atom4);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
+		IBond bond7 = new Bond(atom7, atom1);
+		IBond bond8 = new Bond(atom8, atom4);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -245,29 +244,29 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>. 
 	 */
 	@Test public void testBenzene() throws Exception {
-		IMolecule enol = new NNMolecule();
+	    IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 1);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom2, 1);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom3, 1);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom4, 1);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom5, 1);
-		IAtom atom6 = new NNAtom(Elements.CARBON);
+		IAtom atom6 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom6, 1);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -304,26 +303,26 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>. 
 	 */
 	@Test public void testPyrrole() throws Exception {
-		IMolecule enol = new NNMolecule();
+	    IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 1);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom2, 1);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom3, 1);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom4, 1);
-		IAtom atom5 = new NNAtom(Elements.NITROGEN);
+		IAtom atom5 = new Atom(Elements.NITROGEN);
 		addHydrogens(enol, atom5, 1);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -351,28 +350,28 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	 * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>. 
 	 */
 	@Test public void xtestPyridine() throws Exception {
-		IMolecule enol = new NNMolecule();
+	    IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 1);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom2, 1);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom3, 1);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom4, 1);
-		IAtom atom5 = new NNAtom(Elements.NITROGEN);
-		IAtom atom6 = new NNAtom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.NITROGEN);
+		IAtom atom6 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom6, 1);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);

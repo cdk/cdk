@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -40,10 +40,10 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
     
     @BeforeClass public static void setup() {
         smilesParser =
-            new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+            new SmilesParser(SilentChemObjectBuilder.getInstance());
         atomTypeMatcher =
             CDKAtomTypeMatcher.getInstance(
-                NoNotificationChemObjectBuilder.getInstance()
+                SilentChemObjectBuilder.getInstance()
             );
     }
 

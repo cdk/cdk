@@ -29,7 +29,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 public class IsotopePatternGeneratorTest extends CDKTestCase{
 
 	private final static IChemObjectBuilder builder =
-	    NoNotificationChemObjectBuilder.getInstance();
+	    SilentChemObjectBuilder.getInstance();
 	/**
 	 *  Constructor for the IsotopePatternGeneratorTest object
 	 *

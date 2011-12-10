@@ -26,7 +26,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.nonotify.NNChemObject;
+import org.openscience.cdk.silent.ChemObject;
 
 /**
  * Checks the functionality of the {@link OWLBasedAtomTypeConfigurator}.
@@ -47,7 +47,7 @@ public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
         String configFile = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         configurator.setInputStream(ins);
-        Assert.assertNotSame(0, configurator.readAtomTypes(new NNChemObject().getBuilder()).size());
+        Assert.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size());
     }
 
     @Test

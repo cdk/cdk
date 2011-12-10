@@ -30,7 +30,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -56,7 +56,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
 
     @Test
     public void testFingerprint() throws Exception {
-        SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new MACCSFingerprinter();
 
         IMolecule mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
@@ -89,7 +89,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
 
     @Test
     public void testfp2() throws Exception {
-        SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new MACCSFingerprinter();
 
         IMolecule mol1 = parser.parseSmiles("CC(N)CCCN");

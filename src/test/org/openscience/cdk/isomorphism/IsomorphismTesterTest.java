@@ -33,7 +33,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -157,7 +157,7 @@ public class IsomorphismTesterTest extends CDKTestCase
     public void testBiphenyl() throws Exception {
 
         //get the biphenyl as aromatic smiles
-        SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IMolecule biphenyl_aromaticsmiles = parser.parseSmiles("c1ccccc1c2ccccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_aromaticsmiles);
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(biphenyl_aromaticsmiles.getBuilder());

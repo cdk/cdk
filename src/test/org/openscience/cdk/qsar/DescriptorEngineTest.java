@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -132,8 +131,7 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
         SmilesParser sp = new
                 SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("COC1=CC2=C(C=C1)NC3=C2CCNC3");
-        IMolecule molecule = (IMolecule) mol;
+        IAtomContainer molecule = sp.parseSmiles("COC1=CC2=C(C=C1)NC3=C2CCNC3");
 
         TemplateHandler3D template = TemplateHandler3D.getInstance();
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template, "mm2");

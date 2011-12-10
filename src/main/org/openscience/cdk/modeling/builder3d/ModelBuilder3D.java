@@ -40,7 +40,6 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -151,7 +150,7 @@ public class ModelBuilder3D {
 	/**
 	 * Generate 3D coordinates with force field information.
 	 */
-	public IMolecule generate3DCoordinates(IMolecule molecule, boolean clone)
+	public IAtomContainer generate3DCoordinates(IAtomContainer molecule, boolean clone)
 	    throws CDKException, NoSuchAtomTypeException,
 	           CloneNotSupportedException, IOException{
 	    String[] originalAtomTypeNames = new String[molecule.getAtomCount()];
@@ -177,7 +176,7 @@ public class ModelBuilder3D {
 		ap3d.initilize(parameterSet);
 		atlp3d.setParameterSet(parameterSet);
 		
-		if (clone) molecule = (IMolecule)molecule.clone();
+		if (clone) molecule = (IAtomContainer)molecule.clone();
 		atomPlacer.setMolecule(molecule);
 		
 		if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
@@ -266,7 +265,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  ringSetMolecule  ringSystems of the molecule
 	 */
-	private void layoutMolecule(List ringSetMolecule, IMolecule molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException, IOException, CloneNotSupportedException {
+	private void layoutMolecule(List ringSetMolecule, IAtomContainer molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException, IOException, CloneNotSupportedException {
 		//logger.debug("****** LAYOUT MOLECULE MAIN *******");
 		IAtomContainer ac = null;
 		int safetyCounter = 0;
@@ -406,7 +405,7 @@ public class ModelBuilder3D {
 	 *@param  atomA           placed atom to which the unplaced satom is connected
 	 *@param  atomNeighbours  placed atomNeighbours of atomA
 	 */
-	private void setBranchAtom(IMolecule molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws CDKException {
+	private void setBranchAtom(IAtomContainer molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws CDKException {
 		//logger.debug("****** SET Branch Atom ****** >"+molecule.getAtomNumber(unplacedAtom));
 		IAtomContainer noCoords = molecule.getBuilder().newInstance(IAtomContainer.class);
 		noCoords.addAtom(unplacedAtom);
@@ -462,7 +461,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system 
 	 */
-	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
+	private void searchAndPlaceBranches(IAtomContainer molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
 		java.util.List atoms = null;
 		IAtomContainer branchAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
@@ -498,7 +497,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  startAtoms     AtomContainer of possible start atoms for a chain
 	 */
-	private void placeLinearChains3D(IMolecule molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
+	private void placeLinearChains3D(IAtomContainer molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
 		//logger.debug("****** PLACE LINEAR CHAINS ******");
 		IAtom dihPlacedAtom = null;
 		IAtom thirdPlacedAtom = null;
@@ -589,7 +588,7 @@ public class ModelBuilder3D {
 	/**
 	 * Sets the atomsToUnPlaced attribute of the ModelBuilder3D object.
 	 */
-	private void setAtomsToUnPlaced(IMolecule molecule) {
+	private void setAtomsToUnPlaced(IAtomContainer molecule) {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			molecule.getAtom(i).setFlag(CDKConstants.ISPLACED, false);
 		}
@@ -599,7 +598,7 @@ public class ModelBuilder3D {
 	/**
 	 * Sets the atomsToUnVisited attribute of the ModelBuilder3D object.
 	 */
-	private void setAtomsToUnVisited(IMolecule molecule) {
+	private void setAtomsToUnVisited(IAtomContainer molecule) {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			molecule.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}

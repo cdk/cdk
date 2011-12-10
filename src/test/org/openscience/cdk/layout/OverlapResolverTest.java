@@ -30,12 +30,12 @@ import java.util.Vector;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.nonotify.NNChemFile;
+import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -71,7 +71,7 @@ public class OverlapResolverTest extends CDKTestCase {
 		String filename = "data/cml/overlaptest.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		CMLReader reader = new CMLReader(ins);
-		IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+		IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
 		IAtomContainer atomContainer = (IAtomContainer)ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
 		OverlapResolver or = new OverlapResolver();
@@ -98,7 +98,7 @@ public class OverlapResolverTest extends CDKTestCase {
 		String filename = "data/cml/overlaptest2.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		CMLReader reader = new CMLReader(ins);
-		IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+		IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
 		IAtomContainer atomContainer = (IAtomContainer)ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 		//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 		double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
@@ -118,7 +118,7 @@ public class OverlapResolverTest extends CDKTestCase {
 		String filename = "data/cml/overlaptest3.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		CMLReader reader = new CMLReader(ins);
-		IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+		IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
 		IAtomContainer atomContainer = (IAtomContainer)ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 		//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 		double score = new OverlapResolver().getBondOverlapScore(atomContainer, new Vector());
@@ -139,7 +139,7 @@ public class OverlapResolverTest extends CDKTestCase {
 			String filename = "data/cml/overlaptest.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(ins);
-			IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+			IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
 			IAtomContainer atomContainer = (IAtomContainer)ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			OverlapResolver or = new OverlapResolver(); 

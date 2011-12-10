@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Checks the functionality of the <code>QueryAtomContainerCreator</code>.
@@ -46,7 +46,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
 	 * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
 	 */
     @Test public void test12DimethylBenzene() throws Exception {
-    	IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+    	IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     	IMolecule molecule = builder.newInstance(IMolecule.class);
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));

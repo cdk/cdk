@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -80,7 +80,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
     	// TODO: shk3-cleanuptests: please make it a types list
     	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-    	IMolecule ac = new NNMolecule((IAtomContainer)containersList.get(0));
+    	IAtomContainer ac = new AtomContainer((IAtomContainer)containersList.get(0));
     	addExplicitHydrogens(ac);
     	IAtomContainer chain=ac.getBuilder().newInstance(IAtomContainer.class);
     	for(int i=16;i<25;i++){

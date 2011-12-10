@@ -122,7 +122,6 @@
       <antcall target="ojdcheck-module"><param name="module" value="cip"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="data"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="datadebug"/></antcall>
-      <antcall target="ojdcheck-module"><param name="module" value="nonotify"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="standard"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="atomtype"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="dict"/></antcall>

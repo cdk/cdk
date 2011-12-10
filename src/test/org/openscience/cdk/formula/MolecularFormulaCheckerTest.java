@@ -33,7 +33,7 @@ import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.MMElementRule;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaChecker.
@@ -42,7 +42,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public class MolecularFormulaCheckerTest extends CDKTestCase {
 
-	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 	private IsotopeFactory ifac;
 
 	/**

@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -48,7 +48,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
         "org/openscience/cdk/config/data/" + ATOMTYPE_LIST,
-        NoNotificationChemObjectBuilder.getInstance()
+        SilentChemObjectBuilder.getInstance()
     );
 
     public String getAtomTypeListName() {
@@ -795,7 +795,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     @Test public void countTestedAtomTypes() {
     	AtomTypeFactory factory = AtomTypeFactory.getInstance(
     		"org/openscience/cdk/config/data/structgen_atomtypes.xml",
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
 
    	    IAtomType[] expectedTypes = factory.getAllAtomTypes();        

@@ -29,7 +29,6 @@
       <!-- the data classes modules -->
       <antcall target="test-module"><param name="module" value="data"/></antcall>
       <antcall target="test-module"><param name="module" value="datadebug"/></antcall>
-      <antcall target="test-module"><param name="module" value="nonotify"/></antcall>
       <!-- the other modules -->
       <antcall target="test-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="test-module"><param name="module" value="core"/></antcall>
@@ -69,7 +68,6 @@
       <antcall target="test-module"><param name="module" value="test-interfaces"/></antcall>
       <antcall target="test-module"><param name="module" value="test-data"/></antcall>
       <antcall target="test-module"><param name="module" value="test-datadebug"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-nonotify"/></antcall>
       <antcall target="test-module"><param name="module" value="test-atomtype"/></antcall>
       <antcall target="test-module"><param name="module" value="test-extra"/></antcall>
       <antcall target="test-module"><param name="module" value="test-forcefield"/></antcall>

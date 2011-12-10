@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
@@ -326,7 +326,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     @Test
     public void testImplementationIndependence() throws Exception {
         IMolecule water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
-        IMolecule water2 = someoneBringMeSomeWater(NoNotificationChemObjectBuilder.getInstance());
+        IMolecule water2 = someoneBringMeSomeWater(SilentChemObjectBuilder.getInstance());
 
         IDescriptorResult v1 = descriptor.calculate(water1).getValue();
         IDescriptorResult v2 = descriptor.calculate(water2).getValue();

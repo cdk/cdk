@@ -52,7 +52,7 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -318,7 +318,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testBug1598409() throws Exception
 	{
 		String smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
-		SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IMolecule cdkMol = parser.parseSmiles(smiles);
 		CDKHueckelAromaticityDetector.detectAromaticity(cdkMol);
 		new StructureDiagramGenerator(cdkMol).generateCoordinates();
@@ -395,7 +395,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testBug1714794() throws Exception {
 				String problematicMol2AsSmiles = "N1c2c(c3c(c4c(c(c3O)C)OC(OC=CC(C(C(C(C(C(C(C(C=CC=C(C1=O)C)C)O)C)O)C)OC(=O)C)C)OC)(C4=O)C)c(c2C=NN(C12CC3CC(C1)CC(C2)C3)C)O)O";
-				SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+				SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 				IMolecule cdkMol = parser.parseSmiles(problematicMol2AsSmiles);
 				new StructureDiagramGenerator(cdkMol).generateCoordinates();
 				assertTrue(GeometryTools.has2DCoordinates(cdkMol));
@@ -675,7 +675,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 						+ "   135   128   129    1\n";
 				Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
 				IChemModel model = (IChemModel)r.read(
-				    NoNotificationChemObjectBuilder
+				    SilentChemObjectBuilder
 						.getInstance().newInstance(IChemModel.class));
 				final IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
 				final IAtomContainer clone = (IAtomContainer)mol.clone();
@@ -859,7 +859,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
   public void testBug2843445NaNCoords() throws Exception {
         
         SmilesParser sp = 
-            new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+            new SmilesParser(SilentChemObjectBuilder.getInstance());
         String smiles = 
             "CCCC[C@H](NC(=O)[C@H](CCC(O)=O)NC(=O)[C@@H](NC(=O)[C@@H](CCCC)NC" +
             "(=O)[C@H](CC(N)=O)NC(=O)[C@H](CCC\\N=C(\\N)N)NC(=O)[C@H](CC(C)C)NC" +

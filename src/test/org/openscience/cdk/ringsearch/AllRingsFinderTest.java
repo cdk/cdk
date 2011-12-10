@@ -28,8 +28,8 @@ import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.nonotify.NNChemFile;
+import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -160,7 +160,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		String filename = "data/mdl/ring_03419.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+		IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
 		IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
@@ -296,7 +296,7 @@ public class AllRingsFinderTest extends CDKTestCase
       String filename = "data/mdl/ring_03419.mol";
       InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
       MDLV2000Reader reader = new MDLV2000Reader(ins);
-      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+      IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
       IChemSequence seq = chemFile.getChemSequence(0);
       IChemModel model = seq.getChemModel(0);
       IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
@@ -311,7 +311,7 @@ public class AllRingsFinderTest extends CDKTestCase
       String filename = "data/mdl/four-ring-5x10.mol";
       InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
       MDLV2000Reader reader = new MDLV2000Reader(ins);
-      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+      IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
       IChemSequence seq = chemFile.getChemSequence(0);
       IChemModel model = seq.getChemModel(0);
       IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
@@ -327,7 +327,7 @@ public class AllRingsFinderTest extends CDKTestCase
       String filename = "data/mdl/four-ring-5x10.mol";
       InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
       MDLV2000Reader reader = new MDLV2000Reader(ins);
-      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+      IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
       IChemSequence seq = chemFile.getChemSequence(0);
       IChemModel model = seq.getChemModel(0);
       IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);

@@ -26,7 +26,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Tests for IReactionChain implementations.
@@ -35,7 +35,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public class ReactionChainTest extends CDKTestCase {
 	
-	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 	
 	/**
 	 *  Constructor for the ReactionEngineTest object.

@@ -23,6 +23,19 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.zip.GZIPInputStream;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
@@ -36,23 +49,11 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point3d;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.zip.GZIPInputStream;
 
 /**
  * Helper class for ModelBuilder3D. Handles templates. This is
@@ -67,7 +68,7 @@ import java.util.zip.GZIPInputStream;
 public class TemplateHandler3D {
 	
 	private static final IChemObjectBuilder builder =
-	    NoNotificationChemObjectBuilder.getInstance();
+	    SilentChemObjectBuilder.getInstance();
 	private static final ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 	

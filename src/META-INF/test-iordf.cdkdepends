@@ -8,7 +8,7 @@ cdk-io.jar
 cdk-iordf.jar
 cdk-diff.jar
 cdk-data.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-test.jar
 cdk-test-io.jar
 cdk-datadebug.jar

@@ -30,7 +30,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -193,7 +193,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     @Test
     public void testMethane() throws Exception {
         IMolecule methane =
-             NoNotificationChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+             SilentChemObjectBuilder.getInstance().newInstance(IMolecule.class);
         IAtom carbon = methane.getBuilder().newInstance(IAtom.class,Elements.CARBON);
         methane.addAtom(carbon);
 

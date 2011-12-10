@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -68,7 +68,7 @@ import java.util.List;
  */
 public class SmilesParserTest extends CDKTestCase {
 	
-	private static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+	private static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
 	/** @cdk.bug 1363882 */
   @Test (timeout=1000)

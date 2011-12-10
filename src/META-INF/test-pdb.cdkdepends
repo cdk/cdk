@@ -7,7 +7,7 @@ cdk-io.jar
 cdk-ioformats.jar
 cdk-standard.jar
 cdk-pdb.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-test.jar
 cdk-test-io.jar
 cdk-testdata.jar

@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -68,7 +68,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
     @BeforeClass
     public static void setup() {
-        builder = NoNotificationChemObjectBuilder.getInstance();
+        builder = SilentChemObjectBuilder.getInstance();
         lpcheck = new LonePairElectronChecker();
     }
 

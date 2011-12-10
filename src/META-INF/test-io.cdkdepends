@@ -4,7 +4,7 @@ cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
 cdk-datadebug.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-io.jar
 cdk-ioformats.jar
 cdk-extra.jar
@@ -16,7 +16,7 @@ cdk-qsarmolecular.jar
 cdk-qsarcml.jar
 cdk-pdbcml.jar
 cdk-smiles.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-test.jar
 cdk-testdata.jar
 cdk-isomorphism.jar

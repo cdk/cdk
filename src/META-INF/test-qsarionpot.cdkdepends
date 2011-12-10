@@ -5,7 +5,7 @@ cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
 cdk-atomtype.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-io.jar
 cdk-valencycheck.jar
 cdk-extra.jar

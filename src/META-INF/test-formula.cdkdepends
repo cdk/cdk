@@ -1,7 +1,7 @@
 cdk-annotation.jar
 cdk-interfaces.jar
 cdk-data.jar
-cdk-nonotify.jar
+cdk-silent.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-test.jar

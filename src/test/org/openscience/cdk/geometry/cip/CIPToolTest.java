@@ -39,14 +39,14 @@ import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.nonotify.NNChemFile;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.ChemFile;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.StereoTool;
@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CIPToolTest extends CDKTestCase {
 
-    static SmilesParser smiles = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IMolecule molecule;
     static ILigand[] ligands;
 
@@ -281,7 +281,7 @@ public class CIPToolTest extends CDKTestCase {
         String filename = "data/cml/mol28.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile file = reader.read(new NNChemFile());
+        IChemFile file = reader.read(new ChemFile());
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(file).get(0);
 
         for (IAtom atom : mol.atoms()) {

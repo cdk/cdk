@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
@@ -139,7 +138,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         ISimpleChemObjectReader oReader = new PDBReader(ins);
         Assert.assertNotNull(oReader);
 
-        IChemFile oChemFile = (IChemFile)oReader.read(new NNChemFile());
+        IChemFile oChemFile = (IChemFile)oReader.read(new ChemFile());
         Assert.assertNotNull(oChemFile);
         Assert.assertEquals(oChemFile.getChemSequenceCount(), 1);
 
@@ -205,7 +204,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 		ISimpleChemObjectReader reader = new PDBReader(ins);
 		Assert.assertNotNull(reader);
 
-		ChemFile chemFile = (ChemFile) reader.read(new NNChemFile());
+		ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
 		Assert.assertNotNull(chemFile);
 		Assert.assertEquals(1, chemFile.getChemSequenceCount());
 
@@ -267,7 +266,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         
         reader.getIOSettings()[0].setSetting(String.valueOf(useRebond));
 
-        IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         return chemFile;
 	}
@@ -321,7 +320,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
-	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 	    Assert.assertNotNull(chemFile);
 	    Assert.assertEquals(1, chemFile.getChemSequenceCount());
 
@@ -449,7 +448,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
-	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 	    Assert.assertNotNull(chemFile);
 	    Assert.assertEquals(1, chemFile.getChemSequenceCount());
 

@@ -25,7 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -45,7 +45,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testAmine() throws Exception {
         SmilesParser sp = new SmilesParser(
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
         IMolecule mol = sp.parseSmiles("NC");
         IntegerResult result =
@@ -57,7 +57,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C2H4N2/c1-4-2-3/h2-3H,1H2
      */
     @Test public void test() throws Exception {
-        IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IMolecule mol = builder.newInstance(IMolecule.class);
         IAtom a1 = builder.newInstance(IAtom.class,"N");
         mol.addAtom(a1);

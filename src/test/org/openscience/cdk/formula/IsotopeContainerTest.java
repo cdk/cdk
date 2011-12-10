@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Class testing the IsotopeContainer class.
@@ -14,7 +14,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public class IsotopeContainerTest extends CDKTestCase{
 
-	private static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 	
 	/**
 	 *  Constructor for the IsotopeContainerTest object.

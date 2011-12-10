@@ -53,7 +53,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
-import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -465,7 +464,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test public void testEmptyString() throws Exception {
         String emptyString = "";
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(emptyString));
-        IMolecule mol = reader.read(new NNMolecule());
+        IAtomContainer mol = reader.read(new AtomContainer());
         Assert.assertNull(mol);
     }
 
@@ -609,7 +608,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule mol = reader.read(new NNMolecule());
+        IAtomContainer mol = reader.read(new AtomContainer());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(1).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(6).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(7).getStereo());

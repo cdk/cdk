@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.nonotify.NNChemFile;
+import org.openscience.cdk.silent.ChemFile;
 
 /**
  * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.5,
@@ -81,7 +81,7 @@ public class CML25FragmentsTest extends CDKTestCase {
     private IChemFile parseCMLString(String cmlString) throws Exception {
         IChemFile chemFile = null;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-        chemFile = (IChemFile)reader.read(new NNChemFile());
+        chemFile = (IChemFile)reader.read(new ChemFile());
         return chemFile;
     }
 

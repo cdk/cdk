@@ -26,17 +26,16 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
-import org.openscience.cdk.nonotify.NNAtom;
-import org.openscience.cdk.nonotify.NNBond;
-import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -106,35 +105,35 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	 * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H 
 	 */
 	@Test public void xtestQuinone() throws Exception {
-		IAtomContainer enol = new NNMolecule();
+		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.CARBON);
 		atom5.setHybridization(Hybridization.SP2);
-		IAtom atom6 = new NNAtom(Elements.CARBON);
+		IAtom atom6 = new Atom(Elements.CARBON);
 		atom6.setHybridization(Hybridization.SP2);
-		IAtom atom7 = new NNAtom(Elements.OXYGEN);
+		IAtom atom7 = new Atom(Elements.OXYGEN);
 		atom7.setHybridization(Hybridization.SP2);
-		IAtom atom8 = new NNAtom(Elements.OXYGEN);
+		IAtom atom8 = new Atom(Elements.OXYGEN);
 		atom8.setHybridization(Hybridization.SP2);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
-		IBond bond7 = new NNBond(atom7, atom1);
-		IBond bond8 = new NNBond(atom8, atom4);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
+		IBond bond7 = new Bond(atom7, atom1);
+		IBond bond8 = new Bond(atom8, atom4);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -176,27 +175,27 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
 	 */
 	@Test public void xtestPyrrole() throws Exception {
-		IAtomContainer enol = new NNMolecule();
+		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.NITROGEN);
+		IAtom atom5 = new Atom(Elements.NITROGEN);
 		atom5.setHybridization(Hybridization.SP2);
 		atom5.setImplicitHydrogenCount(1);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -226,29 +225,29 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	}
 
 	@Test public void xtestPyridine() throws Exception {
-		IAtomContainer enol = new NNMolecule();
+		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.CARBON);
 		atom5.setHybridization(Hybridization.SP2);
-		IAtom atom6 = new NNAtom(Elements.NITROGEN);
+		IAtom atom6 = new Atom(Elements.NITROGEN);
 		atom6.setHybridization(Hybridization.SP2);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -291,29 +290,29 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	 * @cdk.bug   1931262
 	 */
 	@Test public void xtestBenzene() throws Exception {
-		IAtomContainer enol = new NNMolecule();
+		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.CARBON);
 		atom5.setHybridization(Hybridization.SP2);
-		IAtom atom6 = new NNAtom(Elements.CARBON);
+		IAtom atom6 = new Atom(Elements.CARBON);
 		atom6.setHybridization(Hybridization.SP2);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);

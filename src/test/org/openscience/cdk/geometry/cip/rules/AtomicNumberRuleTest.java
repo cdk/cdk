@@ -35,7 +35,7 @@ import org.openscience.cdk.geometry.cip.ImplicitHydrogenLigand;
 import org.openscience.cdk.geometry.cip.Ligand;
 import org.openscience.cdk.geometry.cip.VisitedAtoms;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -43,7 +43,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class AtomicNumberRuleTest extends CDKTestCase {
 
-    static SmilesParser smiles = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IMolecule molecule;
 
     @BeforeClass

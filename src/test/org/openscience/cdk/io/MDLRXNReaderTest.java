@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,14 +46,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.nonotify.NNChemFile;
-import org.openscience.cdk.nonotify.NNChemModel;
-import org.openscience.cdk.nonotify.NNReaction;
-import org.openscience.cdk.nonotify.NNReactionSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.InputStream;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
@@ -84,7 +80,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         MDLRXNReader reader1 = new MDLRXNReader(ins1);
-        IReaction reaction1 = new NNReaction();
+        IReaction reaction1 = new Reaction();
         reaction1 = (IReaction)reader1.read(reaction1);
         reader1.close();
 
@@ -127,7 +123,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
 		MDLRXNReader reader2 = new MDLRXNReader(ins2);
-		IReaction reaction2 = new NNReaction();
+		IReaction reaction2 = new Reaction();
 		reaction2 = (IReaction)reader2.read(reaction2);
 		reader2.close();
 
@@ -141,7 +137,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
 		MDLRXNReader reader2 = new MDLRXNReader(ins2);
-		IReaction reaction2 = new NNReaction();
+		IReaction reaction2 = new Reaction();
 		reaction2 = (IReaction)reader2.read(reaction2);
 		reader2.close();
 
@@ -158,7 +154,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         
         
@@ -186,7 +182,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IChemModel chemModel = (IChemModel)reader.read(new NNChemModel());
+        IChemModel chemModel = (IChemModel)reader.read(new ChemModel());
         Assert.assertNotNull(chemModel);
         
         
@@ -213,7 +209,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IReactionSet reactionSet = (IReactionSet)reader.read(new NNReactionSet());
+        IReactionSet reactionSet = (IReactionSet)reader.read(new ReactionSet());
         Assert.assertNotNull(reactionSet);
         
         
@@ -241,12 +237,12 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IReactionSet reactionSet = (IReactionSet)reader.read(new NNReactionSet());
+        IReactionSet reactionSet = (IReactionSet)reader.read(new ReactionSet());
         filename = "data/mdl/output_Cleaned.rxn";
         logger.info("Testing: " + filename);
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLRXNReader(ins);
-        IReactionSet reactionSet2 = (IReactionSet)reader.read(new NNReactionSet());
+        IReactionSet reactionSet2 = (IReactionSet)reader.read(new ReactionSet());
         Assert.assertEquals(reactionSet.getReaction(0).getMappingCount(),reactionSet2.getReaction(0).getMappingCount());
         for(int i=0;i<reactionSet.getReaction(0).getMappingCount();i++){
             Assert.assertEquals(

@@ -29,9 +29,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.SimpleChemObjectReaderTest;
-import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -58,7 +59,7 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
         CDKOWLReader reader = new CDKOWLReader(
             new InputStreamReader(ins)
         );
-        IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+        IAtomContainer mol = (IMolecule)reader.read(new AtomContainer());
 
         Assert.assertNotNull(mol);
         Assert.assertEquals(2, mol.getAtomCount());

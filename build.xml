@@ -527,7 +527,7 @@
             list="silent,data,dict,diff,qm,standard,log4j"/>
         <foreach target="compile-module" param="module" trim="yes"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="datadebug,nonotify,isomorphism,atomtype,render,valencycheck,
+            list="datadebug,isomorphism,atomtype,render,valencycheck,
                   formula,cip"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -581,8 +581,7 @@
                   test-structgen,test-iordf,test-silent"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-qsarmolecular,test-builder3d,test-datadebug,
-        	      test-nonotify"/>
+            list="test-qsarmolecular,test-builder3d,test-datadebug"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-qsarprotein,test-qsarionpot,test-smsd,test-tautomer"/>
@@ -625,7 +624,6 @@
                     <includesfile name="${metainf}/cip.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libiocml.libdepends"/>
-                    <includesfile name="${metainf}/nonotify.libdepends"/>
                     <includesfile name="${metainf}/pdbcml.libdepends"/>
                     <includesfile name="${metainf}/pdb.libdepends"/>
                     <includesfile name="${metainf}/qsar.libdepends"/>
@@ -673,7 +671,6 @@
                     <include name="cdk-io.jar"/>
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
-                    <include name="cdk-nonotify.jar"/>
                     <include name="cdk-pdbcml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
@@ -752,7 +749,6 @@
                     <include name="cdk-ioformats.jar"/>
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
-                    <include name="cdk-nonotify.jar"/>
                     <include name="cdk-pdbcml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
@@ -819,7 +815,6 @@
                     <includesfile name="${metainf}/test-forcefield.libdepends"/>
                     <includesfile name="${metainf}/test-inchi.libdepends"/>
                     <includesfile name="${metainf}/test-io.libdepends"/>
-                    <includesfile name="${metainf}/test-nonotify.libdepends"/>
                     <includesfile name="${metainf}/test-pdb.libdepends"/>
                     <includesfile name="${metainf}/test-qsaratomic.libdepends"/>
                     <includesfile name="${metainf}/test-qsarbond.libdepends"/>
@@ -855,7 +850,6 @@
                     <include name="cdk-test-forcefield.jar"/>
                     <include name="cdk-test-inchi.jar"/>
                     <include name="cdk-test-io.jar"/>
-                    <include name="cdk-test-nonotify.jar"/>
                     <include name="cdk-test-pdb.jar"/>
                     <include name="cdk-test-qsaratomic.jar"/>
                     <include name="cdk-test-qsarbond.jar"/>
@@ -1080,7 +1074,7 @@
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
             <foreach target="test-module" param="module" trim="true"
-                list="core,data,datadebug,dict,diff,nonotify,atomtype,standard,
+                list="core,data,datadebug,dict,diff,atomtype,standard,
                       io,builder3d,forcefield,valencycheck,charges,reaction,
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
@@ -1226,7 +1220,6 @@
           <pathelement location="jar/vecmath1.2-1.14.jar"/>
           <pathelement path="${dist}/jar/cdk-builder3dtools.jar" />
           <pathelement path="${dist}/jar/cdk-interfaces.jar" />
-          <pathelement path="${dist}/jar/cdk-nonotify.jar" />
           <pathelement path="${dist}/jar/cdk-standard.jar" />
           <pathelement path="${dist}/jar/cdk-core.jar" />
           <pathelement path="${dist}/jar/cdk-io.jar" />

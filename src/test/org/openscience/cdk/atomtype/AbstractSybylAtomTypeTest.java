@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Helper class that all atom type matcher test classes must implement.
@@ -44,7 +44,7 @@ abstract public class AbstractSybylAtomTypeTest extends AbstractAtomTypeTest {
 	
 	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
 		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
-		NoNotificationChemObjectBuilder.getInstance()
+		SilentChemObjectBuilder.getInstance()
     );
 
 	public String getAtomTypeListName() {

@@ -33,8 +33,8 @@ import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -68,7 +68,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV3000Reader reader = new MDLV3000Reader(ins);
-        IMolecule m = (IMolecule)reader.read(new NNMolecule());
+        IAtomContainer m = reader.read(new AtomContainer());
         Assert.assertNotNull(m);
         Assert.assertEquals(31, m.getAtomCount());
         Assert.assertEquals(34, m.getBondCount());
@@ -84,7 +84,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     	String emptyString = "";
     	MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));
     	try {
-    		reader.read(new NNMolecule());
+    		reader.read(new AtomContainer());
     		Assert.fail("Should have received a CDK Exception");
     	} catch (CDKException cdkEx) {
     		Assert.assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());

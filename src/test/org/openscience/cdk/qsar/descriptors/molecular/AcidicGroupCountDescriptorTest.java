@@ -27,7 +27,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -47,7 +47,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testOneAcidGroup() throws Exception {
         SmilesParser sp = new SmilesParser(
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
         IMolecule mol = sp.parseSmiles("CC(=O)O");
         IntegerResult result =
@@ -57,7 +57,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testSulphurAcidGroup() throws Exception {
         SmilesParser sp = new SmilesParser(
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
         IMolecule mol = sp.parseSmiles("OS(=O)(=O)O");
         IntegerResult result =
@@ -67,7 +67,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testPhosphorusAcidGroup() throws Exception {
         SmilesParser sp = new SmilesParser(
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
         IMolecule mol = sp.parseSmiles("O=P(=O)O");
         IntegerResult result =
@@ -77,7 +77,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testFancyGroup() throws Exception {
         SmilesParser sp = new SmilesParser(
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
         IMolecule mol = sp.parseSmiles("[NH](S(=O)=O)C(F)(F)F");
         IntegerResult result =
@@ -87,7 +87,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testNitroRing() throws Exception {
         SmilesParser sp = new SmilesParser(
-            NoNotificationChemObjectBuilder.getInstance()
+            SilentChemObjectBuilder.getInstance()
         );
         IMolecule mol = sp.parseSmiles("[nH]1nnnc1");
         IntegerResult result =

@@ -45,10 +45,10 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -64,7 +64,7 @@ public class TemplateExtractor {
 
 	static final String usage = "Usage: TemplateExtractor SDFinfile outfile anyAtom=true/false anyBondAnyAtom=true/false";
 	
-	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
 	public TemplateExtractor() {
 	}
@@ -75,8 +75,7 @@ public class TemplateExtractor {
 		try {
 			System.out.println("Start clean dataset...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-			imdl = new IteratingMDLReader(fin, NoNotificationChemObjectBuilder
-					.getInstance());
+			imdl = new IteratingMDLReader(fin, builder);
 			System.out.print("Read File in..");
 		} catch (Exception exc) {
 			System.out.println("Could not read Molecules from file " + dataFile
@@ -113,8 +112,7 @@ public class TemplateExtractor {
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-			imdl = new IteratingMDLReader(fin, NoNotificationChemObjectBuilder
-					.getInstance());
+			imdl = new IteratingMDLReader(fin, builder);
 			System.out.print("Read File in..");
 		} catch (Exception exc) {
 			System.out.println("Could not read Molecules from file " + dataFile
@@ -317,8 +315,7 @@ public class TemplateExtractor {
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
-			imdl = new IteratingMDLReader(fin, NoNotificationChemObjectBuilder
-					.getInstance());
+			imdl = new IteratingMDLReader(fin, builder);
 			// fin.close();
 			System.out.println("Read File in..");
 		} catch (Exception exc) {
@@ -388,8 +385,7 @@ public class TemplateExtractor {
 		List<BitSet> data = new ArrayList<BitSet>();
 		try {
 			System.out.print("Read data file in ...");
-			imdl = new IteratingMDLReader(fin, NoNotificationChemObjectBuilder
-					.getInstance());
+			imdl = new IteratingMDLReader(fin, builder);
 			// fin.close();
 			System.out.println("ready");
 		} catch (Exception exc) {

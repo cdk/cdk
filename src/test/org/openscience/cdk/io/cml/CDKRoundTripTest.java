@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.libio.cml.Convertor;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomDiff;
 
 /**
@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  */
 public class CDKRoundTripTest extends CDKTestCase {
 
-    private static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+    private static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     
     private static Convertor convertor = new Convertor(false, "");
 

@@ -25,7 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
@@ -45,7 +45,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testMethanol() {
         IChemObjectBuilder builder =
-            NoNotificationChemObjectBuilder.getInstance();
+            SilentChemObjectBuilder.getInstance();
         IMolecule methanol = builder.newInstance(IMolecule.class);
         methanol.addAtom(builder.newInstance(IAtom.class,"C"));
         methanol.addAtom(builder.newInstance(IAtom.class,"O"));
@@ -58,7 +58,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testMethane() {
         IChemObjectBuilder builder =
-            NoNotificationChemObjectBuilder.getInstance();
+            SilentChemObjectBuilder.getInstance();
         IMolecule methane = builder.newInstance(IMolecule.class);
         methane.addAtom(builder.newInstance(IAtom.class,"C"));
         IDescriptorResult result = descriptor.calculate(methane).getValue();
@@ -69,7 +69,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testChloroform() {
         IChemObjectBuilder builder =
-            NoNotificationChemObjectBuilder.getInstance();
+            SilentChemObjectBuilder.getInstance();
         IMolecule chloroform = builder.newInstance(IMolecule.class);
         chloroform.addAtom(builder.newInstance(IAtom.class,"C"));
         for (int i=0; i<3; i++) {

@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.Mol2Reader;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -73,13 +73,13 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
 	@Test public void testGetInstance_IChemObjectBuilder() {
 		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
-		    NoNotificationChemObjectBuilder.getInstance());
+		    SilentChemObjectBuilder.getInstance());
 		Assert.assertNotNull(matcher);
 	}
 	
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
 		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
-		    NoNotificationChemObjectBuilder.getInstance());
+		    SilentChemObjectBuilder.getInstance());
 		Assert.assertNotNull(matcher);
 		Molecule ethane = MoleculeFactory.makeAlkane(2);
 		String[] expectedTypes = {"C.3", "C.3"};

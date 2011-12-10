@@ -26,9 +26,9 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.nonotify.NNAtom;
-import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomType;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -42,8 +42,8 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 
     @Test
     public void testConfigure_IAtom_IAtomType() {
-		IAtom atom = new NNAtom(Elements.CARBON);
-		IAtomType atomType = new NNAtomType(Elements.CARBON);
+		IAtom atom = new Atom(Elements.CARBON);
+		IAtomType atomType = new AtomType(Elements.CARBON);
 		atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
 		AtomTypeManipulator.configure(atom, atomType);
 		Assert.assertEquals(
@@ -54,9 +54,9 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 
     @Test
     public void testConfigureUnsetProperties_DontOverwriterSetProperties() {
-        IAtom atom = new NNAtom(Elements.CARBON);
+        IAtom atom = new Atom(Elements.CARBON);
         atom.setExactMass(13.0);
-        IAtomType atomType = new NNAtomType(Elements.CARBON);
+        IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setExactMass(12.0);
         AtomTypeManipulator.configureUnsetProperties(atom, atomType);
         Assert.assertEquals(13.0, atom.getExactMass(), 0.1);
@@ -64,8 +64,8 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 
     @Test
     public void testConfigureUnsetProperties() {
-        IAtom atom = new NNAtom(Elements.CARBON);
-        IAtomType atomType = new NNAtomType(Elements.CARBON);
+        IAtom atom = new Atom(Elements.CARBON);
+        IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setExactMass(12.0);
         AtomTypeManipulator.configureUnsetProperties(atom, atomType);
         Assert.assertEquals(12.0, atom.getExactMass(), 0.1);
@@ -73,7 +73,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConfigure_IAtom_Null() {
-        IAtom atom = new NNAtom(Elements.CARBON);
+        IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = null;
         AtomTypeManipulator.configure(atom, atomType);
     }

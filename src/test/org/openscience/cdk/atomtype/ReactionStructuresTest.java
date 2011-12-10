@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.type.AdductionSodiumLPReactionTest;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReactionTest;
@@ -49,7 +49,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	private final static CDKAtomTypeMatcher matcher;
 	
 	static {
-		builder = NoNotificationChemObjectBuilder.getInstance();
+		builder = SilentChemObjectBuilder.getInstance();
 		matcher = CDKAtomTypeMatcher.getInstance(builder);
 	}
 	

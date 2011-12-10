@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.nonotify.NNAtomContainer;
+import org.openscience.cdk.silent.AtomContainer;
 
 /**
  * @cdk.module test-renderbasic
@@ -42,7 +42,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainer_SingleAtom() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         BoundsCalculator.calculateBounds(container);
     }
@@ -53,7 +53,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainer() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         BoundsCalculator.calculateBounds(container);
@@ -65,7 +65,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IMoleculeSet_SingleAtom() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IMoleculeSet set = container.getBuilder().newInstance(IMoleculeSet.class);
         set.addAtomContainer(container);
@@ -78,7 +78,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IMoleculeSet() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IMoleculeSet set = container.getBuilder().newInstance(IMoleculeSet.class);
@@ -92,7 +92,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IReactionSet_SingleAtom() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);
         reaction.addReactant(
@@ -109,7 +109,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IReactionSet() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);
@@ -127,7 +127,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IChemModel_SingleAtom() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IMoleculeSet set = container.getBuilder().newInstance(IMoleculeSet.class);
         set.addAtomContainer(container);
@@ -142,7 +142,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IChemModel() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IMoleculeSet set = container.getBuilder().newInstance(IMoleculeSet.class);
@@ -158,7 +158,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IReaction_SingleAtom() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);
         reaction.addReactant(
@@ -173,7 +173,7 @@ public class BoundsCalculatorTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCalculateBounds_IReaction() {
-        IAtomContainer container = new NNAtomContainer();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);

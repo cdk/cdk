@@ -29,8 +29,8 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -40,8 +40,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.PDBReader;
-import org.openscience.cdk.nonotify.NNChemFile;
-import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -228,12 +227,12 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             DefaultChemObjectBuilder.getInstance());
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(dir+filename);
         reader.setReader(ins);
-        IMolecule mol = null;
+        IAtomContainer mol = null;
         if (reader.accepts(Molecule.class)) {
-        	mol = (IMolecule)reader.read(new NNMolecule());
+        	mol = (IMolecule)reader.read(new AtomContainer());
         } else if (reader.accepts(ChemFile.class)) {
-        	IChemFile cf = (IChemFile)reader.read(new NNChemFile());
-        	mol = new NNMolecule();
+        	IChemFile cf = (IChemFile)reader.read(new ChemFile());
+        	mol = new AtomContainer();
         	List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cf);
         	for (IAtomContainer container : containers) mol.add(container);
         }

@@ -27,13 +27,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.nonotify.NNAtomContainer;
-import org.openscience.cdk.nonotify.NNAtomContainerSet;
-import org.openscience.cdk.nonotify.NNChemFile;
-import org.openscience.cdk.nonotify.NNChemModel;
-import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.nonotify.NNMoleculeSet;
-import org.openscience.cdk.nonotify.NNReaction;
+import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.AtomContainerSet;
+import org.openscience.cdk.silent.ChemFile;
+import org.openscience.cdk.silent.ChemModel;
+import org.openscience.cdk.silent.Molecule;
+import org.openscience.cdk.silent.MoleculeSet;
+import org.openscience.cdk.silent.Reaction;
 
 /**
  * TestCase for {@link IChemObjectWriter} implementations.
@@ -50,9 +50,9 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
     }
 
     private static IChemObject[] allChemObjectsTypes = {
-        new NNChemFile(), new NNChemModel(), new NNMolecule(),
-        new NNReaction(), new NNAtomContainerSet(), new NNAtomContainer(),
-        new NNMoleculeSet()
+        new ChemFile(), new ChemModel(), new Molecule(),
+        new Reaction(), new AtomContainerSet(), new AtomContainer(),
+        new MoleculeSet()
     };
 
     /**

@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.XYZReader;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * @cdk.module test-standard
@@ -102,7 +102,7 @@ public class BondToolsTest extends CDKTestCase {
 		XYZReader reader = new XYZReader(ins);
 		AtomTypeFactory atf = AtomTypeFactory.getInstance(
 				 "org/openscience/cdk/config/data/jmol_atomtypes.txt",
-			     NoNotificationChemObjectBuilder.getInstance()
+			     SilentChemObjectBuilder.getInstance()
 		);
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IAtomContainer mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);

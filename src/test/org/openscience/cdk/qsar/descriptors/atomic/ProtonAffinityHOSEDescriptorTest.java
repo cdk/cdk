@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -43,7 +43,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 	ProtonAffinityHOSEDescriptor descriptor;
 	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private final static IChemObjectBuilder builder =
-	    NoNotificationChemObjectBuilder.getInstance();
+	    SilentChemObjectBuilder.getInstance();
     /**
 	 *  Constructor for the ProtonAffinityHOSEDescriptorTest object
 	 *

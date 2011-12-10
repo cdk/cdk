@@ -34,7 +34,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -52,7 +52,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
     @Before
     public void setup() {
-        parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
     @Test

@@ -28,7 +28,7 @@ import java.util.BitSet;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -52,7 +52,7 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
 
     @Test
     public void testFingerprint() throws Exception {
-		SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IFingerprinter printer = new EStateFingerprinter();
 
 		BitSet bs1 = printer.getFingerprint(parser.parseSmiles("C=C-C#N"));
