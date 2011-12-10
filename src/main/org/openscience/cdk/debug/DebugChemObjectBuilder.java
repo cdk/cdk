@@ -18,12 +18,6 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
@@ -49,7 +43,6 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
@@ -67,6 +60,11 @@ import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A helper class to instantiate a {@link IChemObject} for the original CDK
@@ -153,8 +151,6 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
             if (params.length == 0) return (T)new DebugPolymer();
         } else if (IRingSet.class.isAssignableFrom(clazz)) {
             if (params.length == 0) return (T)new DebugRingSet();
-        } else if (IMoleculeSet.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new DebugMoleculeSet();
         } else if (IAtomContainerSet.class.isAssignableFrom(clazz)) {
             if (params.length == 0) return (T)new DebugAtomContainerSet();
         } else if (ICrystal.class.isAssignableFrom(clazz)) {

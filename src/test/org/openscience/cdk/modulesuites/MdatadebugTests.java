@@ -39,6 +39,7 @@ import org.openscience.cdk.debug.DebugBioPolymerTest;
 import org.openscience.cdk.debug.DebugBondTest;
 import org.openscience.cdk.debug.DebugChemFileTest;
 import org.openscience.cdk.debug.DebugChemModelTest;
+import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
 import org.openscience.cdk.debug.DebugChemObjectTest;
 import org.openscience.cdk.debug.DebugChemSequenceTest;
 import org.openscience.cdk.debug.DebugCrystalTest;
@@ -50,7 +51,6 @@ import org.openscience.cdk.debug.DebugLonePairTest;
 import org.openscience.cdk.debug.DebugMappingTest;
 import org.openscience.cdk.debug.DebugMolecularFormulaSetTest;
 import org.openscience.cdk.debug.DebugMolecularFormulaTest;
-import org.openscience.cdk.debug.DebugMoleculeSetTest;
 import org.openscience.cdk.debug.DebugMoleculeTest;
 import org.openscience.cdk.debug.DebugMonomerTest;
 import org.openscience.cdk.debug.DebugPDBAtomTest;
@@ -66,7 +66,6 @@ import org.openscience.cdk.debug.DebugRingSetTest;
 import org.openscience.cdk.debug.DebugRingTest;
 import org.openscience.cdk.debug.DebugSingleElectronTest;
 import org.openscience.cdk.debug.DebugStrandTest;
-import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
 
 /**
  * TestSuite that runs the datadebug tests.
@@ -106,7 +105,6 @@ import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
     DebugRingTest.class,
     DebugRingSetTest.class,
     DebugAtomContainerSetTest.class,
-    DebugMoleculeSetTest.class,
     DebugReactionSetTest.class,
     DebugSingleElectronTest.class,
     DebugStrandTest.class,
