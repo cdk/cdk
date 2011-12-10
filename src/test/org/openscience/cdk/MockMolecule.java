@@ -29,9 +29,6 @@ package org.openscience.cdk;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
-
 /**
  * A molecule which looks like a cube. The center
  * of the cube is located at (0,0,0) and the corners have a length of 2.
@@ -41,7 +38,7 @@ import org.openscience.cdk.Molecule;
  * @author  Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class MockMolecule extends Molecule {
+public class MockMolecule extends AtomContainer {
 
     private static final long serialVersionUID = -3475592461591784619L;
 
