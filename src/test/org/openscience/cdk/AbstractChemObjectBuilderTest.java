@@ -18,9 +18,6 @@
  */
 package org.openscience.cdk;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAdductFormula;
@@ -32,9 +29,11 @@ import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -46,9 +45,7 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -63,8 +60,10 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  * Checks the functionality of {@link IChemObjectBuilder} implementations.
@@ -590,7 +589,7 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
 
     @Test public void testNewMoleculeSet() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IMoleculeSet set = builder.newInstance(IMoleculeSet.class);
+        IAtomContainerSet set = builder.newInstance(IAtomContainerSet.class);
         Assert.assertNotNull(set);
     }
 
