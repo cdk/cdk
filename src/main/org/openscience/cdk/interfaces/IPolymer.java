@@ -40,7 +40,7 @@ import java.util.Collection;
  * @cdk.created 2001-08-06
  * @cdk.keyword polymer
  */
-public interface IPolymer extends IMolecule {
+public interface IPolymer extends IAtomContainer {
 	
 	/**
 	 * Adds the atom oAtom without specifying a Monomer. Therefore the
