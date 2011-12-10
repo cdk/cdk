@@ -20,11 +20,6 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,24 +29,29 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @cdk.module test-standard
@@ -66,7 +66,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 	IAtom atomInMol1 = null;
 	IBond bondInMol1 = null;
 	IAtom atomInMol2 = null;
-	IMoleculeSet moleculeSet = null;
+	IAtomContainerSet moleculeSet = null;
 	IReaction reaction = null;
 	IReactionSet reactionSet = null;
 	IChemModel chemModel = null;
@@ -90,7 +90,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		atomInMol2 = new Atom("O");
 		atomInMol2.setImplicitHydrogenCount(2);
 		molecule2.addAtom(atomInMol2);
-		moleculeSet = new MoleculeSet();
+		moleculeSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		moleculeSet.addAtomContainer(molecule1);
 		moleculeSet.addAtomContainer(molecule2);
 		reaction = new Reaction();
@@ -171,7 +171,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		mol2.addAtom(new Atom("I"));
 		IBond bond2 = new Bond(mol2.getAtom(0), mol2.getAtom(1));
 		mol2.addBond(bond2);
-		IMoleculeSet molSet = new MoleculeSet();
+		IAtomContainerSet molSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		molSet.addAtomContainer(mol1);
 		IReaction r = new Reaction();
 		r.addProduct(mol2);
@@ -204,7 +204,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		mol2.addAtom(new Atom("I"));
 		IBond bond2 = new Bond(mol2.getAtom(0), mol2.getAtom(1));
 		mol2.addBond(bond2);
-		IMoleculeSet molSet = new MoleculeSet();
+		IAtomContainerSet molSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 		molSet.addAtomContainer(mol1);
 		IReaction r = new Reaction();
 		r.addProduct(mol2);
@@ -264,7 +264,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
             //if (o instanceof IAtom) ++atomCount;
             //if (o instanceof IBond) ++bondCount;
             if (o instanceof IMolecule) ++molCount;
-            else if (o instanceof IMoleculeSet) ++molSetCount;
+            else if (o instanceof IAtomContainerSet) ++molSetCount;
             else if (o instanceof IReaction) ++reactionCount;
             else if (o instanceof IReactionSet) ++reactionSetCount;
             else Assert.fail("Unexpected Object of type " + o.getClass());
