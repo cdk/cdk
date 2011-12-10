@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -30,15 +27,17 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This mechanism adduct together two fragments. The second fragment will be deficient in charge.
@@ -58,17 +57,18 @@ public class AdductionLPMechanism implements IReactionMechanism{
      * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
      * reactants and products. 
      *
-     * @param moleculeSet The IMolecule to apply the mechanism
+     *
+     * @param atomContainerSet
      * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
      * @param bondList    The list of bonds taking part in the mechanism. not allowed bonds.
-     * 
+     *
      * @return            The Reaction mechanism
      * 
 	 */
     @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
-	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
-		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder());
-		if (moleculeSet.getAtomContainerCount() != 2) {
+	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
+		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
+		if (atomContainerSet.getAtomContainerCount() != 2) {
 			throw new CDKException("AdductionLPMechanism expects two IMolecule's");
 		}
 		if (atomList.size() != 2) {
@@ -77,13 +77,13 @@ public class AdductionLPMechanism implements IReactionMechanism{
 		if (bondList != null) {
 			throw new CDKException("AdductionLPMechanism don't expect bonds in the ArrayList");
 		}
-		IMolecule molecule1 = moleculeSet.getMolecule(0);
-		IMolecule molecule2 = moleculeSet.getMolecule(1);
+		IAtomContainer molecule1 = atomContainerSet.getAtomContainer(0);
+		IAtomContainer molecule2 = atomContainerSet.getAtomContainer(1);
 		
-		IMolecule reactantCloned;
+		IAtomContainer reactantCloned;
 		try {
-			reactantCloned = (IMolecule) moleculeSet.getMolecule(0).clone();
-			reactantCloned.add((IAtomContainer) moleculeSet.getMolecule(1).clone());
+			reactantCloned = (IAtomContainer) atomContainerSet.getAtomContainer(0).clone();
+			reactantCloned.add((IAtomContainer) atomContainerSet.getAtomContainer(1).clone());
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IMolecule!", e);
 		}

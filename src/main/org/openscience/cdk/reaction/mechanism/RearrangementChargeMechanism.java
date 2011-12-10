@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
@@ -40,12 +37,14 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This mechanism displaces the charge(radical, charge + or charge -) because of
@@ -65,9 +64,10 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products. 
      *
-     * @param moleculeSet The IMolecule to apply the mechanism
+     *
+     * @param atomContainerSet
      * @param atomList    The list of atoms taking part in the mechanism. Only allowed two three.
-     *                    The first atom is the atom which must contain the charge to be moved, the second 
+     *                    The first atom is the atom which must contain the charge to be moved, the second
      *                    is the atom which is in the middle and the third is the atom which acquires the new charge
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed two bond.
      * 					  The first bond is the bond to increase the order and the second is the bond
@@ -77,9 +77,9 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
      * 
 	 */
     @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
-	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
-		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder());
-		if (moleculeSet.getAtomContainerCount() != 1) {
+	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
+		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
+		if (atomContainerSet.getAtomContainerCount() != 1) {
 			throw new CDKException("RearrangementChargeMechanism only expects one IMolecule");
 		}
 		if (atomList.size() != 3) {
@@ -88,8 +88,8 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
 		if (bondList.size() != 2) {
 			throw new CDKException("RearrangementChargeMechanism only expect one bond in the ArrayList");
 		}
-		IMolecule molecule = moleculeSet.getMolecule(0);
-		IMolecule reactantCloned;
+		IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
+		IAtomContainer reactantCloned;
 		try {
 			reactantCloned = (IMolecule) molecule.clone();
 		} catch (CloneNotSupportedException e) {

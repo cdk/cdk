@@ -20,10 +20,6 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -55,6 +51,10 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
 * TestSuite that runs all tests.
@@ -967,8 +967,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * A unit test suite for JUnit.
 	 * 
 	 * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-	 * 
-	 * @see #testIsomphrXilene()
+	 *
 	 *
 	 * @return    The test suite
 	 * @throws    Exception

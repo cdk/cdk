@@ -24,13 +24,13 @@
  */
 package org.openscience.cdk.reaction;
 
-import java.util.ArrayList;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
+
+import java.util.ArrayList;
 
 /**
  * Classes that implement this interface are reaction mechanisms.
@@ -45,7 +45,8 @@ public interface IReactionMechanism {
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
-     * @param moleculeSet The IMoleculeSet to apply the mechanism
+     *
+     * @param atomContainerSet
      * @param atomList    The list of atoms taking part in the mechanism
      * @param bondList    The list of bonds taking part in the mechanism
      * @return            The Reaction mechanism
@@ -53,6 +54,6 @@ public interface IReactionMechanism {
      * @throws CDKException if an error occurs during the reaction process. 
      * See documentation for individual reaction processes
      */
-    public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList) throws CDKException;
+    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList) throws CDKException;
 
 }

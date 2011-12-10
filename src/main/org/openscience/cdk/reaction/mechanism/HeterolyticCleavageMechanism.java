@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import java.util.ArrayList;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.annotations.TestClass;
@@ -35,12 +33,12 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.ArrayList;
 
 /**
  * This mechanism displaces the chemical bond to an Atom. Generating one with
@@ -59,18 +57,19 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products. 
      *
-     * @param moleculeSet The IMolecule to apply the mechanism
+     *
+     * @param atomContainerSet
      * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
-     *                    The first atom receives the positive charge charge and the second 
+     *                    The first atom receives the positive charge charge and the second
      *                    negative charge
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
      * @return            The Reaction mechanism
      * 
 	 */
     @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
-	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
-		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder(), CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
-		if (moleculeSet.getAtomContainerCount() != 1) {
+	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
+		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder(), CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+		if (atomContainerSet.getAtomContainerCount() != 1) {
 			throw new CDKException("TautomerizationMechanism only expects one IMolecule");
 		}
 		if (atomList.size() != 2) {
@@ -79,10 +78,10 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
 		if (bondList.size() != 1) {
 			throw new CDKException("HeterolyticCleavageMechanism only expect one bond in the ArrayList");
 		}
-		IMolecule molecule = moleculeSet.getMolecule(0);
-		IMolecule reactantCloned;
+		IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
+		IAtomContainer reactantCloned;
 		try {
-			reactantCloned = (IMolecule) molecule.clone();
+			reactantCloned = (IAtomContainer) molecule.clone();
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IMolecule!", e);
 		}
