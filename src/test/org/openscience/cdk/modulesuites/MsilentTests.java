@@ -47,7 +47,6 @@ import org.openscience.cdk.silent.IsotopeTest;
 import org.openscience.cdk.silent.LonePairTest;
 import org.openscience.cdk.silent.MolecularFormulaSetTest;
 import org.openscience.cdk.silent.MolecularFormulaTest;
-import org.openscience.cdk.silent.MoleculeSetTest;
 import org.openscience.cdk.silent.MoleculeTest;
 import org.openscience.cdk.silent.MonomerTest;
 import org.openscience.cdk.silent.PDBAtomTest;
@@ -61,9 +60,9 @@ import org.openscience.cdk.silent.ReactionSetTest;
 import org.openscience.cdk.silent.ReactionTest;
 import org.openscience.cdk.silent.RingSetTest;
 import org.openscience.cdk.silent.RingTest;
+import org.openscience.cdk.silent.SilentChemObjectBuilderTest;
 import org.openscience.cdk.silent.SingleElectronTest;
 import org.openscience.cdk.silent.StrandTest;
-import org.openscience.cdk.silent.SilentChemObjectBuilderTest;
 
 /**
  * TestSuite that runs the tests from the silent module.
@@ -101,7 +100,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilderTest;
     RingTest.class,
     RingSetTest.class,
     AtomContainerSetTest.class,
-    MoleculeSetTest.class,
     ReactionSetTest.class,
     ReactionSchemeTest.class,
     SingleElectronTest.class,

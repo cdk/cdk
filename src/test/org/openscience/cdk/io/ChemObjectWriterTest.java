@@ -21,8 +21,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.StringWriter;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
@@ -32,8 +30,9 @@ import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Molecule;
-import org.openscience.cdk.silent.MoleculeSet;
 import org.openscience.cdk.silent.Reaction;
+
+import java.io.StringWriter;
 
 /**
  * TestCase for {@link IChemObjectWriter} implementations.
@@ -51,8 +50,7 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
 
     private static IChemObject[] allChemObjectsTypes = {
         new ChemFile(), new ChemModel(), new Molecule(),
-        new Reaction(), new AtomContainerSet(), new AtomContainer(),
-        new MoleculeSet()
+        new Reaction(), new AtomContainerSet(), new AtomContainer()
     };
 
     /**
