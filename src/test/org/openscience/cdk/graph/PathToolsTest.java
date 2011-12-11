@@ -26,7 +26,13 @@ package org.openscience.cdk.graph;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,7 +52,7 @@ import java.util.List;
  * @cdk.module test-core
  */
 public class PathToolsTest extends CDKTestCase {
-    private static Molecule molecule;
+    private static IAtomContainer molecule;
     private static SmilesParser sp;
 
     @BeforeClass

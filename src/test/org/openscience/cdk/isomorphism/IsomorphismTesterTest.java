@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class IsomorphismTesterTest extends CDKTestCase
 {
-	Molecule pinene_1 = null, pinene_2 = null, pinene_non = null;
+	IAtomContainer pinene_1 = null, pinene_2 = null, pinene_non = null;
 	public IsomorphismTesterTest()
 	{
 		super();

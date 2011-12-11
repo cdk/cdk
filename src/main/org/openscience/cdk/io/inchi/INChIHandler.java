@@ -58,7 +58,7 @@ public class INChIHandler extends DefaultHandler {
     private ChemSequence chemSequence;
     private ChemModel chemModel;
     private IAtomContainerSet setOfMolecules;
-    private Molecule tautomer;
+    private IAtomContainer tautomer;
 
     /** Used to store all chars between two tags */
     private String currentChars;
