@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
@@ -37,7 +37,8 @@ import org.openscience.cdk.io.setting.IOSetting;
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultIteratingChemObjectReader {
+public abstract class DefaultIteratingChemObjectReader<T extends IChemObject>
+implements IIteratingChemObjectReader<T> {
 
     protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;

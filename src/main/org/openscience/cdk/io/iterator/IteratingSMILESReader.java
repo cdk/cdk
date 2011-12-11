@@ -60,8 +60,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, SMILES
  */
 @TestClass("org.openscience.cdk.io.iterator.IteratingSMILESReaderTest")
-public class IteratingSMILESReader extends DefaultIteratingChemObjectReader
-implements IIteratingChemObjectReader<IAtomContainer> {
+public class IteratingSMILESReader
+extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader input;
     private static ILoggingTool logger =
