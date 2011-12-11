@@ -701,7 +701,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        Molecule mol = (Molecule)reader.read(new Molecule());
+        IAtomContainer mol = reader.read(new Molecule());
         for(IBond bond: mol.bonds() ) {
             IPseudoAtom rGroup = null;
             IAtom partner=null;
@@ -743,9 +743,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        Molecule mol = (Molecule)reader.read(new Molecule());
+        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         for(IBond bond: mol.bonds() ) {
-            IPseudoAtom rGroup = null;
+            IPseudoAtom rGroup;
             if (bond.getAtom(0) instanceof IPseudoAtom )  
                 rGroup = (IPseudoAtom)bond.getAtom(0);
             else 
@@ -816,9 +816,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test public void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "data/mdl/with000coordinate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
-        Molecule molOne=null;
+        IAtomContainer molOne=null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molOne = (Molecule)reader.read(new Molecule());
+        molOne = reader.read(new Molecule());
         Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
         Assert.assertNotNull(molOne.getAtom(0).getPoint3d());
     }
@@ -827,8 +827,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     	String filename = "data/mdl/atomValueLines.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
-    	Molecule testMolecule = new Molecule();
-    	Molecule result = reader.read(testMolecule);
+    	IAtomContainer testMolecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+    	IAtomContainer result = reader.read(testMolecule);
     	IAtom oxygen = result.getAtom(0);
     	Assert.assertTrue(oxygen.getSymbol().equals("O"));
     	Assert.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");

@@ -28,20 +28,18 @@
  */
 package org.openscience.cdk.structgen;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.List;
 
 /**
  * @cdk.module test-structgen
@@ -60,11 +58,11 @@ public class VicinitySamplerTest extends CDKTestCase {
 		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
 		addImplicitHydrogens(mol);
 		
-		IMolecule temp = null;
+		IAtomContainer temp = null;
 		List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(37, structures.size());
 		for (int f = 0; f < structures.size(); f++) {
-			temp = (Molecule)structures.get(f);
+			temp = (IAtomContainer)structures.get(f);
 			Assert.assertNotNull(temp);
 			Assert.assertTrue(ConnectivityChecker.isConnected(temp));
 			Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
@@ -81,11 +79,11 @@ public class VicinitySamplerTest extends CDKTestCase {
 		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
 		addImplicitHydrogens(mol);
 		
-		IMolecule temp = null;
+		IAtomContainer temp = null;
 		List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(1, structures.size());
 		for (int f = 0; f < structures.size(); f++) {
-			temp = (Molecule)structures.get(f);
+			temp = (IAtomContainer)structures.get(f);
 			Assert.assertNotNull(temp);
 			Assert.assertTrue(ConnectivityChecker.isConnected(temp));
 			Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());

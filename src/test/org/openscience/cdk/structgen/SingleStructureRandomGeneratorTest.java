@@ -24,17 +24,15 @@
 
 package org.openscience.cdk.structgen;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import javax.swing.*;
+import javax.vecmath.Vector2d;
+import java.awt.event.ActionEvent;
 
 /**
  * @cdk.module test-structgen
@@ -57,10 +55,10 @@ public class SingleStructureRandomGeneratorTest
 	}
 
 
-	private boolean showIt(Molecule molecule, String name) throws Exception
+	private boolean showIt(IAtomContainer molecule, String name) throws Exception
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		sdg.setMolecule((Molecule)molecule.clone());
+		sdg.setMolecule((IAtomContainer)molecule.clone());
 		sdg.generateCoordinates(new Vector2d(0,1));
 		return true;
 	}
@@ -101,7 +99,7 @@ public class SingleStructureRandomGeneratorTest
         {
         	try{
         		IAtomContainer ac = ssrg.generate();
-        		showIt((Molecule)ac, "Randomly generated for " + mf);
+        		showIt(ac, "Randomly generated for " + mf);
         	}
         	catch(Exception ex){System.err.println(ex.getMessage());}
         }

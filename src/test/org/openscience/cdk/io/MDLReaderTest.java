@@ -141,7 +141,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
             "  1  0  0  0  0                 1\n" +
             "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
     	MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
-    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	IAtomContainer mol = reader.read(new Molecule());
     	Assert.assertNotNull(mol);
     	Assert.assertEquals(1, mol.getAtomCount());
     	Assert.assertEquals(0, mol.getBondCount());
@@ -227,9 +227,9 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     public void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "data/mdl/with000coordinate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
-        Molecule molOne=null;
+        IAtomContainer molOne=null;
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
-        molOne = (Molecule)reader.read(new Molecule());
+        molOne = reader.read(new Molecule());
         Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
     }
 }

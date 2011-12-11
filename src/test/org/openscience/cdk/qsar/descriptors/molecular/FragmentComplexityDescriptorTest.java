@@ -2,6 +2,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fragment.MurckoFragmenter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,19 +45,17 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
     public void test2FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest10.mol";
-    	//System.out.println("\nFragmentComplexityTest: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MurckoFragmenter gf=new MurckoFragmenter();
     	double Complexity=0;
     	MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
     	gf.generateFragments(mol);
     	IAtomContainer[] setOfFragments=gf.getFrameworksAsContainers();
-    	for (int i=0;i<setOfFragments.length;i++){
-    		addExplicitHydrogens(setOfFragments[i]);
-    		Complexity=((DoubleResult)descriptor.calculate(setOfFragments[i]).getValue()).doubleValue();
-    		//System.out.println("Complexity:"+Complexity);
-    	}
+        for (IAtomContainer setOfFragment : setOfFragments) {
+            addExplicitHydrogens(setOfFragment);
+            Complexity = ((DoubleResult) descriptor.calculate(setOfFragment).getValue()).doubleValue();
+        }
     	Assert.assertEquals(466.01,Complexity , 0.01);
 	}
 	

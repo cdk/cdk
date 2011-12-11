@@ -32,7 +32,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -122,7 +121,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         Object object = reader.next();
         Assert.assertNotNull(object);
         Assert.assertTrue(object instanceof IAtomContainer);
-        Assert.assertEquals("2-methylbenzo-1,4-quinone", ((Molecule) object).getProperty(CDKConstants.TITLE));
+        Assert.assertEquals("2-methylbenzo-1,4-quinone", ((IAtomContainer) object).getProperty(CDKConstants.TITLE));
         Assert.assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
     }
 
@@ -139,7 +138,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         Object object = reader.next();
         Assert.assertNotNull(object);
         Assert.assertTrue(object instanceof IAtomContainer);
-        Molecule m = (Molecule) object;
+        IAtomContainer m = (IAtomContainer) object;
         Assert.assertEquals("1", m.getProperty("E_NSC"));
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
     }

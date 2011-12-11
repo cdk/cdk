@@ -21,18 +21,13 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,12 +37,17 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Iterator;
 
 /**
  * Checks the functionality of the CanonicalLabeler.
@@ -126,7 +126,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
         String filename = "data/mdl/bug1014344-1.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
-        Molecule mol1 = (Molecule) reader.read(new Molecule());
+        IAtomContainer mol1 = reader.read(new Molecule());
         addImplicitHydrogens(mol1);
         StringWriter output=new StringWriter();
         CMLWriter cmlWriter = new CMLWriter(output);

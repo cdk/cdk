@@ -18,14 +18,6 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.awt.geom.Rectangle2D;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -48,6 +40,13 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.awt.geom.Rectangle2D;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -123,15 +122,15 @@ public class GeometryToolsTest extends CDKTestCase {
 		String filenameMolTwo = "data/mdl/murckoTest6_3d.mol";
     	//String filenameMolTwo = "data/mdl/murckoTest6_3d_2.mol";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolOne);
-	    Molecule molOne=null;
-	    Molecule molTwo=null;
+	    IAtomContainer molOne;
+	    IAtomContainer molTwo;
 	    Map mappedAtoms=new HashMap();
 	    MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-	    molOne = (Molecule)reader.read(new Molecule());
+	    molOne = reader.read(new Molecule());
 		
 	    ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolTwo);
 	    reader = new MDLV2000Reader(ins, Mode.STRICT);
-	    molTwo = (Molecule)reader.read(new Molecule());
+	    molTwo = reader.read(new Molecule());
 	   
 	    mappedAtoms=AtomMappingTools.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
 	    //logger.debug("mappedAtoms:"+mappedAtoms.toString());
