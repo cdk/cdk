@@ -35,7 +35,6 @@ import java.util.NoSuchElementException;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -82,7 +81,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  */
-public class IteratingMDLReader extends DefaultIteratingChemObjectReader implements IChemObjectIOListener {
+public class IteratingMDLReader extends DefaultIteratingChemObjectReader
+implements IChemObjectIOListener, IIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader input;
     private static ILoggingTool logger =
@@ -242,7 +242,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
     /**
      * Returns the next IMolecule.
      */
-    public IChemObject next() {
+    public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }

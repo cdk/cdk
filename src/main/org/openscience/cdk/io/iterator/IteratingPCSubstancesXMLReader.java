@@ -34,7 +34,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
@@ -55,7 +54,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * @cdk.keyword  file format, ASN
  * @cdk.keyword  PubChem
  */
-public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectReader {
+public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectReader
+implements IIteratingChemObjectReader<IChemModel> {
 
 	private Reader primarySource;
     private XmlPullParser parser;
@@ -139,7 +139,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         return hasNext;
     }
     
-	public IChemObject next() {
+	public IChemModel next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }

@@ -33,7 +33,6 @@ import java.util.NoSuchElementException;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
@@ -56,7 +55,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * @cdk.keyword  file format, ASN
  * @cdk.keyword  PubChem
  */
-public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectReader {
+public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectReader
+implements IIteratingChemObjectReader<IAtomContainer> {
 	
 	private Reader primarySource;
     private XmlPullParser parser;
@@ -140,7 +140,7 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         return hasNext;
     }
     
-	public IChemObject next() {
+	public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }
