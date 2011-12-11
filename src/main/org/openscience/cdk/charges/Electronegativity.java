@@ -45,7 +45,7 @@ public class Electronegativity {
     /**Number of maximum resonance structures*/
 	private int maxRS = 50;
 
-	private IMolecule molSigma;
+	private IAtomContainer molSigma;
 	private IAtomContainer acOldS;
 	private double[] marsiliFactors;
 	

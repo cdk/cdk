@@ -325,8 +325,8 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 
     @Test
     public void testImplementationIndependence() throws Exception {
-        IMolecule water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
-        IMolecule water2 = someoneBringMeSomeWater(SilentChemObjectBuilder.getInstance());
+        IAtomContainer water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer water2 = someoneBringMeSomeWater(SilentChemObjectBuilder.getInstance());
 
         IDescriptorResult v1 = descriptor.calculate(water1).getValue();
         IDescriptorResult v2 = descriptor.calculate(water2).getValue();
@@ -339,7 +339,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 
     @Test
     public void testAtomContainerHandling() throws Exception {
-        IMolecule water1 = someoneBringMeSomeWater(
+        IAtomContainer water1 = someoneBringMeSomeWater(
             DefaultChemObjectBuilder.getInstance()
         );
      // creates an AtomContainer with the atoms / bonds from water1
@@ -397,8 +397,8 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         assertEqualOutput(v1, v2, errorMessage);
     }
 
-    private IMolecule someoneBringMeSomeWater(IChemObjectBuilder builder) throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    private IAtomContainer someoneBringMeSomeWater(IChemObjectBuilder builder) throws Exception {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom c1 = builder.newInstance(IAtom.class,"O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
         IAtom h1 = builder.newInstance(IAtom.class,"H");
