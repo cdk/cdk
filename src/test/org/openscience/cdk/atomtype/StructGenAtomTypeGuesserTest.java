@@ -20,16 +20,17 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+
+import java.util.List;
 
 /**
  * @cdk.module test-structgen
@@ -38,7 +39,7 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
 
     @Test
     public void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {
-        Molecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setImplicitHydrogenCount(3);
         Atom atom2 = new Atom("N");

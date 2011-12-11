@@ -25,20 +25,20 @@
 package org.openscience.cdk.charges;
 
 
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import javax.vecmath.Point3d;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
@@ -98,7 +98,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
 		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 		
-		Molecule mol = new Molecule(); // molecule is CF 
+		IAtomContainer mol = new AtomContainer(); // molecule is CF
 		
 		Atom c = new Atom("C"); 
 		mol.addAtom(c); 
@@ -144,7 +144,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
 		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 		
-		Molecule mol = new Molecule(); // molecule is CF 
+		IAtomContainer mol = new AtomContainer(); // molecule is CF 
 		
 		Atom c = new Atom("C"); 
 		mol.addAtom(c); 

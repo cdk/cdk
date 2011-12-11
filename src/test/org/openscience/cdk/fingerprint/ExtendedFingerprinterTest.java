@@ -22,15 +22,10 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.io.InputStream;
-import java.util.BitSet;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
@@ -45,6 +40,11 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
+
+import javax.vecmath.Point2d;
+import java.io.InputStream;
+import java.util.BitSet;
+import java.util.List;
 
 /**
  * @cdk.module test-fingerprint
@@ -124,7 +124,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 	 */
 	@Test public void testDifferentRingFinders()throws Exception{
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
-		Molecule ac1=new Molecule();
+		IAtomContainer ac1 = new AtomContainer();
 		Atom atom1=new Atom("C");
 		Atom atom2=new Atom("C");
 		Atom atom3=new Atom("C");
@@ -149,7 +149,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		ac1.addBond(bond4);
 		ac1.addBond(bond5);
 		ac1.addBond(bond6);
-		Molecule ac2=new Molecule();
+		IAtomContainer ac2 = new AtomContainer();
 		ac2.addAtom(atom1);
 		ac2.addAtom(atom2);
 		ac2.addAtom(atom3);
@@ -344,8 +344,8 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 	 */
 	@Test public void testChebi() throws java.lang.Exception
 	{
-		Molecule searchmol = null;
-		Molecule findmol = null;
+		IAtomContainer searchmol = null;
+		IAtomContainer findmol = null;
 		String filename = "data/mdl/chebisearch.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
