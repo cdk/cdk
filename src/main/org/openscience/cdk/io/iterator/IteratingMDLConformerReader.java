@@ -9,7 +9,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public class IteratingMDLConformerReader implements Iterator {
     private IteratingMDLReader imdlr;
     private ConformerContainer container;
-    private IMolecule lastMol = null;
+    private IAtomContainer lastMol = null;
 
     private boolean hasNext = false;
     private boolean nextIsKnown = false;
@@ -80,7 +80,7 @@ public class IteratingMDLConformerReader implements Iterator {
         if (!nextIsKnown) {
             while (imdlr.hasNext()) {
                 slurpedConformers = true;
-                IMolecule mol = (IMolecule) imdlr.next();
+                IAtomContainer mol = (IAtomContainer) imdlr.next();
                 if (container.size() == 0) container.add(mol);
                 else {
                     if (container.getTitle().equals(mol.getProperty(CDKConstants.TITLE))) container.add(mol);

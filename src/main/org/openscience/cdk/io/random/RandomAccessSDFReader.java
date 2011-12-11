@@ -32,10 +32,10 @@ import java.util.Iterator;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -90,10 +90,10 @@ public class RandomAccessSDFReader extends RandomAccessReader {
                 for (int i=0; i <c;i++) {
                     Iterator cm = ((IChemFile) co).getChemSequence(i).chemModels().iterator();
                     while (cm.hasNext()) {
-                    	Iterator sm = ((IChemModel)cm.next()).getMoleculeSet().atomContainers().iterator();
+                    	Iterator<IAtomContainer> sm = ((IChemModel)cm.next()).getMoleculeSet().atomContainers().iterator();
                         while (sm.hasNext()) {
                         	
-                        	co = (IMolecule) sm.next();
+                        	co = sm.next();
                         	break;
                         }	
                     	break;

@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
@@ -36,15 +39,11 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>This mechanism displaces the charge(radical, charge + or charge -) because of
@@ -91,7 +90,7 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
 		IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
 		IAtomContainer reactantCloned;
 		try {
-			reactantCloned = (IMolecule) molecule.clone();
+			reactantCloned = (IAtomContainer) molecule.clone();
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IMolecule!", e);
 		}

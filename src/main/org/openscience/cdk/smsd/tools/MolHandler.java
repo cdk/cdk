@@ -28,8 +28,8 @@ package org.openscience.cdk.smsd.tools;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-//~--- non-JDK imports --------------------------------------------------------
-import org.openscience.cdk.Molecule;
+
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -38,7 +38,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smsd.labelling.CanonicalLabellingAdaptor;
@@ -79,7 +78,7 @@ public class MolHandler {
 
             readMolecule = new FileInputStream(MolFile);
             molRead = new MDLReader(new InputStreamReader(readMolecule));
-            this.atomContainer = (IMolecule) molRead.read(new Molecule());
+            this.atomContainer = (IAtomContainer) molRead.read(new AtomContainer());
             molRead.close();
             readMolecule.close();
             /*Remove Hydrogen by Asad*/

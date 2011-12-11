@@ -30,9 +30,9 @@ import java.util.Map;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
@@ -46,13 +46,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -74,9 +73,9 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @return deep copy of the mol
      */
     @TestMethod("testMakeDeepCopy")
-    public static IMolecule makeDeepCopy(IAtomContainer container) {
+    public static IAtomContainer makeDeepCopy(IAtomContainer container) {
 
-        IMolecule newAtomContainer = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtomContainer newAtomContainer = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
 
 
@@ -233,10 +232,10 @@ public class SMSDNormalizer extends AtomContainerManipulator {
     public static IAtomContainer removeHydrogensAndPreserveAtomID(IAtomContainer atomContainer) {
         Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>();        // maps original atoms to clones.
         List<IAtom> remove = new ArrayList<IAtom>();  // lists removed Hs.
-        IMolecule mol = null;
+        IAtomContainer mol = null;
         if (atomContainer.getBondCount() > 0) {
             // Clone atoms except those to be removed.
-            mol = atomContainer.getBuilder().newInstance(IMolecule.class);
+            mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);
             int count = atomContainer.getAtomCount();
             for (int i = 0; i < count; i++) {
                 // Clone/remove this atom?
@@ -270,7 +269,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             mol = reComputeHydrogens(mol, atomContainer, remove, map);
 
         } else {
-            mol = atomContainer.getBuilder().newInstance(IMolecule.class, atomContainer);
+            mol = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
             mol.setProperties(atomContainer.getProperties());
             mol.setFlags(atomContainer.getFlags());
             if (atomContainer.getID() != null) {
@@ -333,7 +332,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         }
     }
 
-    private static IAtom[] copyAtoms(IAtomContainer container, IMolecule newAtomContainer) {
+    private static IAtom[] copyAtoms(IAtomContainer container, IAtomContainer newAtomContainer) {
         int atomCount = container.getAtomCount();
         IAtom[] atoms = new IAtom[atomCount];
         for (int index = 0; index < container.getAtomCount(); index++) {
@@ -359,7 +358,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         return atoms;
     }
 
-    private static void copyBonds(IAtom[] atoms, IAtomContainer container, IMolecule newAtomContainer) {
+    private static void copyBonds(IAtom[] atoms, IAtomContainer container, IAtomContainer newAtomContainer) {
         int bondCount = container.getBondCount();
         IBond[] bonds = new IBond[bondCount];
         for (int index = 0; index < container.getBondCount(); index++) {
@@ -393,8 +392,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         }
     }
 
-    private static IMolecule reComputeHydrogens(
-            IMolecule mol,
+    private static IAtomContainer reComputeHydrogens(
+            IAtomContainer mol,
             IAtomContainer atomContainer,
             List<IAtom> remove,
             Map<IAtom, IAtom> map) {
@@ -424,8 +423,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         return mol;
     }
 
-    private static IMolecule cloneAndMarkNonHBonds(
-            IMolecule mol,
+    private static IAtomContainer cloneAndMarkNonHBonds(
+            IAtomContainer mol,
             IAtomContainer atomContainer,
             List<IAtom> remove,
             Map<IAtom, IAtom> map) {

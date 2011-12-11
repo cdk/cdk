@@ -36,8 +36,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.GaussianInputFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -120,15 +120,15 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-		if (IMolecule.class.isInstance(classObject)) return true;
+		if (IAtomContainer.class.isInstance(classObject)) return true;
 		return false;
 	}
 
 	@TestMethod("testWrite")
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IAtomContainer) {
             try {
-                writeMolecule((IMolecule)object);
+                writeMolecule((IAtomContainer)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing Gaussian input file: " + ex.getMessage(), ex);
             }
@@ -140,7 +140,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     /**
      * Writes a molecule for input for Gaussian.
      */
-    public void writeMolecule(IMolecule mol) throws IOException {
+    public void writeMolecule(IAtomContainer mol) throws IOException {
         
         customizeJob();
         

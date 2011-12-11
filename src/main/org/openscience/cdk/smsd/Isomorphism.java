@@ -33,13 +33,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandler;
 import org.openscience.cdk.smsd.algorithm.rgraph.CDKMCSHandler;
@@ -601,19 +601,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         this.queryMol = reactant;
         this.pAC = product;
         mcsBuilder(queryMol, pAC);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param reactant
-     * @param product
-     */
-    @Override
-    @TestMethod("testInit_3args_1")
-    public void init(IMolecule reactant, IMolecule product, boolean removeHydrogen, boolean cleanAndConfigureMolecule) throws CDKException {
-        this.removeHydrogen = removeHydrogen;
-        init(new MolHandler(reactant, removeHydrogen, cleanAndConfigureMolecule),
-                new MolHandler(product, removeHydrogen, cleanAndConfigureMolecule));
     }
 
     /**

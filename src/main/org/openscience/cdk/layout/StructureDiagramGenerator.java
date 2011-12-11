@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -135,7 +134,7 @@ public class StructureDiagramGenerator
 		if (clone)
 		{
 			try {
-				this.molecule = (IMolecule) mol.clone();
+				this.molecule = (IAtomContainer) mol.clone();
 			} catch (CloneNotSupportedException e) {
 				logger.error("Should clone, but exception occured: ", e.getMessage());
 				logger.debug(e);
@@ -943,7 +942,7 @@ public class StructureDiagramGenerator
 	 *  @param molecule the molecule to fix
 	 *  @return the fixed molecule
 	 */
-	private IMolecule fixMol(IMolecule molecule)
+	private IAtomContainer fixMol(IAtomContainer molecule)
 	{
 		IAtom atom = null;
 		for (int f = 0; f < molecule.getAtomCount(); f++)

@@ -34,8 +34,8 @@ import java.util.NoSuchElementException;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -94,7 +94,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
     private IChemObjectBuilder builder;
-    private IMolecule nextMolecule;
+    private IAtomContainer nextMolecule;
     
     private BooleanIOSetting forceReadAs3DCoords;
 
@@ -162,7 +162,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
                         reader.addChemObjectIOListener(this);
                         ((MDLV2000Reader)reader).customizeJob();
                     }
-                    nextMolecule = (IMolecule)reader.read(builder.newInstance(IMolecule.class));
+                    nextMolecule = (IAtomContainer)reader.read(builder.newInstance(IAtomContainer.class));
 
                     // note that a molecule may have 0 atoms, but still
                     // be useful (by having SD tags for example), so just
@@ -187,7 +187,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
         return hasNext;
     }
 
-    private void readDataBlockInto(IMolecule m) throws IOException {
+    private void readDataBlockInto(IAtomContainer m) throws IOException {
         String fieldName = null;
         while (currentLine != null && !(currentLine.trim().equals("$$$$"))) {
             logger.debug("looking for data header: ", currentLine);

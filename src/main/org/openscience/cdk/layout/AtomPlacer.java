@@ -46,7 +46,6 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -331,7 +330,7 @@ public class AtomPlacer
      */
     public void placeLinearChain(IAtomContainer atomContainer, Vector2d initialBondVector, double bondLength)
     {
-        IMolecule withh = atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer);
+        IAtomContainer withh = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
 
         // BUGFIX - withh does not have cloned cloned atoms, so changes are
         // reflected in our atom container. If we're using implicit hydrogens

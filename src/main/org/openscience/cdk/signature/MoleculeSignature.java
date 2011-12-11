@@ -29,7 +29,6 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 
 import signature.AbstractGraphSignature;
 import signature.AbstractVertexSignature;
@@ -117,7 +116,7 @@ public class MoleculeSignature extends AbstractGraphSignature {
      * @param molecule the molecule to convert to a signature
      * @param height the maximum height of the signature
      */
-    public MoleculeSignature(IMolecule molecule, int height) {
+    public MoleculeSignature(IAtomContainer molecule, int height) {
         super(height);
         this.molecule = molecule;
     }

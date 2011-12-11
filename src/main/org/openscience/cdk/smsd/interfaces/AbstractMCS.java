@@ -25,11 +25,11 @@ package org.openscience.cdk.smsd.interfaces;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
@@ -40,17 +40,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
  */
 @TestClass("org.openscience.cdk.smsd.interfaces.AbstractMCSTest")
 public abstract class AbstractMCS {
-
-    /** 
-     * initialize query and target molecules.
-     *
-     * @param source query mol
-     * @param target target mol
-     * @param removeHydrogen true if remove H (implicit) before mapping
-     * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
-     * @throws CDKException
-     */
-    public abstract void init(IMolecule source, IMolecule target, boolean removeHydrogen, boolean cleanAndConfigureMolecule) throws CDKException;
 
     /**
      * initialize query and target molecules.

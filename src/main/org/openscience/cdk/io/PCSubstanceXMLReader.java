@@ -33,9 +33,10 @@ import java.io.StringReader;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
 import org.openscience.cdk.io.pubchemxml.PubChemXMLHelper;
@@ -138,7 +139,7 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
 
     // private procedures
 
-    private IMolecule readMolecule() throws Exception {
+    private IAtomContainer readMolecule() throws Exception {
     	boolean foundCompound = false;
     	while (parser.next() != XmlPullParser.END_DOCUMENT) {
     		if (parser.getEventType() == XmlPullParser.START_TAG) {

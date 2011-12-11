@@ -299,10 +299,6 @@ public class AbstractMCSTest {
     public class AbstractMCSImpl extends AbstractMCS {
 
         @Override
-        public void init(IMolecule source, IMolecule target, boolean removeHydrogen, boolean cleanMol) throws CDKException {
-        }
-
-        @Override
         public void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen, boolean cleanMol) throws CDKException {
         }
 

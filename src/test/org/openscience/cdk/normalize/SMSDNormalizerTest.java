@@ -21,6 +21,9 @@
  */
 package org.openscience.cdk.normalize;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,11 +32,9 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import static org.junit.Assert.*;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -78,7 +79,7 @@ public class SMSDNormalizerTest{
             a.setID(String.valueOf(counter++));
         }
 
-        IMolecule result = SMSDNormalizer.makeDeepCopy(container);
+        IAtomContainer result = SMSDNormalizer.makeDeepCopy(container);
         for (int i = 0; i < result.getAtomCount(); i++) {
             assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
             assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());

@@ -32,7 +32,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.formats.CDKOWLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -102,7 +101,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
 		Class superClass = classObject.getSuperclass();
 	    if (superClass != null) return this.accepts(superClass);
@@ -111,11 +110,11 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 
     /** {@inheritDoc} */
     public <T extends IChemObject> T read(T object) throws CDKException {
-        if (!(object instanceof IMolecule))
+        if (!(object instanceof IAtomContainer))
             throw new CDKException(
                 "Only supported is reading of IMolecule objects."
             );
-        IMolecule result = (IMolecule)object;
+        IAtomContainer result = (IAtomContainer)object;
 
         // do the actual parsing
         Model model = ModelFactory.createDefaultModel();

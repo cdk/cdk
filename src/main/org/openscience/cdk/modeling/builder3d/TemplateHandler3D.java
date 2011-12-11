@@ -44,7 +44,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -72,7 +71,7 @@ public class TemplateHandler3D {
 	private static final ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 	
-    IMolecule molecule;
+	IAtomContainer molecule;
     IRingSet sssr;
     IAtomContainerSet templates = null;
     List<BitSet> fingerprintData = null;
@@ -110,9 +109,9 @@ public class TemplateHandler3D {
         } catch (IOException exc1) {
             throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
         }
-        IMolecule molecule;
+        IAtomContainer molecule;
         while (imdl.hasNext()) {
-            molecule = (IMolecule) imdl.next();
+            molecule = (IAtomContainer) imdl.next();
             templates.addAtomContainer(molecule);
         }
         molecule = null;

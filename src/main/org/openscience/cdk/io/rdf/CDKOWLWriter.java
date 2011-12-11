@@ -25,8 +25,8 @@ import java.io.Writer;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.CDKOWLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -89,7 +89,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class classObject) {
         Class[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
-            if (IMolecule.class.equals(interfaces[i])) return true;
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -98,9 +98,9 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
 
     /** {@inheritDoc} */
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IAtomContainer) {
             try {
-                writeMolecule((IMolecule)object);
+                writeMolecule((IAtomContainer)object);
             } catch (Exception ex) {
                 throw new CDKException(
                     "Error while writing HIN file: " + ex.getMessage(), ex
@@ -113,7 +113,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
         }
     }
 
-    private void writeMolecule(IMolecule mol) {
+    private void writeMolecule(IAtomContainer mol) {
         Model model = Convertor.molecule2Model(mol);
         model.write(output, "N3");
     }

@@ -28,12 +28,12 @@
 package org.openscience.cdk.dict;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
@@ -67,8 +67,8 @@ public class CDKDictionaryReferences {
             makeReferencesExplicitForIsotope((IIsotope)object);
         } else if (object instanceof IElement) {
             makeReferencesExplicitForElement((IElement)object);
-        }  else if (object instanceof IMolecule) {
-            makeReferencesExplicitForMolecule((IMolecule)object);
+        }  else if (object instanceof IAtomContainer) {
+            makeReferencesExplicitForMolecule((IAtomContainer)object);
         } else if (object instanceof IReaction) {
             makeReferencesExplicitForReaction((IReaction)object);
         }
@@ -116,7 +116,7 @@ public class CDKDictionaryReferences {
         isotope.setProperty(prefix + ":self:" + selfCounter++, "chemical:isotope");
     }
 
-    private static void makeReferencesExplicitForMolecule(IMolecule molecule) {
+    private static void makeReferencesExplicitForMolecule(IAtomContainer molecule) {
         int selfCounter = 0;
         molecule.setProperty(prefix + ":self:" + selfCounter++, "chemical:molecularEntity");
         /* remark: this is not strictly true... the Compendium includes the

@@ -44,7 +44,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -168,13 +167,13 @@ public class TemplateHandler
 	public boolean mapTemplateExact(IAtomContainer molecule) throws CDKException {
 				logger.debug("Trying to map a molecule...");
 		boolean mapped = false;
-		IMolecule template = null;
+		IAtomContainer template = null;
 		RMap map = null;
 		IAtom atom1 = null;
 		IAtom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
-			template = (IMolecule) templates.get(f);
+			template = templates.get(f);
 			if (UniversalIsomorphismTester.isIsomorph(molecule, template))
 			{
 				List<RMap> list = UniversalIsomorphismTester.getIsomorphAtomsMap(

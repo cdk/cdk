@@ -21,26 +21,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
-import org.openscience.cdk.fingerprint.IFingerprinter;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.MDLV2000Writer;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -52,6 +32,25 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
+import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.io.MDLV2000Writer;
+import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Helper class that help setup a template library of CDK's Builder3D.
@@ -88,8 +87,8 @@ public class TemplateExtractor {
 			if (c % 1000 == 0) {
 				System.out.println("...");
 			}
-			IMolecule m = builder.newInstance(IMolecule.class);
-			m = (IMolecule) imdl.next();
+			IAtomContainer m = builder.newInstance(IAtomContainer.class);
+			m = (IAtomContainer) imdl.next();
 			if (m.getAtomCount() > 2) {
 				if (m.getAtom(0).getPoint3d() != null) {
 					som.addAtomContainer(m);
@@ -120,7 +119,7 @@ public class TemplateExtractor {
 		}
 		System.out.println("READY");
 		while (imdl.hasNext()) {
-			som.addAtomContainer((IMolecule) imdl.next());
+			som.addAtomContainer((IAtomContainer) imdl.next());
 		}
 		try {
 			imdl.close();
@@ -134,7 +133,7 @@ public class TemplateExtractor {
 	public void PartitionRingsFromComplexRing(String dataFile) {
 		IteratingMDLReader imdl = null;
 		IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
-		IMolecule m = null;
+		IAtomContainer m = null;
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
@@ -146,12 +145,12 @@ public class TemplateExtractor {
 		}
 		System.out.println("READY");
 		while (imdl.hasNext()) {
-			m = (IMolecule) imdl.next();
+			m = (IAtomContainer) imdl.next();
 			System.out.println("Atoms:" + m.getAtomCount());
 			IRingSet ringSetM = new SSSRFinder(m).findSSSR();
 			// som.addAtomContainer(m);
 			for (int i = 0; i < ringSetM.getAtomContainerCount(); i++) {
-				som.addAtomContainer(builder.newInstance(IMolecule.class, ringSetM.getAtomContainer(i)));
+				som.addAtomContainer(builder.newInstance(IAtomContainer.class, ringSetM.getAtomContainer(i)));
 			}
 		}
 		try {
@@ -167,7 +166,7 @@ public class TemplateExtractor {
 	public void extractUniqueRingSystemsFromFile(String dataFile) {
 		System.out.println("****** EXTRACT UNIQUE RING SYSTEMS ******");
 		System.out.println("From file:" + dataFile);
-		IMolecule m = null;
+		IAtomContainer m = null;
 		// RingPartitioner ringPartitioner=new RingPartitioner();
 		List<IRingSet> ringSystems = null;
 		IteratingMDLReader imdl = null;
@@ -204,7 +203,7 @@ public class TemplateExtractor {
 					+ " due to: " + exc.getMessage());
 		}
 		while (imdl.hasNext()) {
-			m = (IMolecule) imdl.next();
+			m = (IAtomContainer) imdl.next();
 			counterMolecules = counterMolecules + 1;
 			/*
 			 * try{ HueckelAromaticityDetector.detectAromaticity(m);
@@ -233,7 +232,7 @@ public class TemplateExtractor {
 						(ac.getAtom(j)).setSymbol("C");
 					}
 
-					key = smilesGenerator.createSMILES(builder.newInstance(IMolecule.class,ac));
+					key = smilesGenerator.createSMILES(builder.newInstance(IAtomContainer.class,ac));
 					// System.out.println("OrgKey:"+key+" For
 					// Molecule:"+counter);
 					if (hashRingSystems.containsKey(key)) {
@@ -253,7 +252,7 @@ public class TemplateExtractor {
 						try {
 							// mdlw.write(new Molecule
 							// ((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet)));
-							mdlw.write(builder.newInstance(IMolecule.class,ac));
+							mdlw.write(builder.newInstance(IAtomContainer.class,ac));
 						} catch (Exception emdl) {
 						}
 
@@ -307,7 +306,7 @@ public class TemplateExtractor {
 	public void makeCanonicalSmileFromRingSystems(String dataFileIn,
 			String dataFileOut) {
 		System.out.println("Start make SMILES...");
-		IMolecule m = null;
+		IAtomContainer m = null;
 		IteratingMDLReader imdl = null;
 		// QueryAtomContainer query=null;
 		List<String> data = new ArrayList<String>();
@@ -323,7 +322,7 @@ public class TemplateExtractor {
 					+ dataFileIn + " due to: " + exc.getMessage());
 		}
 		while (imdl.hasNext()) {
-			m = (IMolecule) imdl.next();
+			m = (IAtomContainer) imdl.next();
 			/*
 			 * try{ HueckelAromaticityDetector.detectAromaticity(m);
 			 * }catch(Exception ex1){ System.out.println("Could not find
@@ -334,7 +333,7 @@ public class TemplateExtractor {
 			// Molecule(m)));
 			try {
 
-				data.add((String) smiles.createSMILES(builder.newInstance(IMolecule.class,m)));
+				data.add((String) smiles.createSMILES(builder.newInstance(IAtomContainer.class,m)));
 			} catch (Exception exc1) {
 				System.out.println("Could not create smile due to: "
 						+ exc1.getMessage());
@@ -378,7 +377,7 @@ public class TemplateExtractor {
 		IFingerprinter fingerPrinter = new HybridizationFingerprinter(
 		    HybridizationFingerprinter.DEFAULT_SIZE, HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH
 		);
-		IMolecule m = null;
+		IAtomContainer m = null;
 		IteratingMDLReader imdl=null;
 		//QueryAtomContainer query=null;
 		IAtomContainer query = null;
@@ -396,7 +395,7 @@ public class TemplateExtractor {
 		int fingerprintCounter = 0;
 		System.out.print("Generated Fingerprints: " + fingerprintCounter + "    ");
 		while (imdl.hasNext() && (moleculeCounter<limit || limit==-1)) {
-			m = (IMolecule) imdl.next();
+			m = (IAtomContainer) imdl.next();
 			moleculeCounter++;
             if (anyAtom && !anyAtomAnyBond) {
                 query = QueryAtomContainerCreator.createAnyAtomContainer(m, false);
@@ -491,7 +490,7 @@ public class TemplateExtractor {
 		}
 	}
 
-	public IMolecule removeLoopBonds(IMolecule molecule, int position) {
+	public IAtomContainer removeLoopBonds(IAtomContainer molecule, int position) {
 		for (int i = 0; i < molecule.getBondCount(); i++) {
 			IBond bond = molecule.getBond(i);
 			if (bond.getAtom(0) == bond.getAtom(1)) {
