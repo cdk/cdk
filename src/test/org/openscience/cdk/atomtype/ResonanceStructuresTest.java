@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -62,7 +63,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
 		
 		//COMPOUND
 		//O=C([H])C(=[O+])C([H])([H])[H]
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -152,7 +153,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
 		
 		//COMPOUND
 		//[H]C1=C([H])C([H])=C(C(=C1([H]))C([H])([H])[H])C([H])([H])[H]
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -192,7 +193,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
 
 		//FRAGMENT_1
 		//[H]C=1C([H])=C([H])C(=C(C=1([H]))C([H])([H])[H])C([H])([H])[H]
-		IMolecule expectedStructure = builder.newInstance(IMolecule.class);
+			IAtomContainer expectedStructure = builder.newInstance(IAtomContainer.class);
 		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
 		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
 		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));

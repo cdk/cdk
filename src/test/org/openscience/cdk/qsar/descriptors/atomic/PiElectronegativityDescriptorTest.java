@@ -405,7 +405,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testCompareIonized() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule molA = builder.newInstance(IMolecule.class);
+        IAtomContainer molA = builder.newInstance(IAtomContainer.class);
 		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addBond(0, 1, IBond.Order.SINGLE);
@@ -420,7 +420,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		
         double resultA= ((DoubleResult)descriptor.calculate(molA.getAtom(3),molA).getValue()).doubleValue();
         
-        IMolecule molB = builder.newInstance(IMolecule.class);
+        IAtomContainer molB = builder.newInstance(IAtomContainer.class);
 		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addBond(0, 1, IBond.Order.SINGLE);

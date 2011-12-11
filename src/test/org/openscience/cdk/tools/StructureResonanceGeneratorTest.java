@@ -357,7 +357,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testGetStructures_IMolecule() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -389,7 +389,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testFlagActiveCenter1() throws Exception {
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+	    IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -431,7 +431,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 
-        IMolecule molecule2 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(new Atom("C"));
         molecule2.addAtom(new Atom("C"));
         molecule2.getAtom(1).setFormalCharge(+1);
@@ -460,7 +460,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testtestGetStructures2() throws Exception {
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -477,7 +477,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
         
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 
-		 IMolecule molecule2 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 		 molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule2.addBond(0, 1, IBond.Order.DOUBLE);
@@ -500,7 +500,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testFormicAcid() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -518,7 +518,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 
 		Assert.assertEquals(3,setOfMolecules.getAtomContainerCount());
 
-		IMolecule molecule2 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule2.getAtom(1).setFormalCharge(-1);
@@ -543,7 +543,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testFluoroethene() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -558,7 +558,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
         
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 
-		IMolecule molecule1 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule1 = builder.newInstance(IAtomContainer.class);
 		molecule1.addAtom(builder.newInstance(IAtom.class,"F"));
 		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule1.addBond(0, 1, IBond.Order.DOUBLE);
@@ -582,7 +582,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testFluorobenzene() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+	    IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -607,7 +607,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		
 		Assert.assertEquals(5,setOfMolecules.getAtomContainerCount());
 		
-		IMolecule molecule1 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule1 = builder.newInstance(IAtomContainer.class);
 	 	molecule1.addAtom(builder.newInstance(IAtom.class,"F"));
 	 	molecule1.getAtom(0).setFormalCharge(1);
 		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -631,7 +631,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
 	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
         
-	    IMolecule molecule2 = builder.newInstance(IMolecule.class);
+	    IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 	 	molecule2.addAtom(builder.newInstance(IAtom.class,"F"));
 	 	molecule2.getAtom(0).setFormalCharge(1);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -666,7 +666,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testFluorobenzeneContainer() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -701,7 +701,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testFluorobenzene_symm() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -726,7 +726,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		
 		Assert.assertEquals(3,setOfMolecules.getAtomContainerCount());
 		
-		IMolecule molecule1 = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule1 = builder.newInstance(IAtomContainer.class);
 	 	molecule1.addAtom(builder.newInstance(IAtom.class,"F"));
 	 	molecule1.getAtom(0).setFormalCharge(1);
 		molecule1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -750,7 +750,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
 	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
         
-	    IMolecule molecule2 = builder.newInstance(IMolecule.class);
+	    IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 	 	molecule2.addAtom(builder.newInstance(IAtom.class,"F"));
 	 	molecule2.getAtom(0).setFormalCharge(1);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -784,7 +784,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testAniline() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -816,7 +816,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testAniline_Symm() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -848,7 +848,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @throws Exception
 	 */
 	@Test public void testAllyl() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -874,7 +874,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @throws Exception
 	 */
 	@Test public void testAllylRadical() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.getAtom(0).setFormalCharge(1);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -904,7 +904,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @throws Exception
 	 */
 	@Test public void testEthenolate() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -934,7 +934,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @throws Exception
 	 */
 	@Test public void test2Methylaniline() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -973,7 +973,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @throws    Exception
 	 */
 	@Test public void test12DimethylBenzene() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1020,7 +1020,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testPreservingAromaticity() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1120,7 +1120,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @throws Exception
 	 */
 	@Test public void testGetContainers_IMolecule() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -1146,7 +1146,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testGetContainers2Groups() throws Exception {
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1191,7 +1191,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testGetContainer_IMolecule_IAtom() throws Exception {
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom1 = builder.newInstance(IAtom.class,"C");
         atom1.setID("atom1");
         molecule.addAtom(atom1);
@@ -1237,7 +1237,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testGetContainer_IMolecule_IBond() throws Exception {
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom1 = builder.newInstance(IAtom.class,"C");
         atom1.setID("atom1");
         molecule.addAtom(atom1);
@@ -1283,7 +1283,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testGetID() throws Exception {
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom1 = builder.newInstance(IAtom.class,"C");
         atom1.setID("atom1");
         molecule.addAtom(atom1);
@@ -1341,7 +1341,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testGetContainersFluoromethylbenzene() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1386,7 +1386,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testGetContainersFluorobenzene() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1428,7 +1428,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void test1Propene2chloro() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"Cl"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1454,7 +1454,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testBenzene1bromo4methoxy() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1491,7 +1491,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 * @return    The test suite
 	 */
 	@Test public void testBenzene1bromo4methoxy_with() throws Exception {
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"Br"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1552,7 +1552,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testBenzylamine() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1590,7 +1590,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testBenzylamine_Aromatic() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -1631,7 +1631,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	 */
 	@Test public void testBenzylamine_Aromatic_lookingSymmetry() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+		 IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);

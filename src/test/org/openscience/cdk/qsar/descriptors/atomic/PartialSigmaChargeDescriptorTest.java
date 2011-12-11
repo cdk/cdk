@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -78,7 +77,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.2138,0.079,0.0942,-0.072,0.0563,0.0563};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -108,7 +107,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Methyl_Floride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -131,7 +130,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0382,-0.1755,0.0457,0.0457,0.0457};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("Cl"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -153,7 +152,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Methyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.021,-0.1448,0.0413,0.0413,0.0413};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("Br"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -175,7 +174,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Methyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.0116,-0.0892,0.0336,0.0336,0.0336};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("I"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -197,7 +196,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = -0.1366;/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -239,7 +238,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = -0.3809; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -265,7 +264,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.3293,0.017,0.057,-0.3943}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"N"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -291,7 +290,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.1031,-0.0828,0.0093,-0.1742}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -360,7 +359,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor4() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3041,0.1055,0.0993,0.0993}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -386,7 +385,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3291,0.144,0.1028,-0.0084,0.0303,0.0303,0.0303}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(0, 1, IBond.Order.DOUBLE);

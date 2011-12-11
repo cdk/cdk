@@ -24,6 +24,7 @@ package org.openscience.cdk.signature;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -59,7 +60,7 @@ public class AbstractSignatureTest {
         }
     }
     
-    public static void addHydrogens(IMolecule mol, int carbonIndex, int count) {
+    public static void addHydrogens(IAtomContainer mol, int carbonIndex, int count) {
         for (int i = 0; i < count; i++) {
             mol.addAtom(builder.newInstance(IAtom.class, "H"));
             int hydrogenIndex = mol.getAtomCount() - 1;
@@ -67,13 +68,13 @@ public class AbstractSignatureTest {
         }
     }
     
-    public static void addCarbons(IMolecule mol, int count) {
+    public static void addCarbons(IAtomContainer mol, int count) {
         for (int i = 0; i < count; i++) {
             mol.addAtom(builder.newInstance(IAtom.class, "C"));
         }
     }
     
-    public static void addRing(int atomToAttachTo, int ringSize, IMolecule mol) {
+    public static void addRing(int atomToAttachTo, int ringSize, IAtomContainer mol) {
         int numberOfAtoms = mol.getAtomCount();
         int previous = atomToAttachTo;
         for (int i = 0; i < ringSize; i++) {
@@ -86,8 +87,8 @@ public class AbstractSignatureTest {
              numberOfAtoms, numberOfAtoms + (ringSize - 1), IBond.Order.SINGLE);
     }
     
-    public static IMolecule makeRhLikeStructure(int pCount, int ringCount) {
-        IMolecule ttpr = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeRhLikeStructure(int pCount, int ringCount) {
+        IAtomContainer ttpr = builder.newInstance(IAtomContainer.class);
         ttpr.addAtom(builder.newInstance(IAtom.class, "Rh"));
         for (int i = 1; i <= pCount; i++) {
             ttpr.addAtom(builder.newInstance(IAtom.class, "P"));
@@ -103,8 +104,8 @@ public class AbstractSignatureTest {
         return ttpr;
     }
     
-    public static IMolecule makeCycleWheel(int ringSize, int ringCount) {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeCycleWheel(int ringSize, int ringCount) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         for (int r = 0; r < ringCount; r++) {
             AbstractSignatureTest.addRing(0, ringSize, mol);
@@ -112,8 +113,8 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeSandwich(int ringSize, boolean hasMethyl) {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeSandwich(int ringSize, boolean hasMethyl) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         AbstractSignatureTest.addCarbons(mol, (ringSize * 2));
         mol.addAtom(builder.newInstance(IAtom.class, "Fe"));
         int center = ringSize * 2;
@@ -141,8 +142,8 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeC7H16A() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeC7H16A() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         AbstractSignatureTest.addCarbons(mol, 7);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
@@ -160,8 +161,8 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeC7H16B() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeC7H16B() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         AbstractSignatureTest.addCarbons(mol, 7);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
@@ -179,8 +180,8 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeC7H16C() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeC7H16C() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         AbstractSignatureTest.addCarbons(mol, 7);
         mol.addBond(0, 2, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
@@ -198,8 +199,8 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeDodecahedrane() {
-        IMolecule dodec = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeDodecahedrane() {
+        IAtomContainer dodec = builder.newInstance(IAtomContainer.class);
         for (int i = 0; i < 20; i++) {
             dodec.addAtom(builder.newInstance(IAtom.class, "C"));
         }
@@ -237,12 +238,12 @@ public class AbstractSignatureTest {
         return dodec;
     }
     
-    public static IMolecule makeCage() {
+    public static IAtomContainer makeCage() {
         /*
          * This 'molecule' is the example used to illustrate the
          * algorithm outlined in the 2004 Faulon &ct. paper
          */
-        IMolecule cage = builder.newInstance(IMolecule.class);
+        IAtomContainer cage = builder.newInstance(IAtomContainer.class);
         for (int i = 0; i < 16; i++) {
             cage.addAtom(builder.newInstance(IAtom.class, "C"));
         }
@@ -279,8 +280,8 @@ public class AbstractSignatureTest {
      * 
      * @return
      */
-    public static IMolecule makeCubane() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeCubane() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 8);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 3, IBond.Order.SINGLE);
@@ -297,8 +298,8 @@ public class AbstractSignatureTest {
         return mol;
     }
 
-    public static IMolecule makeCuneane() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeCuneane() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 8);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 3, IBond.Order.SINGLE);
@@ -315,8 +316,8 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeCyclobutane() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeCyclobutane() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 4);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 3, IBond.Order.SINGLE);
@@ -325,14 +326,14 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeBridgedCyclobutane() {
-        IMolecule mol = AbstractSignatureTest.makeCyclobutane();
+    public static IAtomContainer makeBridgedCyclobutane() {
+        IAtomContainer mol = AbstractSignatureTest.makeCyclobutane();
         mol.addBond(0, 2, IBond.Order.SINGLE);
         return mol;
     }
 
-    public static IMolecule makeNapthalene() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeNapthalene() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 10);
         for (IAtom atom : mol.atoms()) {
             atom.setFlag(CDKConstants.ISAROMATIC, true);
@@ -354,8 +355,8 @@ public class AbstractSignatureTest {
         return mol; 
     }
 
-    public static IMolecule makeHexane() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeHexane() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 6);
         
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -367,8 +368,8 @@ public class AbstractSignatureTest {
         return mol;
     }
     
-    public static IMolecule makeTwistane() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeTwistane() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 10);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
@@ -385,8 +386,8 @@ public class AbstractSignatureTest {
         return mol;
     }
 
-    public static IMolecule makeBenzene() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makeBenzene() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 6);
         for (IAtom atom : mol.atoms()) {
             atom.setFlag(CDKConstants.ISAROMATIC, true);
@@ -411,8 +412,8 @@ public class AbstractSignatureTest {
      *  
      * @return
      */
-    public static IMolecule makePseudoPropellane() {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+    public static IAtomContainer makePseudoPropellane() {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         addCarbons(mol, 5);
         
         mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -425,8 +426,8 @@ public class AbstractSignatureTest {
         return mol;
     }
 
-    public static IMolecule makePropellane() {
-        IMolecule mol = AbstractSignatureTest.makePseudoPropellane();
+    public static IAtomContainer makePropellane() {
+        IAtomContainer mol = AbstractSignatureTest.makePseudoPropellane();
         mol.addBond(0, 4, IBond.Order.SINGLE);
         return mol;
     }

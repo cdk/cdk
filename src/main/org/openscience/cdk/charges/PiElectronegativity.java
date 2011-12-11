@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * Calculation of the electronegativity of orbitals of a molecule 
@@ -48,7 +47,7 @@ public class PiElectronegativity {
     /**Number of maximum resonance structures*/
 	private int maxRS = 50;
 	
-	private IMolecule molPi;
+	private IAtomContainer molPi;
 	private IAtomContainer acOldP;
 	private double[][] gasteigerFactors;
 	
@@ -108,7 +107,7 @@ public class PiElectronegativity {
 
         try {
         	if(!ac.equals(acOldP)){
-        		molPi = ac.getBuilder().newInstance(IMolecule.class,ac);
+        		molPi = ac.getBuilder().newInstance(IAtomContainer.class,ac);
         		
                 peoe = new GasteigerMarsiliPartialCharges();
 	    		peoe.assignGasteigerMarsiliSigmaPartialCharges(molPi, true);

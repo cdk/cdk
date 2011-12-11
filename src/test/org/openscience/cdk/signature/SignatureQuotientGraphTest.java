@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * @cdk.module test-signature
@@ -59,44 +58,44 @@ public class SignatureQuotientGraphTest extends AbstractSignatureTest {
     
     @Test
     public void testCubane() {
-        IMolecule cubane = AbstractSignatureTest.makeCubane();
+        IAtomContainer cubane = AbstractSignatureTest.makeCubane();
         SignatureQuotientGraph qGraph = new SignatureQuotientGraph(cubane);
         checkParameters(qGraph, 1, 1, 1);
     }
     
     @Test
     public void testCuneaneAtHeight1() {
-        IMolecule cuneane = AbstractSignatureTest.makeCuneane();
+        IAtomContainer cuneane = AbstractSignatureTest.makeCuneane();
         SignatureQuotientGraph qGraph = new SignatureQuotientGraph(cuneane, 1);
         checkParameters(qGraph, 1, 1, 1);
     }
     
     @Test
     public void testCuneaneAtHeight2() {
-        IMolecule cuneane = AbstractSignatureTest.makeCuneane();
+        IAtomContainer cuneane = AbstractSignatureTest.makeCuneane();
         SignatureQuotientGraph qGraph = new SignatureQuotientGraph(cuneane, 2);
         checkParameters(qGraph, 3, 5, 3);
     }
     
     @Test
     public void testPropellane() {
-        IMolecule propellane = AbstractSignatureTest.makePropellane();
+        IAtomContainer propellane = AbstractSignatureTest.makePropellane();
         SignatureQuotientGraph qGraph = new SignatureQuotientGraph(propellane);
         checkParameters(qGraph, 2, 2, 1);
     }
     
     @Test
     public void testTwistane() {
-        IMolecule twistane = AbstractSignatureTest.makeTwistane();
+        IAtomContainer twistane = AbstractSignatureTest.makeTwistane();
         SignatureQuotientGraph qGraph = new SignatureQuotientGraph(twistane);
         checkParameters(qGraph, 3, 4, 2);
     }
     
     @Test
     public void testC7H16Isomers() {
-        IMolecule c7H16A = AbstractSignatureTest.makeC7H16A();
-        IMolecule c7H16B = AbstractSignatureTest.makeC7H16B();
-        IMolecule c7H16C = AbstractSignatureTest.makeC7H16C();
+        IAtomContainer c7H16A = AbstractSignatureTest.makeC7H16A();
+        IAtomContainer c7H16B = AbstractSignatureTest.makeC7H16B();
+        IAtomContainer c7H16C = AbstractSignatureTest.makeC7H16C();
         SignatureQuotientGraph qGraphA = new SignatureQuotientGraph(c7H16A, 1);
         SignatureQuotientGraph qGraphB = new SignatureQuotientGraph(c7H16B, 1);
         SignatureQuotientGraph qGraphC = new SignatureQuotientGraph(c7H16C, 1);

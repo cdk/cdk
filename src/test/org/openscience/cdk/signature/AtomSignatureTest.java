@@ -32,7 +32,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * @cdk.module test-signature
@@ -129,8 +128,8 @@ public class AtomSignatureTest extends AbstractSignatureTest {
     
     @Test
     public void cuneaneCubaneHeightTest() {
-        IMolecule cuneane = AbstractSignatureTest.makeCuneane();
-        IMolecule cubane = AbstractSignatureTest.makeCubane();
+        IAtomContainer cuneane = AbstractSignatureTest.makeCuneane();
+        IAtomContainer cubane = AbstractSignatureTest.makeCubane();
         int height = 1;
         AtomSignature cuneaneSignature = new AtomSignature(0, height, cuneane);
         AtomSignature cubaneSignature = new AtomSignature(0, height, cubane);
@@ -139,7 +138,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         Assert.assertEquals(cuneaneSigString, cubaneSigString);
     }
     
-    public void moleculeIsCarbon3Regular(IMolecule molecule) {
+    public void moleculeIsCarbon3Regular(IAtomContainer molecule) {
         int i = 0;
         for (IAtom a : molecule.atoms()) {
             int count = 0;
@@ -155,7 +154,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
     
     @Test
     public void dodecahedraneHeightTest() {
-        IMolecule dodecahedrane = AbstractSignatureTest.makeDodecahedrane();
+        IAtomContainer dodecahedrane = AbstractSignatureTest.makeDodecahedrane();
         moleculeIsCarbon3Regular(dodecahedrane);
         int diameter = 5;
         for (int height = 0; height <= diameter; height++) {
@@ -165,14 +164,14 @@ public class AtomSignatureTest extends AbstractSignatureTest {
     
     @Test
     public void allHeightsOfASymmetricGraphAreEqualTest() {
-        IMolecule cubane = makeCubane();
+        IAtomContainer cubane = makeCubane();
         int diameter = 3;
         for (int height = 0; height <= diameter; height++) {
             allEqualAtHeightTest(cubane, height);
         }
     }
     
-    public void allEqualAtHeightTest(IMolecule molecule, int height) {
+    public void allEqualAtHeightTest(IAtomContainer molecule, int height) {
         Map<String, Integer> sigfreq = new HashMap<String, Integer>();
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             AtomSignature atomSignature = new AtomSignature(i, height, molecule);

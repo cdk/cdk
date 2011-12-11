@@ -27,12 +27,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -63,7 +64,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testStabilizationPlusChargeDescriptor()  throws Exception  {
 		
-		IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(0).setFormalCharge(-1);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -86,7 +87,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 	@Test
     public void testNotCharged()  throws Exception {
 		
-		IMolecule mol = builder.newInstance(IMolecule.class);
+	    IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(0).setFormalCharge(-1);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -110,7 +111,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testStabilizationPlusChargeDescriptor2()  throws Exception  {
 		
-		IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.getAtom(0).setFormalCharge(-1);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -136,7 +137,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testStabilizationComparative()  throws Exception  {
 		
-		IMolecule mol1 = builder.newInstance(IMolecule.class);
+        IAtomContainer mol1 = builder.newInstance(IAtomContainer.class);
 		mol1.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol1.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol1.getAtom(1).setFormalCharge(1);
@@ -150,7 +151,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     	
 		DoubleResult result1 = ((DoubleResult)descriptor.calculate(mol1.getAtom(1),mol1).getValue());
         
-		IMolecule mol2 = builder.newInstance(IMolecule.class);
+		IAtomContainer mol2 = builder.newInstance(IAtomContainer.class);
 		mol2.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol2.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol2.getAtom(1).setFormalCharge(1);
@@ -162,7 +163,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     	
 		DoubleResult result2 = ((DoubleResult)descriptor.calculate(mol2.getAtom(1),mol2).getValue());
         
-		IMolecule mol3 = builder.newInstance(IMolecule.class);
+		IAtomContainer mol3 = builder.newInstance(IAtomContainer.class);
 		mol3.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol3.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol3.getAtom(1).setFormalCharge(1);
@@ -185,7 +186,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     @Test
     public void testCompareIonized() throws Exception{
         
-		IMolecule molA = builder.newInstance(IMolecule.class);
+        IAtomContainer molA = builder.newInstance(IAtomContainer.class);
 		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addAtom(builder.newInstance(IAtom.class,"C"));
 		molA.addBond(0, 1, IBond.Order.SINGLE);
@@ -200,7 +201,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 
 		double resultA= ((DoubleResult)descriptor.calculate(molA.getAtom(3),molA).getValue()).doubleValue();
         
-        IMolecule molB = builder.newInstance(IMolecule.class);
+		IAtomContainer molB = builder.newInstance(IAtomContainer.class);
 		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addAtom(builder.newInstance(IAtom.class,"C"));
 		molB.addBond(0, 1, IBond.Order.SINGLE);

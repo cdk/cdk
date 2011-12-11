@@ -27,6 +27,11 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Properties;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -35,18 +40,12 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Properties;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -152,7 +151,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
 
         IAtomContainer m = (IAtomContainer)reader.next();
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
-        m = (IMolecule)reader.next();
+        m = reader.next();
         Assert.assertEquals("120-78-5", m.getProperty("E_CAS"));
     }
 

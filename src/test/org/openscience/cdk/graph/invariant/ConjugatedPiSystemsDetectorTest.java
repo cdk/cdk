@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,7 +42,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -50,8 +51,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.InputStream;
 
 /**
  * Checks the functionality of the ConjugatedPiSystemsCalculator.
@@ -397,7 +396,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
     @Test public void test3Aminomethane_cation() throws Exception
 	{
-    	IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
     	mol.addAtom(builder.newInstance(IAtom.class,"N"));
     	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(0, 1, Order.SINGLE);
