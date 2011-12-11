@@ -54,8 +54,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * @cdk.keyword  file format, ASN
  * @cdk.keyword  PubChem
  */
-public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectReader
-implements IIteratingChemObjectReader<IChemModel> {
+public class IteratingPCSubstancesXMLReader
+extends DefaultIteratingChemObjectReader<IChemModel> {
 
 	private Reader primarySource;
     private XmlPullParser parser;

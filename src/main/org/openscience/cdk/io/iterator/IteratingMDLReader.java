@@ -81,8 +81,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  */
-public class IteratingMDLReader extends DefaultIteratingChemObjectReader
-implements IChemObjectIOListener, IIteratingChemObjectReader<IAtomContainer> {
+public class IteratingMDLReader extends DefaultIteratingChemObjectReader<IAtomContainer>
+implements IChemObjectIOListener {
 
     private BufferedReader input;
     private static ILoggingTool logger =
