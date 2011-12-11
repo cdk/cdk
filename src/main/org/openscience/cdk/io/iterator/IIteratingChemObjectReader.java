@@ -29,6 +29,7 @@ package org.openscience.cdk.io.iterator;
 
 import java.util.Iterator;
 
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.IChemObjectReader;
 
 /**
@@ -44,8 +45,8 @@ import org.openscience.cdk.io.IChemObjectReader;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-10-19
  */
-public interface IIteratingChemObjectReader
-    extends IChemObjectReader, Iterator {
+public interface  IIteratingChemObjectReader<T extends IChemObject>
+    extends IChemObjectReader, Iterator<T> {
 	
 }
 

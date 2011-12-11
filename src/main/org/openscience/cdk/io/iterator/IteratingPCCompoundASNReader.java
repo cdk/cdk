@@ -59,7 +59,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.keyword  file format, ASN
  * @cdk.keyword  PubChem
  */
-public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectReader {
+public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectReader
+implements IIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader input;
     private static ILoggingTool logger =
@@ -173,7 +174,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
 		return bracketsOpen - bracketsClose;
 	}
 
-	public IChemObject next() {
+	public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }

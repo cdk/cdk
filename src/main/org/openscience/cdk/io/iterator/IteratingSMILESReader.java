@@ -66,7 +66,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, SMILES
  */
 @TestClass("org.openscience.cdk.io.iterator.IteratingSMILESReaderTest")
-public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
+public class IteratingSMILESReader extends DefaultIteratingChemObjectReader
+implements IIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader input;
     private static ILoggingTool logger =
@@ -184,7 +185,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      * @return The next molecule
      */
     @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
-    public IChemObject next() {
+    public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }
