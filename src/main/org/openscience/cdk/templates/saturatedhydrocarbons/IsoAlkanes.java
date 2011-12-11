@@ -24,7 +24,8 @@
 package org.openscience.cdk.templates.saturatedhydrocarbons;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
@@ -35,8 +36,8 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class IsoAlkanes {
 
-    public static Molecule getIsobutane() {
-        Molecule mol = new Molecule();
+    public static IAtomContainer getIsobutane() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -48,8 +49,8 @@ public class IsoAlkanes {
         return mol;
     }
 
-    public static Molecule getIsopentane() {
-        Molecule mol = new Molecule();
+    public static IAtomContainer getIsopentane() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
@@ -63,8 +64,8 @@ public class IsoAlkanes {
         return mol;
     }
 
-    public static Molecule getIsohexane() {
-        Molecule mol = new Molecule();
+    public static IAtomContainer getIsohexane() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));

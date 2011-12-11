@@ -20,14 +20,6 @@
  */
 package org.openscience.cdk.layout;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.InputStream;
-import java.io.StringReader;
-
-import javax.vecmath.Vector2d;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,7 +37,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -55,6 +46,13 @@ import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import javax.vecmath.Vector2d;
+import java.io.InputStream;
+import java.io.StringReader;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  *  A set of test cases for the StructureDiagramGenerator
@@ -338,8 +336,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 
 //		read molecule
-		IMolecule molecule = (IMolecule) molReader.read(new
-				Molecule());
+		IAtomContainer molecule = molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
 //		rebuild 2D coordinates
 		StructureDiagramGenerator structureDiagramGenerator = 
@@ -680,14 +677,14 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 				final IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
 				final IAtomContainer clone = (IAtomContainer)mol.clone();
 				new StructureDiagramGenerator(
-				    mol.getBuilder().newInstance(IMolecule.class, clone)
+				    mol.getBuilder().newInstance(IAtomContainer.class, clone)
 				).generateCoordinates();
 				assertTrue(GeometryTools.has2DCoordinates(clone));
 	}
 
-	Molecule makeTetraMethylCycloButane()
+	IAtomContainer makeTetraMethylCycloButane()
 	{
-		Molecule mol = new Molecule();
+		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
@@ -709,9 +706,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	}
 
 	
-	Molecule makeJhao1()
+	IAtomContainer makeJhao1()
 	{
-		Molecule mol = new Molecule();
+		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
@@ -737,9 +734,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		return mol;
 	}
 
-	Molecule makeJhao2()
+	IAtomContainer makeJhao2()
 	{
-		Molecule mol = new Molecule();
+		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
@@ -768,7 +765,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	/**
 	 * @cdk.bug 1750968
 	 */
-	public IMolecule makeBug1750968() throws Exception {
+	public IAtomContainer makeBug1750968() throws Exception {
 		String filename = "data/mdl/bug_1750968.mol";
 
 //		set up molecule reader
@@ -776,7 +773,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		ISimpleChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 
 //		read molecule
-		return ((IMolecule) molReader.read(new	Molecule()));
+		return molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 	}
 	
 	/**
@@ -806,7 +803,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 		
 		// read molecule
-		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+		IAtomContainer molecule = (IAtomContainer) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
 		// rebuild 2D coordinates
 		// repeat this 10 times since the bug does only occur by chance
@@ -838,7 +835,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 		
 		// read molecule
-		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+		IAtomContainer molecule = molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 		
 		// rebuild 2D coordinates
 		StructureDiagramGenerator structureDiagramGenerator = new StructureDiagramGenerator();

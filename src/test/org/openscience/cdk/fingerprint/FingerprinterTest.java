@@ -26,6 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
@@ -181,8 +182,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
      */
     @Test
     public void testBug2819557() throws CDKException {
-        Molecule butane = makeButane();
-        Molecule propylAmine = makePropylAmine();
+        IAtomContainer butane = makeButane();
+        IAtomContainer propylAmine = makePropylAmine();
 
         Fingerprinter fp = new Fingerprinter();
         BitSet b1 = fp.getFingerprint(butane);
@@ -193,7 +194,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Test
     public void testBondPermutation() throws CDKException {
-        IMolecule pamine = makePropylAmine();
+        IAtomContainer pamine = makePropylAmine();
         Fingerprinter fp = new Fingerprinter();
         BitSet bs1 = fp.getFingerprint(pamine);
 
@@ -207,7 +208,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Test
     public void testAtomPermutation() throws CDKException {
-        IMolecule pamine = makePropylAmine();
+        IAtomContainer pamine = makePropylAmine();
         Fingerprinter fp = new Fingerprinter();
         BitSet bs1 = fp.getFingerprint(pamine);
 
@@ -247,9 +248,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         }
     }
 
-    public static Molecule makeFragment1()
+    public static IAtomContainer makeFragment1()
 	{
-		Molecule mol = new Molecule();
+		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
@@ -268,9 +269,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 	}
 
 
-	public static Molecule makeFragment4()
+	public static IAtomContainer makeFragment4()
 	{
-		Molecule mol = new Molecule();
+		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
 
@@ -278,9 +279,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		return mol;
 	}
 
-	public static Molecule makeFragment2()
+	public static IAtomContainer makeFragment2()
 	{
-		Molecule mol = new Molecule();
+		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
@@ -299,9 +300,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		return mol;
 	}
 
-	public static Molecule makeFragment3()
+	public static IAtomContainer makeFragment3()
 	{
-		Molecule mol = new Molecule();
+		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
@@ -319,8 +320,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		return mol;
 	}
 
-    public static Molecule makeButane() {
-        Molecule mol = new Molecule();
+    public static IAtomContainer makeButane() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
@@ -333,8 +334,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		return mol;
     }
 
-    public static Molecule makePropylAmine() {
-        Molecule mol = new Molecule();
+    public static IAtomContainer makePropylAmine() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
