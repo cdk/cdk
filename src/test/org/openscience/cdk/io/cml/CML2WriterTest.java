@@ -83,7 +83,7 @@ public class CML2WriterTest extends CDKTestCase {
 
     @Test public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();
-        IMolecule molecule = MoleculeFactory.makeBenzene();
+		IAtomContainer molecule = MoleculeFactory.makeBenzene();
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         CMLWriter cmlWriter = new CMLWriter(writer);
         
@@ -191,7 +191,7 @@ public class CML2WriterTest extends CDKTestCase {
 	
     @Test public void testQSARCustomization() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
         CMLWriter cmlWriter = new CMLWriter(writer);

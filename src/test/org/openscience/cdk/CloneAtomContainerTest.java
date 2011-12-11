@@ -29,6 +29,7 @@ package org.openscience.cdk;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -43,7 +44,7 @@ public class CloneAtomContainerTest extends CDKTestCase {
 
 	@Test public void testClone() throws Exception  
 	{
-		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
 		Molecule clonedMol = (Molecule)molecule.clone();
 		Assert.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
 		for (int f = 0; f < molecule.getAtomCount(); f++)

@@ -114,7 +114,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     
     @Test public void testWriteValence() throws Exception {
     	StringWriter writer = new StringWriter();
-        Molecule molecule = MoleculeFactory.makeAlphaPinene();
+    	IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
         molecule.getAtom(0).setValency(1);
         molecule.getAtom(1).setValency(0);
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -131,7 +131,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     
     @Test public void testWriteAtomAtomMapping() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
         molecule.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,1);
         molecule.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,15);
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -228,7 +228,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test public void testUndefinedStereo() throws Exception {
-      IMolecule mol = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
       mol.getBond(0).setStereo(IBond.Stereo.UP_OR_DOWN);
       mol.getBond(1).setStereo(IBond.Stereo.E_OR_Z);
       StringWriter writer = new StringWriter();
@@ -256,9 +256,9 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test public void testTwoFragmentsWithTitle() throws CDKException{
-        IMolecule mol1 = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer mol1 = MoleculeFactory.makeAlphaPinene();
         mol1.setProperty(CDKConstants.TITLE,"title1");
-        IMolecule mol2 = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer mol2 = MoleculeFactory.makeAlphaPinene();
         mol2.setProperty(CDKConstants.TITLE,"title2");
         IChemModel model = mol1.getBuilder().newInstance(IChemModel.class);
         model.setMoleculeSet(mol1.getBuilder().newInstance(IAtomContainerSet.class));

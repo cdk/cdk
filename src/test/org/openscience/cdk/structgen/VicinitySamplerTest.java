@@ -55,7 +55,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 	}
 
 	@Test public void testVicinitySampler_sample() throws Exception {
-		Molecule mol = MoleculeFactory.makeEthylPropylPhenantren();
+	    IAtomContainer mol = MoleculeFactory.makeEthylPropylPhenantren();
 		
 		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
 		addImplicitHydrogens(mol);

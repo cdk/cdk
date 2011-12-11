@@ -27,7 +27,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -884,7 +883,7 @@ public class SmilesParserTest extends CDKTestCase {
 	@org.junit.Test (timeout=1000)
 	public void testSFBug1274464() throws Exception {
 		IAtomContainer fromSmiles = new	SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles("C1=CC=CC=C1");
-		AtomContainer fromFactory =	MoleculeFactory.makeBenzene();
+		IAtomContainer fromFactory =	MoleculeFactory.makeBenzene();
 		CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(fromFactory.getBuilder());
 		Iterator<IAtom> atoms = fromFactory.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(fromFactory.getBuilder());

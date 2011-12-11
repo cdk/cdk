@@ -129,12 +129,12 @@ public class MoleculeSignatureTest extends CDKTestCase {
         return signature.toCanonicalString();
     }
     
-    public String canonicalStringFromMolecule(IMolecule molecule) {
+    public String canonicalStringFromMolecule(IAtomContainer molecule) {
         MoleculeSignature signature = new MoleculeSignature(molecule);
         return signature.getGraphSignature();
     }
     
-    public String fullStringFromMolecule(IMolecule molecule) {
+    public String fullStringFromMolecule(IAtomContainer molecule) {
         MoleculeSignature molSig = new MoleculeSignature(molecule);
         return molSig.toFullString();
     }
@@ -144,7 +144,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
         return signature.getVertexSignatureStrings();
     }
     
-    public void addHydrogens(IMolecule mol, IAtom atom, int n) {
+    public void addHydrogens(IAtomContainer mol, IAtom atom, int n) {
         for (int i = 0; i < n; i++) {
             IAtom h = builder.newInstance(IAtom.class,"H");
             mol.addAtom(h);
@@ -276,7 +276,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
     
     @Test
     public void testCyclohexaneWithHydrogens() {
-        IMolecule cyclohexane = MoleculeFactory.makeCyclohexane();
+        IAtomContainer cyclohexane = MoleculeFactory.makeCyclohexane();
         for (int i = 0; i < 6; i++) {
             addHydrogens(cyclohexane, cyclohexane.getAtom(i), 2);
         }

@@ -528,7 +528,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testDescriptorValue_QSAR() throws Exception {
-    	Molecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
         DescriptorValue originalValue = null;
@@ -562,7 +562,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testDescriptorValue() throws Exception {
-    	Molecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
 
     	String[] propertyName = {"testKey1","testKey2"};
     	String[] propertyValue = {"testValue1","testValue2"};
@@ -583,7 +583,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @throws Exception
      */
     @Test public void testAromaticity() throws Exception {
-    	IMolecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
     	for (IBond bond : molecule.bonds()) {
     		bond.setFlag(CDKConstants.ISAROMATIC, true);
     	}
@@ -598,7 +598,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testAtomAromaticity() throws Exception {
-    	IMolecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
     	for (IAtom atom : molecule.atoms()) {
     		atom.setFlag(CDKConstants.ISAROMATIC, true);
     	}
@@ -619,7 +619,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     	String[] key = {"customAtomProperty1","customAtomProperty2"};
     	String[] value = {"true","false"};
  	   
-        Molecule mol = MoleculeFactory.makeBenzene();
+    	IAtomContainer mol = MoleculeFactory.makeBenzene();
         for (Iterator<IAtom> it = mol.atoms().iterator(); it.hasNext();) {
            IAtom a = it.next();
            for (int i=0; i < key.length;i++)
@@ -649,7 +649,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     @Test public void testBondProperty() throws Exception {
     	String[] key = {"customBondProperty1","customBondProperty2"};
     	String[] value = {"true","false"};
-        Molecule mol = MoleculeFactory.makeBenzene();
+    	IAtomContainer mol = MoleculeFactory.makeBenzene();
         for (Iterator<IBond> it = mol.bonds().iterator(); it.hasNext();) {
            IBond b = it.next();
            for (int i=0; i < key.length;i++)
@@ -680,7 +680,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     	String[] key = {"customMoleculeProperty1","customMoleculeProperty2"};
     	String[] value = {"true","false"};
 
-    	IMolecule mol = MoleculeFactory.makeAdenine();
+    	IAtomContainer mol = MoleculeFactory.makeAdenine();
     	for (int i=0; i < key.length;i++) {
     		mol.setProperty(key[i], value[i]);
     	}

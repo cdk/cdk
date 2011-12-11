@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
@@ -62,7 +61,7 @@ public class CMLRoundTripTool extends CDKTestCase {
      *
      * @see org.openscience.cdk.CMLFragmentsTest
      */
-    public static IAtomContainer roundTripMolecule(Convertor convertor, IMolecule mol) throws Exception {
+    public static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol) throws Exception {
         String cmlString = "<!-- failed -->";
         Element cmlDOM = convertor.cdkAtomContainerToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();

@@ -25,14 +25,14 @@
 
 package org.openscience.cdk.similarity;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.util.Map;
 
 /**
  * @cdk.module test-fingerprint
@@ -41,8 +41,8 @@ public class LingoSimilarityTest extends CDKTestCase {
 
     @Test
     public void testLingoSim() throws Exception {
-        Molecule mol1 = MoleculeFactory.makeIndole();
-        Molecule mol2 = MoleculeFactory.makeIndole();
+        IAtomContainer mol1 = MoleculeFactory.makeIndole();
+        IAtomContainer mol2 = MoleculeFactory.makeIndole();
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
         Map<String, Integer> bs1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> bs2 = fingerprinter.getRawFingerprint(mol2);

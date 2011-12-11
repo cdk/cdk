@@ -33,7 +33,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -95,14 +94,14 @@ public class AtomPlacer3DTest extends CDKTestCase{
 	
 	@Test
 	public void testNumberOfUnplacedHeavyAtoms_IAtomContainer(){
-		IMolecule ac = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer ac = MoleculeFactory.makeAlphaPinene();
 		int count=new AtomPlacer3D().numberOfUnplacedHeavyAtoms(ac);
 		Assert.assertEquals(10,count);
 	}
 	
 	@Test
 	public void testGetPlacedHeavyAtoms_IAtomContainer_IAtom(){
-	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer ac = MoleculeFactory.makeAlphaPinene();
 		IAtomContainer acplaced = new AtomPlacer3D().getPlacedHeavyAtoms(ac, ac.getAtom(0));
 		Assert.assertEquals(0,acplaced.getAtomCount());
 		ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
@@ -112,7 +111,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
 
 	@Test
 	public void testGetPlacedHeavyAtom_IAtomContainer_IAtom_IAtom(){
-	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer ac = MoleculeFactory.makeAlphaPinene();
 		IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0), ac.getAtom(1));
 		Assert.assertNull(acplaced);
 		ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
@@ -124,7 +123,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
 
 	@Test
 	public void testGetPlacedHeavyAtom_IAtomContainer_IAtom(){
-	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer ac = MoleculeFactory.makeAlphaPinene();
 		IAtom acplaced = new AtomPlacer3D().getPlacedHeavyAtom(ac, ac.getAtom(0));
 		Assert.assertNull(acplaced);
 		ac.getAtom(1).setFlag(CDKConstants.ISPLACED, true);
@@ -134,7 +133,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
 	
 	@Test
 	public void testGeometricCenterAllPlacedAtoms_IAtomContainer() throws Exception {
-	    IMolecule ac = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer ac = MoleculeFactory.makeAlphaPinene();
 		for(int i=0;i<ac.getAtomCount();i++){
 			ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 		}

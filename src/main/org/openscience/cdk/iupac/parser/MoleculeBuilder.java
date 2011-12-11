@@ -28,13 +28,14 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -58,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class MoleculeBuilder
 {
     /** The molecule which is worked upon throughout the class and returned at the end */
-    private Molecule currentMolecule = new Molecule();
+    private IAtomContainer currentMolecule = new AtomContainer();
     private IAtom endOfChain;
         
     /**
@@ -68,16 +69,16 @@ public class MoleculeBuilder
      * @param isMainCyclic A flag to show if the molecule is a ring. 0 means not a ring, 1 means is a ring.
      * @return A Molecule containing the requested chain.
      */
-    private Molecule buildChain(int length, boolean isMainCyclic)
+    private IAtomContainer buildChain(int length, boolean isMainCyclic)
     {
-        Molecule currentChain;
+        IAtomContainer currentChain;
         if (length > 0)
         {
             //If is cyclic
             if (isMainCyclic)
             {
                 //Rely on CDK's ring class constructor to generate our cyclic molecules.
-                currentChain = new Molecule();
+                currentChain = new AtomContainer();
                 currentChain.add(new Ring(length, "C"));
             } //Else must not be cyclic
             else
@@ -87,7 +88,7 @@ public class MoleculeBuilder
         }
         else
         {
-            currentChain = new Molecule();
+            currentChain = new AtomContainer();
         }
         
         return currentChain;
@@ -293,7 +294,7 @@ public class MoleculeBuilder
         //Benzene
         else if (funGroupToken == "phenyl" )
         {
-            Molecule benzene = MoleculeFactory.makeBenzene();
+            IAtomContainer benzene = MoleculeFactory.makeBenzene();
             //Detect Aromacity in the benzene ring.
             try
             {
@@ -508,7 +509,7 @@ public class MoleculeBuilder
                     connectingAtom = currentMolecule.getAtom(joinLocation);
                 }
                 
-                Molecule subChain = buildChain(attachedSubstituent.getLength(), false);
+                IAtomContainer subChain = buildChain(attachedSubstituent.getLength(), false);
                 
                 Bond linkingBond = new Bond(subChain.getFirstAtom(), connectingAtom);
                 currentMolecule.addBond(linkingBond);
@@ -527,7 +528,7 @@ public class MoleculeBuilder
      * @param isMainCyclic An indiacation of if the main chain is cyclic.
      * @return The molecule as built from the parsed tokens.
      */
-    protected Molecule buildMolecule(int mainChain, Vector attachedSubstituents
+    protected IAtomContainer buildMolecule(int mainChain, Vector attachedSubstituents
     , Vector attachedGroups, boolean isMainCyclic, String name) throws
     ParseException, CDKException
     {

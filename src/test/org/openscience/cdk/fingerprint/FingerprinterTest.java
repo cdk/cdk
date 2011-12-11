@@ -22,12 +22,15 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.BitSet;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -35,7 +38,6 @@ import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
@@ -44,10 +46,6 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
@@ -63,8 +61,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 	}
 
 	@Test public void testRegression() throws Exception {
-		IMolecule mol1 = MoleculeFactory.makeIndole();
-		IMolecule mol2 = MoleculeFactory.makePyrrole();
+	    IAtomContainer mol1 = MoleculeFactory.makeIndole();
+	    IAtomContainer mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
 		BitSet bs1 = fingerprinter.getFingerprint(mol1);
 		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33, bs1.cardinality());
@@ -88,7 +86,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
 
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Assert.assertNotNull(bs);
 		Assert.assertEquals(fingerprinter.getSize(), bs.size());
@@ -99,9 +97,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		Fingerprinter fingerprinter = new Fingerprinter();
 		Assert.assertNotNull(fingerprinter);
 
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
@@ -111,9 +109,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		Fingerprinter fingerprinter = new Fingerprinter(512);
 		Assert.assertNotNull(fingerprinter);
 
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
@@ -123,9 +121,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
 		Assert.assertNotNull(fingerprinter);
 
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
@@ -133,7 +131,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
   @Test public void testFingerprinterBitSetSize() throws Exception {
     Fingerprinter fingerprinter = new Fingerprinter(1024,7);
     Assert.assertNotNull(fingerprinter);
-    Molecule mol = MoleculeFactory.makeIndole();
+    IAtomContainer mol = MoleculeFactory.makeIndole();
     BitSet bs = fingerprinter.getFingerprint(mol);
     Assert.assertEquals(994, bs.length()); // highest set bit
     Assert.assertEquals(1024, bs.size()); // actual bit set size
@@ -222,7 +220,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Test
     public void testBondPermutation2() throws CDKException {
-        IMolecule pamine = MoleculeFactory.makeCyclopentane();
+        IAtomContainer pamine = MoleculeFactory.makeCyclopentane();
         Fingerprinter fp = new Fingerprinter();
         BitSet bs1 = fp.getFingerprint(pamine);
 
@@ -236,7 +234,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Test
     public void testAtomPermutation2() throws CDKException {
-        IMolecule pamine = MoleculeFactory.makeCyclopentane();
+        IAtomContainer pamine = MoleculeFactory.makeCyclopentane();
         Fingerprinter fp = new Fingerprinter();
         BitSet bs1 = fp.getFingerprint(pamine);
 

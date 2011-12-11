@@ -37,7 +37,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.fingerprint.SignatureFingerprinter;
@@ -56,8 +55,8 @@ public class TanimotoTest extends CDKTestCase
 
 	@Test public void testTanimoto1() throws java.lang.Exception
 	{
-		Molecule mol1 = MoleculeFactory.makeIndole();
-		Molecule mol2 = MoleculeFactory.makePyrrole();
+	    IAtomContainer mol1 = MoleculeFactory.makeIndole();
+	    IAtomContainer mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
 		BitSet bs1 = fingerprinter.getFingerprint(mol1);
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
@@ -68,8 +67,8 @@ public class TanimotoTest extends CDKTestCase
 	@Test
     public void testTanimoto2() throws java.lang.Exception
 	{
-		Molecule mol1 = MoleculeFactory.makeIndole();
-		Molecule mol2 = MoleculeFactory.makeIndole();
+	    IAtomContainer mol1 = MoleculeFactory.makeIndole();
+	    IAtomContainer mol2 = MoleculeFactory.makeIndole();
 		Fingerprinter fingerprinter = new Fingerprinter();
 		BitSet bs1 = fingerprinter.getFingerprint(mol1);
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
@@ -79,8 +78,8 @@ public class TanimotoTest extends CDKTestCase
 	}
 
     @Test public void testExactMatch() throws Exception {
-        Molecule mol1 = MoleculeFactory.makeIndole();
-        Molecule mol2 = MoleculeFactory.makeIndole();
+        IAtomContainer mol1 = MoleculeFactory.makeIndole();
+        IAtomContainer mol2 = MoleculeFactory.makeIndole();
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
         Map<String, Integer> feat1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);

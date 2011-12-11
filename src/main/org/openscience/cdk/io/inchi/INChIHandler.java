@@ -18,11 +18,11 @@
  */
 package org.openscience.cdk.io.inchi;
 
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -100,7 +100,7 @@ public class INChIHandler extends DefaultHandler {
         } else if ("formula".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
-                tautomer = new Molecule(inchiTool.processFormula(
+                tautomer = new AtomContainer(inchiTool.processFormula(
                 	setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars
                 ));
             } else {
@@ -141,7 +141,7 @@ public class INChIHandler extends DefaultHandler {
                     logger.info("INChI version: ", atts.getValue(i));
             }
         } else if ("structure".equals(local)) {
-            tautomer = new Molecule();
+            tautomer = new AtomContainer();
         } else {
             // skip all other elements
         }

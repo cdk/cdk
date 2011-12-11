@@ -64,9 +64,9 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
 		Assert.assertNotNull(fingerprinter);
 		
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
@@ -77,11 +77,11 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
 		Assert.assertNotNull(fingerprinter);
 		
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		IRingSet rs=new SSSRFinder(mol).findSSSR();
 		List rslist=RingPartitioner.partitionRings(rs);
 		BitSet bs = fingerprinter.getFingerprint(mol,rs, rslist);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
@@ -98,9 +98,9 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
 		Assert.assertNotNull(fingerprinter);
 		
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
@@ -110,9 +110,9 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512,7);
 		Assert.assertNotNull(fingerprinter);
 		
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));

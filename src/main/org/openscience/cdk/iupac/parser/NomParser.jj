@@ -26,7 +26,7 @@ PARSER_BEGIN(NomParser)
 package org.openscience.cdk.iupac.parser;
 
 import java.io.StringReader;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.*;
 import java.util.*;
 
@@ -71,7 +71,7 @@ public class NomParser {
      * @throws ParseException Any error which occur in the parsing get wrapped
      * up in a ParseException and thrown.
      */
-    public static Molecule generate (String stringToParse) throws ParseException, CDKException
+    public static IAtomContainer generate (String stringToParse) throws ParseException, CDKException
     {
         isMainCyclic = false;
         tempLocation = new Vector();
@@ -90,7 +90,7 @@ public class NomParser {
         checkConnections (attachedGroups.iterator());
 
         MoleculeBuilder moleculeBuilder = new MoleculeBuilder();
-        Molecule returnedMolecule = moleculeBuilder.buildMolecule(mainChainPrefix, attachedSubstituents, attachedGroups, isMainCyclic, stringToParse);
+        IAtomContainer returnedMolecule = moleculeBuilder.buildMolecule(mainChainPrefix, attachedSubstituents, attachedGroups, isMainCyclic, stringToParse);
         
         return returnedMolecule;
     }

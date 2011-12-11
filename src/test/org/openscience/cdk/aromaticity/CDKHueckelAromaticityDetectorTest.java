@@ -164,13 +164,13 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     @Test public void testPyridineOxide() throws Exception {
-		Molecule molecule = MoleculeFactory.makePyridineOxide();
+        IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
 	}
 
     @Test public void testPyridineOxide_SP2() throws Exception {
-		Molecule molecule = MoleculeFactory.makePyridineOxide();
+        IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
 		Iterator<IBond> bonds = molecule.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
 		for (int i=0; i<6; i++) {
@@ -213,7 +213,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                         true,
                         true
                 };
-        Molecule molecule = MoleculeFactory.makeAzulene();
+        IAtomContainer molecule = MoleculeFactory.makeAzulene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Expected the molecule to be aromatic.", CDKHueckelAromaticityDetector.detectAromaticity(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -227,7 +227,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit. The N has to be counted correctly.
      */
     @Test public void testIndole() throws Exception {
-        Molecule molecule = MoleculeFactory.makeIndole();
+        IAtomContainer molecule = MoleculeFactory.makeIndole();
         boolean testResults[] = {
                 true,
                 true,
@@ -255,7 +255,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit. The N has to be counted correctly.
      */
     @Test public void testPyrrole() throws Exception {
-        Molecule molecule = MoleculeFactory.makePyrrole();
+        IAtomContainer molecule = MoleculeFactory.makePyrrole();
         boolean testResults[] = {
                 true,
                 true,
@@ -279,7 +279,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit
      */
     @Test public void testThiazole() throws Exception {
-        Molecule molecule = MoleculeFactory.makeThiazole();
+        IAtomContainer molecule = MoleculeFactory.makeThiazole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Molecule is not detected as aromatic", CDKHueckelAromaticityDetector.detectAromaticity(molecule));
 
@@ -514,7 +514,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit
      */
     @Test public void testQuinone() throws Exception {
-        Molecule molecule = MoleculeFactory.makeQuinone();
+        IAtomContainer molecule = MoleculeFactory.makeQuinone();
         boolean[] testResults = {false, false, false, false, false, false, false, false};
 
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -549,7 +549,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit
      */
     @Test public void testBenzene() throws Exception {
-        Molecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -559,7 +559,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testCyclobutadiene() throws Exception {
         // anti-aromatic
-        Molecule molecule = MoleculeFactory.makeCyclobutadiene();
+        IAtomContainer molecule = MoleculeFactory.makeCyclobutadiene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(molecule));

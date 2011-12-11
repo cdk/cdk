@@ -83,7 +83,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testSmilesGenerator()
 	{
-        Molecule mol2 = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer mol2 = MoleculeFactory.makeAlphaPinene();
 		SmilesGenerator sg = new SmilesGenerator();
 		fixCarbonHCount(mol2);
 		String smiles2 = null;
@@ -116,7 +116,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testEthylPropylPhenantren() throws Exception
 	{
-		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
+	    IAtomContainer mol1 = MoleculeFactory.makeEthylPropylPhenantren();
         SmilesGenerator sg = new SmilesGenerator();
 		fixCarbonHCount(mol1);
 		String smiles1 = null;
@@ -140,7 +140,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testPropylCycloPropane()
 	{
-		Molecule mol1 = MoleculeFactory.makePropylCycloPropane();
+	    IAtomContainer mol1 = MoleculeFactory.makePropylCycloPropane();
         SmilesGenerator sg = new SmilesGenerator();
 		fixCarbonHCount(mol1);
 		String smiles1 = null;
@@ -733,7 +733,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
 	}
 
-	private void fixCarbonHCount(Molecule mol)
+	private void fixCarbonHCount(IAtomContainer mol)
 	{
 		/*
 		 *  the following line are just a quick fix for this
@@ -881,13 +881,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		}
 	}
 
-	private void display(Molecule molecule)
+	private void display(IAtomContainer molecule)
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 
 		try
 		{
-			sdg.setMolecule((Molecule) molecule.clone());
+			sdg.setMolecule((IAtomContainer) molecule.clone());
 			sdg.generateCoordinates(new Vector2d(0, 1));
 		} catch (Exception exc)
 		{

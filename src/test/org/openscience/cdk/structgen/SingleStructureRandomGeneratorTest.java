@@ -67,13 +67,13 @@ public class SingleStructureRandomGeneratorTest
 
 	private AtomContainer getBunchOfUnbondedAtoms()
 	{
-		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
 		fixCarbonHCount(molecule);
 		molecule.removeAllElectronContainers();
 		return (AtomContainer)molecule;
 	}
 	
-	private void fixCarbonHCount(Molecule mol)
+	private void fixCarbonHCount(IAtomContainer mol)
 	{	
 		/* the following line are just a quick fix for this
 		   particluar carbon-only molecule until we have a proper 

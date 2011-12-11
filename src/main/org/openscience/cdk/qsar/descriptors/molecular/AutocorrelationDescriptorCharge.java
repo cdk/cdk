@@ -22,7 +22,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
@@ -58,7 +57,9 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     	int natom = container.getAtomCount();
         double[] charges = new double[natom];
         try{
-            Molecule mol = new Molecule((IAtomContainer)container.clone());
+            IAtomContainer mol = container.getBuilder().newInstance(
+                IAtomContainer.class, ((IAtomContainer)container.clone())
+            );
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
             for(int i = 0; i < natom; i++){

@@ -31,7 +31,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.silent.AtomContainer;
@@ -84,7 +83,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
 	
 	@Test
 	public void testMapTemplates_IAtomContainer_double() throws Exception{
-		IMolecule ac = MoleculeFactory.makeBicycloRings();
+	    IAtomContainer ac = MoleculeFactory.makeBicycloRings();
 		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mm2");

@@ -29,7 +29,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -191,7 +190,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
 /////////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
 
-        Molecule mol = new Molecule(varAtomContainer);
+        IAtomContainer mol = varAtomContainer.getBuilder().newInstance(IAtomContainer.class, varAtomContainer);
         if (varAtomContainer != acold) {
             acold = varAtomContainer;
 // DETECTION OF pi SYSTEMS
@@ -453,7 +452,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 
 //Others definitions
 
-    private boolean getIfBondIsNotRotatable(Molecule mol, IBond bond, IAtomContainer detected) {
+    private boolean getIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected) {
         boolean isBondNotRotatable = false;
         int counter = 0;
         IAtom atom0 = bond.getAtom(0);
@@ -479,7 +478,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
         return isBondNotRotatable;
     }
 
-    private boolean getIfACarbonIsDoubleBondedToAnOxygen(Molecule mol, IAtom carbonAtom) {
+    private boolean getIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom) {
         boolean isDoubleBondedToOxygen = false;
         List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
         IBond tmpBond;
@@ -539,7 +538,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 
     // given a double bond
     // this method returns a bond bonded to this double bond
-    private int getNearestBondtoAGivenAtom(Molecule mol, IAtom atom, IBond bond) {
+    private int getNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond) {
         int nearestBond = 0;
         double[] values;
         double distance = 0;

@@ -23,18 +23,14 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.CDKTestCase;
-
-import java.util.List;
-//import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * This class tests the RingPartitioner class.
@@ -60,7 +56,7 @@ public class RingPartitionerTest extends CDKTestCase
     @Test
     public void testConvertToAtomContainer_IRingSet()
 	{
-		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
 		SSSRFinder sssrf = new SSSRFinder(molecule);
 
 		IRingSet ringSet = sssrf.findSSSR();
@@ -71,19 +67,19 @@ public class RingPartitionerTest extends CDKTestCase
 
     @Test
     public void testPartitionIntoRings() {
-        IMolecule azulene = MoleculeFactory.makeAzulene();
+        IAtomContainer azulene = MoleculeFactory.makeAzulene();
         SSSRFinder sssrf = new SSSRFinder(azulene);
         IRingSet ringSet = sssrf.findSSSR();
         List list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(1, list.size());
 
-        IMolecule biphenyl = MoleculeFactory.makeBiphenyl();
+        IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl();
         sssrf = new SSSRFinder(biphenyl);
         ringSet = sssrf.findSSSR();
         list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(2, list.size());
 
-        IMolecule spiro = MoleculeFactory.makeSpiroRings();
+        IAtomContainer spiro = MoleculeFactory.makeSpiroRings();
         sssrf = new SSSRFinder(spiro);
         ringSet = sssrf.findSSSR();
         list = RingPartitioner.partitionRings(ringSet);

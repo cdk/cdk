@@ -19,9 +19,9 @@ package org.openscience.cdk.iupac;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.iupac.parser.NomParser;
 import org.openscience.cdk.iupac.parser.ParseException;
@@ -45,13 +45,13 @@ public class ParserTest extends CDKTestCase
     // @Test public void testHello() {}
     @Test public void testEthane() throws Exception
     {
-        Molecule parserMolecule = null;
+        IAtomContainer parserMolecule = null;
         try {
             parserMolecule = NomParser.generate("ethane");
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        Molecule correctMolecule = MoleculeFactory.makeAlkane(2);   
+        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(2);   
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
@@ -59,13 +59,13 @@ public class ParserTest extends CDKTestCase
 
     @Test public void testPentane() throws Exception
     {
-        Molecule parserMolecule = null;
+        IAtomContainer parserMolecule = null;
         try {
             parserMolecule = NomParser.generate("pentane");
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        Molecule correctMolecule = MoleculeFactory.makeAlkane(5);  
+        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(5);  
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
@@ -73,13 +73,13 @@ public class ParserTest extends CDKTestCase
 
     @Test public void testSeptane() throws Exception
     {
-        Molecule parserMolecule = null;
+        IAtomContainer parserMolecule = null;
         try {
             parserMolecule = NomParser.generate("heptane");
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        Molecule correctMolecule = MoleculeFactory.makeAlkane(7);  
+        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(7);  
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
@@ -87,8 +87,8 @@ public class ParserTest extends CDKTestCase
     
     @Test public void testEicosane() throws Exception
     {
-        Molecule parserMolecule = NomParser.generate("Eicosane");
-        Molecule correctMolecule = MoleculeFactory.makeAlkane(20);
+        IAtomContainer parserMolecule = NomParser.generate("Eicosane");
+        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(20);
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
                    comparer.isIsomorphic(parserMolecule, correctMolecule));

@@ -237,7 +237,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         Assert.assertEquals("CONECT    2    1", lastLineButOne);
     }
     
-    private void setCoordinatesToZero(IMolecule mol) {
+    private void setCoordinatesToZero(IAtomContainer mol) {
         for (IAtom atom : mol.atoms()) {
             atom.setPoint3d(new Point3d(0.0, 0.0, 0.0));
         }
@@ -245,7 +245,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     
     @Test
     public void molfactoryRoundtripTest() throws Exception {
-        IMolecule original = MoleculeFactory.makePyrrole();
+        IAtomContainer original = MoleculeFactory.makePyrrole();
         setCoordinatesToZero(original);
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);

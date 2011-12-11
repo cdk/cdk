@@ -1082,7 +1082,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	
 	@Test public void testCyclobutadiene() throws Exception {
         // anti-aromatic
-        IMolecule molecule = MoleculeFactory.makeCyclobutadiene();
+	    IAtomContainer molecule = MoleculeFactory.makeCyclobutadiene();
         addExplicitHydrogens(molecule);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
@@ -1100,7 +1100,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
      * @cdk.bug      1728830
      */
     @Test public void testBenzene() throws Exception {
-        IMolecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
         addExplicitHydrogens(molecule);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);

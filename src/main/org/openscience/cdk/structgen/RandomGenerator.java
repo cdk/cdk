@@ -53,16 +53,16 @@ public class RandomGenerator {
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(RandomGenerator.class);
 	
-	private IMolecule proposedStructure = null;
-	private IMolecule molecule = null;
-	private IMolecule trial = null;
+	private IAtomContainer proposedStructure = null;
+	private IAtomContainer molecule = null;
+	private IAtomContainer trial = null;
 
 	/**
 	 * Constructs a RandomGenerator with a given starting structure.
 	 *
 	 * @param   molecule  The starting structure
 	 */
-	public RandomGenerator(IMolecule molecule)
+	public RandomGenerator(IAtomContainer molecule)
 	{
 		setMolecule(molecule);
 	}
@@ -75,7 +75,7 @@ public class RandomGenerator {
 	 *
 	 * @return A proposed molecule    
 	 */
-	public IMolecule proposeStructure()
+	public IAtomContainer proposeStructure()
 	{
 		logger.debug("RandomGenerator->proposeStructure() Start");
 		do
@@ -325,7 +325,7 @@ public class RandomGenerator {
 	 *
 	 * @param   molecule  a starting structure for this generator
 	 */
-	public void setMolecule(IMolecule molecule)
+	public void setMolecule(IAtomContainer molecule)
 	{
 		this.molecule = molecule;	
 	}
@@ -337,7 +337,7 @@ public class RandomGenerator {
 	 *
 	 * @return The molecule    
 	 */
-	public IMolecule getMolecule()
+	public IAtomContainer getMolecule()
 	{
 		return this.molecule;
 	}

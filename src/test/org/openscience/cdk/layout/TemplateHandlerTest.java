@@ -88,7 +88,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     @Test public void testOtherElements() throws Exception {
         boolean itIsInThere = false;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = MoleculeFactory.makeSteran();
+        IAtomContainer mol = MoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
         Assert.assertTrue(itIsInThere);
         mol.getAtom(0).setSymbol("N");
@@ -102,7 +102,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     @Test public void testOtherBondOrder() throws Exception {
         boolean itIsInThere = false;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = MoleculeFactory.makeSteran();
+        IAtomContainer mol = MoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
         Assert.assertTrue(itIsInThere);
         mol.getBond(0).setOrder(IBond.Order.DOUBLE);

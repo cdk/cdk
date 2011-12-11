@@ -29,10 +29,10 @@ import javax.vecmath.Vector2d;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -50,9 +50,9 @@ public class RandomStructureGeneratorTest extends CDKTestCase {
 	}
 
 	@Test public void testTwentyRandomStructures() {
-		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
 		RandomGenerator rg = new RandomGenerator(molecule);
-		IMolecule result = null;
+		IAtomContainer result = null;
 		for (int f = 0; f < 50; f++) {
 			result = rg.proposeStructure();
 			Assert.assertEquals(molecule.getAtomCount(), result.getAtomCount());

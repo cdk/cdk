@@ -20,6 +20,14 @@
  */
 package org.openscience.cdk.layout;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.InputStream;
+import java.io.StringReader;
+
+import javax.vecmath.Vector2d;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,13 +54,6 @@ import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import javax.vecmath.Vector2d;
-import java.io.InputStream;
-import java.io.StringReader;
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  *  A set of test cases for the StructureDiagramGenerator
@@ -132,7 +133,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testAlphaPinene() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer m = MoleculeFactory.makeAlphaPinene();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -144,7 +145,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testBiphenyl() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeBiphenyl();
+	    IAtomContainer m = MoleculeFactory.makeBiphenyl();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -156,7 +157,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void test4x3CondensedRings() throws Exception
 	{
-		Molecule m = MoleculeFactory.make4x3CondensedRings();
+	    IAtomContainer m = MoleculeFactory.make4x3CondensedRings();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -168,7 +169,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testPhenylEthylBenzene() throws Exception
 	{
-		Molecule m = MoleculeFactory.makePhenylEthylBenzene();
+	    IAtomContainer m = MoleculeFactory.makePhenylEthylBenzene();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -180,7 +181,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testSpiroRings() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeSpiroRings();
+	    IAtomContainer m = MoleculeFactory.makeSpiroRings();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -192,7 +193,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testMethylDecaline() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeMethylDecaline();
+	    IAtomContainer m = MoleculeFactory.makeMethylDecaline();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -204,7 +205,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testBranchedAliphatic() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeBranchedAliphatic();
+	    IAtomContainer m = MoleculeFactory.makeBranchedAliphatic();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -216,7 +217,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testDiamantane() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeDiamantane();
+	    IAtomContainer m = MoleculeFactory.makeDiamantane();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -246,7 +247,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testEthylCyclohexane() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeEthylCyclohexane();
+	    IAtomContainer m = MoleculeFactory.makeEthylCyclohexane();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -258,7 +259,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testBicycloRings() throws Exception
 	{
-		Molecule m = MoleculeFactory.makeBicycloRings();
+	    IAtomContainer m = MoleculeFactory.makeBicycloRings();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}

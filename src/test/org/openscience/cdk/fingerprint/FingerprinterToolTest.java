@@ -24,14 +24,14 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.templates.MoleculeFactory;
-
 import java.util.BitSet;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdk.module test-standard
@@ -50,9 +50,9 @@ public class FingerprinterToolTest extends CDKTestCase
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
 		
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
@@ -61,9 +61,9 @@ public class FingerprinterToolTest extends CDKTestCase
     public void testListDifferences_BitSet_BitSet() throws Exception{
 		Fingerprinter fingerprinter = new Fingerprinter();
 		
-		Molecule mol = MoleculeFactory.makeIndole();
+		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
+		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		List l=FingerprinterTool.listDifferences(bs1, bs);
 		Assert.assertEquals(l.size(),19);

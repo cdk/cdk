@@ -33,7 +33,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -63,7 +62,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     
     @Test
     public void testViaFlags() throws Exception {
-    	IMolecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
     	for (Iterator bonds=molecule.bonds().iterator(); bonds.hasNext();) {
     		((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
     	}

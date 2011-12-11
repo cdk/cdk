@@ -166,7 +166,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	 * This test tests the algorithm behind isConnected().
 	 */
 	@Test public void testIsConnected_IAtomContainer() {
-        Molecule spiro = MoleculeFactory.makeSpiroRings();
+	    IAtomContainer spiro = MoleculeFactory.makeSpiroRings();
         Assert.assertTrue(ConnectivityChecker.isConnected(spiro));
 	}
 

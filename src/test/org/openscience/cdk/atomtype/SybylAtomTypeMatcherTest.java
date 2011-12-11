@@ -81,7 +81,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
 		    SilentChemObjectBuilder.getInstance());
 		Assert.assertNotNull(matcher);
-		Molecule ethane = MoleculeFactory.makeAlkane(2);
+		IAtomContainer ethane = MoleculeFactory.makeAlkane(2);
 		String[] expectedTypes = {"C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, ethane);
 	}
@@ -128,7 +128,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
      * Uses findMatchingAtomType(IAtomContainer, IAtom) type.
      */
     @Test public void testBenzene() throws Exception {
-        IMolecule benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = MoleculeFactory.makeBenzene();
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
@@ -139,7 +139,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testAdenine() throws Exception {
-        IMolecule mol = MoleculeFactory.makeAdenine();
+        IAtomContainer mol = MoleculeFactory.makeAdenine();
           String[] expectedTypes = {"C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar",
             "N.ar", "N.3", "C.ar", "C.ar"
           };
@@ -157,7 +157,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
      * Uses findMatchingAtomType(IAtomContainer) type.
      */
     @Test public void testBenzene_AtomContainer() throws Exception {
-        IMolecule benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = MoleculeFactory.makeBenzene();
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
@@ -171,7 +171,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "data/mol2/atomtyping4.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        IAtomContainer molecule = (IMolecule)reader.read(new Molecule());
         Assert.assertNotNull(molecule);
         IMolecule reference = (IMolecule)molecule.clone();
         
@@ -627,7 +627,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testAniline() throws Exception {
-        IMolecule benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = MoleculeFactory.makeBenzene();
         IAtom nitrogen = benzene.getBuilder().newInstance(IAtom.class,"N");
         benzene.addAtom(nitrogen);
         benzene.addBond(benzene.getBuilder().newInstance(IBond.class,benzene.getAtom(0), nitrogen, IBond.Order.SINGLE));

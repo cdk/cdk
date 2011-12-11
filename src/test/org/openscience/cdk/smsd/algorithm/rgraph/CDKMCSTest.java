@@ -69,8 +69,8 @@ public class CDKMCSTest extends CDKTestCase {
 
     @Test
     public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
-        AtomContainer mol = MoleculeFactory.makeAlphaPinene();
-        AtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -127,8 +127,8 @@ public class CDKMCSTest extends CDKTestCase {
 
     @Test
     public void test2() throws java.lang.Exception {
-        AtomContainer mol = MoleculeFactory.makeAlphaPinene();
-        AtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -143,8 +143,8 @@ public class CDKMCSTest extends CDKTestCase {
 
     @Test
     public void test3() throws java.lang.Exception {
-        AtomContainer mol = MoleculeFactory.makeIndole();
-        AtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -176,8 +176,8 @@ public class CDKMCSTest extends CDKTestCase {
         int[] result1 = {6, 5, 7, 8, 0};
         int[] result2 = {3, 4, 2, 1, 0};
 
-        AtomContainer mol = MoleculeFactory.makeIndole();
-        AtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());

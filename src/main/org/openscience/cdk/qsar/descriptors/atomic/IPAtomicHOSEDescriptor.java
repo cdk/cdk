@@ -20,7 +20,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.Molecule;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -34,15 +42,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  *  This class returns the ionization potential of an atom containg lone 
@@ -256,7 +255,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 				int exactSphere = 0;
 				String hoseCode = "";
 				for(int spheres = maxSpheresToUse; spheres > 0; spheres--){
-					 hcg.getSpheres((Molecule) container, atom, spheres, true);
+					 hcg.getSpheres(container, atom, spheres, true);
 					 List<IAtom> atoms = hcg.getNodesInSphere(spheres);
 					 if(atoms.size() != 0){
 						 exactSphere = spheres;
