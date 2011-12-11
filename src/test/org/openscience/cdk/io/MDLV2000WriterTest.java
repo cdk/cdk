@@ -23,12 +23,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.StringWriter;
-import java.util.Properties;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -56,6 +50,11 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.StringWriter;
+import java.util.Properties;
+
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -77,7 +76,6 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     	MDLV2000Writer reader = new MDLV2000Writer();
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
-    	Assert.assertTrue(reader.accepts(Molecule.class));
         Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 

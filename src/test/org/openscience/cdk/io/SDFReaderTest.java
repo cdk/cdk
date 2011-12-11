@@ -27,19 +27,19 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.silent.AtomContainer;
+
+import java.io.InputStream;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -58,7 +58,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
     	MDLV2000Reader reader = new MDLV2000Reader();
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
-    	Assert.assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test public void testSDFFile() throws Exception {

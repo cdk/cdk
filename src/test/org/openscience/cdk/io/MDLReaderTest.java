@@ -24,10 +24,6 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,6 +43,10 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.List;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -71,7 +71,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     	reader.setReaderMode(Mode.STRICT);
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
-    	Assert.assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test public void testReadFromStringReader() throws Exception {

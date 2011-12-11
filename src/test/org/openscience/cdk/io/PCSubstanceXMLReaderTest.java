@@ -24,16 +24,17 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
 
 /**
  * @cdk.module test-io
@@ -49,7 +50,7 @@ public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test public void testAccepts() throws Exception {
     	PCSubstanceXMLReader reader = new PCSubstanceXMLReader();
-    	Assert.assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     @Test public void testReading() throws Exception {

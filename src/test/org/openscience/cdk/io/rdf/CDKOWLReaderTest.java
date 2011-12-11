@@ -22,19 +22,18 @@
  */
 package org.openscience.cdk.io.rdf;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @cdk.module test-iordf
@@ -49,7 +48,7 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test public void testAccepts() {
-    	Assert.assertTrue(chemObjectIO.accepts(Molecule.class));
+    	Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test public void testMolecule() throws Exception {

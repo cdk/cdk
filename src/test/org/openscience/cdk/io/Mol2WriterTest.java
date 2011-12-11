@@ -24,25 +24,25 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.List;
 
 /**
  * TestCase for the writer MOL2 writer.
@@ -63,7 +63,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     @Test
     public void testAccepts() throws Exception {
         Mol2Writer writer = new Mol2Writer();
-        Assert.assertTrue(writer.accepts(Molecule.class));
+        Assert.assertTrue(writer.accepts(AtomContainer.class));
     }
 
     /**

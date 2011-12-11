@@ -24,14 +24,6 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -58,6 +50,14 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -81,7 +81,6 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     	MDLV2000Reader reader = new MDLV2000Reader();
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     	Assert.assertTrue(reader.accepts(ChemModel.class));
-    	Assert.assertTrue(reader.accepts(Molecule.class));
         Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 

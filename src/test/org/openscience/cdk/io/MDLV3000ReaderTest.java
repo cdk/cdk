@@ -24,19 +24,18 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-import java.io.StringReader;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
+import java.io.StringReader;
 
 /**
  * TestCase for the reading MDL V3000 mol files using one test file.
@@ -57,7 +56,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test public void testAccepts() {
     	MDLV3000Reader reader = new MDLV3000Reader();
-    	Assert.assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
     
     /**

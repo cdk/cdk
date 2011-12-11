@@ -28,15 +28,12 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.exception.CDKException;
@@ -46,8 +43,11 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
@@ -72,7 +72,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     	Assert.assertTrue(reader.accepts(Reaction.class));
 		Assert.assertTrue(reader.accepts(ReactionSet.class));
 		Assert.assertFalse(reader.accepts(AtomContainerSet.class));
-		Assert.assertFalse(reader.accepts(Molecule.class));
+		Assert.assertFalse(reader.accepts(AtomContainer.class));
     }
 
     @Test public void testReadReactions1() throws Exception {

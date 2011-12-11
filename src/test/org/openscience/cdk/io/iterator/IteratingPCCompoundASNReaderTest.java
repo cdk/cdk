@@ -24,15 +24,15 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
-import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
 
 /**
  * @cdk.module test-io
@@ -53,7 +53,7 @@ public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof Molecule);
+            Assert.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 

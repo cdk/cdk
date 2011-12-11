@@ -24,18 +24,10 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,8 +38,14 @@ import org.openscience.cdk.io.formats.RGroupQueryFormat;
 import org.openscience.cdk.isomorphism.matchers.RGroup;
 import org.openscience.cdk.isomorphism.matchers.RGroupList;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -68,7 +66,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAccepts() {
         RGroupQueryReader reader = new RGroupQueryReader();
-        Assert.assertFalse(reader.accepts(Molecule.class));
+        Assert.assertFalse(reader.accepts(AtomContainer.class));
         Assert.assertTrue(reader.accepts(RGroupQuery.class));
     }
 

@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,18 +27,19 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -228,11 +226,11 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(dir+filename);
         reader.setReader(ins);
         IAtomContainer mol = null;
-        if (reader.accepts(Molecule.class)) {
-        	mol = (IMolecule)reader.read(new AtomContainer());
+        if (reader.accepts(AtomContainer.class)) {
+        	mol = reader.read(new AtomContainer());
         } else if (reader.accepts(ChemFile.class)) {
-        	IChemFile cf = (IChemFile)reader.read(new ChemFile());
-        	mol = new AtomContainer();
+        	IChemFile cf = reader.read(new ChemFile());
+        	mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         	List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cf);
         	for (IAtomContainer container : containers) mol.add(container);
         }

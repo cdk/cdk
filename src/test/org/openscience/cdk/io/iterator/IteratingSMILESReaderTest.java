@@ -27,19 +27,18 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
-import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
 
 /**
  * TestCase for the reading SMILES mol files using one test file.
@@ -65,7 +64,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof Molecule);
+            Assert.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
@@ -87,7 +86,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof Molecule);
+            Assert.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
@@ -107,7 +106,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
         while (reader.hasNext()) {
 
-            IMolecule mol = (IMolecule) reader.next();
+            IAtomContainer mol = (IAtomContainer) reader.next();
             String title = (String) mol.getProperty(CDKConstants.TITLE);
             Assert.assertNotNull(title);
         }
@@ -127,7 +126,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof Molecule);
+            Assert.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
