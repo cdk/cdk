@@ -43,7 +43,6 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -89,8 +88,8 @@ public class SMSDTest {
     public void testInit_3args_1() throws CDKException {
         System.out.println("init");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule target = sp.parseSmiles("C\\C=C/OCC=C");
-        IMolecule queryac = sp.parseSmiles("CCCOCC(C)=C");
+        IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
+        IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);
@@ -148,8 +147,8 @@ public class SMSDTest {
     public void testSet_IAtomContainer_IAtomContainer() throws CDKException {
         System.out.println("set");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-        IMolecule queryac = sp.parseSmiles("Nc1ccccc1");
+        IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+        IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
@@ -166,8 +165,8 @@ public class SMSDTest {
     public void testSet_IMolecule_IMolecule() throws Exception {
         System.out.println("set");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-        IMolecule queryac = sp.parseSmiles("Nc1ccccc1");
+        IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+        IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);

@@ -34,7 +34,7 @@ import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.geometry.cip.ImplicitHydrogenLigand;
 import org.openscience.cdk.geometry.cip.Ligand;
 import org.openscience.cdk.geometry.cip.VisitedAtoms;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -47,7 +47,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
 
     @Test
     public void testCBrIFCl() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("FC(Br)(Cl)I");
+        IAtomContainer molecule = smiles.parseSmiles("FC(Br)(Cl)I");
         ILigand ligandF = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
@@ -83,7 +83,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
 
     @Test
     public void testCompare_Identity() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
         ILigand ligand = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
@@ -93,7 +93,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
 
     @Test
     public void testCompare() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
         ILigand ligand1 = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
@@ -107,7 +107,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
 
     @Test
     public void testOrder() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
         List<ILigand> ligands = new ArrayList<ILigand>();
         VisitedAtoms visitedAtoms = new VisitedAtoms();
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 4));
@@ -128,7 +128,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
      */
     @Test
     public void testSideChains() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(C)C([H])(C)CC");
+        IAtomContainer molecule = smiles.parseSmiles("CC(C)C([H])(C)CC");
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
@@ -142,7 +142,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
      */
     @Test
     public void testSideChains_Recursive() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CCCC([H])(C)CC");
+        IAtomContainer molecule = smiles.parseSmiles("CCCC([H])(C)CC");
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
@@ -157,7 +157,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
      */
     @Test
     public void testTwoVersusDoubleBondedOxygen() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("OC(O)C([H])(C)C=O");
+        IAtomContainer molecule = smiles.parseSmiles("OC(O)C([H])(C)C=O");
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 6);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
@@ -170,7 +170,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
      */
     @Test
     public void testDeepRecursion() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC([H])(CCCCCCCCCC)CCCCCCCCC");
+        IAtomContainer molecule = smiles.parseSmiles("CC([H])(CCCCCCCCCC)CCCCCCCCC");
         ILigand ligand1 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 1, 3);
         ILigand ligand2 = CIPTool.defineLigand(molecule, new VisitedAtoms(), 1, 13);
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
@@ -180,7 +180,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
 
     @Test
     public void testImplicitHydrogen_Same() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
         ILigand ligand1 = new ImplicitHydrogenLigand(
             molecule, new VisitedAtoms(), molecule.getAtom(1)
         ); 
@@ -194,7 +194,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
 
     @Test
     public void testImplicitHydrogen() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(Br)([2H])[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(Br)([2H])[H]");
         ILigand ligand1 = new ImplicitHydrogenLigand(
             molecule, new VisitedAtoms(), molecule.getAtom(1)
         ); 

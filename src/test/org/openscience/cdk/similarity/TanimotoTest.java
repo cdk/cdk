@@ -30,22 +30,21 @@
 
 package org.openscience.cdk.similarity;
 
+import java.util.BitSet;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.fingerprint.SignatureFingerprinter;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.util.BitSet;
-import java.util.Map;
 
 /**
  * @cdk.module test-fingerprint
@@ -106,10 +105,10 @@ public class TanimotoTest extends CDKTestCase
     		String smiles2 = "O=C(O)C(N)CCC(=O)O";
     		String smiles3 = "O=C(O)C(N)C";
     		String smiles4 = "CC(=O)C(=O)O";
-    		IMolecule molecule1 = sp.parseSmiles(smiles1);
-    		IMolecule molecule2 = sp.parseSmiles(smiles2);
-    		IMolecule molecule3 = sp.parseSmiles(smiles3);
-    		IMolecule molecule4 = sp.parseSmiles(smiles4);
+    		IAtomContainer molecule1 = sp.parseSmiles(smiles1);
+    		IAtomContainer molecule2 = sp.parseSmiles(smiles2);
+    		IAtomContainer molecule3 = sp.parseSmiles(smiles3);
+    		IAtomContainer molecule4 = sp.parseSmiles(smiles4);
     		Fingerprinter fingerprinter = new Fingerprinter(1024, 6);
     		BitSet bs1 = fingerprinter.getFingerprint(molecule1);
     		BitSet bs2 = fingerprinter.getFingerprint(molecule2);
@@ -146,9 +145,9 @@ public class TanimotoTest extends CDKTestCase
     public void testRawTanimotoBetween0and1() throws Exception {
         SmilesParser smilesParser
             = new SmilesParser( SilentChemObjectBuilder.getInstance() );
-        IMolecule mol1 = smilesParser.parseSmiles(
+        IAtomContainer mol1 = smilesParser.parseSmiles(
             "Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
-        IMolecule mol2 = smilesParser.parseSmiles(
+        IAtomContainer mol2 = smilesParser.parseSmiles(
             "CS(=O)(=O)Nc1ccc(Cc2onc(n2)c3ccc(cc3)S(=O)(=O)Nc4ccc(CCNC[C@H](O)c5cccnc5)cc4)cc1");
 	    	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
 	    	Map<String, Integer> fp1 = fingerprinter.getRawFingerprint(mol1);

@@ -51,6 +51,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -330,10 +331,10 @@ public class Molecules {
         return result;
     }
 
-    public static IMolecule createPyridazine() throws CDKException {
+    public static IAtomContainer createPyridazine() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "C1=CN=NC=C1";
-        IMolecule result = sp.parseSmiles(smiles);
+        IAtomContainer result = sp.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
@@ -341,10 +342,10 @@ public class Molecules {
         return result;
     }
 
-    public static IMolecule createChloroisoquinoline4() throws CDKException {
+    public static IAtomContainer createChloroisoquinoline4() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "ClC1=CC=NC2=C1C=CC=C2";
-        IMolecule result = sp.parseSmiles(smiles);
+        IAtomContainer result = sp.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
@@ -352,10 +353,10 @@ public class Molecules {
         return result;
     }
 
-    public static IMolecule createChlorobenzene() throws CDKException {
+    public static IAtomContainer createChlorobenzene() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "Clc1ccccc1";
-        IMolecule result = sp.parseSmiles(smiles);
+        IAtomContainer result = sp.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);

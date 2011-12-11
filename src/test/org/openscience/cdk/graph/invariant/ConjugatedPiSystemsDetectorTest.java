@@ -294,7 +294,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
     @Test public void testAceticAcid() throws Exception
 	{
-    	IMolecule mol = null;
+        IAtomContainer mol = null;
     	mol = (new SmilesParser(builder)).parseSmiles("CC(=O)O");
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
@@ -351,7 +351,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
     @Test public void test1_fluorobutadienene() throws Exception
 	{
-    	IMolecule mol = (new SmilesParser(builder)).parseSmiles("FC=CC=C");
+        IAtomContainer mol = (new SmilesParser(builder)).parseSmiles("FC=CC=C");
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -374,7 +374,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
     @Test public void testEthyne_difluoro() throws Exception
 	{
-    	IMolecule mol = null;
+        IAtomContainer mol = null;
     	mol = (new SmilesParser(builder)).parseSmiles("FC#CF");
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
@@ -474,7 +474,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
     @Test public void testCyanoallene() throws Exception
 	{
-    	IMolecule mol = null;
+        IAtomContainer mol = null;
     	mol = (new SmilesParser(builder)).parseSmiles("C=C=CC#N");
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
@@ -501,7 +501,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
 	@Test public void testChargeWithProtonExplicit() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		SmilesParser sp = new SmilesParser(builder);
-		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
+		IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
 		lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
@@ -525,7 +525,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
 	@Test public void testChargeWithProtonImplicit() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		SmilesParser sp = new SmilesParser(builder);
-		IMolecule mol = sp.parseSmiles("C=C[C+]");
+		IAtomContainer mol = sp.parseSmiles("C=C[C+]");
 		lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         

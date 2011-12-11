@@ -27,7 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -56,7 +56,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 		 
         
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("CF"); 
+        IAtomContainer mol = sp.parseSmiles("CF"); 
         addExplicitHydrogens(mol);
         
         for (int i = 0 ; i < 2 ; i++){
@@ -73,7 +73,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 		double [] testResult={0.2137,0.0075};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCl");
+		IAtomContainer mol = sp.parseSmiles("CCl");
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 2 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
@@ -87,7 +87,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 		double [] testResult={0.0265,0.1268,0.1872,0.1564,0.1564,0.1347,0.0013,0.0013}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCBr");
+		IAtomContainer mol = sp.parseSmiles("C=CCBr");
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
@@ -102,7 +102,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 		double testResult = 0.0165	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
+		IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
 		addExplicitHydrogens(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
@@ -116,7 +116,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 		
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCOCC");
+		IAtomContainer mol = sp.parseSmiles("CCOCC");
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
@@ -131,7 +131,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 		double [] testResult={0.3463,0.0274,0.448,0.448,0.448}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("NCCO");
+		IAtomContainer mol = sp.parseSmiles("NCCO");
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 5 ; i++){
@@ -146,7 +146,7 @@ public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
 		double [] testResult={0.0203,0.0921,0.1835,0.1569,0.3593,8.5917}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCS");
+		IAtomContainer mol = sp.parseSmiles("C=CCS");
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 4 ; i++){

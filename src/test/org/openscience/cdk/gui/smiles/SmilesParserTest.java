@@ -25,7 +25,7 @@
 package org.openscience.cdk.gui.smiles;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -69,7 +69,7 @@ public class SmilesParserTest {
 			};
 		for (int f = 0; f < smiles.length; f++) {
 			try {
-				IMolecule mol = sp.parseSmiles(smiles[f]);
+				IAtomContainer mol = sp.parseSmiles(smiles[f]);
 				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 			} catch (Exception exc) {
 				logger.debug("Could not parse SMILES: ", smiles[f]);

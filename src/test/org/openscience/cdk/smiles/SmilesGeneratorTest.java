@@ -852,7 +852,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         "c1(c7ccc(c%13ccccc%13)cc7)";
         SmilesParser smilesParser = new SmilesParser(
                 DefaultChemObjectBuilder.getInstance());
-        IMolecule cdkMol = smilesParser.parseSmiles(smiles);
+        IAtomContainer cdkMol = smilesParser.parseSmiles(smiles);
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);    
         String genSmiles = smilesGenerator.createSMILES(cdkMol);
@@ -865,7 +865,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Assert.assertTrue(genSmiles.indexOf("%13") >= 0);
 
         // check that we can read in the SMILES we got
-        IMolecule cdkRoundTripMol 
+        IAtomContainer cdkRoundTripMol 
             = smilesParser.parseSmiles(genSmiles);
         Assert.assertNotNull(cdkRoundTripMol);
     }
@@ -877,7 +877,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     public void testRoundTripPseudoAtom() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "[12*H2-]";
-        IMolecule mol = sp.parseSmiles(smiles);
+        IAtomContainer mol = sp.parseSmiles(smiles);
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);
         String genSmiles = smilesGenerator.createSMILES(mol);
@@ -891,7 +891,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     public void testBug2781199() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "n1ncn(c1)CC";
-        IMolecule mol = sp.parseSmiles(smiles);
+        IAtomContainer mol = sp.parseSmiles(smiles);
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);
         String genSmiles = smilesGenerator.createSMILES(mol);
@@ -907,8 +907,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String s1 = "OC(=O)C(Br)(Cl)N";
         String s2 = "ClC(Br)(N)C(=O)O";
 
-        IMolecule m1 = sp.parseSmiles(s1);
-        IMolecule m2 = sp.parseSmiles(s2);
+        IAtomContainer m1 = sp.parseSmiles(s1);
+        IAtomContainer m2 = sp.parseSmiles(s2);
 
         SmilesGenerator sg = new SmilesGenerator();
         String o1 = sg.createSMILES(m1);
@@ -926,8 +926,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String s1 = "OC(=O)C(Br)(Cl)N";
         String s2 = "ClC(Br)(N)C(=O)O";
 
-        IMolecule m1 = sp.parseSmiles(s1);
-        IMolecule m2 = sp.parseSmiles(s2);
+        IAtomContainer m1 = sp.parseSmiles(s1);
+        IAtomContainer m2 = sp.parseSmiles(s2);
 
         IsotopeFactory fact = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
         fact.configureAtoms(m1);

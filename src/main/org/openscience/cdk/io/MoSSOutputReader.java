@@ -32,12 +32,12 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MoSSOutputFormat;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -176,7 +176,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
         while (line != null) {
             String[] cols = line.split(",");
             try {
-                IMolecule mol = parser.parseSmiles(cols[1]);
+                IAtomContainer mol = parser.parseSmiles(cols[1]);
                 mol.setProperty("focusSupport", cols[5]);
                 mol.setProperty("complementSupport", cols[7]);
                 mol.setProperty("atomCount", cols[2]);

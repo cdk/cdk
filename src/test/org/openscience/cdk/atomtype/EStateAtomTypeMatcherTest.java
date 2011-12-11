@@ -28,10 +28,11 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -46,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class EStateAtomTypeMatcherTest extends CDKTestCase {
     
 	static EStateAtomTypeMatcher matcher;
-	IMolecule mol = null;
+	IAtomContainer mol = null;
 
     @BeforeClass
     public static void setUp(){

@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -52,7 +52,7 @@ public class MMFF94PartialChargesTest extends CDKTestCase {
     public void testMMFF94PartialCharges() throws Exception {
 		double [] testResult={-0.99,0.314,0.66,-0.57,-0.65,0.36,0.36,0,0,0.5};
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule ac = sp.parseSmiles("NCC(=O)O");
+		IAtomContainer ac = sp.parseSmiles("NCC(=O)O");
 		addExplicitHydrogens(ac);
 		MMFF94PartialCharges mmff = new MMFF94PartialCharges();
 		mmff.assignMMFF94PartialCharges(ac);

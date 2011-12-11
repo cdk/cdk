@@ -37,6 +37,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -75,7 +76,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 	 * @cdk.bug 1632610
 	 */
 	public  void testCycloButene() throws Exception {
-		IMolecule mol = parser.parseSmiles("C=CC=C");
+	    IAtomContainer mol = parser.parseSmiles("C=CC=C");
 		
 		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
 		addImplicitHydrogens(mol);

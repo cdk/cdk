@@ -26,12 +26,13 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -131,7 +132,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("CC(CC)Cl"); // not in db
+		IAtomContainer mol = sp.parseSmiles("CC(CC)Cl"); // not in db
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
@@ -150,7 +151,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testNotDB() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("C=CCCl"); // not in db
+		IAtomContainer mol = sp.parseSmiles("C=CCCl"); // not in db
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
@@ -168,7 +169,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("C-Cl");
+		IAtomContainer mol = sp.parseSmiles("C-Cl");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -186,7 +187,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("C-C-Br");
+		IAtomContainer mol = sp.parseSmiles("C-C-Br");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -204,7 +205,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("C-C-C-I");
+		IAtomContainer mol = sp.parseSmiles("C-C-C-I");
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -221,7 +222,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_4() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("C-C-O");
+		IAtomContainer mol = sp.parseSmiles("C-C-O");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -240,7 +241,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_5() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
-    	IMolecule mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
+    	IAtomContainer mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
 
 		addExplicitHydrogens(mol);
 		
@@ -260,7 +261,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_6() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
-    	IMolecule mol = sp.parseSmiles("C-N-C");
+    	IAtomContainer mol = sp.parseSmiles("C-N-C");
 
 		addExplicitHydrogens(mol);
 		
@@ -280,7 +281,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_7() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("C-C-N");
+		IAtomContainer mol = sp.parseSmiles("C-C-N");
 
 		addExplicitHydrogens(mol);
 		
@@ -300,7 +301,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_8() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
-    	IMolecule mol = sp.parseSmiles("C-C-P-C-C");
+    	IAtomContainer mol = sp.parseSmiles("C-C-P-C-C");
 
 		addExplicitHydrogens(mol);
 		
@@ -321,7 +322,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_9() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
-    	IMolecule mol = sp.parseSmiles("O=C(C)CC(C)C");
+    	IAtomContainer mol = sp.parseSmiles("O=C(C)CC(C)C");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -340,7 +341,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_10() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("O=C1C2CCC1CC2");
+		IAtomContainer mol = sp.parseSmiles("O=C1C2CCC1CC2");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -360,7 +361,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor_14() throws Exception{
         
-		IMolecule mol = sp.parseSmiles("CCOCCCO");
+		IAtomContainer mol = sp.parseSmiles("CCOCCCO");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -385,7 +386,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //        
-//    	IMolecule mol = sp.parseSmiles("C-C-N");
+//    	IAtomContainer mol = sp.parseSmiles("C-C-N");
 //		assertEquals(3, mol.getAtomCount());
 //		addExplicitHydrogens(mol);
 //		assertEquals(10, mol.getAtomCount());
@@ -418,7 +419,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 //    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //        
 //		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
-//		IMolecule mol = sp.parseSmiles("CCCCCC");
+//		IAtomContainer mol = sp.parseSmiles("CCCCCC");
 //
 //		addExplicitHydrogens(mol);
 //		
@@ -441,7 +442,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     public void testIPPySystemWithHeteroatomDescriptor3() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("O(C=CC=C)C");
+		IAtomContainer mol = sp.parseSmiles("O(C=CC=C)C");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -465,7 +466,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     public void testIPPySystemWithHeteroatomDescriptor2() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("OC=CC");
+		IAtomContainer mol = sp.parseSmiles("OC=CC");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -489,7 +490,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     public void testIPPySystemWithHeteroatomDescriptor1() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C1=C(C)CCS1");
+		IAtomContainer mol = sp.parseSmiles("C1=C(C)CCS1");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -517,7 +518,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 //    public void testIDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception{
 ////        
 ////		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
-////		IMolecule mol = sp.parseSmiles("OC(C#CC)(C)C");
+////		IAtomContainer mol = sp.parseSmiles("OC(C#CC)(C)C");
 ////
 ////		addExplicitHydrogens(mol);
 ////		

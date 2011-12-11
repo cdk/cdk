@@ -256,7 +256,7 @@ public class AllRingsFinderTest extends CDKTestCase
 
     @Test public void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles("c1ccccc1");
+        IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
 
         AllRingsFinder arf = new AllRingsFinder();
         arf.findAllRings(molecule);
@@ -273,7 +273,7 @@ public class AllRingsFinderTest extends CDKTestCase
 
     @Test public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles("c1cccc1CC");
+        IAtomContainer molecule = sp.parseSmiles("c1cccc1CC");
 
 
         AllRingsFinder arf = new AllRingsFinder();

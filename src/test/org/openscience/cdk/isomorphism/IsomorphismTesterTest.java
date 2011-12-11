@@ -31,8 +31,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -158,7 +158,7 @@ public class IsomorphismTesterTest extends CDKTestCase
 
         //get the biphenyl as aromatic smiles
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IMolecule biphenyl_aromaticsmiles = parser.parseSmiles("c1ccccc1c2ccccc2");
+        IAtomContainer biphenyl_aromaticsmiles = parser.parseSmiles("c1ccccc1c2ccccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_aromaticsmiles);
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(biphenyl_aromaticsmiles.getBuilder());
         hAdder.addImplicitHydrogens(biphenyl_aromaticsmiles);
@@ -167,7 +167,7 @@ public class IsomorphismTesterTest extends CDKTestCase
 
 
         //get the biphenyl as Kekule smiles
-        IMolecule biphenyl_kekulesmiles = parser.parseSmiles("C1=C(C=CC=C1)C2=CC=CC=C2");
+        IAtomContainer biphenyl_kekulesmiles = parser.parseSmiles("C1=C(C=CC=C1)C2=CC=CC=C2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_kekulesmiles);
         hAdder = CDKHydrogenAdder.getInstance(biphenyl_kekulesmiles.getBuilder());
         hAdder.addImplicitHydrogens(biphenyl_kekulesmiles);

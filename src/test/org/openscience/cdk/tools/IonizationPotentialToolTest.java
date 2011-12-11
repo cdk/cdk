@@ -30,7 +30,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -64,7 +64,7 @@ public class IonizationPotentialToolTest extends CDKTestCase {
     public void testBenzene() throws Exception {
         String smiles = "c1ccccc1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles(smiles);
+        IAtomContainer molecule = sp.parseSmiles(smiles);
         lpcheck.saturate(molecule);
         addExplicitHydrogens(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);

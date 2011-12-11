@@ -27,12 +27,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -77,7 +78,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 	{
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
-		IMolecule mol = sp.parseSmiles(smiles);
+		IAtomContainer mol = sp.parseSmiles(smiles);
 		Assert.assertTrue(th.mapTemplates(mol));
 	}
 
@@ -114,11 +115,11 @@ public class TemplateHandlerTest extends CDKTestCase {
 		logger.debug("***TestAddMolecule***");
 		boolean itIsInThere = false;
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = MoleculeFactory.makeAlphaPinene();
+		IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
 		sdg.setMolecule(mol); sdg.generateCoordinates(); mol = sdg.getMolecule();
 
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-		IMolecule smilesMol = sp.parseSmiles(smiles);
+		IAtomContainer smilesMol = sp.parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
 		Assert.assertFalse(itIsInThere);
@@ -134,11 +135,11 @@ public class TemplateHandlerTest extends CDKTestCase {
 		logger.debug("***TestRemoveMolecule***");
 		boolean itIsInThere = false;
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = MoleculeFactory.makeAlphaPinene();
+		IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
 		sdg.setMolecule(mol); sdg.generateCoordinates(); mol = sdg.getMolecule();
 		
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-		IMolecule smilesMol = sp.parseSmiles(smiles);
+		IAtomContainer smilesMol = sp.parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
 		Assert.assertFalse(itIsInThere);

@@ -29,12 +29,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -252,7 +252,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
     	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
         
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("F-C=C");
+		IAtomContainer mol = sp.parseSmiles("F-C=C");
 
 		assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
@@ -280,7 +280,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
     	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
         
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("[F+]=C-[C-]");
+		IAtomContainer mol = sp.parseSmiles("[F+]=C-[C-]");
 
 		assertAtomTypesPerceived(mol);
 		addImplicitHydrogens(mol);

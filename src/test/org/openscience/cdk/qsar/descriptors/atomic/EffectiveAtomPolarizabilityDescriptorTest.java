@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -55,7 +55,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         IAtomicDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("NCCN(C)(C)");
+        IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
 		addExplicitHydrogens(mol);
         
         for (int i = 0 ; i < 6 ; i++){
@@ -72,7 +72,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCCl");
+		IAtomContainer mol = sp.parseSmiles("CCCl");
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -88,7 +88,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCBr");
+		IAtomContainer mol = sp.parseSmiles("C=CCBr");
 		addExplicitHydrogens(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(3),mol).getValue()).doubleValue();
@@ -103,7 +103,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
+		IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 6 ; i++){
@@ -120,7 +120,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCOCC");
+		IAtomContainer mol = sp.parseSmiles("CCOCC");
 		addExplicitHydrogens(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).doubleValue();
@@ -135,7 +135,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("NCCO");
+		IAtomContainer mol = sp.parseSmiles("NCCO");
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -151,7 +151,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCS");
+		IAtomContainer mol = sp.parseSmiles("C=CCS");
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();

@@ -20,6 +20,11 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
+import static java.util.Collections.sort;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -34,10 +39,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.util.ArrayList;
-import static java.util.Collections.sort;
-import java.util.List;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
@@ -174,7 +175,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     @Test
     public void testIndoleAgainstItself() throws Exception {
 
-        IMolecule indole = MoleculeFactory.makeIndole();
+        IAtomContainer indole = MoleculeFactory.makeIndole();
 
         SmilesGenerator generator = new SmilesGenerator();
         generator.setUseAromaticityFlag(true);

@@ -404,7 +404,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalFormalCharge_IAtomContainer() throws Exception
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
+        IAtomContainer mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
         int totalCharge = AtomContainerManipulator.getTotalFormalCharge(mol);
 
         Assert.assertEquals(1,totalCharge);
@@ -417,7 +417,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalExactMass_IAtomContainer() throws Exception{
     	
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("CCl");
+        IAtomContainer mol = parser.parseSmiles("CCl");
         mol.getAtom(0).setExactMass(12.00);
         mol.getAtom(1).setExactMass(34.96885268);
         double totalExactMass = AtomContainerManipulator.getTotalExactMass(mol);
@@ -447,7 +447,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalNaturalAbundance_IAtomContainer() throws Exception{
     	
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("CCl");
+        IAtomContainer mol = parser.parseSmiles("CCl");
         mol.getAtom(0).setNaturalAbundance(98.93);
         mol.getAtom(1).setNaturalAbundance(75.78);
         double totalAbudance = AtomContainerManipulator.getTotalNaturalAbundance(mol);
@@ -462,7 +462,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalPositiveFormalCharge_IAtomContainer() throws Exception
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
+        IAtomContainer mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
         int totalCharge = AtomContainerManipulator.getTotalPositiveFormalCharge(mol);
 
         Assert.assertEquals(2,totalCharge);
@@ -475,7 +475,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void testGetTotalNegativeFormalCharge_IAtomContainer() throws Exception
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
+        IAtomContainer mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
         int totalCharge = AtomContainerManipulator.getTotalNegativeFormalCharge(mol);
 
         Assert.assertEquals(-1,totalCharge);
@@ -788,7 +788,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void testBondOrderSum() throws InvalidSmilesException {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("C=CC");
+        IAtomContainer mol = parser.parseSmiles("C=CC");
         double bosum = AtomContainerManipulator.getBondOrderSum(mol, mol.getAtom(0));
         Assert.assertEquals(2.0, bosum, 0.001);
         bosum = AtomContainerManipulator.getBondOrderSum(mol, mol.getAtom(1));

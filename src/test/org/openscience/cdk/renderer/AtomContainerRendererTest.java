@@ -56,7 +56,7 @@ public class AtomContainerRendererTest {
 	
 	private StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	
-	public IMolecule layout(IMolecule molecule) {
+	public IAtomContainer layout(IAtomContainer molecule) {
 		sdg.setMolecule(molecule);
 		try {
 			sdg.generateCoordinates();
@@ -66,7 +66,7 @@ public class AtomContainerRendererTest {
 		return sdg.getMolecule();
 	}
 	
-	public IMolecule makeSquare() {
+	public IAtomContainer makeSquare() {
 		IMolecule square = builder.newInstance(IMolecule.class);
 		square.addAtom(builder.newInstance(IAtom.class,"C"));
 		square.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -82,7 +82,7 @@ public class AtomContainerRendererTest {
 	
 	@Test
 	public void testSquareMolecule() {
-		IMolecule square = makeSquare();
+	    IAtomContainer square = makeSquare();
 		
 		List<IGenerator<IAtomContainer>> generators =
 			new ArrayList<IGenerator<IAtomContainer>>();

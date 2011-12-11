@@ -21,14 +21,15 @@
  */
 package org.openscience.cdk.smsd.factory;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
@@ -65,8 +66,8 @@ public class SubStructureSearchAlgorithmsTest {
     public void testInit_3args_1() throws InvalidSmilesException, CDKException {
         System.out.println("init");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule target = sp.parseSmiles("C\\C=C/OCC=C");
-        IMolecule queryac = sp.parseSmiles("CCCOCC(C)=C");
+        IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
+        IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, false);
         smsd1.init(queryac, target, true, true);

@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -43,7 +43,7 @@ public class AromaticityCalculatorTest extends CDKTestCase {
     public void testIsAromatic_IRing_IAtomContainer() throws Exception {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-		IMolecule mol = sp.parseSmiles("c1ccncc1");
+		IAtomContainer mol = sp.parseSmiles("c1ccncc1");
 		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 
 		Assert.assertEquals(1, rs.getAtomContainerCount());

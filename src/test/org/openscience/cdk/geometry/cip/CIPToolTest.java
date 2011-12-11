@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 public class CIPToolTest extends CDKTestCase {
 
     static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
-    static IMolecule molecule;
+    static IAtomContainer molecule;
     static ILigand[] ligands;
 
     @BeforeClass
@@ -187,7 +187,7 @@ public class CIPToolTest extends CDKTestCase {
      */
     @Test
     public void testGetLigandLigands() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(2, sideChains.length);
@@ -207,7 +207,7 @@ public class CIPToolTest extends CDKTestCase {
      */
     @Test
     public void testGetLigandLigands_VisitedTracking() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
         for (ILigand ligand2 : sideChains) {
@@ -223,7 +223,7 @@ public class CIPToolTest extends CDKTestCase {
      */
     @Test
     public void testGetLigandLigands_DoubleTriple() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)[H]");
+        IAtomContainer molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)[H]");
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, 1);
         ILigand[] sideChains = CIPTool.getLigandLigands(ligand);
         Assert.assertEquals(2, sideChains.length);
@@ -240,7 +240,7 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testDefineLigand_ImplicitHydrogen() throws Exception {
-        IMolecule molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)");
+        IAtomContainer molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)");
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 3, CIPTool.HYDROGEN);
         Assert.assertTrue(ligand instanceof ImplicitHydrogenLigand);
     }

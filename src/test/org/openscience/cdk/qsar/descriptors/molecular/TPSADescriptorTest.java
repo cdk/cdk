@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -54,51 +54,51 @@ public class TPSADescriptorTest extends MolecularDescriptorTest {
 
 
     @Test public void testTPSA1() throws Exception {
-        IMolecule mol = sp.parseSmiles("O=C(O)CC");
+        IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         addExplicitHydrogens(mol);
         Assert.assertEquals(37.29, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
     @Test
     public void testTPSA2() throws Exception {
-        IMolecule mol = sp.parseSmiles("C=NC(CC#N)N(C)C");
+        IAtomContainer mol = sp.parseSmiles("C=NC(CC#N)N(C)C");
         addExplicitHydrogens(mol);
         Assert.assertEquals(39.39, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
     @Test public void testTPSA3() throws Exception {
-        IMolecule mol = sp.parseSmiles("CCCN(=O)=O");
+        IAtomContainer mol = sp.parseSmiles("CCCN(=O)=O");
         addExplicitHydrogens(mol);
         Assert.assertEquals(45.82, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
     @Test public void testTPSA4() throws Exception {
-        IMolecule mol = sp.parseSmiles("C#N=CC(CNC)N1CC1");
+        IAtomContainer mol = sp.parseSmiles("C#N=CC(CNC)N1CC1");
         addExplicitHydrogens(mol);
         Assert.assertEquals(28.632, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
 
     @Test public void testTPSA5() throws Exception {
-        IMolecule mol = sp.parseSmiles("c1ccncc1");
+        IAtomContainer mol = sp.parseSmiles("c1ccncc1");
         addExplicitHydrogens(mol);
         Assert.assertEquals(12.892, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
     @Test public void testTPSA6() throws java.lang.Exception {
-        IMolecule mol = sp.parseSmiles("[H][N+]([H])(C)C");//at:  16
+        IAtomContainer mol = sp.parseSmiles("[H][N+]([H])(C)C");//at:  16
         addExplicitHydrogens(mol);
         Assert.assertEquals(16.61, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test public void testTPSA7() throws java.lang.Exception {
-        IMolecule mol = sp.parseSmiles("C(I)I");//at:  16
+        IAtomContainer mol = sp.parseSmiles("C(I)I");//at:  16
         addExplicitHydrogens(mol);
         Assert.assertEquals(0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
     @Test public void testTPSA8() throws java.lang.Exception {
-        IMolecule mol = sp.parseSmiles("C(O)O");//at:  16
+        IAtomContainer mol = sp.parseSmiles("C(O)O");//at:  16
         addExplicitHydrogens(mol);
         Assert.assertEquals(40.45, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }

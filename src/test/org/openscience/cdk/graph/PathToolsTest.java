@@ -279,7 +279,7 @@ public class PathToolsTest extends CDKTestCase {
     
     @Test
     public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws Exception {
-    	IMolecule molecule = sp.parseSmiles("C(COF)(Br)NC");
+    	IAtomContainer molecule = sp.parseSmiles("C(COF)(Br)NC");
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();

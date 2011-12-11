@@ -85,7 +85,7 @@ public class StructureDiagramGenerator
 
 	private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = null;
 
-	private IMolecule molecule;
+	private IAtomContainer molecule;
 	private IRingSet sssr;
 	private double bondLength = 1.5;
 	private Vector2d firstBondVector;
@@ -114,7 +114,7 @@ public class StructureDiagramGenerator
 	 *
 	 *  @param  molecule  The molecule to be layed out.
 	 */
-	public StructureDiagramGenerator(IMolecule molecule) {
+	public StructureDiagramGenerator(IAtomContainer molecule) {
 		this();
 		setMolecule(molecule, false);
 		templateHandler = new TemplateHandler(molecule.getBuilder());
@@ -129,7 +129,7 @@ public class StructureDiagramGenerator
 	 *  @param  mol    the molecule for which coordinates are to be generated.
 	 *  @param  clone  Should the whole process be performed with a cloned copy?
 	 */
-	public void setMolecule(IMolecule mol, boolean clone) {
+	public void setMolecule(IAtomContainer mol, boolean clone) {
 		templateHandler = new TemplateHandler(mol.getBuilder());
 		IAtom atom = null;
 		if (clone)
@@ -218,7 +218,7 @@ public class StructureDiagramGenerator
 	 *
 	 *  @param  molecule  the molecule for which coordinates are to be generated.
 	 */
-	public void setMolecule(IMolecule molecule)
+	public void setMolecule(IAtomContainer molecule)
 	{
 		setMolecule(molecule, true);
 	}
@@ -230,7 +230,7 @@ public class StructureDiagramGenerator
 	 *  @return    The molecule with new coordinates (if generateCoordinates() had
 	 *             been called)
 	 */
-	public IMolecule getMolecule()
+	public IAtomContainer getMolecule()
 	{
 		return molecule;
 	}
@@ -258,8 +258,8 @@ public class StructureDiagramGenerator
 	 */
 	public void generateExperimentalCoordinates(Vector2d firstBondVector) throws CDKException {
 		// first make a shallow copy: Atom/Bond references are kept
-		IMolecule original = molecule;
-		IMolecule shallowCopy = molecule.getBuilder().newInstance(IMolecule.class,molecule);
+	    IAtomContainer original = molecule;
+	    IAtomContainer shallowCopy = molecule.getBuilder().newInstance(IAtomContainer.class,molecule);
 		// ok, delete H's from
 		//IAtom[] atoms = shallowCopy.getAtoms();
 		for (int i = 0; i < shallowCopy.getAtomCount(); i++) {

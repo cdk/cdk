@@ -30,11 +30,12 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
@@ -221,7 +222,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		double[] testResult = {-0.0458,-0.0623,-0.0623,-0.0415,0.0003,-0.0855}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
+		IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 6 ; i++){
@@ -314,7 +315,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.2138,0.079,0.0942,-0.072,0.0563,0.0563}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("[F+]=C([H])[C-]([H])[H]");
+		IAtomContainer mol = sp.parseSmiles("[F+]=C([H])[C-]([H])[H]");
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
@@ -328,7 +329,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3855,-0.0454,0.0634,-0.0544,-0.0391,-0.0391}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("O=C([H])[C-]([H])[H]");
+		IAtomContainer mol = sp.parseSmiles("O=C([H])[C-]([H])[H]");
 		Integer[] object = {6};
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
@@ -343,7 +344,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor3() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3855,-0.0454,0.0634,-0.0544,-0.0391,-0.0391}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("[O-]C([H])=C([H])[H]");
+		IAtomContainer mol = sp.parseSmiles("[O-]C([H])=C([H])[H]");
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
@@ -416,7 +417,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor6() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.4331,-0.1067,0.0133,0.0133,0.0133}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("[O-]C([H])([H])[H]");
+		IAtomContainer mol = sp.parseSmiles("[O-]C([H])([H])[H]");
 		Integer[] object = {6};
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
@@ -432,7 +433,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
     public void testPartialSigmaChargeDescriptor7() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {0.0835,0.0265,-0.2622,0.0265,0.0835,-0.0444,0.064,-0.0596,0.0626,-0.0444,0.064}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
+		IAtomContainer mol = sp.parseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
 		Integer[] object = {6};
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){

@@ -54,6 +54,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IMapper;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
@@ -69,19 +70,19 @@ import org.openscience.cdk.smsd.algorithm.vflib.map.VFMapper;
  */
 public class VFMapperTest {
 
-    private IMolecule hexane;
-    private IMolecule benzene;
-    private IMolecule pyridine;
-    private IMolecule toluene4;
-    private IMolecule pyridazine;
-    private IMolecule naphthalene;
-    private IMolecule chlorobenzene;
-    private IMolecule chloroisoquinoline4;
-    private IMolecule toluene;
-    private IMolecule phenol;
-    private IMolecule acetone;
-    private IMolecule propane;
-    private IMolecule cyclopropane;
+    private IAtomContainer hexane;
+    private IAtomContainer benzene;
+    private IAtomContainer pyridine;
+    private IAtomContainer toluene4;
+    private IAtomContainer pyridazine;
+    private IAtomContainer naphthalene;
+    private IAtomContainer chlorobenzene;
+    private IAtomContainer chloroisoquinoline4;
+    private IAtomContainer toluene;
+    private IAtomContainer phenol;
+    private IAtomContainer acetone;
+    private IAtomContainer propane;
+    private IAtomContainer cyclopropane;
 
     public VFMapperTest(){
 

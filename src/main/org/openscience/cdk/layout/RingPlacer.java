@@ -39,7 +39,6 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -61,7 +60,7 @@ public class RingPlacer
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(RingPlacer.class);
 	
-	private IMolecule molecule; 
+	private IAtomContainer molecule; 
 	
 	private AtomPlacer atomPlacer = new AtomPlacer();
 	
@@ -739,12 +738,12 @@ public class RingPlacer
 		}
 	}
 
-	public IMolecule getMolecule()
+	public IAtomContainer getMolecule()
 	{
 		return this.molecule;
 	}
 
-	public void setMolecule(IMolecule molecule)
+	public void setMolecule(IAtomContainer molecule)
 	{
 		this.molecule = molecule;
 	}

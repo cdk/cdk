@@ -27,11 +27,11 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -256,7 +256,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 	@Test public void testNewSaturate_withHAdded() throws Exception {
 		// O=C([H])[C+]([H])[C-]([H])[H]
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
+		IAtomContainer mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
 		lpcheck.saturate(mol);
 		
 		Assert.assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));

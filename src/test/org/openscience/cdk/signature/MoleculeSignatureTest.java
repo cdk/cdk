@@ -108,7 +108,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
         Assert.assertEquals("[C]", molSig.toCanonicalSignatureString(0));
     }
     
-    public void fullPermutationTest(IMolecule mol) {
+    public void fullPermutationTest(IAtomContainer mol) {
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol);
         String expected = new MoleculeSignature(mol).toCanonicalString();
         int numberOfPermutationsTried = 0;
@@ -124,7 +124,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
     
     public String canonicalStringFromSmiles(String smiles)
             throws InvalidSmilesException {
-        IMolecule mol = parser.parseSmiles(smiles);
+        IAtomContainer mol = parser.parseSmiles(smiles);
         MoleculeSignature signature = new MoleculeSignature(mol);
         return signature.toCanonicalString();
     }
@@ -407,7 +407,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
     @Test
     public void methylFerroceneTest() throws Exception {
         String smiles = "CC12C3C4C5C1[Fe]23456789C%10C6C7C8C9%10";
-        IMolecule mol = parser.parseSmiles(smiles);
+        IAtomContainer mol = parser.parseSmiles(smiles);
         MoleculeSignature molSig = new MoleculeSignature(mol);
         int feIndex = findFirstAtomIndexForSymbol(mol, "Fe");
         String sigForIron = molSig.signatureStringForVertex(feIndex);

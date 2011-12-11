@@ -231,7 +231,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 	 */
     @Test public void test1() throws Exception {
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("[F+]=C=C");
+		IAtomContainer mol = sp.parseSmiles("[F+]=C=C");
 		CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		mol.getAtom(2).setImplicitHydrogenCount(2); // third atom

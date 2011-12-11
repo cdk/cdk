@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -65,7 +65,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPDescriptor_1() throws Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCCC=CCCCC");
+		IAtomContainer mol = sp.parseSmiles("CCCC=CCCCC");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
@@ -80,7 +80,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPDescriptor_2() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CC1CCC=C1");
+		IAtomContainer mol = sp.parseSmiles("CC1CCC=C1");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
@@ -95,7 +95,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPDescriptor_3() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCCCC");
+		IAtomContainer mol = sp.parseSmiles("C=CCCCC");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
@@ -111,7 +111,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPDescriptorReaction1() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCCCC");
+		IAtomContainer mol = sp.parseSmiles("C=CCCCC");
 
 		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -130,7 +130,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPDescriptorReaction2() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCCCCC");
+		IAtomContainer mol = sp.parseSmiles("CCCCCC");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
@@ -147,7 +147,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPTripleDescriptor1() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C#CCC");
+		IAtomContainer mol = sp.parseSmiles("C#CCC");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
@@ -163,7 +163,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPTripleDescriptor2() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C(#CC(C)(C)C)C(C)(C)C");
+		IAtomContainer mol = sp.parseSmiles("C(#CC(C)(C)C)C(C)(C)C");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
@@ -179,7 +179,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPConjugatedDescriptor1() throws  java.lang.Exception{
 
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=C(C=CC)C");
+		IAtomContainer mol = sp.parseSmiles("C=C(C=CC)C");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
@@ -200,7 +200,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     @Test public void testIPPySystemReaction1() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CC=C");
+		IAtomContainer mol = sp.parseSmiles("C=CC=C");
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);

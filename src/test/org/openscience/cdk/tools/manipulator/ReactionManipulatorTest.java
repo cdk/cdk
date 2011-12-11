@@ -110,8 +110,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
 	 */
     @Test public void testGetMappedChemObject_IReaction_IAtom() throws Exception {
     	IReaction reaction = builder.newInstance(IReaction.class);
-    	IMolecule reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
-    	IMolecule product = (new SmilesParser(builder)).parseSmiles("C=C=C");
+    	IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
+    	IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
     	
     	IMapping mapping = builder.newInstance(IMapping.class,reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);
@@ -138,8 +138,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
 	 */
     @Test public void testGetMappedChemObject_IReaction_IBond()throws ClassNotFoundException, CDKException, java.lang.Exception {
     	IReaction reaction = builder.newInstance(IReaction.class);
-    	IMolecule reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
-    	IMolecule product = (new SmilesParser(builder)).parseSmiles("C=C=C");
+    	IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
+    	IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
     	
     	IMapping mapping = builder.newInstance(IMapping.class,reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);

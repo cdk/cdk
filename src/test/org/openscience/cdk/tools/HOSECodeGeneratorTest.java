@@ -37,6 +37,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -484,7 +485,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      "C-3;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
      "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
 
-		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C1(C=CN2)=C2C=CC=C1");
+		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C1(C=CN2)=C2C=CC=C1");
 		//display(molecule);
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		String s = null;
@@ -504,7 +505,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testBug655169() throws Exception
 	{
-		IMolecule molecule = null;
+	    IAtomContainer molecule = null;
 		HOSECodeGenerator hcg = null;
 		String[] result = {
 		    "C-4;C(=C/Y/)",
@@ -558,7 +559,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testBug795480() throws Exception
 	{
-		IMolecule molecule = null;
+	    IAtomContainer molecule = null;
 		HOSECodeGenerator hcg = null;
 		String[] result = {
 		    "C-4-;C(=C/Y'+4'/)",
@@ -586,7 +587,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
     }
 	
   	@Test public void testGetAtomsOfSphere() throws Exception {
-  		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
+  	  IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
   		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
@@ -598,7 +599,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 	}
   	
   	@Test public void testGetAtomsOfSphereWithHydr() throws Exception {
-  		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
+  	    IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
   		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 

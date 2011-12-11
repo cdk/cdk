@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -49,7 +50,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(
             SilentChemObjectBuilder.getInstance()
         );
-        IMolecule mol = sp.parseSmiles("CC(=O)O");
+        IAtomContainer mol = sp.parseSmiles("CC(=O)O");
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(1, result.intValue());
@@ -59,7 +60,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(
             SilentChemObjectBuilder.getInstance()
         );
-        IMolecule mol = sp.parseSmiles("OS(=O)(=O)O");
+        IAtomContainer mol = sp.parseSmiles("OS(=O)(=O)O");
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(2, result.intValue());
@@ -69,7 +70,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(
             SilentChemObjectBuilder.getInstance()
         );
-        IMolecule mol = sp.parseSmiles("O=P(=O)O");
+        IAtomContainer mol = sp.parseSmiles("O=P(=O)O");
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(1, result.intValue());
@@ -79,7 +80,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(
             SilentChemObjectBuilder.getInstance()
         );
-        IMolecule mol = sp.parseSmiles("[NH](S(=O)=O)C(F)(F)F");
+        IAtomContainer mol = sp.parseSmiles("[NH](S(=O)=O)C(F)(F)F");
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(1, result.intValue());
@@ -89,7 +90,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(
             SilentChemObjectBuilder.getInstance()
         );
-        IMolecule mol = sp.parseSmiles("[nH]1nnnc1");
+        IAtomContainer mol = sp.parseSmiles("[nH]1nnnc1");
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(2, result.intValue());

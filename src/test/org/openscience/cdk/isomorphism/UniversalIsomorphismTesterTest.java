@@ -249,8 +249,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
      */
     @Test public void testBug2944080()  throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-        IMolecule mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
+        IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IAtomContainer mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
         List<IAtomContainer> list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         Assert.assertEquals(1, list.size());
@@ -266,8 +266,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
      */
     @Test public void testGetSubgraphAtomsMap_2944080()  throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+        IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
 
         //Test for atom mapping between the mols
         List<RMap> maplist = UniversalIsomorphismTester.getSubgraphAtomsMap(mol1, mol2);
@@ -280,8 +280,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
      */
     @Test public void testGetSubgraphMap_2944080()  throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+        IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
 
         //Test for atom mapping between the mols
         List<RMap> maplist = UniversalIsomorphismTester.getSubgraphMap(mol1, mol2);
@@ -294,8 +294,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
      */
     @Test public void testSearchNoConditions_2944080()  throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+        IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
 
         //Test for atom mapping between the mols
         List<List<RMap>> maplist = UniversalIsomorphismTester.search(
@@ -312,8 +312,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
      */
     @Test public void testSearch_2944080()  throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-        IMolecule mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
+        IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IAtomContainer mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
         //Test for atom mapping between the mols
         List<List<RMap>> list = UniversalIsomorphismTester.
@@ -338,8 +338,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
      */
     @Test public void testGetSubgraphAtomsMaps_2944080() throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-        IMolecule mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
+        IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+        IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
 
         List<List<RMap>> list = UniversalIsomorphismTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);

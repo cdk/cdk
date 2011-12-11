@@ -99,7 +99,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test public void testNMethylPyrrol() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("c1ccn(C)c1");
+        IAtomContainer mol = sp.parseSmiles("c1ccn(C)c1");
         Assert.assertTrue("Expected the molecule to be aromatic.", CDKHueckelAromaticityDetector.detectAromaticity(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -183,7 +183,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test public void testFuran() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("c1cocc1");
+        IAtomContainer mol = sp.parseSmiles("c1cocc1");
         Assert.assertTrue("Molecule is not detected aromatic", CDKHueckelAromaticityDetector.detectAromaticity(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -300,7 +300,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         //boolean testResults[] = {true, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
+        IAtomContainer mol = sp.parseSmiles("C1CCCc2c1cccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", CDKHueckelAromaticityDetector.detectAromaticity(mol));
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
@@ -325,7 +325,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test public void testSFBug956924() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+        IAtomContainer mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
         Assert.assertEquals(IAtomType.Hybridization.PLANAR3, mol.getAtom(0).getHybridization());
         for (int f = 1; f < mol.getAtomCount(); f++) {
             Assert.assertEquals(IAtomType.Hybridization.SP2, mol.getAtom(f).getHybridization());
@@ -347,7 +347,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         boolean testResults[] = {false, false, false, false, false, false, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
+        IAtomContainer mol = sp.parseSmiles("O=c1cccccc1"); // tropone
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         Assert.assertEquals(testResults.length, mol.getAtomCount());
@@ -358,7 +358,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testNoxide() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
+        IAtomContainer mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     }
@@ -792,7 +792,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test public void testAnotherNitrogen_SP2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("c1cnc2s[cH][cH]n12");
+        IAtomContainer mol = sp.parseSmiles("c1cnc2s[cH][cH]n12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
@@ -808,7 +808,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testAromaticNOxide() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("O=n1ccccc1");
+        IAtomContainer mol = sp.parseSmiles("O=n1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
@@ -825,7 +825,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testAromaticNOxideCharged() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("[O-][n+]1ccccc1");
+        IAtomContainer mol = sp.parseSmiles("[O-][n+]1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
@@ -836,7 +836,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testSMILES() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C=1N=CNC=1");
+        IAtomContainer mol = sp.parseSmiles("C=1N=CNC=1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
@@ -848,7 +848,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testSMILES2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("OCN1C=CN=C1");
+        IAtomContainer mol = sp.parseSmiles("OCN1C=CN=C1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (int i=2; i<=6; i++) {
@@ -862,7 +862,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testSMILES3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("OC(=O)N1C=CN=C1");
+        IAtomContainer mol = sp.parseSmiles("OC(=O)N1C=CN=C1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (int i=3; i<=7; i++) {
@@ -880,7 +880,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void test3001616() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("OC(=O)N1C=NC2=CC=CC=C12");
+        IAtomContainer mol = sp.parseSmiles("OC(=O)N1C=NC2=CC=CC=C12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
@@ -913,7 +913,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testBug2853035() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C(=O)c1cnn2ccccc12");
+        IAtomContainer mol = sp.parseSmiles("C(=O)c1cnn2ccccc12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {

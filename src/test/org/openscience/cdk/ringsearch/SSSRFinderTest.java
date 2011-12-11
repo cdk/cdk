@@ -83,14 +83,14 @@ public class SSSRFinderTest extends CDKTestCase {
     @Test public void testGetAtomContainerCount() throws Exception
     {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles("c1ccccc1");
+        IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assert.assertEquals(1, ringSet.getAtomContainerCount());
     }
 
     @Test public void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles("c1ccccc1");
+        IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
@@ -104,7 +104,7 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles("c1cccc1CC");
+        IAtomContainer molecule = sp.parseSmiles("c1cccc1CC");
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
@@ -119,7 +119,7 @@ public class SSSRFinderTest extends CDKTestCase {
     @Test public void testBicyclicCompound() throws Exception
     {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
+        IAtomContainer molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assert.assertEquals(2, ringSet.getAtomContainerCount());
     }
@@ -130,7 +130,7 @@ public class SSSRFinderTest extends CDKTestCase {
     @Test public void testSFBug826942() throws Exception
     {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
+        IAtomContainer molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assert.assertEquals(4, ringSet.getAtomContainerCount());
     }

@@ -1,6 +1,4 @@
-/*  $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2002-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+/*  Copyright (C) 2002-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *                200?-2007  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -48,7 +46,6 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -142,7 +139,7 @@ public class SmilesParser {
     IAtom[] ringOtherAtoms = null;
 	IBond.Order[] ringbonds = null;
 	int thisRing = -1;
-	IMolecule molecule = null;
+	IAtomContainer molecule = null;
 	String currentSymbol = null;
 	Map<IAtom,TemporaryChiralityStorage> chiralityInfo = null;
 	
@@ -195,30 +192,30 @@ public class SmilesParser {
 		IReaction reaction = builder.newInstance(IReaction.class);
 
 		// add reactants
-		IMolecule reactantContainer = parseSmiles(reactantSmiles);
+		IAtomContainer reactantContainer = parseSmiles(reactantSmiles);
 		IAtomContainerSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
 		for (int i = 0; i < reactantSet.getAtomContainerCount(); i++)
 		{
-			reaction.addReactant((IMolecule)reactantSet.getAtomContainer(i));
+			reaction.addReactant(reactantSet.getAtomContainer(i));
 		}
 
 		// add reactants
 		if (agentSmiles.length() > 0)
 		{
-			IMolecule agentContainer = parseSmiles(agentSmiles);
+		    IAtomContainer agentContainer = parseSmiles(agentSmiles);
 			IAtomContainerSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
 			for (int i = 0; i < agentSet.getAtomContainerCount(); i++)
 			{
-				reaction.addAgent((IMolecule)agentSet.getAtomContainer(i));
+				reaction.addAgent(agentSet.getAtomContainer(i));
 			}
 		}
 
 		// add products
-		IMolecule productContainer = parseSmiles(productSmiles);
+		IAtomContainer productContainer = parseSmiles(productSmiles);
 		IAtomContainerSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
 		for (int i = 0; i < productSet.getAtomContainerCount(); i++)
 		{
-			reaction.addProduct((IMolecule)productSet.getAtomContainer(i));
+			reaction.addProduct(productSet.getAtomContainer(i));
 		}
 
 		return reaction;
@@ -234,8 +231,8 @@ public class SmilesParser {
 	 *@throws  InvalidSmilesException  thrown when the SMILES string is invalid
 	 */
     @TestMethod("testAromaticSmiles,testSFBug1296113")
-    public IMolecule parseSmiles(String smiles) throws InvalidSmilesException {
-		IMolecule molecule = this.parseString(smiles);
+    public IAtomContainer parseSmiles(String smiles) throws InvalidSmilesException {
+        IAtomContainer molecule = this.parseString(smiles);
 		
 		// analyze the chirality info
 		for (IAtom atom : chiralityInfo.keySet()) {
@@ -296,7 +293,7 @@ public class SmilesParser {
 	 * @return
 	 * @throws InvalidSmilesException
 	 */
-	private IMolecule parseString(String smiles) throws InvalidSmilesException
+	private IAtomContainer parseString(String smiles) throws InvalidSmilesException
 	{
 		logger.debug("parseSmiles()...");
 		IBond bond = null;
@@ -306,7 +303,7 @@ public class SmilesParser {
 		boolean bondExists = true;
 		thisRing = -1;
 		currentSymbol = null;
-		molecule = builder.newInstance(IMolecule.class);
+		molecule = builder.newInstance(IAtomContainer.class);
 		position = 0;
 		chiralityInfo = new HashMap<IAtom,TemporaryChiralityStorage>();
 		// we don't want more than 1024 rings
@@ -986,7 +983,7 @@ public class SmilesParser {
         }
     }
 
-    private void addImplicitHydrogens(IMolecule container) {
+    private void addImplicitHydrogens(IAtomContainer container) {
 		try {
 			logger.debug("before H-adding: ", container);
 			Iterator<IAtom> atoms = container.atoms().iterator();
@@ -1002,7 +999,7 @@ public class SmilesParser {
 		}
 	}
 
-	private void perceiveAromaticity(IMolecule m) {
+	private void perceiveAromaticity(IAtomContainer m) {
 	    IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(m);
 		logger.debug("#mols ", moleculeSet.getAtomContainerCount());
 		for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {

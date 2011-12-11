@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -27,7 +27,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testButane() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("CCCC");
+        IAtomContainer mol = sp.parseSmiles("CCCC");
 
         IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
@@ -45,7 +45,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testComplex1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C(C)(C)C=C(C)C");
+        IAtomContainer mol = sp.parseSmiles("C(C)(C)C=C(C)C");
 
         IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
@@ -62,7 +62,7 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testComplex2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C#CC(C)=C");
+        IAtomContainer mol = sp.parseSmiles("C#CC(C)=C");
 
         IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 

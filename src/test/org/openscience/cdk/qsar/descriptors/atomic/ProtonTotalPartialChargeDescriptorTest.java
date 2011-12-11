@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -50,7 +50,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
 		IAtomicDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CF"); 
+		IAtomContainer mol = sp.parseSmiles("CF"); 
 		addExplicitHydrogens(mol);
 		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol.getAtom(0),mol).getValue();
 		for (int i = 0; i < testResult.length; ++i) {
@@ -65,7 +65,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
     public void testNaNs() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C(F)(F)");
+        IAtomContainer mol = sp.parseSmiles("C(F)(F)");
         addExplicitHydrogens(mol);
         System.out.println("mol.getAtom(0).getSymbol() = " + mol.getAtom(0).getSymbol());
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();

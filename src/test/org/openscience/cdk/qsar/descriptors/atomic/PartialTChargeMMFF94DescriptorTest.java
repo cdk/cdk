@@ -117,7 +117,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.28,-0.56,0.28,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-//		IMolecule mol = sp.parseSmiles("COC");
+//		IAtomContainer mol = sp.parseSmiles("COC");
 		IMolecule mol = builder.newInstance(IMolecule.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
@@ -165,7 +165,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.29,-0.29,0.0};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-//		IMolecule mol = sp.parseSmiles("CCl");
+//		IAtomContainer mol = sp.parseSmiles("CCl");
 		IMolecule mol = builder.newInstance(IMolecule.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom chlorine = builder.newInstance(IAtom.class,Elements.CHLORINE);
@@ -188,7 +188,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={-0.15,-0.15,-0.15,-0.15,-0.15,-0.15,0.15,0.15,0.15,0.15,0.15,0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-//		IMolecule mol = sp.parseSmiles("c1ccccc1");
+//		IAtomContainer mol = sp.parseSmiles("c1ccccc1");
 		IMolecule mol = builder.newInstance(IMolecule.class);
 		for (int i=0; i<6; i++) {
 			IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
