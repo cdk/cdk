@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -49,7 +44,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 
@@ -361,7 +355,7 @@ public class AtomContainerManipulator {
         List<IAtom> remove = new ArrayList<IAtom>();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
-        IMolecule mol = atomContainer.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         int count = atomContainer.getAtomCount();
         for (int i = 0;
                 i < count;
@@ -489,7 +483,7 @@ public class AtomContainerManipulator {
 		// lists removed Hs.
 
 		// Clone atoms except those to be removed.
-		IMolecule mol = ac.getBuilder().newInstance(IMolecule.class);
+		IAtomContainer mol = ac.getBuilder().newInstance(IAtomContainer.class);
 		int count = ac.getAtomCount();
 		for (int i = 0;
 				i < count;

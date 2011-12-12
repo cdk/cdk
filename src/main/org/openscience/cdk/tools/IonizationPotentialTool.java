@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -182,7 +181,7 @@ public class IonizationPotentialTool {
         	return false;
 		
 		StructureResonanceGenerator gRN = new StructureResonanceGenerator();
-		IAtomContainer ac = gRN.getContainer((IMolecule) container, bond);
+		IAtomContainer ac = gRN.getContainer(container, bond);
 
 		if(ac == null)
 			return true;
@@ -268,7 +267,7 @@ public class IonizationPotentialTool {
 		else
 			results[5] = 0.0;
 		// numberResonance
-		IAtomContainer acR = gRI.getContainer(asMolecule(container), atom);
+		IAtomContainer acR = gRI.getContainer(container, atom);
 		if(acR != null){
 			results[6] = acR.getAtomCount();
 			// numberAromaticAtoms
@@ -347,7 +346,7 @@ public class IonizationPotentialTool {
 			else
 				results[5] += 0.0;
 			// numberResonance
-			IAtomContainer acR = gRI.getContainer((IMolecule) container, atom);
+			IAtomContainer acR = gRI.getContainer(container, atom);
 			if(acR != null){
 				results[6] += acR.getAtomCount();
 				// numberAromaticAtoms
@@ -484,7 +483,7 @@ public class IonizationPotentialTool {
 	    IReactionProcess reactionNBE  = new ElectronImpactNBEReaction();
 
 	    IAtomContainerSet setOfReactants = container.getBuilder().newInstance(IAtomContainerSet.class);
-		setOfReactants.addAtomContainer(asMolecule(container));
+		setOfReactants.addAtomContainer(container);
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -502,14 +501,5 @@ public class IonizationPotentialTool {
 		else
 			return null;
 	}
-
-	private static IMolecule asMolecule(IAtomContainer container) {
-        if (container instanceof IMolecule)
-            return (IMolecule) container;
-
-        return container.getBuilder().newInstance(
-            IMolecule.class, container
-        );
-    }
 
 }

@@ -25,7 +25,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -59,7 +58,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
      */
     @Test public void test() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class,"N");
         mol.addAtom(a1);
         IAtom a2 = builder.newInstance(IAtom.class,"N");

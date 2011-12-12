@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -75,7 +74,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 	 */
     @Test public void testIPDescriptor0() throws Exception{
         
-    	IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -249,7 +248,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      */
     @Test
     public void testBug_2787332_triclosan() throws Exception {
-    	IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
     	mol.addAtom(builder.newInstance(IAtom.class,"C"));//0
     	mol.addAtom(builder.newInstance(IAtom.class,"C"));//1
     	mol.addAtom(builder.newInstance(IAtom.class,"C"));//2

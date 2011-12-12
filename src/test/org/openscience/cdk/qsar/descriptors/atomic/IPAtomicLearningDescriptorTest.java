@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -76,7 +75,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-    	IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -107,7 +106,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     @Test
     public void testIPDescriptor1() throws Exception{
         
-    	IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addAtom(builder.newInstance(IAtom.class,"C"));
 		mol.addBond(0, 1, IBond.Order.SINGLE);
@@ -542,7 +541,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 	@Test
     public void testFluorobenzene() throws Exception {
 
-		 IMolecule molecule = builder.newInstance(IMolecule.class);
+	    IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		 molecule.addAtom(builder.newInstance(IAtom.class,"F"));
 		 molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		 molecule.addBond(0, 1, IBond.Order.SINGLE);
