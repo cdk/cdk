@@ -27,7 +27,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @cdk.module test-qsarmolecular
@@ -51,7 +51,7 @@ public class ChiIndexUtilsTest extends CDKTestCase {
         IBond b = builder.newInstance(IBond.class, s, o);
         b.setOrder(IBond.Order.DOUBLE);
 
-        IMolecule m = builder.newInstance(IMolecule.class);
+        IAtomContainer m = builder.newInstance(IAtomContainer.class);
         m.addAtom(s);
         m.addAtom(o);
         m.addBond(b);
@@ -70,7 +70,7 @@ public class ChiIndexUtilsTest extends CDKTestCase {
         b1.setOrder(IBond.Order.DOUBLE);
         b2.setOrder(IBond.Order.DOUBLE);
 
-        IMolecule m = builder.newInstance(IMolecule.class);
+        IAtomContainer m = builder.newInstance(IAtomContainer.class);
         m.addAtom(s);
         m.addAtom(o1);
         m.addBond(b1);

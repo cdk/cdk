@@ -27,16 +27,16 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 
 /**
  * Combined TestCase for the reading/writing of mdl and cml files.
@@ -61,7 +61,7 @@ public class MDLCMLRoundtripTest extends CDKTestCase {
     	String filename = "data/mdl/bug-1649526.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
-        IAtomContainer mol = reader.read(new Molecule());
+        IAtomContainer mol = reader.read(new AtomContainer());
         //Write it as cml
 		StringWriter writer = new StringWriter();
         CMLWriter cmlWriter = new CMLWriter(writer);        

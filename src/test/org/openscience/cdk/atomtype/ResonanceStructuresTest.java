@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
@@ -104,7 +104,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
 //
 //		//FRAGMENT_1
 //		//
-//		IMolecule expectedStructure = builder.newInstance(IMolecule.class);
+//		IAtomContainer expectedStructure = builder.newInstance(IAtomContainer.class);
 //		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
 //		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));
 //		expectedStructure.addAtom(builder.newInstance(IAtom.class,"C"));

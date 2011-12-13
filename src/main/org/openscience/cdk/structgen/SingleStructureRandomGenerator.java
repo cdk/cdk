@@ -35,7 +35,6 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.SaturationChecker;
@@ -109,7 +108,7 @@ public class SingleStructureRandomGenerator {
 	/**
 	 * Generates a random structure based on the atoms in the given IAtomContainer.
 	 */
-	public IMolecule generate() throws CDKException
+	public IAtomContainer generate() throws CDKException
 	{
 		boolean structureFound = false;
 		boolean bondFormed;
@@ -157,7 +156,7 @@ public class SingleStructureRandomGenerator {
 			}
 		} while (!structureFound && iteration < 20);
 		logger.debug("Structure found after #iterations: ", iteration);	
-		return atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer);
+		return atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
 	}
 
 	

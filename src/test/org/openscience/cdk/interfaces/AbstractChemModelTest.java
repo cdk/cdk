@@ -90,7 +90,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         Assert.assertTrue(clone instanceof IChemModel);
     }    
         
-    @Test public void testClone_IMoleculeSet() throws Exception {
+    @Test public void testClone_IAtomContainerSet() throws Exception {
         IChemModel model = (IChemModel)newChemObject();
         IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getMoleculeSet());
@@ -169,11 +169,11 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.changed);
         // changing the set should trigger a change event in the IChemModel
-        crystal.add(chemObject.getBuilder().newInstance(IMolecule.class));
+        crystal.add(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertTrue(listener.changed);
     }
 
-    @Test public void testStateChanged_EventPropagation_MoleculeSet() {
+    @Test public void testStateChanged_EventPropagation_AtomContainerSet() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
@@ -184,7 +184,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.changed);
         // changing the set should trigger a change event in the IChemModel
-        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IMolecule.class));
+        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertTrue(listener.changed);
     }
 
@@ -231,11 +231,11 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.changed);
         // changing the set must *not* trigger a change event in the IChemModel
-        crystal.add(chemObject.getBuilder().newInstance(IMolecule.class));
+        crystal.add(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertFalse(listener.changed);
     }
 
-    @Test public void testStateChanged_ButNotAfterRemoval_MoleculeSet() {
+    @Test public void testStateChanged_ButNotAfterRemoval_AtomContainerSet() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
@@ -248,7 +248,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.changed);
         // changing the set must *not* trigger a change event in the IChemModel
-        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IMolecule.class));
+        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertFalse(listener.changed);
     }
 

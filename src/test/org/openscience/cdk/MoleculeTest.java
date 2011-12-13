@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
@@ -48,7 +48,7 @@ public class MoleculeTest extends AbstractMoleculeTest {
     @BeforeClass public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
             public IChemObject newTestObject() {
-                return new Molecule();
+                return new AtomContainer();
             }
         });
     }
@@ -56,12 +56,12 @@ public class MoleculeTest extends AbstractMoleculeTest {
     // test constructors
     
     @Test public void testMolecule() {
-        IMolecule m = new Molecule();
+        IAtomContainer m = new AtomContainer();
         Assert.assertNotNull(m);
     }
 
     @Test public void testMolecule_int_int_int_int() {
-        IMolecule m = new Molecule(5,5,1,1);
+        IAtomContainer m = new AtomContainer(5,5,1,1);
         Assert.assertNotNull(m);
         Assert.assertEquals(0, m.getAtomCount());
         Assert.assertEquals(0, m.getBondCount());
@@ -86,7 +86,7 @@ public class MoleculeTest extends AbstractMoleculeTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        IMolecule m = new Molecule(acetone);
+        IAtomContainer m = new AtomContainer(acetone);
         Assert.assertNotNull(m);
         Assert.assertEquals(4, m.getAtomCount());
         Assert.assertEquals(3, m.getBondCount());

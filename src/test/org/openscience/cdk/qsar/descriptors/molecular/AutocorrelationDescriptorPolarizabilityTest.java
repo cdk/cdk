@@ -4,8 +4,8 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -29,7 +29,7 @@ public class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescri
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
 				filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IMolecule container = reader.read(new Molecule());
+		IAtomContainer container = reader.read(new AtomContainer());
 		DescriptorValue count = descriptor.calculate(container);
 		System.out.println(count.getValue());
 

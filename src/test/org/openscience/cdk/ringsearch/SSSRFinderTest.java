@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -35,7 +36,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -137,12 +137,12 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test public void testProblem1() throws Exception
     {
-        IMolecule molecule = null;
+        IAtomContainer molecule = null;
         IRing ring = null;
         String filename = "data/mdl/figueras-test-sep3D.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -160,7 +160,7 @@ public class SSSRFinderTest extends CDKTestCase {
         String filename = "data/mdl/ring_03419.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        IAtomContainer molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -176,12 +176,12 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test public void testProblem2() throws Exception
     {
-        IMolecule molecule = null;
+        IAtomContainer molecule = null;
         IRing ring = null;
         String filename = "data/mdl/figueras-test-buried.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -195,12 +195,12 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
     @Test public void testProblem3() throws Exception {
-        IMolecule molecule = null;
+        IAtomContainer molecule = null;
         IRing ring = null;
         String filename = "data/mdl/figueras-test-inring.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -217,11 +217,11 @@ public class SSSRFinderTest extends CDKTestCase {
      * @cdk.bug 891021
      */
     @Test public void testBug891021() throws Exception {
-        IMolecule molecule = null;
+        IAtomContainer molecule = null;
         String filename = "data/mdl/too.many.rings.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -238,7 +238,7 @@ public class SSSRFinderTest extends CDKTestCase {
       * @param molecule  A molecule to determine an atom number for each ring atom
       * @return          string representation of this ring
       */
-    private String toString(IRing ring, IMolecule molecule) throws Exception
+    private String toString(IRing ring, IAtomContainer molecule) throws Exception
     {
         String str = "";
         for (int f = 0; f < ring.getAtomCount(); f++)
@@ -253,7 +253,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * in *some* SSSR (minimum cycle basis).
      */
     @Test  public void testBuckyballRelevantRings() throws Exception {
-        IMolecule buckyball = createBuckyBall();
+        IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetRelevant = new SSSRFinder(buckyball).findRelevantRings();
         ringCount(ringSetRelevant,6,20);
         ringCount(ringSetRelevant,5,12);
@@ -266,7 +266,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * Method findSSSR() computes one (of possibly several) SSSRs.
      */
     @Test  public void testBuckyballSSSR() throws Exception {
-        IMolecule buckyball = createBuckyBall();
+        IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetSSSR = new SSSRFinder(buckyball).findSSSR();
         ringCount(ringSetSSSR,6,19);
         ringCount(ringSetSSSR,5,12);
@@ -283,7 +283,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * is essential.
      */
     @Test public void testBuckyballEssentialRings() throws Exception {
-        IMolecule buckyball = createBuckyBall();
+        IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetEssential =
             new SSSRFinder(buckyball).findEssentialRings();
         ringCount(ringSetEssential,6,0);
@@ -296,13 +296,13 @@ public class SSSRFinderTest extends CDKTestCase {
      * Creates a bucky ball molecule.
      * @return bucky ball molecule
      */
-    private IMolecule createBuckyBall () throws CDKException {
-        IMolecule molecule = null;
+    private IAtomContainer createBuckyBall () throws CDKException {
+        IAtomContainer molecule = null;
         String filename = "data/mdl/buckyball.mol";
         InputStream ins =
             this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IMolecule)reader.read(new org.openscience.cdk.Molecule());
+        molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertTrue("Atom count is 60 ", molecule.getAtomCount()==60 );
         Assert.assertTrue("Bond count is 90 ", molecule.getBondCount()==90 );
         return molecule;

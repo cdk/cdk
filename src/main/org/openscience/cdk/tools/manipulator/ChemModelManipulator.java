@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
@@ -173,7 +172,7 @@ public class ChemModelManipulator {
     @TestMethod("testCreateNewMolecule_IChemModel")
     public static IAtomContainer createNewMolecule(IChemModel chemModel) {
         // Add a new molecule either the set of molecules
-        IMolecule molecule = chemModel.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer molecule = chemModel.getBuilder().newInstance(IAtomContainer.class);
         if (chemModel.getMoleculeSet() != null) {
             IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
             for(int i=0;i<moleculeSet.getAtomContainerCount();i++){
@@ -203,13 +202,7 @@ public class ChemModelManipulator {
     public static IChemModel newChemModel(IAtomContainer atomContainer) {
         IChemModel model = atomContainer.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet moleculeSet = model.getBuilder().newInstance(IAtomContainerSet.class);
-        if (atomContainer instanceof IMolecule) {
-            moleculeSet.addAtomContainer(atomContainer);
-        } else {
-            moleculeSet.addAtomContainer(
-                atomContainer.getBuilder().newInstance(IMolecule.class,atomContainer)
-            );
-        }
+        moleculeSet.addAtomContainer(atomContainer);
         model.setMoleculeSet(moleculeSet);
         return model;
     }

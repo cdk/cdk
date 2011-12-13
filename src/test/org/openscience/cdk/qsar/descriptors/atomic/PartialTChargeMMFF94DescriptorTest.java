@@ -32,7 +32,7 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -73,7 +73,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.28,-0.67,0.0,0.0,0.0,0.4};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
 		// making sure the order matches the test results
@@ -95,7 +95,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.27,-0.99,0.0,0.0,0.0,0.36};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom nitrogen = builder.newInstance(IAtom.class,Elements.NITROGEN);
 		// making sure the order matches the test results
@@ -118,7 +118,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 //		IAtomContainer mol = sp.parseSmiles("COC");
-		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
 		IAtom carbon2 = builder.newInstance(IAtom.class,Elements.CARBON);
@@ -143,7 +143,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={0.23,-0.41,0.0,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom sulfur = builder.newInstance(IAtom.class,Elements.SULFUR);
 		// making sure the order matches the test results
@@ -166,7 +166,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 //		IAtomContainer mol = sp.parseSmiles("CCl");
-		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom chlorine = builder.newInstance(IAtom.class,Elements.CHLORINE);
 		// making sure the order matches the test results
@@ -189,7 +189,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 //		IAtomContainer mol = sp.parseSmiles("c1ccccc1");
-		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		for (int i=0; i<6; i++) {
 			IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 			carbon.setFlag(CDKConstants.ISAROMATIC, true);
@@ -229,7 +229,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={-0.86,0.43,0.43};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		IMolecule mol = builder.newInstance(IMolecule.class);
+		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
 		// making sure the order matches the test results
 		mol.addAtom(oxygen);

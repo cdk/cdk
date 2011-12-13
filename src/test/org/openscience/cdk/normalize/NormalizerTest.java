@@ -18,18 +18,19 @@
  */
 package org.openscience.cdk.normalize;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * @cdk.module test-smiles
@@ -38,7 +39,7 @@ public class NormalizerTest extends CDKTestCase {
 
     @Test
 	public void testNormalize()	throws Exception{
-    Molecule ac=new Molecule();
+        IAtomContainer ac=new AtomContainer();
     ac.addAtom(new Atom("C"));
     ac.addAtom(new Atom("N"));
     ac.addAtom(new Atom("O"));

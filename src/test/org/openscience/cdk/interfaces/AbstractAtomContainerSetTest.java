@@ -41,10 +41,10 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
     public void testSortAtomContainers_Comparator_Null() {
         IAtomContainerSet som = (IAtomContainerSet)newChemObject();
         IChemObjectBuilder builder = som.getBuilder();
-        IAtomContainer con1 = builder.newInstance(IMolecule.class);
+        IAtomContainer con1 = builder.newInstance(IAtomContainer.class);
         con1.addAtom(builder.newInstance(IAtom.class, "C"));
         con1.addAtom(builder.newInstance(IAtom.class, "C"));
-        IAtomContainer con2 = builder.newInstance(IMolecule.class);
+        IAtomContainer con2 = builder.newInstance(IAtomContainer.class);
         con2.addAtom(builder.newInstance(IAtom.class, "C"));
         som.addAtomContainer(con1);
         som.addAtomContainer(con2);

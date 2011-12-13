@@ -21,13 +21,12 @@
  */
 package org.openscience.cdk.charges;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 
 /**
@@ -73,7 +72,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 	public IAtomContainer assignMMFF94PartialCharges(IAtomContainer ac) throws Exception {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
-		ffc.assignAtomTyps((IMolecule)ac);
+		ffc.assignAtomTyps(ac);
 		Map<String,Object> parameterSet = ffc.getParameterSet();
 		// for this calculation,
 		// we need some values stored in the vector "data" in the

@@ -1,17 +1,17 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fragment.MurckoFragmenter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-
-import java.io.InputStream;
 
 /**
  * @author      chhoppe from EUROSCREEN
@@ -30,7 +30,7 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
     	MurckoFragmenter gf=new MurckoFragmenter();
     	double Complexity=0;
         	MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        	Molecule mol = reader.read(new Molecule());
+        	IAtomContainer mol = reader.read(new AtomContainer());
         	gf.generateFragments(mol);
         	IAtomContainer[] setOfFragments=gf.getFrameworksAsContainers();
         	for (int i=0;i<setOfFragments.length;i++){

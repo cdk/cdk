@@ -20,6 +20,11 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +35,6 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,7 +42,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -48,11 +51,6 @@ import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * @cdk.module test-standard
  */
@@ -61,8 +59,8 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 	private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ChemModelManipulatorTest.class);
 	
-	IMolecule molecule1 = null;
-	IMolecule molecule2 = null;
+	IAtomContainer molecule1 = null;
+	IAtomContainer molecule2 = null;
 	IAtom atomInMol1 = null;
 	IBond bondInMol1 = null;
 	IAtom atomInMol2 = null;
@@ -77,7 +75,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 
 	@Before
 	public void setUp() {
-		molecule1 = new Molecule();
+		molecule1 = new AtomContainer();
 		atomInMol1 = new Atom("Cl");
 		atomInMol1.setCharge(-1.0);
 		atomInMol1.setFormalCharge(-1);
@@ -86,7 +84,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		molecule1.addAtom(new Atom("Cl"));
 		bondInMol1 = new Bond(atomInMol1, molecule1.getAtom(1));
 		molecule1.addBond(bondInMol1);
-		molecule2 = new Molecule();
+		molecule2 = new AtomContainer();
 		atomInMol2 = new Atom("O");
 		atomInMol2.setImplicitHydrogenCount(2);
 		molecule2.addAtom(atomInMol2);
@@ -139,13 +137,6 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         Assert.assertNotNull(mol);
         Assert.assertEquals(ac.getAtomCount(), mol.getAtomCount());
     }
-
-    @Test public void testNewChemModel_IMolecule()
-    {
-        IMolecule ac = new Molecule();
-        IChemModel model = ChemModelManipulator.newChemModel(ac);
-        Assert.assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
-    }
     
     @Test public void testGetAtomCount_IChemModel()
     {
@@ -161,12 +152,12 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     
     @Test public void testRemoveElectronContainer_IChemModel_IElectronContainer()
     {
-    	IMolecule mol1 = new Molecule();
+    	IAtomContainer mol1 = new AtomContainer();
 		mol1.addAtom(new Atom("Cl"));
 		mol1.addAtom(new Atom("Cl"));
 		IBond bond1 = new Bond(mol1.getAtom(0), mol1.getAtom(1));
 		mol1.addBond(bond1);
-		IMolecule mol2 = new Molecule();
+		IAtomContainer mol2 = new AtomContainer();
 		mol2.addAtom(new Atom("I"));
 		mol2.addAtom(new Atom("I"));
 		IBond bond2 = new Bond(mol2.getAtom(0), mol2.getAtom(1));
@@ -192,13 +183,13 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     
     @Test public void testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom()
     {
-    	IMolecule mol1 = new Molecule();
+    	IAtomContainer mol1 = new AtomContainer();
     	IAtom atom1 = new Atom("Cl");
 		mol1.addAtom(atom1);
 		mol1.addAtom(new Atom("Cl"));
 		IBond bond1 = new Bond(mol1.getAtom(0), mol1.getAtom(1));
 		mol1.addBond(bond1);
-		IMolecule mol2 = new Molecule();
+		IAtomContainer mol2 = new AtomContainer();
 		IAtom atom2 = new Atom("I");
 		mol2.addAtom(atom2);
 		mol2.addAtom(new Atom("I"));
@@ -263,7 +254,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         for (Object o : list) {
             //if (o instanceof IAtom) ++atomCount;
             //if (o instanceof IBond) ++bondCount;
-            if (o instanceof IMolecule) ++molCount;
+            if (o instanceof IAtomContainer) ++molCount;
             else if (o instanceof IAtomContainerSet) ++molSetCount;
             else if (o instanceof IReaction) ++reactionCount;
             else if (o instanceof IReactionSet) ++reactionSetCount;

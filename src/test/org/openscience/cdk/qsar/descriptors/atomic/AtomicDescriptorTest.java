@@ -29,7 +29,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
@@ -145,8 +145,8 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         );
     }
 
-    private IMolecule someoneBringMeSomeWater() {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+    private IAtomContainer someoneBringMeSomeWater() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");

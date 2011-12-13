@@ -97,7 +97,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
     
 //    @Test
 //    public void integerInvariantsTest() {
-//        IMolecule isotopeChiralMol = builder.newInstance(IMolecule.class);
+//        IAtomContainer isotopeChiralMol = builder.newInstance(IAtomContainer.class);
 //        isotopeChiralMol.addAtom(builder.newInstance(IAtom.class, "C"));
 //        
 //        IAtom s32 = builder.newInstance(IAtom.class, "S");

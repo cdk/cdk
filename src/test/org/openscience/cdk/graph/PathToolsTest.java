@@ -23,6 +23,11 @@
  */
 package org.openscience.cdk.graph;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,21 +37,14 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @cdk.module test-core
@@ -128,7 +126,7 @@ public class PathToolsTest extends CDKTestCase {
     	String filename = "data/mdl/shortest_path_test.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
-    	IMolecule testMolecule = new Molecule();
+    	IAtomContainer testMolecule = new AtomContainer();
     	reader.read(testMolecule);
 
     	ArrayList<IAtom> path = (ArrayList<IAtom>)PathTools.getShortestPath(testMolecule, 
@@ -312,7 +310,7 @@ public class PathToolsTest extends CDKTestCase {
     }
     
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule() throws Exception {
+    public void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer() throws Exception {
         IAtomContainer atomContainer;
         IAtom start;
         atomContainer = sp.parseSmiles("CCCC");
@@ -320,13 +318,13 @@ public class PathToolsTest extends CDKTestCase {
         start = atomContainer.getAtom(0);
         List<IAtom> sphere = new ArrayList<IAtom>();
         sphere.add(start);
-        IMolecule result = atomContainer.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result);
         Assert.assertEquals(4, result.getAtomCount());
     }
     
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule_int() throws Exception {
+    public void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer_int() throws Exception {
         IAtomContainer atomContainer;
         IAtom start;
         atomContainer = sp.parseSmiles("CCCC");
@@ -334,16 +332,16 @@ public class PathToolsTest extends CDKTestCase {
         start = atomContainer.getAtom(0);
         List<IAtom> sphere = new ArrayList<IAtom>();
         sphere.add(start);
-        IMolecule result = atomContainer.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 1);
         Assert.assertEquals(2, result.getAtomCount());
 
-        result = atomContainer.getBuilder().newInstance(IMolecule.class);
+        result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.resetFlags(atomContainer);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 2);
         Assert.assertEquals(3, result.getAtomCount());
 
-        result = atomContainer.getBuilder().newInstance(IMolecule.class);
+        result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.resetFlags(atomContainer);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 3);
         Assert.assertEquals(4, result.getAtomCount());

@@ -27,15 +27,14 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -152,7 +151,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
             "M  END\n";
 
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdlInput));
-        IMolecule molecule = reader.read(new Molecule());
+        IAtomContainer molecule = reader.read(new AtomContainer());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
         hAdder.addImplicitHydrogens(molecule);
@@ -164,7 +163,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     @Test
     public void testAdenine() throws CDKException, CloneNotSupportedException {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class,"N");
         mol.addAtom(a1);
         IAtom a2 = builder.newInstance(IAtom.class,"N");

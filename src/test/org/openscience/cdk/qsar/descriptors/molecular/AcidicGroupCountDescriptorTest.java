@@ -23,13 +23,12 @@ import javax.vecmath.Point2d;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -100,7 +99,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C2H2N4O2/c7-2(8)1-3-5-6-4-1/h(H,7,8)(H,3,4,5,6)
      */
     @Test public void testTwoGroup() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"O");
         a1.setFormalCharge(0);
         a1.setPoint2d(new Point2d(5.9019, 0.5282));
@@ -172,7 +171,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
      */
     @Test
     public void testCID() {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"S");
         a1.setFormalCharge(0);
         a1.setPoint2d(new Point2d(9.4651, 0.25));

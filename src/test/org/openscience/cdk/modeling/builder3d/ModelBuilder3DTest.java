@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.silent.AtomContainer;
@@ -257,7 +256,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void testModelBuilder3D_keepChemObjectIDs() throws Exception {
     	ModelBuilder3D mb3d = ModelBuilder3D.getInstance();
 
-    	IMolecule methanol = new org.openscience.cdk.Molecule();
+    	IAtomContainer methanol = new AtomContainer();
     	IChemObjectBuilder builder = methanol.getBuilder();
 
     	IAtom carbon1 = builder.newInstance(IAtom.class,"C");
@@ -317,7 +316,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
 			str = new StructureDiagramGenerator();
-			str.setMolecule((IMolecule)molecules);
+			str.setMolecule((IAtomContainer)molecules);
 			str.generateCoordinates();
 			resultList.add(str.getMolecule());
 		}
@@ -340,7 +339,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
-			IAtomContainer mol = molecules.getBuilder().newInstance(IMolecule.class,molecules);
+			IAtomContainer mol = molecules.getBuilder().newInstance(IAtomContainer.class,molecules);
 			mol = mb3d.generate3DCoordinates(mol, false);
 			System.out.println("Calculation done");
 		}

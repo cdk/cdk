@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
@@ -46,7 +46,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     public void testMethanol() {
         IChemObjectBuilder builder =
             SilentChemObjectBuilder.getInstance();
-        IMolecule methanol = builder.newInstance(IMolecule.class);
+        IAtomContainer methanol = builder.newInstance(IAtomContainer.class);
         methanol.addAtom(builder.newInstance(IAtom.class,"C"));
         methanol.addAtom(builder.newInstance(IAtom.class,"O"));
         methanol.addBond(0, 1, IBond.Order.SINGLE);
@@ -59,7 +59,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     public void testMethane() {
         IChemObjectBuilder builder =
             SilentChemObjectBuilder.getInstance();
-        IMolecule methane = builder.newInstance(IMolecule.class);
+        IAtomContainer methane = builder.newInstance(IAtomContainer.class);
         methane.addAtom(builder.newInstance(IAtom.class,"C"));
         IDescriptorResult result = descriptor.calculate(methane).getValue();
         Assert.assertTrue(result instanceof DoubleResult);
@@ -70,7 +70,7 @@ public class MannholdLogPDescriptorTest extends MolecularDescriptorTest {
     public void testChloroform() {
         IChemObjectBuilder builder =
             SilentChemObjectBuilder.getInstance();
-        IMolecule chloroform = builder.newInstance(IMolecule.class);
+        IAtomContainer chloroform = builder.newInstance(IAtomContainer.class);
         chloroform.addAtom(builder.newInstance(IAtom.class,"C"));
         for (int i=0; i<3; i++) {
             chloroform.addAtom(builder.newInstance(IAtom.class,"Cl"));

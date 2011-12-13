@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -47,7 +47,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
 	 */
     @Test public void test12DimethylBenzene() throws Exception {
     	IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    	IMolecule molecule = builder.newInstance(IMolecule.class);
+    	IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -66,7 +66,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
     	molecule.addBond(1,7,IBond.Order.SINGLE);
     	
     	// 2,3-dimethyl-1,3-butadiene matches
-    	IMolecule query1 = builder.newInstance(IMolecule.class);
+    	IAtomContainer query1 = builder.newInstance(IAtomContainer.class);
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -82,7 +82,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
     	Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(molecule, queryContainer1));
     	
     	// 2,3-dimethyl-2-butene does not match
-    	IMolecule query2 = builder.newInstance(IMolecule.class);
+    	IAtomContainer query2 = builder.newInstance(IAtomContainer.class);
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
     	molecule.addAtom(builder.newInstance(IAtom.class,"C"));

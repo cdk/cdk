@@ -31,7 +31,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -66,8 +66,8 @@ public class RandomAccessTest extends CDKTestCase {
         for (int i=rf.size()-1; i >=0;i--) {
             IChemObject m = rf.readRecord(i);
             Assert.assertEquals(m.getProperty("MDLNUMBER"),mdlnumbers[i]);
-            Assert.assertTrue(m instanceof IMolecule);
-            Assert.assertTrue(((IMolecule)m).getAtomCount()>0);
+            Assert.assertTrue(m instanceof IAtomContainer);
+            Assert.assertTrue(((IAtomContainer)m).getAtomCount()>0);
         }
         rf.close();
     }

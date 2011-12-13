@@ -30,14 +30,15 @@ import javax.vecmath.Point2d;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -54,7 +55,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
      * @cdk.bug 933572
      */
     @Test public void testBug933572() throws Exception{
-        Molecule ac=new Molecule();
+        IAtomContainer ac=new AtomContainer();
         ac.addAtom(new Atom("H"));
         ac.getAtom(0).setPoint2d(new Point2d(0,0));
         addExplicitHydrogens(ac);
@@ -67,7 +68,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 
     @Test public void testPlaceHydrogens2D() throws Exception {
 	    HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        Molecule dichloromethane = new Molecule();
+	    IAtomContainer dichloromethane = new AtomContainer();
         Atom carbon = new Atom("C");
         Point2d carbonPos = new Point2d(0.0,0.0);
         carbon.setPoint2d(carbonPos);

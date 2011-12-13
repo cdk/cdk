@@ -27,7 +27,7 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -69,7 +69,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 		
 		//COMPOUND
 		//[C*]=C-C
-		IMolecule molecule = builder.newInstance(IMolecule.class);
+		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -112,7 +112,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM4() throws Exception {
 		//Smiles("C#[C+]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.getAtom(1).setFormalCharge(+1);
@@ -146,7 +146,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM5() throws Exception {
 		//Smiles("C=[C*]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -184,7 +184,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM6() throws Exception {
 		//Smiles("C#[C*]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -218,7 +218,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM7() throws Exception {
 		//Smiles("C[C*][C*]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -264,7 +264,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM8() throws Exception {
 		//Smiles("C=[C*][C*]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -307,7 +307,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM9() throws Exception {
         //Smiles("C[N*]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"N"));
         expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -346,7 +346,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM10() throws Exception {
 		//Smiles("C=[N*]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -381,7 +381,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM13() throws Exception {
 		//Smiles("[O+*][C*]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"O"));
         expected1.getAtom(0).setFormalCharge(1);
         expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
@@ -418,7 +418,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM14() throws Exception {
 		//Smiles("[F*]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"F"));
         expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
         
@@ -447,7 +447,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM15() throws Exception {
 		//Smiles("C[O*]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"O"));
         expected1.addBond(0, 1, IBond.Order.SINGLE);
@@ -484,7 +484,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM17() throws Exception {
         //Smiles("[N*+]=C")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"N"));
         expected1.getAtom(0).setFormalCharge(1);
         expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
@@ -522,7 +522,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM18() throws Exception {
 		//Smiles("C[N*+]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"N"));
         expected1.getAtom(1).setFormalCharge(1);
@@ -564,7 +564,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM19() throws Exception {
 		//Smiles("C=[N*+]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"N"));
         expected1.getAtom(1).setFormalCharge(1);
@@ -602,7 +602,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM20() throws Exception {
 		//Smiles("H*]")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
 		
@@ -630,7 +630,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM21() throws Exception {
 		//Smiles("NaH")
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"Na"));
 		expected1.addBond(0, 1, IBond.Order.SINGLE);
@@ -659,7 +659,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 * @see AdductionSodiumLPReactionTest
 	 */
 	@Test public void testM22() throws Exception {
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"O"));
 		expected1.getAtom(0).setFormalCharge(1);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -701,7 +701,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 * @see AdductionSodiumLPReactionTest
 	 */
 	@Test public void testM23() throws Exception {
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"R"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addBond(0, 1, IBond.Order.SINGLE);
@@ -765,7 +765,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM24() throws Exception {
 		//Smiles("C[N*]-[C*]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"N"));
 		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
@@ -809,7 +809,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM25() throws Exception {
 		//Smiles("C[O*]")
-        IMolecule expected1 = builder.newInstance(IMolecule.class);
+        IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"O"));
 		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
@@ -847,7 +847,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 * @see HomolyticCleavageReactionTest#testNsp2DoubleB
 	 */
 	@Test public void testM26() throws Exception {
-		IMolecule expected1 = builder.newInstance(IMolecule.class);
+		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
 		expected1.addAtom(builder.newInstance(IAtom.class,"F"));
 		expected1.getAtom(0).setFormalCharge(1);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));

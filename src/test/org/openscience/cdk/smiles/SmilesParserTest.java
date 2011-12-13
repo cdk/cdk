@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -447,7 +447,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "CC1=CCC2CC1C(C)2C";
 		IAtomContainer mol = sp.parseSmiles(smiles);
 		
-		IMolecule apinene = mol.getBuilder().newInstance(IMolecule.class);
+		IAtomContainer apinene = mol.getBuilder().newInstance(IAtomContainer.class);
 		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
 		// 1
 		apinene.addAtom(mol.getBuilder().newInstance(IAtom.class,"C"));
@@ -494,7 +494,7 @@ public class SmilesParserTest extends CDKTestCase {
 		
 		IsomorphismTester it = new IsomorphismTester(apinene);
 		Assert.assertTrue(it.isIsomorphic(
-		    mol.getBuilder().newInstance(IMolecule.class, mol)
+		    mol.getBuilder().newInstance(IAtomContainer.class, mol)
 		));
 	}
 
@@ -777,7 +777,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IAtomContainer mol = sp.parseSmiles(smiles);
 
 		StructureDiagramGenerator sdg=new StructureDiagramGenerator(
-		    mol.getBuilder().newInstance(IMolecule.class, mol)
+		    mol.getBuilder().newInstance(IAtomContainer.class, mol)
 		);
 		sdg.generateCoordinates();
 
@@ -837,7 +837,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IAtomContainer mol = sp.parseSmiles(smiles);
 
 		StructureDiagramGenerator sdg=new StructureDiagramGenerator(
-		    mol.getBuilder().newInstance(IMolecule.class, mol)
+		    mol.getBuilder().newInstance(IAtomContainer.class, mol)
 		);
 		sdg.generateCoordinates();
 		Assert.assertEquals(6, mol.getAtomCount());
@@ -1771,7 +1771,7 @@ public class SmilesParserTest extends CDKTestCase {
 	@Test public void test1456139() throws Exception{
 		SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
-		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class, mol);		
+		IAtomContainer mol2=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, mol);		
 		Assert.assertNotNull(mol2);
 		Assert.assertEquals(25, mol2.getAtomCount());
 	}

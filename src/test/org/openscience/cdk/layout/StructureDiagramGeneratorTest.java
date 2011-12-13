@@ -33,11 +33,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -122,7 +122,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		//IAtomContainer mol = sp.parseSmiles("C1CCC1CCCCCCCC1CC1");
 
 		IAtomContainer ac = generateCoordinates(mol);
-//		MoleculeViewer2D.display(new Molecule(ac), false);
+//		MoleculeViewer2D.display(new AtomContainer(ac), false);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -235,7 +235,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC(=O)OC1C=CC(SC23CC4CC(CC(C4)C2)C3)N(C1SC56CC7CC(CC(C7)C5)C6)C(C)=O");
 		IAtomContainer ac = generateCoordinates(mol);
-		//MoleculeViewer2D.display(new Molecule(ac), false);
+		//MoleculeViewer2D.display(new AtomContainer(ac), false);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -304,7 +304,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	@Test (timeout=5000)
 	public void testBug780545() throws Exception
 	{
-		Molecule mol = new Molecule();
+	    IAtomContainer mol = new AtomContainer();
 		mol.addAtom(new Atom("C"));
 		IAtomContainer ac = generateCoordinates(mol);
 		assertTrue(GeometryTools.has2DCoordinates(ac));

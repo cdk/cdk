@@ -37,8 +37,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -159,23 +159,6 @@ public class SMSDTest {
 
     /**
      * Test of set method, of class Isomorphism.
-     * @throws Exception
-     */
-    @Test
-    public void testSet_IMolecule_IMolecule() throws Exception {
-        System.out.println("set");
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-        IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
-
-        Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
-        smsd1.init(queryac, target, true, true);
-        smsd1.setChemFilters(true, true, true);
-        assertNotNull(smsd1.getFirstMapping());
-    }
-
-    /**
-     * Test of set method, of class Isomorphism.
      * @throws CDKException
      * @throws IOException
      */
@@ -184,8 +167,8 @@ public class SMSDTest {
         System.out.println("set");
         String molfile = "data/mdl/decalin.mol";
         String queryfile = "data/mdl/decalin.mol";
-        Molecule query = new Molecule();
-        Molecule target = new Molecule();
+        IAtomContainer query = new AtomContainer();
+        IAtomContainer target = new AtomContainer();
 
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

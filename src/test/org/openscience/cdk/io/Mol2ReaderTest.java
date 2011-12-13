@@ -27,27 +27,6 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.silent.AtomContainer;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -55,6 +34,25 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * TestCase for the reading SYBYL mol2 files using a test file.
@@ -116,9 +114,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         String filename = "data/mol2/fromWebsite.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IMolecule reference = (IMolecule)molecule.clone();
+        IAtomContainer reference = (IAtomContainer)molecule.clone();
         Assert.assertEquals("C1", reference.getAtom(0).getID());
     }
     
@@ -176,11 +174,11 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     
-    @Test public void testIMolecule() throws Exception {
+    @Test public void testIAtomContainer() throws Exception {
         String filename = "data/mol2/fromWebsite.mol2";
         InputStream in = Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(in);
-        IMolecule mol = (IMolecule)reader.read(new Molecule());
+        IAtomContainer mol = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(mol);
         Assert.assertEquals(12, mol.getAtomCount());
         Assert.assertEquals(12, mol.getBondCount());

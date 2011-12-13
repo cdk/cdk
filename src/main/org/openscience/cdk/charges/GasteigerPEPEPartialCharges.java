@@ -23,6 +23,11 @@
  */
 package org.openscience.cdk.charges;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -34,7 +39,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.HeterolyticCleavagePBReaction;
@@ -47,11 +51,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -200,7 +199,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		
 		/*find resonance containers, which eliminates the repetitions*/
 		StructureResonanceGenerator gRN = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
-		IAtomContainerSet acSet = gRN.getContainers((IMolecule) removingFlagsAromaticity(ac));
+		IAtomContainerSet acSet = gRN.getContainers(removingFlagsAromaticity(ac));
 //		IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(removingFlagsAromaticity(ac));
 		
 		IAtomContainerSet iSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
@@ -519,7 +518,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 			return null;
 		
 		
-		setOfReactants.addAtomContainer((IMolecule) ac);
+		setOfReactants.addAtomContainer(ac);
 		
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();

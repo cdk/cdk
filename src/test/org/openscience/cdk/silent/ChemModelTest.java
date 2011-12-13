@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -97,7 +97,7 @@ public class ChemModelTest extends AbstractChemModelTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.getChanged());
         // changing the set should trigger a change event in the IChemModel
-        crystal.add(chemObject.getBuilder().newInstance(IMolecule.class));
+        crystal.add(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertFalse(listener.getChanged());
     }
 
@@ -112,7 +112,7 @@ public class ChemModelTest extends AbstractChemModelTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.getChanged());
         // changing the set should trigger a change event in the IChemModel
-        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IMolecule.class));
+        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertFalse(listener.getChanged());
     }
 
@@ -159,7 +159,7 @@ public class ChemModelTest extends AbstractChemModelTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.getChanged());
         // changing the set must *not* trigger a change event in the IChemModel
-        crystal.add(chemObject.getBuilder().newInstance(IMolecule.class));
+        crystal.add(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertFalse(listener.getChanged());
     }
 
@@ -176,7 +176,7 @@ public class ChemModelTest extends AbstractChemModelTest {
         // reset the listener
         listener.reset(); Assert.assertFalse(listener.getChanged());
         // changing the set must *not* trigger a change event in the IChemModel
-        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IMolecule.class));
+        molSet.addAtomContainer(chemObject.getBuilder().newInstance(IAtomContainer.class));
         Assert.assertFalse(listener.getChanged());
     }
 

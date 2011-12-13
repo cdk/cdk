@@ -29,7 +29,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -45,9 +45,9 @@ import org.openscience.cdk.smsd.tools.ExtAtomContainerManipulator;
  */
 public class SMSDBondSensitiveTest {
 
-    private static IMolecule Napthalene;
-    private static IMolecule Cyclohexane;
-    private static IMolecule Benzene;
+    private static IAtomContainer Napthalene;
+    private static IAtomContainer Cyclohexane;
+    private static IAtomContainer Benzene;
 
     @BeforeClass
     public static void setUp() throws CDKException {
@@ -225,7 +225,7 @@ public class SMSDBondSensitiveTest {
 //        IAtomContainer atomContainer = sp.parseSmiles("C");
 //        IQueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
 //
-//        IMolecule mol2 = Molecules.create4Toluene();
+//        IAtomContainer mol2 = Molecules.create4Toluene();
 //
 //        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 //        CDKHueckelAromaticityDetector.detectAromaticity(mol2);

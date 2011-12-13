@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
@@ -399,7 +399,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         String filename = "data/pdb/hetatm_only.pdb";
         IChemFile chemFile = getChemFile(filename, true);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
-        Assert.assertTrue(atomContainer instanceof IMolecule);
+        Assert.assertTrue(atomContainer instanceof IAtomContainer);
         Assert.assertEquals(14, atomContainer.getAtomCount());
         Assert.assertEquals(15, atomContainer.getBondCount());
     }

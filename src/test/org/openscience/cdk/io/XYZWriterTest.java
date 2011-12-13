@@ -24,19 +24,20 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.io.StringWriter;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.io.StringWriter;
 
 /**
  * TestCase for the writer XYZ files using one test file.
@@ -58,7 +59,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
 
     @Test public void testWriting() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setPoint3d(new Point3d(1.0, 2.0, 3.0));
         IAtom atom2 = new Atom("C");
@@ -87,7 +88,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
      */
     @Test public void testWriting_Point2d() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(1.0, 2.0));
         molecule.addAtom(atom1);
@@ -106,7 +107,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
      */
     @Test public void testSixDecimalOuput() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");
         atom1.setPoint3d(new Point3d(1.0, 2.0, 3.0));
         molecule.addAtom(atom1);

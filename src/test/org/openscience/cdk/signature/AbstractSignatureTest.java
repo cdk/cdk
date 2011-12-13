@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
@@ -40,7 +40,7 @@ public class AbstractSignatureTest {
     public static IChemObjectBuilder builder =
         SilentChemObjectBuilder.getInstance();
         
-    public static void print(IMolecule mol) {
+    public static void print(IAtomContainer mol) {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             IAtom a = mol.getAtom(i);
             System.out.print(a.getSymbol() + " " + i + " ");

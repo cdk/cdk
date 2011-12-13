@@ -38,10 +38,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,7 +51,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -139,16 +138,16 @@ public class PDBWriterTest extends ChemObjectIOTest {
 		// Crystal structures :(
     }
     
-    private IMolecule singleAtomMolecule() {
+    private IAtomContainer singleAtomMolecule() {
         return singleAtomMolecule("");    
     }
     
-    private IMolecule singleAtomMolecule(String id) {
+    private IAtomContainer singleAtomMolecule(String id) {
         return singleAtomMolecule(id, null);
     }
     
-    private IMolecule singleAtomMolecule(String id, Integer formalCharge) {
-        IMolecule mol = new Molecule();
+    private IAtomContainer singleAtomMolecule(String id, Integer formalCharge) {
+        IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C", new Point3d(0.0, 0.0, 0.0)); 
         mol.addAtom(atom);
         mol.setID(id);
@@ -158,15 +157,15 @@ public class PDBWriterTest extends ChemObjectIOTest {
         return mol;
     }
     
-    private IMolecule singleBondMolecule() {
-        IMolecule mol = new Molecule();
+    private IAtomContainer singleBondMolecule() {
+        IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));
         mol.addAtom(new Atom("O", new Point3d(1.0, 1.0, 1.0)));
         mol.addBond(0, 1, IBond.Order.SINGLE);
         return mol;
     }
     
-    private String getAsString(IMolecule mol) throws CDKException, IOException {
+    private String getAsString(IAtomContainer mol) throws CDKException, IOException {
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);
         writer.writeMolecule(mol);
@@ -174,13 +173,13 @@ public class PDBWriterTest extends ChemObjectIOTest {
         return stringWriter.toString();
     }
     
-    private String[] getAsStringArray(IMolecule mol) throws CDKException, IOException {
+    private String[] getAsStringArray(IAtomContainer mol) throws CDKException, IOException {
         return getAsString(mol).split(System.getProperty("line.separator"));
     }
         
     @Test
     public void writeAsHET() throws CDKException, IOException {
-        IMolecule mol = singleAtomMolecule();
+        IAtomContainer mol = singleAtomMolecule();
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);
         writer.getIOSettings()[0].setSetting("true");
@@ -192,7 +191,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     
     @Test
     public void writeAsATOM() throws CDKException, IOException {
-        IMolecule mol = singleAtomMolecule();
+        IAtomContainer mol = singleAtomMolecule();
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);
         writer.getIOSettings()[0].setSetting("false");
@@ -204,32 +203,32 @@ public class PDBWriterTest extends ChemObjectIOTest {
     
     @Test
     public void writeMolID() throws CDKException, IOException {
-        IMolecule mol = singleAtomMolecule("ZZZ");
+        IAtomContainer mol = singleAtomMolecule("ZZZ");
         Assert.assertTrue(getAsString(mol).indexOf("ZZZ") != -1);
     }
     
     @Test
     public void writeNullMolID() throws CDKException, IOException {
-        IMolecule mol = singleAtomMolecule(null);
+        IAtomContainer mol = singleAtomMolecule(null);
         Assert.assertTrue(getAsString(mol).indexOf("MOL") != -1);
     }
     
     @Test
     public void writeEmptyStringMolID() throws CDKException, IOException {
-        IMolecule mol = singleAtomMolecule("");
+        IAtomContainer mol = singleAtomMolecule("");
         Assert.assertTrue(getAsString(mol).indexOf("MOL") != -1);
     }
 
     @Test
     public void writeChargedAtom() throws CDKException, IOException {
-        IMolecule mol = singleAtomMolecule("", 1);
+        IAtomContainer mol = singleAtomMolecule("", 1);
         String[] lines = getAsStringArray(mol);
         Assert.assertTrue(lines[lines.length - 2].endsWith("+1"));
     }
     
     @Test
     public void writeMoleculeWithBond() throws CDKException, IOException {
-        IMolecule mol = singleBondMolecule();
+        IAtomContainer mol = singleBondMolecule();
         String[] lines = getAsStringArray(mol);
         String lastLineButTwo = lines[lines.length - 3];
         String lastLineButOne = lines[lines.length - 2];

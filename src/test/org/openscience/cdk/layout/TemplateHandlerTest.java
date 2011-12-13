@@ -30,7 +30,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
@@ -168,7 +168,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 		ISimpleChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 		
 		// Read molecule
-		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+		IAtomContainer molecule = (IAtomContainer) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 		
 		// Map templates
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());

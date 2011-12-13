@@ -23,8 +23,8 @@ import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -57,7 +57,7 @@ public class CDKUtilities {
 	}
 	
 	
-	private static boolean fixNitroGroups(IMolecule m) {
+	private static boolean fixNitroGroups(IAtomContainer m) {
 		// changes nitros given by N(=O)(=O) to [N+](=O)[O-]
 		boolean changed=false;
 		try {
@@ -124,7 +124,7 @@ public class CDKUtilities {
 		
 	}
 	
-	public static boolean fixNitroGroups2(IMolecule m) {
+	public static boolean fixNitroGroups2(IAtomContainer m) {
 		// changes nitros given by [N+](=O)[O-] to N(=O)(=O) 
 		boolean changed=false;
 		try {
@@ -195,7 +195,7 @@ public class CDKUtilities {
 		}
 	}
 	
-	public static void fixAromaticityForXLogP(IMolecule m) {
+	public static void fixAromaticityForXLogP(IAtomContainer m) {
 		// need to find rings and aromaticity again since added H's
 		
 		IRingSet rs=null;
@@ -254,7 +254,7 @@ public class CDKUtilities {
 	}
 	
 	
-	public static void fixSulphurH(IMolecule m) {
+	public static void fixSulphurH(IAtomContainer m) {
 		// removes extra H's attached to sulphurs
 		//logger.debug("EnterFixSulphur");
 		

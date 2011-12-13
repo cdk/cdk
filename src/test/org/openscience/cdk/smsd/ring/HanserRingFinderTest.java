@@ -33,7 +33,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.Molecules;
 
 /**
@@ -65,7 +65,7 @@ public class HanserRingFinderTest {
     @Test
     public void testFindRings() {
         System.out.println("findRings");
-        IMolecule molecule = null;
+        IAtomContainer molecule = null;
         HanserRingFinder instance = new HanserRingFinder();
         Collection expResult = null;
         Collection result = instance.findRings(molecule);
@@ -79,21 +79,21 @@ public class HanserRingFinderTest {
     }
 
     public void testItShoudFindOneRingInBenzene() throws CDKException {
-        IMolecule benzene = Molecules.createBenzene();
+        IAtomContainer benzene = Molecules.createBenzene();
         Collection<List<IAtom>> rings = finder.findRings(benzene);
 
         assertEquals(1, rings.size());
     }
 
     public void testItShouldFindThreeRingsInNaphthalene() throws CDKException {
-        IMolecule naphthalene = Molecules.createNaphthalene();
+        IAtomContainer naphthalene = Molecules.createNaphthalene();
         Collection rings = finder.findRings(naphthalene);
 
         assertEquals(3, rings.size());
     }
 
     public void testItShouldFind28RingsInCubane() throws CDKException {
-        IMolecule cubane = Molecules.createCubane();
+        IAtomContainer cubane = Molecules.createCubane();
         Collection rings = finder.findRings(cubane);
 
         assertEquals(28, rings.size());

@@ -28,15 +28,14 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -90,7 +89,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
       String filename = "data/mol2/atomtyping.mol2";
       InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
       Mol2Reader reader = new Mol2Reader(ins);
-      IMolecule mol = (IMolecule)reader.read(new Molecule());
+      IAtomContainer mol = (IAtomContainer)reader.read(new AtomContainer());
 
       // just check consistency; other methods do perception testing
       SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
@@ -106,9 +105,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "data/mol2/atomtyping.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IMolecule reference = (IMolecule)molecule.clone();
+        IAtomContainer reference = (IAtomContainer)molecule.clone();
         
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -171,9 +170,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "data/mol2/atomtyping4.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = (IMolecule)reader.read(new Molecule());
+        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IMolecule reference = (IMolecule)molecule.clone();
+        IAtomContainer reference = (IAtomContainer)molecule.clone();
         
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -194,7 +193,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 	 * @cdk.bug 2445178
 	 */
 	@Test public void testNonExistingType() throws Exception {
-	    IMolecule mol = new Molecule();
+	    IAtomContainer mol = new AtomContainer();
 	    IAtom atom = new Atom("Error");
 	    mol.addAtom(atom);
 	    SybylAtomTypeMatcher matcher =
@@ -206,9 +205,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "data/mol2/atomtyping2.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IMolecule reference = (IMolecule)molecule.clone();
+        IAtomContainer reference = (IAtomContainer)molecule.clone();
 
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -229,9 +228,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "data/mol2/atomtyping3.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IMolecule reference = (IMolecule)molecule.clone();
+        IAtomContainer reference = (IAtomContainer)molecule.clone();
         
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -264,7 +263,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testDummy() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom atom = new PseudoAtom("R");
         mol.addAtom(atom);
 
@@ -273,7 +272,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testEthene() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
@@ -285,7 +284,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testImine() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
         IAtom atom2 = new Atom("N");
         mol.addAtom(atom);
@@ -297,7 +296,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testPropyne() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
         IAtom atom2 = new Atom("C");
         IAtom atom3 = new Atom("C");
@@ -312,7 +311,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testHalogenatedMethane() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("F"));
         mol.addAtom(new Atom("Cl"));
@@ -328,7 +327,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testMnF4() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("F");
         IAtom atom2 = new Atom("Mn");
         IAtom atom3 = new Atom("F");
@@ -345,7 +344,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testAmide() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
         IAtom atom2 = new Atom("C");
         IAtom atom3 = new Atom("N");
@@ -360,7 +359,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testMethylAmine() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("N");
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
@@ -372,7 +371,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
     
     @Test public void testAmmonia() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("H");
         IAtom atom2 = new Atom("N");
         IAtom atom3 = new Atom("H");
@@ -394,7 +393,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testMethanol() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
@@ -406,7 +405,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
     
     @Test public void testDMSO() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
         IAtom atom2 = new Atom("S");
         IAtom atom3 = new Atom("C");
@@ -424,7 +423,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
     
     @Test public void testDMSOO() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
         IAtom atom1 = new Atom("O");
         IAtom atom2 = new Atom("S");
@@ -445,7 +444,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
     
     @Test public void testCarbokation() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("H");
         IAtom atom2 = new Atom("C"); atom2.setFormalCharge(+1);
         IAtom atom3 = new Atom("H");
@@ -462,7 +461,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     @Test public void testSilicon() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
     	IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"Si"); mol.addAtom(a1);
     	IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"O"); mol.addAtom(a2);
     	IAtom a3 = mol.getBuilder().newInstance(IAtom.class,"O"); mol.addAtom(a3);
@@ -503,7 +502,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testThioAmide() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("S");
         IAtom atom2 = new Atom("C");
         IAtom atom3 = new Atom("N");
@@ -518,7 +517,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testSalts() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
           
           IAtom atom = new Atom("Na");
           atom.setFormalCharge(+1);
@@ -526,35 +525,35 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
           String[] expectedTypes = new String[]{"Na"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
           
-          mol = new Molecule();
+          mol = new AtomContainer();
           atom = new Atom("K");
           atom.setFormalCharge(+1);
           mol.addAtom(atom);
           expectedTypes = new String[]{"K"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
           
-          mol = new Molecule();
+          mol = new AtomContainer();
           atom = new Atom("Ca");
           atom.setFormalCharge(+2);
           mol.addAtom(atom);
           expectedTypes = new String[]{"Ca"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
           
-          mol = new Molecule();
+          mol = new AtomContainer();
           atom = new Atom("Mg");
           atom.setFormalCharge(+2);
           mol.addAtom(atom);
           expectedTypes = new String[]{"Mg"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
           
-          mol = new Molecule();
+          mol = new AtomContainer();
           atom = new Atom("Cu");
           atom.setFormalCharge(+2);
           mol.addAtom(atom);
           expectedTypes = new String[]{"Cu"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
-          mol = new Molecule();
+          mol = new AtomContainer();
           atom = new Atom("Al");
           atom.setFormalCharge(+3);
           mol.addAtom(atom);
@@ -563,7 +562,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testH2S() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
@@ -583,7 +582,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testFerrocene() throws Exception {
-        IAtomContainer ferrocene = new Molecule();
+        IAtomContainer ferrocene = new AtomContainer();
         ferrocene.addAtom(new Atom("C"));
         ferrocene.addAtom(new Atom("C"));
         ferrocene.addAtom(new Atom("C"));
@@ -615,7 +614,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testHCN() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("N");
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
@@ -648,7 +647,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testLithiumMethanoxide() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
         IAtom atom2 = new Atom("C");
         IAtom atom3 = new Atom("Li");
@@ -663,7 +662,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testTinCompound() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
         IAtom atom2 = new Atom("Sn");
         IAtom atom3 = new Atom("C");
@@ -684,7 +683,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testZincChloride() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("Zn"));
         mol.addAtom(new Atom("Cl"));
         mol.addAtom(new Atom("Cl"));
@@ -699,7 +698,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
      * @cdk.inchi InChI=1/H2Se/h1H2
      */
     @Test public void testH2Se() throws Exception {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Se");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
@@ -719,7 +718,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test public void testPhosphate() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
           IAtom atom = new Atom("O");
           IAtom atom2 = new Atom("P");
           IAtom atom3 = new Atom("O");

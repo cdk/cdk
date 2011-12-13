@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
@@ -75,7 +75,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
         for (int i = 0; i < molecule.getBondCount(); i++) {
         	IBond bond = molecule.getBond(i);
         	Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
@@ -94,7 +94,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
             Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));

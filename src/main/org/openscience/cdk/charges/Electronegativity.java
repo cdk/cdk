@@ -24,7 +24,6 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * Calculation of the electronegativity of orbitals of a molecule 
@@ -103,7 +102,7 @@ public class Electronegativity {
 
         try {
         	if(!ac.equals(acOldS)){
-        		molSigma = ac.getBuilder().newInstance(IMolecule.class,ac);
+        		molSigma = ac.getBuilder().newInstance(IAtomContainer.class,ac);
         		peoe.setMaxGasteigerIters(maxI);
 	    		peoe.assignGasteigerMarsiliSigmaPartialCharges(molSigma, true);
 	    		marsiliFactors = peoe.assignGasteigerSigmaMarsiliFactors(molSigma);

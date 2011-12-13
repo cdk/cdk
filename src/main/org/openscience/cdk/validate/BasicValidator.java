@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.validate;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
@@ -28,14 +30,11 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.Iterator;
 
 /**
  * Validator which tests a number of basic chemical semantics.
@@ -68,7 +67,7 @@ public class BasicValidator extends AbstractValidator {
     public ValidationReport validateIsotope(IIsotope subject) {
         return validateIsotopeExistence(subject);
     }
-    public ValidationReport validateMolecule(IMolecule subject) {
+    public ValidationReport validateMolecule(IAtomContainer subject) {
         ValidationReport report = new ValidationReport();
         ValidationTest emptyMolecule = new ValidationTest(subject,
             "Molecule does not contain any atom"
@@ -299,7 +298,7 @@ public class BasicValidator extends AbstractValidator {
     
     // the Molecule tests
 
-    private ValidationReport validateBondOrderSum(IAtom atom, IMolecule molecule) {
+    private ValidationReport validateBondOrderSum(IAtom atom, IAtomContainer molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkBondSum = new ValidationTest(atom,
             "The atom's total bond order is too high."

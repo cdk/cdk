@@ -37,7 +37,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -127,13 +126,13 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	@Test public void testDontDeleteSingleElectrons() {
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
         // make two molecules; one with an LonePair, the other with a SingleElectron
-        Molecule mol1 = new Molecule();
+        IAtomContainer mol1 = new AtomContainer();
         Atom atom1 = new Atom("C");
         mol1.addAtom(atom1);
         LonePair lp1 = new LonePair(atom1);
         mol1.addLonePair(lp1);
         // mol2
-        Molecule mol2 = new Molecule();
+        IAtomContainer mol2 = new AtomContainer();
         Atom atom2 = new Atom("C");
         mol2.addAtom(atom2);
         SingleElectron se2 = new SingleElectron(atom2);

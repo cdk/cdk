@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -74,7 +74,7 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
 
     @Test public void testDebugAtomContainer_IAtomContainer() {
     	IChemObject object = newChemObject();
-        IMolecule acetone = object.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer acetone = object.getBuilder().newInstance(IAtomContainer.class);
         IAtom c1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom c2 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom o = object.getBuilder().newInstance(IAtom.class,"O");

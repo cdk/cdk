@@ -27,14 +27,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ISingleElectron;
 
@@ -63,7 +63,7 @@ public class SaturationCheckerTest extends CDKTestCase
     public void testAllSaturated() throws Exception
 	{
 		// test methane with explicit hydrogen
-		Molecule m = new Molecule();
+	    IAtomContainer m = new AtomContainer();
 		Atom c = new Atom("C");
 		Atom h1 = new Atom("H");
 		Atom h2 = new Atom("H");
@@ -81,7 +81,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		Assert.assertTrue(satcheck.allSaturated(m));
 
 		// test methane with implicit hydrogen
-		m = new Molecule();
+		m = new AtomContainer();
 		c = new Atom("C");
 		c.setImplicitHydrogenCount(4);
 		m.addAtom(c);
@@ -95,7 +95,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	@Test public void testIsSaturated() throws Exception
 	{
 		// test methane with explicit hydrogen
-		Molecule m = new Molecule();
+	    IAtomContainer m = new AtomContainer();
 		Atom c = new Atom("C");
 		Atom h1 = new Atom("H");
 		Atom h2 = new Atom("H");
@@ -123,7 +123,7 @@ public class SaturationCheckerTest extends CDKTestCase
      */
 	@Test public void testIsSaturated_NegativelyChargedOxygen() throws Exception {
 		// test methane with explicit hydrogen
-		Molecule m = new Molecule();
+	    IAtomContainer m = new AtomContainer();
 		Atom c = new Atom("C");
 		Atom h1 = new Atom("H");
 		Atom h2 = new Atom("H");
@@ -152,7 +152,7 @@ public class SaturationCheckerTest extends CDKTestCase
      */
 	@Test public void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
 		// test methane with explicit hydrogen
-		Molecule m = new Molecule();
+	    IAtomContainer m = new AtomContainer();
 		Atom n = new Atom("N");
 		Atom h1 = new Atom("H");
 		Atom h2 = new Atom("H");
@@ -186,7 +186,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		c2.setImplicitHydrogenCount(2);
 		Bond b = new Bond(c1, c2, IBond.Order.SINGLE);
 		// force single bond, saturate() must fix that
-		Molecule m = new Molecule();
+		IAtomContainer m = new AtomContainer();
 		m.addAtom(c1);
 		m.addAtom(c2);
 		m.addBond(b);
@@ -211,7 +211,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		Bond b2 = new Bond(c3, c2, IBond.Order.SINGLE);
 		Bond b3 = new Bond(c3, c4, IBond.Order.SINGLE);
 		// force single bond, saturate() must fix that
-		Molecule m = new Molecule();
+		IAtomContainer m = new AtomContainer();
 		m.addAtom(c1);
 		m.addAtom(c2);
 		m.addAtom(c3);
@@ -226,7 +226,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	}
 
     @Test public void testSaturate_ParaDiOxygenBenzene() throws Exception {
-        Molecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
         Atom a2 = new Atom("O");
@@ -290,7 +290,7 @@ public class SaturationCheckerTest extends CDKTestCase
      */
     @Test public void testBug772316() throws Exception {
 		// test methane with explicit hydrogen
-		Molecule m = new Molecule();
+        IAtomContainer m = new AtomContainer();
 		Atom sulphur = new Atom("S");
 		Atom o1 = new Atom("O");
 		Atom o2 = new Atom("O");
@@ -321,7 +321,7 @@ public class SaturationCheckerTest extends CDKTestCase
     }
     
     @Test public void testBug777529() throws Exception {
-      Molecule m = new Molecule();
+        IAtomContainer m = new AtomContainer();
       m.addAtom(new Atom("C"));
       m.addAtom(new Atom("C"));
       m.addAtom(new Atom("C"));
@@ -418,24 +418,24 @@ public class SaturationCheckerTest extends CDKTestCase
     @Test public void testCalculateNumberOfImplicitHydrogens() throws Exception {
     	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
     	
-    	IMolecule proton = builder.newInstance(IMolecule.class);
+    	IAtomContainer proton = builder.newInstance(IAtomContainer.class);
     	IAtom hplus = builder.newInstance(IAtom.class,"H");
     	hplus.setFormalCharge(1);
     	proton.addAtom(hplus);
     	Assert.assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hplus, proton));
     	
-    	IMolecule hydrogenRadical = builder.newInstance(IMolecule.class);
+    	IAtomContainer hydrogenRadical = builder.newInstance(IAtomContainer.class);
     	IAtom hradical = builder.newInstance(IAtom.class,"H");
     	hydrogenRadical.addAtom(hradical);
     	hydrogenRadical.addSingleElectron(builder.newInstance(ISingleElectron.class,hradical));
     	Assert.assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hradical, hydrogenRadical));
     	
-    	IMolecule hydrogen = builder.newInstance(IMolecule.class);
+    	IAtomContainer hydrogen = builder.newInstance(IAtomContainer.class);
     	IAtom h = builder.newInstance(IAtom.class,"H");
     	hydrogen.addAtom(h);
     	Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(h, hydrogen));
     	
-    	IMolecule coRad = builder.newInstance(IMolecule.class);
+    	IAtomContainer coRad = builder.newInstance(IAtomContainer.class);
     	IAtom c = builder.newInstance(IAtom.class,"C");
     	IAtom o = builder.newInstance(IAtom.class,"O");
     	IBond bond = builder.newInstance(IBond.class,c, o, IBond.Order.DOUBLE);

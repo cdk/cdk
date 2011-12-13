@@ -28,7 +28,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -109,7 +108,7 @@ public class AtomTypeTools {
 				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);
 				atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(sring.getRingSize()));
 				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(ringSystemClassifier(
-						sring, sg.createSMILES(atom2.getBuilder().newInstance(IMolecule.class,sring)))
+						sring, sg.createSMILES(atom2.getBuilder().newInstance(IAtomContainer.class,sring)))
 				));
 				atom2.setFlag(CDKConstants.ISINRING, true);
 				atom2.setFlag(CDKConstants.ISALIPHATIC, false);

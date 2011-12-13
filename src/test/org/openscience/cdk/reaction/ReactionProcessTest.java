@@ -282,7 +282,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //	        IChemFile chemFile = (IChemFile)reader.read(builder.newInstance(IChemFile.class));
 //	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 //	        for(Iterator<IAtomContainer> itM = reactionDict.getReactants().molecules().iterator(); itM.hasNext();){
-//	        	IMolecule molecule = (IMolecule) itM.next();
+//	        	IAtomContainer molecule = (IAtomContainer) itM.next();
 //	        	Assert.assertNotNull("The representation entry for ["+entryString+"]  must contain the InChI id for each reactant.",
 //	        			molecule.getProperty(CDKConstants.INCHI));
 //	        	Assert.assertNotSame("The representation entry for ["+entryString+"]  must contain the InChI id for each reactant.",
@@ -298,7 +298,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
     	List<String> xmlList = entry.getExampleReactions();
     	Assert.assertTrue("The representation entry for ["+entryString+"]  must contain at least one example of reaction.",
@@ -382,16 +382,16 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //	        
 //	        IReaction reactionTest = builder.newInstance(IReaction.class);
 //	        for(Iterator<IAtomContainer> itM = reactionDict.getReactants().molecules(); itM.hasNext();){
-//	        	reactionTest.addReactant((IMolecule) itM.next());
+//	        	reactionTest.addReactant((IAtomContainer) itM.next());
 //	        }
 //	        for(Iterator<IAtomContainer> itM = reactionDict.getAgents().molecules(); itM.hasNext();){
-//	        	reactionTest.addAgent((IMolecule) itM.next());
+//	        	reactionTest.addAgent((IAtomContainer) itM.next());
 //	        }
-//	        IMoleculeSet reactants = reactionDict.getReactants();
+//	        IAtomContainerSet reactants = reactionDict.getReactants();
 //	        System.out.println(reactants);
 //	        if(reactants.getAtomContainerCount() == 0)
 //	        	reactants = null;
-//	        IMoleculeSet agents = reactionDict.getAgents();
+//	        IAtomContainerSet agents = reactionDict.getAgents();
 //	        if(agents.getAtomContainerCount() == 0)
 //	        	agents = null;
 //	        System.out.println(agents);

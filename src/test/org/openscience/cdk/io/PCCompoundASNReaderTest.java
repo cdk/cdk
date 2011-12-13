@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -63,8 +63,8 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
         IChemFile cFile = (IChemFile)reader.read(new ChemFile());
         List containers = ChemFileManipulator.getAllAtomContainers(cFile);
         Assert.assertEquals(1, containers.size());
-        Assert.assertTrue(containers.get(0) instanceof IMolecule);
-        IMolecule molecule = (IMolecule)containers.get(0);
+        Assert.assertTrue(containers.get(0) instanceof IAtomContainer);
+        IAtomContainer molecule = (IAtomContainer)containers.get(0);
         Assert.assertNotNull(molecule);
 
         // check atom stuff

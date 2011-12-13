@@ -21,18 +21,19 @@
  */
 package org.openscience.cdk.smsd.algorithm.single;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 import java.io.InputStream;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import static org.junit.Assert.*;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smsd.Isomorphism;
@@ -58,36 +59,16 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class SingleMappingHandler.
+     * @throws Exception 
      */
     @Test
-    public void testSet_IAtomContainer_IAtomContainer() {
+    public void testSet_IAtomContainer_IAtomContainer() throws Exception {
         System.out.println("set");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
         source.addAtom(atomSource);
         IAtomContainer target = new AtomContainer();
-        target.addAtom(atomTarget);
-        boolean removeHydrogen = false;
-        SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
-        MolHandler mol1 = new MolHandler(source, true, true);
-        MolHandler mol2 = new MolHandler(target, true, true);
-        instance.set(mol1, mol2);
-        assertNotNull(instance.getFirstAtomMapping());
-    }
-
-    /**
-     * Test of set method, of class SingleMappingHandler.
-     * @throws Exception 
-     */
-    @Test
-    public void testSet_IMolecule_IMolecule() throws Exception {
-        System.out.println("set");
-        IAtom atomSource = new Atom("R");
-        IAtom atomTarget = new Atom("R");
-        IMolecule source = new Molecule();
-        source.addAtom(atomSource);
-        IMolecule target = new Molecule();
         target.addAtom(atomTarget);
         boolean removeHydrogen = false;
         SingleMappingHandler instance = new SingleMappingHandler(removeHydrogen);
@@ -107,8 +88,8 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         System.out.println("set");
         String molfile = "data/mdl/decalin.mol";
         String queryfile = "data/mdl/decalin.mol";
-        Molecule query = new Molecule();
-        Molecule target = new Molecule();
+        IAtomContainer query = new AtomContainer();
+        IAtomContainer target = new AtomContainer();
 
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -132,9 +113,9 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         System.out.println("set");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
-        IMolecule source = new Molecule();
+        IAtomContainer source = new AtomContainer();
         source.addAtom(atomSource);
-        IMolecule target = new Molecule();
+        IAtomContainer target = new AtomContainer();
         target.addAtom(atomTarget);
         MolHandler source1 = new MolHandler(source, true, true);
         MolHandler target1 = new MolHandler(target, true, true);

@@ -23,6 +23,12 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.StringWriter;
+import java.util.Properties;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,7 +39,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,17 +48,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.StringWriter;
-import java.util.Properties;
 
 
 /**
@@ -85,7 +84,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
      */
     @Test public void testBug890456() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new PseudoAtom("*"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
@@ -100,7 +99,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
      */
     @Test public void testBug1212219() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setMassNumber(14);
         molecule.addAtom(atom);
@@ -154,7 +153,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
      */
     @Test public void testBug1778479() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom1 = builder.newInstance(IPseudoAtom.class);
         IAtom atom2 = builder.newInstance(IAtom.class,"C");
         IBond bond = builder.newInstance(IBond.class,atom1, atom2);
@@ -170,7 +169,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test public void testNullFormalCharge() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFormalCharge(null);
         molecule.addAtom(atom);
@@ -187,7 +186,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test public void testPrefer3DCoordinateOutput() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint2d(new Point2d(1.0, 2.0));
         atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
@@ -206,7 +205,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test public void testForce2DCoordinates() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint2d(new Point2d(1.0, 2.0));
         atom.setPoint3d(new Point3d(3.0, 4.0, 5.0));
@@ -241,7 +240,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test(expected=CDKException.class)
     public void testUnsupportedBondOrder() throws Exception {
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(
@@ -276,7 +275,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
      */
     @Test public void testRGPLine() throws Exception {
         StringWriter writer = new StringWriter();
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IPseudoAtom atom1 = builder.newInstance(IPseudoAtom.class);
         atom1.setSymbol("R");
         atom1.setLabel("R12");
@@ -314,7 +313,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         oxygen.setProperty(CDKConstants.COMMENT, "Oxygen comment");
         IBond bond = builder.newInstance(IBond.class,carbon, oxygen, CDKConstants.BONDORDER_DOUBLE);
 
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(oxygen);
         molecule.addAtom(carbon);
         molecule.addBond(bond);

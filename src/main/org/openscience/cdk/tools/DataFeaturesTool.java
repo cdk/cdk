@@ -30,7 +30,7 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.features.MoleculeFeaturesTool;
 
 /**
@@ -50,7 +50,7 @@ public class DataFeaturesTool {
 	 * 
 	 * @return integer representation of the present features 
 	 */
-	public static int getSupportedDataFeatures(IMolecule molecule) {
+	public static int getSupportedDataFeatures(IAtomContainer molecule) {
 		int features = DataFeatures.NONE;
 		if (MoleculeFeaturesTool.hasElementSymbols(molecule))
 			features = features | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;

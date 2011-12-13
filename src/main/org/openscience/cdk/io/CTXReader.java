@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CTXFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -125,7 +124,7 @@ public class CTXReader extends DefaultChemObjectReader {
         IChemSequence seq = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel model = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet containerSet = file.getBuilder().newInstance(IAtomContainerSet.class);
-        IMolecule container = file.getBuilder().newInstance(IMolecule.class);
+        IAtomContainer container = file.getBuilder().newInstance(IAtomContainer.class);
         
         int lineNumber = 0;
         

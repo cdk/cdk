@@ -24,15 +24,15 @@
  */
 package org.openscience.cdk.graph.rebond;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.graph.rebond.RebondTool;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
-
-import javax.vecmath.Point3d;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Checks the functionality of the RebondTool.
@@ -54,7 +54,7 @@ public class RebondToolTest extends CDKTestCase {
     @Test
     public void testRebond_IAtomContainer() throws Exception {
 		RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-		Molecule methane = new Molecule();
+		IAtomContainer methane = new AtomContainer();
 		methane.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));
 		methane.addAtom(new Atom("H", new Point3d(0.6, 0.6, 0.6)));
 		methane.addAtom(new Atom("H", new Point3d(-0.6, -0.6, 0.6)));

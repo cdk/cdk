@@ -29,7 +29,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.debug.DebugAtomContainer;
 import org.openscience.cdk.debug.DebugChemFile;
@@ -82,7 +81,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted = true;
             }
         }
-        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
+        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction", oneAccepted);
     }
 
     private static IChemObject[] acceptableDebugChemObjects = {
@@ -97,11 +96,11 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted = true;
             }
         }
-        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
+        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction", oneAccepted);
     }
 
     protected static IChemObject[] acceptableChemObjects = {
-        new ChemFile(), new ChemModel(), new Molecule(),
+        new ChemFile(), new ChemModel(), new AtomContainer(),
         new Reaction(), new RGroupQuery()
     };
 
@@ -112,7 +111,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted = true;
             }
         }
-        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction, IRGroupQuery", oneAccepted);
+        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery", oneAccepted);
     }
 
     @Test public void testClose() throws Exception {

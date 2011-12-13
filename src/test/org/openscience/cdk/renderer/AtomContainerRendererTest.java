@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -67,7 +67,7 @@ public class AtomContainerRendererTest {
 	}
 	
 	public IAtomContainer makeSquare() {
-		IMolecule square = builder.newInstance(IMolecule.class);
+		IAtomContainer square = builder.newInstance(IAtomContainer.class);
 		square.addAtom(builder.newInstance(IAtom.class,"C"));
 		square.addAtom(builder.newInstance(IAtom.class,"C"));
 		square.addAtom(builder.newInstance(IAtom.class,"C"));

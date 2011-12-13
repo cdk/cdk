@@ -21,9 +21,9 @@ package org.openscience.cdk.graph.invariant;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -36,7 +36,7 @@ public class InChINumbersToolsTest extends CDKTestCase {
 
     @Test
     public void testSimpleNumbering() throws CDKException{
-        IAtomContainer container = new Molecule();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
         container.addBond(0, 1, IBond.Order.SINGLE);
@@ -48,7 +48,7 @@ public class InChINumbersToolsTest extends CDKTestCase {
 	
     @Test
     public void testHydrogens() throws CDKException{
-        IAtomContainer container = new Molecule();
+        IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("H"));
         container.addAtom(new Atom("C"));
         container.addBond(0, 1, IBond.Order.SINGLE);

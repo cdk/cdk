@@ -22,17 +22,16 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -1044,7 +1043,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
      */
     @Test 
     public void testHelium() {
-        IAtomContainer helium = new Molecule();
+        IAtomContainer helium = new AtomContainer();
         helium.addAtom(new Atom("He"));
         
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);
@@ -1057,7 +1056,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
      */
     @Test 
     public void testAmericum() {
-        IAtomContainer helium = new Molecule();
+        IAtomContainer helium = new AtomContainer();
         helium.addAtom(new Atom("Am"));
         
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);

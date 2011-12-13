@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomDiff;
@@ -51,7 +50,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     private static Convertor convertor = new Convertor(false, "");
 
     @Test public void testIElement_Symbol() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         mol.addAtom(atom);
         IAtomContainer copy = CMLRoundTripTool.roundTripMolecule(convertor, mol);
@@ -60,7 +59,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIElement_AtomicNumber() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setAtomicNumber(6);
         mol.addAtom(atom);
@@ -70,7 +69,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIIsotope_NaturalAbundance() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setNaturalAbundance(99.);
         mol.addAtom(atom);
@@ -80,7 +79,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
     
     @Test public void testIIsotope_ExactMass() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setExactMass(12.);
         mol.addAtom(atom);
@@ -90,7 +89,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIIsotope_MassNumber() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setMassNumber(13);
         mol.addAtom(atom);
@@ -100,7 +99,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtomType_Name() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setAtomTypeName("C.sp3");
         mol.addAtom(atom);
@@ -110,7 +109,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtomType_MaxBondOrder() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setMaxBondOrder(IBond.Order.TRIPLE);
         mol.addAtom(atom);
@@ -120,7 +119,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtomType_BondOrderSum() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setBondOrderSum(4.);
         mol.addAtom(atom);
@@ -130,7 +129,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIAtomType_FormalCharge() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFormalCharge(+1);
         mol.addAtom(atom);
@@ -140,7 +139,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtomType_FormalNeighborCount() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFormalNeighbourCount(4);
         mol.addAtom(atom);
@@ -150,7 +149,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtomType_Hybridization() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setHybridization(IAtomType.Hybridization.SP3);
         mol.addAtom(atom);
@@ -160,7 +159,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtomType_CovalentRadius() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setCovalentRadius(1.5d);
         mol.addAtom(atom);
@@ -170,7 +169,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtomType_Valency() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setValency(4);
         mol.addAtom(atom);
@@ -180,7 +179,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIAtom_Charge() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setCharge(0.3);
         mol.addAtom(atom);
@@ -190,7 +189,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIAtom_HydrogenCount() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setImplicitHydrogenCount(4);
         mol.addAtom(atom);
@@ -200,7 +199,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIAtom_Point2d() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint2d(new Point2d(1.0, 2.0));
         mol.addAtom(atom);
@@ -210,7 +209,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIAtom_Point3d() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint3d(new Point3d(1.0, 2.0, 3.0));
         mol.addAtom(atom);
@@ -220,7 +219,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIAtom_FractionalPoint3d() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setFractionalPoint3d(new Point3d(1.0, 2.0, 3.0));
         mol.addAtom(atom);
@@ -230,7 +229,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Test public void testIAtom_Point8d() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setPoint2d(new Point2d(0.0, 0.0));
         atom.setPoint3d(new Point3d(-1.0, -2.0, -3.0));
@@ -242,7 +241,7 @@ public class CDKRoundTripTest extends CDKTestCase {
     }
 
     @Ignore @Test public void testIAtom_StereoParity() throws Exception {
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
         atom.setStereoParity(-1);
         mol.addAtom(atom);

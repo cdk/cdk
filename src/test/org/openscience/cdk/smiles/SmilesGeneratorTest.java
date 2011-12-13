@@ -23,6 +23,13 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -30,7 +37,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -47,7 +53,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -58,12 +63,6 @@ import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
 
 /**
  * @author         steinbeck
@@ -490,7 +489,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String oldSmiles = sg.createSMILES(mol);
 		while (acap.hasNext())
 		{
-			smiles = sg.createSMILES(new Molecule((AtomContainer) acap.next()));
+			smiles = sg.createSMILES(new AtomContainer((AtomContainer) acap.next()));
 			//logger.debug(smiles);
 			Assert.assertEquals(oldSmiles, smiles);
 		}
@@ -521,7 +520,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String oldSmiles = sg.createSMILES(mol);
 		while (acbp.hasNext())
 		{
-			smiles = sg.createSMILES(new Molecule((AtomContainer) acbp.next()));
+			smiles = sg.createSMILES(new AtomContainer((AtomContainer) acbp.next()));
 			//logger.debug(smiles);
 			Assert.assertEquals(oldSmiles, smiles);
 		}
@@ -720,7 +719,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         CMLReader cmlreader=new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
         IAtomContainer mol2=((IChemFile)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         addImplicitHydrogens(mol2);
-        String cmlSmiles = sg.createSMILES(new Molecule(mol2));
+        String cmlSmiles = sg.createSMILES(new AtomContainer(mol2));
         Assert.assertEquals(molSmiles,cmlSmiles);
 	}
 
@@ -812,7 +811,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol.addAtom(new Atom(Elements.CARBON));
 		mol.addBond(0,1,IBond.Order.SINGLE);
 		SmilesGenerator generator = new SmilesGenerator();
-		generator.createSMILES(new Molecule(mol));
+		generator.createSMILES(new AtomContainer(mol));
 		Assert.assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
 		// mmm, that does not reproduce the bug findings yet :(
 	}
@@ -950,7 +949,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IsotopeFactory fact = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
         fact.configureAtoms(mol);
         SmilesGenerator sg = new SmilesGenerator();
-        String smiles = sg.createSMILES((IMolecule) mol);
+        String smiles = sg.createSMILES((IAtomContainer) mol);
         IAtomContainer mol2 = sp.parseSmiles(smiles);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
     }

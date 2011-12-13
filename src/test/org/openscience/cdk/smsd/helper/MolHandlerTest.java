@@ -23,20 +23,16 @@
  */
 package org.openscience.cdk.smsd.helper;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import static org.junit.Assert.*;
-import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
@@ -72,7 +68,7 @@ public class MolHandlerTest {
     @Test
     public void testGetMolecule() {
         System.out.println("getMolecule");
-        MolHandler instance = new MolHandler(new Molecule(), true, true);
+        MolHandler instance = new MolHandler(new AtomContainer(), true, true);
         IAtomContainer result = instance.getMolecule();
         assertNotNull(result);
     }
@@ -83,7 +79,7 @@ public class MolHandlerTest {
     @Test
     public void testGetRemoveHydrogenFlag() {
         System.out.println("getRemoveHydrogenFlag");
-        MolHandler instance = new MolHandler(new Molecule(), true, true);
+        MolHandler instance = new MolHandler(new AtomContainer(), true, true);
         boolean expResult = true;
         boolean result = instance.getRemoveHydrogenFlag();
         assertEquals(expResult, result);

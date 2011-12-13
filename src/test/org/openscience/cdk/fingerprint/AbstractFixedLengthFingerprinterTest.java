@@ -27,8 +27,8 @@ import java.util.BitSet;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 
@@ -45,12 +45,12 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         InputStream ins =
             this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule superstructure = (IMolecule)reader.read(new Molecule());
+        IAtomContainer superstructure = (IAtomContainer)reader.read(new AtomContainer());
 
         filename = "data/mdl/bug706786-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule substructure = (IMolecule)reader.read(new Molecule());
+        IAtomContainer substructure = (IAtomContainer)reader.read(new AtomContainer());
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(superstructure);
@@ -67,12 +67,12 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         InputStream ins =
             this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule superstructure = (IMolecule)reader.read(new Molecule());
+        IAtomContainer superstructure = (IAtomContainer)reader.read(new AtomContainer());
 
         filename = "data/mdl/bug853254-1.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule substructure = (IMolecule)reader.read(new Molecule());
+        IAtomContainer substructure = (IAtomContainer)reader.read(new AtomContainer());
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(superstructure);
@@ -91,12 +91,12 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         InputStream ins =
             this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule substructure = (IMolecule)reader.read(new Molecule());
+        IAtomContainer substructure = (IAtomContainer)reader.read(new AtomContainer());
 
         filename = "data/mdl/bug934819-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule superstructure = reader.read(new Molecule());
+        IAtomContainer superstructure = reader.read(new AtomContainer());
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(superstructure);
@@ -115,12 +115,12 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         InputStream ins =
             this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule structure1 = (IMolecule)reader.read(new Molecule());
+        IAtomContainer structure1 = (IAtomContainer)reader.read(new AtomContainer());
 
         filename = "data/mdl/bug771485-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule structure2 = (IMolecule)reader.read(new Molecule());
+        IAtomContainer structure2 = (IAtomContainer)reader.read(new AtomContainer());
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(structure2);
@@ -140,12 +140,12 @@ public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterT
         InputStream ins =
             this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule structure1 = (IMolecule)reader.read(new Molecule());
+        IAtomContainer structure1 = (IAtomContainer)reader.read(new AtomContainer());
 
         filename = "data/mdl/bug931608-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IMolecule structure2 = (IMolecule)reader.read(new Molecule());
+        IAtomContainer structure2 = (IAtomContainer)reader.read(new AtomContainer());
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet bs1 = fingerprinter.getFingerprint(structure1);

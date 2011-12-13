@@ -26,16 +26,15 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -81,7 +80,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 	}
 	
   @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
-      IMolecule mol = new Molecule();
+      IAtomContainer mol = new AtomContainer();
       IAtom atom = new Atom("C");
       final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
       atom.setHybridization(thisHybridization);
@@ -97,7 +96,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 
 	@Test public void testSP3Atoms(){
 		//Testing with CC(C)(C)CC 
-		mol = new Molecule();
+		mol = new AtomContainer();
 		IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
 		mol.addAtom(a1);
 		IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"C");
@@ -190,7 +189,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 	
 	@Test public void testSP2Atoms(){
 		//Test with C=CC=N 
-		mol = new Molecule();
+		mol = new AtomContainer();
 		IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
 		mol.addAtom(a1);
 		IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"C");
@@ -236,7 +235,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 	
 	@Test public void testSPAtoms(){
 		//Testing with  C#CCC#N 
-		mol = new Molecule();
+		mol = new AtomContainer();
 		IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
 		mol.addAtom(a1);
 		IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"C");
@@ -278,7 +277,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 	
 	@Test public void testAromaticAtoms(){
 		//Testing with C1=CN=CC=C1C		
-		mol = new Molecule();
+		mol = new AtomContainer();
 		IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
 		a1.setFlag(CDKConstants.ISAROMATIC,true);
 		mol.addAtom(a1);
@@ -370,7 +369,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 
     @Test public void testNaphthalene(){
 		//Testing with C1=CC2C=CC=CC=2C=C1		
-		mol = new Molecule();
+		mol = new AtomContainer();
 		IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
 		a1.setFlag(CDKConstants.ISAROMATIC,true);
 		mol.addAtom(a1);
@@ -471,7 +470,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 	
 	@Test public void testChargedAtoms(){
 		//Testing with C[N+]		
-		mol = new Molecule();		
+		mol = new AtomContainer();		
 		IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
 		mol.addAtom(a1);
 		IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"N");
@@ -511,7 +510,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 	
 	@Test public void testNaCl(){
 		//Testing with [Na+].[Cl-]		
-		mol = new Molecule();		
+		mol = new AtomContainer();		
 		IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"Na");
 		a1.setFormalCharge(+1);
 		mol.addAtom(a1);
@@ -524,7 +523,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		Assert.assertTrue(testAtom("SClm",a2));
 		
 		//Testing with different presentation - [Na]Cl 		
-		mol = new Molecule();		
+		mol = new AtomContainer();		
 		a1 = mol.getBuilder().newInstance(IAtom.class,"Na");		
 		mol.addAtom(a1);
 		a2 = mol.getBuilder().newInstance(IAtom.class,"Cl");				

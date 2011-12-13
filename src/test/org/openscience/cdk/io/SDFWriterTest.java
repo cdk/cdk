@@ -31,11 +31,11 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -68,10 +68,10 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
-    @Test public void testWrite_IMoleculeSet_Properties_Off() throws Exception {
+    @Test public void testWrite_IAtomContainerSet_Properties_Off() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
         molSet.addAtomContainer(molecule);
@@ -105,10 +105,10 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertNotSame(0, writer.toString().length());
     }
 
-    @Test public void testWrite_IMoleculeSet_Properties() throws Exception {
+    @Test public void testWrite_IAtomContainerSet_Properties() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
         molSet.addAtomContainer(molecule);
@@ -120,10 +120,10 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertTrue(writer.toString().indexOf("bar") != -1);
     }
 
-    @Test public void testWrite_IMoleculeSet_CDKProperties() throws Exception {
+    @Test public void testWrite_IAtomContainerSet_CDKProperties() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty(InvPair.CANONICAL_LABEL, "bar");
         molSet.addAtomContainer(molecule);
@@ -136,10 +136,10 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         );
     }
 
-    @Test public void testWrite_IMoleculeSet_SingleMolecule() throws Exception {
+    @Test public void testWrite_IAtomContainerSet_SingleMolecule() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);
         
@@ -149,13 +149,13 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
     }
 
-    @Test public void testWrite_IMoleculeSet_Multimolecule() throws Exception {
+    @Test public void testWrite_IAtomContainerSet_MultIAtomContainer() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainerSet molSet = new AtomContainerSet();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);
-        molecule = new Molecule();
+        molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molSet.addAtomContainer(molecule);
         
@@ -165,16 +165,16 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
     }
 
-    @Test public void testWrite_IMolecule_Multimolecule() throws Exception {
+    @Test public void testWrite_IAtomContainer_MultIAtomContainer() throws Exception {
         StringWriter writer = new StringWriter();
         SDFWriter sdfWriter = new SDFWriter(writer);
 
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("foo", "bar");
         sdfWriter.write(molecule);
 
-        molecule = new Molecule();
+        molecule = new AtomContainer();
         molecule.addAtom(new Atom("C"));
         molecule.setProperty("toys", "r-us");
         sdfWriter.write(molecule);

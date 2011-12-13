@@ -235,7 +235,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
         	for (IAtomContainer container : containers) mol.add(container);
         }
         
-        Assert.assertNotNull("Could not read the file into a IMolecule: " + filename, mol);
+        Assert.assertNotNull("Could not read the file into a IAtomContainer: " + filename, mol);
         
         TestResults results = new TestResults();
         assert mol != null;

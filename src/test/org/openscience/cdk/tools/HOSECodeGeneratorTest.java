@@ -25,24 +25,24 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.InputStream;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * Tests the HOSECode generator.
@@ -123,7 +123,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 			"C-3;*C*C*C(//)"
 		};
 		
-		  IMolecule mol = new Molecule();
+		  IAtomContainer mol = new AtomContainer();
 		  IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"O");
 		  a1.setPoint2d(new Point2d(502.88457268119913, 730.4999999999999));  mol.addAtom(a1);
 		  IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"C");
@@ -348,7 +348,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 "C-3;*C*C*C(*C*C,*C,*CC,O/*CC,*CC,*&O,*&,*C*C,&/*&,=OC,*&,=&,C,*C&,*C)"
 		};
 		
-		  IMolecule mol = new Molecule();
+		  IAtomContainer mol = new AtomContainer();
 		  IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"O");
 		  a1.setPoint2d(new Point2d(502.88457268119913, 730.4999999999999));  mol.addAtom(a1);
 		  IAtom a2 = mol.getBuilder().newInstance(IAtom.class,"C");

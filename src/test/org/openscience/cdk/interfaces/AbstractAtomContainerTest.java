@@ -113,7 +113,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(atom, molecule.getAtom(0));
         Object clone = molecule.clone();
         Assert.assertNotSame(molecule, clone);
-        // after the cloning the IAtom on the original IMolecule should be unchanged
+        // after the cloning the IAtom on the original IAtomContainer should be unchanged
         Assert.assertEquals(atom, molecule.getAtom(0));
     }
 
@@ -130,7 +130,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(bond, molecule.getBond(0));
         Object clone = molecule.clone();
         Assert.assertNotSame(molecule, clone);
-        // after the cloning the IBond on the original IMolecule should be unchanged
+        // after the cloning the IBond on the original IAtomContainer should be unchanged
         Assert.assertEquals(bond, molecule.getBond(0));
     }
 
@@ -144,7 +144,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(lonePair, molecule.getLonePair(0));
         Object clone = molecule.clone();
         Assert.assertNotSame(molecule, clone);
-        // after the cloning the ILonePair on the original IMolecule should be unchanged
+        // after the cloning the ILonePair on the original IAtomContainer should be unchanged
         Assert.assertEquals(lonePair, molecule.getLonePair(0));
     }
 
@@ -158,7 +158,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(singleElectron, molecule.getSingleElectron(0));
         Object clone = molecule.clone();
         Assert.assertNotSame(molecule, clone);
-        // after the cloning the ISingleElectron on the original IMolecule should be unchanged
+        // after the cloning the ISingleElectron on the original IAtomContainer should be unchanged
         Assert.assertEquals(singleElectron, molecule.getSingleElectron(0));
     }
 
@@ -342,7 +342,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
 //    @Test public void testGetConnectedBonds_IAtom() {
 //        // acetone molecule
-//        IMolecule acetone = getNewBuilder().newInstance(IMolecule.class);
+//        IAtomContainer acetone = getNewBuilder().newInstance(IAtomContainer.class);
 //        
 //        IAtom c1 = getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom c2 = getNewBuilder().newInstance(IAtom.class,"C");
@@ -767,7 +767,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     
 //    @Test public void testGetAtoms() {
 //        // acetone molecule
-//        IMolecule acetone = getNewBuilder().newInstance(IMolecule.class);
+//        IAtomContainer acetone = getNewBuilder().newInstance(IAtomContainer.class);
 //        IAtom c1 = getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom c2 = getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom o = getNewBuilder().newInstance(IAtom.class,"O");
@@ -1189,7 +1189,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
 //    @Test public void testSetElectronContainers_arrayIElectronContainer() {
 //        // acetone molecule
-//        IMolecule acetone = getNewBuilder().newInstance(IMolecule.class);
+//        IAtomContainer acetone = getNewBuilder().newInstance(IAtomContainer.class);
 //        IAtom c1 = getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom c2 = getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom o = getNewBuilder().newInstance(IAtom.class,"O");
@@ -1216,7 +1216,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
 //    @Test public void testAddElectronContainers_IAtomContainer() {
 //        // acetone molecule
-//        IMolecule acetone = getNewBuilder().newInstance(IMolecule.class);
+//        IAtomContainer acetone = getNewBuilder().newInstance(IAtomContainer.class);
 //        IAtom c1 = getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom c2 = getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom o = getNewBuilder().newInstance(IAtom.class,"O");
@@ -1514,7 +1514,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     }
     
 //    @Test public void testGetConnectedAtoms_IAtom() {
-//        IMolecule acetone = acetone.getNewBuilder().newInstance(IMolecule.class);
+//        IAtomContainer acetone = acetone.getNewBuilder().newInstance(IAtomContainer.class);
 //        IAtom c1 = acetone.getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom c2 = acetone.getNewBuilder().newInstance(IAtom.class,"C");
 //        IAtom o = acetone.getNewBuilder().newInstance(IAtom.class,"O");

@@ -37,13 +37,11 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.CTXFormat;
@@ -181,7 +179,7 @@ public class ReaderFactoryTest extends CDKTestCase {
         );
         // now try reading something from it
         IChemObject[] objects = { 
-        		new ChemFile(), new ChemModel(), new Molecule(),
+        		new ChemFile(), new ChemModel(), new AtomContainer(),
         		new Reaction()
         };
         boolean read = false;
@@ -216,10 +214,10 @@ public class ReaderFactoryTest extends CDKTestCase {
                     expectedBondCount,
                     ChemModelManipulator.getBondCount((IChemModel)chemObject)
                 );
-            } else if (chemObject instanceof IMolecule) {
+            } else if (chemObject instanceof IAtomContainer) {
                 Assert.assertEquals(
                     expectedBondCount,
-                    ((IMolecule)chemObject).getBondCount()
+                    ((IAtomContainer)chemObject).getBondCount()
                 );
             } else if (chemObject instanceof IReaction) {
                 Assert.assertEquals(
@@ -242,10 +240,10 @@ public class ReaderFactoryTest extends CDKTestCase {
                     expectedAtomCount,
                     ChemModelManipulator.getAtomCount((IChemModel)chemObject)
                 );
-            } else if (chemObject instanceof IMolecule) {
+            } else if (chemObject instanceof IAtomContainer) {
                 Assert.assertEquals(
                     expectedAtomCount,
-                    ((IMolecule)chemObject).getAtomCount()
+                    ((IAtomContainer)chemObject).getAtomCount()
                 );
             } else if (chemObject instanceof IReaction) {
                 Assert.assertEquals(
@@ -274,7 +272,7 @@ public class ReaderFactoryTest extends CDKTestCase {
             reader.getClass().getName()
         );
         // now try reading something from it
-        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
         Assert.assertNotSame(0, molecule.getAtomCount());
         Assert.assertNotSame(0, molecule.getBondCount());

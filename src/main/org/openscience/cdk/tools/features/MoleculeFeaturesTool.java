@@ -29,11 +29,9 @@
 package org.openscience.cdk.tools.features;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.DataFeatures;
-
-import java.util.Iterator;
 
 /**
  * Utility that helps determine which data features are present.
@@ -45,17 +43,17 @@ import java.util.Iterator;
  */
 public class MoleculeFeaturesTool {
 
-    public static boolean hasPartialCharges(IMolecule molecule) {
+    public static boolean hasPartialCharges(IAtomContainer molecule) {
         for (IAtom atom : molecule.atoms()) if (atom.getCharge() != 0.0000) return true;
         return false;
     }
 
-    public static boolean hasFormalCharges(IMolecule molecule) {
+    public static boolean hasFormalCharges(IAtomContainer molecule) {
         for (IAtom atom : molecule.atoms()) if (atom.getFormalCharge() != 0) return true;
         return false;
     }
 
-    public static boolean hasElementSymbols(IMolecule molecule) {
+    public static boolean hasElementSymbols(IAtomContainer molecule) {
         for (IAtom atom : molecule.atoms()) {
             if (atom.getSymbol() != null &&
                 atom.getSymbol().length() > 0) return true;
@@ -66,7 +64,7 @@ public class MoleculeFeaturesTool {
     /**
      * Checks whether all bonds have exactly two atoms.
      */
-    public static boolean hasGraphRepresentation(IMolecule molecule) {        
+    public static boolean hasGraphRepresentation(IAtomContainer molecule) {        
         for (IBond bond : molecule.bonds()) if (bond.getAtomCount() != 2) return false;
         return true;
     }

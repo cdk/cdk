@@ -29,12 +29,12 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
@@ -43,12 +43,12 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  */
 public class LigancyFourChiralityTest extends CDKTestCase {
 
-    private static IMolecule molecule;
+    private static IAtomContainer molecule;
     private static ILigand[] ligands;
 
     @BeforeClass
     public static void setup() throws Exception {
-        molecule = new Molecule();
+        molecule = new AtomContainer();
         molecule.addAtom(new Atom("Cl"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("Br"));

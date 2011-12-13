@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -205,12 +205,12 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     @Test
     public void testTakeIntoAccountImplicitHydrogens() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule methane1 = builder.newInstance(IMolecule.class);
+        IAtomContainer methane1 = builder.newInstance(IAtomContainer.class);
         IAtom c1 = builder.newInstance(IAtom.class,"C");
         c1.setImplicitHydrogenCount(4);
         methane1.addAtom(c1);
 
-        IMolecule methane2 = builder.newInstance(IMolecule.class);
+        IAtomContainer methane2 = builder.newInstance(IAtomContainer.class);
         IAtom c2 = builder.newInstance(IAtom.class,"C");
         methane2.addAtom(c2);
         IAtom h1 = builder.newInstance(IAtom.class,"H"); methane2.addAtom(h1);
@@ -232,7 +232,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     @Test
     public void testTakeIntoAccountImplicitHydrogensInEthane() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule ethane1 = builder.newInstance(IMolecule.class);
+        IAtomContainer ethane1 = builder.newInstance(IAtomContainer.class);
         IAtom c1 = builder.newInstance(IAtom.class,"C");
         IAtom c2 = builder.newInstance(IAtom.class,"C");
         c1.setImplicitHydrogenCount(3);
@@ -241,7 +241,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         ethane1.addAtom(c2);
         ethane1.addBond(0,1,IBond.Order.SINGLE);
 
-        IMolecule ethane2 = builder.newInstance(IMolecule.class);
+        IAtomContainer ethane2 = builder.newInstance(IAtomContainer.class);
         IAtom c3 = builder.newInstance(IAtom.class,"C");
         IAtom c4 = builder.newInstance(IAtom.class,"C");
         ethane2.addAtom(c3);
@@ -350,7 +350,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 
         String errorMessage = "(" + descriptor.getClass().toString() +
             ") The descriptor does not give the same results depending on " +
-            "it being passed an IMolecule or an IAtomContainer.";
+            "it being passed an IAtomContainer or an IAtomContainer.";
         assertEqualOutput(v1, v2, errorMessage);
     }
 
@@ -374,14 +374,14 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     @Ignore
     @Test public void testTakeIntoAccountBondHybridization() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule ethane1 = builder.newInstance(IMolecule.class);
+        IAtomContainer ethane1 = builder.newInstance(IAtomContainer.class);
         IAtom c1 = builder.newInstance(IAtom.class,"C");
         IAtom c2 = builder.newInstance(IAtom.class,"C");
         ethane1.addAtom(c1);
         ethane1.addAtom(c2);
         ethane1.addBond(0, 1, IBond.Order.DOUBLE);
 
-        IMolecule ethane2 = builder.newInstance(IMolecule.class);
+        IAtomContainer ethane2 = builder.newInstance(IAtomContainer.class);
         IAtom c3 = builder.newInstance(IAtom.class,"C");
         c3.setHybridization(IAtomType.Hybridization.SP2);
         IAtom c4 = builder.newInstance(IAtom.class,"C");

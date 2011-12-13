@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-
-import javax.vecmath.Point3d;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -55,7 +56,7 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 		Object[] params = {Integer.valueOf(2)};
 		descriptor.setParameters(params);
 		
-		Molecule mol = new Molecule();
+		IAtomContainer mol = new AtomContainer();
 		Atom a0 = new Atom("C"); mol.addAtom(a0); a0.setPoint3d(new Point3d(1.2492, -0.2810, 0.0000));
 		Atom a1 = new Atom("C"); mol.addAtom(a1); a1.setPoint3d(new Point3d(0.0000, 0.6024, -0.0000));
 		Atom a2 = new Atom("C"); mol.addAtom(a2); a2.setPoint3d(new Point3d(-1.2492,-0.2810,0.0000));

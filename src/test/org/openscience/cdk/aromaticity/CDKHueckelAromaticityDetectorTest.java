@@ -22,20 +22,25 @@
  */
 package org.openscience.cdk.aromaticity;
 
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -47,11 +52,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author steinbeck
@@ -68,7 +68,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test
     public void testDetectAromaticity_IAtomContainer() throws Exception {
-        IMolecule mol = makeAromaticMolecule();
+        IAtomContainer mol = makeAromaticMolecule();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -113,7 +113,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     @Test public void testPyridine() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("N"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0,1,IBond.Order.SINGLE);
@@ -145,7 +145,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     @Test public void testCyclopentadienyl() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setFormalCharge(-1);
         for (int i=1; i<5; i++) {
@@ -416,7 +416,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/porphyrin.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -456,7 +456,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug698152.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -472,7 +472,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * @cdk.bug 716259
      */
     @Test public void testBug716259() throws Exception {
-        IMolecule molecule = null;
+        IAtomContainer molecule = null;
         //boolean isAromatic = false;
         boolean[] testResults = {
                 true,
@@ -499,7 +499,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug716259.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+        molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -531,7 +531,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug1328739.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -568,8 +568,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         }
     }
 
-    private IMolecule makeAromaticMolecule() {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+    private IAtomContainer makeAromaticMolecule() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(329.99999999999994, 971.0));
         mol.addAtom(a1);
@@ -631,7 +631,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void test3Amino2MethylPyridine() throws Exception {
 
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"N");
         a1.setPoint2d(new Point2d(3.7321, 1.345));
         mol.addAtom(a1);

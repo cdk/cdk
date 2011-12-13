@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAdductFormula;
@@ -44,7 +47,6 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBMonomer;
@@ -61,9 +63,6 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
 
 /**
  * Checks the functionality of {@link IChemObjectBuilder} implementations.
@@ -410,27 +409,6 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         );
         Assert.assertNotNull(mapping);
     }
-    
-    @Test public void testNewMolecule() {
-        IChemObjectBuilder builder = rootObject.getBuilder();
-        IMolecule lonePair = builder.newInstance(IMolecule.class);
-        Assert.assertNotNull(lonePair);
-    }   
-
-    @Test public void testNewMolecule_int_int_int_int() {
-        IChemObjectBuilder builder = rootObject.getBuilder();
-        IMolecule lonePair = builder.newInstance(IMolecule.class, 1,2,3,4);
-        Assert.assertNotNull(lonePair);
-    }   
-
-    @Test public void testNewMolecule_IAtomContainer() {
-        IChemObjectBuilder builder = rootObject.getBuilder();
-        IMolecule lonePair = builder.newInstance(
-            IMolecule.class,
-            builder.newInstance(IAtomContainer.class)
-        );
-        Assert.assertNotNull(lonePair);
-    }   
 
     @Test public void testNewMonomer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
@@ -670,7 +648,7 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
 
     @Test public void testNewTetrahedralChirality() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "Cl"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "Br"));

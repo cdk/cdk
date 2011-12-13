@@ -34,9 +34,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLV2000Reader;
 
 /**
  * Tests the HOSECode genertor.
@@ -180,11 +180,11 @@ double[] result = {
      14.4,
      13.3
 		};
-		Molecule molecule = null;
+        IAtomContainer molecule = null;
 		String filename = "data/mdl/BremserPredictionTest.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		molecule = reader.read(new Molecule());
+		molecule = reader.read(new AtomContainer());
 		double prediction;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -257,7 +257,7 @@ double[] result = {
 	}
 
 	
-	private void removeHydrogens(AtomContainer ac)
+	private void removeHydrogens(IAtomContainer ac)
 	{
 		org.openscience.cdk.interfaces.IAtom atom = null;
 		int f = ac.getAtomCount() - 1;

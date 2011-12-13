@@ -37,7 +37,6 @@ import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
@@ -78,23 +77,6 @@ public class IMCSBaseTest {
         MolHandler target = null;
         IMCSBase instance = new IMCSBaseImpl();
         instance.set(source, target);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of set method, of class IMCSBase.
-     * @throws Exception
-     */
-    @Test
-    public void testSet_IMolecule_IMolecule() throws Exception {
-        System.out.println("set");
-        IMolecule source = null;
-        IMolecule target = null;
-        IMCSBase instance = new IMCSBaseImpl();
-        MolHandler mol1 = new MolHandler(source, true, true);
-        MolHandler mol2 = new MolHandler(target, true, true);
-        instance.set(mol1, mol2);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

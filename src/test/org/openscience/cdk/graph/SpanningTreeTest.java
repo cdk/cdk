@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -69,7 +69,7 @@ public class SpanningTreeTest extends CDKTestCase {
     	if (ethane == null) {
     		// create ethane
     		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-    		IMolecule ethaneMolecule = builder.newInstance(IMolecule.class);
+    		IAtomContainer ethaneMolecule = builder.newInstance(IAtomContainer.class);
     		ethaneMolecule.addAtom(builder.newInstance(IAtom.class,"C"));
     		ethaneMolecule.addAtom(builder.newInstance(IAtom.class,"C"));
     		ethaneMolecule.addBond(0, 1, IBond.Order.SINGLE);

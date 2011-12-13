@@ -24,14 +24,15 @@
 package org.openscience.cdk.io;
 
 import groovy.lang.GroovyShell;
+
+import java.io.StringWriter;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
-
-import java.io.StringWriter;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * TestCase for the writer CDK source code files using one test file.
@@ -52,7 +53,7 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
     @Test public void testOutput() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
+        IAtomContainer molecule = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setMassNumber(14);
         molecule.addAtom(atom);

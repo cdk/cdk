@@ -27,22 +27,22 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Checks the functionality of {@link IMolecule} implementations.
+ * Checks the functionality of {@link IAtomContainer} implementations.
  *
  * @cdk.module test-interfaces
  */
 public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
 
 	@Test public void testClone() throws Exception {
-        IMolecule molecule = (IMolecule)newChemObject();
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
         Object clone = molecule.clone();
-        Assert.assertTrue(clone instanceof IMolecule);
+        Assert.assertTrue(clone instanceof IAtomContainer);
 	Assert.assertNotSame(molecule, clone);
     }    
 
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IMolecule m = (IMolecule)newChemObject();
+        IAtomContainer m = (IAtomContainer)newChemObject();
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -51,7 +51,7 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
     }
 
     @Test public void testGetLonePairCount_Molecule() {
-        IMolecule acetone = (IMolecule)newChemObject();
+        IAtomContainer acetone = (IAtomContainer)newChemObject();
         IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
         IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
         IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");

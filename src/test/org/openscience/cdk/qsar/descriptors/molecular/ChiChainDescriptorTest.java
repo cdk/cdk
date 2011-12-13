@@ -1,18 +1,17 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import javax.vecmath.Point2d;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -32,7 +31,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testDan64() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(0.7500000000000004, 2.799038105676658));
         mol.addAtom(a1);
@@ -67,7 +66,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test public void testDan80() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -109,7 +108,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
 
     @Test public void testDan81() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -150,7 +149,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testDan82() throws Exception {
 
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -191,7 +190,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testDan154() throws Exception {
 
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
         mol.addAtom(a1);
@@ -268,7 +267,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     }
 //    @Test public void testDan277() throws CDKException {
 //
-//        IMolecule mol = null;
+//        IAtomContainer mol = null;
 //
 //        ChiChainDescriptor desc = new ChiChainDescriptor();
 //        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();

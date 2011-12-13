@@ -63,7 +63,7 @@ public class SharingElectronMechanismTest extends ReactionMechanismTest {
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testInitiate_IMoleculeSet_ArrayList_ArrayList(){
+	@Test public void testInitiate_IAtomContainerSet_ArrayList_ArrayList(){
 		IReactionMechanism mechanism = new SharingElectronMechanism();
 		
 		Assert.assertNotNull(mechanism);

@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-
-import javax.vecmath.Point3d;
 
 /**
  * @cdk.module test-qsaratomic
@@ -57,7 +58,7 @@ public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest 
 		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 		
-		Molecule mol = new Molecule(); // molecule is CF 
+		IAtomContainer mol = new AtomContainer(); // molecule is CF 
 		
 		Atom c = new Atom("C"); 
 		mol.addAtom(c); 
