@@ -159,6 +159,20 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
                 params[0] instanceof IAtomContainer) {
                 return (T)new DebugCrystal((IAtomContainer)params[0]);
             }
+        } else if (IRing.class.isAssignableFrom(clazz)) {
+            if (params.length == 0) {
+                return (T)new DebugRing();
+            } else if (params.length == 1) {
+                if (params[0] instanceof IAtomContainer) {
+                    return (T)new DebugRing((IAtomContainer)params[0]);
+                } else if (params[0] instanceof Integer) {
+                    return (T)new DebugRing((Integer)params[0]);
+                } 
+            } else if (params.length == 2 &&
+                    params[0] instanceof Integer &&
+                    params[1] instanceof String) {
+                return (T)new DebugRing((Integer)params[0], (String)params[1]);
+            }
         } else if (IAtomContainer.class.isAssignableFrom(clazz)) {
             if (params.length == 0) {
                 return (T)new DebugAtomContainer();
@@ -173,20 +187,6 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
                 return (T)new DebugAtomContainer(
                     (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
                 );
-            }
-        } else if (IRing.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) {
-                return (T)new DebugRing();
-            } else if (params.length == 1) {
-                if (params[0] instanceof IAtomContainer) {
-                    return (T)new DebugRing((IAtomContainer)params[0]);
-                } else if (params[0] instanceof Integer) {
-                    return (T)new DebugRing((Integer)params[0]);
-                } 
-            } else if (params.length == 2 &&
-                    params[0] instanceof Integer &&
-                    params[1] instanceof String) {
-                return (T)new DebugRing((Integer)params[0], (String)params[1]);
             }
         }  else if (IAtomType.class.isAssignableFrom(clazz)) {
             if (params.length == 1) {
