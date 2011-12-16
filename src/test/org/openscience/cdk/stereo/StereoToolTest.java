@@ -59,7 +59,7 @@ public class StereoToolTest extends CDKTestCase {
         
         double distancePos = StereoTool.signedDistanceToPlane(
                 planeNormal, pointInPlane, pointToMeasurePos);
-        Assert.assertEquals(2.0, distancePos);
+        Assert.assertEquals(2.0, distancePos, 0.1);
     }
     @Test
     public void negativePointPlaneDistanceTest() {
@@ -75,7 +75,7 @@ public class StereoToolTest extends CDKTestCase {
         
         double distance = StereoTool.signedDistanceToPlane(
                 planeNormal, pointInPlane, pointToMeasureNeg);
-        Assert.assertEquals(-2.0, distance);
+        Assert.assertEquals(-2.0, distance, 0.1);
     }
     
     @Test
