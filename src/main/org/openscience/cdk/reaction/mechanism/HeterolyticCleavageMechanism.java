@@ -66,7 +66,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
      * @return            The Reaction mechanism
      * 
 	 */
-    @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
+    @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
 		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder(), CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
 		if (atomContainerSet.getAtomContainerCount() != 1) {

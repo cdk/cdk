@@ -226,7 +226,7 @@ public class StructureResonanceGenerator {
 	 * @param molecule The IMolecule to analyze
 	 * @return         The different resonance structures
 	 */
-    @TestMethod("testGetStructures_IMolecule")
+    @TestMethod("testGetStructures_IAtomContainer")
 	public IAtomContainerSet getStructures(IAtomContainer molecule) {
     	int countStructure = 0;
     	IAtomContainerSet setOfMol = molecule.getBuilder().newInstance(IAtomContainerSet.class);
@@ -267,7 +267,7 @@ public class StructureResonanceGenerator {
 	 * @param molecule The IMolecule to analyze
 	 * @return         The different containers
 	 */
-    @TestMethod("testGetContainers_IMolecule")
+    @TestMethod("testGetContainers_IAtomContainer")
 	public IAtomContainerSet getContainers(IAtomContainer molecule) {
     	IAtomContainerSet setOfCont = molecule.getBuilder().newInstance(IAtomContainerSet.class);
 		IAtomContainerSet setOfMol = getStructures(molecule);
@@ -368,7 +368,7 @@ public class StructureResonanceGenerator {
 	 * @param atom     The IAtom
 	 * @return         The container with the atom
 	 */
-    @TestMethod("testGetContainer_IMolecule_IAtom")
+    @TestMethod("testGetContainer_IAtomContainer_IAtom")
 	public IAtomContainer getContainer(IAtomContainer molecule, IAtom atom) {
     	IAtomContainerSet setOfCont = getContainers(molecule);
     	if(setOfCont == null)
@@ -390,7 +390,7 @@ public class StructureResonanceGenerator {
 	 * @param bond     The IBond
 	 * @return         The container with the bond
 	 */
-    @TestMethod("testGetContainer_IMolecule_IBond")
+    @TestMethod("testGetContainer_IAtomContainer_IBond")
 	public IAtomContainer getContainer(IAtomContainer molecule, IBond bond) {
     	IAtomContainerSet setOfCont = getContainers(molecule);
     	if(setOfCont == null)
