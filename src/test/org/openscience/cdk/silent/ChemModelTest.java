@@ -101,7 +101,8 @@ public class ChemModelTest extends AbstractChemModelTest {
         Assert.assertFalse(listener.getChanged());
     }
 
-    @Test public void testStateChanged_EventPropagation_MoleculeSet() {
+    @Override
+    @Test public void testStateChanged_EventPropagation_AtomContainerSet() {
         ChemObjectListener listener = new ChemObjectListener();
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
@@ -163,7 +164,8 @@ public class ChemModelTest extends AbstractChemModelTest {
         Assert.assertFalse(listener.getChanged());
     }
 
-    @Test public void testStateChanged_ButNotAfterRemoval_MoleculeSet() {
+    @Override
+    @Test public void testStateChanged_ButNotAfterRemoval_AtomContainerSet() {
         ChemObjectListener listener = new ChemObjectListener();
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
