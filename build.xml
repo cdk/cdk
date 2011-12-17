@@ -159,7 +159,7 @@
             <condition property="junit.present">
               <or>
                 <available file="${ant.home}/lib/junit.jar"/>
-                <available file="${devellib}/junit-4.5.jar"/>
+                <available file="${devellib}/junit-4.10.jar"/>
               </or>
             </condition>
 
