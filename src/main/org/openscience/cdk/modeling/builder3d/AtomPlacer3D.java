@@ -77,6 +77,7 @@ public class AtomPlacer3D {
 	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain
 	 *
 	 * @param  chain  chain to be searched
+	 * @param  molecule  the chain container (reference) molecule
 	 * @return        the atom number of the first heavy atom the number of heavy atoms in the chain
 	 */
 	public int[] findHeavyAtomsInChain(IAtomContainer molecule, IAtomContainer chain) {
@@ -113,6 +114,7 @@ public class AtomPlacer3D {
 	 *  Method assigns 3Dcoordinates to the heavy atoms in an aliphatic chain
 	 *
 	 * @param  chain          the atoms to be assigned, must be connected
+	 * 
 	 */
 	public void placeAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain) throws CDKException{
 		//logger.debug("******** Place aliphatic Chain *********");
