@@ -24,12 +24,11 @@ import java.io.PrintStream;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-core
  */
-public class SystemOutLoggingToolTest extends CDKTestCase {
+public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
 	@Test public void testLoggingTool_Class() throws Exception {
 	    ILoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -670,5 +669,10 @@ public class SystemOutLoggingToolTest extends CDKTestCase {
         ILoggingTool logger = SystemOutLoggingTool.create(this.getClass());
         Assert.assertNotNull(logger);
     }
+
+	@Override
+	public ILoggingTool getLoggingTool() {
+		return new SystemOutLoggingTool(this.getClass());
+	}
 }
 
