@@ -3,3 +3,4 @@ cdk-interfaces.jar
 cdk-core.jar
 cdk-log4j.jar
 cdk-test.jar
+cdk-test-core.jar
