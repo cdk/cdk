@@ -34,6 +34,7 @@ import org.openscience.cdk.protein.data.PDBMonomer;
 /**
  * @cdk.module  nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.PDBMonomer} instead.
  */
 public class NNPDBMonomer extends PDBMonomer {
 

@@ -34,6 +34,7 @@ import org.openscience.cdk.protein.data.PDBPolymer;
 /**
  * @cdk.module  nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.PDBPolymer} instead.
  */
 public class NNPDBPolymer extends PDBPolymer {
 

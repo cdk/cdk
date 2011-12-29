@@ -25,12 +25,13 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.formula.AdductFormula;
-import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * @cdk.module  nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.AdductFormula} instead.
  */
 public class NNAdductFormula extends AdductFormula {
 	

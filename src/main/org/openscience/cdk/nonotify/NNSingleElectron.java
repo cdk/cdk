@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * @cdk.module nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.SingleElectron} instead.
  */
 public class NNSingleElectron extends SingleElectron {
 

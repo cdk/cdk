@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /** 
  * @cdk.module nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.Ring} instead.
  */
 public class NNRing extends Ring {
 

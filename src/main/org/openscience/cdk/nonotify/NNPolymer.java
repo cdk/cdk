@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * @cdk.module nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.Polymer} instead.
  */
 public class NNPolymer extends Polymer { 
 

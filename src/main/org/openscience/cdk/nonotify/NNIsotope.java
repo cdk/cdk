@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * @cdk.module nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.Isotope} instead.
  */
 public class NNIsotope extends Isotope {
 

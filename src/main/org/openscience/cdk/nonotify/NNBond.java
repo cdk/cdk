@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * @cdk.module nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.Bond} instead.
  */
 public class NNBond extends Bond {
 

@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.AtomParity} instead.
  */
 public class NNAtomParity extends AtomParity  {
     

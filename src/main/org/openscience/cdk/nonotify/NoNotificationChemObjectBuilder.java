@@ -64,6 +64,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * A helper class to instantiate a {@link IChemObject} for the original CDK
@@ -72,6 +73,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * @author        egonw
  * @cdk.module    nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link SilentChemObjectBuilder} instead.
  */
 public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 

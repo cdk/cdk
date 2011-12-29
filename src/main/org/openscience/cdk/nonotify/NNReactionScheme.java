@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /** 
  * @cdk.module nonotify
+ * @deprecated    Use the {@link org.openscience.cdk.silent.ReactionScheme} instead.
  */
 public class NNReactionScheme extends ReactionScheme {
 

@@ -34,6 +34,7 @@ import org.openscience.cdk.protein.data.PDBStructure;
 /**
  * @cdk.module  nonotify
  * @cdk.githash
+ * @deprecated    Use the {@link org.openscience.cdk.silent.PDBStructure} instead.
  */
 public class NNPDBStructure extends PDBStructure {
 

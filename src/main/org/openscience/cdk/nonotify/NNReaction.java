@@ -35,7 +35,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * @cdk.module nonotify
  * @cdk.githash
- */
+  * @deprecated    Use the {@link org.openscience.cdk.silent.Reaction} instead.
+*/
 public class NNReaction extends Reaction {
 
 	private static final long serialVersionUID = 2951866794445339044L;
