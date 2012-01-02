@@ -189,7 +189,8 @@ public class AtomPlacer3D {
 	 * The first Atom end up in the origin, the second on on the x axis, and the third
 	 * one in the XY plane. The rest is added by applying the Zmatrix distances, angles
 	 * and dihedrals. Assign coordinates directly to the atoms.
-	 *
+	 * 
+	 * @param  molecule  the molecule to be placed in 3D
 	 * @param  flag_branched  marks branched chain
 	 * author: egonw,cho
 	 */
