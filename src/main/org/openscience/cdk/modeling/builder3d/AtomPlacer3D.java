@@ -112,6 +112,7 @@ public class AtomPlacer3D {
 	/**
 	 *  Method assigns 3Dcoordinates to the heavy atoms in an aliphatic chain
 	 *
+	 * @param molecule        the reference molecule for the chain
 	 * @param  chain          the atoms to be assigned, must be connected
 	 */
 	public void placeAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain) throws CDKException{
