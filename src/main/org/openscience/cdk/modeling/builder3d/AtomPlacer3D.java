@@ -260,7 +260,7 @@ public class AtomPlacer3D {
 
 
 	/**
-	 *  Gets the hybridisationState of an atom
+	 *  Gets the hybridisationState of an atom.
 	 *
 	 *@param  atom1  atom
 	 *@return        The hybridisationState value (sp=1;sp2=2;sp3=3)
