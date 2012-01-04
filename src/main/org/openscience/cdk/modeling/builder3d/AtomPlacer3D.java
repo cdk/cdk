@@ -74,7 +74,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain
+	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain.
 	 *
 	 * @param  molecule the reference molecule for searching the chain 
 	 * @param  chain  chain to be searched
