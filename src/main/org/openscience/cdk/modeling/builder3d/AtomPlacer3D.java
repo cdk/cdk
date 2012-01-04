@@ -65,7 +65,7 @@ public class AtomPlacer3D {
 	AtomPlacer3D(){}
 	
 	/**
-	 *  Initialize the atomPlacer class
+	 *  Initialize the atomPlacer class.
 	 * 
 	 * @param  parameterSet  Force Field parameter as Hashtable
 	 */
