@@ -105,13 +105,15 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
                          IAtom atom, 
                          RendererModel model) {
         Stack<Position> unused = getUnusedPositions(ac, atom);
-        
-        boolean drawNumbers = 
-            model.getParameter(WillDrawAtomNumbers.class).getValue();
-        if (!invisibleCarbon(atom, ac, model) && drawNumbers) {
-            Position position = getNextPosition(unused);
-            String number = String.valueOf(ac.getAtomNumber(atom) + 1);
-            textGroup.addChild(number, position);
+
+        if (model.hasParameter(WillDrawAtomNumbers.class)) {
+        	boolean drawNumbers = 
+        			model.getParameter(WillDrawAtomNumbers.class).getValue();
+        	if (!invisibleCarbon(atom, ac, model) && drawNumbers) {
+        		Position position = getNextPosition(unused);
+        		String number = String.valueOf(ac.getAtomNumber(atom) + 1);
+        		textGroup.addChild(number, position);
+        	}
         }
         
         if (showImplicitHydrogens.getValue()) {
