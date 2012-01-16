@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class JaguarFormatTest extends ChemFormatTest {
+public class JaguarFormatTest extends ChemFormatMatcherTest {
 
     public JaguarFormatTest() {
-        super.setChemFormat((IChemFormat)JaguarFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)JaguarFormat.getInstance());
     }
     
 }
