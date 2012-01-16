@@ -39,7 +39,7 @@ public class RingSizeComparatorTest extends CDKTestCase {
 
     @Test
     public void testRingSizeComparator_int() {
-		RingSizeComparator comp = new RingSizeComparator(RingSet.LARGE_FIRST);
+		RingSizeComparator comp = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
 		Assert.assertNotNull(comp);
 	}
 

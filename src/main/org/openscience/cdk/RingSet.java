@@ -40,11 +40,6 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 
 	private static final long serialVersionUID = 7168431521057961434L;
 	
-	/** Flag to denote that the set is order with the largest ring first? */
-	public final static int LARGE_FIRST = 1;
-    /** Flag to denote that the set is order with the smallest ring first? */
-	public final static int SMALL_FIRST = 2;
-	
 	/**
 	 * The constructor.
 	 *
