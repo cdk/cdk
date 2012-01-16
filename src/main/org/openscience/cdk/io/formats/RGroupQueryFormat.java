@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
@@ -33,6 +34,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.RGroupQueryFormatTest")
 public class RGroupQueryFormat implements IChemFormatMatcher {
 
 
