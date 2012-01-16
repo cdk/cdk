@@ -68,6 +68,7 @@ public class MOPAC2002Format implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("MOPAC2002") >= 0) {
             return true;

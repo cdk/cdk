@@ -70,6 +70,7 @@ public class Gaussian98Format implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
 	public boolean matches(int lineNumber, String line) {
 		if (line.indexOf("Gaussian(R) 98") >= 0 ||
             line.indexOf("Gaussian 98") >= 0) {

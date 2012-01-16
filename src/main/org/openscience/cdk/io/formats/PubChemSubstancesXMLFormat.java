@@ -84,6 +84,7 @@ public class PubChemSubstancesXMLFormat implements IChemFormatMatcher {
 		return DataFeatures.NONE;
 	}
 
+    @TestMethod("testMatches")
 	public boolean matches(int lineNumber, String line) {
 		if (line.contains("<PC-Substances")) return true;
 		return false;

@@ -70,6 +70,7 @@ public class QChemFormat implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Welcome to Q-Chem") != -1) {
             return true;

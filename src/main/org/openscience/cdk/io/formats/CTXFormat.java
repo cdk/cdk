@@ -72,6 +72,7 @@ public class CTXFormat implements IChemFormatMatcher {
       return null;
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 1 && line.startsWith(" /IDENT")) {
             return true;

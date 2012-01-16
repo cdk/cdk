@@ -71,6 +71,7 @@ public class NWChemFormat implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Northwest Computational Chemistry Package") >= 0) {
             return true;

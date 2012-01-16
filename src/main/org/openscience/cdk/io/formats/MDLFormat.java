@@ -74,6 +74,7 @@ public class MDLFormat implements IChemFormatMatcher {
       return null;
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 4 && line.length()>7 && 
         		   (line.indexOf("2000") == -1) && // MDL Mol V2000 format 

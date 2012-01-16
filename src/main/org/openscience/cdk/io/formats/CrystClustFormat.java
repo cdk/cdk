@@ -72,6 +72,7 @@ public class CrystClustFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.CrystClustWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 1 && line.startsWith("frame: ")) {
             return true;

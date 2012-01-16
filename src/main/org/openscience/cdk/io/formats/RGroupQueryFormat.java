@@ -80,6 +80,7 @@ public class RGroupQueryFormat implements IChemFormatMatcher {
         return "org.openscience.cdk.io.RGroupQueryWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("$RGP") >= 0)
             return true;

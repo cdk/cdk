@@ -72,6 +72,7 @@ public class GamessFormat implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("GAMESS execution script") >= 0 ||
             line.indexOf("GAMESS VERSION") >= 0) {

@@ -69,6 +69,7 @@ public class MOPAC7Format implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("MOPAC:  VERSION  7.00") >= 0) {
             return true;
