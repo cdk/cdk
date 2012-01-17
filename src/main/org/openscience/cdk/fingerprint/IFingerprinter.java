@@ -25,11 +25,10 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.Map;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-
-import java.util.BitSet;
-import java.util.Map;
 
 /**
  * Interface for fingerprint calculators.
