@@ -165,8 +165,8 @@ public class TanimotoTest extends CDKTestCase
 
     	
     @Test public void testICountFingerprintComparison() throws Exception {
-        Molecule mol1 = MoleculeFactory.makeIndole();
-        Molecule mol2 = MoleculeFactory.makeIndole();
+        IAtomContainer mol1 = MoleculeFactory.makeIndole();
+        IAtomContainer mol2 = MoleculeFactory.makeIndole();
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
         ICountFingerprint fp1 = fingerprinter.getCountFingerprint(mol1);
         ICountFingerprint fp2 = fingerprinter.getCountFingerprint(mol2);
@@ -176,8 +176,8 @@ public class TanimotoTest extends CDKTestCase
     }
     
     @Test public void compareCountFingerprintAndRawFingerprintTanimoto() throws CDKException {
-    		Molecule mol1 = MoleculeFactory.make123Triazole();
-    		Molecule mol2 = MoleculeFactory.makeImidazole();
+    		IAtomContainer mol1 = MoleculeFactory.make123Triazole();
+    		IAtomContainer mol2 = MoleculeFactory.makeImidazole();
     		SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
     		ICountFingerprint countFp1 = fingerprinter.getCountFingerprint(mol1);
     		ICountFingerprint countFp2 = fingerprinter.getCountFingerprint(mol2);
@@ -203,8 +203,8 @@ public class TanimotoTest extends CDKTestCase
 		Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001 );
 		Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001 );
 		
-		Molecule mol1 = MoleculeFactory.makeIndole();
-        Molecule mol2 = MoleculeFactory.makeIndole();
+		IAtomContainer mol1 = MoleculeFactory.makeIndole();
+        IAtomContainer mol2 = MoleculeFactory.makeIndole();
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
         fp1 = fingerprinter.getCountFingerprint(mol1);
         fp2 = fingerprinter.getCountFingerprint(mol2);
@@ -215,8 +215,8 @@ public class TanimotoTest extends CDKTestCase
     @Test
     public void testComparingBitFingerprintAndCountBehavingAsBit() 
                 throws Exception {
-    		Molecule mol1 = MoleculeFactory.make123Triazole();
-		Molecule mol2 = MoleculeFactory.makeImidazole();
+    	IAtomContainer mol1 = MoleculeFactory.make123Triazole();
+		IAtomContainer mol2 = MoleculeFactory.makeImidazole();
 		
 		SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
 		ICountFingerprint countFp1 = fingerprinter.getCountFingerprint(mol1);
