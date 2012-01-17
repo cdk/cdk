@@ -70,4 +70,21 @@ public interface ICountFingerprint extends Serializable {
 	 * @param behaveAsBitFingerprint
 	 */
 	public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint);
+
+	
+    /**
+     * Whether the fingerprint contains the given hash.
+     * 
+     * @param hash
+     * @return true if the fingerprint contains the given hash, otherwise false.
+     */
+    public boolean hasHash( int hash );
+
+    /**
+     * Get the number of times a certain hash exists in the fingerprint.
+     * 
+     * @param hash
+     * @return the number associated with the given hash
+     */
+    public int getCountForHash( int hash );
 }

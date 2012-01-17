@@ -26,10 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -144,4 +142,19 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 	public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {
 		this.behaveAsBitFingerprint = behaveAsBitFingerprint;
 	}
+
+    @Override
+    public boolean hasHash( int hash ) {
+        return Arrays.binarySearch( hitHashes, hash ) >= 0;
+    }
+
+    @Override
+    public int getCountForHash( int hash ) {
+
+        int index = Arrays.binarySearch( hitHashes, hash );
+        if ( index >= 0 ) {
+            return numOfHits[index];
+        }
+        return 0;
+    }
 }
