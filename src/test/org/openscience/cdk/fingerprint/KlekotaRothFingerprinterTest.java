@@ -50,8 +50,8 @@ public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
 		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IFingerprinter printer = getFingerprinter();
 
-		BitSet bs1 = printer.getFingerprint(parser.parseSmiles("C=C-C#N"));
-		BitSet bs2 = printer.getFingerprint(parser.parseSmiles("C=CCC(O)CC#N"));
+		BitSet bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N")).asBitSet();
+		BitSet bs2 = printer.getBitFingerprint(parser.parseSmiles("C=CCC(O)CC#N")).asBitSet();
 
         Assert.assertEquals(4860,printer.getSize());
         
