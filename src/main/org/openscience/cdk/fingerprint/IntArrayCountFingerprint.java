@@ -42,7 +42,11 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.fingerprint.IntArrayCountFingerprintTest")
 public class IntArrayCountFingerprint implements ICountFingerprint {
 
-	int[] hitHashes;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 8656072054328822795L;
+    int[] hitHashes;
 	int[] numOfHits;
 	private boolean behaveAsBitFingerprint;
 	

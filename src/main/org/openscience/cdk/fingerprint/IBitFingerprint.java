@@ -22,6 +22,7 @@
 */
 package org.openscience.cdk.fingerprint;
 
+import java.io.Serializable;
 import java.util.BitSet;
 
 /**
@@ -30,7 +31,7 @@ import java.util.BitSet;
  * @author jonalv
  * @cdk.module     core
  */
-public interface IBitFingerprint {
+public interface IBitFingerprint extends Serializable {
 
 	/**
 	 * @return the number of bits set to true in the fingerprint.

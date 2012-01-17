@@ -37,7 +37,11 @@ import java.util.Set;
  */
 public class IntArrayFingerprint implements IBitFingerprint {
 
-	private int[] trueBits;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 5175105019921245323L;
+    private int[] trueBits;
 	
 	public IntArrayFingerprint(Map<String, Integer> rawFingerPrint) {
 		trueBits = new int[rawFingerPrint.size()];

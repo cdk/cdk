@@ -22,6 +22,8 @@
 */
 package org.openscience.cdk.fingerprint;
 
+import java.io.Serializable;
+
 /**
  * Interface for count fingerprint representations.
  * 
@@ -29,7 +31,7 @@ package org.openscience.cdk.fingerprint;
  * @cdk.module     core
  *
  */
-public interface ICountFingerprint {
+public interface ICountFingerprint extends Serializable {
 
 	/**
 	 * @return the size of the fingerprint.

@@ -33,7 +33,11 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.fingerprint.BitSetFingerprintTest")
 public class BitSetFingerprint implements IBitFingerprint {
 
-	private BitSet bitset;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 9034774011095165227L;
+    private BitSet bitset;
 	
 	public BitSetFingerprint(BitSet bitset) {
 		this.bitset = bitset;
