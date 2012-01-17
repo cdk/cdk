@@ -244,6 +244,30 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
     }
 
     @Test
+    public void testSetOrder_electronCounts() {
+    	IBond b = (IBond)newChemObject();
+        IAtom c = b.getBuilder().newInstance(IAtom.class,"C");
+        IAtom o = b.getBuilder().newInstance(IAtom.class,"C");
+
+        b.setAtom(c, 0); b.setAtom(o, 1); b.setOrder(Order.SINGLE);
+        Assert.assertNotNull(b.getElectronCount());
+        Assert.assertEquals(2, b.getElectronCount().intValue());
+
+        b.setAtom(c, 0); b.setAtom(o, 1); b.setOrder(Order.DOUBLE);
+        Assert.assertNotNull(b.getElectronCount());
+        Assert.assertEquals(4, b.getElectronCount().intValue());
+
+        b.setAtom(c, 0); b.setAtom(o, 1); b.setOrder(Order.TRIPLE);
+        Assert.assertNotNull(b.getElectronCount());
+        Assert.assertEquals(6, b.getElectronCount().intValue());
+
+        // OK, a bit hypothetical
+        b.setAtom(c, 0); b.setAtom(o, 1); b.setOrder(Order.QUADRUPLE);
+        Assert.assertNotNull(b.getElectronCount());
+        Assert.assertEquals(8, b.getElectronCount().intValue());
+    }
+
+    @Test
     public void testSetStereo_IBond_Stereo() {
     	IBond b = (IBond)newChemObject();
         IAtom c = b.getBuilder().newInstance(IAtom.class,"C");
@@ -470,4 +494,5 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         Assert.assertTrue(bond1.isConnectedTo(bond3));
         Assert.assertFalse(bond4.isConnectedTo(bond1));
     }
+
 }
