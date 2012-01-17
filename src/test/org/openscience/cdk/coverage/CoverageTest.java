@@ -140,7 +140,8 @@ abstract public class CoverageTest {
                     }
                     // replace '$' with '_'
                     testMethod = replaceFunnyCharacters(testMethod);
-                    if (!testMethod.equals("testClass$_String")) {
+                    if (!testMethod.equals("testClass$_String") &&
+                    	!testMethod.startsWith("test_SWITCH_TABLE")) {
                     	if (!testMethodNames.contains(testMethod)) {
                     		System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
                     		missingTestsCount++;
