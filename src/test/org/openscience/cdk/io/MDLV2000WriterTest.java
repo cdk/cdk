@@ -23,12 +23,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.StringWriter;
-
-import java.util.Properties;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -56,6 +50,12 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.StringWriter;
+import java.io.InputStream;
+import java.util.Properties;
 
 
 /**
@@ -358,5 +358,21 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.write(benzene);
         Assert.assertTrue(writer.toString().indexOf("2  1  4  0  0  0  0") != -1);
     }
-    
+
+    @Test
+    public void testWritePseudoAtoms() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatoms.sdf");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+
+        StringWriter writer = new StringWriter();
+        MDLV2000Writer mwriter = new MDLV2000Writer(writer);
+        mwriter.write(molecule);
+
+        String output = writer.toString();
+        Assert.assertTrue(output.indexOf("Gln") != -1);
+        Assert.assertTrue(output.indexOf("Leu") != -1);
+    }
+
 }
