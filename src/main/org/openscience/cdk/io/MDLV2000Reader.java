@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -164,6 +165,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
@@ -187,6 +189,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             return (T)readChemModel((IChemModel)object);
 		} else if (object instanceof IMolecule) {
 			return (T)readMolecule((IMolecule)object);
+		} else if (object instanceof IAtomContainer) {
+			return (T)readMolecule(object.getBuilder().newInstance(IMolecule.class, object));
 		} else {
 			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}

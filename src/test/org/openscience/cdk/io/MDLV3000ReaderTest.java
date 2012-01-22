@@ -30,15 +30,16 @@ import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 
 /**
  * TestCase for the reading MDL V3000 mol files using one test file.

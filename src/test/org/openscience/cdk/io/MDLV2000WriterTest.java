@@ -24,10 +24,16 @@
 package org.openscience.cdk.io;
 
 
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Properties;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -39,6 +45,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -50,12 +57,6 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.StringWriter;
-import java.io.InputStream;
-import java.util.Properties;
 
 
 /**
