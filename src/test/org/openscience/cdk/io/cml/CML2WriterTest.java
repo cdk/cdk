@@ -474,7 +474,7 @@ public class CML2WriterTest extends CDKTestCase {
 //    	chain.setID("rsl1");
 //        
 //        
-//        IReaction reaction = NewDefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+//        IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
 //        reaction.setID("r1");
 //        IAtomContainer moleculeA = reaction.getNewBuilder().newInstance(IAtomContainer.class);
 //        moleculeA.setID("A");
@@ -517,7 +517,7 @@ public class CML2WriterTest extends CDKTestCase {
 //        scheme1.add(scheme2);
 //        
 //        
-//        IReaction reaction1 = NewDefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+//        IReaction reaction1 = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
 //        reaction1.setID("r1.1");
 //        IAtomContainer moleculeA = reaction1.getNewBuilder().newInstance(IAtomContainer.class);
 //        moleculeA.setID("A");

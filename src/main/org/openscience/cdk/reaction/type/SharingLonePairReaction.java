@@ -56,7 +56,7 @@ import java.util.Iterator;
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
  * 
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new SharingLonePairReaction();
  *  Object[] params = {Boolean.FALSE};

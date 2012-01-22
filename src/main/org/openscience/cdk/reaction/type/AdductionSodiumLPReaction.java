@@ -58,7 +58,7 @@ import java.util.Iterator;
  * <p>Below you have an example how to initiate the mechanism.</p>
  * <p>It is processed by the AdductionLPMechanism class</p>
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new AdductionSodiumLPReaction();
  *  Object[] params = {Boolean.FALSE};

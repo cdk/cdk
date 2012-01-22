@@ -57,7 +57,7 @@ import java.util.Iterator;
  *  typically from rings without any access or deficiency of charge and have a 
  *  even number of atoms. </p>
  *  <p>The reaction don't care if the product are the same in symmetry.</p>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new PiBondingMovementReaction();
  *  Object[] params = {Boolean.FALSE};

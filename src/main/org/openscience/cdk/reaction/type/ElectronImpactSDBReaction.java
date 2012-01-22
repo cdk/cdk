@@ -53,7 +53,7 @@ import java.util.Iterator;
  * This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
  * 
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new ElectronImpactSDBReaction();
  *  Object[] params = {Boolean.FALSE};

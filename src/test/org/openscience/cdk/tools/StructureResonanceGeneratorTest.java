@@ -200,7 +200,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //	 * @return    The test suite
 //	 */
 //	@Test public void testGetAllStructures_IAtomContainer() throws Exception {
-//		IAtomContainer molecule = (new SmilesParser(NewDefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
+//		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
 //        addExplicitHydrogens(molecule);
 //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -229,7 +229,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
 //		
 //		/*1*/
-//        IAtomContainer molecule1 = (new SmilesParser(NewDefaultChemObjectBuilder.getInstance())).parseSmiles("C[C+](O)C=O");
+//        IAtomContainer molecule1 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C[C+](O)C=O");
 //        for(int i = 0; i < 4; i++)
 //			molecule1.addAtom(new Atom("H"));
 //		molecule1.addBond(0, 5, IBond.Order.SINGLE);
@@ -280,7 +280,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //	 * @return    The test suite
 //	 */
 //	@Test public void testGetStructures_IAtomContainer() throws Exception {
-//		IAtomContainer molecule = (new SmilesParser(NewDefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
+//		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
 //        addExplicitHydrogens(molecule);
 //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -298,7 +298,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //
 //		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 //		
-//		IAtomContainer molecule1 = (new SmilesParser(NewDefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
+//		IAtomContainer molecule1 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
 //		addExplicitHydrogens(molecule1);
 //		lpcheck.saturate(molecule1);
 //		IAtom atom1 =  molecule1.getAtom(4);
@@ -318,7 +318,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //	 * @return    The test suite
 //	 */
 //	@Test public void testGetStructures2() throws Exception {
-//		IAtomContainer molecule = (new SmilesParser(NewDefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
+//		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
 //        addExplicitHydrogens(molecule);
 //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -336,7 +336,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //
 //		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 //		
-//		IAtomContainer molecule1 = (new SmilesParser(NewDefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
+//		IAtomContainer molecule1 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
 //		addExplicitHydrogens(molecule1);
 //		lpcheck.saturate(molecule1);
 //

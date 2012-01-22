@@ -59,7 +59,7 @@ import java.util.List;
  * the negative charge of the atom A, the double bond in position 2 is 
  * displaced.</p>
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RearrangementLonePairReaction();
  *  HashMap<String,Object> params = new HashMap<String,Object>();

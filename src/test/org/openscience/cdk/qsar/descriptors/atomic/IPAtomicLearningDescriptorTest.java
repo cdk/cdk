@@ -417,7 +417,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //        
-//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		IAtomContainer mol = sp.parseSmiles("CCCCCC");
 //
 //		addExplicitHydrogens(mol);
@@ -516,7 +516,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 ////    @Test
 //    public void testIDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception{
 ////        
-////		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+////		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 ////		IAtomContainer mol = sp.parseSmiles("OC(C#CC)(C)C");
 ////
 ////		addExplicitHydrogens(mol);

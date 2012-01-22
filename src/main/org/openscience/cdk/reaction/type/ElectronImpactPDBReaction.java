@@ -53,7 +53,7 @@ import java.util.Iterator;
  * <p>It is processed by the RemovingSEofPBMechanism class</p>
  * 
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new ElectronImpactPDBReaction();
  *  Object[] params = {Boolean.FALSE};

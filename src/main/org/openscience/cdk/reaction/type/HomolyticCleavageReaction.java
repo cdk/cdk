@@ -55,7 +55,7 @@ import java.util.Iterator;
  * <pre>A-B => [A*] + [B*]</pre>
  * <p>It is processed by the HomolyticCleavageMechanism class</p>
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new HomolyticCleavageReaction();
  *  Object[] params = {Boolean.FALSE};
