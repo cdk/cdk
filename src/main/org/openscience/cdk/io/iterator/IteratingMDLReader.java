@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <pre>
  * File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
  * IteratingMDLReader reader = new IteratingMDLReader(
- *   new FileInputStream(sdfFile), NewDefaultChemObjectBuilder.getInstance()
+ *   new FileInputStream(sdfFile), DefaultChemObjectBuilder.getInstance()
  * );
  * while (reader.hasNext()) {
  *   IMolecule molecule = (IMolecule)reader.next();

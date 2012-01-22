@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>It is processed by the RemovingSEofPBMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new ElectronImpactPDBReaction();
  *  Object[] params = {Boolean.FALSE};

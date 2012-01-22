@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <pre>[C+]-C => C=C + [H+] </pre>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new HyperconjugationReaction();
  *  Object[] params = {Boolean.FALSE};

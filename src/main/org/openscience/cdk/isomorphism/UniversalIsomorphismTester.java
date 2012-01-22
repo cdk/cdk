@@ -70,7 +70,7 @@ import java.util.Map;
  *  which allows one to do SMARTS or MQL like queries.
  *  The first {@link IAtomContainer} must never be an {@link IQueryAtomContainer}.
  *  An example:<pre>
- *  SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+ *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  *  IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
  *  IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
  *  IQueryAtomContainer query = IQueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);

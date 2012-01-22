@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new ElectronImpactSDBReaction();
  *  Object[] params = {Boolean.FALSE};

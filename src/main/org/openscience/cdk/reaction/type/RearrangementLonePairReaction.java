@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>It is processed by the RearrangementChargeMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RearrangementLonePairReaction();
  *  Object[] params = {Boolean.FALSE};

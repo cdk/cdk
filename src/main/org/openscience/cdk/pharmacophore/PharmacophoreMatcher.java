@@ -98,7 +98,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p/>
  * String filename = "/Users/rguha/pcore1.sdf";
  * IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
- *      new FileReader(new File(filename)), NewDefaultChemObjectBuilder.getInstance());
+ *      new FileReader(new File(filename)), DefaultChemObjectBuilder.getInstance());
  * <p/>
  * ConformerContainer conformers;
  * if (reader.hasNext()) conformers = (ConformerContainer) reader.next();

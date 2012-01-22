@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>Below you have an example how to initiate the mechanism.</p>
  * <p>It is processed by the HeterolyticCleavageMechanism class</p>
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new HeterolyticCleavagePBReaction();
  *  Object[] params = {Boolean.FALSE};

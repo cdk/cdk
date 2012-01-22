@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>Below you have an example how to initiate the mechanism.</p>
  * <p>It is processed by the AdductionPBMechanism class</p>
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new AdductionProtonLPReaction();
  *  Object[] params = {Boolean.FALSE};

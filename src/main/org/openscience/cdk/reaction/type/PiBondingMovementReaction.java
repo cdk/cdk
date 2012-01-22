@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  typically from rings without any access or deficiency of charge and have a 
  *  even number of atoms. </p>
  *  <p>The reaction don't care if the product are the same in symmetry.</p>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new PiBondingMovementReaction();
  *  Object[] params = {Boolean.FALSE};

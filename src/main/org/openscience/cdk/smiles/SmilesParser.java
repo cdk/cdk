@@ -67,7 +67,7 @@ import java.util.StringTokenizer;
  * at a time are supported. An example:
  * <pre>
  * try {
- *   SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+ *   SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  *   IMolecule m = sp.parseSmiles("c1ccccc1");
  * } catch (InvalidSmilesException ise) {
  * }

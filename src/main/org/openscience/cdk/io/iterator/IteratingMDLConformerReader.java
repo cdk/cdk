@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * <pre>
  * String filename = "/Users/rguha/conf2.sdf";
  * IteratingMDLConformerReader2 reader = new IteratingMDLConformerReader2(
- *         new FileReader(new File(filename)), NewDefaultChemObjectBuilder.getInstance());
+ *         new FileReader(new File(filename)), DefaultChemObjectBuilder.getInstance());
  * while (reader.hasNext()) {
  *      ConformerContainer2 cc = (ConformerContainer2) reader.next();
  * }

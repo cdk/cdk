@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * the negative charge of the atom A, the double bond in position 2 is 
  * displaced.</p>
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IMoleculeSet.class);
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RearrangementAnion1Reaction();
  *  HashMap<String,Object> params = new HashMap<String,Object>();

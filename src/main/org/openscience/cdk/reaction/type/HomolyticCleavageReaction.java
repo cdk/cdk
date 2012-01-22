@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <pre>A-B => [A*] + [B*]</pre>
  * <p>It is processed by the HomolyticCleavageMechanism class</p>
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new HomolyticCleavageReaction();
  *  Object[] params = {Boolean.FALSE};

@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  * 
  * <pre>
- *  IMoleculeSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newMoleculeSet();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RadicalSiteRrBetaReaction();
  *  Object[] params = {Boolean.FALSE};
