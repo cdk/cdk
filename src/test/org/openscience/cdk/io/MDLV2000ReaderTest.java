@@ -57,6 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 
+
 /**
  * TestCase for the reading MDL mol files using one test file.
  * A test case for SDF files is available as separate Class.
@@ -942,4 +943,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
         Assert.assertEquals(2, r1Count);
     }
+
+    @Test
+    public void testPseudoAtomLabels() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatoms.sdf");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        Assert.assertTrue(molecule.getAtom(4) instanceof IPseudoAtom);
+        Assert.assertEquals("Gln", molecule.getAtom(4).getSymbol());
+        IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(4);
+        Assert.assertEquals("Gln", pa.getLabel());
+    }
+
 }
