@@ -241,6 +241,7 @@
       <classpath>
         <fileset dir="develjar/">
           <include name="ojdcheck.jar" />
+          <include name="com-sun-*.jar" />
         </fileset>
       </classpath>
     </javac>

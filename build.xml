@@ -303,6 +303,7 @@
               <param name="module" value="${module}"/>
           </antcall>
 
+          <ant antfile="javadoc.xml" target="compileDocTests"/>
           <ant antfile="javadoc.xml" target="ojdcheck-module">
               <property name="module" value="${module}"/>
           </ant>
