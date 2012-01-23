@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -64,7 +65,7 @@ import java.util.StringTokenizer;
 
 /**
  * Reads content from MDL molfiles and SD files. 
- * It can read a {@link IMolecule} or {@link IChemModel} from an MDL molfile, and
+ * It can read a {@link IAtomContainer} or {@link IChemModel} from an MDL molfile, and
  * a {@link IChemFile} from a SD file, with a {@link IChemSequence} of
  * {@link IChemModel}'s, where each IChemModel will contain one IMolecule.
  *
@@ -164,6 +165,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
@@ -187,6 +189,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             return (T)readChemModel((IChemModel)object);
 		} else if (object instanceof IMolecule) {
 			return (T)readMolecule((IMolecule)object);
+		} else if (object instanceof IAtomContainer) {
+			return (T)readMolecule(object.getBuilder().newInstance(IMolecule.class, object));
 		} else {
 			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}
@@ -478,15 +482,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     	}
                     }
                     else {
-                        atom = molecule.getBuilder().newInstance(IPseudoAtom.class,"R");
+                        atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
                     }
                 } else {
                     handleError(
-                        "Invalid element type. Must be an existing " +
-                        "element, or one in: A, Q, L, LP, *.",
-                        linecount, 32, 35
+                            "Invalid element type. Must be an existing " +
+                                    "element, or one in: A, Q, L, LP, *.",
+                            linecount, 32, 35
                     );
-                	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
+                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
+                    atom.setSymbol(element);
                 }
 
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later
