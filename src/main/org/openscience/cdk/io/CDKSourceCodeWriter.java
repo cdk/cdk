@@ -244,15 +244,15 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 	}
 	
 	private void initIOSettings() {
-		write2DCoordinates = new BooleanIOSetting("write2DCoordinates", IOSetting.LOW,
+		write2DCoordinates = new BooleanIOSetting("write2DCoordinates", IOSetting.Importance.LOW,
             "Should 2D coordinates be added?", 
             "true");
 
-		write3DCoordinates = new BooleanIOSetting("write3DCoordinates", IOSetting.LOW,
+		write3DCoordinates = new BooleanIOSetting("write3DCoordinates", IOSetting.Importance.LOW,
 	        "Should 3D coordinates be added?", 
 		    "true");
 
-        builder = new StringIOSetting("builder", IOSetting.LOW,
+        builder = new StringIOSetting("builder", IOSetting.Importance.LOW,
             "Which IChemObjectBuilder should be used?", 
             "DefaultChemObjectBuilder");
     }

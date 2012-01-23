@@ -944,10 +944,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
     
     private void initIOSettings() {
-        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
+        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
           "Should coordinates always be read as 3D?", 
           "false");
-        interpretHydrogenIsotopes = new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.LOW,
+        interpretHydrogenIsotopes = new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.Importance.LOW,
           "Should D and T be interpreted as hydrogen isotopes?",
           "true");
     }

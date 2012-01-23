@@ -253,7 +253,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
     private void initIOSettings() {
         writerProperties = new BooleanIOSetting("writeProperties",
-          IOSetting.LOW,
+          IOSetting.Importance.LOW,
           "Should molecular properties be written?", 
           "true"
         );

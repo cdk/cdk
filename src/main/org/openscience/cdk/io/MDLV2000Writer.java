@@ -557,19 +557,19 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private void initIOSettings() {
         forceWriteAs2DCoords = new BooleanIOSetting(
             "ForceWriteAs2DCoordinates",
-            IOSetting.LOW,
+            IOSetting.Importance.LOW,
             "Should coordinates always be written as 2D?",
             "false"
         );
         writeAromaticBondTypes = new BooleanIOSetting(
             "WriteAromaticBondTypes",
-            IOSetting.LOW,
+            IOSetting.Importance.LOW,
             "Should aromatic bonds be written as bond type 4?",
             "false"
         );
         writeQueryFormatValencies = new BooleanIOSetting(
              "WriteQueryFormatValencies",
-             IOSetting.LOW,
+             IOSetting.Importance.LOW,
              "Should valencies be written in the MDL Query format?",
              "false"
         );

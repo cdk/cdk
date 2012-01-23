@@ -292,31 +292,31 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
+        cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.Importance.LOW,
           "Should the output use CML identifiers?", 
           "true");
 
-        namespacedOutput = new BooleanIOSetting("NamespacedOutput", IOSetting.LOW,
+        namespacedOutput = new BooleanIOSetting("NamespacedOutput", IOSetting.Importance.LOW,
           "Should the output use namespaced output?", 
           "true");
 
-        namespacePrefix = new StringIOSetting("NamespacePrefix", IOSetting.LOW,
+        namespacePrefix = new StringIOSetting("NamespacePrefix", IOSetting.Importance.LOW,
           "What should the namespace prefix be? [empty is no prefix]",
           "");
           
-        schemaInstanceOutput = new BooleanIOSetting("SchemaInstance", IOSetting.LOW,
+        schemaInstanceOutput = new BooleanIOSetting("SchemaInstance", IOSetting.Importance.LOW,
           "Should the output use the Schema-Instance attribute?", 
           "false");
         
-        instanceLocation = new StringIOSetting("InstanceLocation", IOSetting.LOW,
+        instanceLocation = new StringIOSetting("InstanceLocation", IOSetting.Importance.LOW,
           "Where is the schema found?",
           "");
 
-        indent = new BooleanIOSetting("Indenting", IOSetting.LOW,
+        indent = new BooleanIOSetting("Indenting", IOSetting.Importance.LOW,
           "Should the output be indented?", 
           "true");
 
-        xmlDeclaration = new BooleanIOSetting("XMLDeclaration", IOSetting.LOW,
+        xmlDeclaration = new BooleanIOSetting("XMLDeclaration", IOSetting.Importance.LOW,
                 "Should the output contain an XML declaration?",
                 "true");
     }

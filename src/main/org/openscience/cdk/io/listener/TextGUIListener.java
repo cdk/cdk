@@ -36,6 +36,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.IOSetting.Importance;
 import org.openscience.cdk.io.setting.OptionIOSetting;
 
 /**
@@ -55,19 +56,15 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
     private BufferedReader in;
     private PrintWriter out;
     
-    private int level = 0;
+    private Importance level = Importance.HIGH;
     
-    /**
-     * 0 = ask no questions
-     * 3 = ask all questions
-     */
-    public TextGUIListener(int level) {
+    public TextGUIListener(Importance level) {
         this.level = level;
         this.setInputReader(new InputStreamReader(System.in));
         this.setOutputWriter(new OutputStreamWriter(System.out));
     }
     
-    public void setLevel(int level) {
+    public void setLevel(Importance level) {
         this.level = level;
     }
     
@@ -108,7 +105,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
      */
     public void processIOSettingQuestion(IOSetting setting) {
         // post the question
-        if (setting.getLevel() < this.level) {
+        if (setting.getLevel().ordinal() <= this.level.ordinal()) {
             // output the option name
             this.out.print("[" + setting.getName() + "]: ");
             // post the question

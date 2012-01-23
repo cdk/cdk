@@ -741,13 +741,13 @@ public class PDBReader extends DefaultChemObjectReader {
 	}
 
     private void initIOSettings() {
-    	useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
+    	useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.Importance.LOW,
           "Should the PDBReader deduce bonding patterns?", 
           "false");
-        readConnect = new BooleanIOSetting("ReadConnectSection", IOSetting.LOW,
+        readConnect = new BooleanIOSetting("ReadConnectSection", IOSetting.Importance.LOW,
           "Should the CONECT be read?",
           "true");
-        useHetDictionary = new BooleanIOSetting("UseHetDictionary", IOSetting.LOW,
+        useHetDictionary = new BooleanIOSetting("UseHetDictionary", IOSetting.Importance.LOW,
           "Should the PDBReader use the HETATM dictionary for atom types?", 
           "false");
     }

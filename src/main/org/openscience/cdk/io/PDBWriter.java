@@ -97,16 +97,16 @@ public class PDBWriter extends DefaultChemObjectWriter {
             }
         } catch (Exception exc) {
         }
-        writeAsHET = new BooleanIOSetting("WriteAsHET", IOSetting.LOW, 
+        writeAsHET = new BooleanIOSetting("WriteAsHET", IOSetting.Importance.LOW, 
                         "Should the output file use HETATM", "false");
         useElementSymbolAsAtomName = new BooleanIOSetting(
-                "UseElementSymbolAsAtomName", IOSetting.LOW, 
+                "UseElementSymbolAsAtomName", IOSetting.Importance.LOW, 
                 "Should the element symbol be written as the atom name", "false");
-        writeCONECTRecords = new BooleanIOSetting("WriteCONECT", IOSetting.LOW, 
+        writeCONECTRecords = new BooleanIOSetting("WriteCONECT", IOSetting.Importance.LOW, 
                 "Should the bonds be written as CONECT records?", "true");
-        writeTERRecord = new BooleanIOSetting("WriteTER", IOSetting.LOW, 
+        writeTERRecord = new BooleanIOSetting("WriteTER", IOSetting.Importance.LOW, 
                 "Should a TER record be put at the end of the atoms?", "false");
-        writeENDRecord = new BooleanIOSetting("WriteEND", IOSetting.LOW, 
+        writeENDRecord = new BooleanIOSetting("WriteEND", IOSetting.Importance.LOW, 
                 "Should an END record be put at the end of the file?", "true");
     }
 

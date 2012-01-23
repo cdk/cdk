@@ -195,7 +195,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     private void initIOSettings() {
         useAromaticityFlag = new BooleanIOSetting(
             "UseAromaticity",
-            IOSetting.LOW,
+            IOSetting.Importance.LOW,
             "Should aromaticity information be stored in the SMILES?",
             "false"
         );
