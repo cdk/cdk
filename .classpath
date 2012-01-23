@@ -16,7 +16,6 @@
 	<classpathentry exported="true" kind="lib" path="jar/xercesImpl-2.9.0.jar" sourcepath="org.openscience.cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="develjar/com-sun-javadoc.jar" sourcepath="org.openscience.cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar" sourcepath="org.openscience.cdksrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="develjar/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="jar/cmlxom-2.5-b1.jar"/>
 	<classpathentry kind="lib" path="develjar/ojdcheck.jar"/>
 	<classpathentry kind="lib" path="develjar/asm-3.1.jar"/>
@@ -30,5 +29,6 @@
 	<classpathentry kind="lib" path="jar/jena/slf4j-api-1.5.6.jar"/>
 	<classpathentry kind="lib" path="jar/jena/iri.jar"/>
 	<classpathentry kind="lib" path="jar/jena/icu4j_3_4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
