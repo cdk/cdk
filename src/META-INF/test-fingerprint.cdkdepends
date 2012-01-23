@@ -17,4 +17,4 @@ cdk-formula.jar
 cdk-testdata.jar
 cdk-test-standard.jar
 cdk-diff.jar
-cdk-silent.jar
+cdk-signature.jar
