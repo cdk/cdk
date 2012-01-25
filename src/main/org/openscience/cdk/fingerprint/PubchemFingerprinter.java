@@ -87,7 +87,7 @@ import java.util.Map;
 public class PubchemFingerprinter implements IFingerprinter {
 
     /** 
-     * Number of bits in this fingerprint
+     * Number of bits in this fingerprint.
      */
     public static final int FP_SIZE = 881;
 
