@@ -86,7 +86,9 @@ import java.util.Map;
 @TestClass("org.openscience.cdk.fingerprint.PubchemFingerprinterTest")
 public class PubchemFingerprinter implements IFingerprinter {
 
-    // number of bits in this fingerprint
+    /** 
+     * Number of bits in this fingerprint
+     */
     public static final int FP_SIZE = 881;
 
     private byte[] m_bits;
@@ -2375,6 +2377,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         if (cs.countSubstructure("Br[#6]1[#6](Br)[#6][#6][#6]1") > 0) fp[b >> 3] |= MASK[b % 8];
     }
 
+    /** {@inheritDoc} */
 	@Override
 	public ICountFingerprint getCountFingerprint(IAtomContainer container)
 			throws CDKException {

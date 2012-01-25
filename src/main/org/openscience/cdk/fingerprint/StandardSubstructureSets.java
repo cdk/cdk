@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Default sets of atom containers aimed for use with the substructure
+ * Default sets of atom containers aimed for use with the substructure.
  * 
  * @author egonw
  * 
@@ -23,6 +23,8 @@ public class StandardSubstructureSets {
 	private static String[] smarts = null;
 	
 	/**
+	 * The functional groups. 
+	 * 
 	 * @return A set of the functional groups.
      * @throws Exception if there is an error parsing SMILES for the functional groups
 	 */

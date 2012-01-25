@@ -68,9 +68,7 @@ public class EStateFingerprinter implements IFingerprinter {
     public EStateFingerprinter() {
     }
 
-    /**
-     * Calculates the substructure fingerprint for the given AtomContainer.
-     */
+    /** {@inheritDoc} */
     @TestMethod("testFingerprint")
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) 
                   throws CDKException {
@@ -92,11 +90,13 @@ public class EStateFingerprinter implements IFingerprinter {
         throw new UnsupportedOperationException();
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testGetSize")
     public int getSize() {
         return patterns.length;
     }
 
+    /** {@inheritDoc} */
 	@Override
 	public ICountFingerprint getCountFingerprint(IAtomContainer container)
 			throws CDKException {

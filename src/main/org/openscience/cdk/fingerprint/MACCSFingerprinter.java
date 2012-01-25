@@ -87,9 +87,7 @@ public class MACCSFingerprinter implements IFingerprinter {
         }
     }
 
-    /**
-     * Calculates the substructure fingerprint for the given AtomContainer.
-     */
+    /** {@inheritDoc} */
     @TestMethod("testFingerprint,testfp2")
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) 
                   throws CDKException {
@@ -154,6 +152,7 @@ public class MACCSFingerprinter implements IFingerprinter {
         throw new UnsupportedOperationException();
     }
 
+    /** {@inheritDoc} */
     @TestMethod("getsize")
     public int getSize() {
         if (keys != null)
@@ -202,6 +201,7 @@ public class MACCSFingerprinter implements IFingerprinter {
         }
     }
 
+    /** {@inheritDoc} */
 	@Override
 	public ICountFingerprint getCountFingerprint(IAtomContainer container)
 			throws CDKException {

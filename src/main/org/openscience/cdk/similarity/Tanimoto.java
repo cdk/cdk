@@ -218,13 +218,27 @@ public class Tanimoto
 	    return ( (double)xy / (x + y - xy) );
 	}
     
+    /**
+     * Calculates Tanimoto distance for two count fingerprints using method 1.
+     * 
+     * @param fp1 count fingerprint 1
+     * @param fp2 count fingerprint 2
+     * @return a Tanimoto distance
+     */
     public static double method1( ICountFingerprint fp1, 
-    		                         ICountFingerprint fp2) {
+                                  ICountFingerprint fp2) {
     	return calculate(fp1, fp2);
     }
     
+    /**
+     * Calculates Tanimoto distance for two count fingerprints using method 2.
+     * 
+     * @param fp1 count fingerprint 1
+     * @param fp2 count fingerprint 2
+     * @return a Tanimoto distance
+     */
     public static double method2( ICountFingerprint fp1,
-    		                         ICountFingerprint fp2) {
+                                  ICountFingerprint fp2) {
     	
     		long maxSum = 0,
     		     minSum = 0;

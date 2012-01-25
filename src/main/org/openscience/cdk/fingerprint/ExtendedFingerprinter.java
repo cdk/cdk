@@ -93,6 +93,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
      * there is a fused ring system with 1,2...8 or more rings in it
      *
      *@param container The AtomContainer for which a Fingerprint is generated
+     *@return a bit fingerprint for the given <code>IAtomContainer</code>.
      */
     @TestMethod("testgetBitFingerprint_IAtomContainer")
     public IBitFingerprint getBitFingerprint(IAtomContainer container) 
@@ -121,7 +122,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
      *                          getExtendedFingerprint(AtomContainer ac), 
      *                          which does the calculation)
      * @param     rslist        A list of all ring systems in ac
-     * @exception CDKException  Description of the Exception
+     * @exception CDKException  for example if input can not be cloned.
      * @return a BitSet representing the fingerprint
      */
     @TestMethod("testgetBitFingerprint_IAtomContainer_IRingSet_List")
@@ -167,11 +168,13 @@ public class ExtendedFingerprinter implements IFingerprinter {
         return fingerprint;
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testGetSize")
     public int getSize() {
         return fingerprinter.getSize()+RESERVED_BITS;
     }
 
+    /** {@inheritDoc} */
 	@Override
 	public ICountFingerprint getCountFingerprint(IAtomContainer container)
 			throws CDKException {
