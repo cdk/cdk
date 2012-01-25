@@ -250,13 +250,13 @@ public class Tanimoto
     					                                     : null;
     			Integer hash2 = j < fp2.numOfPopulatedbins() ? fp2.getHash(j) 
     					                                     : null;
-			Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i) 
-					                                      : null;
-			Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j) 
-					                                      : null;
+    			Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i) 
+    					                                      : null;
+    			Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j) 
+    					                                      : null;
     			
     			if ( count2 == null || (hash1 != null && hash1 < hash2) ) {
-				maxSum += count1;
+    			maxSum += count1;
     				i++;
     				continue;
     			}
