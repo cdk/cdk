@@ -56,7 +56,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 		Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
 		// Assert.assert correct comparison
-		Assert.assertEquals("null <-> cycloPentane", -1, comparator.compare(null, cycloPentane));
+		Assert.assertEquals("null <-> cycloPentane", 1, comparator.compare(null, cycloPentane));
 	}
 
     @Test
@@ -93,7 +93,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
 		Comparator<IAtomContainer> comparator = new AtomContainerComparator();
 
 		// Assert.assert correct comparison
-		Assert.assertEquals("cycloPentane <-> null", 1, comparator.compare(cycloPentane, null));
+		Assert.assertEquals("cycloPentane <-> null", -1, comparator.compare(cycloPentane, null));
     }
 
 	@Test

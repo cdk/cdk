@@ -74,6 +74,7 @@ public class ShelXFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.ShelXWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("ZERR ") ||
             line.startsWith("TITL ")) {

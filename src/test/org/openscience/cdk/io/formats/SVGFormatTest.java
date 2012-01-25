@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2012  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@slists.sourceforge.net
  * 
@@ -27,10 +25,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class JaguarFormatTest extends ChemFormatMatcherTest {
+public class SVGFormatTest extends ResourceFormatTest {
 
-    public JaguarFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)JaguarFormat.getInstance());
+    public SVGFormatTest() {
+        super.setResourceFormat((IResourceFormat)SVGFormat.getInstance());
     }
     
 }

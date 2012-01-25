@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@slists.sourceforge.net
  * 
@@ -27,10 +25,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-ioformats
  */
-public class JaguarFormatTest extends ChemFormatMatcherTest {
+public class MOPAC7InputFormatTest extends ChemFormatMatcherTest {
 
-    public JaguarFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)JaguarFormat.getInstance());
+    public MOPAC7InputFormatTest() {
+        super.setChemFormatMatcher((IChemFormatMatcher)MOPAC7InputFormat.getInstance());
     }
     
 }

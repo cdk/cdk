@@ -68,6 +68,7 @@ public class ABINITFormat implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("natom") >= 0 ||
             line.indexOf("ABINIT") >= 0) {

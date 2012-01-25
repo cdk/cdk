@@ -69,6 +69,7 @@ public class Gaussian95Format implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Gaussian 95") >= 0) {
             return true;

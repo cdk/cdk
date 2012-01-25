@@ -34,7 +34,7 @@ abstract public class ResourceFormatTest {
     
     private IResourceFormat resourceFormat;
     
-    public void setResourceFormat(IChemFormat format) {
+    public void setResourceFormat(IResourceFormat format) {
         this.resourceFormat = format;
     }
 

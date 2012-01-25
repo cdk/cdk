@@ -72,6 +72,7 @@ public class MDLV2000Format implements IChemFormatMatcher {
     	return "org.openscience.cdk.io.MDLV2000Writer";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 4 && 
             (line.indexOf("v2000") >= 0 ||

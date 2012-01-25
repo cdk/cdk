@@ -70,6 +70,7 @@ public class CDKOWLFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.rdf.CDKOWLWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("PREFIX") &&
             line.contains("http://cdk.sourceforge.net/model.owl#")) {

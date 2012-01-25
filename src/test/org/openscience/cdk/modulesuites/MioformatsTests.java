@@ -36,6 +36,7 @@ import org.openscience.cdk.io.formats.BGFFormatTest;
 import org.openscience.cdk.io.formats.BSFormatTest;
 import org.openscience.cdk.io.formats.CACheFormatTest;
 import org.openscience.cdk.io.formats.CDKOWLFormatTest;
+import org.openscience.cdk.io.formats.CDKSourceCodeFormatTest;
 import org.openscience.cdk.io.formats.CIFFormatTest;
 import org.openscience.cdk.io.formats.CMLFormatTest;
 import org.openscience.cdk.io.formats.CMLRSSFormatTest;
@@ -53,6 +54,7 @@ import org.openscience.cdk.io.formats.DMol3FormatTest;
 import org.openscience.cdk.io.formats.DOCK5FormatTest;
 import org.openscience.cdk.io.formats.DaltonFormatTest;
 import org.openscience.cdk.io.formats.FenskeHall_ZMatrixFormatTest;
+import org.openscience.cdk.io.formats.FingerprintFormatTest;
 import org.openscience.cdk.io.formats.GROMOS96FormatTest;
 import org.openscience.cdk.io.formats.GamessFormatTest;
 import org.openscience.cdk.io.formats.Gaussian03FormatTest;
@@ -61,6 +63,7 @@ import org.openscience.cdk.io.formats.Gaussian92FormatTest;
 import org.openscience.cdk.io.formats.Gaussian94FormatTest;
 import org.openscience.cdk.io.formats.Gaussian95FormatTest;
 import org.openscience.cdk.io.formats.Gaussian98FormatTest;
+import org.openscience.cdk.io.formats.GaussianInputFormatTest;
 import org.openscience.cdk.io.formats.GhemicalMMFormatTest;
 import org.openscience.cdk.io.formats.GhemicalSPMFormatTest;
 import org.openscience.cdk.io.formats.HINFormatTest;
@@ -87,6 +90,7 @@ import org.openscience.cdk.io.formats.PCModelFormatTest;
 import org.openscience.cdk.io.formats.PDBFormatTest;
 import org.openscience.cdk.io.formats.PDBMLFormatTest;
 import org.openscience.cdk.io.formats.PMPFormatTest;
+import org.openscience.cdk.io.formats.POVRayFormatTest;
 import org.openscience.cdk.io.formats.PQSChemFormatTest;
 import org.openscience.cdk.io.formats.PubChemASNFormatTest;
 import org.openscience.cdk.io.formats.PubChemCompoundXMLFormatTest;
@@ -101,6 +105,7 @@ import org.openscience.cdk.io.formats.SDFFormatTest;
 import org.openscience.cdk.io.formats.SMARTSFormatTest;
 import org.openscience.cdk.io.formats.SMILESFIXFormatTest;
 import org.openscience.cdk.io.formats.SMILESFormatTest;
+import org.openscience.cdk.io.formats.SVGFormatTest;
 import org.openscience.cdk.io.formats.ShelXFormatTest;
 import org.openscience.cdk.io.formats.SpartanFormatTest;
 import org.openscience.cdk.io.formats.SybylDescriptorFormatTest;
@@ -136,6 +141,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     CacaoInternalFormatTest.class,
     CACheFormatTest.class,
     CDKOWLFormatTest.class,
+    CDKSourceCodeFormatTest.class,
     Chem3D_Cartesian_1FormatTest.class,
     Chem3D_Cartesian_2FormatTest.class,
     ChemDrawFormatTest.class,
@@ -151,6 +157,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     DMol3FormatTest.class,
     DOCK5FormatTest.class,
     FenskeHall_ZMatrixFormatTest.class,
+    FingerprintFormatTest.class,
     GamessFormatTest.class,
     Gaussian03FormatTest.class,
     Gaussian90FormatTest.class,
@@ -158,6 +165,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     Gaussian94FormatTest.class,
     Gaussian95FormatTest.class,
     Gaussian98FormatTest.class,
+    GaussianInputFormatTest.class,
     GhemicalMMFormatTest.class,
     GhemicalSPMFormatTest.class,
     GROMOS96FormatTest.class,
@@ -185,6 +193,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     PDBFormatTest.class,
     PDBMLFormatTest.class,
     PMPFormatTest.class,
+    POVRayFormatTest.class,
     PQSChemFormatTest.class,
     PubChemASNFormatTest.class,
     PubChemFormatTest.class,
@@ -201,6 +210,7 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     SMILESFIXFormatTest.class,
     SMILESFormatTest.class,
     SpartanFormatTest.class,
+    SVGFormatTest.class,
     SybylDescriptorFormatTest.class,
     TinkerMM2FormatTest.class,
     TinkerXYZFormatTest.class,

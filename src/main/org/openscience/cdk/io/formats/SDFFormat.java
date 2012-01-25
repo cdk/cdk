@@ -74,6 +74,7 @@ public class SDFFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.SDFWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.equals("$$$$")) {
             return true;

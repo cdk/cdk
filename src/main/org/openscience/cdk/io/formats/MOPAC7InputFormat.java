@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,28 +22,27 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
-
 /**
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.MOPAC7FormatTest")
-public class MOPAC7Format implements IChemFormatMatcher {
+@TestClass("org.openscience.cdk.io.formats.MOPAC7InputFormatTest")
+public class MOPAC7InputFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private MOPAC7Format() {}
+    private MOPAC7InputFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new MOPAC7Format();
+    	if (myself == null) myself = new MOPAC7InputFormat();
     	return myself;
     }
 
     @TestMethod("testGetFormatName")
     public String getFormatName() {
-        return "MOPAC7";
+        return "MOPAC7 Input";
     }
 
     @TestMethod("testGetMIMEType")
@@ -61,7 +55,7 @@ public class MOPAC7Format implements IChemFormatMatcher {
     }
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
-        return new String[]{"mop","mopcrt","mopout"};
+        return new String[0];
     }
 
     @TestMethod("testGetReaderClassName")
@@ -71,9 +65,6 @@ public class MOPAC7Format implements IChemFormatMatcher {
 
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("MOPAC:  VERSION  7.00") >= 0) {
-            return true;
-        }
         return false;
     }
 

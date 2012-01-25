@@ -68,6 +68,7 @@ public class SpartanFormat implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Spartan") != -1 &&
             line.indexOf("Quantum Mechanics Program") != -1) {

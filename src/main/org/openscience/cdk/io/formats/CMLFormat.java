@@ -74,6 +74,7 @@ public class CMLFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.CMLWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if ((line.indexOf("http://www.xml-cml.org/schema") != -1) ||
             (line.indexOf("<atom") != -1) ||

@@ -68,6 +68,7 @@ public class Aces2Format implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("ACES2") >= 0) {
             return true;

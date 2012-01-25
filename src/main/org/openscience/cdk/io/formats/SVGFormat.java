@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 /**
@@ -30,6 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.SVGFormatTest")
 public class SVGFormat implements IResourceFormat {
 
 	private static IResourceFormat myself = null;

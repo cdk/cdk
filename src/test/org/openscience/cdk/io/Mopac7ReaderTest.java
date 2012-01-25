@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2012  Egon Willighagen <egon.willighagen@gmail.com>
  * 
  * Contact: cdk-devel@slists.sourceforge.net
  * 
@@ -21,16 +19,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- */
-package org.openscience.cdk.io.formats;
+ *  */
+package org.openscience.cdk.io;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.silent.AtomContainer;
 
 /**
- * @cdk.module test-ioformats
+ * @cdk.module test-io
  */
-public class JaguarFormatTest extends ChemFormatMatcherTest {
+public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
 
-    public JaguarFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)JaguarFormat.getInstance());
+    @BeforeClass public static void setup() {
+        setSimpleChemObjectReader(new Mopac7Reader(), "data/mopac/ethylene.dat.out");
     }
-    
+
+    @Test public void testAccepts() {
+    	Mopac7Reader reader = new Mopac7Reader();
+    	reader.setReaderMode(Mode.STRICT);
+    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    }
+
 }
