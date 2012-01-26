@@ -665,4 +665,15 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         );
         Assert.assertNotNull(af);
     }
+
+    @Test public void testSugggestion() {
+    	IChemObjectBuilder builder = getRootObject().getBuilder();
+    	try {
+    		builder.newInstance(IAtom.class, Boolean.TRUE);
+    		Assert.fail("I expected an exception, because this constructor does not exist.");
+    	} catch (Exception exception) {
+    		String message = exception.getMessage();
+    		Assert.assertTrue(message.contains("Candidates are"));
+    	}
+    }
 }
