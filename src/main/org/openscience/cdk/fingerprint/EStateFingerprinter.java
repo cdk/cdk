@@ -62,7 +62,7 @@ import java.util.Map;
 @TestClass("org.openscience.cdk.fingerprint.EStateFingerprinterTest")
 public class EStateFingerprinter implements IFingerprinter {
 
-    private static final String[] patterns = EStateFragments.getSmarts();
+    private static final String[] PATTERNS = EStateFragments.getSmarts();
 
     @TestMethod("testFingerprint,testGetSize")
     public EStateFingerprinter() {
@@ -73,12 +73,12 @@ public class EStateFingerprinter implements IFingerprinter {
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) 
                   throws CDKException {
 
-        int bitsetLength = patterns.length;
+        int bitsetLength = PATTERNS.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("C");
-        for (int i = 0; i < patterns.length; i++) {
-            sqt.setSmarts(patterns[i]);
+        for (int i = 0; i < PATTERNS.length; i++) {
+            sqt.setSmarts(PATTERNS[i]);
             boolean status = sqt.matches(atomContainer);
             if (status) fingerPrint.set(i, true);
         }
@@ -93,7 +93,7 @@ public class EStateFingerprinter implements IFingerprinter {
     /** {@inheritDoc} */
     @TestMethod("testGetSize")
     public int getSize() {
-        return patterns.length;
+        return PATTERNS.length;
     }
 
     /** {@inheritDoc} */
