@@ -33,7 +33,6 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
-import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
