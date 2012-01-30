@@ -409,7 +409,7 @@
 		<scalar dictRef="bo:atomicNumber">7</scalar>
 	</isotope>
 	<isotope id="N14" number="14" elementType="N">
-		<scalar dictRef="bo:relativeAbundance">99.632</scalar>
+		<scalar dictRef="bo:relativeAbundance">99.636</scalar>
 		<scalar dictRef="bo:exactMass" errorValue="0.0006E-6">14.003074</scalar>
 		<scalar dictRef="bo:spin">1+</scalar>
 		<scalar dictRef="bo:magneticMoment">+0.403761</scalar>
@@ -417,7 +417,7 @@
 		<scalar dictRef="bo:atomicNumber">7</scalar>
 	</isotope>
 	<isotope id="N15" number="15" elementType="N">
-		<scalar dictRef="bo:relativeAbundance">0.368</scalar>
+		<scalar dictRef="bo:relativeAbundance">0.364</scalar>
 		<scalar dictRef="bo:exactMass" errorValue="0.0007E-6">15.0001089</scalar>
 		<scalar dictRef="bo:spin">1/2-</scalar>
 		<scalar dictRef="bo:magneticMoment">-0.283189</scalar>
@@ -1480,7 +1480,7 @@
 		<scalar dictRef="bo:atomicNumber">17</scalar>
 	</isotope>
 	<isotope id="Cl35" number="35" elementType="Cl">
-		<scalar dictRef="bo:relativeAbundance">75.78</scalar>
+		<scalar dictRef="bo:relativeAbundance">75.76</scalar>
 		<scalar dictRef="bo:exactMass" errorValue="0.04E-6">34.96885268</scalar>
 		<scalar dictRef="bo:spin">3/2+</scalar>
 		<scalar dictRef="bo:magneticMoment">+0.82187</scalar>
@@ -1492,7 +1492,7 @@
 		<scalar dictRef="bo:atomicNumber">17</scalar>
 	</isotope>
 	<isotope id="Cl37" number="37" elementType="Cl">
-		<scalar dictRef="bo:relativeAbundance">24.22</scalar>
+		<scalar dictRef="bo:relativeAbundance">24.24</scalar>
 		<scalar dictRef="bo:exactMass" errorValue="0.05E-6">36.96590259</scalar>
 		<scalar dictRef="bo:spin">3/2+</scalar>
 		<scalar dictRef="bo:magneticMoment">+0.68412</scalar>
