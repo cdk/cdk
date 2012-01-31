@@ -1,4 +1,4 @@
-/* Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2009,2012  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,6 +22,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderextraCoverageTest;
+import org.openscience.cdk.renderer.ChemModelRendererTest;
+import org.openscience.cdk.renderer.MoleculeSetRendererTest;
+import org.openscience.cdk.renderer.ReactionRendererTest;
+import org.openscience.cdk.renderer.ReactionSetRendererTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>renderextra</code>
@@ -31,6 +35,10 @@ import org.openscience.cdk.coverage.RenderextraCoverageTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	RenderextraCoverageTest.class
+	RenderextraCoverageTest.class,
+	MoleculeSetRendererTest.class,
+	ChemModelRendererTest.class,
+	ReactionRendererTest.class,
+	ReactionSetRendererTest.class
 })
 public class MrenderextraTests {}
