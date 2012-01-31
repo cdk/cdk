@@ -50,6 +50,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Prepares input file for running MOPAC.
@@ -110,6 +111,9 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
 	        try {
 	            IAtomContainer container = (IAtomContainer) arg0;
 	            writer.write(mopacCommands.getSetting());
+	            int formalCharge = AtomContainerManipulator.getTotalFormalCharge(container);
+	            if (formalCharge != 0)
+	            	writer.write(" CHARGE=" + formalCharge);
 	            writer.newLine();
 	            if (container.getProperty("Names") != null)
 	                writer.write(container.getProperty("Names").toString());
