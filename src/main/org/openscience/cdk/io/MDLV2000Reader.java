@@ -518,6 +518,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.error("Cannot set mass difference for a non-element!");
                 }
 
+                
+                // set the stereo partiy
+                Integer parity = line.length() > 41 ? Character.digit(line.charAt(41), 10) : 0;                                
+                atom.setStereoParity(parity);
+                
                 if (line.length() >= 51) {
                     String valenceString = removeNonDigits(line.substring(48,51));
                     logger.debug("Valence: ", valenceString);

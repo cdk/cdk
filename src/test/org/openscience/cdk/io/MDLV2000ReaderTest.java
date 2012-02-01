@@ -919,4 +919,25 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("Gln", pa.getLabel());
     }
 
+    @Test
+    public void testAtomParity() throws CDKException{
+        
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        reader.read(molecule);
+        
+        boolean chiralCentre = false;
+        IAtom[] atoms = AtomContainerManipulator.getAtomArray(molecule);
+        for (IAtom atom : atoms) {
+            Integer parity = atom.getStereoParity();
+            if(parity == 1){
+                chiralCentre = true;
+            }
+        }
+        
+        Assert.assertTrue(chiralCentre);
+        
+    }
+    
 }
