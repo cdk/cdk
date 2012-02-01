@@ -322,7 +322,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         	}else{
         		line += formatMDLString(container.getAtom(f).getSymbol(), 3);
         	}
-        	line += " 0  0  0  0  0";
+        	line += String.format(" 0  0  %d  0  0", atom.getStereoParity() == null ? 0 : atom.getStereoParity());
         	if (writeQueryFormatValencies.isSet() &&
         	    atom.getValency() != (Integer)CDKConstants.UNSET) {
         	    // valence 0 is defined as 15 in mol files - but this writer
