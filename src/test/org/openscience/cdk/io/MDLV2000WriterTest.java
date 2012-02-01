@@ -374,7 +374,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
        
-        Assert.assertTrue(writer.toString().contains("   -1.1749    0.1436    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0"));              
+        Assert.assertTrue(sw.toString().contains("   -1.1749    0.1436    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0"));              
         
         
     }
