@@ -24,6 +24,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -920,12 +921,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testAtomParity() throws CDKException{
+    public void testAtomParity() throws CDKException, IOException{
         
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         reader.read(molecule);
+        reader.close();
+
         
         boolean chiralCentre = false;
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(molecule);
@@ -935,6 +938,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 chiralCentre = true;
             }
         }
+        
         
         Assert.assertTrue(chiralCentre);
         
