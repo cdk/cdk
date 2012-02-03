@@ -32,6 +32,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -81,6 +82,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  */
+@TestClass("org.openscience.cdk.io.iterator.IteratingSDFReaderTest")
 public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomContainer>
 implements IChemObjectIOListener {
 
@@ -116,6 +118,7 @@ implements IChemObjectIOListener {
      * @param  in  The InputStream to read from
      * @param builder The builder
      */
+    @TestMethod("testReadDataItems")
     public IteratingSDFReader(InputStream in, IChemObjectBuilder builder) {
         this(new InputStreamReader(in), builder);
     }
