@@ -4410,7 +4410,18 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes8 = {"Se.5", "C.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes8, mol);
     }
-  
+    
+    @Test
+    public void test_Se_2() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+      
+        String[] expectedTypes = {"Se.2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     /**
      * @cdk.inchi InChI=1S/H2Te/h1H2
