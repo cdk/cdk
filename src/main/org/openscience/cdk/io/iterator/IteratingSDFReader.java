@@ -81,12 +81,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  */
-public class IteratingMDLReader extends DefaultIteratingChemObjectReader<IAtomContainer>
+public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomContainer>
 implements IChemObjectIOListener {
 
     private BufferedReader input;
     private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IteratingMDLReader.class);
+        LoggingToolFactory.createLoggingTool(IteratingSDFReader.class);
     private String currentLine;
     private IChemFormat currentFormat;
     private final ReaderFactory factory = new ReaderFactory();
@@ -104,7 +104,7 @@ implements IChemObjectIOListener {
      * @param  in  The Reader to read from
      * @param builder The builder
      */
-    public IteratingMDLReader(Reader in, IChemObjectBuilder builder) {
+    public IteratingSDFReader(Reader in, IChemObjectBuilder builder) {
         this.builder = builder;
     	setReader(in);
     	initIOSettings();
@@ -116,7 +116,7 @@ implements IChemObjectIOListener {
      * @param  in  The InputStream to read from
      * @param builder The builder
      */
-    public IteratingMDLReader(InputStream in, IChemObjectBuilder builder) {
+    public IteratingSDFReader(InputStream in, IChemObjectBuilder builder) {
         this(new InputStreamReader(in), builder);
     }
 
