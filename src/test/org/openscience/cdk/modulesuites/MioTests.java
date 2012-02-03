@@ -62,7 +62,7 @@ import org.openscience.cdk.io.XYZReaderTest;
 import org.openscience.cdk.io.XYZWriterTest;
 import org.openscience.cdk.io.cml.CMLIOTests;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
-import org.openscience.cdk.io.iterator.IteratingMDLReaderTest;
+import org.openscience.cdk.io.iterator.IteratingSDFReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundASNReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundXMLReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
@@ -114,7 +114,7 @@ import org.openscience.cdk.io.program.Mopac7WriterTest;
     ChemObjectIOInstantionTests.class,
 
         // cdk.io.iterator package
-    IteratingMDLReaderTest.class,
+    IteratingSDFReaderTest.class,
     IteratingMDLConformerReaderTest.class,
     IteratingPCCompoundASNReaderTest.class,
     IteratingPCCompoundXMLReaderTest.class,

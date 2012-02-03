@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -98,14 +98,14 @@ public class TemplateHandler3D {
      */
     private void loadTemplates() throws CDKException{
         logger.debug("Loading templates...");
-        IteratingMDLReader imdl;
+        IteratingSDFReader imdl;
         InputStream ins;
         BufferedReader fin;
 
         try {
             ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz");
             fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
-            imdl = new IteratingMDLReader(fin, builder);
+            imdl = new IteratingSDFReader(fin, builder);
         } catch (IOException exc1) {
             throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
         }
