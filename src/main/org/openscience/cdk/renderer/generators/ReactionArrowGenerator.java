@@ -23,6 +23,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
@@ -38,8 +40,10 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * @cdk.module renderextra
  *
  */
+@TestClass("org.openscience.cdk.renderer.generators.ReactionArrowGeneratorTest")
 public class ReactionArrowGenerator implements IGenerator<IReaction> {
 
+	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
         Rectangle2D totalBoundsReactants = 
         	BoundsCalculator.calculateBounds(reaction.getReactants());

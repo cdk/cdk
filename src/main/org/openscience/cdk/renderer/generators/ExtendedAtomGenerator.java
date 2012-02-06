@@ -26,6 +26,8 @@ import java.util.Stack;
 
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,6 +46,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module renderextra
  *
  */
+@TestClass("org.openscience.cdk.renderer.generators.ExtendedAtomGeneratorTest")
 public class ExtendedAtomGenerator extends BasicAtomGenerator {
 
     public static class ShowImplicitHydrogens extends
@@ -204,7 +207,8 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             }
         }
     }
-    
+
+    @TestMethod("getParametersTest")
     public List<IGeneratorParameter<?>> getParameters() {
     	List<IGeneratorParameter<?>> parameters =
     		new ArrayList<IGeneratorParameter<?>>();
