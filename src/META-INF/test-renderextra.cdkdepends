@@ -5,5 +5,7 @@ cdk-standard.jar
 cdk-render.jar
 cdk-renderbasic.jar
 cdk-renderextra.jar
+cdk-data.jar
+cdk-nonotify.jar
 cdk-test.jar
 cdk-test-renderbasic.jar
