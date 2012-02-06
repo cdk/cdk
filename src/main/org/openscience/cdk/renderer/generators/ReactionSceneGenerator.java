@@ -22,6 +22,8 @@ package org.openscience.cdk.renderer.generators;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -33,6 +35,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  *
  * @cdk.module renderextra
  */
+@TestClass("org.openscience.cdk.renderer.generators.ReactionSceneGeneratorTest")
 public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
     public static class ShowReactionBoxes extends
@@ -55,6 +58,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
     public ReactionSceneGenerator() {}
 
+    @TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		return new ElementGroup();
 	}

@@ -26,6 +26,17 @@ import org.openscience.cdk.renderer.ChemModelRendererTest;
 import org.openscience.cdk.renderer.MoleculeSetRendererTest;
 import org.openscience.cdk.renderer.ReactionRendererTest;
 import org.openscience.cdk.renderer.ReactionSetRendererTest;
+import org.openscience.cdk.renderer.generators.AtomContainerBoundsGeneratorTest;
+import org.openscience.cdk.renderer.generators.AtomNumberGeneratorTest;
+import org.openscience.cdk.renderer.generators.ExtendedAtomGeneratorTest;
+import org.openscience.cdk.renderer.generators.LonePairGeneratorTest;
+import org.openscience.cdk.renderer.generators.ProductsBoxGeneratorTest;
+import org.openscience.cdk.renderer.generators.RadicalGeneratorTest;
+import org.openscience.cdk.renderer.generators.ReactantsBoxGeneratorTest;
+import org.openscience.cdk.renderer.generators.ReactionArrowGeneratorTest;
+import org.openscience.cdk.renderer.generators.ReactionBoxGeneratorTest;
+import org.openscience.cdk.renderer.generators.ReactionPlusGeneratorTest;
+import org.openscience.cdk.renderer.generators.ReactionSceneGeneratorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>renderextra</code>
@@ -39,6 +50,17 @@ import org.openscience.cdk.renderer.ReactionSetRendererTest;
 	MoleculeSetRendererTest.class,
 	ChemModelRendererTest.class,
 	ReactionRendererTest.class,
-	ReactionSetRendererTest.class
+	ReactionSetRendererTest.class,
+	ReactionBoxGeneratorTest.class,
+	ReactionPlusGeneratorTest.class,
+	ReactantsBoxGeneratorTest.class,
+	ProductsBoxGeneratorTest.class,
+	ReactionSceneGeneratorTest.class,
+	ExtendedAtomGeneratorTest.class,
+	ReactionArrowGeneratorTest.class,
+	RadicalGeneratorTest.class,
+	LonePairGeneratorTest.class,
+	AtomContainerBoundsGeneratorTest.class,
+	AtomNumberGeneratorTest.class
 })
 public class MrenderextraTests {}
