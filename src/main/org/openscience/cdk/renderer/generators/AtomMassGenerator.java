@@ -22,6 +22,7 @@ package org.openscience.cdk.renderer.generators;
 
 import java.io.IOException;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,6 +35,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module renderextra
  */
+@TestClass("org.openscience.cdk.renderer.generators.AtomMassGeneratorTest")
 public class AtomMassGenerator extends BasicAtomGenerator {
 
     private ILoggingTool logger =
