@@ -25,6 +25,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
@@ -42,6 +44,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @author maclean
  * @cdk.module renderextra
  */
+@TestClass("org.openscience.cdk.renderer.generators.BoundsGeneratorTest")
 public class BoundsGenerator implements IGenerator<IReaction> {
 
 	/**
@@ -57,7 +60,8 @@ public class BoundsGenerator implements IGenerator<IReaction> {
     private IGeneratorParameter<Color> boundsColor = new BoundsColor();
 
     public BoundsGenerator() {}
-    
+
+    @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
         ElementGroup elementGroup = new ElementGroup();
         IMoleculeSet reactants = reaction.getReactants();

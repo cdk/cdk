@@ -25,6 +25,8 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
@@ -38,6 +40,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 /**
  * @cdk.module renderextra
  */
+@TestClass("org.openscience.cdk.renderer.generators.MappingGeneratorTest")
 public class MappingGenerator implements IGenerator<IReaction> {
 
 	/**
@@ -75,6 +78,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
 	
     public MappingGenerator() {}
 
+    @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if(!showAtomAtomMapping.getValue()) return null;
         ElementGroup elementGroup = new ElementGroup();
