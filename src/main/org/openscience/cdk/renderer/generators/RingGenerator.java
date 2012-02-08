@@ -29,6 +29,8 @@ import java.util.Set;
 
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -46,6 +48,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module renderbasic
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.renderer.generators.RingGeneratorTest")
 public class RingGenerator extends BasicBondGenerator {
 
     /**
@@ -158,6 +161,7 @@ public class RingGenerator extends BasicBondGenerator {
     }
 
     /** {@inheritDoc} */
+    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         // Get our super class's version of things
         List<IGeneratorParameter<?>> superPars = super.getParameters();

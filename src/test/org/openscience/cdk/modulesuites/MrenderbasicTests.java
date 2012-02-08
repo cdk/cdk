@@ -42,6 +42,7 @@ import org.openscience.cdk.renderer.generators.BasicAtomGeneratorTest;
 import org.openscience.cdk.renderer.generators.BasicBondGeneratorTest;
 import org.openscience.cdk.renderer.generators.BasicGeneratorTest;
 import org.openscience.cdk.renderer.generators.BasicSceneGeneratorTest;
+import org.openscience.cdk.renderer.generators.RingGeneratorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>renderbasic</code>
@@ -57,6 +58,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGeneratorTest;
 	BasicBondGeneratorTest.class,
 	BasicSceneGeneratorTest.class,
 	BasicGeneratorTest.class,
+	RingGeneratorTest.class,
 	WedgeLineElementTest.class,
 	LineElementTest.class,
 	PathElementTest.class,

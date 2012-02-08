@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -70,6 +71,7 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** {@inheritDoc} */
+    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
     	ArrayList<IGeneratorParameter<?>> list = new ArrayList<IGeneratorParameter<?>>();
     	list.addAll(this.atomGenerator.getParameters());

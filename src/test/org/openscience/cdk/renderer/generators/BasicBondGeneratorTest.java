@@ -32,6 +32,7 @@ public class BasicBondGeneratorTest extends AbstractGeneratorTest {
 		super.setup();
 		this.generator = new BasicBondGenerator();
 		model.registerParameters(generator);
+        super.setTestedGenerator(generator);
 	}
 	
 	@Test
