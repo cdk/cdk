@@ -50,6 +50,7 @@ public class ReactionPlusGeneratorTest extends AbstractGeneratorTest {
         model.registerParameters(new BasicBondGenerator());
         this.generator = new ReactionPlusGenerator();
         model.registerParameters(generator);
+        super.setTestedGenerator(generator);
     }
 	
 	@Test

@@ -50,6 +50,7 @@ public class AtomMassGeneratorTest extends AbstractGeneratorTest {
         model.registerParameters(new BasicBondGenerator());
         this.generator = new AtomMassGenerator();
         model.registerParameters(generator);
+        super.setTestedGenerator(generator);
     }
 	
 	@Test
