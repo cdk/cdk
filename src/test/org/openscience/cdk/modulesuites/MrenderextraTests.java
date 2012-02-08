@@ -27,9 +27,12 @@ import org.openscience.cdk.renderer.MoleculeSetRendererTest;
 import org.openscience.cdk.renderer.ReactionRendererTest;
 import org.openscience.cdk.renderer.ReactionSetRendererTest;
 import org.openscience.cdk.renderer.generators.AtomContainerBoundsGeneratorTest;
+import org.openscience.cdk.renderer.generators.AtomMassGeneratorTest;
 import org.openscience.cdk.renderer.generators.AtomNumberGeneratorTest;
+import org.openscience.cdk.renderer.generators.BoundsGeneratorTest;
 import org.openscience.cdk.renderer.generators.ExtendedAtomGeneratorTest;
 import org.openscience.cdk.renderer.generators.LonePairGeneratorTest;
+import org.openscience.cdk.renderer.generators.MappingGeneratorTest;
 import org.openscience.cdk.renderer.generators.ProductsBoxGeneratorTest;
 import org.openscience.cdk.renderer.generators.RadicalGeneratorTest;
 import org.openscience.cdk.renderer.generators.ReactantsBoxGeneratorTest;
@@ -61,6 +64,9 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGeneratorTest;
 	RadicalGeneratorTest.class,
 	LonePairGeneratorTest.class,
 	AtomContainerBoundsGeneratorTest.class,
-	AtomNumberGeneratorTest.class
+	AtomNumberGeneratorTest.class,
+	AtomMassGeneratorTest.class,
+	BoundsGeneratorTest.class,
+	MappingGeneratorTest.class
 })
 public class MrenderextraTests {}

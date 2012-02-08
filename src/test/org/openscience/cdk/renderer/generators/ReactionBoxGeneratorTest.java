@@ -50,6 +50,7 @@ public class ReactionBoxGeneratorTest extends AbstractGeneratorTest {
         model.registerParameters(new BasicBondGenerator());
         this.generator = new ReactionBoxGenerator();
         model.registerParameters(generator);
+        super.setTestedGenerator(generator);
     }
 	
 	@Test

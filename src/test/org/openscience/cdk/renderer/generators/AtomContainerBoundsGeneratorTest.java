@@ -51,6 +51,7 @@ public class AtomContainerBoundsGeneratorTest extends AbstractGeneratorTest {
         model.registerParameters(new BasicBondGenerator());
         this.generator = new AtomContainerBoundsGenerator();
         model.registerParameters(generator);
+        super.setTestedGenerator(generator);
     }
 	
 	@Test

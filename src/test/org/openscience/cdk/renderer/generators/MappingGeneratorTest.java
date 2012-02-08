@@ -27,6 +27,7 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -37,7 +38,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 public class MappingGeneratorTest extends AbstractGeneratorTest {
 	
 	private MappingGenerator generator;
-	
+
 	@Override
 	public Rectangle getCustomCanvas() {
 		return null;
@@ -51,6 +52,7 @@ public class MappingGeneratorTest extends AbstractGeneratorTest {
         model.registerParameters(new BasicBondGenerator());
         this.generator = new MappingGenerator();
         model.registerParameters(generator);
+        super.setTestedGenerator(generator);
     }
 	
 	@Test
@@ -62,5 +64,5 @@ public class MappingGeneratorTest extends AbstractGeneratorTest {
 		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
 		Assert.assertEquals(0, elements.size());
 	}
-	
+
 }
