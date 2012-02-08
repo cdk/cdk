@@ -27,6 +27,8 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -55,11 +57,21 @@ public abstract class AbstractGeneratorTest {
 	
 	protected BasicSceneGenerator sceneGenerator;
 	
+	private IGenerator testedGenerator;
+
+    /**
+     * Sets the {@link IGenerator} that is being tested.
+     */
+    public void setTestedGenerator(IGenerator generator) {
+        testedGenerator = generator;
+    }
+
 	/**
 	 * Sets up the model and transform.
 	 * Call from the 'Before' method in subclasses.
 	 */
 	public void setup() {
+		if (model != null) return; // things are already set up
 		model = new RendererModel();
 		elementUtil = new ElementUtility();
 		elementUtil.setTransform(this.getTransform());
@@ -278,6 +290,15 @@ public abstract class AbstractGeneratorTest {
         container.addBond(1, 2, IBond.Order.SINGLE);
         container.addBond(2, 3, IBond.Order.SINGLE);
         return container;
-	    
+	}
+
+	@Test
+	public void testGetParameters() {
+		Assert.assertNotNull("The tested generator is not set.", this.testedGenerator);
+
+		Assert.assertNotNull(
+			"The getParameters() must not return a null value.",
+			this.testedGenerator.getParameters()
+		);
 	}
 }

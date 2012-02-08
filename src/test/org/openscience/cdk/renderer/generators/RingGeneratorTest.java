@@ -1,5 +1,4 @@
-/* Copyright (C) 2010  Gilleain Torrance <gilleain.torrance@gmail.com>
- *               2011  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2012  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -25,25 +24,19 @@ package org.openscience.cdk.renderer.generators;
 import java.awt.Rectangle;
 import java.util.List;
 
-import javax.vecmath.Point2d;
-
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
-import org.openscience.cdk.renderer.elements.LineElement;
 
 /**
- * Test the {@link BasicBondGenerator}.
- * 
- * @author     maclean
  * @cdk.module test-renderbasic
  */
-public class BasicGeneratorTest extends AbstractGeneratorTest {
+public class RingGeneratorTest extends AbstractGeneratorTest {
 	
-	private BasicGenerator generator;
+	private RingGenerator generator;
 	
 	@Override
 	public Rectangle getCustomCanvas() {
@@ -53,46 +46,21 @@ public class BasicGeneratorTest extends AbstractGeneratorTest {
     @Before
     public void setup() {
         super.setup();
-        this.generator = new BasicGenerator();
+        model.registerParameters(new BasicSceneGenerator());
+        model.registerParameters(new BasicAtomGenerator());
+        this.generator = new RingGenerator();
         model.registerParameters(generator);
         super.setTestedGenerator(generator);
     }
 	
 	@Test
-	public void testSingleAtom() {
-		IAtomContainer singleAtom = makeSingleAtom();
+	public void testEmptyContainer() {
+		IAtomContainer emptyContainer = super.builder.newInstance(IAtomContainer.class);
 		
 		// nothing should be made
-		IRenderingElement root = generator.generate(singleAtom, model);
+		IRenderingElement root = generator.generate(emptyContainer, model);
 		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(1, elements.size());
+		Assert.assertEquals(0, elements.size());
 	}
 	
-	@Test
-	public void testSingleBond() {
-		IAtomContainer container = makeSingleBond();
-		
-		// generate the single line element
-		IRenderingElement root = generator.generate(container, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(1, elements.size());
-		
-		// test that the endpoints are distinct
-		LineElement line = (LineElement) elements.get(0);
-		Assert.assertNotSame(0, AbstractGeneratorTest.length(line));
-	}
-	
-	@Test
-	public void testSquare() {
-		IAtomContainer square = makeSquare();
-		
-		// generate all four bonds
-		IRenderingElement root = generator.generate(square, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(4, elements.size());
-		
-		// test that the center is at the origin
-		Assert.assertEquals(new Point2d(0,0), center(elements));
-	}
-
 }
