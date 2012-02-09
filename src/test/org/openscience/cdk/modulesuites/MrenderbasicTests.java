@@ -26,12 +26,14 @@ import org.openscience.cdk.renderer.AtomContainerRendererTest;
 import org.openscience.cdk.renderer.BoundsCalculatorTest;
 import org.openscience.cdk.renderer.elements.ArrowElementTest;
 import org.openscience.cdk.renderer.elements.AtomSymbolElementTest;
+import org.openscience.cdk.renderer.elements.ElementGroupTest;
 import org.openscience.cdk.renderer.elements.GeneralPathTest;
 import org.openscience.cdk.renderer.elements.LineElementTest;
 import org.openscience.cdk.renderer.elements.OvalElementTest;
 import org.openscience.cdk.renderer.elements.PathElementTest;
 import org.openscience.cdk.renderer.elements.RectangleElementTest;
 import org.openscience.cdk.renderer.elements.RingElementTest;
+import org.openscience.cdk.renderer.elements.TextGroupElementTest;
 import org.openscience.cdk.renderer.elements.WedgeLineElementTest;
 import org.openscience.cdk.renderer.elements.path.CubicToTest;
 import org.openscience.cdk.renderer.elements.path.LineToTest;
@@ -64,6 +66,8 @@ import org.openscience.cdk.renderer.generators.RingGeneratorTest;
 	PathElementTest.class,
 	OvalElementTest.class,
 	RingElementTest.class,
+	ElementGroupTest.class,
+	TextGroupElementTest.class,
 	AtomSymbolElementTest.class,
 	RectangleElementTest.class,
 	ArrowElementTest.class,
