@@ -63,6 +63,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
 		return new ElementGroup();
 	}
 	
+	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {

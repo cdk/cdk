@@ -67,6 +67,7 @@ public class ReactionArrowGenerator implements IGenerator<IReaction> {
         );
 	}
 
+	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {

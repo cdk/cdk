@@ -82,6 +82,7 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 	    return new TextElement(x, axis, "+", color);
 	}
 
+	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {
