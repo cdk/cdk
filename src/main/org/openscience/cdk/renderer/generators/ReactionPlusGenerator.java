@@ -44,6 +44,8 @@ import org.openscience.cdk.renderer.elements.TextElement;
 @TestClass("org.openscience.cdk.renderer.generators.ReactionPlusGeneratorTest")
 public class ReactionPlusGenerator implements IGenerator<IReaction> {
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		ElementGroup diagram = new ElementGroup();
@@ -82,6 +84,8 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 	    return new TextElement(x, axis, "+", color);
 	}
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(

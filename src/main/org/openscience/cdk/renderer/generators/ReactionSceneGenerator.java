@@ -41,6 +41,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
     public static class ShowReactionBoxes extends
     AbstractGeneratorParameter<Boolean> {
+    	/** {@inheritDoc}} */
     	public Boolean getDefault() {
     		return Boolean.TRUE;
     	}
@@ -50,6 +51,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
     public static class ArrowHeadWidth extends
     AbstractGeneratorParameter<Double> {
+    	/** {@inheritDoc}} */
     	public Double getDefault() {
     		return 10.0;
     	}
@@ -59,11 +61,15 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
     public ReactionSceneGenerator() {}
 
+	/** {@inheritDoc}} */
+	@Override
     @TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		return new ElementGroup();
 	}
 	
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(

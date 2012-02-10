@@ -51,6 +51,8 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
 
 	private static double DISTANCE;
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if(!model.getParameter(ShowReactionBoxes.class).getValue())
@@ -89,6 +91,8 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
         return diagram;
 	}
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(

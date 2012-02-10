@@ -54,6 +54,7 @@ public class BoundsGenerator implements IGenerator<IReaction> {
 	 */
     public static class BoundsColor extends
     AbstractGeneratorParameter<Color> {
+    	/** {@inheritDoc}} */
         public Color getDefault() {
             return Color.LIGHT_GRAY;
         }
@@ -62,6 +63,8 @@ public class BoundsGenerator implements IGenerator<IReaction> {
 
     public BoundsGenerator() {}
 
+	/** {@inheritDoc}} */
+	@Override
     @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
         ElementGroup elementGroup = new ElementGroup();
@@ -98,6 +101,8 @@ public class BoundsGenerator implements IGenerator<IReaction> {
                                     boundsColor.getValue());
     }
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
