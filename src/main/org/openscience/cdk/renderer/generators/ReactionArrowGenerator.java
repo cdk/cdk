@@ -38,7 +38,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * 
  * @author maclean
  * @cdk.module renderextra
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.ReactionArrowGeneratorTest")
 public class ReactionArrowGenerator implements IGenerator<IReaction> {

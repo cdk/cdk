@@ -39,6 +39,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 
 /**
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.MappingGeneratorTest")
 public class MappingGenerator implements IGenerator<IReaction> {

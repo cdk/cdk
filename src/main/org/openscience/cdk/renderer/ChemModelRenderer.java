@@ -103,6 +103,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  *
  * @author maclean
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.ChemModelRendererTest")
 public class ChemModelRenderer extends AbstractRenderer<IChemModel>

@@ -43,6 +43,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * 
  * @author maclean
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.BoundsGeneratorTest")
 public class BoundsGenerator implements IGenerator<IReaction> {

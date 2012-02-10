@@ -41,7 +41,7 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
  * 
  * @author maclean
  * @cdk.module renderextra
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.ReactionBoxGeneratorTest")
 public class ReactionBoxGenerator implements IGenerator<IReaction> {

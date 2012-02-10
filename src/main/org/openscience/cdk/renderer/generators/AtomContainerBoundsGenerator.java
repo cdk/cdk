@@ -32,6 +32,7 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
 
 /**
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.AtomContainerBoundsGeneratorTest")
 public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> {

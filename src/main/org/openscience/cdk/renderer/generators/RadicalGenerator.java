@@ -46,7 +46,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * 
  * @author maclean
  * @cdk.module renderextra
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.RadicalGeneratorTest")
 public class RadicalGenerator implements IGenerator<IAtomContainer> {

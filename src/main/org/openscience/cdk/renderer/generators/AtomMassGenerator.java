@@ -34,6 +34,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.AtomMassGeneratorTest")
 public class AtomMassGenerator extends BasicAtomGenerator {
