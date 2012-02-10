@@ -46,6 +46,8 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 @TestClass("org.openscience.cdk.renderer.generators.ReactantsBoxGeneratorTest")
 public class ReactantsBoxGenerator implements IGenerator<IReaction> {
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if (!model.getParameter(ShowReactionBoxes.class).getValue())
@@ -73,6 +75,8 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
         return diagram;
 	}
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(

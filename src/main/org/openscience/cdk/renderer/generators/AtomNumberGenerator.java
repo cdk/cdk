@@ -52,7 +52,8 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     public static class AtomNumberTextColor extends
         AbstractGeneratorParameter<Color> {
-        public Color getDefault() {
+    	/** {@inheritDoc}} */
+    	public Color getDefault() {
             return Color.BLACK;
         }
     }
@@ -61,6 +62,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     
     public static class WillDrawAtomNumbers extends
                         AbstractGeneratorParameter<Boolean> {
+    	/** {@inheritDoc}} */
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -70,6 +72,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     public static class AtomColorer extends
     AbstractGeneratorParameter<IAtomColorer> {
+    	/** {@inheritDoc}} */
     	public IAtomColorer getDefault() {
     		return new CDK2DAtomColors();
     	}
@@ -78,6 +81,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     public static class ColorByType extends
     AbstractGeneratorParameter<Boolean> {
+    	/** {@inheritDoc}} */
     	public Boolean getDefault() {
     		return Boolean.FALSE;
     	}
@@ -90,12 +94,15 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
      */
     public static class Offset extends
     AbstractGeneratorParameter<Vector2d> {
+    	/** {@inheritDoc}} */
     	public Vector2d getDefault() {
     		return new Vector2d();
     	}
     }
     private Offset offset = new Offset();
 
+	/** {@inheritDoc}} */
+	@Override
     @TestMethod("testEmptyContainer")
 	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
 		ElementGroup numbers = new ElementGroup();
@@ -125,6 +132,8 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 		return numbers;
 	}
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList( new IGeneratorParameter<?>[] {

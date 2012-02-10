@@ -51,6 +51,8 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
     
     public LonePairGenerator() {}
 
+	/** {@inheritDoc}} */
+	@Override
     @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
         ElementGroup group = new ElementGroup();
@@ -101,6 +103,8 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
         return group;
     }
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();

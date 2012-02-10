@@ -53,6 +53,8 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
     
     public RadicalGenerator() {}
 
+	/** {@inheritDoc}} */
+	@Override
     @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
         ElementGroup group = new ElementGroup();
@@ -93,6 +95,8 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         return group;
     }
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();

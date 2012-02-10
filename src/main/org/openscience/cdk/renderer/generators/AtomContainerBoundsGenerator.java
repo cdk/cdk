@@ -37,6 +37,8 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
 @TestClass("org.openscience.cdk.renderer.generators.AtomContainerBoundsGeneratorTest")
 public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> {
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testEmptyContainer")
     public IRenderingElement generate( IAtomContainer ac, RendererModel model) {
         double[] minMax = GeometryTools.getMinMax(ac);
@@ -45,6 +47,8 @@ public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> 
         
     }
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();

@@ -49,6 +49,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
 	 */
     public static class AtomAtomMappingLineColor extends
     AbstractGeneratorParameter<Color> {
+    	/** {@inheritDoc}} */
     	public Color getDefault() {
     		return Color.gray;
     	}
@@ -61,6 +62,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
 	 */
     public static class MappingLineWidth extends
     AbstractGeneratorParameter<Double> {
+    	/** {@inheritDoc}} */
     	public Double getDefault() {
     		return 1.0;
     	}
@@ -70,6 +72,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
 
     public static class ShowAtomAtomMapping extends
     AbstractGeneratorParameter<Boolean> {
+    	/** {@inheritDoc}} */
     	public Boolean getDefault() {
     		return Boolean.TRUE;
     	}
@@ -79,6 +82,8 @@ public class MappingGenerator implements IGenerator<IReaction> {
 	
     public MappingGenerator() {}
 
+	/** {@inheritDoc}} */
+	@Override
     @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if(!showAtomAtomMapping.getValue()) return null;
@@ -110,6 +115,8 @@ public class MappingGenerator implements IGenerator<IReaction> {
 		return mappingLineWidth.getValue() / scale;
 	}
 
+	/** {@inheritDoc}} */
+	@Override
 	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
