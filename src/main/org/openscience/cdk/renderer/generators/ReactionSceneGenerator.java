@@ -34,6 +34,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * Generator for general reaction scene components.
  *
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.ReactionSceneGeneratorTest")
 public class ReactionSceneGenerator implements IGenerator<IReaction> {

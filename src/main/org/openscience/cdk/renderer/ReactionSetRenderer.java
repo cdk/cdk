@@ -102,6 +102,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  *
  * @author maclean
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.ReactionSetRendererTest")
 public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>

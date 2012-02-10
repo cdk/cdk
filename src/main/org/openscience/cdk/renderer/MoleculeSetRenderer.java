@@ -104,6 +104,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  *
  * @author maclean
  * @cdk.module renderextra
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.MoleculeSetRendererTest")
 public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>

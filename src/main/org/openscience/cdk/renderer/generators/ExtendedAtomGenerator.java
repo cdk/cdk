@@ -44,7 +44,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * 
  * @author maclean
  * @cdk.module renderextra
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.ExtendedAtomGeneratorTest")
 public class ExtendedAtomGenerator extends BasicAtomGenerator {

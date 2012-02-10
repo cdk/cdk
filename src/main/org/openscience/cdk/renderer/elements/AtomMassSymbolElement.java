@@ -24,6 +24,7 @@ import java.awt.Color;
 
 /**
  * @cdk.module renderextra
+ * @cdk.githash
  */
 public class AtomMassSymbolElement extends AtomSymbolElement {
 

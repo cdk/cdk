@@ -44,7 +44,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * 
  * @author maclean
  * @cdk.module renderextra
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.LonePairGeneratorTest")
 public class LonePairGenerator implements IGenerator<IAtomContainer> {

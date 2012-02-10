@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.elements.TextElement;
  * 
  * @author maclean
  * @cdk.module renderextra
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.ReactionPlusGeneratorTest")
 public class ReactionPlusGenerator implements IGenerator<IReaction> {
