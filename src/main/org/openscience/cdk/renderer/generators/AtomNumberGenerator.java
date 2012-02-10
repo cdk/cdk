@@ -124,6 +124,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 		return numbers;
 	}
 
+	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList( new IGeneratorParameter<?>[] {
                 textColor,

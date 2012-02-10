@@ -108,7 +108,8 @@ public class MappingGenerator implements IGenerator<IReaction> {
 		double scale = model.getParameter(Scale.class).getValue();
 		return mappingLineWidth.getValue() / scale;
 	}
-	
+
+	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {

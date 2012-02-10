@@ -93,6 +93,7 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         return group;
     }
 
+	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();
     }

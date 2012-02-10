@@ -73,6 +73,7 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
         return diagram;
 	}
 
+	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {

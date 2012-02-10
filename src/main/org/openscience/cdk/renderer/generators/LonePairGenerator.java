@@ -101,6 +101,7 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
         return group;
     }
 
+	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();
     }

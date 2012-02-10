@@ -97,6 +97,7 @@ public class BoundsGenerator implements IGenerator<IReaction> {
                                     boundsColor.getValue());
     }
 
+	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
             new IGeneratorParameter<?>[] {

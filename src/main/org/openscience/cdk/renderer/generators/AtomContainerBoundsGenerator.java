@@ -44,6 +44,7 @@ public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> 
         
     }
 
+	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();
     }
