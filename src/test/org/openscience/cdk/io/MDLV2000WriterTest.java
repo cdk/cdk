@@ -366,7 +366,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        reader.read(molecule);
+        molecule = reader.read(molecule);
         reader.close();
         
         StringWriter sw =new StringWriter();
