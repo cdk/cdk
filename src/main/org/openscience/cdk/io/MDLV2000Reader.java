@@ -62,6 +62,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Reads content from MDL molfiles and SD files. 
@@ -108,6 +110,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     //Keep track of atoms and the lines they were on in the atom block.
     private List<IAtom> atomsByLinePosition;
+    // Pattern to remove trailing space (String.trim() will remove leading space, which we don't want)
+    private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
     
     public MDLV2000Reader() {
         this(new StringReader(""));
@@ -438,6 +442,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             int atomBlockLineNumber=0;
             for (int f = 0; f < atoms; f++) {
                 line = input.readLine(); linecount++; atomBlockLineNumber++;
+                Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
+                if(trailingSpaceMatcher.find()){
+                    handleError("Trailing space found",
+                                linecount,
+                                trailingSpaceMatcher.start(), trailingSpaceMatcher.end());
+                    line = trailingSpaceMatcher.replaceAll("");
+                }
                 x = Double.parseDouble(line.substring(0, 10).trim());
                 y = Double.parseDouble(line.substring(10, 20).trim());
                 z = Double.parseDouble(line.substring(20, 30).trim());
@@ -446,7 +457,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 totalY += Math.abs(y);
                 totalZ += Math.abs(z);
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
-                String element = line.substring(31,34).trim();
+                String element = line.substring(31, Math.min(line.length(), 34)).trim();
+                if(line.length() < 34){
+                    handleError("Element atom type does not follow V2000 format type should of length three" +
+                                " and padded with space if required",
+                                linecount, 31, 34);
+                }
 
                 logger.debug("Atom type: ", element);
                 if (isotopeFactory.isElement(element)) {
@@ -498,6 +514,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 atom.setPoint3d(new Point3d(x, y, z));
                 
                 // parse further fields
+                if(line.length() >= 36){
                 String massDiffString = line.substring(34,36).trim();
                 logger.debug("Mass difference: ", massDiffString);
                 if (!(atom instanceof IPseudoAtom)) {
@@ -516,6 +533,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                 } else {
                     logger.error("Cannot set mass difference for a non-element!");
+                }
+                } else {                      
+                    handleError("Mass difference is missing", linecount, 34, 36);
                 }
 
                 
@@ -548,6 +568,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                 }
                 
+                if(line.length() >= 39){
                 String chargeCodeString = line.substring(36,39).trim();
                 logger.debug("Atom charge code: ", chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
@@ -566,6 +587,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         atom.setFormalCharge(-2);
                 } else if (chargeCode == 7) {
                         atom.setFormalCharge(-3);
+                }
+                } else {
+                    handleError("Atom charge is missing", linecount, 36, 39);
                 }
                 
                 try {

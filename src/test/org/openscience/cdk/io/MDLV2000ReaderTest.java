@@ -920,6 +920,18 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("Gln", pa.getLabel());
     }
 
+    /**
+     * @cdk.bug 3485634
+     */
+    @Test
+    public void testMissingAtomProperties() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug3485634.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IMolecule molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        molecule = reader.read(molecule);
+        Assert.assertEquals(9, molecule.getAtomCount());
+    }
+
     @Test
     public void testAtomParity() throws CDKException, IOException{
         
