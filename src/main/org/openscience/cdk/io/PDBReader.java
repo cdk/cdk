@@ -671,9 +671,19 @@ public class PDBReader extends DefaultChemObjectReader {
 //            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
 //		}
 		if (lineLength >= 79) {
-            String frag = cLine.substring(78, 80).trim();
+			String frag;
+			if (lineLength >= 80) {
+				frag = cLine.substring(78, 80).trim();
+			} else {
+				frag = cLine.substring(78);
+			}
             if (frag.length() > 0) {
-                oAtom.setCharge(Double.parseDouble(frag));
+        		// see Format_v33_A4.pdf, p. 178
+            	if (frag.endsWith("-") || frag.endsWith("+")) {
+            		oAtom.setCharge(Double.parseDouble(new StringBuilder(frag).reverse().toString()));            		
+            	} else {
+            		oAtom.setCharge(Double.parseDouble(frag));
+                }
             }
 		}
 		
