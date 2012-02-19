@@ -38,6 +38,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
@@ -303,6 +305,37 @@ public class IteratingMDLReaderTest extends CDKTestCase {
 		    }
         }
     	
+    }
+
+
+    /**
+     * @cdk.bug 3488307
+     */
+    @Test public void testBrokenSDF() throws IOException, CDKException {
+
+        String path                = "data/mdl/bug3488307.sdf";
+        InputStream in             = getClass().getClassLoader().getResourceAsStream(path);
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IteratingMDLReader reader  = new IteratingMDLReader(in, builder);
+
+        reader.setSkip(true); // skip over null entries and keep reading until EOF
+
+        int count = 0;
+
+        java.util.ArrayList<Object> titles            = new java.util.ArrayList<Object>();
+        java.util.ArrayList<IAtomContainer> molecules = new java.util.ArrayList<IAtomContainer>();
+
+        while(reader.hasNext()){
+            IAtomContainer molecule = reader.next();
+            titles.add(molecule.getProperty(CDKConstants.TITLE));
+            molecules.add(molecule);
+            count++;
+        }
+
+        reader.close();
+
+        Assert.assertEquals(3, count);
+
     }
 
 }

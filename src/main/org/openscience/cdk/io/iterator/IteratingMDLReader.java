@@ -29,8 +29,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -99,6 +103,24 @@ implements IChemObjectIOListener {
     
     private BooleanIOSetting forceReadAs3DCoords;
 
+    // if an error is encountered the reader will skip over the error
+    private boolean skip = false;
+
+    // buffer to store pre-read Mol records in
+    private StringBuffer buffer = new StringBuffer(10000);
+
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    
+    // patterns to match
+    private static Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
+    private static Pattern M_END                = Pattern.compile("M\\s\\sEND");
+    private static Pattern SDF_RECORD_SEPARATOR = Pattern.compile("\\$\\$\\$\\$");
+    private static Pattern SDF_FIELD_START      = Pattern.compile("\\A>\\s");
+
+    // map of MDL formats to their readers
+    private final Map<IChemFormat, ISimpleChemObjectReader> readerMap
+            = new HashMap<IChemFormat, ISimpleChemObjectReader>(5);
+
     /**
      * Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
      *
@@ -106,9 +128,7 @@ implements IChemObjectIOListener {
      * @param builder The builder
      */
     public IteratingMDLReader(Reader in, IChemObjectBuilder builder) {
-        this.builder = builder;
-    	setReader(in);
-    	initIOSettings();
+        this(in, builder, false);
     }
 
     /**
@@ -121,79 +141,175 @@ implements IChemObjectIOListener {
         this(new InputStreamReader(in), builder);
     }
 
+    /**
+     * Constructs a new IteratingMDLReader that can read Molecule from a given a
+     * InputStream. This constructor allows specification of whether the reader will
+     * skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
+     * is read the iterating reader will stop at the broken molecule. However if
+     * skip is set to true then the reader will keep trying to read more molecules
+     * until the end of the file is reached.
+     *
+     * @param in       the {@see InputStream} to read from
+     * @param builder  builder to use
+     * @param skip     whether to skip null molecules
+     */
+    public IteratingMDLReader(InputStream in, IChemObjectBuilder builder, boolean skip) {
+        this(new InputStreamReader(in), builder, skip);
+    }
+
+    /**
+     * Constructs a new IteratingMDLReader that can read Molecule from a given a
+     * Reader. This constructor allows specification of whether the reader will
+     * skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
+     * is read the iterating reader will stop at the broken molecule. However if
+     * skip is set to true then the reader will keep trying to read more molecules
+     * until the end of the file is reached.
+     *
+     * @param in       the {@see Reader} to read from
+     * @param builder  builder to use
+     * @param skip     whether to skip null molecules
+     */
+    public IteratingMDLReader(Reader in, IChemObjectBuilder builder, boolean skip){
+        this.builder = builder;
+        setReader(in);
+        initIOSettings();
+        setSkip(skip);
+    }
+
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return currentFormat;
     }
 
     /**
+     *                Method will return an appropriate reader for the provided format. Each reader is stored
+     *                in a map, if no reader is available for the specified format a new reader is created. The
+     *                {@see ISimpleChemObjectReadr#setErrorHandler(IChemObjectReaderErrorHandler)} and
+     *                {@see ISimpleChemObjectReadr#setReaderMode(DefaultIteratingChemObjectReader)}
+     *                methods are set.
+     *
+     * @param  format The format to obtain a reader for
+     * @return        instance of a reader appropriate for the provided format
+     */
+    private ISimpleChemObjectReader getReader(IChemFormat format){
+
+        // create a new reader if not mapped
+        if(!readerMap.containsKey(format)){
+
+            ISimpleChemObjectReader reader = factory.createReader(format);
+            reader.setErrorHandler(this.errorHandler);
+            reader.setReaderMode(this.mode);
+            if (currentFormat instanceof MDLV2000Format) {
+                reader.addChemObjectIOListener(this);
+                ((MDLV2000Reader)reader).customizeJob();
+            }
+
+            readerMap.put(format, reader);
+
+        }
+
+        return readerMap.get(format);
+
+    }
+
+    /**
      * Returns true if another IMolecule can be read.
      */
     public boolean hasNext() {
-        if (!nextAvailableIsKnown) {
-            hasNext = false;
-            
-            // now try to parse the next Molecule
-            try {
-                if ((currentLine = input.readLine()) != null) {
-                	currentFormat = (IChemFormat)MDLFormat.getInstance();
-                    StringBuffer buffer = new StringBuffer();
-                    while (currentLine != null && !currentLine.equals("M  END")) {
-                        // still in a molecule
-                        buffer.append(currentLine);
-                        buffer.append(System.getProperty("line.separator"));
 
-                        currentLine = input.readLine();
-
-                        // do MDL molfile version checking
-                        if (currentLine.contains("V2000") || currentLine.contains("v2000")) {
-                        	currentFormat = (IChemFormat)MDLV2000Format.getInstance();
-                        } else if (currentLine.contains("V3000") || currentLine.contains("v3000")) {
-                        	currentFormat = (IChemFormat)MDLV3000Format.getInstance();
-                        }
-                    }
-                    buffer.append(currentLine);
-                    buffer.append(System.getProperty("line.separator"));
-                    logger.debug("MDL file part read: ", buffer);
-                    ISimpleChemObjectReader reader = factory.createReader(currentFormat);
-                    reader.setReader(new StringReader(buffer.toString()));
-                    reader.setErrorHandler(this.errorHandler);
-                    reader.setReaderMode(this.mode);
-                    if (currentFormat instanceof MDLV2000Format) {
-                        reader.addChemObjectIOListener(this);
-                        ((MDLV2000Reader)reader).customizeJob();
-                    }
-                    nextMolecule = (IMolecule)reader.read(builder.newInstance(IMolecule.class));
-
-                    // note that a molecule may have 0 atoms, but still
-                    // be useful (by having SD tags for example), so just
-                    // check for null'ness rather than atom count
-                    hasNext = nextMolecule != null;
-
-                    // now read the data part
-                    currentLine = input.readLine();
-                    readDataBlockInto(nextMolecule);
-                } else {
-                    hasNext = false;
-                }
-            } catch (Exception exception) {
-                logger.error("Error while reading next molecule: " +
-                             exception.getMessage());
-                logger.debug(exception);
-                hasNext = false;
-            }
-            if (!hasNext) nextMolecule = null;
-            nextAvailableIsKnown = true;
+        if (nextAvailableIsKnown) {
+            return hasNext;
         }
-        return hasNext;
+
+        hasNext = false;
+        nextMolecule = null;
+        buffer.delete(0, buffer.length());
+            
+        // now try to parse the next Molecule
+        try {
+            currentFormat = (IChemFormat)MDLFormat.getInstance();
+
+            while ((currentLine = input.readLine()) != null) {
+
+                // still in a molecule
+                buffer.append(currentLine).append(LINE_SEPARATOR);
+
+                // do MDL molfile version checking
+                Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
+                if (versionMatcher.find()) {
+                    currentFormat = versionMatcher.group(1) != null
+                            ? (IChemFormat) MDLV2000Format.getInstance()
+                            : (IChemFormat) MDLV3000Format.getInstance();
+                }
+
+                // un-trimmed line has already been stored in buffer
+                currentLine = currentLine.trim();
+                
+                if(M_END.matcher(currentLine).matches()) {
+
+                    logger.debug("MDL file part read: ", buffer);
+
+                    IMolecule molecule = null;
+
+                    try{
+                        ISimpleChemObjectReader reader = getReader(currentFormat);
+                        InputStream byteStream         = new ByteArrayInputStream(buffer.toString().getBytes("UTF-8"));
+                        reader.setReader(byteStream);
+                        molecule = (IMolecule)reader.read(builder.newInstance(IMolecule.class));
+                        byteStream.close();
+                    } catch (Exception exception){
+                        logger.error("Error while reading next molecule: " +
+                                     exception.getMessage());
+                        logger.debug(exception);
+                    }
+
+                    if(molecule != null){
+                        readDataBlockInto(molecule);
+                        hasNext              = true;
+                        nextAvailableIsKnown = true;
+                        nextMolecule         = molecule;
+                        return true;
+                    } else if(skip){
+                        // null molecule and skip = true, eat up the rest of the entry until '$$$$'
+                        String line;
+                        while ((line = input.readLine()) != null && !SDF_RECORD_SEPARATOR.matcher(line).matches()) {
+                            buffer.delete(0, buffer.length());
+                        }
+                    } else {
+                        return false;
+                    }
+
+                    // empty the buffer
+                    buffer.delete(0, buffer.length());
+                       
+                }
+
+                // found SDF record separator ($$$$) without parsing a molecule (separator is detected
+                // in readDataBlockInto()) the buffer is cleared and the iterator continues reading
+                if(SDF_RECORD_SEPARATOR.matcher(currentLine).matches()){
+                    buffer.delete(0, buffer.length());
+                }
+
+            }
+        } catch (IOException exception) {
+            logger.error("Error while reading next molecule: " +
+                         exception.getMessage());
+            logger.debug(exception);
+        }
+
+        // reached end of file
+        return false;
+
     }
 
     private void readDataBlockInto(IMolecule m) throws IOException {
         String fieldName = null;
-        while (currentLine != null && !(currentLine.trim().equals("$$$$"))) {
+        while ((currentLine = input.readLine()) != null
+                && !SDF_RECORD_SEPARATOR.matcher(currentLine).matches()) {
             logger.debug("looking for data header: ", currentLine);
             String str = new String(currentLine);
-            if (str.startsWith("> ")) {
+            if (SDF_FIELD_START.matcher(str).find()) {
                 fieldName = extractFieldName(fieldName, str);
                 str = skipOtherFieldHeaderLines(str);
                 String data = extractFieldData(str);
@@ -202,8 +318,17 @@ implements IChemObjectIOListener {
                     m.setProperty(fieldName, data);
                 }
             }
-            currentLine = input.readLine();
         }
+    }
+
+    /**
+     *        Indicate whether the reader should skip over SDF records
+     *        that cause problems. If true the reader will fetch the next
+     *        molecule
+     * @param skip ignore error molecules continue reading
+     */
+    public void setSkip(boolean skip){
+        this.skip = skip;
     }
 
     private String extractFieldData(String str) throws IOException {
