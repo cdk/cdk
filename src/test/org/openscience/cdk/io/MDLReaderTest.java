@@ -230,4 +230,16 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         molOne = reader.read(new AtomContainer());
         Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
     }
+
+    /**
+     * @cdk.bug 3485634
+     */
+    @Test
+    public void testMissingAtomProperties() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug3485634.mol");
+        MDLReader reader = new MDLReader(in);
+        IMolecule molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        molecule = reader.read(molecule);
+        Assert.assertEquals(9, molecule.getAtomCount());
+    }
 }
