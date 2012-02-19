@@ -926,10 +926,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        reader.read(molecule);
+        molecule = reader.read(molecule);
         reader.close();
 
-        
+        Assert.assertEquals(6, molecule.getAtomCount());
         boolean chiralCentre = false;
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(molecule);
         for (IAtom atom : atoms) {
