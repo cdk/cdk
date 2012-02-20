@@ -253,7 +253,9 @@ public class BCUTDescriptor implements IMolecularDescriptor {
     private boolean hasUndefined(double[][] m) {
         for (double[] aM : m) {
             for (int j = 0; j < m[0].length; j++) {
-                if (Double.isNaN(aM[j]) || Double.isInfinite(aM[j])) return true;
+                if (Double.isNaN(aM[j]) || Double.isInfinite(aM[j])) {
+                    return true;
+                }
             }
         }
         return false;
@@ -372,8 +374,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         }
 
         double[][] burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
-        if (!hasUndefined(burdenMatrix))
-                 return getDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
+        if (hasUndefined(burdenMatrix))
+            return getDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
         Matrix matrix = new Matrix(burdenMatrix);
         EigenvalueDecomposition eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval1 = eigenDecomposition.getRealEigenvalues();
@@ -403,9 +405,9 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             diagvalue[counter] = molecule.getAtom(i).getCharge();
             counter++;
         }
-        burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);       
-        if (!hasUndefined(burdenMatrix))
-                 return getDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
+        burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
+        if (hasUndefined(burdenMatrix))
+            return getDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
         matrix = new Matrix(burdenMatrix);
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval2 = eigenDecomposition.getRealEigenvalues();
@@ -422,8 +424,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             counter++;
         }
         burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
-        if (!hasUndefined(burdenMatrix))
-                 return getDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
+        if (hasUndefined(burdenMatrix))
+            return getDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
         matrix = new Matrix(burdenMatrix);
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval3 = eigenDecomposition.getRealEigenvalues();
