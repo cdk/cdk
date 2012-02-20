@@ -23,6 +23,8 @@ package org.openscience.cdk.qsar;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
+
+import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.dict.Dictionary;
@@ -89,7 +91,7 @@ public class DescriptorEngine {
     private Dictionary dict = null;
     private List<String> classNames = null;
     private List<IDescriptor> descriptors = null;
-    private List<DescriptorSpecification> speclist = null;
+    private List<IImplementationSpecification> speclist = null;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DescriptorEngine.class);
 
@@ -311,7 +313,7 @@ public class DescriptorEngine {
      *         the supplied identifier
      */
     @TestMethod(value="testDictionaryType")
-    public String getDictionaryType(DescriptorSpecification descriptorSpecification) {
+    public String getDictionaryType(IImplementationSpecification descriptorSpecification) {
         return getDictionaryType(descriptorSpecification.getSpecificationReference());
     }
 
@@ -388,7 +390,7 @@ public class DescriptorEngine {
      */
 
     @TestMethod(value="testDictionaryClass")
-    public String[] getDictionaryClass(DescriptorSpecification descriptorSpecification) {
+    public String[] getDictionaryClass(IImplementationSpecification descriptorSpecification) {
         return getDictionaryClass(descriptorSpecification.getSpecificationReference());
     }
 
@@ -475,7 +477,7 @@ public class DescriptorEngine {
      *         with which the <code>DescriptorValue</code> objects can be obtained from a
      *         molecules property list
      */
-    public List<DescriptorSpecification> getDescriptorSpecifications() {
+    public List<IImplementationSpecification> getDescriptorSpecifications() {
         return (speclist);
     }
 
@@ -485,7 +487,7 @@ public class DescriptorEngine {
      * @param specs A list of specification objects
      * @see #getDescriptorSpecifications
      */
-    public void setDescriptorSpecifications(List<DescriptorSpecification> specs) {
+    public void setDescriptorSpecifications(List<IImplementationSpecification> specs) {
         speclist = specs;
     }
 
@@ -526,7 +528,7 @@ public class DescriptorEngine {
     @TestMethod(value="testAvailableClass")
     public String[] getAvailableDictionaryClasses() {
         List<String> classList = new ArrayList<String>();
-        for (DescriptorSpecification spec : speclist) {
+        for (IImplementationSpecification spec : speclist) {
             String[] tmp = getDictionaryClass(spec);
             if (tmp != null) classList.addAll(Arrays.asList(tmp));
         }
@@ -700,8 +702,8 @@ public class DescriptorEngine {
         return descriptors;
     }
 
-    public List<DescriptorSpecification> initializeSpecifications(List<IDescriptor> descriptors) {
-        List<DescriptorSpecification> speclist = new ArrayList<DescriptorSpecification>();
+    public List<IImplementationSpecification> initializeSpecifications(List<IDescriptor> descriptors) {
+        List<IImplementationSpecification> speclist = new ArrayList<IImplementationSpecification>();
         for (IDescriptor descriptor : descriptors) {
             speclist.add(descriptor.getSpecification());
         }
@@ -715,7 +717,7 @@ public class DescriptorEngine {
             String className = classNames.get(i);
             if (className.equals(identifier)) {
                 IDescriptor descriptor = descriptors.get(i);
-                DescriptorSpecification descSpecification = descriptor.getSpecification();
+                IImplementationSpecification descSpecification = descriptor.getSpecification();
                 String[] tmp = descSpecification.getSpecificationReference().split("#");
                 if (tmp.length != 2) {
                     logger.debug("Something fishy with the spec ref: ", descSpecification.getSpecificationReference());

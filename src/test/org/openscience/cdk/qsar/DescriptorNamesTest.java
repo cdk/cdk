@@ -28,6 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -50,7 +51,7 @@ public class DescriptorNamesTest extends CDKTestCase {
     @Test
     public void checkUniqueMolecularDescriptorNames() throws Exception {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
-        List<DescriptorSpecification> specs = engine.getDescriptorSpecifications();
+        List<IImplementationSpecification> specs = engine.getDescriptorSpecifications();
 
         // we work with a simple molecule with 3D coordinates
         String filename = "data/mdl/lobtest2.sdf";
@@ -65,7 +66,7 @@ public class DescriptorNamesTest extends CDKTestCase {
 
         int ncalc = 0;
         List<String> descNames = new ArrayList<String>();
-        for (DescriptorSpecification spec : specs) {
+        for (IImplementationSpecification spec : specs) {
             DescriptorValue value = (DescriptorValue) ac.getProperty(spec);
             if (value == null) continue;
             ncalc++;

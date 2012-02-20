@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.qsar;
 
+import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
@@ -86,7 +87,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 public interface IDescriptor {
 
    /**
-   * Returns a <code>Map</code> which specifies which descriptor
+   * Returns a <code>IImplementationSpecification</code> which specifies which descriptor
    * is implemented by this class. 
    *
    * These fields are used in the map:
@@ -100,7 +101,7 @@ public interface IDescriptor {
    *
    * @return An object containing the descriptor specification
    */
-    public DescriptorSpecification getSpecification();
+    public IImplementationSpecification getSpecification();
     
     /** 
      * Returns the names of the parameters for this descriptor. The method
