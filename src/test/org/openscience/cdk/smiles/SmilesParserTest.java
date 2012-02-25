@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -53,9 +56,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -2307,6 +2307,21 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1cc2c3cc1.c1cb23cc1");
         Assert.assertNotNull(mol);
+    }
+
+    @Test
+    public void testFormalNeighborBount() throws CDKException, CloneNotSupportedException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("Oc1ccc(O)cc1");
+        Assert.assertEquals("O.sp3", mol.getAtom(0).getAtomTypeName());
+        Assert.assertEquals(2, mol.getAtom(0).getFormalNeighbourCount().intValue());
+        Assert.assertEquals("C.sp2", mol.getAtom(1).getAtomTypeName());
+        Assert.assertEquals(3, mol.getAtom(1).getFormalNeighbourCount().intValue());
+        IMolecule clone = (IMolecule)mol.clone();
+        Assert.assertEquals("O.sp3", clone.getAtom(0).getAtomTypeName());
+        Assert.assertEquals(2, clone.getAtom(0).getFormalNeighbourCount().intValue());
+        Assert.assertEquals("C.sp2", clone.getAtom(1).getAtomTypeName());
+        Assert.assertEquals(3, clone.getAtom(1).getFormalNeighbourCount().intValue());
     }
 
     /**
