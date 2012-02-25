@@ -2314,6 +2314,21 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertNotNull(mol);
     }
 
+    @Test
+    public void testFormalNeighborBount() throws CDKException, CloneNotSupportedException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Oc1ccc(O)cc1");
+        Assert.assertEquals("O.sp3", mol.getAtom(0).getAtomTypeName());
+        Assert.assertEquals(2, mol.getAtom(0).getFormalNeighbourCount().intValue());
+        Assert.assertEquals("C.sp2", mol.getAtom(1).getAtomTypeName());
+        Assert.assertEquals(3, mol.getAtom(1).getFormalNeighbourCount().intValue());
+        IAtomContainer clone = (IAtomContainer)mol.clone();
+        Assert.assertEquals("O.sp3", clone.getAtom(0).getAtomTypeName());
+        Assert.assertEquals(2, clone.getAtom(0).getFormalNeighbourCount().intValue());
+        Assert.assertEquals("C.sp2", clone.getAtom(1).getAtomTypeName());
+        Assert.assertEquals(3, clone.getAtom(1).getFormalNeighbourCount().intValue());
+    }
+
     /**
      * Counts aromatic atoms in a molecule.
      * @param mol molecule for which to count aromatic atoms.
