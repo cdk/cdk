@@ -26,6 +26,8 @@ import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.JniInchiWrapper;
 import net.sf.jniinchi.LoadNativeLibraryException;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -64,6 +66,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module inchi
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.inchi.InChIGeneratorFactoryTest")
 public class InChIGeneratorFactory {
  
     private static InChIGeneratorFactory INSTANCE;
@@ -92,6 +95,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException if unable to load native code when attempting 
      * to create the factory
      */
+    @TestMethod("testGetInstance")
     public static InChIGeneratorFactory getInstance() throws CDKException {
         synchronized ( InChIGeneratorFactory.class ) {
             if ( INSTANCE == null ) {
@@ -108,6 +112,7 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
+    @TestMethod("testGetInChIGenerator_IAtomContainer")
     public InChIGenerator getInChIGenerator(IAtomContainer container) 
                           throws CDKException {
         return(new InChIGenerator(container));
@@ -121,6 +126,7 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
      */
+    @TestMethod("testGetInChIGenerator_IAtomContainer_String")
     public InChIGenerator getInChIGenerator(IAtomContainer container, 
                                             String options) 
                           throws CDKException {
@@ -135,6 +141,7 @@ public class InChIGeneratorFactory {
      * @return the InChI generator object
      * @throws CDKException  if the generator cannot be instantiated
      */
+    @TestMethod("testGetInChIGenerator_IAtomContainer_List")
     public InChIGenerator getInChIGenerator(IAtomContainer container, 
                                             List<INCHI_OPTION> options) throws CDKException {
         return(new InChIGenerator(container, options));
@@ -148,6 +155,7 @@ public class InChIGeneratorFactory {
      * @return   the InChI structure generator object
      * @throws CDKException    if the generator cannot be instantiated
      */
+    @TestMethod("testGetInChIToStructure_String_IChemObjectBuilder")
     public InChIToStructure getInChIToStructure(String inchi, 
                                                 IChemObjectBuilder builder) 
                             throws CDKException {
@@ -163,6 +171,7 @@ public class InChIGeneratorFactory {
      * @return   the InChI structure generator object
      * @throws CDKException    if the generator cannot be instantiated
      */
+    @TestMethod("testGetInChIToStructure_String_IChemObjectBuilder_NullString")
     public InChIToStructure getInChIToStructure(String inchi, 
                                                 IChemObjectBuilder builder, 
                                                 String options) 
@@ -179,6 +188,7 @@ public class InChIGeneratorFactory {
      * @return   the InChI structure generator object
      * @throws CDKException    if the generator cannot be instantiated     
      */
+    @TestMethod("testGetInChIToStructure_String_IChemObjectBuilder_List")
     public InChIToStructure getInChIToStructure(String inchi, 
                                                 IChemObjectBuilder builder, 
                                                 List<String> options) 
