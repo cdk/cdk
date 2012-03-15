@@ -27,6 +27,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * TestCase for the {@link InChIToStructure} class.
@@ -82,6 +84,61 @@ public class InChIToStructureTest extends CDKTestCase {
 		INCHI_RET returnStatus = parser.getReturnStatus();
 		Assert.assertNotNull(returnStatus);
 		Assert.assertEquals(INCHI_RET.EOF, returnStatus);
+	}
+
+	@Test
+	public void testGetMessage() throws CDKException {
+		InChIToStructure parser = new InChIToStructure(
+			"InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance()
+		);
+		parser.getAtomContainer();
+		String message = parser.getMessage();
+		Assert.assertNotNull(message);
+	}
+
+	@Test
+	public void testGetMessageNull() throws CDKException {
+		InChIToStructure parser = new InChIToStructure(
+			"InChI=1S", DefaultChemObjectBuilder.getInstance()
+		);
+		parser.getAtomContainer();
+		String message = parser.getMessage();
+		Assert.assertNull(message);
+	}
+
+	@Test
+	public void testGetLog() throws CDKException {
+		InChIToStructure parser = new InChIToStructure(
+			"InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance()
+		);
+		parser.getAtomContainer();
+		String message = parser.getMessage();
+		Assert.assertNotNull(message);
+	}
+
+	@Test
+	public void testGetWarningFlags() throws CDKException {
+		InChIToStructure parser = new InChIToStructure(
+			"InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance()
+		);
+		parser.getAtomContainer();
+		long[][] flags = parser.getWarningFlags();
+		Assert.assertNotNull(flags);
+		Assert.assertEquals(2, flags.length);
+		Assert.assertEquals(2, flags[0].length);
+		Assert.assertEquals(2, flags[1].length);
+	}
+
+	@Test
+	public void testGetAtomContainer_IChemObjectBuilder() throws CDKException {
+		InChIToStructure parser = new InChIToStructure(
+			"InChI=1S/CH5/h1H4", DefaultChemObjectBuilder.getInstance()
+		);
+		parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+		IAtomContainer container = parser.getAtomContainer();
+		// test if the created IAtomContainer is done with the Silent module...
+		// OK, this is not typical use, but maybe the above generate method should be private
+		Assert.assertTrue(container instanceof AtomContainer);
 	}
 
 }
