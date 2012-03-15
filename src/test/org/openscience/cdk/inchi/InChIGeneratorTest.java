@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
- *                    2010  Egon Willighagen <egonw@users.sf.net>
+ *               2010,2012  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -60,7 +61,48 @@ public class InChIGeneratorTest extends CDKTestCase {
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
     }
-    
+
+    @Test public void testGetLog() throws Exception {
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("Cl"));
+        InChIGenerator gen = getFactory().getInChIGenerator(ac,"FixedH");
+        Assert.assertNotNull(gen.getLog());
+    }
+
+    @Test public void testGetAuxInfo() throws Exception {
+        IAtomContainer ac = new AtomContainer();
+        IAtom a1 = new Atom("C");
+        IAtom a2 = new Atom("C");
+        a1.setImplicitHydrogenCount(3);
+        a2.setImplicitHydrogenCount(3);
+        ac.addAtom(a1);
+        ac.addAtom(a2);
+        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
+        InChIGenerator gen = getFactory().getInChIGenerator(ac);
+        Assert.assertNotNull(gen.getAuxInfo());
+        Assert.assertTrue(gen.getAuxInfo().startsWith("AuxInfo="));
+    }
+
+    @Test public void testGetMessage() throws Exception {
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("Cl"));
+        InChIGenerator gen = getFactory().getInChIGenerator(ac,"FixedH");
+        Assert.assertNull(
+        	"Because this generation should work, I expected a null message String.",
+        	gen.getMessage()
+        );
+    }
+
+    @Test public void testGetWarningMessage() throws Exception {
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("Cl"));
+        ac.addAtom(new Atom("H"));
+        ac.addBond(0, 1, Order.TRIPLE);
+        InChIGenerator gen = getFactory().getInChIGenerator(ac);
+        Assert.assertNotNull(gen.getMessage());
+        Assert.assertTrue(gen.getMessage().contains("Accepted unusual valence"));
+    }
+
     /**
      * Tests charge is correctly passed to InChI.
      * 
