@@ -30,6 +30,7 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -82,6 +83,28 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         }
     }
 
+	@Test
+    public void testLargeRingSystem() throws Exception {
+        String smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        
+        DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
+        molecule = dbst.fixAromaticBondOrders(molecule);
+        Assert.assertNotNull(molecule);
+
+        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        Assert.assertEquals(34, molecule.getAtomCount());
+
+        // we should have 14 double bonds
+        int doubleBondCount = 0;
+        for (int i = 0; i < molecule.getBondCount(); i++) {
+            IBond bond = molecule.getBond(i);
+            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+        }
+        Assert.assertEquals(13, doubleBondCount);
+    }
+	
 	@Test(timeout=1000) 
     public void testPyrrole_CustomRingFinder() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
