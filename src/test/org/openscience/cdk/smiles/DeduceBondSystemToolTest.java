@@ -103,7 +103,32 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         }
         Assert.assertEquals(13, doubleBondCount);
     }
-	
+
+	/**
+	 * @cdk.bug 3506770
+	 */
+	@Test
+    public void testLargeBioclipseUseCase() throws Exception {
+        String smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        
+        DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
+        molecule = dbst.fixAromaticBondOrders(molecule);
+        Assert.assertNotNull(molecule);
+
+        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        Assert.assertEquals(40, molecule.getAtomCount());
+
+        // we should have 14 double bonds
+        int doubleBondCount = 0;
+        for (int i = 0; i < molecule.getBondCount(); i++) {
+            IBond bond = molecule.getBond(i);
+            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
+        }
+        Assert.assertEquals(10, doubleBondCount);
+    }
+
 	@Test(timeout=1000) 
     public void testPyrrole_CustomRingFinder() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
