@@ -142,6 +142,7 @@ protected JniInchiInputInchi input;
      * 
      * @throws CDKException
      */
+    @TestMethod("testGetAtomContainer_IChemObjectBuilder")
     protected void generateAtomContainerFromInchi(IChemObjectBuilder builder) throws CDKException {
         try {
             output = JniInchiWrapper.getStructureFromInchi(input);
@@ -289,6 +290,7 @@ protected JniInchiInputInchi input;
     /**
      * Gets generated (error/warning) messages.
      */
+    @TestMethod("testGetMessage")
     public String getMessage() {
         return(output.getMessage());
     }
@@ -296,6 +298,7 @@ protected JniInchiInputInchi input;
     /**
      * Gets generated log.
      */
+    @TestMethod("testGetLog")
     public String getLog() {
         return(output.getLog());
     }
@@ -309,6 +312,7 @@ protected JniInchiInputInchi input;
      * <br>y=1 => Main layer or Mobile-H
      * <br>y=0 => Fixed-H layer
      */
+    @TestMethod("testGetWarningFlags")
     public long[][] getWarningFlags() {
         return(output.getWarningFlags());
     }

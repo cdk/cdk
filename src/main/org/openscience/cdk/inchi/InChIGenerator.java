@@ -416,6 +416,7 @@ public class InChIGenerator {
     /**
      * Gets auxillary information.
      */
+    @TestMethod("testGetAuxInfo")
     public String getAuxInfo() {
         return(output.getAuxInfo());
     }
@@ -423,6 +424,7 @@ public class InChIGenerator {
     /**
      * Gets generated (error/warning) messages.
      */
+    @TestMethod("testGetMessage,testGetWarningMessage")
     public String getMessage() {
         return(output.getMessage());
     }
@@ -430,6 +432,7 @@ public class InChIGenerator {
     /**
      * Gets generated log.
      */
+    @TestMethod("testGetLog")
     public String getLog() {
         return(output.getLog());
     }

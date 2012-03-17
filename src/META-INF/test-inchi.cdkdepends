@@ -9,3 +9,4 @@ cdk-valencycheck.jar
 cdk-test.jar
 cdk-inchi.jar
 cdk-smiles.jar
+cdk-silent.jar
