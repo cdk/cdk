@@ -147,16 +147,14 @@ public class DeduceBondSystemTool {
         this.FixPyridineNOxides(molecule,ringSet);
 
         //We need to establish which rings share bonds and set up sets of such interdependant rings
-        List<Integer[]> rBondsArray;
-        rBondsArray= new ArrayList<Integer[]>();
-        List<List<Integer>> ringGroups;
-        ringGroups = new ArrayList<List<Integer>>();
+        List<Integer[]> rBondsArray = null;
+        List<List<Integer>> ringGroups = null;
 
         //Start by getting a list (same dimensions and ordering as ringset) of all the ring bond numbers in the reduced ring set
-        getRingSystem(molecule, ringSet, rBondsArray);
+        rBondsArray = getRingSystem(molecule, ringSet);
 
         //Now find out which share a bond and assign them accordingly to groups
-        assignRingGroups(rBondsArray, ringGroups);
+        ringGroups = assignRingGroups(rBondsArray);
 
         //Set up the array of MasterLists to pass to Loop function - one for each dependant group of rings
         List<List> MasterLists;
@@ -848,7 +846,9 @@ public class DeduceBondSystemTool {
      * @param mol      The IMolecule for which to store the IRingSet.
      * @param ringSet  The IRingSet to store
      */
-    private void getRingSystem(IMolecule mol, IRingSet ringSet, List<Integer[]> bondsArray) {
+    private List<Integer[]> getRingSystem(IMolecule mol, IRingSet ringSet) {
+        List<Integer[]> bondsArray;
+        bondsArray= new ArrayList<Integer[]>();
     	for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
     		IRing ring = (IRing)ringSet.getAtomContainer(r);
     		Integer[] bondNumbers = new Integer[ring.getBondCount()];
@@ -856,6 +856,7 @@ public class DeduceBondSystemTool {
     			bondNumbers[i] = mol.getBondNumber(ring.getBond(i));
     		bondsArray.add(bondNumbers);
     	}
+        return bondsArray;
     }
     /**
      * Stores an IRingSet corresponding to a molecule using the bond numbers.
@@ -878,7 +879,9 @@ public class DeduceBondSystemTool {
      * @param rBondsArray
      * @param ringGroups
      */
-    private void assignRingGroups(List<Integer[]> rBondsArray, List<List<Integer>> ringGroups){
+    private List<List<Integer>> assignRingGroups(List<Integer[]> rBondsArray){
+        List<List<Integer>> ringGroups;
+        ringGroups = new ArrayList<List<Integer>>();
         for(int i = 0; i < rBondsArray.size()-1; i++){    //for each ring except the last in rBondsArray
             for(int j = 0; j < rBondsArray.get(i).length; j++){ //for each bond in each ring
 
@@ -914,6 +917,7 @@ public class DeduceBondSystemTool {
                 ringGroups.get(ringGroups.size()-1).add(i);
             }
         }
+        return ringGroups;
     }
     /**
      * 
@@ -971,10 +975,10 @@ public class DeduceBondSystemTool {
 
         //Only work on the relevant ring bonds
         IRingSet ringset = removeExtraRings(combi);
-        ArrayList<Integer[]> rBondsArray = new ArrayList<Integer[]>();
+        List<Integer[]> rBondsArray = null;
 
         //Get hold of the bond numbers
-        getRingSystem(combi,  ringset, rBondsArray);
+        rBondsArray = getRingSystem(combi, ringset);
 
         //Cycle through each molecule
         for(int i = 1; i < retMols.size(); i++){
