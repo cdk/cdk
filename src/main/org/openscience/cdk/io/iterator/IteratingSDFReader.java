@@ -151,7 +151,7 @@ implements IChemObjectIOListener {
      * skip is set to true then the reader will keep trying to read more molecules
      * until the end of the file is reached.
      *
-     * @param in       the {@see InputStream} to read from
+     * @param in       the {@link InputStream} to read from
      * @param builder  builder to use
      * @param skip     whether to skip null molecules
      */
@@ -167,7 +167,7 @@ implements IChemObjectIOListener {
      * skip is set to true then the reader will keep trying to read more molecules
      * until the end of the file is reached.
      *
-     * @param in       the {@see Reader} to read from
+     * @param in       the {@link Reader} to read from
      * @param builder  builder to use
      * @param skip     whether to skip null molecules
      */
