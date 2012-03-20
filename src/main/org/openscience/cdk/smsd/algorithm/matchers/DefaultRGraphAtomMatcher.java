@@ -115,10 +115,6 @@ public class DefaultRGraphAtomMatcher implements AtomMatcher {
     }
 
     /** {@inheritDoc}
-     *
-     * @param targetContainer
-     * @param targetAtom
-     * @return
      */
     public boolean matches(IAtomContainer targetContainer, IAtom targetAtom) {
         if (qAtom instanceof IQueryAtom) {

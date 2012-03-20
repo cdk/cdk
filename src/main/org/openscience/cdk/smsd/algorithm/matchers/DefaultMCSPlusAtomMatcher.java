@@ -169,10 +169,6 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
     }
 
     /** {@inheritDoc}
-     *
-     * @param targetContainer
-     * @param targetAtom
-     * @return
      */
     public boolean matches(IAtomContainer targetContainer, IAtom targetAtom) {
         if (smartQueryAtom != null && qAtom == null) {

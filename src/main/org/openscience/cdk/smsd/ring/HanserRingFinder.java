@@ -87,9 +87,10 @@ public class HanserRingFinder implements RingFinder {
     }
 
     /**
-     * Returns collection of rings
-     * @param molecule
-     * @return
+     * Returns a collection of rings.
+     * 
+     * @param  molecule
+     * @return a {@link Collection} of {@link List}s containing one ring each
      * @see org.openscience.cdk.smsd.ring.RingFinder#findRings(org.openscience.cdk.interfaces.IAtomContainer)
      */
     public Collection<List<IAtom>> findRings(IAtomContainer molecule) {
