@@ -21,6 +21,8 @@
 */
 package org.openscience.cdk.renderer;
 
+import static org.openscience.cdk.renderer.BoundsCalculator.calculateBounds;
+
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
@@ -196,21 +198,30 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
         IReactionSet reactionSet = chemModel.getReactionSet();
 
         if (moleculeSet == null && reactionSet != null) {
-            return reactionSetRenderer.paint(reactionSet, drawVisitor);
+            Rectangle2D totalBounds = calculateBounds(reactionSet);
+            this.setupTransformNatural(totalBounds);
+            IRenderingElement diagram = reactionSetRenderer.generateDiagram(reactionSet);
+            this.paint(drawVisitor,diagram);
+            return this.convertToDiagramBounds(totalBounds);
         }
 
         if (moleculeSet != null && reactionSet == null) {
-            return moleculeSetRenderer.paint(moleculeSet, drawVisitor);
+            Rectangle2D totalBounds = calculateBounds(moleculeSet);
+            this.setupTransformNatural(totalBounds);
+            IRenderingElement diagram = moleculeSetRenderer.generateDiagram(moleculeSet);
+            this.paint( drawVisitor, diagram);
+            return this.convertToDiagramBounds(totalBounds);
         }
 
         if (moleculeSet != null && reactionSet != null) {
-            Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reactionSet);
-            totalBounds = totalBounds.createUnion(
-                    BoundsCalculator.calculateBounds(moleculeSet));
+            Rectangle2D totalBounds = BoundsCalculator.calculateBounds(chemModel);
+
             this.setupTransformNatural(totalBounds);
+
             ElementGroup diagram = new ElementGroup();
             diagram.add(reactionSetRenderer.generateDiagram(reactionSet));
             diagram.add(moleculeSetRenderer.generateDiagram(moleculeSet));
+
             this.paint(drawVisitor, diagram);
 
             // the size of the painted diagram is returned
