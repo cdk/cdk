@@ -193,18 +193,11 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
     /** {@inheritDoc} */ @Override
 	public Rectangle paint(IReactionSet reactionSet, IDrawVisitor drawVisitor) {
         // total up the bounding boxes
-        Rectangle2D totalBounds = new Rectangle2D.Double();
-        for (IReaction reaction : reactionSet.reactions()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
+        Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reactionSet);
 
         // setup and draw
         this.setupTransformNatural(totalBounds);
+
         ElementGroup diagram = new ElementGroup();
         for (IReaction reaction : reactionSet.reactions()) {
             diagram.add(reactionRenderer.generateDiagram(reaction));
@@ -228,15 +221,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
-        Rectangle2D totalBounds = null;
-        for (IReaction reaction : reactionSet.reactions()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
+        Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reactionSet);
 
         this.setupTransformToFit(bounds, totalBounds,
                 AverageBondLengthCalculator.calculateAverageBondLength(reactionSet), resetCenter);
