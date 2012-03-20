@@ -322,13 +322,8 @@ public class IteratingMDLReaderTest extends CDKTestCase {
 
         int count = 0;
 
-        java.util.ArrayList<Object> titles            = new java.util.ArrayList<Object>();
-        java.util.ArrayList<IAtomContainer> molecules = new java.util.ArrayList<IAtomContainer>();
-
         while(reader.hasNext()){
             IAtomContainer molecule = reader.next();
-            titles.add(molecule.getProperty(CDKConstants.TITLE));
-            molecules.add(molecule);
             count++;
         }
 
