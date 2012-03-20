@@ -264,6 +264,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
 
     /** {@inheritDoc} */ @Override
 	public Rectangle calculateDiagramBounds(IMoleculeSet moleculeSet) {
+		if(moleculeSet == null) return this.calculateScreenBounds(new Rectangle2D.Double());
 	    return this.calculateScreenBounds(
 	               BoundsCalculator.calculateBounds(moleculeSet));
 	}
