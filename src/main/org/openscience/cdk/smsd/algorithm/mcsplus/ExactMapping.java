@@ -43,7 +43,6 @@ public class ExactMapping {
      * Extract atom mapping from the cliques and stores it in a List
      * @param comp_graph_nodes
      * @param clique_List_org
-     * @return 
      */
     private static List<Integer> extractCliqueMapping(List<Integer> comp_graph_nodes, List<Integer> clique_List_org) {
 
