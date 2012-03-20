@@ -220,18 +220,11 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
     /** {@inheritDoc} */ @Override
 	public Rectangle paint(IMoleculeSet moleculeSet, IDrawVisitor drawVisitor) {
         // total up the bounding boxes
-        Rectangle2D totalBounds = new Rectangle2D.Double();
-        for (IAtomContainer molecule : moleculeSet.molecules()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(molecule);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
+        Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
 
         // setup and draw
         this.setupTransformNatural(totalBounds);
+
         IRenderingElement diagram = this.generateDiagram(moleculeSet);
         this.paint(drawVisitor, diagram);
 
@@ -251,15 +244,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
-        Rectangle2D totalBounds = null;
-        for (IAtomContainer molecule : molecules.molecules()) {
-            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(molecule);
-            if (totalBounds == null) {
-                totalBounds = modelBounds;
-            } else {
-                totalBounds = totalBounds.createUnion(modelBounds);
-            }
-        }
+        Rectangle2D totalBounds = BoundsCalculator.calculateBounds(molecules);
 
         this.setupTransformToFit(bounds, totalBounds,
         		AverageBondLengthCalculator.calculateAverageBondLength(molecules), resetCenter);
