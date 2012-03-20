@@ -731,7 +731,7 @@ public class MolecularFormulaManipulator {
 	 *
 	 * @param 	atomContainer     IAtomContainer object
 	 * @return	a molecular formula object
-	 * @see		getMolecularFormula(IAtomContainer,IMolecularFormula)
+	 * @see		#getMolecularFormula(IAtomContainer,IMolecularFormula)
 	 */
 	@TestMethod("testGetMolecularFormula_IAtomContainer")
 	public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer) {
