@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.io.ChemObjectIO;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
@@ -40,25 +41,12 @@ import org.openscience.cdk.io.setting.IOSetting;
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultEventChemObjectReader implements IEventChemObjectReader {
+public abstract class DefaultEventChemObjectReader extends ChemObjectIO implements IEventChemObjectReader {
 
     /**
      * An event to be sent to listeners when a frame is read.
      */
     private ReaderEvent frameReadEvent = null;
-
-    /**
-     * Holder of reader event listeners.
-     */
-    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
-
-    public void addChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.add(listener);
-    }
-
-    public void removeChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.remove(listener);
-    }
 
     public boolean accepts(IChemObject object) {
     	return accepts(object.getClass());
@@ -81,9 +69,9 @@ public abstract class DefaultEventChemObjectReader implements IEventChemObjectRe
      * Sends a frame read event to the registered ReaderListeners.
      */
     protected void fireFrameRead() {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            IReaderListener listener = (IReaderListener) listenerList.get(i);
-            
+        for (IChemObjectIOListener chemListener : getListeners()) {
+            IReaderListener listener = (IReaderListener) chemListener;
+
             // Lazily create the event:
             if (frameReadEvent == null) {
                 frameReadEvent = new ReaderEvent(this);
@@ -92,15 +80,4 @@ public abstract class DefaultEventChemObjectReader implements IEventChemObjectRe
         }
     }
 
-    protected void fireIOSettingQuestion(IOSetting setting) {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = listenerList.get(i);
-            listener.processIOSettingQuestion(setting);
-        }
-    }
-
-    public IOSetting[] getIOSettings() {
-        return new IOSetting[0];
-    }
-   
 }

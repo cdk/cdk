@@ -24,6 +24,7 @@
 package org.openscience.cdk.io.setting;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.ISetting;
 
 /**
  * An interface for reader settings. It is subclassed by implementations,
@@ -34,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public abstract class IOSetting {
+public abstract class IOSetting implements ISetting {
 
 	public enum Importance {
 		HIGH,

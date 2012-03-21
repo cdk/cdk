@@ -32,6 +32,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * This class is the interface that all IO readers should implement.
@@ -91,6 +92,114 @@ public interface IChemObjectIO extends Closeable {
      * @param listener the listener to be removed.
      */
     public void removeChemObjectIOListener(IChemObjectIOListener listener);
-    
+
+    /**
+     * Access all the listeners for this ChemObject Reader or Writer. This will
+     * returned an unmodifiable list of listeners. Listeners should be added to and
+     * removed from the reader/writer using {@see addListener(IChemObjectIOListener)} and
+     * {@see removeListener(IChemObjectIOListener)}
+     *
+     * @return all listeners managed by this IO object
+     */
+    public Collection<IChemObjectIOListener> getListeners();
+
+    /**
+     * Add an IOSetting to the reader/writer. If the name clashes with
+     * another setting the original setting will be returned. This method
+     * should be called when assigning field settings:
+     *
+     * <pre>{@code
+     * private BooleanIOSetting setting; // field
+     *
+     * ...
+     *
+     * setting = addSetting(new BooleanIOSetting("setting", ...));
+     * // if setting was already added we are now using the correct instance
+     *
+     *}</pre>
+     *
+     * @param setting setting to add
+     *
+     * @return usable setting
+     *
+     * @see org.openscience.cdk.io.setting.SettingManager#add(org.openscience.cdk.interfaces.ISetting)
+     */
+    public <S extends IOSetting> S addSetting(IOSetting setting);
+
+    /**
+     * Adds a collection of {@see IOSetting}s to the reader/writer. This
+     * is useful for transferring/propagating settings between different
+     * reader/writer.
+     *
+     * When the new settings are added if there is a setting with the same
+     * name already stored the value for the new setting is set on the managed
+     * setting (See. IteratingSDFReader/SDFWriter for propagation examples).
+     * Note that if the setting is invalid (a CDKException thrown) then the setting
+     * will not be set.
+     *
+     * <pre>{@code
+     * // two different readers (of same or different type)
+     * IChemObjectReader reader1 = ...;
+     * IChemObjectReader reader2 = ...;
+     *
+     * // settings transferred from reader2 to reader1
+     * reader1.addSettings(reader2.getSettings());
+     * }</pre>
+     *
+     * @param settings collection of settings to add
+     * @see #getSettings()
+     */
+    public void addSettings(Collection<IOSetting> settings);
+
+    /**
+     * Determine whether this reader/writer has a setting of the
+     * provided name.
+     *
+     * @param name name of a setting
+     *
+     * @return whether the setting is available
+     *
+     * @see org.openscience.cdk.io.setting.SettingManager#has(String)
+     */
+    public boolean hasSetting(String name);
+
+    /**
+     * Access a named setting managed by this reader/writer.
+     *
+     * @param name name of the setting
+     * @param <S>  type to cast to
+     *
+     * @return instance of the setting for the name (InvalidParameterException is thrown
+     *         if no setting for the provided name is found)
+     *
+     * @see #getSetting(String, Class)
+     * @see org.openscience.cdk.io.setting.SettingManager#get(String)
+     */
+    public <S extends IOSetting> S getSetting(String name);
+
+    /**
+     * Access a named setting managed by this reader/writer.
+     *
+     * @param name name of the setting
+     * @param c    the class of the setting (matching generic return type). This is need
+     *             as due to type erasure we don't know the class of 'S' at runtime.
+     * @param <S>  type to cast to
+     *
+     * @return instance of the setting for the name (InvalidParameterException is thrown
+     *         if no setting for the provided name is found)
+     *
+     * @see #getSetting(String)
+     * @see org.openscience.cdk.io.setting.SettingManager#get(String, Class)
+     */
+    public <S extends IOSetting> S getSetting(String name, Class<S> c);
+
+    /**
+     * Access a collection of {@see IOSetting}s for this reader/writer.
+     * @return collection of IOSetting's
+     * @see #addSettings(java.util.Collection)
+     */
+    public Collection<IOSetting> getSettings();
+
+
 }
 
