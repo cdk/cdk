@@ -279,9 +279,9 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
 	 * Given a bond length for a model, calculate the scale that will transform
 	 * this length to the on screen bond length in RendererModel.
 	 *
-	 * @param modelBondLength
-	 * @param reset
-	 * @return
+	 * @param  modelBondLength the wanted model bond length in screen length
+	 * @return returns the scale that causes the drawn bond lengths in pixels to match
+	 *         the given model bond length
 	 */
 	public double calculateScaleForBondLength(double modelBondLength) {
 	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
@@ -292,6 +292,8 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
         }
 	}
 
+	/** {@inheritDoc} */
+	@Override
     public List<IGenerator<IMoleculeSet>> getGenerators() {
         return new ArrayList<IGenerator<IMoleculeSet>>(generators);
     }
