@@ -121,7 +121,9 @@ abstract public class CoverageAnnotationTest {
         // we're going to skip private.
         Method[] sourceMethods = coreClass.getDeclaredMethods();
         for (Method method : sourceMethods) {
-            int modifiers = method.getModifiers();
+        	if (method.isBridge()) continue;
+
+        	int modifiers = method.getModifiers();
             if (Modifier.isPrivate(modifiers)) continue;
 
             TestMethod testMethodAnnotation = method.getAnnotation(TestMethod.class);
