@@ -27,8 +27,6 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
-import org.openscience.cdk.renderer.elements.AtomMassSymbolElement;
-import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -43,19 +41,6 @@ public class AtomMassGenerator extends BasicAtomGenerator {
         LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
 
 	public AtomMassGenerator() {}
-
-	public IRenderingElement generateElements(
-	        IAtom atom, int alignment, RendererModel model) {
-		return new AtomMassSymbolElement(
-				atom.getPoint2d().x,
-				atom.getPoint2d().y, 
-				atom.getSymbol(), 
-				atom.getFormalCharge(), 
-				atom.getImplicitHydrogenCount(), 
-				alignment, 
-				atom.getMassNumber(),
-				super.getAtomColor(atom, model));
-	}
 
 	public boolean showCarbon(
 	        IAtom atom, IAtomContainer ac, RendererModel model) {
