@@ -34,7 +34,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 /**
  * @cdk.module test-renderextra
  */
-public class AtomMassGeneratorTest extends AbstractGeneratorTest {
+public class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
 	
 	private AtomMassGenerator generator;
 	
@@ -60,7 +60,7 @@ public class AtomMassGeneratorTest extends AbstractGeneratorTest {
 		// nothing should be made
 		IRenderingElement root = generator.generate(emptyContainer, model);
 		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(1, elements.size());
+		Assert.assertEquals(0, elements.size());
 	}
 	
 }
