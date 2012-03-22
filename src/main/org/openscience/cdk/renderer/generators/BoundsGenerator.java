@@ -27,7 +27,6 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
@@ -80,17 +79,8 @@ public class BoundsGenerator implements IGenerator<IReaction> {
         
         return elementGroup;
     }
-    
-    public IRenderingElement generate(IMolecule molecule, RendererModel model) {
-        Rectangle2D bounds = BoundsCalculator.calculateBounds(molecule);
-        return new RectangleElement(bounds.getMinX(),
-                bounds.getMinY(),
-                bounds.getMaxX(),
-                bounds.getMaxY(),
-                boundsColor.getValue());
-    }
-    
-    public IRenderingElement generate(
+
+    private IRenderingElement generate(
             IMoleculeSet moleculeSet, RendererModel model) {
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
         
