@@ -78,7 +78,7 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
         return diagram;
 	}
 	
-	public TextElement makePlus(
+	private TextElement makePlus(
 	        Rectangle2D a, Rectangle2D b, double axis, Color color) {
 	    double x = (a.getCenterX() + b.getCenterX()) / 2;
 	    return new TextElement(x, axis, "+", color);
