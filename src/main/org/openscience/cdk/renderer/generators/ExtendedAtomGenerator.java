@@ -71,6 +71,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     
 	/** {@inheritDoc}} */
 	@Override
+    @TestMethod("testSingleAtom")
     public IRenderingElement generate(
             IAtomContainer ac, IAtom atom, RendererModel model) {
         boolean drawNumbers = false;
@@ -102,12 +103,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
     
-    public boolean hideAtomSymbol(IAtom atom, RendererModel model) {
-        return atom.getSymbol().equals("C") &&
-               !model.getParameter(KekuleStructure.class).getValue();
-    }
-    
-    public void decorate(TextGroupElement textGroup, 
+    private void decorate(TextGroupElement textGroup, 
                          IAtomContainer ac, 
                          IAtom atom, 
                          RendererModel model) {
@@ -162,7 +158,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
     
-    public Stack<Position> getUnusedPositions(IAtomContainer ac, IAtom atom) {
+    private Stack<Position> getUnusedPositions(IAtomContainer ac, IAtom atom) {
         Stack<Position> unused = new Stack<Position>();
         for (Position p : Position.values()) {
             unused.add(p);
@@ -177,7 +173,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         return unused;
     }
     
-    public Position getPosition(IAtom atom, IAtom connectedAtom) {
+    private Position getPosition(IAtom atom, IAtom connectedAtom) {
         Point2d pA = atom.getPoint2d();
         Point2d pB = connectedAtom.getPoint2d();
         double dx = pB.x - pA.x;
