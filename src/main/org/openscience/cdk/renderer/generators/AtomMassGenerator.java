@@ -23,6 +23,7 @@ package org.openscience.cdk.renderer.generators;
 import java.io.IOException;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,6 +43,7 @@ public class AtomMassGenerator extends BasicAtomGenerator {
 
 	public AtomMassGenerator() {}
 
+	@TestMethod("showCarbon_ShowEndCarbonsTest")
 	public boolean showCarbon(
 	        IAtom atom, IAtomContainer ac, RendererModel model) {
 
