@@ -35,6 +35,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -238,7 +239,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     public void testMissingAtomProperties() throws Exception {
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug3485634.mol");
         MDLReader reader = new MDLReader(in);
-        IMolecule molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtomContainer molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         Assert.assertEquals(9, molecule.getAtomCount());
     }

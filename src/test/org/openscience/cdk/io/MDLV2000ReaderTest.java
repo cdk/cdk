@@ -964,7 +964,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void testMissingAtomProperties() throws Exception {
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug3485634.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IMolecule molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtomContainer molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         Assert.assertEquals(9, molecule.getAtomCount());
     }
