@@ -25,11 +25,11 @@
 package org.openscience.cdk.io.iterator;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -38,18 +38,15 @@ import java.util.regex.Pattern;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.formats.MDLV3000Format;
-import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -87,8 +84,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, SDF
  */
 @TestClass("org.openscience.cdk.io.iterator.IteratingSDFReaderTest")
-public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomContainer>
-implements IChemObjectIOListener {
+public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader input;
     private static ILoggingTool logger =
@@ -203,8 +199,7 @@ implements IChemObjectIOListener {
             reader.setErrorHandler(this.errorHandler);
             reader.setReaderMode(this.mode);
             if (currentFormat instanceof MDLV2000Format) {
-                reader.addChemObjectIOListener(this);
-                ((MDLV2000Reader)reader).customizeJob();
+            	reader.addSettings(getSettings());
             }
 
             readerMap.put(format, reader);
@@ -411,27 +406,11 @@ implements IChemObjectIOListener {
         forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
           "Should coordinates always be read as 3D?", 
           "false");
+        addSetting(forceReadAs3DCoords);
     }
     
     public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
     }
-
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[1];
-        settings[0] = forceReadAs3DCoords;
-        return settings;
-    }
-
-	public void processIOSettingQuestion(IOSetting setting) {
-	    if (setting.getName().equals(forceReadAs3DCoords.getName())) {
-	    	try {
-	            setting.setSetting(forceReadAs3DCoords.getSetting());
-            } catch (CDKException e) {
-	            logger.debug("Could not propagate forceReadAs3DCoords setting");
-            }
-	    }
-    }
-
 }
 

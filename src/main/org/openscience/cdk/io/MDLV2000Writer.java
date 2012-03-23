@@ -111,7 +111,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private BufferedWriter writer;
     
     /**
-     * Constructs a new MDLWriter that can write an {@link IMolecule}
+     * Constructs a new MDLWriter that can write an {@link IAtomContainer}
      * to the MDL molfile format.
      *
      * @param   out  The Writer to write to
@@ -126,7 +126,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     }
 
     /**
-     * Constructs a new MDLWriter that can write an {@link IMolecule}
+     * Constructs a new MDLWriter that can write an {@link IAtomContainer}
      * to a given OutputStream.
      *
      * @param   output  The OutputStream to write to
@@ -180,7 +180,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     /**
      * Writes a {@link IChemObject} to the MDL molfile formated output. 
      * It can only output ChemObjects of type {@link IChemFile},
-     * {@link IMolecule} and {@link IAtomContainer}.
+     * {@link IChemObject} and {@link IAtomContainer}.
      *
      * @param object {@link IChemObject} to write
      *
@@ -555,39 +555,32 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * so a 'query file' is created if the container has aromatic bonds and this settings is true.
      */
     private void initIOSettings() {
-        forceWriteAs2DCoords = new BooleanIOSetting(
+        forceWriteAs2DCoords = addSetting(new BooleanIOSetting(
             "ForceWriteAs2DCoordinates",
             IOSetting.Importance.LOW,
             "Should coordinates always be written as 2D?",
             "false"
-        );
-        writeAromaticBondTypes = new BooleanIOSetting(
+        ));
+        writeAromaticBondTypes = addSetting(new BooleanIOSetting(
             "WriteAromaticBondTypes",
             IOSetting.Importance.LOW,
             "Should aromatic bonds be written as bond type 4?",
             "false"
-        );
-        writeQueryFormatValencies = new BooleanIOSetting(
+        ));
+        writeQueryFormatValencies = addSetting(new BooleanIOSetting(
              "WriteQueryFormatValencies",
              IOSetting.Importance.LOW,
              "Should valencies be written in the MDL Query format?",
              "false"
-        );
+        ));
     }
 
     public void customizeJob() {
-        fireIOSettingQuestion(forceWriteAs2DCoords);
-        fireIOSettingQuestion(writeAromaticBondTypes);
-        fireIOSettingQuestion(writeQueryFormatValencies);
+        for(IOSetting setting : getSettings()){
+            fireIOSettingQuestion(setting);
+        }
     }
 
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[3];
-        settings[0] = forceWriteAs2DCoords;
-        settings[1] = writeAromaticBondTypes;
-        settings[2] = writeQueryFormatValencies;
-        return settings;
-    }
 }
 
 

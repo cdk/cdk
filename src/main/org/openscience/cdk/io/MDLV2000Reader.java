@@ -973,24 +973,18 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
     
     private void initIOSettings() {
-        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
+        forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
           "Should coordinates always be read as 3D?", 
-          "false");
-        interpretHydrogenIsotopes = new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.Importance.LOW,
+          "false"));
+        interpretHydrogenIsotopes = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.Importance.LOW,
           "Should D and T be interpreted as hydrogen isotopes?",
-          "true");
+          "true"));
     }
     
     public void customizeJob() {
-        fireIOSettingQuestion(forceReadAs3DCoords);
-        fireIOSettingQuestion(interpretHydrogenIsotopes);
-    }
-
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[2];
-        settings[0] = forceReadAs3DCoords;
-        settings[1] = interpretHydrogenIsotopes;
-        return settings;
+        for(IOSetting setting : getSettings()){
+            fireIOSettingQuestion(setting);
+        }
     }
 
     public List<IAtom> getAtomsByLinePosition() {

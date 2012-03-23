@@ -604,19 +604,14 @@ public class MDLReader extends DefaultChemObjectReader {
     }
     
     private void initIOSettings() {
-        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
+        forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
           "Should coordinates always be read as 3D?", 
-          "false");
+          "false"));
     }
     
     public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
     }
 
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[1];
-        settings[0] = forceReadAs3DCoords;
-        return settings;
-    }
 }
 

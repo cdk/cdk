@@ -254,25 +254,25 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");
         commandOptions.add("IR frequency calculation (with Raman)");
-        command = new OptionIOSetting("Command", IOSetting.Importance.HIGH,
+        command = addSetting(new OptionIOSetting("Command", IOSetting.Importance.HIGH,
           "What kind of job do you want to perform?", commandOptions, 
-          "energy calculation");
+          "energy calculation"));
         
-        comment = new StringIOSetting("Comment", IOSetting.Importance.LOW,
+        comment = addSetting(new StringIOSetting("Comment", IOSetting.Importance.LOW,
           "What comment should be put in the file?", 
-          "Created with CDK (http://cdk.sf.net/)");
+          "Created with CDK (http://cdk.sf.net/)"));
         
-        memory = new StringIOSetting("Memory", IOSetting.Importance.LOW,
+        memory = addSetting(new StringIOSetting("Memory", IOSetting.Importance.LOW,
           "How much memory do you want to use?", 
-          "unset");
+          "unset"));
         
-        shell = new BooleanIOSetting("OpenShell", IOSetting.Importance.MEDIUM,
+        shell = addSetting(new BooleanIOSetting("OpenShell", IOSetting.Importance.MEDIUM,
           "Should the calculation be open shell?", 
-          "false");
+          "false"));
 
-        proccount = new IntegerIOSetting("ProcessorCount", IOSetting.Importance.LOW,
+        proccount = addSetting(new IntegerIOSetting("ProcessorCount", IOSetting.Importance.LOW,
           "How many processors should be used by Gaussian?", 
-          "1");
+          "1"));
 
         usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.Importance.LOW,
           "Should a check point file be saved?", 
@@ -280,27 +280,9 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
     
     private void customizeJob() {
-        fireIOSettingQuestion(basis);
-        fireIOSettingQuestion(method);
-        fireIOSettingQuestion(command);
-        fireIOSettingQuestion(comment);
-        fireIOSettingQuestion(shell);
-        fireIOSettingQuestion(proccount);
-        fireIOSettingQuestion(memory);
-        fireIOSettingQuestion(usecheckpoint);
-    }
-    
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[8];
-        settings[0] = basis;
-        settings[1] = method;
-        settings[2] = command;
-        settings[3] = comment;
-        settings[4] = shell;
-        settings[5] = proccount;
-        settings[6] = usecheckpoint;
-        settings[7] = memory;
-        return settings;
+        for(IOSetting setting : getSettings()){
+            fireIOSettingQuestion(setting);
+        }
     }
 }
 

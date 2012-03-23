@@ -212,14 +212,14 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
     private BooleanIOSetting optimize;
     
     private void initIOSettings() {
-    	optimize = new BooleanIOSetting("Optimize", IOSetting.Importance.MEDIUM,
-    	    "Should the structure be optimized?", 
+    	optimize = addSetting(new BooleanIOSetting("Optimize", IOSetting.Importance.MEDIUM,
+    		"Should the structure be optimized?", 
     		"true"
-    	);
-    	mopacCommands = new StringIOSetting("Commands", IOSetting.Importance.LOW,
-    	    "What Mopac commands should be used (overwrites other choices)?", 
-    	    "PM3 NOINTER NOMM BONDS MULLIK PRECISE"
-    	);
+    	));
+    	mopacCommands = addSetting(new StringIOSetting("Commands", IOSetting.Importance.LOW,
+    		"What Mopac commands should be used (overwrites other choices)?", 
+    		"PM3 NOINTER NOMM BONDS MULLIK PRECISE"
+    	));
     }
     
     private void customizeJob() {
@@ -236,14 +236,4 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
         fireIOSettingQuestion(mopacCommands);
     }
     
-    /** {@inheritDoc} */
-    @Override
-    @TestMethod("testGetIOSetting")
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[2];
-        settings[0] = optimize;
-        settings[1] = mopacCommands;
-        return settings;
-    }
-
 }
