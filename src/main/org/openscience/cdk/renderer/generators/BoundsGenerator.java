@@ -69,19 +69,19 @@ public class BoundsGenerator implements IGenerator<IReaction> {
         ElementGroup elementGroup = new ElementGroup();
         IMoleculeSet reactants = reaction.getReactants();
         if (reactants != null) {
-            elementGroup.add(this.generate(reactants, model));
+            elementGroup.add(this.generate(reactants));
         }
         
         IMoleculeSet products = reaction.getProducts();
         if (products != null) {
-            elementGroup.add(this.generate(products, model));
+            elementGroup.add(this.generate(products));
         }
         
         return elementGroup;
     }
 
     private IRenderingElement generate(
-            IMoleculeSet moleculeSet, RendererModel model) {
+            IMoleculeSet moleculeSet) {
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
         
         return new RectangleElement(totalBounds.getMinX(),
