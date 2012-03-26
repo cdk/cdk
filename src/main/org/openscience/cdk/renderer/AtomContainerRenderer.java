@@ -118,11 +118,15 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      *            a class that manages mappings between zoom and font sizes
      */
     public AtomContainerRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-        this.generators = generators;
-        this.fontManager = fontManager;
-        for (IGenerator<IAtomContainer> generator : generators) {
+    	this(new RendererModel(),generators,fontManager);
+    	for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
+    }
+    public AtomContainerRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+    	super(rendererModel);
+        this.generators = generators;
+        this.fontManager = fontManager;
     }
 
     /**
