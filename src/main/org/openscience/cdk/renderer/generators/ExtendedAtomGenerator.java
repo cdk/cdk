@@ -76,7 +76,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
 	@Override
     @TestMethod("testSingleAtom")
     public IRenderingElement generate(
-            IAtomContainer ac, IAtom atom, RendererModel model) {
+            IAtomContainer container, IAtom atom, RendererModel model) {
         boolean drawNumbers = false;
     	if (model.hasParameter(WillDrawAtomNumbers.class)) {
             drawNumbers = 
@@ -84,7 +84,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     	}
         if (!hasCoordinates(atom) 
              || invisibleHydrogen(atom, model) 
-             || (invisibleCarbon(atom, ac, model) 
+             || (invisibleCarbon(atom, container, model) 
              && !drawNumbers)) {
             return null;
         } else if (model.getParameter(CompactAtom.class).getValue()) {
@@ -93,44 +93,44 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             String text;
             if (atom instanceof IPseudoAtom) {
                 text = ((IPseudoAtom) atom).getLabel();
-            } else if (invisibleCarbon(atom, ac, model) && drawNumbers) {
-                text = String.valueOf(ac.getAtomNumber(atom) + 1);
+            } else if (invisibleCarbon(atom, container, model) && drawNumbers) {
+                text = String.valueOf(container.getAtomNumber(atom) + 1);
             } else {
                 text = atom.getSymbol();
             }
-            Point2d p = atom.getPoint2d();
-            Color c = getAtomColor(atom,model);
-            TextGroupElement textGroup = new TextGroupElement(p.x, p.y, text, c);
-            decorate(textGroup, ac, atom, model);
+            Point2d point = atom.getPoint2d();
+            Color ccolor = getAtomColor(atom,model);
+            TextGroupElement textGroup = new TextGroupElement(point.x, point.y, text, ccolor);
+            decorate(textGroup, container, atom, model);
             return textGroup;
         }
     }
     
     private void decorate(TextGroupElement textGroup, 
-                         IAtomContainer ac, 
+                         IAtomContainer container, 
                          IAtom atom, 
                          RendererModel model) {
-        Stack<Position> unused = getUnusedPositions(ac, atom);
+        Stack<Position> unused = getUnusedPositions(container, atom);
 
         if (model.hasParameter(WillDrawAtomNumbers.class)) {
         	boolean drawNumbers = 
         			model.getParameter(WillDrawAtomNumbers.class).getValue();
-        	if (!invisibleCarbon(atom, ac, model) && drawNumbers) {
+        	if (!invisibleCarbon(atom, container, model) && drawNumbers) {
         		Position position = getNextPosition(unused);
-        		String number = String.valueOf(ac.getAtomNumber(atom) + 1);
+        		String number = String.valueOf(container.getAtomNumber(atom) + 1);
         		textGroup.addChild(number, position);
         	}
         }
         
         if (showImplicitHydrogens.getValue()) {
         	if(atom.getImplicitHydrogenCount()!=null){
-	            int nH = atom.getImplicitHydrogenCount();
-	            if (nH > 0) {
+	            int hCount = atom.getImplicitHydrogenCount();
+	            if (hCount > 0) {
 	                Position position = getNextPosition(unused);
-	                if (nH == 1) {
+	                if (hCount == 1) {
 	                    textGroup.addChild("H", position);
 	                } else {
-	                    textGroup.addChild("H", String.valueOf(nH), position);
+	                    textGroup.addChild("H", String.valueOf(hCount), position);
 	                }
 	            }
         	}
@@ -140,7 +140,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         if (massNumber != null) {
             try {
                 IsotopeFactory factory = 
-                    IsotopeFactory.getInstance(ac.getBuilder());
+                    IsotopeFactory.getInstance(container.getBuilder());
                 int majorMass = 
                     factory.getMajorIsotope(atom.getSymbol()).getMassNumber();
                 if (massNumber != majorMass) {
@@ -161,13 +161,13 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
     
-    private Stack<Position> getUnusedPositions(IAtomContainer ac, IAtom atom) {
+    private Stack<Position> getUnusedPositions(IAtomContainer container, IAtom atom) {
         Stack<Position> unused = new Stack<Position>();
         for (Position p : Position.values()) {
             unused.add(p);
         }
         
-        for (IAtom connectedAtom : ac.getConnectedAtomsList(atom)) {
+        for (IAtom connectedAtom : container.getConnectedAtomsList(atom)) {
             Position used = getPosition(atom, connectedAtom);
             if (unused.contains(used)) {
                 unused.remove(used);
@@ -177,33 +177,33 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     }
     
     private Position getPosition(IAtom atom, IAtom connectedAtom) {
-        Point2d pA = atom.getPoint2d();
-        Point2d pB = connectedAtom.getPoint2d();
-        double dx = pB.x - pA.x;
-        double dy = pB.y - pA.y;
+        Point2d pointA = atom.getPoint2d();
+        Point2d pointB = connectedAtom.getPoint2d();
+        double diffx = pointB.x - pointA.x;
+        double diffy = pointB.y - pointA.y;
         
         final double DELTA = 0.2;
         
-        if (dx < -DELTA) {                          // generally west
-            if (dy < -DELTA) {
+        if (diffx < -DELTA) {                          // generally west
+            if (diffy < -DELTA) {
                 return Position.NW;
-            } else if (dy > -DELTA && dy < DELTA) {
+            } else if (diffy > -DELTA && diffy < DELTA) {
                 return Position.W;
             } else {
                 return Position.SW;
             }
-        } else if (dx > -DELTA && dx < DELTA) {     //  north or south
-            if (dy < -DELTA) {
+        } else if (diffx > -DELTA && diffx < DELTA) {     //  north or south
+            if (diffy < -DELTA) {
                 return Position.N;
-            } else if (dy > -DELTA && dy < DELTA) { // right on top of the atom!
+            } else if (diffy > -DELTA && diffy < DELTA) { // right on top of the atom!
                 return Position.N;                  // XXX
             } else {
                 return Position.S;
             }
         } else {                                    // generally east 
-            if (dy < -DELTA) {
+            if (diffy < -DELTA) {
                 return Position.NE;
-            } else if (dy > -DELTA && dy < DELTA) {
+            } else if (diffy > -DELTA && diffy < DELTA) {
                 return Position.E;
             } else {
                 return Position.SE;

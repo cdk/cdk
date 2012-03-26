@@ -98,10 +98,10 @@ public class MappingGenerator implements IGenerator<IReaction> {
             // XXX assume that the ChemObjects are actually IAtoms...
             IAtom endPointA = (IAtom) mapping.getChemObject(0);
             IAtom endPointB = (IAtom) mapping.getChemObject(1);
-            Point2d pA = endPointA.getPoint2d();
-            Point2d pB = endPointB.getPoint2d();
+            Point2d pointA = endPointA.getPoint2d();
+            Point2d pointB = endPointB.getPoint2d();
             elementGroup.add(
-                    new LineElement(pA.x, pA.y, pB.x, pB.y, getWidthForMappingLine(model), mappingColor));
+                    new LineElement(pointA.x, pointA.y, pointB.x, pointB.y, getWidthForMappingLine(model), mappingColor));
         }
         return elementGroup;
     }

@@ -113,7 +113,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 	/** {@inheritDoc}} */
 	@Override
     @TestMethod("testEmptyContainer")
-	public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+	public IRenderingElement generate(IAtomContainer container, RendererModel model) {
 		ElementGroup numbers = new ElementGroup();
 		if (!model.getParameter(WillDrawAtomNumbers.class).getValue())
 		    return numbers;
@@ -125,12 +125,12 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 		offset.scale( 1/model.getParameter(Scale.class).getValue() );
 
 		int number = 1;
-		for (IAtom atom : ac.atoms()) {
-			Point2d p = new Point2d(atom.getPoint2d());
-			p.add( offset );
+		for (IAtom atom : container.atoms()) {
+			Point2d point = new Point2d(atom.getPoint2d());
+			point.add( offset );
 			numbers.add(
 				new TextElement(
-					p.x, p.y, String.valueOf(number),
+					point.x, point.y, String.valueOf(number),
 					colorByType.getValue() ?
 						atomColorer.getValue().getAtomColor(atom)
 						: textColor.getValue()

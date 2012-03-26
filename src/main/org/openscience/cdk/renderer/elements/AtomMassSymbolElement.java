@@ -45,10 +45,10 @@ public class AtomMassSymbolElement extends AtomSymbolElement {
 	 * @param atomMass      the mass number of the atom
 	 * @param color         the color
 	 */
-	public AtomMassSymbolElement(double x, double y, String symbol,
+	public AtomMassSymbolElement(double xCoord, double yCoord, String symbol,
 			Integer formalCharge, Integer hydrogenCount, int alignment,
 			Integer atomMass, Color color) {
-		super(x, y, symbol, formalCharge, hydrogenCount, alignment, color);
+		super(xCoord, yCoord, symbol, formalCharge, hydrogenCount, alignment, color);
 		this.atomMassNumber = atomMass != null ? atomMass : -1;
 	}
 }

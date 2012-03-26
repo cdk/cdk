@@ -49,8 +49,6 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 @TestClass("org.openscience.cdk.renderer.generators.ProductsBoxGeneratorTest")
 public class ProductsBoxGenerator implements IGenerator<IReaction> {
 
-	private static double DISTANCE;
-
 	/** {@inheritDoc}} */
 	@Override
 	@TestMethod("testEmptyReaction")
@@ -59,7 +57,7 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
 			return null;
 	    if (reaction.getProductCount() == 0) 
 	    	return new ElementGroup();
-		DISTANCE = model.getParameter(BondLength.class)
+		double distance = model.getParameter(BondLength.class)
     		.getValue() / model.getParameter(Scale.class).getValue() / 2;
         Rectangle2D totalBounds = null;
         for (IAtomContainer molecule : reaction.getProducts().molecules()) {
@@ -76,15 +74,15 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
         Color foregroundColor = model.getParameter(
         	BasicSceneGenerator.ForegroundColor.class).getValue();
         diagram.add(new RectangleElement(
-        	totalBounds.getMinX()-DISTANCE,
-            totalBounds.getMinY()-DISTANCE,
-            totalBounds.getMaxX()+DISTANCE,
-            totalBounds.getMaxY()+DISTANCE,
+        	totalBounds.getMinX()-distance,
+            totalBounds.getMinY()-distance,
+            totalBounds.getMaxX()+distance,
+            totalBounds.getMaxY()+distance,
             foregroundColor
         ));
         diagram.add(new TextElement(
         	(totalBounds.getMinX()+totalBounds.getMaxX())/2,
-        	totalBounds.getMinY()-DISTANCE,
+        	totalBounds.getMinY()-distance,
         	"Products",
         	foregroundColor
         ));

@@ -56,7 +56,7 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
 	/** {@inheritDoc}} */
 	@Override
     @TestMethod("testEmptyContainer")
-    public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+    public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
         
         // TODO : put into RendererModel
@@ -71,26 +71,26 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         double modelRadius = SCREEN_RADIUS /
             model.getParameter(Scale.class).getValue();
         Map<IAtom,Integer> singleElectronsPerAtom = new HashMap<IAtom, Integer>();
-        for (ISingleElectron e : ac.singleElectrons()) {
-            IAtom atom = e.getAtom();
+        for (ISingleElectron electron : container.singleElectrons()) {
+            IAtom atom = electron.getAtom();
             if(singleElectronsPerAtom.get(atom)==null)
                 singleElectronsPerAtom.put(atom,0);
-            Point2d p = atom.getPoint2d();
-            int align = GeometryTools.getBestAlignmentForLabelXY(ac, atom);
-            double rx = p.x;
-            double ry = p.y;
+            Point2d point = atom.getPoint2d();
+            int align = GeometryTools.getBestAlignmentForLabelXY(container, atom);
+            double xRadius = point.x;
+            double yRadius = point.y;
             if (align == 1) {
-                rx += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                xRadius += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             } else if (align == -1) {
-                rx -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                xRadius -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             } else if (align == 2) {
-                ry += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                yRadius += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             } else if (align == -2) {
-                ry -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                yRadius -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
             }
             singleElectronsPerAtom.put(atom, singleElectronsPerAtom.get(atom)+1);
             group.add(
-                    new OvalElement(rx, ry, modelRadius, true, RADICAL_COLOR));
+                    new OvalElement(xRadius, yRadius, modelRadius, true, RADICAL_COLOR));
         }
         return group;
     }

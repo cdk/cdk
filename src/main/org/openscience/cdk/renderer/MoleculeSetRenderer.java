@@ -170,32 +170,32 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
         int topOverlap    = screenBounds.y - diagramBounds.y;
         int bottomOverlap = diagramMaxY - screenMaxY;
 
-        int dx = 0;
-        int dy = 0;
-        int w = screenBounds.width;
-        int h = screenBounds.height;
+        int diffx = 0;
+        int diffy = 0;
+        int width = screenBounds.width;
+        int height = screenBounds.height;
 
         if (leftOverlap > 0) {
-            dx = leftOverlap;
+            diffx = leftOverlap;
         }
 
         if (rightOverlap > 0) {
-            w += rightOverlap;
+            width += rightOverlap;
         }
 
         if (topOverlap > 0) {
-            dy = topOverlap;
+            diffy = topOverlap;
         }
 
         if (bottomOverlap > 0) {
-            h += bottomOverlap;
+            height += bottomOverlap;
         }
 
-        if (dx != 0 || dy != 0) {
-            this.shiftDrawCenter(dx, dy);
+        if (diffx != 0 || diffy != 0) {
+            this.shiftDrawCenter(diffx, diffy);
         }
 
-        return new Rectangle(dx, dy, w, h);
+        return new Rectangle(diffx, diffy, width, height);
     }
 
     /**

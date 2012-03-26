@@ -54,7 +54,7 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
 	/** {@inheritDoc}} */
 	@Override
     @TestMethod("testEmptyContainer")
-    public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
+    public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
         
         // TODO : put into RendererModel
@@ -72,32 +72,32 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
         double modelAtomRadius = ATOM_RADIUS / scale;
         double modelPointRadius = SCREEN_RADIUS / scale;
         double modelSeparation = SCREEN_SEPARATION / scale;
-        for (ILonePair lp : ac.lonePairs()) {
-            IAtom atom = lp.getAtom();
-            Point2d p = atom.getPoint2d();
-            int align = GeometryTools.getBestAlignmentForLabelXY(ac, atom);
-            double rx = p.x;
-            double ry = p.y;
-            double dx = 0;
-            double dy = 0;
+        for (ILonePair lonePair : container.lonePairs()) {
+            IAtom atom = lonePair.getAtom();
+            Point2d point = atom.getPoint2d();
+            int align = GeometryTools.getBestAlignmentForLabelXY(container, atom);
+            double xRadius = point.x;
+            double yRadius = point.y;
+            double diffx = 0;
+            double diffy = 0;
             if (align == 1) {
-                rx += modelAtomRadius;
-                dy += modelSeparation;
+                xRadius += modelAtomRadius;
+                diffy += modelSeparation;
             } else if (align == -1) {
-                rx -= modelAtomRadius;
-                dy += modelSeparation;
+                xRadius -= modelAtomRadius;
+                diffy += modelSeparation;
             } else if (align == 2) {
-                ry -= modelAtomRadius;
-                dx += modelSeparation;
+                yRadius -= modelAtomRadius;
+                diffx += modelSeparation;
             } else if (align == -2) {
-                ry += modelAtomRadius;
-                dx += modelSeparation;
+                yRadius += modelAtomRadius;
+                diffx += modelSeparation;
             }
             group.add(
-                    new OvalElement(rx + dx, ry + dy,
+                    new OvalElement(xRadius + diffx, yRadius + diffy,
                             modelPointRadius, true, RADICAL_COLOR));
             group.add(
-                    new OvalElement(rx - dx, ry - dy,
+                    new OvalElement(xRadius - diffx, yRadius - diffy,
                             modelPointRadius, true, RADICAL_COLOR));
         }
         return group;

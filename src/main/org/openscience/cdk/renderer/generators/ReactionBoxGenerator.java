@@ -52,7 +52,7 @@ public class ReactionBoxGenerator implements IGenerator<IReaction> {
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if (!model.getParameter(ShowReactionBoxes.class).getValue())
 			return null;
-		double d = model.getParameter(BondLength.class)
+		double separation = model.getParameter(BondLength.class)
     		.getValue() / model.getParameter(Scale.class).getValue();
 		Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reaction);
         if (totalBounds == null) return null;
@@ -61,16 +61,16 @@ public class ReactionBoxGenerator implements IGenerator<IReaction> {
         Color foregroundColor = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         diagram.add(new RectangleElement(
-        	totalBounds.getMinX()-d,
-            totalBounds.getMinY()-d,
-            totalBounds.getMaxX()+d,
-            totalBounds.getMaxY()+d,
+        	totalBounds.getMinX()-separation,
+            totalBounds.getMinY()-separation,
+            totalBounds.getMaxX()+separation,
+            totalBounds.getMaxY()+separation,
             foregroundColor
         ));
         if (reaction.getID() != null) {
         	diagram.add(new TextElement(
         		(totalBounds.getMinX()+totalBounds.getMaxX())/2, 
-        		totalBounds.getMinY()-d, 
+        		totalBounds.getMinY()-separation, 
         		reaction.getID(), 
         		foregroundColor
         	));
