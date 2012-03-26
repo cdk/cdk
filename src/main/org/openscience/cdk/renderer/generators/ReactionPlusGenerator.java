@@ -49,32 +49,40 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		ElementGroup diagram = new ElementGroup();
-		
+
+		Color color = model.getParameter(
+			BasicSceneGenerator.ForegroundColor.class
+		).getValue();
 		IMoleculeSet reactants = reaction.getReactants();
-        Rectangle2D totalBoundsReactants = BoundsCalculator.calculateBounds(reactants);
-        Rectangle2D bounds1 = 
-        	BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
-        double axis = totalBoundsReactants.getCenterY();
-        Color color = model.getParameter(
-            BasicSceneGenerator.ForegroundColor.class).getValue();
-        for (int i = 1; i < reaction.getReactantCount(); i++) {
-        	Rectangle2D bounds2 = 
-        		BoundsCalculator.calculateBounds(reactants.getAtomContainer(i));
-        	diagram.add(makePlus(bounds1, bounds2, axis, color));
-        	bounds1 = bounds2;
-        }
+
+		// only draw + signs when there are more than one reactant
+		if (reactants.getAtomContainerCount() > 1) {
+			Rectangle2D totalBoundsReactants = BoundsCalculator.calculateBounds(reactants);
+			Rectangle2D bounds1 = 
+				BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
+			double axis = totalBoundsReactants.getCenterY();
+			for (int i = 1; i < reaction.getReactantCount(); i++) {
+				Rectangle2D bounds2 = 
+					BoundsCalculator.calculateBounds(reactants.getAtomContainer(i));
+				diagram.add(makePlus(bounds1, bounds2, axis, color));
+				bounds1 = bounds2;
+			}
+		}
         
+		// only draw + signs when there are more than one products
         IMoleculeSet products = reaction.getProducts();
-        Rectangle2D totalBoundsProducts = BoundsCalculator.calculateBounds(products);
-        axis = totalBoundsProducts.getCenterY();
-        bounds1 = BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
-        for (int i = 1; i < reaction.getProductCount(); i++) {
-        	Rectangle2D bounds2 = 
-        		BoundsCalculator.calculateBounds(products.getAtomContainer(i));
-        	
-        	diagram.add(makePlus(bounds1, bounds2, axis, color));
-        	bounds1 = bounds2;
-        }
+		if (products.getAtomContainerCount() > 1) {
+			Rectangle2D totalBoundsProducts = BoundsCalculator.calculateBounds(products);
+			double axis = totalBoundsProducts.getCenterY();
+			Rectangle2D bounds1 = BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
+			for (int i = 1; i < reaction.getProductCount(); i++) {
+				Rectangle2D bounds2 = 
+					BoundsCalculator.calculateBounds(products.getAtomContainer(i));
+
+				diagram.add(makePlus(bounds1, bounds2, axis, color));
+				bounds1 = bounds2;
+			}
+		}
         return diagram;
 	}
 	
