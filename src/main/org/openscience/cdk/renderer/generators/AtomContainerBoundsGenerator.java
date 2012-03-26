@@ -42,8 +42,8 @@ public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> 
 	/** {@inheritDoc}} */
 	@Override
 	@TestMethod("testEmptyContainer")
-    public IRenderingElement generate( IAtomContainer ac, RendererModel model) {
-        double[] minMax = GeometryTools.getMinMax(ac);
+    public IRenderingElement generate( IAtomContainer container, RendererModel model) {
+        double[] minMax = GeometryTools.getMinMax(container);
         return new RectangleElement(minMax[0], minMax[1], minMax[2], minMax[3],
                 new Color(.7f, .7f, 1.0f));
         

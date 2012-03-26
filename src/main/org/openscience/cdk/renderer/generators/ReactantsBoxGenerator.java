@@ -55,7 +55,7 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
 	    if (reaction.getReactantCount() == 0) 
 	    	return new ElementGroup();
 	    
-		double d = model.getParameter(BondLength.class)
+		double separation = model.getParameter(BondLength.class)
     		.getValue() / model.getParameter(Scale.class).getValue()/2;
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reaction.getReactants());
         
@@ -67,10 +67,10 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
         Color foregroundColor = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         diagram.add(new RectangleElement(
-            minX - d, minY - d, maxX + d, maxY + d, foregroundColor
+            minX - separation, minY - separation, maxX + separation, maxY + separation, foregroundColor
         ));
         diagram.add(new TextElement(
-            (minX+maxX)/2, minY-d, "Reactants", foregroundColor
+            (minX+maxX)/2, minY-separation, "Reactants", foregroundColor
         ));
         return diagram;
 	}

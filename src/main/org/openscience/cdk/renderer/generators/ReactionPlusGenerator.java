@@ -78,10 +78,11 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
         return diagram;
 	}
 	
+	/** Place a '+' sign between two molecules. */
 	private TextElement makePlus(
-	        Rectangle2D a, Rectangle2D b, double axis, Color color) {
-	    double x = (a.getCenterX() + b.getCenterX()) / 2;
-	    return new TextElement(x, axis, "+", color);
+	        Rectangle2D moleculeBox1, Rectangle2D moleculeBox2, double axis, Color color) {
+	    double arrowCenter = (moleculeBox1.getCenterX() + moleculeBox2.getCenterX()) / 2;
+	    return new TextElement(arrowCenter, axis, "+", color);
 	}
 
 	/** {@inheritDoc}} */
