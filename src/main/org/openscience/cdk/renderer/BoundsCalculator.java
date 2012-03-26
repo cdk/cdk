@@ -56,18 +56,16 @@ public class BoundsCalculator {
     public static Rectangle2D calculateBounds(IChemModel chemModel) {
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
-        Rectangle2D totalBounds = null;
+        Rectangle2D totalBounds = new Rectangle2D.Double();
         if (moleculeSet != null) {
-            totalBounds = calculateBounds(moleculeSet);
+            totalBounds = totalBounds.createUnion(
+            	calculateBounds(moleculeSet)
+            );
         }
-
         if (reactionSet != null) {
-            if (totalBounds == null) {
-                totalBounds = calculateBounds(reactionSet);
-            } else {
-                totalBounds = totalBounds.createUnion(
-                        calculateBounds(reactionSet));
-            }
+            totalBounds = totalBounds.createUnion(
+                 calculateBounds(reactionSet)
+            );
         }
         return totalBounds;
     }
