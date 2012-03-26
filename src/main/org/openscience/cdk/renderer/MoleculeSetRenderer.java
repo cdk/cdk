@@ -81,21 +81,21 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * </pre>
  * will just repaint the previously generated diagram, at the same scale.<p>
  *
- * There are two sets of methods for painting IChemObjects - those that take
+ * <p>There are two sets of methods for painting IChemObjects - those that take
  * a Rectangle that represents the desired draw area, and those that return a
  * Rectangle that represents the actual draw area. The first are intended for
  * drawing molecules fitted to the screen (where 'screen' means any drawing
  * area) while the second type of method are for drawing bonds at the length
  * defined by the {@link RendererModel} parameter bondLength.<p>
  *
- * There are two numbers used to transform the model so that it fits on screen.
+ * <p>There are two numbers used to transform the model so that it fits on screen.
  * The first is <tt>scale</tt>, which is used to map model coordinates to
  * screen coordinates. The second is <tt>zoom</tt> which is used to, well,
  * zoom the on screen coordinates. If the diagram is fit-to-screen, then the
  * ratio of the bounds when drawn using bondLength and the bounds of
  * the screen is used as the zoom.<p>
  *
- * So, if the bond length on screen is set to 40, and the average bond length
+ * <p>So, if the bond length on screen is set to 40, and the average bond length
  * of the model is 2 (unitless, but roughly &Aring;ngstrom scale) then the
  * scale will be 20. If the model is 10 units wide, then the diagram drawn at
  * 100% zoom will be 10 * 20 = 200 in width on screen. If the screen is 400
@@ -133,10 +133,10 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
     }
 	
 	/**
-	 * Setup the transformations necessary to draw this Chem Model.
+	 * Setup the transformations necessary to draw this {@link IMoleculeSet}.
 	 *
-	 * @param chemModel
-	 * @param screen
+	 * @param moleculeSet the {@link IMoleculeSet} for what to set the scale
+	 * @param screen      the {@link Rectangle} for which to calculate the scale
 	 */
 	public void setup(IMoleculeSet moleculeSet, Rectangle screen) {
 	    this.setScale(moleculeSet);
@@ -202,7 +202,8 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
      * Set the scale for an IMoleculeSet. It calculates the average bond length
      * of the model and calculates the multiplication factor to transform this
      * to the bond length that is set in the RendererModel.
-     * @param moleculeSet
+     * 
+     * @param moleculeSet the {@link IMoleculeSet} for what to set the scale
      */
     public void setScale(IMoleculeSet moleculeSet) {
         double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(moleculeSet);
@@ -212,6 +213,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
         this.rendererModel.getParameter(Scale.class).setValue(scale);
     }
 
+    /** {@inheritDoc} */ @Override
 	public Rectangle paint(IMoleculeSet moleculeSet, IDrawVisitor drawVisitor) {
         // total up the bounding boxes
         Rectangle2D totalBounds = new Rectangle2D.Double();
@@ -235,9 +237,9 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
 	/**
      * Paint a set of molecules.
      *
-     * @param reaction the reaction to paint
+     * @param molecules   the {@link IMoleculeSet} to paint
      * @param drawVisitor the visitor that does the drawing
-     * @param bounds the bounds on the screen
+     * @param bounds      the bounds on the screen
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
@@ -262,6 +264,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
         this.paint(drawVisitor, diagram);
     }
 
+    /** {@inheritDoc} */ @Override
     public IRenderingElement generateDiagram(IMoleculeSet molecules) {
         ElementGroup diagram = new ElementGroup();
         for (IAtomContainer molecule : molecules.molecules()) {
@@ -270,6 +273,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
         return diagram;
     }
 
+    /** {@inheritDoc} */ @Override
 	public Rectangle calculateDiagramBounds(IMoleculeSet moleculeSet) {
 	    return this.calculateScreenBounds(
 	               BoundsCalculator.calculateBounds(moleculeSet));

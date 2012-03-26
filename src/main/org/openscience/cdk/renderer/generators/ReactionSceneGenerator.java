@@ -39,6 +39,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 @TestClass("org.openscience.cdk.renderer.generators.ReactionSceneGeneratorTest")
 public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
+	/** Boolean that indicates if boxes are drawn around the reaction. */
     public static class ShowReactionBoxes extends
     AbstractGeneratorParameter<Boolean> {
     	/** {@inheritDoc}} */
@@ -49,6 +50,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
     private IGeneratorParameter<Boolean> showReactionBoxes =
     	new ShowReactionBoxes();
 
+    /** Double which indicates how wide the arrow head is in screen pixels. */
     public static class ArrowHeadWidth extends
     AbstractGeneratorParameter<Double> {
     	/** {@inheritDoc}} */
@@ -58,8 +60,6 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
     }
     private IGeneratorParameter<Double> arrowHeadWidth =
     	new ArrowHeadWidth();
-
-    public ReactionSceneGenerator() {}
 
 	/** {@inheritDoc}} */
 	@Override

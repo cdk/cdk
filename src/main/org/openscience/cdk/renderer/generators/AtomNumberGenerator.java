@@ -43,13 +43,17 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
- * @author maclean
- * @cdk.module renderextra
+ * {@link IGenerator} for {@link IAtomContainer}s that will draw atom numbers
+ * for the atoms.
+ *
+ * @author      maclean
+ * @cdk.module  renderextra
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.AtomNumberGeneratorTest")
 public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
+	/** Color to draw the atom numbers with. */
     public static class AtomNumberTextColor extends
         AbstractGeneratorParameter<Color> {
     	/** {@inheritDoc}} */
@@ -59,7 +63,9 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     }
 
     private IGeneratorParameter<Color> textColor = new AtomNumberTextColor();
-    
+
+    /** Boolean parameter indicating if atom numbers should be drawn, allowing
+     * this feature to be disabled temporarily. */
     public static class WillDrawAtomNumbers extends
                         AbstractGeneratorParameter<Boolean> {
     	/** {@inheritDoc}} */
@@ -70,6 +76,8 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     private WillDrawAtomNumbers willDrawAtomNumbers =
     	new WillDrawAtomNumbers();
 
+    /** The color scheme by which to color the atom numbers, if
+     * the {@link ColorByType} boolean is true. */
     public static class AtomColorer extends
     AbstractGeneratorParameter<IAtomColorer> {
     	/** {@inheritDoc}} */
@@ -79,6 +87,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     }
     private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
 
+    /** Boolean to indicate of the {@link AtomColorer} scheme will be used. */
     public static class ColorByType extends
     AbstractGeneratorParameter<Boolean> {
     	/** {@inheritDoc}} */
