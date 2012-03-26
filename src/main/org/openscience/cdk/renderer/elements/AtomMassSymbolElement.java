@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -22,14 +20,31 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 /**
+ * Rendering element that shows the {@link IAtom} mass number information.
+ *
  * @cdk.module renderextra
  * @cdk.githash
  */
 public class AtomMassSymbolElement extends AtomSymbolElement {
 
+	/** The {@link IAtom}s mass number. */
 	public final int atomMassNumber;
 
+	/**
+	 * Constructs a new {@link TextElement} displaying the atom's mass number information.
+	 * 
+	 * @param xCoord        screen x-coordinate of where the text is displayed 
+	 * @param yCoord        screen y-coordinate of where the text is displayed
+	 * @param symbol        the element symbol of the atom
+	 * @param formalCharge  the formal charge of the atom
+	 * @param hydrogenCount the number of implicit hydrogens of the atom
+	 * @param alignment     indicator of how the text should be aligned
+	 * @param atomMass      the mass number of the atom
+	 * @param color         the color
+	 */
 	public AtomMassSymbolElement(double x, double y, String symbol,
 			Integer formalCharge, Integer hydrogenCount, int alignment,
 			Integer atomMass, Color color) {

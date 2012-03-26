@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -32,6 +30,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
+ * {@link IGenerator} that can render mass number information of atoms.
+ *
  * @cdk.module renderextra
  * @cdk.githash
  */
@@ -41,17 +41,24 @@ public class AtomMassGenerator extends BasicAtomGenerator {
     private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
 
-	public AtomMassGenerator() {}
-
+	/**
+	 * Returns true if the mass number of this element is set and not
+	 * equal the mass number of the most abundant isotope of this element.
+	 * 
+	 * @param  atom      {@link IAtom} which is being examined
+	 * @param  container {@link IAtomContainer} of which the atom is part
+	 * @param  model     the {@link RendererModel}
+	 * @return true, when mass number information should be depicted
+	 */
 	@TestMethod("showCarbon_ShowEndCarbonsTest")
 	public boolean showCarbon(
-	        IAtom atom, IAtomContainer ac, RendererModel model) {
+	        IAtom atom, IAtomContainer container, RendererModel model) {
 
 		Integer massNumber = atom.getMassNumber(); 
 		if (massNumber != null) {
 			try {
 				Integer expectedMassNumber 
-						= IsotopeFactory.getInstance(ac.getBuilder())
+						= IsotopeFactory.getInstance(container.getBuilder())
 							.getMajorIsotope(atom.getSymbol())
 								.getMassNumber(); 
 				if (massNumber != expectedMassNumber)
@@ -60,6 +67,6 @@ public class AtomMassGenerator extends BasicAtomGenerator {
 				logger.warn(e);
 			}
 		}
-		return super.showCarbon(atom, ac, model);
+		return super.showCarbon(atom, container, model);
 	}
 }

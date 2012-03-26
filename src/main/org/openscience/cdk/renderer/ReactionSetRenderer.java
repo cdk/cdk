@@ -127,6 +127,18 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
         this.setup();
     }
 	
+    /**
+     * A renderer that generates diagrams using the specified
+     * generators for {@link IAtomContainer}s and {@link IReactionSet}s
+     * and manages fonts with the supplied font manager.
+     *
+     * @param generators
+     *            a list of classes that implement the {@link IGenerator} interface
+     * @param reactionGenerators
+     *            a list of classes that implement the {@link IGenerator} interface
+     * @param fontManager
+     *            a class that manages mappings between zoom and font sizes
+     */
 	public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators, 
 	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
@@ -165,6 +177,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
         this.rendererModel.getParameter(Scale.class).setValue(scale);
     }
 
+    /** {@inheritDoc} */ @Override
 	public Rectangle paint(IReactionSet reactionSet, IDrawVisitor drawVisitor) {
         // total up the bounding boxes
         Rectangle2D totalBounds = new Rectangle2D.Double();
@@ -192,9 +205,9 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
     /**
      * Paint a set of reactions.
      *
-     * @param reaction the reaction to paint
+     * @param reactionSet the reaction to paint
      * @param drawVisitor the visitor that does the drawing
-     * @param bounds the bounds on the screen
+     * @param bounds      the bounds on the screen
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
@@ -224,6 +237,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
         this.paint(drawVisitor, diagram);
     }
 
+    /** {@inheritDoc} */ @Override
 	public Rectangle calculateDiagramBounds(IReactionSet reactionSet) {
         return this.calculateScreenBounds(
                 BoundsCalculator.calculateBounds(reactionSet));

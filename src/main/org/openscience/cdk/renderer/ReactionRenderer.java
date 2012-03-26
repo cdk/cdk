@@ -131,7 +131,18 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         }
         moleculeSetRenderer = new MoleculeSetRenderer(generators, fontManager);
     }
-	
+
+    /**
+     * A renderer that draws {@link IReaction}s with the passed {@link IGenerator}
+     * for both {@link IAtomContainer} and {@link IReaction} content.
+     *
+     * @param generators
+     *            a list of classes that implement the {@link IGenerator} interface
+     * @param reactionGenerators
+     *            a list of {@link IGenerator} related to {@link IReaction}s
+     * @param fontManager
+     *            a class that manages mappings between zoom and font sizes
+     */
 	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators, 
 	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
@@ -171,6 +182,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         this.rendererModel.getParameter(Scale.class).setValue(scale);
     }
 
+    /** {@inheritDoc} */ @Override
 	public Rectangle paint(IReaction reaction, IDrawVisitor drawVisitor) {
 
         // calculate the bounds
@@ -209,6 +221,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         this.paint(drawVisitor, diagram);
     }
 
+    /** {@inheritDoc} */ @Override
 	public Rectangle calculateDiagramBounds(IReaction reaction) {
         return this.calculateScreenBounds(
                 BoundsCalculator.calculateBounds(reaction));
@@ -231,6 +244,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         }
 	}
 
+    /** {@inheritDoc} */ @Override
     public IRenderingElement generateDiagram(IReaction reaction) {
 	    ElementGroup diagram = new ElementGroup();
 	    

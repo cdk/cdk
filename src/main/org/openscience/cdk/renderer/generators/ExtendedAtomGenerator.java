@@ -49,6 +49,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 @TestClass("org.openscience.cdk.renderer.generators.ExtendedAtomGeneratorTest")
 public class ExtendedAtomGenerator extends BasicAtomGenerator {
 
+	/** Boolean that indicates if implicit hydrogens should be depicted. */
     public static class ShowImplicitHydrogens extends
     AbstractGeneratorParameter<Boolean> {
     	/** {@inheritDoc}} */
@@ -59,6 +60,8 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     private IGeneratorParameter<Boolean> showImplicitHydrogens =
     	new ShowImplicitHydrogens();
 
+    /** Boolean that indicates if atom type names should be given instead
+     * of element symbols. */
     public static class ShowAtomTypeNames extends
                         AbstractGeneratorParameter<Boolean> {
     	/** {@inheritDoc}} */

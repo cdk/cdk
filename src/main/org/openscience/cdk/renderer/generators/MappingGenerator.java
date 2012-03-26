@@ -38,6 +38,9 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
+ * {@link IGenerator} that will show how atoms map between the reactant and
+ * product side.
+ *
  * @cdk.module renderextra
  * @cdk.githash
  */
@@ -70,6 +73,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
     private IGeneratorParameter<Double> mappingLineWidth =
     	new MappingLineWidth();
 
+    /** Boolean by which atom-atom mapping depiction can be temporarily disabled. */
     public static class ShowAtomAtomMapping extends
     AbstractGeneratorParameter<Boolean> {
     	/** {@inheritDoc}} */
