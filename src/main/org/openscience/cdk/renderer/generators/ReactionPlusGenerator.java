@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
@@ -53,7 +53,7 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 		Color color = model.getParameter(
 			BasicSceneGenerator.ForegroundColor.class
 		).getValue();
-		IMoleculeSet reactants = reaction.getReactants();
+		IAtomContainerSet reactants = reaction.getReactants();
 
 		// only draw + signs when there are more than one reactant
 		if (reactants.getAtomContainerCount() > 1) {
@@ -70,7 +70,7 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 		}
         
 		// only draw + signs when there are more than one products
-        IMoleculeSet products = reaction.getProducts();
+		IAtomContainerSet products = reaction.getProducts();
 		if (products.getAtomContainerCount() > 1) {
 			Rectangle2D totalBoundsProducts = BoundsCalculator.calculateBounds(products);
 			double axis = totalBoundsProducts.getCenterY();

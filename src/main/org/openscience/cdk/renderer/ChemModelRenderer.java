@@ -32,9 +32,8 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -111,7 +110,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 public class ChemModelRenderer extends AbstractRenderer<IChemModel>
   implements IRenderer<IChemModel> {
 
-	private IRenderer<IMoleculeSet> moleculeSetRenderer;
+	private IRenderer<IAtomContainerSet> moleculeSetRenderer;
 	
 	private IRenderer<IReactionSet> reactionSetRenderer;
 	
@@ -194,7 +193,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
      */
     public Rectangle paint(IChemModel chemModel, IDrawVisitor drawVisitor) {
 
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+    	IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
 
         if (moleculeSet == null && reactionSet != null) {
@@ -283,7 +282,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
     public void paint(IChemModel chemModel,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
         // check for an empty model
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+    	IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
 
         // nasty, but it seems that reactions can be read in as ChemModels
@@ -324,7 +323,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
 	 * @return a rectangle in screen space.
 	 */
 	public Rectangle calculateDiagramBounds(IChemModel model) {
-        IMoleculeSet moleculeSet = model.getMoleculeSet();
+		IAtomContainerSet moleculeSet = model.getMoleculeSet();
         IReactionSet reactionSet = model.getReactionSet();
         if ((moleculeSet == null && reactionSet == null)) {
             return new Rectangle();

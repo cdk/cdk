@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
@@ -67,12 +67,12 @@ public class BoundsGenerator implements IGenerator<IReaction> {
     @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
         ElementGroup elementGroup = new ElementGroup();
-        IMoleculeSet reactants = reaction.getReactants();
+        IAtomContainerSet reactants = reaction.getReactants();
         if (reactants != null) {
             elementGroup.add(this.generate(reactants));
         }
         
-        IMoleculeSet products = reaction.getProducts();
+        IAtomContainerSet products = reaction.getProducts();
         if (products != null) {
             elementGroup.add(this.generate(products));
         }
@@ -81,7 +81,7 @@ public class BoundsGenerator implements IGenerator<IReaction> {
     }
 
     private IRenderingElement generate(
-            IMoleculeSet moleculeSet) {
+    		IAtomContainerSet moleculeSet) {
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
         
         return new RectangleElement(totalBounds.getMinX(),

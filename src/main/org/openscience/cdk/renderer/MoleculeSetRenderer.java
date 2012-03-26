@@ -32,9 +32,8 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -107,8 +106,8 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.MoleculeSetRendererTest")
-public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
-  implements IRenderer<IMoleculeSet> {
+public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
+  implements IRenderer<IAtomContainerSet> {
 
     private IRenderer<IAtomContainer> atomContainerRenderer;
     
@@ -142,7 +141,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
 	 * @param moleculeSet the {@link IMoleculeSet} for what to set the scale
 	 * @param screen      the {@link Rectangle} for which to calculate the scale
 	 */
-	public void setup(IMoleculeSet moleculeSet, Rectangle screen) {
+	public void setup(IAtomContainerSet moleculeSet, Rectangle screen) {
 	    this.setScale(moleculeSet);
 	    Rectangle2D bounds = BoundsCalculator.calculateBounds(moleculeSet);
 	    if(bounds != null)
@@ -209,7 +208,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
      * 
      * @param moleculeSet the {@link IMoleculeSet} for what to set the scale
      */
-    public void setScale(IMoleculeSet moleculeSet) {
+    public void setScale(IAtomContainerSet moleculeSet) {
         double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(moleculeSet);
         double scale = this.calculateScaleForBondLength(bondLength);
 
@@ -218,7 +217,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
     }
 
     /** {@inheritDoc} */ @Override
-	public Rectangle paint(IMoleculeSet moleculeSet, IDrawVisitor drawVisitor) {
+	public Rectangle paint(IAtomContainerSet moleculeSet, IDrawVisitor drawVisitor) {
         // total up the bounding boxes
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
 
@@ -240,7 +239,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
-    public void paint(IMoleculeSet molecules,
+    public void paint(IAtomContainerSet molecules,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
@@ -254,16 +253,16 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
     }
 
     /** {@inheritDoc} */ @Override
-    public IRenderingElement generateDiagram(IMoleculeSet molecules) {
+    public IRenderingElement generateDiagram(IAtomContainerSet molecules) {
         ElementGroup diagram = new ElementGroup();
-        for (IAtomContainer molecule : molecules.molecules()) {
+        for (IAtomContainer molecule : molecules.atomContainers()) {
             diagram.add(atomContainerRenderer.generateDiagram(molecule));
         }
         return diagram;
     }
 
     /** {@inheritDoc} */ @Override
-	public Rectangle calculateDiagramBounds(IMoleculeSet moleculeSet) {
+	public Rectangle calculateDiagramBounds(IAtomContainerSet moleculeSet) {
 		if(moleculeSet == null) return this.calculateScreenBounds(new Rectangle2D.Double());
 	    return this.calculateScreenBounds(
 	               BoundsCalculator.calculateBounds(moleculeSet));
@@ -288,8 +287,8 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
 
 	/** {@inheritDoc} */
 	@Override
-    public List<IGenerator<IMoleculeSet>> getGenerators() {
-        return new ArrayList<IGenerator<IMoleculeSet>>(generators);
+    public List<IGenerator<IAtomContainerSet>> getGenerators() {
+        return new ArrayList<IGenerator<IAtomContainerSet>>(generators);
     }
    
 }

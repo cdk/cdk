@@ -60,7 +60,7 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
 		double distance = model.getParameter(BondLength.class)
     		.getValue() / model.getParameter(Scale.class).getValue() / 2;
         Rectangle2D totalBounds = null;
-        for (IAtomContainer molecule : reaction.getProducts().molecules()) {
+        for (IAtomContainer molecule : reaction.getProducts().atomContainers()) {
             Rectangle2D bounds = BoundsCalculator.calculateBounds(molecule);
             if (totalBounds == null) {
                 totalBounds = bounds;

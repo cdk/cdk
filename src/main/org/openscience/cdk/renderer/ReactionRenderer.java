@@ -31,9 +31,8 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -109,7 +108,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 public class ReactionRenderer extends AbstractRenderer<IReaction>
   implements IRenderer<IReaction> {
     
-    private IRenderer<IMoleculeSet> moleculeSetRenderer;
+    private IRenderer<IAtomContainerSet> moleculeSetRenderer;
 
     /**
      * A renderer that generates diagrams using the specified
