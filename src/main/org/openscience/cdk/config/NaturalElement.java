@@ -24,6 +24,7 @@ package org.openscience.cdk.config;
 
 import java.util.Map;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -69,7 +70,7 @@ public final class NaturalElement implements IElement {
 	@Override public boolean getFlag(int flag_type) { return false; }
 	@Override public void setProperties(Map<Object, Object> properties) {}
 	@Override public void setFlags(boolean[] flagsNew) {}
-	@Override public boolean[] getFlags() { return null; }
+	@Override public boolean[] getFlags() { return new boolean[CDKConstants.MAX_FLAG_INDEX + 1]; }
 	@Override public IChemObjectBuilder getBuilder() { return null; }
 	@Override public void setAtomicNumber(Integer atomicNumber) {}
 	@Override public void setSymbol(String symbol) {}
