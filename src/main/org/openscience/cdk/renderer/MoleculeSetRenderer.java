@@ -123,11 +123,15 @@ public class MoleculeSetRenderer extends AbstractRenderer<IMoleculeSet>
      */
     @TestMethod("testConstructor")
 	public MoleculeSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-        this.fontManager = fontManager;
-        for (IGenerator<IAtomContainer> generator : generators) {
+		this(new RendererModel(),generators,fontManager);
+		for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
-        atomContainerRenderer = new AtomContainerRenderer(generators, fontManager);
+	}
+	public MoleculeSetRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+		super(rendererModel);
+        this.fontManager = fontManager;
+        atomContainerRenderer = new AtomContainerRenderer(rendererModel,generators, fontManager);
         this.generators = Collections.emptyList();
         this.setup();
     }

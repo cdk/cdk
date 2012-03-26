@@ -124,22 +124,29 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
      */
 	@TestMethod("testConstructor")
 	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+		super(new RendererModel());
         this.fontManager = fontManager;
         for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
-        moleculeSetRenderer = new MoleculeSetRenderer(generators, fontManager);
-        reactionSetRenderer = new ReactionSetRenderer(generators, fontManager);
+        moleculeSetRenderer = new MoleculeSetRenderer(rendererModel,generators, fontManager);
+        reactionSetRenderer = new ReactionSetRenderer(rendererModel,generators, fontManager);
         this.setup();
     }
 	
 	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, 
 	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
+		super(new RendererModel());
 	    this.fontManager = fontManager;
-        
+	    for (IGenerator<IAtomContainer> generator : generators) {
+            rendererModel.registerParameters(generator);
+        }
+	    for (IGenerator<IReaction> generator : reactionGenerators) {
+            rendererModel.registerParameters(generator);
+        }
         reactionSetRenderer = 
-            new ReactionSetRenderer(generators, reactionGenerators, fontManager);
+            new ReactionSetRenderer(rendererModel,generators, reactionGenerators, fontManager);
         this.setup();
 	}
 	
