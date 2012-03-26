@@ -122,8 +122,15 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
      */
     @TestMethod("testConstructor")
 	public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+		this(new RendererModel(),generators,fontManager);
+		for (IGenerator<IAtomContainer> generator : generators) {
+            rendererModel.registerParameters(generator);
+        }
+	}
+	public ReactionSetRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators, IFontManager fontManager){
+		super(rendererModel);
         this.fontManager = fontManager;
-        reactionRenderer = new ReactionRenderer(generators, fontManager);
+        reactionRenderer = new ReactionRenderer(rendererModel,generators, fontManager);
         this.setup();
     }
 	
@@ -142,8 +149,14 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
 	public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators, 
 	                List<IGenerator<IReaction>> reactionGenerators, 
 	                IFontManager fontManager) {
+		this(new RendererModel(),generators,reactionGenerators,fontManager);
+	}
+	protected ReactionSetRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators,
+            List<IGenerator<IReaction>> reactionGenerators,
+            IFontManager fontManager) {
+		super(rendererModel);
 	    this.fontManager = fontManager;
-	    reactionRenderer = 
+	    reactionRenderer =
 	        new ReactionRenderer(generators, reactionGenerators, fontManager);
         this.setup();
 	}
