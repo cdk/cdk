@@ -841,10 +841,11 @@ public class UniversalIsomorphismTester {
       for (int j = i + 1; j < gr.getGraph().size(); j++) {
         RNode y = gr.getGraph().get(j);
 
-        a1 = ac1.getBond(gr.getGraph().get(i).getRMap().getId1());
-        a2 = ac2.getBond(gr.getGraph().get(i).getRMap().getId2());
-        b1 = ac1.getBond(gr.getGraph().get(j).getRMap().getId1());
-        b2 = ac2.getBond(gr.getGraph().get(j).getRMap().getId2());
+        a1 = ac1.getBond(x.getRMap().getId1());
+        a2 = ac2.getBond(x.getRMap().getId2());
+
+        b1 = ac1.getBond(y.getRMap().getId1());
+        b2 = ac2.getBond(y.getRMap().getId2());
 
         if (a2 instanceof IQueryBond) {
             if (a1.equals(b1) || a2.equals(b2) ||
