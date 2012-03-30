@@ -26,8 +26,16 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
+import com.sun.xml.internal.rngom.digested.DOneOrMorePattern;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +43,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -54,7 +62,7 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
 
     @Before
     public void setup() {
-        parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
@@ -68,8 +76,8 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
         IFingerprinter printer = new PubchemFingerprinter();
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
-        IMolecule mol2 = parser.parseSmiles("c1ccccc1CC");
+        IAtomContainer mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
+        IAtomContainer mol2 = parser.parseSmiles("c1ccccc1CC");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
@@ -96,9 +104,9 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
     public void testfp2() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter();
 
-        IMolecule mol1 = parser.parseSmiles("CC(N)CCCN");
-        IMolecule mol2 = parser.parseSmiles("CC(N)CCC");
-        IMolecule mol3 = parser.parseSmiles("CCCC");
+        IAtomContainer mol1 = parser.parseSmiles("CC(N)CCCN");
+        IAtomContainer mol2 = parser.parseSmiles("CC(N)CCC");
+        IAtomContainer mol3 = parser.parseSmiles("CCCC");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
@@ -124,7 +132,7 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
      */
     @Test
     public void testCID2518130() throws CDKException {
-        IMolecule mol = parser.parseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
+        IAtomContainer mol = parser.parseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
@@ -146,7 +154,7 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
      */
     @Test
     public void testCID5934166() throws CDKException {
-        IMolecule mol = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
+        IAtomContainer mol = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
@@ -168,7 +176,7 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
        */
       @Test
       public void testCID25181289() throws CDKException {
-          IMolecule mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+          IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
           AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
           CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
           adder.addImplicitHydrogens(mol);
@@ -185,7 +193,7 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
 
     @Test
     public void testBenzene() throws CDKException {
-        IMolecule mol = parser.parseSmiles("c1ccccc1");
+        IAtomContainer mol = parser.parseSmiles("c1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
@@ -198,6 +206,63 @@ public class PubchemFingerprinterTest extends AbstractFingerprinterTest {
 
         Assert.assertEquals(ref, fp);
 
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 3510588
+     */
+    @Test
+    public void testMultithreadedUsage() throws Exception {
+        IAtomContainer mol1 = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+        IAtomContainer mol2 = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
+
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
+        adder.addImplicitHydrogens(mol1);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+
+        adder.addImplicitHydrogens(mol2);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol2);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+
+
+        IFingerprinter fp = new PubchemFingerprinter();
+        BitSet bs1 = fp.getFingerprint(mol1);
+        BitSet bs2 = fp.getFingerprint(mol2);
+
+        class FpRunner implements Callable<BitSet> {
+            IAtomContainer mol;
+            FpRunner(IAtomContainer mol) {
+                this.mol = mol;
+            }
+            public BitSet call() throws Exception {
+                BitSet fp = null;
+                IFingerprinter fpr = new PubchemFingerprinter();
+                try {
+                    fp = fpr.getFingerprint(mol);
+                } catch (CDKException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+                return fp;
+            }
+        }
+
+        // now lets run some threads
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        List<FpRunner> tasks = new ArrayList<FpRunner>();
+        tasks.add(new FpRunner(mol1));
+        tasks.add(new FpRunner(mol2));
+        List<Future<BitSet>> ret = executor.invokeAll(tasks);
+
+        BitSet fb1 = ret.get(0).get();
+        Assert.assertNotNull(fb1);
+
+        BitSet fb2 = ret.get(1).get();
+        Assert.assertNotNull(fb2);
+
+        Assert.assertEquals(bs1, fb1);
+        Assert.assertEquals(bs2, fb2);
     }
 
 }
