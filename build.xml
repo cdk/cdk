@@ -799,7 +799,7 @@
             </jar>
         </target>
 
-        <target id="dist-test-large" name="dist-test-large" depends="test-dist-all"
+        <target id="dist-test-large" name="dist-test-large" depends="test-dist-all, jarTestdata"
             description="Builds on big jar file for the CDK test classes.">
 
             <!-- first unjar the CDK and other jars we need -->
@@ -841,6 +841,7 @@
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-test.jar"/>
+                    <include name="cdk-testdata.jar"/>
                     <include name="cdk-test-annotation.jar"/>
                     <include name="cdk-test-ioformats.jar"/>
                     <include name="cdk-test-core.jar"/>
