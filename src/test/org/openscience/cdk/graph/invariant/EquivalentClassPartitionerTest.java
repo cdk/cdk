@@ -25,7 +25,14 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.io.MDLV2000Reader;
+
+import java.io.InputStream;
 
 /**
  * Checks the functionality of the TopologicalEquivalentClass.
@@ -230,5 +237,31 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		Assert.assertTrue(equivalentClass[0]==2);//number of Class
 		Assert.assertEquals("111111222222222222111111",strEquivalent);
 	}
-	
+
+    /**
+     * @cdk.bug 3513954
+     * @throws Exception
+     */
+    @Test
+    public void testPseudoAtoms() throws Exception {
+        String filename = "data/mdl/pseudoatoms.sdf";
+
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        mol = reader.read(mol);
+        Assert.assertNotNull(mol);
+
+        // check that there are some pseudo-atoms
+        boolean hasPseudo = false;
+        for (IAtom atom : mol.atoms()) {
+            if (atom instanceof PseudoAtom) hasPseudo = true;
+        }
+        Assert.assertTrue("The molecule should have one or more pseudo atoms", hasPseudo);
+
+        EquivalentClassPartitioner partitioner = new EquivalentClassPartitioner(mol);
+        Assert.assertNotNull(partitioner);
+
+        int[] classes = partitioner.getTopoEquivClassbyHuXu(mol);
+    }
 }
