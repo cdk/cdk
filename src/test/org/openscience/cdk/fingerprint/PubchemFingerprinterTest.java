@@ -27,13 +27,11 @@ package org.openscience.cdk.fingerprint;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import com.sun.xml.internal.rngom.digested.DOneOrMorePattern;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
