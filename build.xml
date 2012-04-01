@@ -810,6 +810,7 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
+                    <includesfile name="${metainf}/test.libdepends"/>
                     <includesfile name="${metainf}/test-core.libdepends"/>
                     <includesfile name="${metainf}/test-data.libdepends"/>
                     <includesfile name="${metainf}/test-datadebug.libdepends"/>
@@ -844,6 +845,7 @@
                     <includesfile name="${metainf}/test-cip.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-test.jar"/>
                     <include name="cdk-test-annotation.jar"/>
                     <include name="cdk-test-ioformats.jar"/>
                     <include name="cdk-test-core.jar"/>
