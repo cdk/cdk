@@ -93,13 +93,7 @@ public class PubchemFingerprinter implements IFingerprinter {
 
     private SMARTSQueryTool sqt;
     public PubchemFingerprinter() {
-        try {
-            sqt = new SMARTSQueryTool("C");
-        } catch (CDKException e) {
-            // bad practice but, the above initialization
-            // will never fail so we don't bother throwing
-            // the exception
-        }
+    	sqt = new SMARTSQueryTool("C");
         m_bits = new byte[(FP_SIZE + 7) >> 3];
     }
 
