@@ -4,6 +4,7 @@ cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
 cdk-datadebug.jar
+cdk-silent.jar
 cdk-nonotify.jar
 cdk-io.jar
 cdk-ioformats.jar
