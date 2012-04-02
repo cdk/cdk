@@ -77,10 +77,13 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertNotNull(molecule);
 
         molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
         	IBond bond = molecule.getBond(i);
         	Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
         }
+        Assert.assertEquals(6, doubleBondCount);
     }
 
 	@Test
@@ -143,10 +146,13 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertNotNull(molecule);
 
         molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
             Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
         }
+        Assert.assertEquals(6, doubleBondCount);
     }
 
 	/**
