@@ -49,7 +49,8 @@ public interface IBond extends IElectronContainer {
 		SINGLE,
 		DOUBLE,
 		TRIPLE,
-		QUADRUPLE
+		QUADRUPLE,
+		UNSET
 	}
 	
 	/**
