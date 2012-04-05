@@ -1,9 +1,9 @@
 options {
 	STATIC=false;
 	FORCE_LA_CHECK=false;
-	USER_CHAR_STREAM = false;
-    UNICODE_INPUT = false;
-    IGNORE_CASE = false;
+	USER_CHAR_STREAM=false;
+    UNICODE_INPUT=false;
+    IGNORE_CASE=false;
     MULTI=true;
     VISITOR=true;
     NODE_DEFAULT_VOID=true;
@@ -77,7 +77,6 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
  * @cdk.keyword substructure search
  */
 public class SMARTSParser {
-
 	/**
 	 * This method parses a Smarts String and returns an instance of 
 	 * <code>QueryAtomContainer</code>
@@ -97,17 +96,22 @@ public class SMARTSParser {
         }
         return container;	
 	} 
+
 }
 
 PARSER_END(SMARTSParser)
 
+TOKEN_MGR_DECLS : {
+
+    // Required by SetState
+    void backup(int n) { input_stream.backup(n); } 
+
+} 
+
 <*> TOKEN:
 {
     <#_WS: ( " " | "\t" | "\n" | "\r" ) >
-}
-
-<DEFAULT> TOKEN:
-{
+    |
     // Logical Operators
     <L_AND : ";" >
     |
@@ -138,7 +142,7 @@ PARSER_END(SMARTSParser)
     |
     <   R_BOND : "@" >  // any ring bond
     |
-    // Elements
+    // Explicit Elements
         <  c: "c" >
     |   <  n: "n" >
     |   <  o: "o" >
@@ -146,27 +150,69 @@ PARSER_END(SMARTSParser)
     |   <  p: "p" >
     |   < as: "as" >
     |   < se: "se" >
-    |   <  H: "H" >
-    |   < HE: "He" >
-    |   < LI: "Li" >
-    |   < BE: "Be" >
     |   <  B: "B" >
     |   <  C: "C" >
     |   <  N: "N" >
     |   <  O: "O" >
     |   <  F: "F" >
+    |   <  P: "P" >
+    |   <  S: "S" >
+    |	< CL: "Cl" >   
+    |   < BR: "Br" >
+    |   <  I: "I" >
+    |   < WILDCARD: "*" >
+    |   <a : "a" >
+    |   <A : "A" >
+    |   <CARET : "^">
+    |   <Q_MARK : "?" >
+    |
+    <DIGIT: ["0"-"9"] > 
+    |
+    <L_BRACKET : "[" > 
+    |
+    <L_PAREN : "(" > 
+    |
+    <R_PAREN : ")" > 
+    |
+    <R_BRACKET : "]" > 
+    |
+    <DOLLAR : "$" > 
+    |
+    <PLUS: "+" >
+}
+
+<ATOM_EXPRESSION> TOKEN: {
+    <h : "h" >
+    |
+    <D : "D" >
+    |
+    <R : "R" >
+    |
+    <r : "r" >
+    |
+    <v : "v" >
+    |
+    <X : "X" >
+    |
+    <x : "x" >
+    |
+    <G : "G" >
+    |
+    <HX : "#X" >
+    |
+    // ELEMENTS 
+    <  H: "H" >
+    |   < HE: "He" >
+    |   < LI: "Li" >
+    |   < BE: "Be" >
     |   < NE: "Ne" >
     |   < NA: "Na" >
     |   < MG: "Mg" >
     |	< AL: "Al" >
     |	< SI: "Si" >
-    |   <  P: "P" >
-    |   <  S: "S" >
-    |	< CL: "Cl" >
     |	< AR: "Ar" >
     |   <  K: "K" >
     |   < CA: "Ca" >
-    |   < SC: "Sc" >
     |   < TI: "Ti" >
     |   <  V: "V" >
     |   < CR: "Cr" >
@@ -180,7 +226,6 @@ PARSER_END(SMARTSParser)
     |   < GE: "Ge" >
     |   < AS: "As" >
     |   < SE: "Se" >
-    |   < BR: "Br" >
     |   < KR: "Kr" >
     |   < RB: "Rb" >
     |   < SR: "Sr" >
@@ -198,7 +243,6 @@ PARSER_END(SMARTSParser)
     |   < SN: "Sn" >
     |   < SB: "Sb" >
     |   < TE: "Te" >
-    |   <  I: "I" >
     |   < XE: "Xe" >
     |   < CS: "Cs" >
     |   < BA: "Ba" >
@@ -248,47 +292,9 @@ PARSER_END(SMARTSParser)
     |   <  TM: "Tm" >
     |   <  YB: "Yb" >
     |   <  LU: "Lu" >
-    |   <  PR: "Pr" >        
-    // Atomic Primitives
-    |   < WILDCARD: "*" >
-    |
-    <h : "h" >
-    |
-    <a : "a" >
-    |
-    <A : "A" >
-    |
-    <D : "D" >
-    |
-    <R : "R" >
-    |
-    <r : "r" >
-    |
-    <v : "v" >
-    |
-    <X : "X" >
-    |
-    <x : "x" >
-    |
-    <G : "G" >
-    |
-    <HX : "#X" >
-    |
-    <CARET : "^">
-    |
-    <DOLLAR : "$" >
-    |
-    <L_PAREN : "(" >
-    | 
-    <R_PAREN : ")" >
-    |
-    <L_BRACKET : "[" >
-    |
-    <R_BRACKET : "]" >
-    |
-    <Q_MARK : "?" >
-    |
-    <DIGIT: ["0"-"9"] > 
+    |   <  PR: "Pr" >     
+    |   <SC: "Sc"> 
+
 }
 
 /**
@@ -395,7 +401,9 @@ ASTAtom	 AtomExpression() #Atom :
 	( 
 	    ( 
 	    
-	    	<L_BRACKET> { firstToken = getToken(1); secondToken = getToken(2); }
+	    	<L_BRACKET> { token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION);
+firstToken = getToken(1); 
+secondToken = getToken(2); }
 	    	( AtomicMass() { massNode = (ASTAtomicMass)jjtree.popNode(); }	)?
 	    	LowAndExpression() 
 	    	{
@@ -405,7 +413,7 @@ ASTAtom	 AtomExpression() #Atom :
 					jjtree.pushNode(topNode);
 				}
 	    	}
-	    	<R_BRACKET> { rightBracket = token; }
+	    	<R_BRACKET> { token_source.SwitchTo(SMARTSParserConstants.DEFAULT); rightBracket = token; }
 	    	{   
 	    		Token HToken = null;
 	    		// If the LowAndExpression is "[H]", change it to an ExplicitAtom
@@ -530,7 +538,8 @@ void NotExpression() #NotExpression :
 
 void RecursiveSmartsExpression() #RecursiveSmartsExpression : {}
 {
-    <DOLLAR> <L_PAREN> SmartsExpression() <R_PAREN>
+    <DOLLAR> <L_PAREN> {token_source.SwitchTo(SMARTSParserConstants.DEFAULT); }
+    SmartsExpression() <R_PAREN> {token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION); }
 }
 
 void PrimitiveAtomExpression() : {}
