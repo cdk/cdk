@@ -102,7 +102,7 @@ public class ForceFieldConfigurator {
 	 */
 	public boolean checkForceFieldType(String ffname) {
 		boolean check=false;
-		for (int i = 0; i <= fftypes.length; i++) {
+		for (int i = 0; i < fftypes.length; i++) {
 			if (fftypes[i].equals(ffname)) {
 				check=true;
 				break;
