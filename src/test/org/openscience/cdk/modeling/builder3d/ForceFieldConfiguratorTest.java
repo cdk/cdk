@@ -1,3 +1,26 @@
+/* Copyright (C) 2000-2007  Christoph Steinbeck 
+ *               2001-2007,2009  Egon Willighagen 
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.modeling.builder3d;
 
 
@@ -22,15 +45,17 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
 /**
  * @author Daniel Szisz
  * @version 01/04/2012
+ * @module test-modelbuilder3d
+ * 
  */
 public class ForceFieldConfiguratorTest  {
 
 	ForceFieldConfigurator forceFieldConfigurator = new ForceFieldConfigurator();
 	
 	
-	/*
-	 * bug : ArrayIndexOutOfBoundsException because of wrong for loop
-	 */
+	/**
+	 * @cdk.bug : ArrayIndexOutOfBoundsException because of wrong for loop
+	*/
 	@Test
 	public void testCheckForceFieldType_String() {
 		assertEquals(2, forceFieldConfigurator.getFfTypes().length);
@@ -42,9 +67,8 @@ public class ForceFieldConfiguratorTest  {
 	}
 	
 	@Test
-	public void testSetForceFieldConfigurator_String() {
+	public void testSetForceFieldConfigurator_String() throws CDKException {
 		String forceFieldName = "mmff94";
-		try {
 		forceFieldConfigurator.setForceFieldConfigurator(forceFieldName);
 		List<IAtomType> mmff94AtomTypes = forceFieldConfigurator.getAtomTypes();
 		assertNotNull(mmff94AtomTypes);
@@ -62,16 +86,10 @@ public class ForceFieldConfiguratorTest  {
 		IAtomType atomtype3 = mm2AtomTypes.get(3);
 		assertEquals("Csp", atomtype3.getAtomTypeName());
 		
-		} catch(CDKException cdkexp) {
-			cdkexp.printStackTrace();
-		}
 	}
 	
 	@Test
-	public void testSetMM2Parameters() {
-		try {
-		//FIXME bug : Problem within readParameterSets due 
-			//to:java.lang.NullPointerException	
+	public void testSetMM2Parameters() throws CDKException {
 		forceFieldConfigurator.setMM2Parameters();
 		assertNotNull(forceFieldConfigurator.getParameterSet());
 		List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
@@ -79,15 +97,10 @@ public class ForceFieldConfiguratorTest  {
 		assertEquals("Csp2", atomtype1.getAtomTypeName());
 		assertEquals(6, (int) atomtype1.getAtomicNumber());
 		assertEquals(12, (int) atomtype1.getMassNumber());
-		
-		} catch(CDKException cdkexp) {
-			cdkexp.printStackTrace();
-		}
 	}
 	
 	@Test
-	public void testSetMMFF94Parameters() {
-		try {
+	public void testSetMMFF94Parameters() throws Exception {
 		forceFieldConfigurator.setMMFF94Parameters();
 		assertNotNull(forceFieldConfigurator.getParameterSet());
 		List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
@@ -97,9 +110,6 @@ public class ForceFieldConfiguratorTest  {
 		assertEquals(4, (int) atomtype4.getFormalNeighbourCount());
 		assertEquals(12, (int) atomtype4.getMassNumber());
 		
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Test
@@ -113,13 +123,8 @@ public class ForceFieldConfiguratorTest  {
 		
 	}
 	
-	@Test
-	public void testConfigureMM2BasedAtom_IAtom_String_boolean() {
-			
-	}
-	
-	/*
-	 * bug : mmff94 atom types N and N3OX are given 
+	/**
+	 * @cdk.bug  #3515122:  N atom type instead of NC=O
 	 */
 	@Test
 	public void testConfigureMMFF94BasedAtom_IAtom_String_boolean_hydroxyurea() throws CDKException {
@@ -158,8 +163,8 @@ public class ForceFieldConfiguratorTest  {
 		
 	}
 	
-	/*
-	 * bug : mmff94 atomtype N instead of NC=O
+	/**
+	 * @cdk.bug  #3515122 : mmff94 atomtype N instead of NC=O
 	 */
 	@Test
 	public void testConfigureMMFF94BasedAtom_IAtom_String_boolean_urea() throws CDKException {
@@ -178,8 +183,8 @@ public class ForceFieldConfiguratorTest  {
 		
 	}
 		
-	/*
-	 * bug : bad atom types
+	/**
+	 * @cdk.bug : bad atom types
 	 */
 	@Test 
 	public void testAssignAtomTyps_test4_hydroxyurea() throws CDKException {
