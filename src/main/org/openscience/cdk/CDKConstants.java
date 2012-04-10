@@ -171,7 +171,7 @@ public class CDKConstants {
 
     /**
      * Flag used for marking uncertainty of the bond order.
-     * If used on an <br>
+     * If used on an
      * <ul>
      *  <li>IMolecule it means that one or several of the bonds have 
      * 		this flag raised (which may indicate aromaticity).</li>

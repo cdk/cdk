@@ -69,6 +69,40 @@ public class SmilesParserTest extends CDKTestCase {
 	
 	private static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
+	  @Test (timeout=1000)
+	  public void testSingleOrDoubleFlag() throws Exception {
+		  String smiles = "c1cccn1c2cccn2";
+		  IMolecule mol = sp.parseSmiles(smiles);
+		  assertAtomTypesPerceived(mol);
+		  // Let's check the atoms first...
+		  Assert.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getAtom(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getAtom(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));		  
+		  Assert.assertTrue(mol.getAtom(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getAtom(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  
+		  Assert.assertTrue(mol.getAtom(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getAtom(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getAtom(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getAtom(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));		  
+		  // ...and then the bonds...
+		  // ...in the first ring...
+		  Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  // ...then the bond in between the rings...
+		  Assert.assertFalse(mol.getBond(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  // ...and at last the bonds in the other ring.
+		  Assert.assertTrue(mol.getBond(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  Assert.assertTrue(mol.getBond(10).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+	  }
+	  
 	/** @cdk.bug 1363882 */
   @Test (timeout=1000)
   public void testBug1363882() throws Exception {

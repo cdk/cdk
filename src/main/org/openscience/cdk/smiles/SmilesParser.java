@@ -36,8 +36,10 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -48,6 +50,8 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -270,7 +274,26 @@ public class SmilesParser {
             }
         }
         this.addImplicitHydrogens(molecule);
-
+        
+        // Set the flag SINGLE_OR_DOUBLE to false if the bond with it isn't in a ring.
+       if (molecule.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
+        	SpanningTree molTree = new SpanningTree(molecule);
+        	try {
+        		IRingSet rings = molTree.getAllRings();
+        		for (int j = 0; j < rings.getAtomContainerCount(); j++) {
+        			for (IBond bond : rings.getAtomContainer(j).bonds())
+        				if (bond.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE) &&
+        						bond.getAtom(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE)
+        						) {
+        					bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        				}
+        		}
+        	} catch (NoSuchAtomException exception) {
+        		logger.error("Caught unexpected Exception while identifying the rings.");
+        		logger.debug(exception);
+        	}
+        }
+        
         if (!preservingAromaticity ) {
             this.perceiveAromaticity(molecule);
         }
@@ -357,6 +380,11 @@ public class SmilesParser {
 									currentSymbol = currentSymbol.toUpperCase();
 									atom = builder.newInstance(IAtom.class,currentSymbol);
 									atom.setHybridization(Hybridization.SP2);
+									// If the letter is small we rise the flag
+									atom.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+									// If the flag hasn't been raised on the molecule, lets do it.
+									if (molecule.getFlag(CDKConstants.SINGLE_OR_DOUBLE) != true)
+										molecule.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
                                     if (preservingAromaticity ) {
                                         atom.setFlag(CDKConstants.ISAROMATIC, true);
                                     }
