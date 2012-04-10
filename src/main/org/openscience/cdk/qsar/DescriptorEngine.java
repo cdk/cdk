@@ -23,7 +23,6 @@ package org.openscience.cdk.qsar;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
-
 import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -411,8 +410,12 @@ public class DescriptorEngine {
         Entry[] dictEntries = dict.getEntries();
 
         String specRef = getSpecRef(identifier);
-        String definition = null;
+        if (specRef == null) {
+            logger.error("Cannot determine specification for id: ", identifier);
+            return "";
+        }
 
+        String definition = null;
         for (Entry dictEntry : dictEntries) {
             if (!dictEntry.getClassName().equals("Descriptor")) continue;
             if (dictEntry.getID().equals(specRef.toLowerCase())) {
@@ -448,8 +451,12 @@ public class DescriptorEngine {
     public String getDictionaryTitle(String identifier) {
         Entry[] dictEntries = dict.getEntries();
         String specRef = getSpecRef(identifier);
-        String title = null;
+        if (specRef == null) {
+            logger.error("Cannot determine specification for id: ", identifier);
+            return "";
+        }
 
+        String title = null;
         for (Entry dictEntry : dictEntries) {
             if (!dictEntry.getClassName().equals("Descriptor")) continue;
             if (dictEntry.getID().equals(specRef.toLowerCase())) {
