@@ -309,13 +309,14 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
 	public Object visit(ASTNotBond node, Object data) {
 		Object left = node.jjtGetChild(0).jjtAccept(this, data);
-		if (node.getType() == SMARTSParserConstants.DEFAULT) {
-			return left;
-		}
+		if (node.getType() == SMARTSParserConstants.NOT) {
 		LogicalOperatorBond bond = new LogicalOperatorBond();
 		bond.setOperator("not");
 		bond.setLeft((IQueryBond) left);
 		return bond;
+		} else {
+			return left;
+		}
 	}
 
 	public Object visit(ASTImplicitHighAndBond node, Object data) {
@@ -579,13 +580,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
 	public Object visit(ASTNotExpression node, Object data) {
 		Object left = node.jjtGetChild(0).jjtAccept(this, data);
-		if (node.getType() == SMARTSParserConstants.DEFAULT) {
-			return left;
-		}
+		if (node.getType() == SMARTSParserConstants.NOT) {
 		LogicalOperatorAtom atom = new LogicalOperatorAtom();
 		atom.setOperator("not");
 		atom.setLeft((IQueryAtom) left);
 		return atom;
+	}
+		return left;
 	}
 
 	public Object visit(ASTExplicitHighAndExpression node, Object data) {
