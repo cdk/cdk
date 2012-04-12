@@ -1,9 +1,9 @@
 [javacc.jar]
 Library=JavaCC
-#Version=1.0.2
+#Version=5.0
 #Copyright=
 License=BSD
 #LicenseURL=
 #Download=
 #SourceCode=
-Homepage=https://javacc.dev.java.net/
+Homepage=http://javacc.java.net/
