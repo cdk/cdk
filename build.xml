@@ -484,8 +484,6 @@
 	 <!-- OK, we now need to do some replacements such as 
 	      adding cdk.module tags and changing access modes
 	  -->
-	 <replace file="${src}/main/org/openscience/cdk/smiles/smarts/parser/JJTSMARTSParserState.java" 
-	          token="class JJTSMARTSParserState {" value="public class JJTSMARTSParserState {" />
          <replace dir="${src}/main/org/openscience/cdk/smiles/smarts/parser" 
 	          excludes="AST*.java,SMARTSParser.jjt,SMARTSParser.jj,*Node.java"
                   token="package org.openscience.cdk.smiles.smarts.parser;" summary="true" >
