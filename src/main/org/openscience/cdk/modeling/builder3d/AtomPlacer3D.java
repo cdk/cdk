@@ -30,6 +30,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,6 +47,9 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module     builder3d
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.modeling.builder3d.AtomPlacer3DTest" +
+		   "org.openscience.cdk.modeling.builder3d.FurtherAtomPlacer3DTest")
+
 public class AtomPlacer3D {
 
 	private Map<Object,List> pSet = null;
