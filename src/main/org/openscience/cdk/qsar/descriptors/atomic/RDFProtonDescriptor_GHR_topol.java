@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
+/* Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
  * Copyright (C) 2006-2007  Federico
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -30,7 +28,6 @@ import javax.vecmath.Vector3d;
 
 import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Ring;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -42,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -217,7 +215,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
             }
         }
         IRingSet rsAtom;
-        Ring ring;
+        IRing ring;
         IRingSet ringsWithThisBond;
 // SET ISINRING FLAGS FOR BONDS
         Iterator<IBond> bondsInContainer = varAtomContainer.bonds().iterator();
@@ -302,7 +300,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
                                 if (!curAtomThird.equals(neighbour0)) {
                                     rsAtom = varRingSet.getRings(thirdBond);
                                     for (Object aRsAtom : rsAtom.atomContainers()) {
-                                        ring = (Ring) aRsAtom;
+                                        ring = (IRing) aRsAtom;
                                         if (ring.getRingSize() > 4 && ring.contains(thirdBond)) {
                                             theBondIsInA6MemberedRing = true;
                                         }
