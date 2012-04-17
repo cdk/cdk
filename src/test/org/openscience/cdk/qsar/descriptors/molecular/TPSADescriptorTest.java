@@ -28,7 +28,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -101,6 +103,15 @@ public class TPSADescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("C(O)O");//at:  16
         addExplicitHydrogens(mol);
         Assert.assertEquals(40.45, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+    }
+
+    @Test
+    public void testRing() throws Exception {
+        sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C1CCCC1CCC2CCCNC2");
+        addExplicitHydrogens(mol);
+        DescriptorValue dv = descriptor.calculate(mol);
+        Assert.assertNotNull(dv);
     }
 
 
