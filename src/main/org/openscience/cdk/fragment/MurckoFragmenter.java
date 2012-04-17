@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
+/* Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -41,7 +38,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -62,7 +58,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
  * the largest framework.
  *
  * @author Rajarshi Guha
- * @cdk.module extra
+ * @cdk.module  fragment
  * @cdk.githash
  * @cdk.keyword fragment
  * @cdk.keyword framework
@@ -74,7 +70,6 @@ public class MurckoFragmenter implements IFragmenter {
     private static final String IS_LINKER_ATOM = "linker";
 
     SmilesGenerator smilesGenerator = new SmilesGenerator(true);
-    IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
     IRingSet ringSet;
 
     Map<String, IAtomContainer> frameMap = new HashMap<String, IAtomContainer>();

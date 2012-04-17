@@ -1,10 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
+/*  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,7 +21,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -96,7 +89,6 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
     };
 
     public ChiPathClusterDescriptor() {
-        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     @TestMethod("testGetSpecification")
@@ -136,6 +128,7 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
 
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
+    	if (sp == null) sp = new SmilesParser(container.getBuilder());
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());

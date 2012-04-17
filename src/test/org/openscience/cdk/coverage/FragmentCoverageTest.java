@@ -1,8 +1,7 @@
-/*
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2012  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -17,28 +16,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
+package org.openscience.cdk.coverage;
 
-package org.openscience.cdk.geometry.surface;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import javax.vecmath.Point3d;
-
-/** 
- * Representation of a triangle in 3D.
+/**
+ * TestSuite that tests whether all public methods in the fragment
+ * module are tested. Unlike Emma, it does not test that all code is
+ * tested, just all methods.
  *
- * By default this class represent the triangle in clockwise 
- * fashion.
- *
- * @author Rajarshi Guha
- * @cdk.module  qsarmolecular
- * @cdk.githash
+ * @cdk.module test-fragment
  */
-public class Triangle {
-    Point3d p1,p2,p3;
-    public Triangle( Point3d p1, Point3d p2, Point3d p3 ) {
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
+public class FragmentCoverageTest extends CoverageAnnotationTest {
+
+    private final static String CLASS_LIST = "fragment.javafiles";
+    
+    @BeforeClass public static void setUp() throws Exception {
+        loadClassList(CLASS_LIST, FragmentCoverageTest.class.getClassLoader());
     }
+
+    @Test public void testCoverage() {
+        super.runCoverageTest();
+    }
+
 }
-
-

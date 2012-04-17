@@ -21,12 +21,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -132,8 +132,8 @@ public class HybridizationRatioDescriptor implements IMolecularDescriptor {
             int nsp3 = 0;
             for (IAtom atom : clone.atoms()) {
                 if (!atom.getSymbol().equals("C")) continue;
-                if (atom.getHybridization() == AtomType.Hybridization.SP2) nsp2++;
-                else if (atom.getHybridization() == AtomType.Hybridization.SP3) nsp3++;
+                if (atom.getHybridization() == Hybridization.SP2) nsp2++;
+                else if (atom.getHybridization() == Hybridization.SP3) nsp3++;
             }
             double ratio = nsp3 / (double) (nsp2 + nsp3);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

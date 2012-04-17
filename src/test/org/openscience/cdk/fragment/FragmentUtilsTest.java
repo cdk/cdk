@@ -39,7 +39,7 @@ import java.util.Set;
 /**
  * Test fragment utils
  *
- * @cdk.module test-extra
+ * @cdk.module test-fragment
  */
 public class FragmentUtilsTest extends CDKTestCase {
 

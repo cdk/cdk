@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -133,7 +132,7 @@ class ChiIndexUtils {
      */
     public static double evalValenceIndex(IAtomContainer atomContainer, List fragList) throws CDKException {
         try {
-            IsotopeFactory ifac = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+            IsotopeFactory ifac = IsotopeFactory.getInstance(atomContainer.getBuilder());
             ifac.configureAtoms(atomContainer);
         } catch (IOException e) {
             throw new CDKException("IO problem occured when using the CDK atom config\n"+e.getMessage(), e);

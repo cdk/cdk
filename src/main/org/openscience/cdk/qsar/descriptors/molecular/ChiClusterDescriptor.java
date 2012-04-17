@@ -1,10 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
+/*  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,13 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -98,7 +90,6 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
     };
 
     public ChiClusterDescriptor() {
-        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     @TestMethod("testGetSpecification")
@@ -146,6 +137,7 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
 
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
+    	if (sp == null) sp = new SmilesParser(container.getBuilder());
 
         // removeHydrogens does a deep copy, so no need to clone
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
