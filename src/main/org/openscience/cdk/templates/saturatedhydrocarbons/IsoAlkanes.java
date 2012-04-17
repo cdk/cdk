@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,10 +18,10 @@
  */
 package org.openscience.cdk.templates.saturatedhydrocarbons;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This class contains methods for generating simple organic alkanes.
@@ -36,12 +31,12 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class IsoAlkanes {
 
-    public static IAtomContainer getIsobutane() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
+    public static IAtomContainer getIsobutane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
 
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
@@ -49,13 +44,13 @@ public class IsoAlkanes {
         return mol;
     }
 
-    public static IAtomContainer getIsopentane() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
+    public static IAtomContainer getIsopentane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
 
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
@@ -64,14 +59,14 @@ public class IsoAlkanes {
         return mol;
     }
 
-    public static IAtomContainer getIsohexane() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
+    public static IAtomContainer getIsohexane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
 
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
