@@ -65,7 +65,7 @@ public class AtomPlacer3D {
 	AtomPlacer3D(){}
 	
 	/**
-	 *  Initialize the atomPlacer class
+	 *  Initialize the atomPlacer class.
 	 * 
 	 * @param  parameterSet  Force Field parameter as Hashtable
 	 */
@@ -74,8 +74,10 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain
-	 *
+	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain.
+	 * 
+	 * 
+	 * @param  molecule the reference molecule for searching the chain
 	 * @param  chain  chain to be searched
 	 * @return        the atom number of the first heavy atom the number of heavy atoms in the chain
 	 */
@@ -96,7 +98,7 @@ public class AtomPlacer3D {
 
 
 	/**
-	 *  Mark all atoms in chain as placed (CDKConstant ISPLACED)
+	 *  Mark all atoms in chain as placed. (CDKConstant ISPLACED)
 	 *
 	 * @param  ac  chain
 	 * @return     chain all atoms marked as placed
@@ -110,7 +112,7 @@ public class AtomPlacer3D {
 
 	
 	/**
-	 *  Method assigns 3Dcoordinates to the heavy atoms in an aliphatic chain
+	 *  Method assigns 3Dcoordinates to the heavy atoms in an aliphatic chain.
 	 *
 	 * @param  chain          the atoms to be assigned, must be connected
 	 */
