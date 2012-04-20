@@ -43,7 +43,9 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
- * @author Daniel Szisz
+ * Checks the functionality of {@link #ForceFieldConfigurator}.
+ * 
+ * @author danielszisz
  * @version 01/04/2012
  * @module test-modelbuilder3d
  * 
@@ -51,7 +53,6 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
 public class ForceFieldConfiguratorTest  {
 
 	ForceFieldConfigurator forceFieldConfigurator = new ForceFieldConfigurator();
-	
 	
 	/**
 	 * @cdk.bug : ArrayIndexOutOfBoundsException because of wrong for loop
