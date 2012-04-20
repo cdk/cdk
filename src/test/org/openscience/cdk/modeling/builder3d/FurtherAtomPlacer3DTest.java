@@ -21,18 +21,15 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.modeling.builder3d.AtomPlacer3D;
 
 /**
- * This class tests the different functionalities
- * of the AtomPlacer3D class.
- * 
- * @category 3D model building
- * @cdk.module test-builder3d
+ * Tests not-yet-tested functionalities of {@link AtomPlacer3D}. 
+ *    
  * @author danielszisz
- * @created 27/02/2012
+ * @cdk.module test-builder3d
+ * @created 04/27/2012
+ * @version 04/20/2012
  */
 
-
-public class FurtherAtomPlacer3DTest extends CDKTestCase {
-	
+public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 	
 	@Test
 	public void testAllHeavyAtomsPlaced_IAtomContainer() {
@@ -263,46 +260,38 @@ public class FurtherAtomPlacer3DTest extends CDKTestCase {
 		Assert.assertNull(s3);
 	}
 	
-	/**
-	 * @cdk.bug ???? : bad angle value
-	 */
 	@Test
 	public void testGetAngleValue_String_String_String() throws Exception {
-	MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
-	Map<String, Object> ffmap = new HashMap<String, Object>();
-	AtomPlacer3D ap = new AtomPlacer3D();
-	mmff94bpsr.readParameterSets();
-	ffmap = mmff94bpsr.getParamterSet();
-	ap.initilize(ffmap);
 	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 	String smiles = "CCCCCC";
 	IAtomContainer molecule = sp.parseSmiles(smiles);
 	Assert.assertNotNull(molecule);
+	ForceFieldConfigurator ffc= new ForceFieldConfigurator();
+	ffc.setForceFieldConfigurator("mmff94");
+	AtomPlacer3D atomPlacer3d= new AtomPlacer3D();
+	atomPlacer3d.initilize(ffc.getParameterSet());
+	ffc.assignAtomTyps(molecule);
+	
 	String id1 = molecule.getAtom(1).getAtomTypeName();
 	String id2 = molecule.getAtom(2).getAtomTypeName();
 	String id3 = molecule.getAtom(3).getAtomTypeName();
 	
-	double anglev = ap.getAngleValue(id1, id2, id3);
-	Assert.assertNotNull(anglev);
-	System.err.println(anglev);
+	double anglev = atomPlacer3d.getAngleValue(id1, id2, id3);
+	Assert.assertTrue(anglev==109.608);
 	
 	}
 	
-	/**
-	 * @cdk.bug ????? bad bond length value
-	 */
 	@Test
 	public void testGetBondLengthValue_String_String() throws Exception {
-		MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
-		Map<String, Object> ffmap = new HashMap<String, Object>();
-		AtomPlacer3D ap = new AtomPlacer3D();
-		mmff94bpsr.readParameterSets();
-		ffmap = mmff94bpsr.getParamterSet();
-		ap.initilize(ffmap);
-	    SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		String smiles = "CCCCCC";
 		IAtomContainer molecule = sp.parseSmiles(smiles);
 		Assert.assertNotNull(molecule);
+		ForceFieldConfigurator ffc= new ForceFieldConfigurator();
+		ffc.setForceFieldConfigurator("mmff94");
+		AtomPlacer3D atomPlacer3d= new AtomPlacer3D();
+		atomPlacer3d.initilize(ffc.getParameterSet());
+		ffc.assignAtomTyps(molecule);
 		
 		String id1 = molecule.getAtom(1).getAtomTypeName();
 		String id2 = molecule.getAtom(2).getAtomTypeName();
@@ -311,9 +300,8 @@ public class FurtherAtomPlacer3DTest extends CDKTestCase {
 		Assert.assertNotSame(mmff94id1, id1);
 		Assert.assertNotSame(mmff94id2, id2);
 		
-		double bondlength = ap.getBondLengthValue(id1, id2);
-		System.err.println(bondlength);
-		Assert.assertNotNull(bondlength);
+		double bondlength = atomPlacer3d.getBondLengthValue(id1, id2);
+		Assert.assertTrue(bondlength==1.508);
 	}
 	
 	@Test 
