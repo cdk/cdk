@@ -65,7 +65,7 @@ public class AtomPlacer3D {
 	AtomPlacer3D(){}
 	
 	/**
-	 *  Initialize the atomPlacer class
+	 *  Initialize the atomPlacer class.
 	 * 
 	 * @param  parameterSet  Force Field parameter as Hashtable
 	 */
@@ -75,7 +75,9 @@ public class AtomPlacer3D {
 
 	/**
 	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain
-	 *
+	 * 
+	 * 
+	 * @param  molecule the reference molecule for searching the chain
 	 * @param  chain  chain to be searched
 	 * @return        the atom number of the first heavy atom the number of heavy atoms in the chain
 	 */
