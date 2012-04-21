@@ -620,7 +620,6 @@
                     <includesfile name="${metainf}/data.libdepends"/>
                     <includesfile name="${metainf}/silent.libdepends"/>
                     <includesfile name="${metainf}/extra.libdepends"/>
-                    <includesfile name="${metainf}/fragment.libdepends"/>
                     <includesfile name="${metainf}/cip.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libiocml.libdepends"/>
