@@ -1,12 +1,29 @@
+/* Copyright (C) 2000-2007  Christoph Steinbeck 
+ *               2001-2007,2009  Egon Willighagen 
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.modeling.builder3d;
 
-
 import static org.junit.Assert.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Hashtable;
@@ -16,99 +33,19 @@ import java.util.Map.Entry;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomType;
 
-
-
-
 /**
  * This class is for testing the MMFF94 based parameter
  * reading in CDK.
  * 
  * @author danielszisz
- * @see org.openscience.cdk.modeling.builder3d.MMFF94BasedParameterSetReader
+ * @version 04/16/2012
+ * @cdk.module test-builder3d
  */
 public class MMFF94BasedParameterSetReaderTest {
 	
-	private String line, atomline, bondline, angleline, strbndline, torsionline,
-	               opbendline, dataline;
-	private boolean firstatomline = true;
-	private boolean firstbondline = true;
-	private boolean firstangleline = true;
-	private boolean firststrbndline = true;
-	private boolean firsttorsionline = true;
-	private boolean firstopbendline = true;
-	private boolean firstdataline = true;
-	
-	@Deprecated
-	public void initializeMMFF94ParameterFileLines() {
-		String fname = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
-		ClassLoader loader = MMFF94BasedParameterSetReader.class.getClassLoader();
-		InputStream inps = loader.getResourceAsStream(fname);
-		BufferedReader r = new BufferedReader(new InputStreamReader(inps), 1024);
-		try {
-			while(true) {
-		line = r.readLine();
-		if(line == null) {
-			break;
-		}
-		else if(line.startsWith("atom")) {
-			if(firstatomline) { 
-				atomline = line;
-				firstatomline = false;
-			}
-			else continue;
-		}
-		else if(line.startsWith("bond")) {
-			if(firstbondline) {
-			bondline = line;
-			firstbondline = false;
-	   	}
-			else continue;
-		}
-		else if(line.startsWith("angle")) {
-			if(firstangleline) {
-				angleline = line;
-				firstangleline = false;
-			}
-			else continue;
-		}
-		else if(line.startsWith("strbnd")) { 
-			if(firststrbndline) {
-				strbndline = line;
-				firststrbndline = false;
-			}
-		}
-		else if(line.startsWith("torsion")) { 
-			if(firsttorsionline) {
-				torsionline = line; 
-				firsttorsionline = false;
-			}
-		}
-		else if(line.startsWith("opbend")) { 
-			if(firstopbendline) {
-				opbendline = line;
-				firstopbendline = false;
-			}
-		}
-		else if(line.startsWith("data")) { 
-			if(firstdataline) {
-				dataline = line;
-				firstdataline = false;
-			}
-		}
-	}
-} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void testreadParameterSets() {
-		MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
-		try { 
-			mmff94bpsr.readParameterSets();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	@Test public void testreadParameterSets() throws Exception {
+		MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader(); 
+		mmff94bpsr.readParameterSets();
 		Map<String, Object> parameterSet = new Hashtable<String, Object>();
 		parameterSet = mmff94bpsr.getParamterSet();
 		
@@ -126,8 +63,7 @@ public class MMFF94BasedParameterSetReaderTest {
 
 		//atom
 		//TODO testing 
-		
-		
+			
 		//bond
 //		String scode = "0";
 		String sid1 = "C";
@@ -211,15 +147,6 @@ public class MMFF94BasedParameterSetReaderTest {
 			else if(e.getKey().equals(anglekey)) assertEquals(angledata, e.getValue());
 			else if(e.getKey().equals(torsionkey)) assertEquals(torsiondata, e.getValue());
 			else if(e.getKey().equals(opbendkey)) assertEquals(opbenddata, e.getValue());
-		}
-		
-		
-		
-		
-		
+		}		
 	}
-	
-	
-	
-
 }
