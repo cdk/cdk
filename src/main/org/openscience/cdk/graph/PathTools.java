@@ -508,8 +508,6 @@ public class PathTools {
         return tmp;
     }
 
-    private static List<List<IAtom>> allPaths;
-
     /**
      * Get a list of all the paths between two atoms.
      * <p/>
@@ -523,13 +521,13 @@ public class PathTools {
      */
     @TestMethod("testGetAllPaths_IAtomContainer_IAtom_IAtom")
     public static List<List<IAtom>> getAllPaths(IAtomContainer atomContainer, IAtom start, IAtom end) {
-        allPaths = new ArrayList<List<IAtom>>();
+        List<List<IAtom>> allPaths = new ArrayList<List<IAtom>>();
         if (start.equals(end)) return allPaths;
-        findPathBetween(atomContainer, start, end, new ArrayList<IAtom>());
+        findPathBetween(allPaths, atomContainer, start, end, new ArrayList<IAtom>());
         return allPaths;
     }
 
-    private static void findPathBetween(IAtomContainer atomContainer, IAtom start, IAtom end, List<IAtom> path) {
+    private static void findPathBetween(List<List<IAtom>> allPaths, IAtomContainer atomContainer, IAtom start, IAtom end, List<IAtom> path) {
         if (start == end) {
             path.add(start);
             allPaths.add(new ArrayList<IAtom>(path));
@@ -540,7 +538,7 @@ public class PathTools {
             return;
         path.add(start);
         List<IAtom> nbrs = atomContainer.getConnectedAtomsList(start);
-        for (IAtom nbr : nbrs) findPathBetween(atomContainer, nbr, end, path);
+        for (IAtom nbr : nbrs) findPathBetween(allPaths, atomContainer, nbr, end, path);
         path.remove(path.size() - 1);
     }
 
