@@ -440,6 +440,7 @@ public class StructureResonanceGenerator {
 					for (IBond bond : acClone.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, false);
 				}
 		}
+		UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ss = set.getAtomContainer(i);
 			for(int j = 0 ; j < ss.getAtomCount(); j++)
@@ -450,15 +451,15 @@ public class StructureResonanceGenerator {
 				
 				if(!lookingSymmetry ){
 					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(acClone);
-					if(UniversalIsomorphismTester.isIsomorph(ss,qAC)){
+					if(universalIsomorphismTester.isIsomorph(ss,qAC)){
 						QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(acClone);
-						if(UniversalIsomorphismTester.isIsomorph(ss,qAC2))
+						if(universalIsomorphismTester.isIsomorph(ss,qAC2))
 							return true;
 					}
 				}else{
 					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(acClone);
 					CDKHueckelAromaticityDetector.detectAromaticity(ss);
-					if(UniversalIsomorphismTester.isIsomorph(ss,qAC))
+					if(universalIsomorphismTester.isIsomorph(ss,qAC))
 						return true;
 				}
 				
