@@ -78,6 +78,8 @@ public class TemplateHandler3D {
     private boolean templatesLoaded = false;
 
     private static TemplateHandler3D self = null;
+
+    private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
     
     private TemplateHandler3D() {
         templates = builder.newInstance(IAtomContainerSet.class);
@@ -212,16 +214,16 @@ public class TemplateHandler3D {
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
                 IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(template);
                 //we do the exact match with any atom and any bond
-                if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
+                if (universalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better
-                    List<RMap> list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
+                    List<RMap> list = universalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
                     boolean flagwritefromsecondbest=false;
                     if ((NumberOfRingAtoms) / list.size() == 1 && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
                     	//so atom and bond count match, could be it's even an exact match,
                     	//we check this with the original ring system
-                    	if(UniversalIsomorphismTester.isSubgraph(ringSystems, template)){
+                    	if(universalIsomorphismTester.isSubgraph(ringSystems, template)){
                     		flagMaxSubstructure = true;
-                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, template);
+                    		list = universalIsomorphismTester.getSubgraphAtomsMap(ringSystems, template);
                     	}else{
                     		//if it isn't we still now it's better than just the isomorphism
                     		flagSecondbest = true;
