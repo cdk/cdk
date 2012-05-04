@@ -156,12 +156,13 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
         int resultLength = substructureSet.getAtomContainerCount();
         IntegerArrayResult results = new IntegerArrayResult(resultLength);
 
+        UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
         IAtomContainer substructure;
         for (int i=0; i<resultLength; i++) {
             substructure = substructureSet.getAtomContainer(i);
             List maps;
             try {
-                maps = UniversalIsomorphismTester.getSubgraphMaps(ac, substructure);
+                maps = universalIsomorphismTester.getSubgraphMaps(ac, substructure);
             } catch (CDKException e) {
                 // TODO is it OK to cast Double.NaN to int?
                 for (int j = 0; j < resultLength; j++) results.add((int) Double.NaN);
