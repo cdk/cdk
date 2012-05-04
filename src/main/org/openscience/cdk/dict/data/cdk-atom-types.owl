@@ -6,6 +6,7 @@
   <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
   <!ENTITY elem "http://cdk.sf.net/ontologies/elements#" >
   <!ENTITY at   "http://cdk.sf.net/ontologies/atomtypes#" >
+  <!ENTITY bo   "http://cdk.sf.net/ontologies/bondorders#" >
   <!ENTITY cdkat "http://cdk.sf.net/ontologies/atomtype/cdk#" >
 ]>
 <rdf:RDF xmlns="&cdkat;" xml:base="&cdkat;"
@@ -41,6 +42,12 @@
   <owl:Thing rdf:about="&at;planar"/>
   <owl:Thing rdf:about="&at;sp3d2"/>
   <owl:Thing rdf:about="&at;octahedral"/>
+
+  <!-- The formal bond types from &at; -->
+  <owl:Thing rdf:about="&at;single"/>
+  <owl:Thing rdf:about="&at;double"/>
+  <owl:Thing rdf:about="&at;triple"/>
+  <owl:Thing rdf:about="&at;quadruple"/>
 
   <!-- The Elements from &elem; -->
   <owl:Thing rdf:about="&elem;H"/>
@@ -175,8 +182,10 @@
     <at:hybridization rdf:resource="&at;sp3"/>
     <at:formalCharge>0</at:formalCharge>
     <at:lonePairCount>0</at:lonePairCount>
-    <at:formalNeighbourCount>4</at:formalNeighbourCount>
-    <at:piBondCount>0</at:piBondCount>
+    <at:formalBondType rdf:resource="&bo;single"/>
+    <at:formalBondType rdf:resource="&bo;single"/>
+    <at:formalBondType rdf:resource="&bo;single"/>
+    <at:formalBondType rdf:resource="&bo;single"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="C.sp">

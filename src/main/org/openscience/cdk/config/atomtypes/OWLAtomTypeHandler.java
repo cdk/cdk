@@ -27,9 +27,11 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -49,6 +51,10 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     private String currentChars;
     private List<IAtomType> atomTypes;
     private IAtomType currentAtomType;
+    private int piBondCount;
+    private int neighborCount;
+    private Order maxBondOrder;
+    private double bondOrderSum;
 
     private static IChemObjectBuilder builder;
 
@@ -92,19 +98,23 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 	private void endAtomTypeElement(String local) {
     	if ("AtomType".equals(local)) {
     		atomTypes.add(currentAtomType);
+    		currentAtomType.setProperty(CDKConstants.PI_BOND_COUNT, piBondCount);
+    		currentAtomType.setFormalNeighbourCount(neighborCount);
+    		if (maxBondOrder != Order.UNSET) currentAtomType.setMaxBondOrder(maxBondOrder);
+    		if (bondOrderSum > 0.1) currentAtomType.setBondOrderSum(bondOrderSum);
     	} else if ("formalCharge".equals(local)) {
     		if (currentChars.charAt(0) == '+') {
     			currentChars = currentChars.substring(1);
     		}
     		currentAtomType.setFormalCharge(Integer.parseInt(currentChars));
     	} else if ("formalNeighbourCount".equals(local)) {
-    		currentAtomType.setFormalNeighbourCount(Integer.parseInt(currentChars));
+    		neighborCount = Integer.parseInt(currentChars);
     	} else if ("lonePairCount".equals(local)) {
     		currentAtomType.setProperty(CDKConstants.LONE_PAIR_COUNT, Integer.parseInt(currentChars));
     	} else if ("singleElectronCount".equals(local)) {
     		currentAtomType.setProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.parseInt(currentChars));
     	} else if ("piBondCount".equals(local)) {
-    		currentAtomType.setProperty(CDKConstants.PI_BOND_COUNT, Integer.parseInt(currentChars));
+    		piBondCount = Integer.parseInt(currentChars);
     	}
 	}
 
@@ -121,9 +131,33 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     	if ("AtomType".equals(local)) {
     		currentAtomType = builder.newInstance(IAtomType.class, "H");
     		currentAtomType.setAtomTypeName(atts.getValue("rdf:ID"));
+    		piBondCount = 0;
+    		neighborCount = 0;
+    		maxBondOrder = Order.UNSET;
+    		bondOrderSum = 0.0;
     	} else if ("hasElement".equals(local)) {
     		String attrValue = atts.getValue("rdf:resource");
     		currentAtomType.setSymbol(attrValue.substring(attrValue.indexOf("#")+1));
+    	} else if ("formalBondType".equals(local)) {
+    		neighborCount++;
+    		String attrValue = atts.getValue("rdf:resource");
+    		String bondType = attrValue.substring(attrValue.indexOf("#")+1);
+    		if ("single".equals(bondType)) {
+    			maxBondOrder = BondManipulator.getMaximumBondOrder(maxBondOrder, Order.SINGLE);
+    			bondOrderSum += 1.0;
+    		} else if ("double".equals(bondType)) {
+    			maxBondOrder = BondManipulator.getMaximumBondOrder(maxBondOrder, Order.DOUBLE);
+    			piBondCount++;
+    			bondOrderSum += 2.0;
+    		} else if ("triple".equals(bondType)) {
+    			maxBondOrder = BondManipulator.getMaximumBondOrder(maxBondOrder, Order.TRIPLE);
+    			piBondCount = piBondCount + 2;
+    			bondOrderSum += 3.0;
+    		} else if ("quadruple".equals(bondType)) {
+    			maxBondOrder = BondManipulator.getMaximumBondOrder(maxBondOrder, Order.QUADRUPLE);
+    			piBondCount = piBondCount + 3;
+    			bondOrderSum += 4.0;
+    		} // else: should throw an exception 
     	} else if ("hybridization".equals(local)) {
     		String attrValue = atts.getValue("rdf:resource");
     		String hybridization = attrValue.substring(attrValue.indexOf("#")+1);
