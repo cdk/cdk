@@ -238,7 +238,7 @@ public class SMARTSQueryTool {
                 }
             }
         } else {
-            List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(this.atomContainer, query);
+            List bondMapping = new UniversalIsomorphismTester().getSubgraphMaps(this.atomContainer, query);
             matchingAtoms = getAtomMappings(bondMapping, this.atomContainer);
         }
 
