@@ -36,7 +36,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Helper class that all atom type matcher test classes must implement.
@@ -142,6 +144,15 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase {
     		Assert.assertFalse(
     			"Number of neighbors is too high",
     			connectionCount > matched.getFormalNeighbourCount()
+    		);
+    	}
+    	if (matched.getMaxBondOrder() != null) {
+    		Order expectedMax = matched.getMaxBondOrder();
+    		Order maxBondOrder = BondManipulator.getMaximumBondOrder(connections);
+    		Assert.assertTrue(
+    			"The highest bond order exceeds the maximum for the atom type",
+    			BondManipulator.isHigherOrder(expectedMax, maxBondOrder) |
+    			expectedMax == maxBondOrder
     		);
     	}
 	}
