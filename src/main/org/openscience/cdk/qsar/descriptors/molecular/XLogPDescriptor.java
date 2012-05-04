@@ -862,6 +862,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
             }
         }
 
+        UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
         if (checkAminoAcid>1){
 //			alpha amino acid
             QueryAtomContainer aminoAcid =
@@ -885,8 +886,8 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 
             //AtomContainer aminoacid = sp.parseSmiles("NCC(=O)O");
             try {
-                if (UniversalIsomorphismTester.isSubgraph(ac, aminoAcid)) {
-                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ac, aminoAcid);
+                if (universalIsomorphismTester.isSubgraph(ac, aminoAcid)) {
+                    List list = universalIsomorphismTester.getSubgraphAtomsMap(ac, aminoAcid);
                     RMap map = null;
                     IAtom atom1=null;
                     for (int j = 0; j < list.size(); j++){
@@ -910,7 +911,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         IAtomContainer paba = createPaba(ac.getBuilder());
         // p-amino sulphonic acid
         try {
-            if (UniversalIsomorphismTester.isSubgraph(ac, paba)) {
+            if (universalIsomorphismTester.isSubgraph(ac, paba)) {
                 xlogP -= 0.501;
                 //logger.debug("XLOGP: p-amino sulphonic acid	-0.501");
             }
@@ -922,7 +923,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         if (salicylFlag){
             IAtomContainer salicilic = createSalicylicAcid(ac.getBuilder());
             try {
-                if (UniversalIsomorphismTester.isSubgraph(ac, salicilic)) {
+                if (universalIsomorphismTester.isSubgraph(ac, salicilic)) {
                     xlogP += 0.554;
                     //logger.debug("XLOGP: salicylic acid	 0.554");
                 }
@@ -948,7 +949,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         orthopair.addBond(new OrderQueryBond(atom2,atom4,IBond.Order.SINGLE));
 
         try {
-            if (UniversalIsomorphismTester.isSubgraph(ac, orthopair)) {
+            if (universalIsomorphismTester.isSubgraph(ac, orthopair)) {
                 xlogP -= 0.268;
                 //logger.debug("XLOGP: Ortho oxygen pair	-0.268");
             }
