@@ -232,7 +232,7 @@ public class PharmacophoreMatcher {
             logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
             return false;
         }
-        bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
+        bondMapping = new UniversalIsomorphismTester().getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
         logger.debug("  Got " + bondMapping.size() + " hits");
         return bondMapping.size() > 0;
     }
