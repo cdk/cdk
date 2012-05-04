@@ -113,7 +113,7 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
      */
     private void initilizeBitSets() throws CDKException {
 		List<List<RMap>> bondMappings = null;
-		bondMappings = UniversalIsomorphismTester.getSubgraphMaps(atomContainer, recursiveQuery);
+		bondMappings = new UniversalIsomorphismTester().getSubgraphMaps(atomContainer, recursiveQuery);
 
 		bitSet = new BitSet(atomContainer.getAtomCount());
 		
