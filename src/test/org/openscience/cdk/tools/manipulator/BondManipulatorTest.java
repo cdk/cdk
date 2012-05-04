@@ -164,6 +164,48 @@ public class BondManipulatorTest extends CDKTestCase {
 	}
 
     @Test
+    public void testGetMaximumBondOrder_IBond_IBond() {
+		IBond bond1 = new Bond(); bond1.setOrder(IBond.Order.SINGLE);
+		IBond bond2 = new Bond(); bond2.setOrder(IBond.Order.QUADRUPLE);
+		Assert.assertEquals(IBond.Order.QUADRUPLE, BondManipulator.getMaximumBondOrder(bond1, bond2));
+	}
+
+    @Test
+    public void testGetMaximumBondOrder_IBond_IBond_Unset() {
+		IBond bond1 = new Bond(); bond1.setOrder(IBond.Order.UNSET);
+		IBond bond2 = new Bond(); bond2.setOrder(IBond.Order.DOUBLE);
+		Assert.assertEquals(IBond.Order.DOUBLE, BondManipulator.getMaximumBondOrder(bond1, bond2));
+	}
+
+    @Test
+    public void testGetMaximumBondOrder_Order_Order() {
+		Assert.assertEquals(
+			IBond.Order.QUADRUPLE,
+			BondManipulator.getMaximumBondOrder(IBond.Order.SINGLE, IBond.Order.QUADRUPLE)
+		);
+	}
+
+    @Test
+    public void testGetMaximumBondOrder_Order_Order_Single() {
+		Assert.assertEquals(
+			IBond.Order.SINGLE,
+			BondManipulator.getMaximumBondOrder(IBond.Order.SINGLE, IBond.Order.SINGLE)
+		);
+	}
+
+    @Test
+    public void testGetMaximumBondOrder_Order_Order_Unset() {
+		Assert.assertEquals(
+			IBond.Order.SINGLE,
+			BondManipulator.getMaximumBondOrder(IBond.Order.SINGLE, IBond.Order.UNSET)
+		);
+		Assert.assertEquals(
+			IBond.Order.SINGLE,
+			BondManipulator.getMaximumBondOrder(IBond.Order.UNSET, IBond.Order.SINGLE)
+		);
+	}
+
+    @Test
     public void testGetMinimumBondOrder_List() {
 		List<IBond> bonds = new ArrayList<IBond>();
 		IBond bond = new Bond(); bond.setOrder(IBond.Order.DOUBLE);

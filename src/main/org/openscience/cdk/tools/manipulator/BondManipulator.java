@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 import java.util.Iterator;
 import java.util.List;
@@ -255,6 +256,39 @@ public class BondManipulator {
 			if (isHigherOrder(bond.getOrder(), maxOrder)) maxOrder = bond.getOrder();
 		}
 		return maxOrder;
+	}
+
+    /**
+     * Returns the maximum bond order for the two bonds.
+     *
+     * @param  firstBond  first bond to compare
+     * @param  secondBond second bond to compare
+     * @return            The maximum bond order found
+     */
+    @TestMethod("testGetMaximumBondOrder_IBond_IBond")
+    public static IBond.Order getMaximumBondOrder(IBond firstBond, IBond secondBond) {
+    	if (isHigherOrder(firstBond.getOrder(), secondBond.getOrder()))
+    		return firstBond.getOrder();
+    	else
+    		return secondBond.getOrder();
+	}
+
+    /**
+     * Returns the maximum bond order for the two bond orders.
+     *
+     * @param  firstOrder  first bond order to compare
+     * @param  secondOrder second bond order to compare
+     * @return             The maximum bond order found
+     */
+    @TestMethod("testGetMaximumBondOrder_Order_Order")
+    public static IBond.Order getMaximumBondOrder(IBond.Order firstOrder, IBond.Order secondOrder) {
+    	if (firstOrder == Order.UNSET) return secondOrder;
+    	if (secondOrder == Order.UNSET) return firstOrder;
+
+    	if (isHigherOrder(firstOrder, secondOrder))
+    		return firstOrder;
+    	else
+    		return secondOrder;
 	}
 
 	/**
