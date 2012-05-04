@@ -191,19 +191,29 @@
   <at:AtomType rdf:ID="C.sp">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;C"/>
-    <at:formalNeighbourCount>2</at:formalNeighbourCount>
     <at:lonePairCount>0</at:lonePairCount>
-    <at:piBondCount>2</at:piBondCount>
     <at:hybridization rdf:resource="&at;sp1"/>
+    <at:formalBondType rdf:resource="&bo;single"/>
+    <at:formalBondType rdf:resource="&bo;triple"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="C.allene">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;C"/>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:hybridization rdf:resource="&at;sp1"/>
+    <at:formalBondType rdf:resource="&bo;double"/>
+    <at:formalBondType rdf:resource="&bo;double"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="C.sp2">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;C"/>
-    <at:formalNeighbourCount>3</at:formalNeighbourCount>
     <at:lonePairCount>0</at:lonePairCount>
-    <at:piBondCount>1</at:piBondCount>
     <at:hybridization rdf:resource="&at;sp2"/>
+    <at:formalBondType rdf:resource="&bo;double"/>
+    <at:formalBondType rdf:resource="&bo;single"/>
+    <at:formalBondType rdf:resource="&bo;single"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="C.plus.planar">

@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
@@ -375,8 +376,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	            IAtomType type = getAtomType("C.sp3");
 	            if (isAcceptable(atom, atomContainer, type)) return type;
 	        } else if (atom.getHybridization() == Hybridization.SP1) {
-	            IAtomType type = getAtomType("C.sp");
-	            if (isAcceptable(atom, atomContainer, type)) return type;
+	        	IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+	        	if (maxBondOrder == Order.TRIPLE) {
+		            IAtomType type = getAtomType("C.sp");
+		            if (isAcceptable(atom, atomContainer, type)) return type;
+	        	} else {
+	        		IAtomType type = getAtomType("C.allene");
+	        		if (isAcceptable(atom, atomContainer, type)) return type;
+	        	}
 	        }
 	    } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
 	        IAtomType type = getAtomType("C.sp2");
@@ -435,7 +442,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	            // OK, one or two double bonds?
 	            int doubleBondCount = countAttachedDoubleBonds(atomContainer, atom);
 	            if (doubleBondCount == 2) {
-	                IAtomType type = getAtomType("C.sp");
+	                IAtomType type = getAtomType("C.allene");
 	                if (isAcceptable(atom, atomContainer, type)) return type;
 	            } else if (doubleBondCount == 1) {
 	                IAtomType type = getAtomType("C.sp2");
