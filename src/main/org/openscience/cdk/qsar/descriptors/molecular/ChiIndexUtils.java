@@ -63,12 +63,13 @@ class ChiIndexUtils {
      * @return A list of lists, each list being the atoms that match the query fragments
      */
     public static List<List<Integer>> getFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries) {
+        UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
         List<List<Integer>> uniqueSubgraphs = new ArrayList<List<Integer>>();
         for (QueryAtomContainer query : queries) {
             List subgraphMaps = null;
             try {
                 // we get the list of bond mappings
-                subgraphMaps = UniversalIsomorphismTester.getSubgraphMaps(atomContainer, query);
+                subgraphMaps = universalIsomorphismTester.getSubgraphMaps(atomContainer, query);
             } catch (CDKException e) {
                 e.printStackTrace();
             }
