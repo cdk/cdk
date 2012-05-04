@@ -75,6 +75,8 @@ public class TemplateHandler
 
 	private List<IAtomContainer> templates = null;
 
+	private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+
 
 	/**
 	 * Creates a new TemplateHandler.
@@ -147,7 +149,7 @@ public class TemplateHandler
 		{
 			mol2 = templates.get(f);
 			ac2 = molecule.getBuilder().newInstance(IAtomContainer.class,mol2);
-			if (UniversalIsomorphismTester.isIsomorph(ac1, ac2)) {
+			if (universalIsomorphismTester.isIsomorph(ac1, ac2)) {
 				templates.remove(f);
 				return mol2;
 			}
@@ -174,9 +176,9 @@ public class TemplateHandler
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = templates.get(f);
-			if (UniversalIsomorphismTester.isIsomorph(molecule, template))
+			if (universalIsomorphismTester.isIsomorph(molecule, template))
 			{
-				List<RMap> list = UniversalIsomorphismTester.getIsomorphAtomsMap(
+				List<RMap> list = universalIsomorphismTester.getIsomorphAtomsMap(
 					molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
 					molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
@@ -217,9 +219,9 @@ public class TemplateHandler
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = templates.get(f);
-			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
+			if (universalIsomorphismTester.isSubgraph(molecule, template))
 			{
-				List listOfLists = UniversalIsomorphismTester.getSubgraphAtomsMaps(
+				List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
 						molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
 						molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
@@ -287,9 +289,9 @@ public class TemplateHandler
 		for (int f = 0; f < templates.size(); f++)
 		{
 			IAtomContainer template = templates.get(f);
-			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
+			if (universalIsomorphismTester.isSubgraph(molecule, template))
 			{
-				List listOfLists = UniversalIsomorphismTester.getSubgraphAtomsMaps(
+				List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
 						molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
 						molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
