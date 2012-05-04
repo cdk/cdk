@@ -89,8 +89,9 @@ public class Normalizer {
         }
         IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
         List l = null;
-        while ((l = UniversalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
-          List l2 = UniversalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
+        UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+        while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
+          List l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
           Iterator bondit = l.iterator();
           while (bondit.hasNext()) {
             RMap rmap = (RMap) bondit.next();
