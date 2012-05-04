@@ -111,8 +111,13 @@ public class UniversalIsomorphismTester {
 
   final static int ID1 = 0;
   final static int ID2 = 1;
-  private static long start;
-  private static long timeout=-1;
+  private long start;
+  private long timeout=-1;
+
+  public UniversalIsomorphismTester()
+  {
+      
+  }
 
   ///////////////////////////////////////////////////////////////////////////
   //                            Query Methods
@@ -134,7 +139,7 @@ public class UniversalIsomorphismTester {
    * @return     true if the 2 molecule are isomorph
    * @throws     CDKException if the first molecule is an instance of IQueryAtomContainer
    */
-  public static boolean isIsomorph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+  public boolean isIsomorph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
 	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
@@ -167,7 +172,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
    * @return     the first isomorph mapping found projected of g1. This is a List of RMap objects containing Ids of matching bonds.
    */
-  public static List<RMap> getIsomorphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+  public List<RMap> getIsomorphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
 	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
@@ -194,7 +199,7 @@ public class UniversalIsomorphismTester {
    * This is a List of RMap objects containing Ids of matching atoms.
    * @throws CDKException if the first molecules is not an instance of {@link IQueryAtomContainer}
    */
-  public static List<RMap> getIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException {
+  public List<RMap> getIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException {
 	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
@@ -202,7 +207,7 @@ public class UniversalIsomorphismTester {
 	  
       List<RMap> list = checkSingleAtomCases(g1, g2);
       if (list == null) {
-          return makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getIsomorphMap(g1, g2), g1, g2);
+          return makeAtomsMapOfBondsMap(getIsomorphMap(g1, g2), g1, g2);
       } else if (list.isEmpty()) {
           return null;
       } else {
@@ -219,7 +224,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
    * @return     the list of all the 'mappings'
    */
-  public static List<List<RMap>> getIsomorphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+  public List<List<RMap>> getIsomorphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
     return search(g1, g2, getBitSet(g1), getBitSet(g2), true, true);
   }
 
@@ -246,7 +251,7 @@ public class UniversalIsomorphismTester {
    *
    * @see #makeAtomsMapsOfBondsMaps(List, IAtomContainer, IAtomContainer)
    */
-  public static List<List<RMap>> getSubgraphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+  public List<List<RMap>> getSubgraphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
     return search(g1, g2, new BitSet(), getBitSet(g2), true, true);
   }
 
@@ -259,7 +264,7 @@ public class UniversalIsomorphismTester {
    * @return     the first subgraph bond mapping found projected on g1. This is a {@link List} of
    *             {@link RMap} objects containing Ids of matching bonds.
    */
-  public static List<RMap> getSubgraphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+  public List<RMap> getSubgraphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
     List<RMap> result = null;
     List<List<RMap>> rMapsList = search(g1, g2, new BitSet(), getBitSet(g2), false, false);
 
@@ -281,13 +286,13 @@ public class UniversalIsomorphismTester {
    * @return     all subgraph atom mappings found projected on g1. This is a
    *             {@link List} of {@link RMap} objects containing Ids of matching atoms.
    */
-  public static List<List<RMap>> getSubgraphAtomsMaps(IAtomContainer g1,
+  public List<List<RMap>> getSubgraphAtomsMaps(IAtomContainer g1,
 		                                              IAtomContainer g2)
     throws CDKException {
       List<RMap> list = checkSingleAtomCases(g1, g2);
       if (list == null) {
           return makeAtomsMapsOfBondsMaps(
-              UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2
+              getSubgraphMaps(g1, g2), g1, g2
           );
       } else {
           List<List<RMap>> atomsMap = new ArrayList<List<RMap>>();
@@ -305,12 +310,12 @@ public class UniversalIsomorphismTester {
    * @return    the first subgraph atom mapping found projected on g1.
    *            This is a {@link List} of {@link RMap} objects containing Ids of matching atoms.
    */
-  public static List<RMap> getSubgraphAtomsMap(IAtomContainer g1,
+  public List<RMap> getSubgraphAtomsMap(IAtomContainer g1,
                                                IAtomContainer g2)
       throws CDKException {
       List<RMap> list = checkSingleAtomCases(g1, g2);
       if (list == null) {
-          return makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getSubgraphMap(g1, g2), g1, g2);
+          return makeAtomsMapOfBondsMap(getSubgraphMap(g1, g2), g1, g2);
       } else if (list.isEmpty()) {
           return null;
       } else {
@@ -325,7 +330,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
    * @return     true if g2 a subgraph on g1
    */
-  public static boolean isSubgraph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+  public boolean isSubgraph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
 	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
@@ -365,7 +370,7 @@ public class UniversalIsomorphismTester {
    * @return     the list of all the maximal common substructure
    *             found projected of g1 (list of AtomContainer )
    */
-  public static List<IAtomContainer> getOverlaps(IAtomContainer g1, IAtomContainer g2) throws CDKException{
+  public List<IAtomContainer> getOverlaps(IAtomContainer g1, IAtomContainer g2) throws CDKException{
       start=System.currentTimeMillis();
       List<List<RMap>> rMapsList = search(g1, g2, new BitSet(), new BitSet(), true, false);
 
@@ -438,7 +443,7 @@ public class UniversalIsomorphismTester {
    *                           structure
    * @return                   a List of Lists of {@link RMap} objects that represent the search solutions
    */
-  public static List<List<RMap>> search(IAtomContainer g1, IAtomContainer g2, BitSet c1,
+  public List<List<RMap>> search(IAtomContainer g1, IAtomContainer g2, BitSet c1,
 		  BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
 	  // remember start time
 	  start = System.currentTimeMillis();
@@ -476,8 +481,8 @@ public class UniversalIsomorphismTester {
 	  // build the RGraph corresponding to this problem
 	  RGraph rGraph = buildRGraph(g1, g2); 
 	  // Set time data
-	  rGraph.setTimeout(UniversalIsomorphismTester.timeout);
-	  rGraph.setStart(UniversalIsomorphismTester.start);
+	  rGraph.setTimeout(timeout);
+	  rGraph.setStart(start);
 	  // parse the RGraph with the given constrains and options
 	  rGraph.parse(c1, c2, findAllStructure, findAllMap);
 	  List<BitSet> solutionList = rGraph.getSolutions();
@@ -579,7 +584,7 @@ public class UniversalIsomorphismTester {
    * @return            the list cleaned
    * @throws CDKException if there is a problem in obtaining subgraphs
    */
-  private static List<IAtomContainer> getMaximum(List<IAtomContainer> graphList) throws CDKException {
+  private List<IAtomContainer> getMaximum(List<IAtomContainer> graphList) throws CDKException {
     List<IAtomContainer> reducedGraphList = new ArrayList<IAtomContainer>();
     reducedGraphList.addAll(graphList);
 
@@ -1087,8 +1092,8 @@ public class UniversalIsomorphismTester {
    * @param timeout
    * Time in milliseconds. -1 to ignore the timeout.
    */
-  public static void setTimeout(long timeout) {
-	  UniversalIsomorphismTester.timeout = timeout;
+  public void setTimeout(long timeout) {
+	  this.timeout = timeout;
   }
   
 }
