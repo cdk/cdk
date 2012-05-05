@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -175,6 +176,10 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
     	Integer originalNeighborCount2 = bond.getAtom(1).getFormalNeighbourCount();
     	IAtomType.Hybridization originalHybridization2 = bond.getAtom(1).getHybridization();
     	Integer originalValency2 = bond.getAtom(1).getValency();
+    	Double originalBondOrderSum1 = bond.getAtom(0).getBondOrderSum();
+    	Order originalMaxBondOrder1 = bond.getAtom(0).getMaxBondOrder();
+    	Double originalBondOrderSum2 = bond.getAtom(1).getBondOrderSum();
+    	Order originalMaxBondOrder2 = bond.getAtom(1).getMaxBondOrder();
         if (!isCachedAtomContainer(ac)) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
@@ -214,6 +219,10 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 	    bond.getAtom(1).setHybridization(originalHybridization2);
 	    bond.getAtom(1).setValency(originalValency2);
 	    bond.getAtom(1).setFormalNeighbourCount(originalNeighborCount2);
+	    bond.getAtom(0).setMaxBondOrder(originalMaxBondOrder1);
+    	bond.getAtom(0).setBondOrderSum(originalBondOrderSum1);
+    	bond.getAtom(1).setMaxBondOrder(originalMaxBondOrder2);
+    	bond.getAtom(1).setBondOrderSum(originalBondOrderSum2);
 	    
         return getCachedDescriptorValue(bond) != null
                 ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

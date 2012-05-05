@@ -32,6 +32,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -137,6 +138,8 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         	Integer originalValency = atom.getValency();
         	IAtomType.Hybridization originalHybridization = atom.getHybridization();
         	boolean originalFlag = atom.getFlag(CDKConstants.VISITED);
+        	Double originalBondOrderSum = atom.getBondOrderSum();
+        	Order originalMaxBondOrder = atom.getMaxBondOrder();
             polarizability = pol.calculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
         	// restore original props
         	atom.setAtomTypeName(originalAtomtypeName);
@@ -145,6 +148,8 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         	atom.setImplicitHydrogenCount(originalHCount);
         	atom.setFlag(CDKConstants.VISITED, originalFlag);
         	atom.setHybridization(originalHybridization);
+        	atom.setMaxBondOrder(originalMaxBondOrder);
+        	atom.setBondOrderSum(originalBondOrderSum);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(polarizability),
                     getDescriptorNames());

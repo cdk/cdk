@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -139,6 +140,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     	String originalAtomtypeName = atom.getAtomTypeName();
     	Integer originalNeighborCount = atom.getFormalNeighbourCount();
     	Integer originalValency = atom.getValency();
+    	Double originalBondOrderSum = atom.getBondOrderSum();
+    	Order originalMaxBondOrder = atom.getMaxBondOrder();
     	IAtomType.Hybridization originalHybridization = atom.getHybridization();
 
         if (!isCachedAtomContainer(container)) {
@@ -158,6 +161,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     	atom.setFormalNeighbourCount(originalNeighborCount);
     	atom.setValency(originalValency);
     	atom.setHybridization(originalHybridization);
+    	atom.setMaxBondOrder(originalMaxBondOrder);
+    	atom.setBondOrderSum(originalBondOrderSum);
 
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(value),descriptorNames);
