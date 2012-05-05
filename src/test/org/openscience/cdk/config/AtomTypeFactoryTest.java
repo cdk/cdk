@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -164,6 +165,8 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
         Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
         Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+        Assert.assertEquals(Order.SINGLE, atomType.getMaxBondOrder());
+        Assert.assertEquals(4.0, atomType.getBondOrderSum(), 0.1);
         
         atomType = factory.getAtomType("N.sp2.radical");
         Assert.assertNotNull(atomType);
@@ -178,6 +181,8 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
         Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
         Assert.assertEquals(1, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+        Assert.assertEquals(Order.DOUBLE, atomType.getMaxBondOrder());
+        Assert.assertEquals(2.0, atomType.getBondOrderSum(), 0.1);
 
         atomType = factory.getAtomType("N.planar3");
         Assert.assertNotNull(atomType);
@@ -192,6 +197,8 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
         Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
         Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+        Assert.assertEquals(Order.SINGLE, atomType.getMaxBondOrder());
+        Assert.assertEquals(3.0, atomType.getBondOrderSum(), 0.1);
     }
 
     @Test
