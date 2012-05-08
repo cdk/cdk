@@ -278,6 +278,10 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		Assert.assertNull(nextSuchUnPlacedHeavyAtom);
 	}
 	
+	
+	/**
+	 * @cdk.bug #3224093
+	 */
 	@Test
 	public void testGetAngleValue_String_String_String() throws Exception {
 		SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -299,6 +303,9 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		
 	}
 	
+	/**
+	 * @cdk.bug #3524092  
+	 */
 	@Test
 	public void testGetBondLengthValue_String_String() throws Exception {
 		SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -320,6 +327,28 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		
 		double bondlength = atomPlacer3d.getBondLengthValue(id1, id2);
 		Assert.assertEquals(1.508, bondlength, 0.001);
+	}
+	
+	/**
+	 * @cdk.bug #3523247
+	 */
+	@Test
+	public void testGetBondLengthValue_bug_CNBond() throws Exception {
+		SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		String smiles = "CCCN";
+		IAtomContainer molecule = parser.parseSmiles(smiles);
+		Assert.assertNotNull(molecule);
+		ForceFieldConfigurator ffc= new ForceFieldConfigurator();
+		ffc.setForceFieldConfigurator("mmff94");
+		AtomPlacer3D atomPlacer3d= new AtomPlacer3D();
+		atomPlacer3d.initilize(ffc.getParameterSet());
+		ffc.assignAtomTyps(molecule);
+		
+		String id1 = molecule.getAtom(2).getAtomTypeName();
+		String id2 = molecule.getAtom(3).getAtomTypeName();
+		double bondlength = atomPlacer3d.getBondLengthValue(id1, id2);
+		Assert.assertEquals(1.482, bondlength, 0.001);
+		
 	}
 	
 	@Test 
