@@ -135,4 +135,428 @@ public class DeAromatizationTool {
         return true;
     }
 
+    public static void Dearomatize(IAtomContainer molecule)
+    {
+        SSSRFinder finder = new SSSRFinder(molecule);
+        IRingSet sssr = finder.findEssentialRings();
+        List<IRingSet> rings = RingPartitioner.partitionRings(sssr);
+        for (IRingSet ring : rings)
+        {
+            if (Dearomatize666Rings(ring)) continue;
+            if (Dearomatize566Rings(ring)) continue;
+            if (Dearomatize66Rings(ring)) continue;
+            if (Dearomatize56Rings(ring)) continue;
+            if (Dearomatize6Ring(ring)) continue;   
+            if (Dearomatize5Ring(ring)) continue;
+        }
+    }
+
+    public static boolean Dearomatize666Rings(IRingSet rings)
+    {
+        if (rings.getAtomContainerCount()!=3) 
+        {
+            // Stop if not three rings fused together.
+            return false;
+        }
+        IAtomContainer ringA = rings.getAtomContainer(0);
+        IAtomContainer ringB = rings.getAtomContainer(1);
+        IAtomContainer ringC = rings.getAtomContainer(2);
+        
+        // Make ringB the middle ring.
+        if (isMiddleRing(ringA, ringB, ringC))
+        {
+            IAtomContainer temp = ringB;
+            ringB = ringA;
+            ringA = temp;
+        }
+        if (isMiddleRing(ringC, ringA, ringB))
+        {
+            IAtomContainer temp = ringB;
+            ringB = ringC;
+            ringC = temp;
+        }
+        
+        int maxAtomsRingA = ringA.getAtomCount();
+        int maxAtomsRingB = ringB.getAtomCount();
+        int maxAtomsRingC = ringC.getAtomCount();
+        if (maxAtomsRingA!=6 || maxAtomsRingB!=6 || maxAtomsRingC!=6)
+        {
+            // Stop if not a 6-membered ring fused to 6-membered ring fused to another 6-membered ring.
+            return false;
+        }
+                
+        if (!isAllAtomsAromatic(ringA) || !isAllAtomsAromatic(ringB) || !isAllAtomsAromatic(ringC))
+        {
+            // Not all atoms of the three rings are aromatic.
+            return false;
+        }
+        
+        InvalidateBonds(ringA);
+        InvalidateBonds(ringB);
+        InvalidateBonds(ringC);
+        
+        // Change first 6-membered ring.
+        DearomatizeRing(ringA, null, null);
+        
+        // Change second 6-membered ring.
+        DearomatizeRing(ringB, null, null);
+        
+        // Change third 6-membered ring.
+        DearomatizeRing(ringC, null, null);
+
+        return true;
+    }
+    
+    public static boolean Dearomatize566Rings(IRingSet rings)
+    {
+        if (rings.getAtomContainerCount()!=3) 
+        {
+            // Stop if not three rings fused together.
+            return false;
+        }
+        IAtomContainer ringA = rings.getAtomContainer(0);
+        IAtomContainer ringB = rings.getAtomContainer(1);
+        IAtomContainer ringC = rings.getAtomContainer(2);
+        
+        if (ringA.getAtomCount() > ringB.getAtomCount())
+        {
+            // Ensure ringA is smaller than ringB and ringC
+            ringA = rings.getAtomContainer(1);
+            ringB = rings.getAtomContainer(0);
+        }
+        else if (ringA.getAtomCount() > ringC.getAtomCount())
+        {
+            // Ensure ringA is smaller than ringB and ringC
+            ringA = rings.getAtomContainer(2);
+            ringC = rings.getAtomContainer(0);
+        }
+        
+        // Make ringB the middle ring if ringA is not the middle ring.
+        if (isMiddleRing(ringC, ringA, ringB))
+        {
+            IAtomContainer temp = ringB;
+            ringB = ringC;
+            ringC = temp;
+        }
+        
+        int maxAtomsRingA = ringA.getAtomCount();
+        int maxAtomsRingB = ringB.getAtomCount();
+        int maxAtomsRingC = ringC.getAtomCount();
+        if (maxAtomsRingA!=5 || maxAtomsRingB!=6 || maxAtomsRingC!=6)
+        {
+            // Stop if not a 5-membered ring fused to 6-membered ring fused to another 6-membered ring.
+            return false;
+        }
+                
+        if (!isAllAtomsAromatic(ringA) || !isAllAtomsAromatic(ringB) || !isAllAtomsAromatic(ringC))
+        {
+            // Not all atoms of the three rings are aromatic.
+            return false;
+        }    
+       
+        InvalidateBonds(ringA);
+        InvalidateBonds(ringB);
+        InvalidateBonds(ringC);
+        
+        // Find nH, o or s in 5-membered ring if any.
+        IAtom startAtom = ringA.getAtom(0);
+        for (int a=0; a<maxAtomsRingA; ++a)
+        {
+            IAtom atom = ringA.getAtom(a);
+            if ((atom.getAtomicNumber()==7 && atom.getImplicitHydrogenCount()>=1) ||    // nH
+                atom.getAtomicNumber()==8 ||    // o
+                atom.getAtomicNumber()==16)     // s
+            {
+                startAtom = atom;
+                break;
+            }
+        }
+        
+        // Change 5-membered ring.
+        IBond startBond = ringA.getConnectedBondsList(startAtom).get(0);
+        DearomatizeRing(ringA, startAtom, startBond);
+        
+        // Change second 6-membered ring.
+        DearomatizeRing(ringB, null, null);
+        
+        // Change third 6-membered ring.
+        DearomatizeRing(ringC, null, null);
+
+        return true;
+    }
+
+    public static boolean Dearomatize66Rings(IRingSet rings)
+    {
+        if (rings.getAtomContainerCount()!=2) 
+        {
+            // Stop if not two rings fused together.
+            return false;
+        }
+        IAtomContainer ringA = rings.getAtomContainer(0);
+        IAtomContainer ringB = rings.getAtomContainer(1);        
+        int maxAtomsRingA = ringA.getAtomCount();
+        int maxAtomsRingB = ringB.getAtomCount();
+        if (maxAtomsRingA!=6 || maxAtomsRingB!=6)
+        {
+            // Stop if not a 6-membered ring fused to 6-membered ring.
+            return false;
+        }
+                
+        if (!isAllAtomsAromatic(ringA) || !isAllAtomsAromatic(ringB))
+        {
+            // Not all atoms of the two rings are aromatic.
+            return false;
+        }
+        
+        InvalidateBonds(ringA);
+        InvalidateBonds(ringB);
+        
+        // Change first 6-membered ring.
+        DearomatizeRing(ringA, null, null);
+        
+        // Change second 6-membered ring.
+        DearomatizeRing(ringB, null, null);
+
+        return true;
+    }
+        
+    public static boolean Dearomatize56Rings(IRingSet rings)
+    {
+        if (rings.getAtomContainerCount()!=2) 
+        {
+            // Stop if not two rings fused together.
+            return false;
+        }
+        IAtomContainer ringA = rings.getAtomContainer(0);
+        IAtomContainer ringB = rings.getAtomContainer(1);
+        if (ringA.getAtomCount() > ringB.getAtomCount())
+        {
+            // Ensure ringA is smaller than ringB
+            ringA = rings.getAtomContainer(1);
+            ringB = rings.getAtomContainer(0);
+        }
+        int maxAtomsRingA = ringA.getAtomCount();
+        int maxAtomsRingB = ringB.getAtomCount();
+        if (maxAtomsRingA!=5 || maxAtomsRingB!=6)
+        {
+            // Stop if not a 5-membered ring fused to 6-membered ring.
+            return false;
+        }
+        
+        if (!isAllAtomsAromatic(ringA) || !isAllAtomsAromatic(ringB))
+        {
+            // Not all atoms of the two rings are aromatic.
+            return false;
+        }
+        
+        InvalidateBonds(ringA);
+        InvalidateBonds(ringB);
+        
+        // Find nH, o or s in 5-membered ring if any.
+        IAtom startAtom = ringA.getAtom(0);
+        for (int a=0; a<maxAtomsRingA; ++a)
+        {
+            IAtom atom = ringA.getAtom(a);
+            if ((atom.getAtomicNumber()==7 && atom.getImplicitHydrogenCount()>=1) ||    // nH
+                atom.getAtomicNumber()==8 ||    // o
+                atom.getAtomicNumber()==16)     // s
+            {
+                startAtom = atom;
+                break;
+            }
+        }
+        
+        // Change 5-membered ring.
+        IBond startBond = ringA.getConnectedBondsList(startAtom).get(0);
+        DearomatizeRing(ringA, startAtom, startBond);
+        
+        // Change 6-membered ring.
+        DearomatizeRing(ringB, null, null);
+
+        return true;
+    }
+    
+    public static boolean Dearomatize6Ring(IRingSet rings)
+    {
+        if (rings.getAtomContainerCount()!=1) 
+        {
+            // Stop if not one ring.
+            return false;
+        }
+        IAtomContainer ringA = rings.getAtomContainer(0);       
+        int maxAtomsRingA = ringA.getAtomCount();
+        if (maxAtomsRingA!=6)
+        {
+            // Stop if not a 6-membered ring.
+            return false;
+        }
+        
+        if (!isAllAtomsAromatic(ringA))
+        {
+            // Not all atoms of the ring are aromatic.
+            return false;
+        }
+        
+        InvalidateBonds(ringA);
+               
+        // Change 6-membered ring.
+        IAtom startAtom = ringA.getAtom(0);       
+        IBond startBond = ringA.getConnectedBondsList(startAtom).get(0);
+        DearomatizeRing(ringA, startAtom, startBond);
+
+        return true;
+    }
+    
+    public static boolean Dearomatize5Ring(IRingSet rings)
+    {
+        if (rings.getAtomContainerCount()!=1) 
+        {
+            // Stop if not one ring.
+            return false;
+        }
+        IAtomContainer ringA = rings.getAtomContainer(0);       
+        int maxAtomsRingA = ringA.getAtomCount();
+        if (maxAtomsRingA!=5)
+        {
+            // Stop if not a 5-membered ring.
+            return false;
+        }
+        
+        if (!isAllAtomsAromatic(ringA))
+        {
+            // Not all atoms of the ring are aromatic.
+            return false;
+        }
+        
+        InvalidateBonds(ringA);
+        
+        // Find nH, o or s in 5-membered ring if any.
+        IAtom startAtom = ringA.getAtom(0);
+        for (int a=0; a<maxAtomsRingA; ++a)
+        {
+            IAtom atom = ringA.getAtom(a);
+            if ((atom.getAtomicNumber()==7 && atom.getImplicitHydrogenCount()>=1) ||    // nH
+                atom.getAtomicNumber()==8 ||    // o
+                atom.getAtomicNumber()==16)     // s
+            {
+                startAtom = atom;
+                break;
+            }
+        }
+        
+        // Change 5-membered ring.
+        IBond startBond = ringA.getConnectedBondsList(startAtom).get(0);
+        DearomatizeRing(ringA, startAtom, startBond);
+
+        return true;
+    }
+    
+    private static boolean isAllAtomsAromatic(IAtomContainer ring)
+    {
+        for (IAtom atom : ring.atoms())
+        {
+            if (!atom.getFlag(CDKConstants.ISAROMATIC))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private static boolean isMiddleRing(IAtomContainer ring, IAtomContainer ringA, IAtomContainer ringB)
+    {
+        boolean hasAtomInRingA = false;
+        boolean hasAtomInRingB = false;
+        for (IAtom atom : ring.atoms())
+        {
+            if (!hasAtomInRingA && ringA.contains(atom)) hasAtomInRingA = true;
+            else if (!hasAtomInRingB && ringB.contains(atom)) hasAtomInRingB = true;
+        }
+        return hasAtomInRingA && hasAtomInRingB;
+    }
+        
+    private static void RemoveAromaticFlag(IAtomContainer ring)
+    {
+        for (IAtom atom : ring.atoms())
+        {
+            atom.setFlag(CDKConstants.ISAROMATIC, false);
+        }
+        for (IBond bond : ring.bonds())
+        {
+            bond.setFlag(CDKConstants.ISAROMATIC, false);
+        }
+    }
+    
+    private static void InvalidateBonds(IAtomContainer ring)
+    {
+        for (IBond bond : ring.bonds())
+        {
+            bond.setOrder(IBond.Order.QUADRUPLE);
+        }
+    }
+    
+    private static void DearomatizeRing(IAtomContainer ring, IAtom startAtom, IBond startBond)
+    {
+        IAtom curAtom = startAtom;
+        IBond curBond = startBond;
+        int maxBonds = ring.getBondCount();
+        
+        if (curAtom==null)
+        {
+            curAtom = ring.getAtom(0);        
+        }
+        if (curBond==null)
+        {
+            curBond = ring.getConnectedBondsList(curAtom).get(0);
+        }
+        
+        boolean nextIsSingle = true;
+        boolean nextNextIsSingle = false;
+        for (int i=0; i<maxBonds; ++i)
+        {
+            IBond bond = ring.getBond(i);
+            if (bond.getOrder()!=IBond.Order.QUADRUPLE)
+            {
+                curBond = bond;
+                curAtom = bond.getAtom(0);
+                if (bond.getOrder()==IBond.Order.SINGLE)
+                {
+                    nextIsSingle = true;
+                    nextNextIsSingle = true;
+                }
+                else
+                {
+                    nextIsSingle = false;
+                    nextNextIsSingle = true;
+                }
+            }
+        }
+        
+        for (int i=0; i<maxBonds; ++i)
+        {
+            if (nextIsSingle || (i==1 && nextNextIsSingle))
+            {
+                curBond.setOrder(IBond.Order.SINGLE);
+                nextIsSingle = false;
+            }
+            else
+            {
+                curBond.setOrder(IBond.Order.DOUBLE);
+                nextIsSingle = true;
+            }
+            curAtom = curBond.getConnectedAtom(curAtom);
+            List<IBond> bonds = ring.getConnectedBondsList(curAtom);
+            for (IBond bond : bonds)
+            {
+                if (bond!=curBond)
+                {
+                    curBond = bond;
+                    break;
+                }
+            }
+        }
+        
+        RemoveAromaticFlag(ring);
+    }
+
 }
