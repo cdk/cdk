@@ -1,7 +1,6 @@
-/* Copyright (C) 2000-2007  Christoph Steinbeck 
- *               2001-2007,2009  Egon Willighagen 
- *
- * Contact: cdk-devel@lists.sourceforge.net
+/* Copyright (C) 2012 Daniel Szisz 
+ *             
+ * Contact: orlando@caesar.elte.hu
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -213,6 +212,43 @@ public class ForceFieldConfiguratorTest  {
 			ffAtomTypes[i] = mmff94atom.getAtomTypeName();
 		 }
 		 assertEquals(expectedAtomTypes, ffAtomTypes);
+		
+	}
+	
+	/**
+	 * @cdk.bug #3523240
+	 */
+	@Test
+	public void testAssignAtomTyps_bug() throws Exception {
+		String smiles = "CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O";
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		SmilesParser parser = new SmilesParser(builder);
+		IAtomContainer bugmol = parser.parseSmiles(smiles);
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		IAtom amideN = bugmol.getAtom(11);
+		forceFieldConfigurator.configureMMFF94BasedAtom(amideN, 
+				new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3), 
+				false);
+//		System.err.println(amideN.getAtomTypeName());
+		assertEquals("NC=O", amideN.getAtomTypeName());
+	}
+	
+	/**
+	 * @cdk.bug #3524734
+	 */
+	@Test 
+	public void testAssignAtomTyps_bug_no2() throws Exception {
+		String smiles = "CC[N+](=O)[O-]";
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		SmilesParser parser = new SmilesParser(builder);
+		IAtomContainer bugmol = parser.parseSmiles(smiles);
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		IAtom amideN = bugmol.getAtom(2);
+		forceFieldConfigurator.configureMMFF94BasedAtom(amideN, 
+				new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3), 
+				false);
+//		System.err.println(amideN.getAtomTypeName());
+		assertEquals("NO3", amideN.getAtomTypeName());
 		
 	}
 
