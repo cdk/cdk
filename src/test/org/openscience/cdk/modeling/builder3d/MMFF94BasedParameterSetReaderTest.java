@@ -1,7 +1,6 @@
-/* Copyright (C) 2000-2007  Christoph Steinbeck 
- *               2001-2007,2009  Egon Willighagen 
+/* Copyright (C) 2012 Daniel Szisz
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * Contact: orlando@caesar.elte.hu
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
