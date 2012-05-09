@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * Checks the functionality of {@link #ForceFieldConfigurator}.
  * 
  * @author danielszisz
- * @version 01/04/2012
+ * @version 09/05/2012
  * @cdk.module test-forcefield
  */
 public class ForceFieldConfiguratorTest  {
@@ -248,6 +248,45 @@ public class ForceFieldConfiguratorTest  {
 				false);
 //		System.err.println(amideN.getAtomTypeName());
 		assertEquals("NO3", amideN.getAtomTypeName());
+		
+	}
+	
+	@Test
+	public void testAssignAtomTyps_bug_so2() throws Exception {
+		String smiles = "CS(=O)(=O)NC(=O)NN1CC2CCCC2C1";
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		SmilesParser parser = new SmilesParser(builder);
+		IAtomContainer bugmol = parser.parseSmiles(smiles);
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		IAtom sulphur = bugmol.getAtom(1);
+		HOSECodeGenerator hscodegen = new HOSECodeGenerator();
+		forceFieldConfigurator.configureAtom(sulphur, 
+				hscodegen.getHOSECode(bugmol, sulphur, 3), false);
+		assertEquals("SO2", sulphur.getAtomTypeName());
+	}
+	
+	/**
+	 * @cdk.bug #3525144
+	 */
+	@Test
+	public void testAssignAtomTyps_bug_nitrogenatomType() throws Exception {
+		String smiles = "CNC(=O)N(C)N=O";
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		SmilesParser parser = new SmilesParser(builder);
+		IAtomContainer bugmol = parser.parseSmiles(smiles);
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		IAtom nitrogen1 = bugmol.getAtom(1);
+		IAtom nitrogen2 = bugmol.getAtom(4);
+		IAtom nitrogen3 = bugmol.getAtom(6);
+		HOSECodeGenerator hscodegen = new HOSECodeGenerator();
+		forceFieldConfigurator.configureAtom(nitrogen1, 
+				hscodegen.getHOSECode(bugmol, nitrogen1, 3), false);
+		forceFieldConfigurator.configureAtom(nitrogen2, 
+				hscodegen.getHOSECode(bugmol, nitrogen2, 3), false);
+		forceFieldConfigurator.configureAtom(nitrogen3, 
+				hscodegen.getHOSECode(bugmol, nitrogen3, 3), false);
+		assertEquals("NC=O", nitrogen1.getAtomTypeName());
+		assertEquals("NC=O", nitrogen2.getAtomTypeName());
 		
 	}
 
