@@ -101,6 +101,8 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     		currentAtomType.setFormalNeighbourCount(Integer.parseInt(currentChars));
     	} else if ("lonePairCount".equals(local)) {
     		currentAtomType.setProperty(CDKConstants.LONE_PAIR_COUNT, Integer.parseInt(currentChars));
+    	} else if ("singleElectronCount".equals(local)) {
+    		currentAtomType.setProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.parseInt(currentChars));
     	} else if ("piBondCount".equals(local)) {
     		currentAtomType.setProperty(CDKConstants.PI_BOND_COUNT, Integer.parseInt(currentChars));
     	}

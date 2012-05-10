@@ -314,6 +314,9 @@ public class CDKConstants {
     /** Used as property key for indicating the HOSE code for a certain atom type. */
     public static final String LONE_PAIR_COUNT = "cdk:Lone Pair Count";
 
+    /** Used as property key for indicating the number of single electrons on the atom type. */
+    public static final String SINGLE_ELECTRON_COUNT = "cdk:Lone Pair Count";
+
 }
 
 
