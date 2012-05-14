@@ -26,8 +26,6 @@ package org.openscience.cdk.modeling.builder3d;
 import static junit.framework.Assert.*;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
