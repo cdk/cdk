@@ -166,7 +166,7 @@ public class MMFF94BasedAtomTypePattern {
 		//n N=O
 		
 		//cdk.bug 3515122 fixed
-		atomTypePatterns.add(Pattern.compile("N-[1-3];[CH]{1,3}.{1}+[A-Z]{0,3}+[,]?+=O[CNX].*+"));
+		atomTypePatterns.add(Pattern.compile("N-[1-3];[CHN]{1,3}.{1}+[A-Z]{0,3}+[,]?+=O[CNXO].*+"));
 		//NC=0 amid 
 		atomTypePatterns.add(Pattern.compile("N-1-2];[CH]{1}+=S[(].*+"));
 		//NSO (50)
