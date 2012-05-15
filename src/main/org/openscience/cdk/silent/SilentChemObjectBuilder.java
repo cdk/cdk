@@ -409,7 +409,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
 	        } else {
 	            // the IBond(IAtom[]) constructor
 	            boolean allIAtom = true;
-	            for (int i=0; i<(params.length-1) && allIAtom; i++) {
+	            for (int i=0; i<params.length && allIAtom; i++) {
 	                if (!(params[i] instanceof IAtom)) allIAtom = false;
 	            }
 	            if (allIAtom) {
