@@ -379,7 +379,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	            return (T)new Bond();
 	        } else if (params.length == 2 &&
 	                params[0] instanceof IAtom &&
-	                params[0] instanceof IAtom) {
+	                params[1] instanceof IAtom) {
 	            return (T)new Bond((IAtom)params[0], (IAtom)params[1]);
 	        } else if (params.length == 3 &&
 	                params[0] instanceof IAtom &&
