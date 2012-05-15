@@ -225,7 +225,20 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         );
         Assert.assertNotNull(bond);
     }
-    
+
+    /**
+     * @cdk.bug 3526870
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testNewBond_IAtom_IMolecule() {
+        IChemObjectBuilder builder = rootObject.getBuilder();
+        builder.newInstance(
+            IBond.class,
+            builder.newInstance(IAtom.class),
+            builder.newInstance(IMolecule.class)
+        );
+    }
+
     @Test public void testNewBond_IAtom_IAtom_IBond_Order() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IBond bond = builder.newInstance(
