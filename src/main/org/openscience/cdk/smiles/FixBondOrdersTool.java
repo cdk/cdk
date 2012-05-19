@@ -34,6 +34,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * 
  * @author Kevin Lawson
  * @author Lucy Entwistle
+ * @cdk.module smiles
  */
 public class FixBondOrdersTool {
 
