@@ -235,7 +235,7 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         builder.newInstance(
             IBond.class,
             builder.newInstance(IAtom.class),
-            builder.newInstance(IMolecule.class)
+            builder.newInstance(IAtomContainer.class)
         );
     }
 
