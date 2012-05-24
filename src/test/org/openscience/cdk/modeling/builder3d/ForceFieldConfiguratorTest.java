@@ -249,6 +249,10 @@ public class ForceFieldConfiguratorTest  {
 		
 	}
 	
+    /**
+     * 
+     * @cdk.bug #3525096
+     */
 	@Test
 	public void testAssignAtomTyps_bug_so2() throws Exception {
 		String smiles = "CS(=O)(=O)NC(=O)NN1CC2CCCC2C1";
@@ -287,5 +291,25 @@ public class ForceFieldConfiguratorTest  {
 		assertEquals("NC=O", nitrogen2.getAtomTypeName());
 		
 	}
+	
+	/**
+	 * @cdk.bug #3526295
+	 */
+	@Test
+	public void testAssignAtomTyps_bug_amideRingAtomType() throws Exception {
+		String smiles = "O=C1N(C(=O)C(C(=O)N1)(CC)CC)C";
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		SmilesParser parser = new SmilesParser(builder);
+		IAtomContainer bugmol = parser.parseSmiles(smiles);
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		IAtom nitrogen1 = bugmol.getAtom(2);
+		HOSECodeGenerator hscodegen = new HOSECodeGenerator();
+		forceFieldConfigurator.configureAtom(nitrogen1, 
+				hscodegen.getHOSECode(bugmol, nitrogen1, 3), false);
+		assertEquals("NC=O", nitrogen1.getAtomTypeName());
+		
+	}
+	
+	
 
 }
