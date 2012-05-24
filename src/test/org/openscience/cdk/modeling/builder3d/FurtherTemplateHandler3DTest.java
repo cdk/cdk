@@ -36,6 +36,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import java.util.List;
 
 /**
+ * Test class for {@link TemplateHandler3D}.
  * 
  * @author danielszisz
  * @created 05/14/2012
@@ -64,7 +65,31 @@ public class FurtherTemplateHandler3DTest {
 		IAtomContainer allAtomsInOneContainer = RingSetManipulator.
 				getAllInOneContainer(largestRingSet);
 		tmphandler3d.mapTemplates(allAtomsInOneContainer, allAtomsInOneContainer.getAtomCount());
-		ModelBuilder3DTest.checkAverageBondLength(molecule);
+		for (int j=0; j<allAtomsInOneContainer.getAtomCount(); j++) {
+			assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
+		}
 	}
+	
+
+	@Test public void testMapTemplates_cyclicMol2() throws Exception {
+		TemplateHandler3D tmphandler3d = TemplateHandler3D.getInstance();
+		String cyclicMolSmi = "CC(C)(C)NC(=O)C1CN(CCN1CC(CC(Cc1ccccc1)C(=O)NC1c2ccccc2CC1O)O)Cc1cccnc1";
+		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		SmilesParser smiparser = new SmilesParser(builder);
+		IAtomContainer molecule = smiparser.parseSmiles(cyclicMolSmi);
+		ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
+		forcefconf.setForceFieldConfigurator("mmff94");
+		IRingSet rings = forcefconf.assignAtomTyps(molecule);
+		List<IRingSet> ringSystems = RingPartitioner.partitionRings(rings);
+		IRingSet largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);
+		IAtomContainer allAtomsInOneContainer = RingSetManipulator.
+				getAllInOneContainer(largestRingSet);
+		tmphandler3d.mapTemplates(allAtomsInOneContainer, allAtomsInOneContainer.getAtomCount());
+		for (int j=0; j<allAtomsInOneContainer.getAtomCount(); j++) {
+			assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
+		}
+	}
+	
+	
 
 }
