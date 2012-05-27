@@ -1,6 +1,6 @@
-/* $Revision$ $Author$ $Date$
- *
+/*
  * Copyright (C) 2006-2007  Rajarshi Guha <rajarshi@users.sf.net>
+ * Copyright (C) 2012 Kevin Lawson <kevin.lawson@syngenta.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -36,6 +36,7 @@ import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNBond;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -111,8 +112,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = smilesParser.parseSmiles(smiles);
         
-        DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
-        molecule = dbst.fixAromaticBondOrders(molecule);
+        molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
         molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
@@ -136,8 +136,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = smilesParser.parseSmiles(smiles);
         
-        DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
-        molecule = dbst.fixAromaticBondOrders(molecule);
+        molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
         molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
@@ -151,104 +150,6 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         }
         Assert.assertEquals(10, doubleBondCount);
     }
-
-	@Test(timeout=1000) 
-    public void testPyrrole_CustomRingFinder() throws Exception {
-        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
-        
-        DeduceBondSystemTool dbst = new DeduceBondSystemTool(
-            new AllRingsFinder()
-        );
-        molecule = dbst.fixAromaticBondOrders(molecule);
-        Assert.assertNotNull(molecule);
-
-        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
-        int doubleBondCount = 0;
-        for (int i = 0; i < molecule.getBondCount(); i++) {
-            IBond bond = molecule.getBond(i);
-            Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-            if (bond.getOrder() == Order.DOUBLE) doubleBondCount++;
-        }
-        Assert.assertEquals(6, doubleBondCount);
-    }
-
-	/**
-	 * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H 
-	 */
-	@Test public void xtestQuinone() throws Exception {
-		IMolecule enol = new NNMolecule();
-		
-		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
-		atom5.setHybridization(Hybridization.SP2);
-		IAtom atom6 = new NNAtom(Elements.CARBON);
-		atom6.setHybridization(Hybridization.SP2);
-		IAtom atom7 = new NNAtom(Elements.OXYGEN);
-		atom7.setHybridization(Hybridization.SP2);
-		IAtom atom8 = new NNAtom(Elements.OXYGEN);
-		atom8.setHybridization(Hybridization.SP2);
-		
-		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
-		IBond bond7 = new NNBond(atom7, atom1);
-		IBond bond8 = new NNBond(atom8, atom4);
-		
-		enol.addAtom(atom1);
-		enol.addAtom(atom2);
-		enol.addAtom(atom3);
-		enol.addAtom(atom4);
-		enol.addAtom(atom5);
-		enol.addAtom(atom6);
-		enol.addAtom(atom7);
-		enol.addAtom(atom8);
-		enol.addBond(bond1);
-		enol.addBond(bond2);
-		enol.addBond(bond3);
-		enol.addBond(bond4);
-		enol.addBond(bond5);
-		enol.addBond(bond6);
-		enol.addBond(bond7);
-		enol.addBond(bond8);
-		
-		// perceive atom types
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
-		//
-		/**
-		 * getImplicitHydrogenCount() returns null otherwise 
-		 * and throws NPE in getFreeValenciesForRingGroup()
-		CDKHydrogenAdder hadder = CDKHydrogenAdder.getInstance(enol.getBuilder());
-		hadder.addImplicitHydrogens(enol);
-		 */
-		// now have the algorithm have a go at it
-		enol = fbot.kekuliseAromaticRings(enol);
-        Assert.assertNotNull(enol);
-       // Assert.assertTrue(fbot.isOK(enol));
-        
-		// now check whether it did the right thing
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(0).getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(1).getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(2).getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(3).getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(4).getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(5).getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(6).getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(7).getOrder());
-	}
 
 	/**
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
