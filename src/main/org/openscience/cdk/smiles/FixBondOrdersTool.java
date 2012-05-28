@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -145,10 +144,10 @@ public class FixBondOrdersTool {
  * @throws CDKException 
  */
     @TestMethod("testLargeRingSystem")
-    public IMolecule kekuliseAromaticRings(IMolecule molecule) throws CDKException {
-        IMolecule mNew = null;
+    public IAtomContainer kekuliseAromaticRings(IAtomContainer molecule) throws CDKException {
+    	IAtomContainer mNew = null;
         try {
-            mNew = (IMolecule) molecule.clone();
+            mNew = (IAtomContainer) molecule.clone();
         } catch (Exception e) {
             throw new CDKException("Failed to clone source molecule");
         }
@@ -238,7 +237,7 @@ public class FixBondOrdersTool {
      * @param m The {@link IMolecule} from which we want to remove rings
      * @return The set of reduced rings
      */
-    private IRingSet removeExtraRings(IMolecule m) throws Exception {
+    private IRingSet removeExtraRings(IAtomContainer m) throws Exception {
 
         SSSRFinder arf = new SSSRFinder(m);
         IRingSet rs = arf.findSSSR();
@@ -272,7 +271,7 @@ public class FixBondOrdersTool {
      * @return The List of Integer arrays for the bond numbers of each ringSet
      */
     
-    private List<Integer[]> getRingSystem(IMolecule mol, IRingSet ringSet) {
+    private List<Integer[]> getRingSystem(IAtomContainer mol, IRingSet ringSet) {
         List<Integer[]> bondsArray;
         bondsArray = new ArrayList<Integer[]>();
         for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
@@ -380,7 +379,7 @@ public class FixBondOrdersTool {
      * @param {@link IRingSet} ringSet
      * @return List of atom numbers for each set
      */
-    private List getAtomNosForRingGroup(IMolecule molecule, List<Integer> ringGroup, IRingSet ringSet) {
+    private List getAtomNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
         List atc = new ArrayList<Integer>();
         for (Integer i : ringGroup) {
             for (IAtom atom : ringSet.getAtomContainer(i).atoms()) {
@@ -404,7 +403,7 @@ public class FixBondOrdersTool {
      * @param {@link IRingSet} ringSet
      * @return List of bond numbers for each set
      */
-    private List getBondNosForRingGroup(IMolecule molecule, List<Integer> ringGroup, IRingSet ringSet) {
+    private List getBondNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
         List btc = new ArrayList<Integer>();
         for (Integer i : ringGroup) {
             for (IBond bond : ringSet.getAtomContainer(i).bonds()) {
@@ -427,7 +426,7 @@ public class FixBondOrdersTool {
      * @param bondsToCheck
      * @return List of atom pairs
      */
-    private List getAtomNoPairsForRingGroup(IMolecule molecule, List<Integer> bondsToCheck) {
+    private List getAtomNoPairsForRingGroup(IAtomContainer molecule, List<Integer> bondsToCheck) {
         List aptc = new ArrayList<Integer[]>();
         for (Integer i : bondsToCheck) {
             Integer[] aps = new Integer[2];
@@ -446,7 +445,7 @@ public class FixBondOrdersTool {
      * @param M
      * @return The List of free valencies available for extra ring bonding
      */
-    private List getFreeValenciesForRingGroup(IMolecule molecule, List<Integer> atomsToCheck, Matrix M, IRingSet rs) {
+    private List getFreeValenciesForRingGroup(IAtomContainer molecule, List<Integer> atomsToCheck, Matrix M, IRingSet rs) {
         List fvtc = new ArrayList<Integer>();
         for (int i = 0; i < atomsToCheck.size(); i++) {
             int j = atomsToCheck.get(i);

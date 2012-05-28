@@ -28,17 +28,14 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NNAtom;
-import org.openscience.cdk.nonotify.NNBond;
-import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -72,12 +69,12 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	public void testPyrrole() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
         	IBond bond = molecule.getBond(i);
@@ -91,12 +88,12 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	public void testPyrrole_Silent() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
         	IBond bond = molecule.getBond(i);
@@ -110,12 +107,12 @@ public class FixBondOrdersToolTest extends CDKTestCase {
     public void testLargeRingSystem() throws Exception {
         String smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
         Assert.assertEquals(34, molecule.getAtomCount());
 
         // we should have 14 double bonds
@@ -134,12 +131,12 @@ public class FixBondOrdersToolTest extends CDKTestCase {
     public void testLargeBioclipseUseCase() throws Exception {
         String smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
         Assert.assertEquals(40, molecule.getAtomCount());
 
         // we should have 14 double bonds
@@ -155,27 +152,27 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
 	 */
 	@Test public void xtestPyrrole() throws Exception {
-		IMolecule enol = new NNMolecule();
+		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.NITROGEN);
+		IAtom atom5 = new Atom(Elements.NITROGEN);
 		atom5.setHybridization(Hybridization.SP2);
 		atom5.setImplicitHydrogenCount(1);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -205,29 +202,29 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	}
 
 	@Test public void xtestPyridine() throws Exception {
-		IMolecule enol = new NNMolecule();
+		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.CARBON);
 		atom5.setHybridization(Hybridization.SP2);
-		IAtom atom6 = new NNAtom(Elements.NITROGEN);
+		IAtom atom6 = new Atom(Elements.NITROGEN);
 		atom6.setHybridization(Hybridization.SP2);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -270,29 +267,29 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	 * @cdk.bug   1931262
 	 */
 	@Test public void xtestBenzene() throws Exception {
-		IMolecule enol = new NNMolecule();
+		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
-		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom1 = new Atom(Elements.CARBON);
 		atom1.setHybridization(Hybridization.SP2);
-		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new Atom(Elements.CARBON);
 		atom2.setHybridization(Hybridization.SP2);
-		IAtom atom3 = new NNAtom(Elements.CARBON);
+		IAtom atom3 = new Atom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
-		IAtom atom4 = new NNAtom(Elements.CARBON);
+		IAtom atom4 = new Atom(Elements.CARBON);
 		atom4.setHybridization(Hybridization.SP2);
-		IAtom atom5 = new NNAtom(Elements.CARBON);
+		IAtom atom5 = new Atom(Elements.CARBON);
 		atom5.setHybridization(Hybridization.SP2);
-		IAtom atom6 = new NNAtom(Elements.CARBON);
+		IAtom atom6 = new Atom(Elements.CARBON);
 		atom6.setHybridization(Hybridization.SP2);
 		
 		// bond block
-		IBond bond1 = new NNBond(atom1, atom2);
-		IBond bond2 = new NNBond(atom2, atom3);
-		IBond bond3 = new NNBond(atom3, atom4);
-		IBond bond4 = new NNBond(atom4, atom5);
-		IBond bond5 = new NNBond(atom5, atom6);
-		IBond bond6 = new NNBond(atom6, atom1);
+		IBond bond1 = new Bond(atom1, atom2);
+		IBond bond2 = new Bond(atom2, atom3);
+		IBond bond3 = new Bond(atom3, atom4);
+		IBond bond4 = new Bond(atom4, atom5);
+		IBond bond5 = new Bond(atom5, atom6);
+		IBond bond6 = new Bond(atom6, atom1);
 		
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
@@ -337,7 +334,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	public void testAcyclic() throws Exception {
         String smiles = "CCCCCCC";
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
