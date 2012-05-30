@@ -232,8 +232,13 @@ public class ChemModelManipulator {
             IReactionSet reactionSet = chemModel.getReactionSet();
             return ReactionSetManipulator.getRelevantAtomContainer(reactionSet, atom);
         }
-        // This should never happen.
-        return null;
+        if (chemModel.getCrystal() != null && chemModel.getCrystal().contains(atom)) {
+            return chemModel.getCrystal();
+        }
+        if (chemModel.getRingSet() != null) {
+        	return AtomContainerSetManipulator.getRelevantAtomContainer(chemModel.getRingSet(), atom);
+        }
+        throw new IllegalArgumentException("The provided atom is not part of this IChemModel.");
     }
 
     /**
