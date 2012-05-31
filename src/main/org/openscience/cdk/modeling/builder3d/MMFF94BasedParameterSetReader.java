@@ -248,7 +248,8 @@ public class MMFF94BasedParameterSetReader {
 		} catch (NumberFormatException nfe) {
 			throw new IOException("setBond: Malformed Number due to:"+nfe);
 		}
-		key = "bond" + scode + ";" + sid1 + ";" + sid2;
+//		key = "bond" + scode + ";" + sid1 + ";" + sid2;
+		key = "bond" + sid1 + ";" + sid2;
 		parameterSet.put(key, data);
 	}
 	
@@ -280,7 +281,8 @@ public class MMFF94BasedParameterSetReader {
 			data.add(new Double(va3));
 			data.add(new Double(va4));
 			
-			key = "angle" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
+//			key = "angle" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
+			key = "angle" + sid1 + ";" + sid2 + ";" + sid3;
 			if (parameterSet.containsKey(key)) {
 				data = (Vector) parameterSet.get(key);
 				data.add(new Double(va1));
