@@ -164,7 +164,7 @@ public class MMFF94BasedAtomTypePattern {
 		//n no2
 		atomTypePatterns.add(Pattern.compile("N-2;[A-Z[^O]]{0,1}=O[A-Z[^O]]{0,1}[(].*+"));
 		//n N=O
-		atomTypePatterns.add(Pattern.compile("N-[1-3];[CH]{1,3}.{1}+[A-Z]{0,3}+[,]?+=O[CNX].*+"));
+		atomTypePatterns.add(Pattern.compile("N-[1-3];[CHN]{1,3}.{1}+[A-Z]{0,3}+[,]?+=O[CNX].*+"));
 		//NC=0 amid 
 		atomTypePatterns.add(Pattern.compile("N-1-2];[CH]{1}+=S[(].*+"));
 		//NSO (50)
