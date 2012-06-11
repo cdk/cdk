@@ -112,6 +112,7 @@ public class FormatFactory {
     /**
      * Registers a format for detection.
      */
+    @TestMethod("testRegisterFormat")
     public void registerFormat(IChemFormatMatcher format) {
         formats.add(format);
     }
@@ -121,6 +122,7 @@ public class FormatFactory {
      * 
      * @return {@link List} of {@link IChemFormat}s.
      */
+    @TestMethod("testGetFormats")
     public List<IChemFormatMatcher> getFormats(){
     	return formats;
     }
@@ -144,6 +146,7 @@ public class FormatFactory {
      *
      * @see #guessFormat(InputStream)
      */
+    @TestMethod("testGuessFormat_Reader")
     public IChemFormat guessFormat(Reader input) throws IOException {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");

@@ -1,10 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+/*  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,9 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -73,7 +65,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:largestAliphaticChain
  */
-
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.LongestAliphaticChainDescriptorTest")
 public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 	private boolean checkRingSystem = false;
@@ -265,7 +256,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     
     
     private IAtomContainer createAtomContainerFromPath(IAtomContainer container, List<IAtom> path){
-    	IAtomContainer aliphaticChain = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+    	IAtomContainer aliphaticChain = container.getBuilder().newInstance(IAtomContainer.class);
         for (int i=0;i<path.size()-1;i++){
     		if (!aliphaticChain.contains(path.get(i))){
     			aliphaticChain.addAtom(path.get(i));

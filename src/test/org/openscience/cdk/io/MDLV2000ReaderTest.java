@@ -24,6 +24,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.Iterator;
@@ -55,6 +56,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
 
 
 /**
@@ -942,4 +944,53 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
         Assert.assertEquals(2, r1Count);
     }
+
+    @Test
+    public void testPseudoAtomLabels() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatoms.sdf");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        Assert.assertTrue(molecule.getAtom(4) instanceof IPseudoAtom);
+        Assert.assertEquals("Gln", molecule.getAtom(4).getSymbol());
+        IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(4);
+        Assert.assertEquals("Gln", pa.getLabel());
+    }
+
+    /**
+     * @cdk.bug 3485634
+     */
+    @Test
+    public void testMissingAtomProperties() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug3485634.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        Assert.assertEquals(9, molecule.getAtomCount());
+    }
+
+    @Test
+    public void testAtomParity() throws CDKException, IOException{
+        
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        reader.close();
+
+        Assert.assertEquals(6, molecule.getAtomCount());
+        boolean chiralCentre = false;
+        IAtom[] atoms = AtomContainerManipulator.getAtomArray(molecule);
+        for (IAtom atom : atoms) {
+            Integer parity = atom.getStereoParity();
+            if(parity == 1){
+                chiralCentre = true;
+            }
+        }
+        
+        
+        Assert.assertTrue(chiralCentre);
+        
+    }
+    
 }

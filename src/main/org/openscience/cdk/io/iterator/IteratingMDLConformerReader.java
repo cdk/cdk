@@ -15,7 +15,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Iterate over conformers of a collection of molecules stored in SDF format.
  * <p/>
- * This class is analogous to the {@link org.openscience.cdk.io.iterator.IteratingMDLReader} except that
+ * This class is analogous to the {@link org.openscience.cdk.io.iterator.IteratingSDFReader} except that
  * rather than return a single {@link org.openscience.cdk.interfaces.IMolecule} at each iteration this
  * class will return all the conformers for a given molecule at each iteration.
  * <p/>
@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * <pre>
  * String filename = "/Users/rguha/conf2.sdf";
  * IteratingMDLConformerReader2 reader = new IteratingMDLConformerReader2(
- *         new FileReader(new File(filename)), NewDefaultChemObjectBuilder.getInstance());
+ *         new FileReader(new File(filename)), DefaultChemObjectBuilder.getInstance());
  * while (reader.hasNext()) {
  *      ConformerContainer2 cc = (ConformerContainer2) reader.next();
  * }
@@ -50,7 +50,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 @TestClass("org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest")
 public class IteratingMDLConformerReader implements Iterator {
-    private IteratingMDLReader imdlr;
+    private IteratingSDFReader imdlr;
     private ConformerContainer container;
     private IAtomContainer lastMol = null;
 
@@ -59,13 +59,13 @@ public class IteratingMDLConformerReader implements Iterator {
 
     @TestMethod("testSDF")
     public IteratingMDLConformerReader(Reader in, IChemObjectBuilder builder) {
-        imdlr = new IteratingMDLReader(in, builder);
+        imdlr = new IteratingSDFReader(in, builder);
         container = new ConformerContainer();
     }
 
     @TestMethod("testSDF")
     public IteratingMDLConformerReader(InputStream in, IChemObjectBuilder builder) {
-        imdlr = new IteratingMDLReader(in, builder);
+        imdlr = new IteratingSDFReader(in, builder);
         container = new ConformerContainer();
     }
 

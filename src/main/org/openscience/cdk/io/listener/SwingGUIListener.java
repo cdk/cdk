@@ -33,6 +33,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.IOSetting.Importance;
 import org.openscience.cdk.io.setting.OptionIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 
@@ -50,18 +51,18 @@ import org.openscience.cdk.io.setting.StringIOSetting;
 public class SwingGUIListener implements IReaderListener, IWriterListener {
 
     private Component frame = null;
-    private int level = 0;
+    private Importance level = Importance.HIGH;
     
     /**
      * 0 = ask no questions
      * 3 = ask all questions
      */
-    public SwingGUIListener(Component frame, int level) {
+    public SwingGUIListener(Component frame, Importance level) {
         this.level = level;
         this.frame = frame;
     }
     
-    public void setLevel(int level) {
+    public void setLevel(Importance level) {
         this.level = level;
     }
         
@@ -77,7 +78,7 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
      */
     public void processIOSettingQuestion(IOSetting setting) {
         // post the question
-        if (setting.getLevel() < this.level) {
+        if (setting.getLevel().ordinal() <= this.level.ordinal()) {
             String answer = setting.getSetting();
             
             if (setting instanceof BooleanIOSetting) {

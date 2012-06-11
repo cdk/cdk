@@ -31,6 +31,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -90,6 +92,7 @@ public class MDLReader extends DefaultChemObjectReader {
         LoggingToolFactory.createLoggingTool(MDLReader.class);
 
     private BooleanIOSetting forceReadAs3DCoords;
+    private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
     
     public MDLReader() {
         this(new StringReader(""));
@@ -372,6 +375,13 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.info("Reading atom block");
             for (int f = 0; f < atoms; f++) {
                 line = input.readLine(); linecount++;
+                Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
+                if(trailingSpaceMatcher.find()){
+                    handleError("Trailing space found",
+                                linecount,
+                                trailingSpaceMatcher.start(), trailingSpaceMatcher.end());
+                    line = trailingSpaceMatcher.replaceAll("");
+                }
                 x = new Double(line.substring( 0,10).trim()).doubleValue();
                 y = new Double(line.substring(10,20).trim()).doubleValue();
                 z = new Double(line.substring(20,30).trim()).doubleValue();
@@ -380,7 +390,12 @@ public class MDLReader extends DefaultChemObjectReader {
                 totalY += Math.abs(y);
                 totalZ += Math.abs(z);
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
-                String element = line.substring(31,34).trim();
+                String element = line.substring(31, Math.min(34, line.length())).trim();
+                if(line.length() < 34){
+                    handleError("Element atom type does not follow V2000 format type should of length three" +
+                                " and padded with space if required",
+                                linecount, 31, 34);
+                }
 
                 logger.debug("Atom type: ", element);
                 if (isotopeFactory.isElement(element)) {
@@ -421,6 +436,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 atom.setPoint3d(new Point3d(x, y, z));
                 
                 // parse further fields
+                if(line.length() >= 36) {
                 String massDiffString = line.substring(34,36).trim();
                 logger.debug("Mass difference: ", massDiffString);
                 if (!(atom instanceof IPseudoAtom)) {
@@ -436,8 +452,12 @@ public class MDLReader extends DefaultChemObjectReader {
                 } else {
                     logger.error("Cannot set mass difference for a non-element!");
                 }
+                } else {
+                    handleError("Mass difference is missing", linecount, 34, 36);
+                }
                 
                 
+                if(line.length() >= 39){
                 String chargeCodeString = line.substring(36,39).trim();
                 logger.debug("Atom charge code: ", chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
@@ -456,6 +476,9 @@ public class MDLReader extends DefaultChemObjectReader {
                         atom.setFormalCharge(-2);
                 } else if (chargeCode == 7) {
                         atom.setFormalCharge(-3);
+                }
+                } else{
+                    handleError("Atom charge count is empty", linecount, 35, 39);
                 }
                 
                 try {
@@ -581,19 +604,14 @@ public class MDLReader extends DefaultChemObjectReader {
     }
     
     private void initIOSettings() {
-        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
+        forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
           "Should coordinates always be read as 3D?", 
-          "false");
+          "false"));
     }
     
     public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
     }
 
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[1];
-        settings[0] = forceReadAs3DCoords;
-        return settings;
-    }
 }
 

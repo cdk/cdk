@@ -26,7 +26,6 @@ package org.openscience.cdk.reaction.type;
 
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -55,7 +54,7 @@ import java.util.Iterator;
  * <pre>A-B => [A*] + [B*]</pre>
  * <p>It is processed by the HomolyticCleavageMechanism class</p>
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new HomolyticCleavageReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -127,7 +126,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
             throw new CDKException("HomolyticCleavageReaction don't expects agents");
         }
 
-        IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
+        IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
         IAtomContainer reactant = reactants.getAtomContainer(0);
 
         /* if the parameter hasActiveCenter is not fixed yet, set the active centers*/

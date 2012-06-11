@@ -74,6 +74,7 @@ public class PDBFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.PDBWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("HEADER") ||
             line.startsWith("HETATM ") ||

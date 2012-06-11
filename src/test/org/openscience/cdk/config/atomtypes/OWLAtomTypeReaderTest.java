@@ -59,6 +59,7 @@ public class OWLAtomTypeReaderTest extends CDKTestCase {
 		"    <at:lonePairCount>0</at:lonePairCount>" +
 		"    <at:formalNeighbourCount>4</at:formalNeighbourCount>" +
 		"    <at:piBondCount>0</at:piBondCount>" +
+		"    <at:singleElectronCount>0</at:singleElectronCount>" +
 		"  </at:AtomType>" +
 		"</rdf:RDF>";
 
@@ -103,6 +104,7 @@ public class OWLAtomTypeReaderTest extends CDKTestCase {
     	Assert.assertEquals(4, atomType.getFormalNeighbourCount().intValue());
     	Assert.assertEquals(0, atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
     	Assert.assertEquals(0, atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+    	Assert.assertEquals(0, atomType.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT));
     }
 
 }

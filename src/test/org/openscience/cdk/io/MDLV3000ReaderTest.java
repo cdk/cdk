@@ -27,10 +27,12 @@ package org.openscience.cdk.io;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -88,6 +90,18 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     	} catch (CDKException cdkEx) {
     		Assert.assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());
     	}
+    }
+
+    @Test
+    public void testPseudoAtomLabels() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatomsv3000.mol");
+        MDLV3000Reader reader = new MDLV3000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        Assert.assertTrue(molecule.getAtom(9) instanceof IPseudoAtom);
+        Assert.assertEquals("Leu", molecule.getAtom(9).getSymbol());
+        IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);
+        Assert.assertEquals("Leu", pa.getLabel());
     }
 
 }

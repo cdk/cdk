@@ -24,7 +24,13 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -196,6 +202,63 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         Assert.assertEquals(ref, fp);
 
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 3510588
+     */
+    @Test
+    public void testMultithreadedUsage() throws Exception {
+        IAtomContainer mol1 = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+        IAtomContainer mol2 = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
+
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
+        adder.addImplicitHydrogens(mol1);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+
+        adder.addImplicitHydrogens(mol2);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol2);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+
+
+        IFingerprinter fp = new PubchemFingerprinter();
+        BitSet bs1 = fp.getFingerprint(mol1);
+        BitSet bs2 = fp.getFingerprint(mol2);
+
+        class FpRunner implements Callable<BitSet> {
+            IAtomContainer mol;
+            FpRunner(IAtomContainer mol) {
+                this.mol = mol;
+            }
+            public BitSet call() throws Exception {
+                BitSet fp = null;
+                IFingerprinter fpr = new PubchemFingerprinter();
+                try {
+                    fp = fpr.getFingerprint(mol);
+                } catch (CDKException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+                return fp;
+            }
+        }
+
+        // now lets run some threads
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        List<FpRunner> tasks = new ArrayList<FpRunner>();
+        tasks.add(new FpRunner(mol1));
+        tasks.add(new FpRunner(mol2));
+        List<Future<BitSet>> ret = executor.invokeAll(tasks);
+
+        BitSet fb1 = ret.get(0).get();
+        Assert.assertNotNull(fb1);
+
+        BitSet fb2 = ret.get(1).get();
+        Assert.assertNotNull(fb2);
+
+        Assert.assertEquals(bs1, fb1);
+        Assert.assertEquals(bs2, fb2);
     }
 
 }

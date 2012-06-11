@@ -33,30 +33,6 @@ import org.openscience.cdk.io.setting.IOSetting;
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultChemObjectWriter implements IChemObjectWriter {
+public abstract class DefaultChemObjectWriter extends ChemObjectIO implements IChemObjectWriter {
 
-    /**
-     * Holder of reader event listeners.
-     */
-    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
-
-    public void addChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.add(listener);
-    }
-
-    public void removeChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.remove(listener);
-    }
-    
-    protected void fireIOSettingQuestion(IOSetting setting) {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = listenerList.get(i);
-            listener.processIOSettingQuestion(setting);
-        }
-    }
-
-    public IOSetting[] getIOSettings() {
-        return new IOSetting[0];
-    }
-    
 }

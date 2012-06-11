@@ -97,17 +97,17 @@ public class PDBWriter extends DefaultChemObjectWriter {
             }
         } catch (Exception exc) {
         }
-        writeAsHET = new BooleanIOSetting("WriteAsHET", IOSetting.LOW, 
-                        "Should the output file use HETATM", "false");
-        useElementSymbolAsAtomName = new BooleanIOSetting(
-                "UseElementSymbolAsAtomName", IOSetting.LOW, 
-                "Should the element symbol be written as the atom name", "false");
-        writeCONECTRecords = new BooleanIOSetting("WriteCONECT", IOSetting.LOW, 
-                "Should the bonds be written as CONECT records?", "true");
-        writeTERRecord = new BooleanIOSetting("WriteTER", IOSetting.LOW, 
-                "Should a TER record be put at the end of the atoms?", "false");
-        writeENDRecord = new BooleanIOSetting("WriteEND", IOSetting.LOW, 
-                "Should an END record be put at the end of the file?", "true");
+        writeAsHET = addSetting(new BooleanIOSetting("WriteAsHET", IOSetting.Importance.LOW,
+                        "Should the output file use HETATM", "false"));
+        useElementSymbolAsAtomName = addSetting(new BooleanIOSetting(
+                "UseElementSymbolAsAtomName", IOSetting.Importance.LOW, 
+                "Should the element symbol be written as the atom name", "false"));
+        writeCONECTRecords = addSetting(new BooleanIOSetting("WriteCONECT", IOSetting.Importance.LOW,
+                "Should the bonds be written as CONECT records?", "true"));
+        writeTERRecord = addSetting(new BooleanIOSetting("WriteTER", IOSetting.Importance.LOW,
+                "Should a TER record be put at the end of the atoms?", "false"));
+        writeENDRecord = addSetting(new BooleanIOSetting("WriteEND", IOSetting.Importance.LOW,
+                "Should an END record be put at the end of the file?", "true"));
     }
 
     public PDBWriter(OutputStream output) {
@@ -341,15 +341,6 @@ public class PDBWriter extends DefaultChemObjectWriter {
    public void close() throws IOException {
         writer.close();
     }
-   
-   public IOSetting[] getIOSettings() {
-       IOSetting[] settings = new IOSetting[7];
-       settings[0] = writeAsHET;
-       settings[1] = useElementSymbolAsAtomName;
-       settings[2] = writeCONECTRecords;
-       settings[3] = writeTERRecord;
-       settings[4] = writeENDRecord;
-       return settings;
-   }
+
 
 }

@@ -20,22 +20,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -53,6 +37,21 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class that implements the MDL mol V3000 format. This reader reads the 
@@ -127,6 +126,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
@@ -271,6 +271,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 		throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
                 	}
                 	atom = readData.getBuilder().newInstance(IPseudoAtom.class,element);
+                    atom.setSymbol(element);
                 }
 
                 // parse atom coordinates (in Angstrom)
@@ -584,14 +585,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testAccepts")
-    public boolean accepts(IChemObject object) {
-        if (object instanceof IAtomContainer) {
-            return true;
-        }
-        return false;
-    }
-
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
@@ -599,9 +592,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     
     private void initIOSettings() {
     }
-    
-    public IOSetting[] getIOSettings() {
-        return new IOSetting[0];
-    }
+
     
 }

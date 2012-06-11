@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -119,16 +118,16 @@ public class AdductionPBMechanism implements IReactionMechanism{
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
 		if (type == null) return null;
 
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+		IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule1);
 		
 		/* mapping */
 		for(IAtom atom:molecule1.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule1.getAtomNumber(atom)));
+			IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule1.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		for(IAtom atom:molecule2.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule2.getAtomNumber(atom)));
+			IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule2.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
         

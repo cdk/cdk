@@ -55,7 +55,7 @@ import java.util.List;
  * <p>The use of this class is exemplified as follows. To get information 
  * about the major isotope of hydrogen, one can use this code:
  * <pre>
- *   IsotopeFactory factory = IsotopeFactory.getInstance(NewDefaultChemObjectBuilder.getInstance());
+ *   IsotopeFactory factory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre> 
  *

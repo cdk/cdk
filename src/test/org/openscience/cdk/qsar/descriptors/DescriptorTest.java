@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.descriptors;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
 
@@ -141,7 +142,7 @@ public abstract class DescriptorTest extends CDKTestCase {
     }
 
     @Test public void testGetSpecification() {
-    	DescriptorSpecification spec = descriptor.getSpecification();
+    	IImplementationSpecification spec = descriptor.getSpecification();
     	Assert.assertNotNull(
     		"The descriptor specification returned must not be null.",
     		spec
@@ -189,7 +190,7 @@ public abstract class DescriptorTest extends CDKTestCase {
      * but one based on a repository blob or commit.
      */
     @Test public void testGetSpecification_IdentifierNonDefault() {
-        DescriptorSpecification spec = descriptor.getSpecification();
+    	IImplementationSpecification spec = descriptor.getSpecification();
         Assert.assertNotSame("$Id$", spec.getImplementationIdentifier());
     }
     

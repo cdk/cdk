@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.silent;
 
+import java.lang.reflect.Constructor;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
@@ -181,12 +182,42 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
             }
         }
 
-	    throw new IllegalArgumentException(
-	        "No constructor found with the given number of parameters."
-	    );
+	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
 	}
 
-    @SuppressWarnings("unchecked")
+	private String getNoConstructorFoundMessage(Class clazz) {
+	    StringBuffer buffer = new StringBuffer();
+	    String className = clazz.getName().substring(32);
+	    buffer.append("No constructor found for ");
+	    buffer.append(className);
+	    buffer.append(" with the given number of parameters.");
+
+	    // try loading the implementation
+	    try {
+            Class impl = this.getClass().getClassLoader().loadClass(
+                "org.openscience.cdk." + className
+            );
+            buffer.append(" Candidates are: ");
+            Constructor[] constructors = impl.getConstructors();
+            for (int i=0; i<constructors.length; i++) {
+                buffer.append(className).append('(');
+                Class[] params = constructors[i].getParameterTypes();
+                for (int j=0; j<params.length; j++) {
+                    buffer.append(params[j].getName().substring(
+                        params[j].getName().lastIndexOf('.') + 1
+                    ));
+                    if ((j+1)<params.length) buffer.append(", ");
+                }
+                buffer.append(')');
+                if ((i+1)<constructors.length) buffer.append(", ");
+            }
+        } catch (ClassNotFoundException e) {
+            // ok, then we do without suggestions
+        }
+        return buffer.toString();
+	}
+
+	@SuppressWarnings("unchecked")
     private <T extends ICDKObject>T newAtomContainerInstance(
             Class<T> clazz, Object... params)
     {
@@ -228,9 +259,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
             }
         }
 
-        throw new IllegalArgumentException(
-            "No constructor found with the given number of parameters."
-        );
+	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
     }
 
 	@SuppressWarnings("unchecked")
@@ -330,9 +359,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
             }
 	    }
 
-	    throw new IllegalArgumentException(
-            "No constructor found with the given number of parameters."
-        );
+	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -344,7 +371,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
 	            return (T)new Bond();
 	        } else if (params.length == 2 &&
 	                params[0] instanceof IAtom &&
-	                params[0] instanceof IAtom) {
+	                params[1] instanceof IAtom) {
 	            return (T)new Bond((IAtom)params[0], (IAtom)params[1]);
 	        } else if (params.length == 3 &&
 	                params[0] instanceof IAtom &&
@@ -382,7 +409,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
 	        } else {
 	            // the IBond(IAtom[]) constructor
 	            boolean allIAtom = true;
-	            for (int i=0; i<(params.length-1) && allIAtom; i++) {
+	            for (int i=0; i<params.length && allIAtom; i++) {
 	                if (!(params[i] instanceof IAtom)) allIAtom = false;
 	            }
 	            if (allIAtom) {
@@ -407,11 +434,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
 	        if (params.length == 0) return (T)new ElectronContainer();
 	    }
 
-        throw new IllegalArgumentException(
-            "No constructor found with the given number of parameters."
-        );
+	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
     }
 	
 }
-
-

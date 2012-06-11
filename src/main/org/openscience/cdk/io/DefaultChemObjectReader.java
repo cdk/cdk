@@ -34,7 +34,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultChemObjectReader implements ISimpleChemObjectReader {
+public abstract class DefaultChemObjectReader extends ChemObjectIO implements ISimpleChemObjectReader {
 
     /**
      * An event to be sent to listeners when a frame is read.
@@ -44,27 +44,13 @@ public abstract class DefaultChemObjectReader implements ISimpleChemObjectReader
     protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;
 
-    /**
-     * Holder of reader event listeners.
-     */
-    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>(2);
-
-    public void addChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.add(listener);
-    }
-
-    public void removeChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.remove(listener);
-    }
-
     /* Extra convenience methods */
     
     /**
      * Sends a frame read event to the registered ReaderListeners.
      */
     protected void fireFrameRead() {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = listenerList.get(i);
+        for (IChemObjectIOListener listener : getListeners()) {
             if (listener instanceof IReaderListener) {
                 // Lazily create the event:
                 if (frameReadEvent == null) {
@@ -75,17 +61,6 @@ public abstract class DefaultChemObjectReader implements ISimpleChemObjectReader
         }
     }
 
-    protected void fireIOSettingQuestion(IOSetting setting) {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = listenerList.get(i);
-            listener.processIOSettingQuestion(setting);
-        }
-    }
-
-    public IOSetting[] getIOSettings() {
-        return new IOSetting[0];
-    }
-    
     public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
     	this.mode = mode;
     }

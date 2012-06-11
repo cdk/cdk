@@ -182,7 +182,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         IAtomContainer mol = singleAtomMolecule();
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);
-        writer.getIOSettings()[0].setSetting("true");
+        writer.getSetting("WriteAsHET").setSetting("true");
         writer.writeMolecule(mol);
         writer.close();
         String asString = stringWriter.toString();
@@ -194,7 +194,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         IAtomContainer mol = singleAtomMolecule();
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);
-        writer.getIOSettings()[0].setSetting("false");
+        writer.getSetting("WriteAsHET").setSetting("false");
         writer.writeMolecule(mol);
         writer.close();
         String asString = stringWriter.toString();

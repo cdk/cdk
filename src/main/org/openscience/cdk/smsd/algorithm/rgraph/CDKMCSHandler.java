@@ -43,8 +43,7 @@ import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
- * This class acts as a handler class for CDKMCS algorithm
- * {@link org.openscience.cdk.smsd.algorithm.cdk.CDKMCS}.
+ * This class acts as a handler class for {@link CDKMCS} algorithm.
  * 
  * @cdk.module smsd
  * @cdk.githash

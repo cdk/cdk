@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 
@@ -35,6 +36,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.POVRayFormatTest")
 public class POVRayFormat implements IResourceFormat {
 
 	private static IResourceFormat myself = null;

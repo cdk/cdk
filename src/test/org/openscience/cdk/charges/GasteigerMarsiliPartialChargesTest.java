@@ -24,19 +24,27 @@
 package org.openscience.cdk.charges;
 
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.util.Iterator;
+import java.util.List;
+import java.io.InputStream;
 
 /**
  *  Description of the Class
@@ -209,12 +217,37 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
      * 
 	 */
     @Test
-    public void testSetStepSize() throws Exception {
-		
+    public void testSetStepSize() throws Exception {		
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		int STEP_SIZE = 22;
 		peoe.setStepSize(STEP_SIZE);
 		Assert.assertEquals(STEP_SIZE,peoe.getStepSize());
 		
 	}
+
+    @Test
+    public void testUndefinedPartialCharge() throws Exception {
+        String filename = "data/mdl/burden_undefined.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        ChemFile content = reader.read(new ChemFile());
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
+
+        Assert.assertNotNull(ac);
+        addExplicitHydrogens(ac);
+        CDKHueckelAromaticityDetector.detectAromaticity(ac);
+
+        addExplicitHydrogens(ac);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        lpcheck.saturate(ac);
+
+        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+        peoe.calculateCharges(ac);
+
+        for (IAtom atom : ac.atoms()) {
+            Assert.assertFalse(atom.getSymbol() + " had an undefined partial charge", Double.isNaN(atom.getCharge()));
+            Assert.assertFalse(Double.isInfinite(atom.getCharge()));
+        }
+    }
 }

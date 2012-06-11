@@ -56,7 +56,7 @@ import java.util.Iterator;
  * <pre>[C+]-C => C=C + [H+] </pre>
  * 
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new HyperconjugationReaction();
  *  Object[] params = {Boolean.FALSE};

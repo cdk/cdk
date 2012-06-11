@@ -26,7 +26,6 @@ package org.openscience.cdk.reaction.type;
 
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -58,7 +57,7 @@ import java.util.Iterator;
  * <p>Below you have an example how to initiate the mechanism.</p>
  * <p>It is processed by the HeterolyticCleavageMechanism class</p>
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new TautomerizationReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -129,7 +128,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
 			throw new CDKException("TautomerizationReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newInstance(IReactionSet.class);
+		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IAtomContainer reactant = reactants.getAtomContainer(0);
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/

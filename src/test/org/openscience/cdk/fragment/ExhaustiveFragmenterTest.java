@@ -30,7 +30,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * Test exhaustive fragmenter.
  *
- * @cdk.module test-extra
+ * @cdk.module test-fragment
  */
 public class ExhaustiveFragmenterTest extends CDKTestCase {
 

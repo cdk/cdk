@@ -2,9 +2,6 @@ cdk-annotation.jar
 cdk-core.jar
 cdk-data.jar
 cdk-interfaces.jar
-cdk-qsar.jar
-cdk-qsaratomic.jar
 cdk-io.jar
 cdk-standard.jar
 cdk-charges.jar
-cdk-extra.jar

@@ -239,14 +239,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         basisOptions.add("6-31g(d)");
         basisOptions.add("6-311g");
         basisOptions.add("6-311+g**");
-        basis = new OptionIOSetting("Basis", IOSetting.MEDIUM,
+        basis = new OptionIOSetting("Basis", IOSetting.Importance.MEDIUM,
           "Which basis set do you want to use?", basisOptions, "6-31g");
 
         List<String> methodOptions = new ArrayList<String>();
         methodOptions.add("rb3lyp");
         methodOptions.add("b3lyp");
         methodOptions.add("rhf");
-        method = new OptionIOSetting("Method", IOSetting.MEDIUM,
+        method = new OptionIOSetting("Method", IOSetting.Importance.MEDIUM,
           "Which method do you want to use?", methodOptions, "b3lyp");
         
         List<String> commandOptions = new ArrayList<String>();
@@ -254,53 +254,35 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");
         commandOptions.add("IR frequency calculation (with Raman)");
-        command = new OptionIOSetting("Command", IOSetting.HIGH,
+        command = addSetting(new OptionIOSetting("Command", IOSetting.Importance.HIGH,
           "What kind of job do you want to perform?", commandOptions, 
-          "energy calculation");
+          "energy calculation"));
         
-        comment = new StringIOSetting("Comment", IOSetting.LOW,
+        comment = addSetting(new StringIOSetting("Comment", IOSetting.Importance.LOW,
           "What comment should be put in the file?", 
-          "Created with CDK (http://cdk.sf.net/)");
+          "Created with CDK (http://cdk.sf.net/)"));
         
-        memory = new StringIOSetting("Memory", IOSetting.LOW,
+        memory = addSetting(new StringIOSetting("Memory", IOSetting.Importance.LOW,
           "How much memory do you want to use?", 
-          "unset");
+          "unset"));
         
-        shell = new BooleanIOSetting("OpenShell", IOSetting.MEDIUM,
+        shell = addSetting(new BooleanIOSetting("OpenShell", IOSetting.Importance.MEDIUM,
           "Should the calculation be open shell?", 
-          "false");
+          "false"));
 
-        proccount = new IntegerIOSetting("ProcessorCount", IOSetting.LOW,
+        proccount = addSetting(new IntegerIOSetting("ProcessorCount", IOSetting.Importance.LOW,
           "How many processors should be used by Gaussian?", 
-          "1");
+          "1"));
 
-        usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.LOW,
+        usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.Importance.LOW,
           "Should a check point file be saved?", 
           "false");
     }
     
     private void customizeJob() {
-        fireIOSettingQuestion(basis);
-        fireIOSettingQuestion(method);
-        fireIOSettingQuestion(command);
-        fireIOSettingQuestion(comment);
-        fireIOSettingQuestion(shell);
-        fireIOSettingQuestion(proccount);
-        fireIOSettingQuestion(memory);
-        fireIOSettingQuestion(usecheckpoint);
-    }
-    
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[8];
-        settings[0] = basis;
-        settings[1] = method;
-        settings[2] = command;
-        settings[3] = comment;
-        settings[4] = shell;
-        settings[5] = proccount;
-        settings[6] = usecheckpoint;
-        settings[7] = memory;
-        return settings;
+        for(IOSetting setting : getSettings()){
+            fireIOSettingQuestion(setting);
+        }
     }
 }
 

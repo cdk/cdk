@@ -32,7 +32,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.CrystalClustFormatTest")
+@TestClass("org.openscience.cdk.io.formats.CrystClustFormatTest")
 public class CrystClustFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
@@ -72,6 +72,7 @@ public class CrystClustFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.CrystClustWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 1 && line.startsWith("frame: ")) {
             return true;

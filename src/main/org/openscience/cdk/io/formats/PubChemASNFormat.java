@@ -84,6 +84,7 @@ public class PubChemASNFormat implements IChemFormatMatcher {
 		return DataFeatures.NONE;
 	}
 
+    @TestMethod("testMatches")
 	public boolean matches(int lineNumber, String line) {
 		if (lineNumber == 1 && line.startsWith("PC-Compound")) return true;
 		return false;

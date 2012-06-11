@@ -87,11 +87,13 @@ import java.util.Map;
 public class PubchemFingerprinter implements IFingerprinter {
 
     // number of bits in this fingerprint
-    public static int FP_SIZE = 881;
+    public static final int FP_SIZE = 881;
 
     private byte[] m_bits;
 
+    private SMARTSQueryTool sqt;
     public PubchemFingerprinter() {
+    	sqt = new SMARTSQueryTool("C");
         m_bits = new byte[(FP_SIZE + 7) >> 3];
     }
 
@@ -297,13 +299,11 @@ public class PubchemFingerprinter implements IFingerprinter {
         }
     }
 
-    static class CountSubstructures {
+    class CountSubstructures {
         private IAtomContainer mol;
-        private SMARTSQueryTool sqt;
 
         public CountSubstructures(IAtomContainer m) {
             mol = m;
-            sqt = new SMARTSQueryTool("C");
         }
 
         public int countSubstructure(String smarts) throws CDKException {
@@ -315,7 +315,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         }
     }
 
-    static private void _generateFp(byte[] fp, IAtomContainer mol) 
+    private void _generateFp(byte[] fp, IAtomContainer mol)
                         throws CDKException {
         countElements(fp, mol);
         countRings(fp, mol);
@@ -1085,7 +1085,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         if (cr.countHeteroAromaticRing() >= 4) fp[b >> 3] |= MASK[b % 8];
     }
 
-    private static void countSubstructures(byte[] fp, IAtomContainer mol) throws CDKException {
+    private void countSubstructures(byte[] fp, IAtomContainer mol) throws CDKException {
         CountSubstructures cs = new CountSubstructures(mol);
         int b;
 

@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Writer;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -69,12 +69,12 @@ public class TemplateExtractor {
 	}
 
 	public void cleanDataSet(String dataFile) {
-		IteratingMDLReader imdl = null;
+		IteratingSDFReader imdl = null;
 		IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
 		try {
 			System.out.println("Start clean dataset...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-			imdl = new IteratingMDLReader(fin, builder);
+			imdl = new IteratingSDFReader(fin, builder);
 			System.out.print("Read File in..");
 		} catch (Exception exc) {
 			System.out.println("Could not read Molecules from file " + dataFile
@@ -106,12 +106,12 @@ public class TemplateExtractor {
 	}
 
 	public void ReadNCISdfFileAsTemplate(String dataFile) {
-		IteratingMDLReader imdl = null;
+		IteratingSDFReader imdl = null;
 		IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-			imdl = new IteratingMDLReader(fin, builder);
+			imdl = new IteratingSDFReader(fin, builder);
 			System.out.print("Read File in..");
 		} catch (Exception exc) {
 			System.out.println("Could not read Molecules from file " + dataFile
@@ -131,13 +131,13 @@ public class TemplateExtractor {
 	}
 
 	public void PartitionRingsFromComplexRing(String dataFile) {
-		IteratingMDLReader imdl = null;
+		IteratingSDFReader imdl = null;
 		IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
 		IAtomContainer m = null;
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-			imdl = new IteratingMDLReader(fin, builder);
+			imdl = new IteratingSDFReader(fin, builder);
 			System.out.print("Read File in..");
 		} catch (Exception exc) {
 			System.out.println("Could not read Molecules from file " + dataFile
@@ -169,7 +169,7 @@ public class TemplateExtractor {
 		IAtomContainer m = null;
 		// RingPartitioner ringPartitioner=new RingPartitioner();
 		List<IRingSet> ringSystems = null;
-		IteratingMDLReader imdl = null;
+		IteratingSDFReader imdl = null;
 
 		HashMap<String,String> hashRingSystems = new HashMap<String,String>();
 		SmilesGenerator smilesGenerator = new SmilesGenerator();
@@ -196,7 +196,7 @@ public class TemplateExtractor {
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-			imdl = new IteratingMDLReader(fin, builder);
+			imdl = new IteratingSDFReader(fin, builder);
 			System.out.println("Read File in..");
 		} catch (Exception exc) {
 			System.out.println("Could not read Molecules from file " + dataFile
@@ -307,14 +307,14 @@ public class TemplateExtractor {
 			String dataFileOut) {
 		System.out.println("Start make SMILES...");
 		IAtomContainer m = null;
-		IteratingMDLReader imdl = null;
+		IteratingSDFReader imdl = null;
 		// QueryAtomContainer query=null;
 		List<String> data = new ArrayList<String>();
 		SmilesGenerator smiles = new SmilesGenerator();
 		try {
 			System.out.println("Start...");
 			BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
-			imdl = new IteratingMDLReader(fin, builder);
+			imdl = new IteratingSDFReader(fin, builder);
 			// fin.close();
 			System.out.println("Read File in..");
 		} catch (Exception exc) {
@@ -378,13 +378,13 @@ public class TemplateExtractor {
 		    HybridizationFingerprinter.DEFAULT_SIZE, HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH
 		);
 		IAtomContainer m = null;
-		IteratingMDLReader imdl=null;
+		IteratingSDFReader imdl=null;
 		//QueryAtomContainer query=null;
 		IAtomContainer query = null;
 		List<BitSet> data = new ArrayList<BitSet>();
 		try {
 			System.out.print("Read data file in ...");
-			imdl = new IteratingMDLReader(fin, builder);
+			imdl = new IteratingSDFReader(fin, builder);
 			// fin.close();
 			System.out.println("ready");
 		} catch (Exception exc) {

@@ -193,21 +193,16 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        useAromaticityFlag = new BooleanIOSetting(
+        useAromaticityFlag = addSetting(new BooleanIOSetting(
             "UseAromaticity",
-            IOSetting.LOW,
+            IOSetting.Importance.LOW,
             "Should aromaticity information be stored in the SMILES?",
             "false"
-        );
+        ));
     }
 
     public void customizeJob() {
         fireIOSettingQuestion(useAromaticityFlag);
     }
 
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[1];
-        settings[0] = useAromaticityFlag;
-        return settings;
-    }
 }

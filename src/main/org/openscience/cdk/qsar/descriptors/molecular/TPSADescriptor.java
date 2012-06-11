@@ -1,9 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Ring;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -32,6 +26,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -257,9 +252,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
         }
 
         // iterate over all atoms of ac
-        java.util.Iterator atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : ac.atoms()) {
             if (atom.getSymbol().equals("N") || atom.getSymbol().equals("O") ||
                     atom.getSymbol().equals("S") || atom.getSymbol().equals("P")) {
                 int singleBondCount = 0;
@@ -321,7 +314,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
                 if (rs.contains(atom)) {
                     IRingSet rsAtom = rs.getRings(atom);
                     for (int ringSetIndex = 0; ringSetIndex < rsAtom.getAtomContainerCount(); ringSetIndex++) {
-                        Ring ring = (Ring) rsAtom.getAtomContainer(ringSetIndex);
+                        IRing ring = (IRing) rsAtom.getAtomContainer(ringSetIndex);
                         if (ring.getRingSize() == 3)
                             isIn3MemberRing = 1;
                     }

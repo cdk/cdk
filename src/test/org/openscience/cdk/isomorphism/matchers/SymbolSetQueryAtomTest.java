@@ -38,9 +38,9 @@ import org.openscience.cdk.CDKTestCase;
 public class SymbolSetQueryAtomTest extends CDKTestCase
 {
 	
-    SymbolSetQueryAtom symbolSet = null;
+    private static SymbolSetQueryAtom symbolSet = null;
     
-    @BeforeClass public void setUp() {
+    @BeforeClass static public void setUp() {
         symbolSet = new SymbolSetQueryAtom();
         symbolSet.addSymbol("C");
         symbolSet.addSymbol("Fe");

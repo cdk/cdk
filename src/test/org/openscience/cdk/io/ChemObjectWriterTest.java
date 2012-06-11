@@ -31,6 +31,9 @@ import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Reaction;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 /**
@@ -78,4 +81,15 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
         }
     }
 
+    @Test public void testSetWriter_Writer() throws Exception {
+        Assert.assertNotNull("No IChemObjectWriter has been set!", chemObjectIO);
+        StringWriter testWriter = new StringWriter();
+        chemObjectIO.setWriter(testWriter);
+    }
+
+    @Test public void testSetWriter_OutputStream() throws Exception {
+        Assert.assertNotNull("No IChemObjectWriter has been set!", chemObjectIO);
+        ByteArrayOutputStream testStream = new ByteArrayOutputStream();
+        chemObjectIO.setWriter(testStream);
+    }
 }

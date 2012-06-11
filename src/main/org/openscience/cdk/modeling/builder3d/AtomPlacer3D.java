@@ -30,6 +30,8 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,6 +48,8 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module     builder3d
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.modeling.builder3d.AtomPlacer3DTest " +
+ "org.openscience.cdk.modeling.builder3d.FurtherAtomPlacer3DTest")
 public class AtomPlacer3D {
 
 	private Map<Object,List> pSet = null;
@@ -65,7 +69,7 @@ public class AtomPlacer3D {
 	AtomPlacer3D(){}
 	
 	/**
-	 *  Initialize the atomPlacer class
+	 *  Initialize the atomPlacer class.
 	 * 
 	 * @param  parameterSet  Force Field parameter as Hashtable
 	 */
@@ -74,8 +78,9 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain
+	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain.
 	 *
+	 * @param  molecule the reference molecule for searching the chain 
 	 * @param  chain  chain to be searched
 	 * @return        the atom number of the first heavy atom the number of heavy atoms in the chain
 	 */
@@ -310,6 +315,7 @@ public class AtomPlacer3D {
 	 * @param  id2            atom2 id
 	 * @return                The distanceValue value from the force field parameter set
 	 */
+	@TestMethod("testGetBondLengthValue")
 	public double getBondLengthValue(String id1, String id2){
 		String dkey = "";
 		if (pSet.containsKey(("bond" + id1 + ";" + id2))) {
@@ -334,6 +340,7 @@ public class AtomPlacer3D {
 	 * @param  id3            Description of the Parameter
 	 * @return                The angleKey value
 	 */
+	@TestMethod("testGetAngleValue")
 	public double getAngleValue(String id1, String id2, String id3) {
 		String akey = "";
 		if (pSet.containsKey(("angle" + id1 + ";" + id2 + ";" + id3))) {

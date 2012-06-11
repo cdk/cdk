@@ -61,7 +61,7 @@ import java.util.List;
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  * 
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RadicalSiteRrGammaReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -160,10 +160,10 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 4, true);
+				hcg.getSpheres(reactant, atomi, 4, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(4);
 				
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 5, true);
+				hcg.getSpheres(reactant, atomi, 5, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(5).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();
@@ -223,10 +223,10 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
 			IAtom  atomi = atomis.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 4, true);
+				hcg.getSpheres(reactant, atomi, 4, true);
 				List<IAtom> atom1s = hcg.getNodesInSphere(4);
 				
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 5, true);
+				hcg.getSpheres(reactant, atomi, 5, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(5).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

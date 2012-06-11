@@ -54,6 +54,7 @@ public class BasicGeneratorTest extends AbstractGeneratorTest {
         super.setup();
         this.generator = new BasicGenerator();
         model.registerParameters(generator);
+        super.setTestedGenerator(generator);
     }
 	
 	@Test

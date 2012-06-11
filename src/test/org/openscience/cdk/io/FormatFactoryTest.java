@@ -29,8 +29,11 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
@@ -261,4 +264,42 @@ public class FormatFactoryTest extends CDKTestCase {
         Assert.assertEquals("Bortrifluorid", line);
     }
 
+    @Test
+    public void testGetFormats() {
+    	List<IChemFormatMatcher> formats = factory.getFormats();
+    	Assert.assertNotNull(formats);
+    	Assert.assertNotSame(0, formats.size());
+    	for (IChemFormatMatcher matcher : formats) {
+    		Assert.assertNotNull(matcher);
+    	}
+    }
+
+    class DummyFormat implements IChemFormatMatcher {
+
+		@Override public String getReaderClassName() { return null; }
+		@Override public String getWriterClassName() { return null; }
+		@Override public int getSupportedDataFeatures() { return 0; }
+		@Override public int getRequiredDataFeatures() { return 0; }
+		@Override public String getFormatName() { return "Dummy Format"; }
+		@Override public String getMIMEType() { return null; }
+		@Override public boolean isXMLBased() { return false; }
+		@Override public String getPreferredNameExtension() { return "dummy"; }
+		@Override public String[] getNameExtensions() {
+			return new String[] { "dummy", "dum" };
+		}
+
+		@Override
+		public boolean matches(int lineNumber, String line) {
+			return line.startsWith("DummyFormat:");
+		}
+    }
+
+    @Test
+    public void testRegisterFormat() throws IOException {
+    	factory.registerFormat(new DummyFormat());
+    	StringReader reader = new StringReader("DummyFormat:");
+    	IChemFormat format = factory.guessFormat(reader);
+    	Assert.assertNotNull(format);
+    	Assert.assertTrue(format instanceof DummyFormat);
+    }
 }

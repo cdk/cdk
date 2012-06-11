@@ -303,6 +303,7 @@
               <param name="module" value="${module}"/>
           </antcall>
 
+          <ant antfile="javadoc.xml" target="compileDocTests"/>
           <ant antfile="javadoc.xml" target="ojdcheck-module">
               <property name="module" value="${module}"/>
           </ant>
@@ -483,8 +484,6 @@
 	 <!-- OK, we now need to do some replacements such as 
 	      adding cdk.module tags and changing access modes
 	  -->
-	 <replace file="${src}/main/org/openscience/cdk/smiles/smarts/parser/JJTSMARTSParserState.java" 
-	          token="class JJTSMARTSParserState {" value="public class JJTSMARTSParserState {" />
          <replace dir="${src}/main/org/openscience/cdk/smiles/smarts/parser" 
 	          excludes="AST*.java,SMARTSParser.jjt,SMARTSParser.jj,*Node.java"
                   token="package org.openscience.cdk.smiles.smarts.parser;" summary="true" >
@@ -537,10 +536,13 @@
             list="renderbasic"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
+            list="renderextra"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
             list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="control,extra,reaction,pdbcml,libiomd"/>
+            list="control,extra,fragment,reaction,pdbcml,libiomd"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="charges,smarts,signature"/>
@@ -577,7 +579,7 @@
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-data,test-qsaratomic,test-qsarbond,
-                  test-pdb,test-smiles,test-extra,test-atomtype,
+                  test-pdb,test-smiles,test-extra,test-fragment,test-atomtype,
                   test-structgen,test-iordf,test-silent"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -594,6 +596,9 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-renderawt"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-renderextra"/>
     </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
@@ -667,6 +672,7 @@
                     <include name="cdk-data.jar"/>
                     <include name="cdk-silent.jar"/>
                     <include name="cdk-extra.jar"/>
+                    <include name="cdk-fragment.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
                     <include name="cdk-libiocml.jar"/>
@@ -744,6 +750,7 @@
                     <include name="cdk-silent.jar"/>
                     <include name="cdk-diff.jar"/>
                     <include name="cdk-extra.jar"/>
+                    <include name="cdk-fragment.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
                     <include name="cdk-ioformats.jar"/>
@@ -798,19 +805,21 @@
             </jar>
         </target>
 
-        <target id="dist-test-large" name="dist-test-large" depends="test-dist-all"
+        <target id="dist-test-large" name="dist-test-large" depends="test-dist-all, jarTestdata"
             description="Builds on big jar file for the CDK test classes.">
 
             <!-- first unjar the CDK and other jars we need -->
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
+                    <includesfile name="${metainf}/test.libdepends"/>
                     <includesfile name="${metainf}/test-core.libdepends"/>
                     <includesfile name="${metainf}/test-data.libdepends"/>
                     <includesfile name="${metainf}/test-datadebug.libdepends"/>
                     <includesfile name="${metainf}/test-silent.libdepends"/>
                     <includesfile name="${metainf}/test-diff.libdepends"/>
                     <includesfile name="${metainf}/test-extra.libdepends"/>
+                    <includesfile name="${metainf}/test-fragment.libdepends"/>
                     <includesfile name="${metainf}/test-builder3d.libdepends"/>
                     <includesfile name="${metainf}/test-forcefield.libdepends"/>
                     <includesfile name="${metainf}/test-inchi.libdepends"/>
@@ -838,6 +847,8 @@
                     <includesfile name="${metainf}/test-cip.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
+                    <include name="cdk-test.jar"/>
+                    <include name="cdk-testdata.jar"/>
                     <include name="cdk-test-annotation.jar"/>
                     <include name="cdk-test-ioformats.jar"/>
                     <include name="cdk-test-core.jar"/>
@@ -846,6 +857,7 @@
                     <include name="cdk-test-silent.jar"/>
                     <include name="cdk-test-diff.jar"/>
                     <include name="cdk-test-extra.jar"/>
+                    <include name="cdk-test-fragment.jar"/>
                     <include name="cdk-test-builder3d.jar"/>
                     <include name="cdk-test-forcefield.jar"/>
                     <include name="cdk-test-inchi.jar"/>
@@ -1025,7 +1037,7 @@
         </target>
 
         <target id="noJunit" name="noJunit" depends="check" unless="junit.present">
-            <fail message="JUnit is not installed in Ant. Please run ant with the option '-lib develjar/junit-4.3.1.jar'."/>
+            <fail message="JUnit is not installed in Ant. Please run ant with the option '-lib develjar/junit-4.10.jar'."/>
         </target>
         
 		<target id="test-module" name="test-module" depends="noJunit"
@@ -1078,7 +1090,7 @@
                       io,builder3d,forcefield,valencycheck,charges,reaction,
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
-                      structgen,libiomd,libiocml,formula,render,extra,sdg,
+                      structgen,libiomd,libiocml,formula,render,extra,fragment,sdg,
                       ioformats,log4j,smsd,signature,iordf,cip,tautomer,
                       isomorphism,renderbasic,renderawt,silent"/>
         </target>

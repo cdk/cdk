@@ -70,7 +70,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     /**
      *The renderer model is final as it is not intended to be replaced.
      */
-    protected final RendererModel rendererModel = new RendererModel();
+    protected final RendererModel rendererModel;
 
     /**
      * Font managers change the font size depending on the zoom.
@@ -102,6 +102,9 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      */
     protected AffineTransform transform;
 
+    public AbstractRenderer(RendererModel rendererModel) {
+    	this.rendererModel = rendererModel;
+    }
     /**
      * The main method of the renderer, that uses each of the generators
      * to create a different set of {@link IRenderingElement}s grouped

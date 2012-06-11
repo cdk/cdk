@@ -52,7 +52,7 @@ public interface IMouseEventRelay {
      * @param screenCoordX the x part of the screen coordinate where the event happened.
      * @param screenCoordY the y part of the screen coordinate where the event happened.
      */
-	public abstract void mouseClickedDownRight(int x, int y);
+	public abstract void mouseClickedDownRight(int screenCoordX, int screenCoordY);
 
 	/**
      * Event to signal that the right mouse button has been released.
@@ -60,7 +60,7 @@ public interface IMouseEventRelay {
      * @param screenCoordX the x part of the screen coordinate where the event happened.
      * @param screenCoordY the y part of the screen coordinate where the event happened.
      */
-	public abstract void mouseClickedUpRight(int x, int y);
+	public abstract void mouseClickedUpRight(int screenCoordX, int screenCoordY);
 
 	/**
      * Event to signal that a mouse button has been double clicked.

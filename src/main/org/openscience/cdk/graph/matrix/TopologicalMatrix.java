@@ -1,5 +1,7 @@
 package org.openscience.cdk.graph.matrix;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -12,9 +14,9 @@ import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
  * 
  * @author federico
  * @cdk.githash
- *
+ * @cdk.module  qsarmolecular
  */
-
+@TestClass("org.openscience.cdk.graph.matrix.TopologicalMatrixTest")
 public class TopologicalMatrix implements IGraphMatrix {
 	
 	/**
@@ -23,7 +25,7 @@ public class TopologicalMatrix implements IGraphMatrix {
      * @param  container The AtomContainer for which the matrix is calculated
 	 * @return           A topological matrix representating this AtomContainer
 	 */
-	
+	@TestMethod("testTopologicalMatrix_IAtomContainer")
 	public static int[][] getMatrix(IAtomContainer container) {
 			int[][]conMat = AdjacencyMatrix.getMatrix(container);
 			int[][]TopolDistance = PathTools.computeFloydAPSP(conMat);

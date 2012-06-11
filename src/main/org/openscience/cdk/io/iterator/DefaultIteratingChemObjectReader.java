@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.io.ChemObjectIO;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -38,24 +39,12 @@ import org.openscience.cdk.io.setting.IOSetting;
  * @cdk.githash
  */
 public abstract class DefaultIteratingChemObjectReader<T extends IChemObject>
-implements IIteratingChemObjectReader<T> {
+    extends ChemObjectIO
+    implements IIteratingChemObjectReader<T> {
 
     protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;
 	
-    /**
-     * Holder of reader event listeners.
-     */
-    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
-
-    public void addChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.add(listener);
-    }
-
-    public void removeChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.remove(listener);
-    }
-
     public boolean accepts(Class objectClass) {
         return false; // it's an iterator, idiot.
     }
@@ -68,18 +57,7 @@ implements IIteratingChemObjectReader<T> {
     public void remove() {
         throw new UnsupportedOperationException();
     }
-    
-    protected void fireIOSettingQuestion(IOSetting setting) {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = listenerList.get(i);
-            listener.processIOSettingQuestion(setting);
-        }
-    }
 
-    public IOSetting[] getIOSettings() {
-        return new IOSetting[0];
-    }
-   
     public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
     	this.mode = mode;
     }

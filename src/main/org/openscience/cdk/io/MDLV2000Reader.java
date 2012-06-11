@@ -65,9 +65,11 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  * Reads content from MDL molfiles and SD files. 
- * It can read a {@link IMolecule} or {@link IChemModel} from an MDL molfile, and
+ * It can read a {@link IAtomContainer} or {@link IChemModel} from an MDL molfile, and
  * a {@link IChemFile} from a SD file, with a {@link IChemSequence} of
  * {@link IChemModel}'s, where each IChemModel will contain one IMolecule.
  *
@@ -110,6 +112,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     //Keep track of atoms and the lines they were on in the atom block.
     private List<IAtom> atomsByLinePosition;
+    // Pattern to remove trailing space (String.trim() will remove leading space, which we don't want)
+    private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
     
     public MDLV2000Reader() {
         this(new StringReader(""));
@@ -166,6 +170,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
     Class superClass = classObject.getSuperclass();
@@ -443,6 +448,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             int atomBlockLineNumber=0;
             for (int f = 0; f < atoms; f++) {
                 line = input.readLine(); linecount++; atomBlockLineNumber++;
+                Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
+                if(trailingSpaceMatcher.find()){
+                    handleError("Trailing space found",
+                                linecount,
+                                trailingSpaceMatcher.start(), trailingSpaceMatcher.end());
+                    line = trailingSpaceMatcher.replaceAll("");
+                }
                 x = Double.parseDouble(line.substring(0, 10).trim());
                 y = Double.parseDouble(line.substring(10, 20).trim());
                 z = Double.parseDouble(line.substring(20, 30).trim());
@@ -451,7 +463,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 totalY += Math.abs(y);
                 totalZ += Math.abs(z);
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
-                String element = line.substring(31,34).trim();
+                String element = line.substring(31, Math.min(line.length(), 34)).trim();
+                if(line.length() < 34){
+                    handleError("Element atom type does not follow V2000 format type should of length three" +
+                                " and padded with space if required",
+                                linecount, 31, 34);
+                }
 
                 logger.debug("Atom type: ", element);
                 if (isotopeFactory.isElement(element)) {
@@ -487,21 +504,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     	}
                     }
                     else {
-                        atom = molecule.getBuilder().newInstance(IPseudoAtom.class,"R");
+                        atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
                     }
                 } else {
                     handleError(
-                        "Invalid element type. Must be an existing " +
-                        "element, or one in: A, Q, L, LP, *.",
-                        linecount, 32, 35
+                            "Invalid element type. Must be an existing " +
+                                    "element, or one in: A, Q, L, LP, *.",
+                            linecount, 32, 35
                     );
-                	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
+                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
+                    atom.setSymbol(element);
                 }
 
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later
                 atom.setPoint3d(new Point3d(x, y, z));
                 
                 // parse further fields
+                if(line.length() >= 36){
                 String massDiffString = line.substring(34,36).trim();
                 logger.debug("Mass difference: ", massDiffString);
                 if (!(atom instanceof IPseudoAtom)) {
@@ -521,7 +540,15 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 } else {
                     logger.error("Cannot set mass difference for a non-element!");
                 }
+                } else {                      
+                    handleError("Mass difference is missing", linecount, 34, 36);
+                }
 
+                
+                // set the stereo partiy
+                Integer parity = line.length() > 41 ? Character.digit(line.charAt(41), 10) : 0;                                
+                atom.setStereoParity(parity);
+                
                 if (line.length() >= 51) {
                     String valenceString = removeNonDigits(line.substring(48,51));
                     logger.debug("Valence: ", valenceString);
@@ -547,6 +574,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                 }
                 
+                if(line.length() >= 39){
                 String chargeCodeString = line.substring(36,39).trim();
                 logger.debug("Atom charge code: ", chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
@@ -565,6 +593,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         atom.setFormalCharge(-2);
                 } else if (chargeCode == 7) {
                         atom.setFormalCharge(-3);
+                }
+                } else {
+                    handleError("Atom charge is missing", linecount, 36, 39);
                 }
                 
                 try {
@@ -942,24 +973,18 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
     
     private void initIOSettings() {
-        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
+        forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
           "Should coordinates always be read as 3D?", 
-          "false");
-        interpretHydrogenIsotopes = new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.LOW,
+          "false"));
+        interpretHydrogenIsotopes = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.Importance.LOW,
           "Should D and T be interpreted as hydrogen isotopes?",
-          "true");
+          "true"));
     }
     
     public void customizeJob() {
-        fireIOSettingQuestion(forceReadAs3DCoords);
-        fireIOSettingQuestion(interpretHydrogenIsotopes);
-    }
-
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[2];
-        settings[0] = forceReadAs3DCoords;
-        settings[1] = interpretHydrogenIsotopes;
-        return settings;
+        for(IOSetting setting : getSettings()){
+            fireIOSettingQuestion(setting);
+        }
     }
 
     public List<IAtom> getAtomsByLinePosition() {

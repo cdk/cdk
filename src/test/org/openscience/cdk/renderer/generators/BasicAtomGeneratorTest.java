@@ -68,6 +68,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         super.setup();
         this.generator = new BasicAtomGenerator();
         model.registerParameters(generator);
+        super.setTestedGenerator(generator);
     }
     
     @Test

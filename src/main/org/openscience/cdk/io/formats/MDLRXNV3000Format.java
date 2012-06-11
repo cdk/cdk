@@ -75,6 +75,7 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
     	if (lineNumber == 1) {
     		isRXN = (line.indexOf("$RXN") != -1);

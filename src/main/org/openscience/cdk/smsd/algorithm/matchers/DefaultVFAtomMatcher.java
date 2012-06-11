@@ -170,10 +170,6 @@ public class DefaultVFAtomMatcher implements VFAtomMatcher {
     }
 
     /** {@inheritDoc}
-     *
-     * @param targetContainer
-     * @param targetAtom
-     * @return
      */
     public boolean matches(TargetProperties targetContainer, IAtom targetAtom) {
         if (smartQueryAtom != null && qAtom == null) {

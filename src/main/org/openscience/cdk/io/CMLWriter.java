@@ -292,33 +292,33 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
+        cmlIds = addSetting(new BooleanIOSetting("CMLIDs", IOSetting.Importance.LOW,
           "Should the output use CML identifiers?", 
-          "true");
+          "true"));
 
-        namespacedOutput = new BooleanIOSetting("NamespacedOutput", IOSetting.LOW,
+        namespacedOutput = addSetting(new BooleanIOSetting("NamespacedOutput", IOSetting.Importance.LOW,
           "Should the output use namespaced output?", 
-          "true");
+          "true"));
 
-        namespacePrefix = new StringIOSetting("NamespacePrefix", IOSetting.LOW,
+        namespacePrefix = addSetting(new StringIOSetting("NamespacePrefix", IOSetting.Importance.LOW,
           "What should the namespace prefix be? [empty is no prefix]",
-          "");
+          ""));
           
-        schemaInstanceOutput = new BooleanIOSetting("SchemaInstance", IOSetting.LOW,
+        schemaInstanceOutput = addSetting(new BooleanIOSetting("SchemaInstance", IOSetting.Importance.LOW,
           "Should the output use the Schema-Instance attribute?", 
-          "false");
+          "false"));
         
-        instanceLocation = new StringIOSetting("InstanceLocation", IOSetting.LOW,
+        instanceLocation = addSetting(new StringIOSetting("InstanceLocation", IOSetting.Importance.LOW,
           "Where is the schema found?",
-          "");
+          ""));
 
-        indent = new BooleanIOSetting("Indenting", IOSetting.LOW,
+        indent = addSetting(new BooleanIOSetting("Indenting", IOSetting.Importance.LOW,
           "Should the output be indented?", 
-          "true");
+          "true"));
 
-        xmlDeclaration = new BooleanIOSetting("XMLDeclaration", IOSetting.LOW,
+        xmlDeclaration = addSetting(new BooleanIOSetting("XMLDeclaration", IOSetting.Importance.LOW,
                 "Should the output contain an XML declaration?",
-                "true");
+                "true"));
     }
     
     private void customizeJob() {
@@ -333,18 +333,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
         }
         fireIOSettingQuestion(indent);
         fireIOSettingQuestion(xmlDeclaration);
-    }
-
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[7];
-        settings[0] = cmlIds;
-        settings[1] = namespacedOutput;
-        settings[2] = namespacePrefix;
-        settings[3] = schemaInstanceOutput;
-        settings[4] = instanceLocation;
-        settings[5] = indent;
-        settings[6] = xmlDeclaration;
-        return settings;
     }
 
 }

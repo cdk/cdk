@@ -19,9 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,10 +30,14 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -154,6 +155,27 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         DoubleArrayResult result1 = (DoubleArrayResult) descriptor.calculate(mol).getValue();
         for (int i = 0; i < result1.length(); i++) Assert.assertTrue( result1.get(i) != Double.NaN);
+    }
+
+    /**
+     * @cdk.bug 3489559
+     */
+    @Test
+    public void testUndefinedValues() throws Exception {
+        String filename = "data/mdl/burden_undefined.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        ChemFile content = reader.read(new ChemFile());
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
+
+        Assert.assertNotNull(ac);
+        addExplicitHydrogens(ac);
+        CDKHueckelAromaticityDetector.detectAromaticity(ac);
+
+        Exception e = descriptor.calculate(ac).getException();
+        Assert.assertNotNull(e);
+        Assert.assertEquals("Burden matrix has undefined values", e.getMessage());                
     }
 }
 

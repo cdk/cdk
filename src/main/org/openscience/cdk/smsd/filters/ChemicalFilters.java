@@ -865,9 +865,10 @@ public class ChemicalFilters {
     }
 
     /**
-     * Get bond order value as IBond order
-     * @param srcOrder
-     * @return
+     * Get bond order value as {@link Order}.
+     *
+     * @param  srcOrder numerical bond order
+     * @return          the bond order type for the given numerical bond order 
      */
     public static IBond.Order convertOrder(double srcOrder) {
         if (srcOrder > 3.5) {
@@ -886,9 +887,11 @@ public class ChemicalFilters {
     }
 
     /**
-     *Get bond order value as integer
-     * @param bond
-     * @return
+     * Get bond order value as {@code int} value.
+     * 
+     * @param  bond The {@link IBond} for which the order is returned.
+     * @return      1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple bond,
+     *              and 0 for any other bond type.
      */
     public static int convertBondOrder(IBond bond) {
         int value = 0;
@@ -914,7 +917,6 @@ public class ChemicalFilters {
     /**
      * Get stereo value as integer
      * @param bond
-     * @return
      */
     public static int convertBondStereo(IBond bond) {
         int value = 0;
@@ -949,7 +951,6 @@ public class ChemicalFilters {
     /**
      * Get stereo value as Stereo enum
      * @param stereoValue
-     * @return
      */
     public static IBond.Stereo convertStereo(int stereoValue) {
         IBond.Stereo stereo = IBond.Stereo.NONE;

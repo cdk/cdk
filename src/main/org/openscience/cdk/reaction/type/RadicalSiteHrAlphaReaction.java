@@ -60,7 +60,7 @@ import java.util.Iterator;
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  * 
  * <pre>
- *  IAtomContainerSet setOfReactants = NewDefaultChemObjectBuilder.getInstance().newAtomContainerSet();
+ *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RadicalSiteHrAlphaReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -138,7 +138,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings((IAtomContainer) reactant);
+		IRingSet ringSet = arf.findAllRings(reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
 			IRing ring = (IRing)ringSet.getAtomContainer(ir);
 			for (int jr = 0; jr < ring.getAtomCount(); jr++) {
@@ -158,7 +158,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 2, true);
+				hcg.getSpheres(reactant, atomi, 2, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(2).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();
@@ -215,7 +215,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 			IAtom  atomi = atomis.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				
-				hcg.getSpheres((IAtomContainer) reactant, atomi, 2, true);
+				hcg.getSpheres(reactant, atomi, 2, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(2).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();

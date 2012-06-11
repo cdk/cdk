@@ -11,7 +11,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-qsarmolecular
  */
 public class TopologicalMatrixTest extends CDKTestCase {
 

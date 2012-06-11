@@ -81,8 +81,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         
         StringReader stringReader = new StringReader(data); 
         PDBReader reader = new PDBReader(stringReader);
-        reader.getIOSettings()[0].setSetting("false");   // UseRebondTool
-        reader.getIOSettings()[1].setSetting("true");  // ReadConnectSection
+        reader.getSetting("UseRebondTool").setSetting("false");      // UseRebondTool
+        reader.getSetting("ReadConnectSection").setSetting("true");  // ReadConnectSection
 
         ChemObject object = new ChemFile();
         reader.read(object);
@@ -264,7 +264,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	public IChemFile getChemFile(ISimpleChemObjectReader reader, boolean useRebond) throws Exception {
         Assert.assertNotNull(reader);
         
-        reader.getIOSettings()[0].setSetting(String.valueOf(useRebond));
+        reader.getSetting("UseRebondTool").setSetting(String.valueOf(useRebond));
 
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);

@@ -671,9 +671,19 @@ public class PDBReader extends DefaultChemObjectReader {
 //            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
 //		}
 		if (lineLength >= 79) {
-            String frag = cLine.substring(78, 80).trim();
+			String frag;
+			if (lineLength >= 80) {
+				frag = cLine.substring(78, 80).trim();
+			} else {
+				frag = cLine.substring(78);
+			}
             if (frag.length() > 0) {
-                oAtom.setCharge(Double.parseDouble(frag));
+        		// see Format_v33_A4.pdf, p. 178
+            	if (frag.endsWith("-") || frag.endsWith("+")) {
+            		oAtom.setCharge(Double.parseDouble(new StringBuilder(frag).reverse().toString()));            		
+            	} else {
+            		oAtom.setCharge(Double.parseDouble(frag));
+                }
             }
 		}
 		
@@ -741,29 +751,22 @@ public class PDBReader extends DefaultChemObjectReader {
 	}
 
     private void initIOSettings() {
-    	useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
+    	useRebondTool = addSetting(new BooleanIOSetting("UseRebondTool", IOSetting.Importance.LOW,
           "Should the PDBReader deduce bonding patterns?", 
-          "false");
-        readConnect = new BooleanIOSetting("ReadConnectSection", IOSetting.LOW,
+          "false"));
+        readConnect = addSetting(new BooleanIOSetting("ReadConnectSection", IOSetting.Importance.LOW,
           "Should the CONECT be read?",
-          "true");
-        useHetDictionary = new BooleanIOSetting("UseHetDictionary", IOSetting.LOW,
+          "true"));
+        useHetDictionary = addSetting(new BooleanIOSetting("UseHetDictionary", IOSetting.Importance.LOW,
           "Should the PDBReader use the HETATM dictionary for atom types?", 
-          "false");
+          "false"));
     }
     
     public void customizeJob() {
-        fireIOSettingQuestion(useRebondTool);
-        fireIOSettingQuestion(readConnect);
-        fireIOSettingQuestion(useHetDictionary);
+        for(IOSetting setting : getSettings()){
+            fireIOSettingQuestion(setting);
+        }
     }
 
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[3];
-        settings[0] = useRebondTool;
-        settings[1] = readConnect;
-        settings[2] = useHetDictionary;
-        return settings;
-    }
 
 }

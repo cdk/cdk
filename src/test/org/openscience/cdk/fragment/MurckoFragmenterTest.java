@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * Test Murcko fragmenter.
  *
- * @cdk.module test-extra
+ * @cdk.module test-fragment
  */
 public class MurckoFragmenterTest extends CDKTestCase {
 

@@ -25,13 +25,12 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.coverage.ExtraCoverageTest;
-import org.openscience.cdk.fragment.ExhaustiveFragmenterTest;
-import org.openscience.cdk.fragment.MurckoFragmenterTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
 import org.openscience.cdk.io.ShelXWriterTest;
 import org.openscience.cdk.iupac.ParserTest;
+import org.openscience.cdk.reaction.ReactionChainTest;
 import org.openscience.cdk.tools.BremserPredictorTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
@@ -55,7 +54,6 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
     ShelXWriterTest.class,
     BremserPredictorTest.class,
     ParserTest.class,
-    ExhaustiveFragmenterTest.class,
-    MurckoFragmenterTest.class    
+    ReactionChainTest.class    
 })
 public class MextraTests {}

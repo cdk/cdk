@@ -1,8 +1,4 @@
-package org.openscience.cdk.fragment;
-
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
+/* Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,8 +20,8 @@ package org.openscience.cdk.fragment;
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+package org.openscience.cdk.fragment;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,7 +39,7 @@ import java.util.List;
  * not be used by the rest of the API or by other users of the library.
  *
  * @author Rajarshi Guha
- * @cdk.module extra
+ * @cdk.module fragment
  */
 @TestClass("org.openscience.cdk.fragment.FragmentUtilsTest")
 public class FragmentUtils {
@@ -104,7 +100,7 @@ public class FragmentUtils {
     // of the splitting bond. In addition, the new IAtomContainer should not contain the
     // splitting bond itself
     protected static IAtomContainer makeAtomContainer(IAtom atom, List<IBond> parts, IAtom excludedAtom) {
-        IAtomContainer partContainer = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer partContainer = atom.getBuilder().newInstance(IAtomContainer.class);
         partContainer.addAtom(atom);
         for (IBond aBond : parts) {
             for (IAtom bondedAtom : aBond.atoms()) {

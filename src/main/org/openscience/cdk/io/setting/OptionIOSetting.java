@@ -44,7 +44,7 @@ public class OptionIOSetting extends IOSetting {
      * OptionIOSetting is IOSetting for which the value must be
      * in the list of possible options.
      */
-    public OptionIOSetting(String name, int level, 
+    public OptionIOSetting(String name, Importance level, 
                            String question, List<String> settings, 
                            String defaultSetting) {
         super(name, level, question, defaultSetting);

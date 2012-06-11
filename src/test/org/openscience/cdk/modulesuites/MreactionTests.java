@@ -30,7 +30,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.atomtype.ResonanceStructuresTest;
 import org.openscience.cdk.coverage.ReactionCoverageTest;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetectorTest;
-import org.openscience.cdk.reaction.ReactionChainTest;
 import org.openscience.cdk.reaction.ReactionEngineTest;
 import org.openscience.cdk.reaction.ReactionSpecificationTest;
 import org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest;
@@ -92,7 +91,6 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
     ReactionCoverageTest.class, 
         
     // Individual Tests
-    ReactionChainTest.class,
     ReactionEngineTest.class,
     ReactionSpecificationTest.class,
 

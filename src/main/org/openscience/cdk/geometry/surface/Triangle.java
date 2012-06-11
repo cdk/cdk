@@ -29,7 +29,7 @@ import javax.vecmath.Point3d;
  * fashion.
  *
  * @author Rajarshi Guha
- * @cdk.module extra
+ * @cdk.module  qsarmolecular
  * @cdk.githash
  */
 public class Triangle {

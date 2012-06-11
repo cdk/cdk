@@ -22,12 +22,15 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -626,7 +629,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results;
 
         results = match("[OD1H]-*", "CCO");
-        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
     }
 
@@ -639,7 +642,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results;
 
         results = match("[OD1H]-*", "CCO[H]");
-        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
 
    }
@@ -1452,7 +1455,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
 
         results = match("C#[#X]", "CCNC(=O)C#N");
-        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
 
         results = match("C#[#X]", "CCNC(=O)C#C");
@@ -1598,7 +1601,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     @Test
     public void testLactamRecursiveAlternate() throws Exception {
         int[] results = match("[!R]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1");
-        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
     }
 

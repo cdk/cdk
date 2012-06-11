@@ -71,8 +71,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
     private BooleanIOSetting writerProperties;
-    private Map<String,IOSetting> mdlWriterSettings;
-    
+
     /**
      * Constructs a new SDFWriter that writes to the given {@link Writer}.
      *
@@ -201,14 +200,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
             // write the MDL molfile bits
             StringWriter stringWriter = new StringWriter();
             MDLV2000Writer mdlWriter = new MDLV2000Writer(stringWriter);
-            Properties ioSettings = new Properties();
-            for (String settingName : mdlWriterSettings.keySet()) {
-                ioSettings.put(settingName, mdlWriterSettings.get(settingName).getSetting());
-            }
-            mdlWriter.addChemObjectIOListener(
-                new PropertiesListener(ioSettings)
-            );
-            mdlWriter.customizeJob();
+            mdlWriter.addSettings(getSettings());
             mdlWriter.write(container);
             mdlWriter.close();
             writer.write(stringWriter.toString());
@@ -252,31 +244,20 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        writerProperties = new BooleanIOSetting("writeProperties",
-          IOSetting.LOW,
+        writerProperties = addSetting(new BooleanIOSetting("writeProperties",
+          IOSetting.Importance.LOW,
           "Should molecular properties be written?", 
           "true"
-        );
-        // cache the MDLV2000Writer settings
-        IOSetting[] settings = new MDLV2000Writer().getIOSettings();
-        mdlWriterSettings = new HashMap<String,IOSetting>();
-        for (int i=0; i<settings.length; i++) {
-            mdlWriterSettings.put(settings[i].getName(), settings[i]);
-        }
+        ));
+        addSettings(new MDLV2000Writer().getSettings());
     }
 
     public void customizeJob() {
-        fireIOSettingQuestion(writerProperties);
-        for (IOSetting setting : mdlWriterSettings.values()) {
+        for(IOSetting setting : getSettings()){
             fireIOSettingQuestion(setting);
         }
     }
 
-    public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[1];
-        settings[0] = writerProperties;
-        return settings;
-    }
 }
 
 

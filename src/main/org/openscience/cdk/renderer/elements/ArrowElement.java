@@ -21,11 +21,15 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * {@link IRenderingElement} for linear arrows. 
  *
  * @cdk.module renderbasic
  */
+@TestClass("org.openscience.cdk.renderer.elements.ArrowElementTest")
 public class ArrowElement implements IRenderingElement {
 
     public final double startX;
@@ -60,6 +64,7 @@ public class ArrowElement implements IRenderingElement {
     }
 
     /** {@inheritDoc} */
+    @TestMethod("testAccept")
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }

@@ -74,6 +74,7 @@ public class Mol2Format implements IChemFormatMatcher {
       return "org.openscience.cdk.io.Mol2Writer"; 
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("<TRIPOS>") >= 0) {
             return true;

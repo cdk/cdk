@@ -44,10 +44,11 @@ import org.openscience.cdk.io.MDLRXNV3000ReaderTest;
 import org.openscience.cdk.io.MDLRXNWriterTest;
 import org.openscience.cdk.io.MDLReaderTest;
 import org.openscience.cdk.io.MDLV2000ReaderTest;
-import org.openscience.cdk.io.MDLV3000ReaderTest;
 import org.openscience.cdk.io.MDLV2000WriterTest;
+import org.openscience.cdk.io.MDLV3000ReaderTest;
 import org.openscience.cdk.io.Mol2ReaderTest;
 import org.openscience.cdk.io.Mol2WriterTest;
+import org.openscience.cdk.io.Mopac7ReaderTest;
 import org.openscience.cdk.io.PCCompoundASNReaderTest;
 import org.openscience.cdk.io.PDBWriterTest;
 import org.openscience.cdk.io.PMPReaderTest;
@@ -61,10 +62,11 @@ import org.openscience.cdk.io.XYZReaderTest;
 import org.openscience.cdk.io.XYZWriterTest;
 import org.openscience.cdk.io.cml.CMLIOTests;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
-import org.openscience.cdk.io.iterator.IteratingMDLReaderTest;
+import org.openscience.cdk.io.iterator.IteratingSDFReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundASNReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundXMLReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
+import org.openscience.cdk.io.program.Mopac7WriterTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
@@ -97,6 +99,8 @@ import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
     MDLRXNWriterTest.class,
     Mol2ReaderTest.class,
     Mol2WriterTest.class,
+    Mopac7ReaderTest.class,
+    Mopac7WriterTest.class,
     PCCompoundASNReaderTest.class,
     PDBWriterTest.class,
     PMPReaderTest.class,
@@ -110,7 +114,7 @@ import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
     ChemObjectIOInstantionTests.class,
 
         // cdk.io.iterator package
-    IteratingMDLReaderTest.class,
+    IteratingSDFReaderTest.class,
     IteratingMDLConformerReaderTest.class,
     IteratingPCCompoundASNReaderTest.class,
     IteratingPCCompoundXMLReaderTest.class,

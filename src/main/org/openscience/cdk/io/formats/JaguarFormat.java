@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.JMEFormatTest")
+@TestClass("org.openscience.cdk.io.formats.JaguarFormatTest")
 public class JaguarFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
@@ -71,6 +71,7 @@ public class JaguarFormat implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Jaguar") >= 0 &&
             line.indexOf("Schrodinger") >= 0) {

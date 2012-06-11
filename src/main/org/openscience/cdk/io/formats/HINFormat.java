@@ -76,6 +76,7 @@ public class HINFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.HINWriter";
     }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("atom ") &&
             (line.endsWith(" s") || line.endsWith(" d") ||

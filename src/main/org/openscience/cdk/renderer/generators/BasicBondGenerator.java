@@ -29,6 +29,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -525,6 +526,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** {@inheritDoc} */
+    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(
                 new IGeneratorParameter<?>[] {

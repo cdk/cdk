@@ -372,7 +372,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIPDescriptorReaction2() throws Exception{
 //        
-//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		IAtomContainer mol = sp.parseSmiles("CCCCCC");
 //
 //		addExplicitHydrogens(mol);
@@ -398,7 +398,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIPPySystemWithHeteroatomDescriptor3() throws Exception{
 //        
-//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		IAtomContainer mol = sp.parseSmiles("O(C=CC=C)C");
 //
 //		addExplicitHydrogens(mol);
@@ -426,7 +426,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIPPySystemWithHeteroatomDescriptor2() throws Exception{
 //        
-//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		IAtomContainer mol = sp.parseSmiles("OC=CC");
 //
 //		addExplicitHydrogens(mol);
@@ -454,7 +454,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIPPySystemWithHeteroatomDescriptor1() throws Exception{
 //        
-//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		IAtomContainer mol = sp.parseSmiles("C1=C(C)CCS1");
 //
 //		addExplicitHydrogens(mol);
@@ -483,7 +483,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //    @Test
 //    public void testIDescriptor5() throws Exception{
 //        
-//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		IAtomContainer mol = sp.parseSmiles("OC(C#CC)(C)C");
 //
 //		addExplicitHydrogens(mol);

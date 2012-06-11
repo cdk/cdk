@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2004-2007  Christian Hoppe
+/*  Copyright (C) 2004-2007  Christian Hoppe
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -47,7 +44,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:NilaComplexity
  */
-
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptorTest")
 public class FragmentComplexityDescriptor implements IMolecularDescriptor {
     private static final String[] names = {"fragC"};

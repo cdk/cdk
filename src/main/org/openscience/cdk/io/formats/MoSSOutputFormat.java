@@ -78,6 +78,7 @@ public class MoSSOutputFormat implements IChemFormatMatcher {
     public String getWriterClassName() { return null; }
 
     /** {@inheritDoc} */
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 1 && line.equals("id,description,nodes,edges,s_abs,s_rel,c_abs,c_rel")) {
             return true;

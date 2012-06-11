@@ -24,6 +24,7 @@
 package org.openscience.cdk.io.setting;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.ISetting;
 
 /**
  * An interface for reader settings. It is subclassed by implementations,
@@ -34,18 +35,15 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public abstract class IOSetting {
+public abstract class IOSetting implements ISetting {
 
-    /** The levels available:
-     *    HIGH         important question
-     *    MEDIUM
-     *    LOW          unimportant question
-     */
-    public static final int HIGH   = 0;
-    public static final int MEDIUM = 1;
-    public static final int LOW    = 2;
-    
-    protected int    level;
+	public enum Importance {
+		HIGH,
+		MEDIUM,
+		LOW
+	}
+
+	protected Importance level;
     protected String name;
     protected String question;
     protected String setting;
@@ -62,7 +60,7 @@ public abstract class IOSetting {
      * @param defaultSetting The default setting, used if not overwritten
      *                       by a user
      */
-    public IOSetting(String name, int level, 
+    public IOSetting(String name, Importance level, 
                          String question, String defaultSetting) {
         this.level = level;
         this.name  = name;
@@ -82,7 +80,7 @@ public abstract class IOSetting {
         return this.setting;
     }
     
-    public int getLevel() {
+    public Importance getLevel() {
         return this.level;
     }
     

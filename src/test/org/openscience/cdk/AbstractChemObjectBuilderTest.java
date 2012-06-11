@@ -225,7 +225,20 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         );
         Assert.assertNotNull(bond);
     }
-    
+
+    /**
+     * @cdk.bug 3526870
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testNewBond_IAtom_IMolecule() {
+        IChemObjectBuilder builder = rootObject.getBuilder();
+        builder.newInstance(
+            IBond.class,
+            builder.newInstance(IAtom.class),
+            builder.newInstance(IAtomContainer.class)
+        );
+    }
+
     @Test public void testNewBond_IAtom_IAtom_IBond_Order() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IBond bond = builder.newInstance(
@@ -670,5 +683,16 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         );
         Assert.assertNotNull(chirality);
         Assert.assertEquals(builder, chirality.getBuilder());
+    }
+
+    @Test public void testSugggestion() {
+    	IChemObjectBuilder builder = getRootObject().getBuilder();
+    	try {
+    		builder.newInstance(IAtom.class, Boolean.TRUE);
+    		Assert.fail("I expected an exception, because this constructor does not exist.");
+    	} catch (Exception exception) {
+    		String message = exception.getMessage();
+    		Assert.assertTrue(message.contains("Candidates are"));
+    	}
     }
 }

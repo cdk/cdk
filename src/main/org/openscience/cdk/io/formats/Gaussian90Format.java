@@ -69,6 +69,7 @@ public class Gaussian90Format implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Gaussian G90") >= 0) {
             return true;

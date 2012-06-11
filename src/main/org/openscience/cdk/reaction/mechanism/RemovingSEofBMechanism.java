@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -34,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
@@ -100,7 +99,7 @@ public class RemovingSEofBMechanism implements IReactionMechanism{
 		
 		int charge = atom1C.getFormalCharge();
 		atom1C.setFormalCharge(charge+1);
-		reactantCloned.addSingleElectron(new SingleElectron(atom2C));
+		reactantCloned.addSingleElectron(atom1C.getBuilder().newInstance(ISingleElectron.class, atom2C));
 
 		// check if resulting atom type is reasonable
 		atom1C.setHybridization(null);
@@ -112,12 +111,12 @@ public class RemovingSEofBMechanism implements IReactionMechanism{
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null)return null;
 		
-		IReaction reaction = DefaultChemObjectBuilder.getInstance().newInstance(IReaction.class);
+		IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
 		
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = DefaultChemObjectBuilder.getInstance().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+			IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		if(bond1.getOrder() != IBond.Order.SINGLE) {

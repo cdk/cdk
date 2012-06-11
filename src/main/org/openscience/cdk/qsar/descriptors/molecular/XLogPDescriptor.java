@@ -229,7 +229,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
             }
         }
         double xlogP = 0;
-//		SmilesParser sp = new SmilesParser(NewDefaultChemObjectBuilder.getInstance());
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String symbol = "";
         int bondCount = 0;
         int atomCount = ac.getAtomCount();

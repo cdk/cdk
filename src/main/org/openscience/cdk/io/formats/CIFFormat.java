@@ -70,6 +70,7 @@ public class CIFFormat implements IChemFormatMatcher {
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("_cell_length_a") ||
             line.startsWith("_audit_creation_date") ||
