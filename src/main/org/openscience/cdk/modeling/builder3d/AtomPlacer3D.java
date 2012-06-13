@@ -101,7 +101,7 @@ public class AtomPlacer3D {
 
 
 	/**
-	 *  Mark all atoms in chain as placed (CDKConstant ISPLACED)
+	 *  Mark all atoms in chain as placed. (CDKConstant ISPLACED)
 	 *
 	 * @param  ac  chain
 	 * @return     chain all atoms marked as placed
