@@ -1,0 +1,147 @@
+<html>
+	<head>
+		<title>NetBeans build system README</title>
+	</head>
+	<body>
+		<h1>README for NetBeans build environment.</h1>
+		<h2>Philosophy</h3>
+		<div>
+			This section discusses the rational behind the way the project
+			files for NetBeans have been set up.<br/><br/>
+			The objectives were:
+			<ul>
+				<li>To allow users familiar with NetBeans to contribute to the CDK
+					project without being obliged to learn Eclipse.</li>
+				<li>To leverage, as far as possible, the current build system.</li>
+				<li>To require no changes to the current build system (other than a few bug fixes).</li>
+				<li>To avoid, as far as possible, the necessity to maintain the NetBeans
+				    environment, since this is unlikely to be done by the main maintainers.</li>
+				<li>To cut build time to a minimum, without compromising the previous objective.</li>
+				<li>To support the "occasional" developer rather than one spending
+					considerable time on the project, in particular favouring simplicity
+					over competeness by omitting, for example, full support for those elements
+					that require unusual building such as the smiles parser (uses javacc).</li>
+			</ul>
+			
+			These objectives have been addressed by adopting a two phase approach:
+			<ol>
+				<li>Perform a complete build of the CDK via the existing build file
+					to act as a baseline.</li>
+				<li>Compile any changed files directly into a 'delta' directory and use
+					these classes in preference to the ones in the baseline, with all other
+					classes being taken directly for the baseline build.</li>
+			</ol><br/>
+		</div>
+
+		<h2>Quick Start</h3>
+		<div>
+			In order to participate in the CDK developement process using NetBeans
+			perform the following steps:
+			<ol>
+				<li>Run a recent version of NetBeans</li>
+				<li>Clone the CDK repository by clicking menu Team/Git/clone...</li>
+				<li>Select Git repository (at time of writing git://cdk.git.sourceforge.net/gitroot/cdk/cdk)</li>
+				<li>Select the branch(es) you wish to clone</li>
+				<li>Specify the destination directory. This is in two parts, the parent directory which
+					could be where you normally keep your netbeans projects or somewhere new, and the project directory
+					itself (CDK would be a good choice, but you can suit yourself - the project name will be CDK anyway).</li>
+				<li>Cup of coffee while it downloads (or lunch more like).</li>
+				<li>Right click in the Projects tab, open Project... then select the project directory.</li>
+				<li>Perform a baseline build by right clicking the project name (CDK) in the Projects tab and selecting 
+					CDK-rebuild.</li>
+				<li>Another cup of coffee or light snack (about 25 mins).</li>
+				<li>Make sure the build has worked. There will likely be lots of deprecated warnings etc
+				    but there should be no hard errors and the build output window should finish with the
+					magic words "BUILD SUCCESSFUL".</li>
+				<li>You are now ready to roll. You can modify most source files and test files. You can get
+					them built by selecting "build project" (F11) or you can just let them get built
+					when you run a test. In order to run a test, right click on the test source and select
+					"test file" or "debug test file". If there is a test file with the same name as a source
+					file but with "Test" appended then you can also run it by right clicking on the
+					source file and selecting the test option.</li>
+				<li>When you have all your changes debugged and finished, use Git to commit them locally.
+					This can be done by clicking the project name (to act on the whole project) then
+					selecting menu Team/Commit... and following the dialog. Deselect any
+					files that you don't want to make part of this new version (if any) and check that all
+					modified files are present, write a suitably
+					descriptive message then go ahead. Be sure that you are ready - don't do a commit unless you
+					are sure that everything is OK.</li>
+				<li>Generate a patch file. Menu Team/Export/Export Commit... then follow the dialog. Save the
+				    patch file (usually add extension .patch) somewhere you can get at.</li>
+				<li>Mail the patch to an appropriate maintainer to get them to check it out and then
+					apply it to the master sources.</li>
+				<li>Repeat as desired...</li>
+			</ol><br/>
+		</div>
+			
+		<h2>Implementation Details</h3>
+		<div>
+			In order to determine whether a file has been changed since the last full build
+			a timestamp is recorded in "nbproject/cdk-dynamic.properties". Files modified
+			after this time are recompiled into the delta folder (netbeans-delta-build). Both
+			main sources and test files are compiled into the same place for simplicity. The
+			build target is referenced in all the run and test targets, so running a test for
+			example will compile any needed sources first. Because of the reference to the baseline
+			build this is usually very rapid (a few seconds).<br/><br/>
+			Normally it will not be necessary to invoke any of the targets in the ant files explicitly,
+			with the possible exception of forcing the initial baseline build of the CDK, which
+			it might be useful to perform at the users convenience (it takes around half an hour).
+			This can be achieved by right clicking the project name in the Projects tab after
+			first opening the project, and then selecting CDK-rebuild.<br/><br/>
+			
+			The following elements have been added to the cdk:<br/><br/>
+			<table border="3">
+				<tr>
+					<td>nbproject/project.xml</td>
+					<td>
+						This defines the project to NetBeans. Most of the actions associated
+						with keys and menu items (test file, build etc) have been mapped to
+						targets in the ant build file ide-file-targets. The java version used
+						by the <i>IDE</i> to parse the java files is set here (though this isn't
+						used to actually compile them).<br/>
+						This file includes "build.props" from the main CDK to define the version
+						information of this build. It also includes nbproject/CDK-build.properties
+						to define the classpaths for checking and code completion.
+					</td>
+				</tr>
+				<tr>
+					<td>nbproject/ide-file-targets.xml</td>
+					<td>
+						This is an ANT build file that defines all the targets to permit
+						the IDE to perform builds, tests, debugs etc. It occasionally calls
+						targets in the CDK build file, eg to rebuild the CDK from scratch.
+						When it rebuilds the CDK it writes a tilmestamp to cdk-dynamic.properties,
+						and if it finds the list of classpaths in CDK-build.properties out
+						of date it will update it. The java version actually used for compilation
+						is set here, so if it needs updating this must be done both here and in project.xml
+						(there doesn't seem and easy way round this as project.xml doesn't allow the use
+						of a property to define the version).<br/>
+						See the commments in the file for info about the various targets.
+					</td>
+				</tr>
+				<tr>
+					<td>nbproject/CDK-dynamic.properties</td>
+					<td>
+						This contains the timestamp of the last local build of the full CDK.
+						It is ignored by GIT and recreated as needed by ide-file-targets.
+					</td>
+				</tr>
+				<tr>
+					<td>nbproject/CDK-build.properties</td>
+					<td>
+						This contains defines that are common between ide-file-targets and project.xml,
+						notably the compile/run classpaths. It is sometimes updated by ide-file-targets.
+					</td>
+				</tr>
+				<tr>
+					<td>netbeans-delta-build</td>
+					<td>
+						This contains the compiled classes of the source files that have been modified
+						since the baseline CDK build was made. It is created (and deleted) by ide-file-targets
+						and is ignored by GIT.
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

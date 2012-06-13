@@ -13,3 +13,6 @@ cdk-src+libs-*.tar.gz
 cdk-src+libs-*.zip
 sourcedist
 *~
+netbeans-delta-build/
+nbproject/CDK-dynamic.properties
+nbproject/private/

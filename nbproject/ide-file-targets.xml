@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="CDK-IDE">
+
+	<!-- Include ant-contrib tasks -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="${basedir}/develjar/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+	
+	<property name="ts.fmt" value="yyyy/MM/dd HH:mm:ss:SSS Z"/>
+
+	<property file="${basedir}/build.props"/>
+	<property file="${basedir}/nbproject/cdk-build.properties"/>
+	
+	<property name="cdk.java.version" value="1.6"/>
+
+	<property name="cdk.main.src" value="${basedir}/src/main"/>
+	<property name="cdk.test.src" value="${basedir}/src/test"/>
+
+	<property name="cdk.jar" value="${basedir}/dist/jar/cdk-${version}.jar"/>
+	<property name="cdk-test.jar" value="${basedir}/dist/jar/cdk-test-${version}.jar"/>
+	
+	<property name="delta-build.dir" value="${basedir}/netbeans-delta-build"/>
+	<property name="cdk.dynamic.props" value="${basedir}/nbproject/CDK-dynamic.properties"/>
+	<property name="cdk.junit.tmp" value="${basedir}/reports"/>
+
+	<property name="cdk.rebuild.warn">
+		The CDK build has already been performed.
+		This is a lengthy process (tens of minutes).
+		Are you quite sure that you want to continue?
+	</property>
+
+	<!-- Make sure the dynamic property file exists, then load it -->
+	<if>
+		<available file="${cdk.dynamic.props}"/>
+		<else>
+			<propertyfile file="${cdk.dynamic.props}" comment="Dynamic values saved for netbeans build"/>
+		</else>
+	</if>
+	<property file="${cdk.dynamic.props}"/>
+
+
+
+	<!--
+		Path for main and test builds. Get most of the stuff from the jars, with
+		just the changed stuff from delta-build.dir
+		This isn't as efficient as it might be because we include stuff that isn't
+		needed, eg the test stuff for the main files, however it seems fast enough
+		and it doesn't risk omitting something needed. If anythig could be found in
+		more than one file we assume that either copy will do (which is fairly
+		reasonable for this project). The exception is stuff *we* have built into
+		delta-build.dir which we make sure gets picked up in preference to the copy
+		in the two CDK jars.
+	-->
+    <path id="cdk.cp">
+        <pathelement location="${delta-build.dir}"/>
+        <pathelement location="${cdk.jar}"/>
+        <pathelement location="${cdk-test.jar}"/>
+        <pathelement path="${cdk.develjar.cp}"/>
+	</path>
+
+
+
+	
+	<!-- +++++++++++++++++++ Parameterless Targets +++++++++++++++++++++++ -->
+
+
+	<target name="init">
+        <mkdir dir="${delta-build.dir}"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${delta-build.dir}"/>
+	</target>
+
+	
+	<!--
+		Do an incremental build of the netbeans CDK changes.
+		The basic idea is that we only build the files changed since the last
+		full build of the CDK. This is mainly a time saving thing: a full build
+		can take half an hour whereas this will typically take a second or two. It
+		is also able to leverage the "don't rebuild if up to date" capabilities
+		of ANT, which the main build circumvents by copying everthing first.
+		We build our stuff into delta-build.dir which we put first on the classpath
+		so our rebuilt stuff gets picked up preferentially.
+	-->
+	<target name="build" depends="init">
+		<!-- first do a full rebuild if it hasn't ever been done -->
+		<if>
+			<not>
+				<and>
+					<isset property="cdk.last-full-rebuild-time"/>
+					<available file="${cdk.jar}"/>
+					<available file="${cdk-test.jar}"/>
+				</and>
+			</not>
+			<then>
+				<antcall target="CDK-rebuild"/>
+				<property file="${cdk.dynamic.props}"/>
+			</then>
+		</if>
+		
+		<!-- Now compile everything modified since the last full build -->
+		<antcall target="compile-files">
+			<param name="files" value="**/*.java"/>
+		</antcall>
+	</target>
+
+
+	<!--
+		Rebuild the main CDK via the standard build file and set the timestamp
+		in the properties file. This will be used to filter javac when building
+		via netbeans.
+		Note that this target should ONLY be called as the top level target or
+		as a sub target when cdk.last-full-rebuild-time hasn't been set yet.
+	-->
+	<target name="CDK-rebuild" depends="clean">
+		<!-- If the build has already been done, make sure the user really wants to rebuild -->
+		<if>
+			<and>
+				<available file="${cdk.jar}"/>
+				<available file="${cdk-test.jar}"/>
+			</and>
+			<then>
+				<local name="answer"/>
+				<input message="${cdk.rebuild.warn}" validargs="  no  ,  yes  " addproperty="answer"/>
+				<if>
+					<equals arg1="${answer}" arg2="  no  " trim="true"/>
+					<then>
+						<fail message="Aborted at users request."/>
+					</then>
+				</if>
+			</then>
+		</if>
+		
+		<!-- While we are at it, make sure the list of devel jars is up to date -->
+		<antcall target="set-devel-jars"/>
+		
+		<!-- Do a clean and build via the project's main build file -->
+		<ant antfile="build.xml">
+			<target name="clean"/>
+			<target name="dist-large"/>
+			<target name="dist-test-large"/>
+		</ant>
+
+		<!-- Write a timestamp into the dynamic file -->
+		<tstamp>
+			<format property="tmp.timestamp" timezone="+0000" pattern="${ts.fmt}"/>
+		</tstamp>
+		<propertyfile file="${cdk.dynamic.props}">
+			<entry key="cdk.last-full-rebuild-time" value="${tmp.timestamp}"/>
+		</propertyfile>
+	</target>
+
+
+
+	<!-- If the classpath in the CDK-build.properties isn't up to date, rewrite it -->
+	<target name="set-devel-jars">
+		<local name="path.tmp"/>
+
+		<!--
+			Create a pathname string for the devel jars. We include the kitchen 
+			sink so that we are sure that we haven't missed anything and so that 
+			changes do not have to be tracked in this file (which the eclipse
+			based developers will forget to do).
+		-->
+		<pathconvert dirsep="/" pathsep=";" property="path.tmp">
+			<sort>
+				<union>
+					<fileset dir="${basedir}" includes="develjar/*.jar"/>
+					<fileset dir="${basedir}" includes="jar/**/*.jar"/>
+				</union>
+			</sort>
+			<filtermapper>
+				<replacestring from="${basedir}${file.separator}" to=""/>
+			</filtermapper>
+		</pathconvert>
+
+		<!-- If the current path isn't the same then rewrite the prop file -->
+		<if>
+			<equals arg1="${cdk.develjar.cp}" arg2="${path.tmp}" trim="true"/>
+			<else>
+				<propertyfile  file="${basedir}/nbproject/cdk-build.properties">
+					<entry key="cdk.develjar.cp" value="${path.tmp}"/>
+				</propertyfile>
+			</else>
+		</if>
+	</target>
+	
+	
+
+	<!-- ++++++++++++++ Targets with single Parameter +++++++++++++++++ -->
+
+    <target name="compile-selected-files-in-main" depends="compile-files"/>
+    <target name="compile-selected-files-in-test" depends="compile-files"/>
+	
+	<!-- Compile everything modified since the last full build -->
+    <target name="compile-files">
+        <fail unless="files">Must set property 'files'</fail>
+		<javac destdir="${delta-build.dir}" classpathref="cdk.cp" debug="true"
+			   source="${cdk.java.version}" target="${cdk.java.version}"
+			   srcdir="${cdk.main.src}" includeAntRuntime="false">
+			<include name="${files}"/>
+			<date when="after" datetime="${cdk.last-full-rebuild-time}" pattern="${ts.fmt}"/>
+		</javac>
+		<javac destdir="${delta-build.dir}" classpathref="cdk.cp" debug="true"
+			   source="${cdk.java.version}" target="${cdk.java.version}"
+			   srcdir="${cdk.test.src}" includeAntRuntime="false">
+			<include name="${files}"/>
+			<date when="after" datetime="${cdk.last-full-rebuild-time}" pattern="${ts.fmt}"/>
+		</javac>
+    </target>
+
+
+
+    <target name="run-selected-file" depends="build">
+		<fail unless="run.class">Must specify 'run.class'</fail>
+		<java classname="${run.class}" failonerror="true" fork="true" classpathref="cdk.cp"/>
+	</target>
+
+	<target name="debug-selected-file" depends="build">
+        <fail unless="debug.class">Must set property 'debug.class'</fail>
+        <nbjpdastart addressproperty="jpda.address" name="CDK" transport="dt_socket">
+            <classpath refid="cdk.cp"/>
+        </nbjpdastart>
+        <java classname="${debug.class}" fork="true" classpathref="cdk.cp" >
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+        </java>
+	</target>
+
+
+	<!-- Allow user to run test on main class, rather than specify it's associated test -->
+	<target name="test-selected-file">
+		<fail unless="tested.class">Must specify 'tested.class'</fail>
+		<antcall target="junit-selected-file"><param name="test.class" value="${tested.class}Test"/></antcall>
+	</target>
+	<target name="debug-test-selected-file">
+		<fail unless="tested.class">Must specify 'tested.class'</fail>
+		<antcall target="junit-debug-selected-file"><param name="test.class" value="${tested.class}Test"/></antcall>
+	</target>
+	
+	
+
+	<!-- Invoke junit on the test class -->
+    <target name="junit-selected-file" depends="build">
+		<fail unless="test.class">Must specify 'test.class'</fail>
+		<junit fork="true" forkmode="once">
+			<classpath refid="cdk.cp"/>
+			<formatter type="xml"/>
+			<formatter type="brief" usefile="false"/>
+			<test name="${test.class}" todir="${cdk.junit.tmp}"/>
+		</junit>
+	</target>
+
+	<!-- Invoke junit on the test class with debuger attached -->
+	<target name="junit-debug-selected-file" depends="build">
+        <fail unless="test.class">Must specify 'test.class'</fail>
+        <nbjpdastart addressproperty="jpda.address" name="CDK" transport="dt_socket">
+            <classpath refid="cdk.cp"/>
+        </nbjpdastart>
+		<junit fork="true" forkmode="once">
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+			<classpath refid="cdk.cp"/>
+			<formatter type="xml"/>
+			<formatter type="brief" usefile="false"/>
+			<test name="${test.class}" todir="${cdk.junit.tmp}"/>
+        </junit>
+	</target>
+	
+</project>
