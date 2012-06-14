@@ -26,6 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.io.cml.CML2Test;
 import org.openscience.cdk.io.cml.CML2WriterTest;
 import org.openscience.cdk.io.cml.CMLRoundTripTest;
+import org.openscience.cdk.libio.cml.ConvertorTest;
 
 /**
  * TestSuite that runs all the unit tests for the CDK module libiocml.
@@ -36,6 +37,7 @@ import org.openscience.cdk.io.cml.CMLRoundTripTest;
 @SuiteClasses(value={
     CML2Test.class,
     CML2WriterTest.class,
-    CMLRoundTripTest.class
+    CMLRoundTripTest.class,
+    ConvertorTest.class
 })
 public class MlibiocmlTests {}
