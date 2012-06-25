@@ -220,6 +220,9 @@ public class AtomContainerManipulator {
     }
 
     /**
+     * Get the total formal charge on a molecule.
+     *
+     * @param atomContainer the atom container to consider
      * @return The summed formal charges of all atoms in this AtomContainer.
      */
     @TestMethod("testGetTotalFormalCharge_IAtomContainer")
@@ -230,6 +233,9 @@ public class AtomContainerManipulator {
         return chargeP + chargeN;
     }
     /**
+     * Get the total formal negative charge on a molecule.
+     *
+     * @param atomContainer the atom container to consider
      * @return The summed negative formal charges of all atoms in this AtomContainer.
      */
     @TestMethod("testGetTotalNegativeFormalCharge_IAtomContainer")
@@ -243,6 +249,9 @@ public class AtomContainerManipulator {
         return charge;
     }
     /**
+     * Get the total positive formal charge on a molecule.
+     *
+     * @param atomContainer the atom container to consider
      * @return The summed positive formal charges of all atoms in this AtomContainer.
      */
     @TestMethod("testGetTotalPositiveFormalCharge_IAtomContainer")
@@ -257,6 +266,9 @@ public class AtomContainerManipulator {
     }
 
     /**
+     * Count the total number of hydrogens (implicit and explicit).
+     *
+     * @param atomContainer the atom container to consider
      * @return The summed implicit hydrogens of all atoms in this AtomContainer.
      */
     @TestMethod("testGetTotalHydrogenCount_IAtomContainer,testGetTotalHydrogenCount_IAtomContainer_zeroImplicit,testGetTotalHydrogenCount_IAtomContainer_nullImplicit,testGetTotalHydrogenCount_ImplicitHydrogens")
@@ -271,6 +283,9 @@ public class AtomContainerManipulator {
     }
 
     /**
+     * Count explicit hydrogens.
+     *
+     * @param atomContainer the atom container to consider
      * @return The number of explicit hydrogens on the given IAtom.
      */
     @TestMethod("testCountExplicitH")
@@ -288,29 +303,35 @@ public class AtomContainerManipulator {
      * Adds explicit hydrogens (without coordinates) to the IAtomContainer,
      * equaling the number of set implicit hydrogens.
      *
+     * @param atomContainer the atom container to consider
      * @cdk.keyword hydrogens, adding
      */
     @TestMethod("testConvertImplicitToExplicitHydrogens_IAtomContainer")
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
+        List<IAtom> hydrogens = new ArrayList<IAtom>();
+        List<IBond> newBonds = new ArrayList<IBond>();
+        List<Integer> atomIndex = new ArrayList<Integer>();
+
         for (IAtom atom : atomContainer.atoms()) {
             if (!atom.getSymbol().equals("H")) {
                 Integer hCount = atom.getImplicitHydrogenCount();
                 if (hCount != null) {
                     for (int i = 0; i < hCount; i++) {
-                        IAtom hydrogen = atom.getBuilder().newInstance(IAtom.class,"H");
+
+                        IAtom hydrogen = atom.getBuilder().newInstance(IAtom.class, "H");
                         hydrogen.setAtomTypeName("H");
-                        atomContainer.addAtom(hydrogen);
-                        atomContainer.addBond(
-                                atom.getBuilder().newInstance(IBond.class,
-                                        atom, hydrogen,
-                                        CDKConstants.BONDORDER_SINGLE
-                                )
-                        );
+                        hydrogens.add(hydrogen);
+                        newBonds.add(atom.getBuilder().newInstance(IBond.class,
+                                atom, hydrogen, CDKConstants.BONDORDER_SINGLE
+                        ));
                     }
-                    atom.setImplicitHydrogenCount(0);
+                    atomIndex.add(atomContainer.getAtomNumber(atom));
                 }
             }
         }
+        for (Integer index : atomIndex) atomContainer.getAtom(index).setImplicitHydrogenCount(0);
+        for (IAtom atom : hydrogens) atomContainer.addAtom(atom);
+        for (IBond bond : newBonds) atomContainer.addBond(bond);
     }
 
     /**
