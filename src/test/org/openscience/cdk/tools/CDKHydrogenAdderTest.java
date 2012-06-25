@@ -243,7 +243,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
 
     	Assert.assertEquals(1, mol.getAtomCount());
     	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(mol);
-    	Assert.assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newInstance(IElement.class,"H")));
+    	Assert.assertEquals(2, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newInstance(IElement.class,"H")));
     	Assert.assertEquals(0, mol.getConnectedBondsCount(proton));
     	Assert.assertNotNull(proton.getImplicitHydrogenCount());
     	Assert.assertEquals(1, proton.getImplicitHydrogenCount().intValue());
