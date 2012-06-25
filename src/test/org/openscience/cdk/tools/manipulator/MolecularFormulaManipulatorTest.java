@@ -20,11 +20,6 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -45,7 +40,13 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -893,7 +894,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("C");
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(mol);
         double exactMass = MolecularFormulaManipulator.getTotalExactMass(mf);
-        Assert.assertEquals(12.0000, exactMass, 0.0001);
+        Assert.assertEquals(16.0313, exactMass, 0.0001);
     }
 
     @Test
@@ -1062,5 +1063,27 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(helium);
         Assert.assertNotNull(formula);
         Assert.assertEquals("Am", MolecularFormulaManipulator.getString(formula));
+    }
+
+    /**
+     * @cdk.bug 2983334
+     */
+    @Test
+    public void testImplicitH() throws Exception {
+
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
+
+        IAtomContainer mol = MoleculeFactory.makeBenzene();
+
+        IMolecularFormula f = MolecularFormulaManipulator.getMolecularFormula(mol);
+        Assert.assertEquals("C6", MolecularFormulaManipulator.getString(f));
+
+        Assert.assertEquals(6, mol.getAtomCount());
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        adder.addImplicitHydrogens(mol);
+        Assert.assertEquals(6, mol.getAtomCount());
+        f = MolecularFormulaManipulator.getMolecularFormula(mol);
+        Assert.assertEquals("C6H6", MolecularFormulaManipulator.getString(f));
+
     }
 }
