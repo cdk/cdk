@@ -304,9 +304,9 @@ public class MolecularFormulaManipulator {
 	}
 
 	/**
-	 * Returns the string representation of the molecule formula with
-	 * numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags.
-	 * Useful for displaying formulae in Swing components or on the web.
+	 * Returns the string representation of the molecule formula based on Hill
+	 * System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. Useful for
+	 * displaying formulae in Swing components or on the web.
 	 * 
 	 *
 	 * @param   formula  The IMolecularFormula object
@@ -320,11 +320,11 @@ public class MolecularFormulaManipulator {
 	}
 
 	/**
-	 * Returns the string representation of the molecule formula with
-	 * numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope
-	 * of each Element in &lt;sup&gt;&lt;/sup&gt; tags and the total
-	 * charge of IMolecularFormula in &lt;sup&gt;&lt;/sup&gt; tags.
-	 * Useful for displaying formulae in Swing components or on the web.
+	 * Returns the string representation of the molecule formula based on Hill
+	 * System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the
+	 * isotope of each Element in &lt;sup&gt;&lt;/sup&gt; tags and the total
+	 * charge of IMolecularFormula in &lt;sup&gt;&lt;/sup&gt; tags. Useful for
+	 * displaying formulae in Swing components or on the web.
 	 * 
 	 *
 	 * @param   formula  The IMolecularFormula object
@@ -337,7 +337,11 @@ public class MolecularFormulaManipulator {
 	@TestMethod("testGetHTML_IMolecularFormula_boolean_boolean")
 	public static String getHTML(IMolecularFormula formula, boolean chargeB, boolean isotopeB) {
 		String htmlString = "";
-		String[] orderElements = generateOrderEle();
+		String[] orderElements;
+		if (containsElement(formula, formula.getBuilder().newInstance(IElement.class,"C")))
+			orderElements = generateOrderEle_Hill_WithCarbons();
+		else
+			orderElements = generateOrderEle_Hill_NoCarbons();
 		for (String orderElement : orderElements) {
 			IElement element = formula.getBuilder().newInstance(IElement.class,orderElement);
 			if (containsElement(formula, element)) {
