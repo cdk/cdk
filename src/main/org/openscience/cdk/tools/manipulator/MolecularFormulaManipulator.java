@@ -266,7 +266,11 @@ public class MolecularFormulaManipulator {
 		return isotopesList;
 	}
 
+	/**
+	 * @deprecated  Use {@link #getString()}
+	 */
 	@TestMethod("testGetHillString_IMolecularFormula")
+	@Deprecated 
 	public static String getHillString(IMolecularFormula formula) {
 		StringBuffer hillString = new StringBuffer();
 
