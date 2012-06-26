@@ -760,17 +760,25 @@ public class MolecularFormulaManipulator {
 	 * @see                      #getMolecularFormula(IAtomContainer)
 	 */
 	@TestMethod("testGetMolecularFormula_IAtomContainer_IMolecularFormula")
-	public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
-		int charge = 0;
-		for (IAtom iAtom : atomContainer.atoms()) {
-			formula.addIsotope(iAtom);
-			charge += iAtom.getFormalCharge();
-		}
-		formula.setCharge(charge);
-		return formula;
-	}
+    public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
+        int charge = 0;
+        IAtom hAtom = null;
+        for (IAtom iAtom : atomContainer.atoms()) {
+            formula.addIsotope(iAtom);
+            charge += iAtom.getFormalCharge();
 
-	/**
+            if (iAtom.getImplicitHydrogenCount() != null &&
+                    (iAtom.getImplicitHydrogenCount() > 0)) {
+                if (hAtom == null) hAtom =
+                        atomContainer.getBuilder().newInstance(IAtom.class, "H");
+                formula.addIsotope(hAtom, iAtom.getImplicitHydrogenCount());
+            }
+        }
+        formula.setCharge(charge);
+        return formula;
+    }
+
+    /**
 	 * Method that actually does the work of convert the IMolecularFormula
 	 * to IAtomContainer.
 	 * <p> The hydrogens must be implicit.

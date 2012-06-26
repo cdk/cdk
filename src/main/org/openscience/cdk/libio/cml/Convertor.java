@@ -734,8 +734,10 @@ public class Convertor {
             this.checkPrefix(bondStereo);
             if (cdkBond.getStereo() == IBond.Stereo.UP) {
                 bondStereo.setDictRef("cml:W");
+                bondStereo.setXMLContent("W");
             } else {
                 bondStereo.setDictRef("cml:H");
+                bondStereo.setXMLContent("H");
             }
             cmlBond.appendChild(bondStereo);
         }
