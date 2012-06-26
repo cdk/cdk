@@ -336,12 +336,33 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetHTML_IMolecularFormula_boolean_boolean")
 	public static String getHTML(IMolecularFormula formula, boolean chargeB, boolean isotopeB) {
-		String htmlString = "";
 		String[] orderElements;
 		if (containsElement(formula, formula.getBuilder().newInstance(IElement.class,"C")))
 			orderElements = generateOrderEle_Hill_WithCarbons();
 		else
 			orderElements = generateOrderEle_Hill_NoCarbons();
+		return getHTML(formula, orderElements, chargeB, isotopeB);
+	}
+	
+	/**
+	 * Returns the string representation of the molecule formula with numbers 
+	 * wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element
+	 * in &lt;sup&gt;&lt;/sup&gt; tags and the total charge of IMolecularFormula
+	 * in &lt;sup&gt;&lt;/sup&gt; tags. Useful for displaying formulae in Swing
+	 * components or on the web.
+	 * 
+	 *
+	 * @param   formula  The IMolecularFormula object
+	 * @param   orderElements The order of Elements
+	 * @param   chargeB  True, If it has to show the charge
+	 * @param   isotopeB True, If it has to show the Isotope mass
+	 * @return           A HTML representation of the molecular formula
+	 * @see              #getHTML(IMolecularFormula)
+	 * 
+	 */
+	@TestMethod("testGetHTML_IMolecularFormula_arrayString_boolean_boolean")
+	public static String getHTML(IMolecularFormula formula, String[] orderElements, boolean chargeB, boolean isotopeB) {
+		String htmlString = "";
 		for (String orderElement : orderElements) {
 			IElement element = formula.getBuilder().newInstance(IElement.class,orderElement);
 			if (containsElement(formula, element)) {
