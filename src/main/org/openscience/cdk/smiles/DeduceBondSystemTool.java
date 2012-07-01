@@ -48,7 +48,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingManipulator;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
- * for a number of common ring systems of up to seven-membered rings.
+ * for a number of common ring systems of up to seven-membered rings. It assumes
+ * that atom types have been perceived before that class is used.
  *
  * <p>The calculation can be interrupted with {@link #setInterrupted(boolean)},
  * but assumes that this class is not used in a threaded fashion. When a calculation
