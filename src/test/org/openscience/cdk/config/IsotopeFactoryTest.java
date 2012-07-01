@@ -24,19 +24,11 @@
  */
 package org.openscience.cdk.config;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Element;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.w3c.dom.Document;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -47,11 +39,21 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.w3c.dom.Document;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Checks the functionality of the IsotopeFactory
@@ -300,6 +302,16 @@ public class IsotopeFactoryTest extends CDKTestCase
     @Test public void testGetIsotope() throws Exception {
         IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         Assert.assertEquals(13.00335484, isofac.getIsotope("C", 13).getExactMass(), 0.0000001);
+    }
+
+    /**
+     * @cdk.bug 3534288
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testNonexistingElement() throws Exception {
+        IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IAtom xxAtom = new Atom("Xx");
+        isofac.configure(xxAtom);
     }
 
 }
