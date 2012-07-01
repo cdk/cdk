@@ -1,6 +1,6 @@
 CDK - The Chemical Development Kit
  
-Copyright 1997-2010 The CDK Development Team
+Copyright 1997-2012 The CDK Development Team
 License: LGPL v2, see doc/lgpl.license
 
 1. Introduction
@@ -19,7 +19,7 @@ PLEASE NOTE: This is a library of useful data structures and algorithms to manip
 from the area of structural chemo- and bioinformatics. As such, it is intended for the use by
 programmers, who wish to save some effort by reusing code. It is not intended for the enduser. 
 If you consider yourself to be more like user, you might not find what you wanted. 
-Please refer to other projects like the JChemPaint project (http://jchempaint.sourceforge.net)
+Please refer to other projects like the JChemPaint project (http://jchempaint.github.com/)
 or the Jmol project (http://www.jmol.org/) for programs that actually take advantage of the 
 CDK library.
 
@@ -36,7 +36,7 @@ cdk/$ ant
 creates a number of .jar files in the 'dist' directory corresponding to subsets of the CDK
 functionality. For convenience, one large .jar file containing everything can be created using the
 target 'dist-large' (using the command "ant dist-large"). This is also created in dist/jar and is
-typically named something like 'cdk-1.2.7.jar'.
+typically named something like 'cdk-1.4.11.jar'.
 
 2.1 Creating the JavaDoc documentation for the API
 
@@ -55,7 +55,8 @@ cdk/$ firefox doc/api/index.html
 
 3. Running tests
 
-IMPORTANT: this requires the Git version of the sources.
+IMPORTANT: this requires the Git version of the sources, because the test files are not included in
+the source code distribution.
 
 After you compiled the code, you can do "ant test-all" to run the test suite of non-interactive, automated
 tests. You might need to copy an appropriate junit.jar into your $ANT_HOME/lib
@@ -91,6 +92,10 @@ Then, a "ant run" should give you a window where you can add bonds to a given st
 Currently, there are more than 2500 test, of which a large part tests the data, datadebug and 
 nonotify classes.
 
+You can run the tests for an individual module with (for the core module):
+
+cdk/$ ant -Dmodule=core compile-module jarTestdata test-module
+
 4. Using CDK
 
 CDK is a class library intended to be used by other programs. It will not run 
@@ -114,6 +119,6 @@ examples and tutorials:
 * http://rguha.net/code/java/
 * http://www.redbrick.dcu.ie/~noel/CDKJython.html
 
-Further examples can also be found in issues of the CDK News:
-* http://cdknews.org/
+And for updates on CDK use cases:
 
+* https://plus.google.com/103703750118158205464/posts
