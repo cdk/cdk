@@ -1071,7 +1071,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     @Test
     public void testImplicitH() throws Exception {
 
-        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance());
 
         IAtomContainer mol = MoleculeFactory.makeBenzene();
 
