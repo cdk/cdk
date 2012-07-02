@@ -117,6 +117,7 @@ public class CMLCoreModule implements ICMLModule {
     protected List<String> hCounts;
     protected List<String> atomParities;
     protected List<String> atomDictRefs;
+    protected List<String> atomAromaticities;
     protected List<String> spinMultiplicities;
     protected List<String> occupancies;
     protected Map<Integer,List<String>> atomCustomProperty;
@@ -201,6 +202,7 @@ public class CMLCoreModule implements ICMLModule {
             this.hCounts = conv.hCounts;
             this.atomParities = conv.atomParities;
             this.atomDictRefs = conv.atomDictRefs;
+            this.atomAromaticities = conv.atomAromaticities;
             this.spinMultiplicities = conv.spinMultiplicities;
             this.occupancies = conv.occupancies;
             this.bondCounter = conv.bondCounter;
@@ -273,6 +275,7 @@ public class CMLCoreModule implements ICMLModule {
         zfract = new ArrayList<String>();
         hCounts = new ArrayList<String>();
         atomParities = new ArrayList<String>();
+        atomAromaticities = new ArrayList<String>();
         atomDictRefs = new ArrayList<String>();
         spinMultiplicities = new ArrayList<String>();
         occupancies = new ArrayList<String>();
@@ -679,6 +682,9 @@ public class CMLCoreModule implements ICMLModule {
             if (atomCounter > atomDictRefs.size()) {
                 atomDictRefs.add(null);
             }
+            if (atomCounter > atomAromaticities.size()) {
+                atomAromaticities.add(null);
+            }
             if (atomCounter > isotope.size()) {
                 isotope.add(null);
             }
@@ -998,6 +1004,8 @@ public class CMLCoreModule implements ICMLModule {
                     partialCharges.add(cData.trim());
                 } else if (DICTREF.equals("cdk:atomicNumber")) {
                     atomicNumbers.add(cData.trim());
+                } else if (DICTREF.equals("cdk:aromaticAtom")) {
+                    atomAromaticities.add(cData.trim());
                 } else if (DICTREF.equals("cdk:isotopicMass")) {
                     exactMasses.add(cData.trim());
                 }else {
@@ -1174,6 +1182,7 @@ public class CMLCoreModule implements ICMLModule {
         boolean has3Dfract = false;
         boolean has2D = false;
         boolean hasFormalCharge = false;
+        boolean hasAtomAromaticities = false;
         boolean hasPartialCharge = false;
         boolean hasHCounts = false;
         boolean hasSymbols = false;
@@ -1236,6 +1245,14 @@ public class CMLCoreModule implements ICMLModule {
         } else {
             logger.debug(
                     "No formal Charge info: " + formalCharges.size(), 
+                    " != " + atomCounter);
+        }
+
+        if (atomAromaticities.size() == atomCounter) {
+            hasAtomAromaticities = true;
+        } else {
+            logger.debug(
+                    "No aromatic atom info: " + atomAromaticities.size(), 
                     " != " + atomCounter);
         }
 
@@ -1387,6 +1404,11 @@ public class CMLCoreModule implements ICMLModule {
 //                cdo.setObjectProperty("Atom", "formalCharge", 
 //                                      (String)formalCharges.get(i));
                 currentAtom.setFormalCharge(Integer.parseInt((String)formalCharges.get(i)));
+            }
+
+            if (hasAtomAromaticities) {
+            	if (atomAromaticities.get(i) != null)
+            		currentAtom.setFlag(CDKConstants.ISAROMATIC, true);
             }
 
             if (hasPartialCharge) {
