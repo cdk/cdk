@@ -3929,7 +3929,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void test_Co_plus() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IMolecule mol = builder.newInstance(IMolecule.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a2 = builder.newInstance(IAtom.class,"Co");
         a2.setFormalCharge(1);
         mol.addAtom(a2);
