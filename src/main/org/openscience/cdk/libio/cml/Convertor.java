@@ -653,6 +653,12 @@ public class Convertor {
         }
         writeProperties(cdkAtom, cmlAtom);
 
+        if (cdkAtom.getFlag(CDKConstants.ISAROMATIC)) {
+        	CMLScalar aromAtom = new CMLScalar();
+        	aromAtom.setDictRef("cdk:aromaticAtom");
+        	cmlAtom.appendChild(aromAtom);
+        }
+
         Iterator<String> elements = customizers.keySet().iterator();
         while (elements.hasNext()) {
             ICMLCustomizer customizer = (ICMLCustomizer)customizers.get(elements.next());
