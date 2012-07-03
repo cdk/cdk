@@ -58,4 +58,12 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
         	Assert.assertTrue(map.containsKey(print));
         }
     }
+
+    @Test(expected=UnsupportedOperationException.class)
+    public void testUnsupportedMethod() throws Exception {
+    	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("O(NC)CC");
+        fingerprinter.getFingerprint(mol);
+    }
 }

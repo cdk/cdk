@@ -62,6 +62,7 @@ public class SignatureFingerprinter implements IFingerprinter {
         this.signatureDepth = depth;
     }
 
+    @TestMethod("testUnsupportedMethod")
     public BitSet getFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
