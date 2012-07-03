@@ -42,7 +42,7 @@ import java.util.TreeSet;
  * @cdk.keyword similarity, tanimoto
  * @cdk.module fingerprint
  */
-@TestClass("org.openscience.cdk.similarity.LingoTest")
+@TestClass("org.openscience.cdk.similarity.LingoSimilarityTest")
 public class LingoSimilarity {
 
     private LingoSimilarity() {        
