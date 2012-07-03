@@ -203,7 +203,7 @@ public class PathTools {
      * @param molecule      A molecule into which all the atoms and bonds are stored
      *                      that are found during search
      */
-    @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IMolecule")
+    @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IAtomContainer")
     public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtomContainer molecule) {
         // logger.debug("Staring partitioning with this ac: " + ac);
         breadthFirstSearch(atomContainer, sphere, molecule, -1);
@@ -257,7 +257,7 @@ public class PathTools {
      *                      that are found during search
      * @param max
      */
-    @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IMolecule_int")
+    @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IAtomContainer_int")
     public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtomContainer molecule, int max) {
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<IAtom>();
