@@ -270,7 +270,7 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
                 return (T)new NNBond();
             } else if (params.length == 2 &&
                 params[0] instanceof IAtom &&
-                params[0] instanceof IAtom) {
+                params[1] instanceof IAtom) {
                 return (T)new NNBond((IAtom)params[0], (IAtom)params[1]);
             } else if (params.length == 2 &&
                     params[0] instanceof IAtom[] &&
@@ -312,7 +312,7 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
             } else {
                 // the IBond(IAtom[]) constructor
                 boolean allIAtom = true;
-                for (int i=0; i<(params.length-1) && allIAtom; i++) {
+                for (int i=0; i<params.length && allIAtom; i++) {
                     if (!(params[i] instanceof IAtom)) allIAtom = false;
                 }
                 if (allIAtom) {
