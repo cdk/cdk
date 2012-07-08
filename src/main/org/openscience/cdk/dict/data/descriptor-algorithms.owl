@@ -488,13 +488,9 @@
 
     <Descriptor rdf:ID="bpol">
         <rdfs:label>Bond Polarizabilities</rdfs:label>
-        <annotation>
-            <documentation>
                 <dc:contributor rdf:resource="#mf"/>
                 <dc:contributor rdf:resource="#elw"/>
                 <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
         <definition rdf:parseType='Literal'>
             Descriptor that calculates the sum of the absolute value of the difference between atomic
             polarizabilities of all bonded atoms in the molecule (including implicit hydrogens).
