@@ -86,6 +86,17 @@ public class GeometryToolsTest extends CDKTestCase {
     	Assert.assertFalse(GeometryTools.has2DCoordinates((IAtomContainer)null));
     }
 
+    @Test public void testHas2DCoordinates_Partial() {
+        IAtomContainer container = new AtomContainer();
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("C");
+        atom1.setPoint2d(new Point2d(1,1));
+        container.addAtom(atom1);
+        Assert.assertTrue(GeometryTools.has2DCoordinates(container));
+        container.addAtom(atom2);
+        Assert.assertFalse(GeometryTools.has2DCoordinates(container));
+    }
+
     /**
      * @cdk.bug 2936440
      */
@@ -95,9 +106,74 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer molOne=null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = (IAtomContainer)reader.read(new AtomContainer());
-        Assert.assertEquals(2,GeometryTools.has2DCoordinatesNew(molOne));
+        Assert.assertTrue(GeometryTools.has2DCoordinates(molOne));
     }
-    
+
+    @Test public void get2DCoordinateCoverage_EmptyAtomContainer(){
+        IAtomContainer container = new AtomContainer();
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage((IAtomContainer) null));
+    }
+
+    @Test public void get2DCoordinateCoverage_Partial(){
+
+        IAtomContainer container = new AtomContainer();
+
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+
+        atom1.setPoint2d(new Point2d(1,1));
+        atom3.setPoint2d(new Point2d(1,1));
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.PARTIAL, GeometryTools.get2DCoordinateCoverage(container));
+
+    }
+
+    @Test public void get2DCoordinateCoverage_Full(){
+
+        IAtomContainer container = new AtomContainer();
+
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+
+        atom1.setPoint2d(new Point2d(1,1));
+        atom2.setPoint2d(new Point2d(2,1));
+        atom3.setPoint2d(new Point2d(1,2));
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.FULL, GeometryTools.get2DCoordinateCoverage(container));
+
+    }
+
+    @Test public void get2DCoordinateCoverage_None_3D(){
+
+        IAtomContainer container = new AtomContainer();
+
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+
+        atom1.setPoint3d(new Point3d(1,1,0));
+        atom2.setPoint3d(new Point3d(2,1,0));
+        atom3.setPoint3d(new Point3d(1,2,0));
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
+
+    }
+
     @Test public void testTranslateAllPositive_IAtomContainer() {
 		IAtomContainer container = new AtomContainer();
 		IAtom atom = new Atom(Elements.CARBON);
@@ -376,6 +452,79 @@ public class GeometryToolsTest extends CDKTestCase {
     	container.addAtom(atom2);
     	Assert.assertTrue(GeometryTools.has3DCoordinates(container));
     }
+
+    @Test public void testHas3DCoordinates_EmptyAtomContainer() {
+    	IAtomContainer container = new AtomContainer();
+    	Assert.assertFalse(GeometryTools.has3DCoordinates(container));
+    	Assert.assertFalse(GeometryTools.has3DCoordinates((IAtomContainer) null));
+    }
+
+    @Test public void get3DCoordinateCoverage_EmptyAtomContainer(){
+        IAtomContainer container = new AtomContainer();
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage(container));
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage((IAtomContainer) null));
+    }
+
+    @Test public void get3DCoordinateCoverage_Partial(){
+
+        IAtomContainer container = new AtomContainer();
+
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+
+        atom1.setPoint3d(new Point3d(1,1,0));
+        atom3.setPoint3d(new Point3d(1,1,0));
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.PARTIAL, GeometryTools.get3DCoordinateCoverage(container));
+
+    }
+
+    @Test public void get3DCoordinateCoverage_Full(){
+
+        IAtomContainer container = new AtomContainer();
+
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+
+        atom1.setPoint3d(new Point3d(1,1,0));
+        atom2.setPoint3d(new Point3d(2,1,0));
+        atom3.setPoint3d(new Point3d(1,2,0));
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.FULL, GeometryTools.get3DCoordinateCoverage(container));
+
+    }
+
+    @Test public void get3DCoordinateCoverage_None_2D(){
+
+        IAtomContainer container = new AtomContainer();
+
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+
+        atom1.setPoint2d(new Point2d(1,1));
+        atom2.setPoint2d(new Point2d(2,1));
+        atom3.setPoint2d(new Point2d(1,2));
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
+
+    }
+
+
     
     @Test public void testTranslateAllPositive_IAtomContainer_HashMap(){
     	Atom atom1=new Atom("C");

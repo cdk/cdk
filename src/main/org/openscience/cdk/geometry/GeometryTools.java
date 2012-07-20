@@ -62,7 +62,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @author        Ludovic Petain
  * @author        Christian Hoppe
  * @author        Niels Out
- * 
+ * @author        John May
+ *
  * @cdk.module    standard
  * @cdk.githash
  */
@@ -70,6 +71,31 @@ public class GeometryTools {
 
 	private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(GeometryTools.class);
+
+    /**
+     * Provides to coverage of coordinates for this molecule.
+     *
+     * @see GeometryTools#get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see GeometryTools#get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
+     */
+    public static enum CoordinateCoverage {
+
+        /**
+         * All atoms have coordinates.
+         */
+        FULL,
+
+        /**
+         * At least one atom has coordinates but some are missing.
+         */
+        PARTIAL,
+
+        /**
+         * No atoms have coordinates.
+         */
+        NONE
+
+    };
 
 	/**
 	 *  Adds an automatically calculated offset to the coordinates of all atoms
@@ -943,15 +969,63 @@ public class GeometryTools {
 
 
 	/**
-	 *  Determines if this AtomContainer contains 2D coordinates.
-	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 * Determines if all this AtomContainer's atoms contain 2D coordinates. If any atom
+     * is null or has unset 2D coordinates this method will return false.
 	 *
-	 *@param  container  Description of the Parameter
-	 *@return    boolean indication that 2D coordinates are available
+	 * @param  container  the atom container to examine
+     *
+	 * @return indication that all 2D coordinates are available
+     *
+     * @see org.openscience.cdk.interfaces.IAtom#getPoint2d()
+     *
 	 */
 	public static boolean has2DCoordinates(IAtomContainer container) {
-		return has2DCoordinatesNew(container)>0;
+
+        if (container == null || container.getAtomCount() == 0)
+            return Boolean.FALSE;
+
+        for (IAtom atom : container.atoms()) {
+
+            if (atom == null || atom.getPoint2d() == null)
+                return Boolean.FALSE;
+
+        }
+
+        return Boolean.TRUE;
+
 	}
+
+    /**
+     * Determines the coverage of this containers 2D coordinates. If all atoms
+     * are non-null and have 2D coordinates this method will return 'FULL'. If
+     * one or more atoms does have 2D coordinates and any others atoms are null
+     * or are missing 2D coordinates this method will return PARTIAL. If all atoms
+     * are null or are all missing 2D coordinates this method will return NONE. If
+     * the provided container is null NONE is also returned.
+     *
+     * @param container the container to inspect
+     * @return FULL, PARTIAL or NONE depending on the number of 2D coordinates pressent
+     * @see CoordinateCoverage
+     * @see #has2DCoordinates(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see #get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see org.openscience.cdk.interfaces.IAtom#getPoint2d()
+     */
+    public static CoordinateCoverage get2DCoordinateCoverage(IAtomContainer container) {
+
+        if (container == null || container.getAtomCount() == 0)
+            return CoordinateCoverage.NONE;
+
+        int count = 0;
+
+        for (IAtom atom : container.atoms()) {
+            count += atom != null && atom.getPoint2d() != null ? 1 : 0;
+        }
+
+        return count == 0 ? CoordinateCoverage.NONE :
+               count == container.getAtomCount() ? CoordinateCoverage.FULL
+                                                 : CoordinateCoverage.PARTIAL;
+
+    }
 
 
 	/**
@@ -959,10 +1033,13 @@ public class GeometryTools {
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *
-	 *@param container the molecule to be considered
+	 * @param container the molecule to be considered
      * @return    0 no 2d, 1=some, 2= for each atom
+     * @deprecated use get2DCoordinateCoverage for determining partial coordinates
+     * @see #get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
 	 */
-	public static int has2DCoordinatesNew(IAtomContainer container) {
+	@Deprecated
+    public static int has2DCoordinatesNew(IAtomContainer container) {
 		if (container == null) return 0;
 		
 		boolean no2d=false;
@@ -1013,21 +1090,64 @@ public class GeometryTools {
 	}
 
 
-	/**
-	 *  Determines if this model contains 3D coordinates
-	 *
-	 *@param container the molecule to consider
-	 *@return    boolean indication that 3D coordinates are available
-	 */
-	public static boolean has3DCoordinates(IAtomContainer container) {
-		boolean hasinfo = true;
+    /**
+     * Determines if all this AtomContainer's atoms contain 3D coordinates. If any atom
+     * is null or has unset 3D coordinates this method will return false. If the provided
+     * container is null false is returned.
+     *
+     * @param container the atom container to examine
+     *
+     * @return indication that all 3D coordinates are available
+     *
+     * @see org.openscience.cdk.interfaces.IAtom#getPoint3d()
+     */
+    public static boolean has3DCoordinates(IAtomContainer container) {
+
+        if (container == null || container.getAtomCount() == 0)
+            return Boolean.FALSE;
+
         for (IAtom atom : container.atoms()) {
-            if (atom.getPoint3d() == null) {
-                return false;
-            }
+
+            if (atom == null || atom.getPoint3d() == null)
+                return Boolean.FALSE;
+
         }
-		return hasinfo;
-	}
+
+        return Boolean.TRUE;
+
+    }
+
+    /**
+     * Determines the coverage of this containers 3D coordinates. If all atoms
+     * are non-null and have 3D coordinates this method will return 'FULL'. If
+     * one or more atoms does have 3D coordinates and any others atoms are null
+     * or are missing 3D coordinates this method will return PARTIAL. If all atoms
+     * are null or are all missing 3D coordinates this method will return NONE. If
+     * the provided container is null NONE is also returned.
+     *
+     * @param container the container to inspect
+     * @return FULL, PARTIAL or NONE depending on the number of 3D coordinates pressent
+     * @see CoordinateCoverage
+     * @see #has3DCoordinates(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see #get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see org.openscience.cdk.interfaces.IAtom#getPoint3d()
+     */
+    public static CoordinateCoverage get3DCoordinateCoverage(IAtomContainer container) {
+
+        if (container == null || container.getAtomCount() == 0)
+            return CoordinateCoverage.NONE;
+
+        int count = 0;
+
+        for(IAtom atom : container.atoms()){
+            count += atom != null && atom.getPoint3d() != null ? 1 : 0;
+        }
+
+        return count == 0 ? CoordinateCoverage.NONE :
+               count == container.getAtomCount() ? CoordinateCoverage.FULL
+                                                 : CoordinateCoverage.PARTIAL;
+
+    }
 
 
 	/**
