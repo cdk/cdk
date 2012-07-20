@@ -372,7 +372,7 @@ public class AtomPlacer
             nextAtom.setPoint2d(atomPoint);
             nextAtom.setFlag(CDKConstants.ISPLACED, true);
             boolean trans=false;
-            if(GeometryTools.has2DCoordinatesNew(atomContainer)==2){
+            if(GeometryTools.has2DCoordinates(atomContainer)){
                 try{
                     if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtom(f-2),withh.getAtom(f-1)))){
                         trans=BondTools.isCisTrans(withh.getAtom(f-3),withh.getAtom(f-2),withh.getAtom(f-1),withh.getAtom(f-0),withh);
