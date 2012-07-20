@@ -969,7 +969,7 @@ public class GeometryTools {
 
 
 	/**
-	 * Determines if all this AtomContainer's atoms contain 2D coordinates. If any atom
+	 * Determines if all this {@link IAtomContainer}'s atoms contain 2D coordinates. If any atom
      * is null or has unset 2D coordinates this method will return false.
 	 *
 	 * @param  container  the atom container to examine
@@ -996,15 +996,18 @@ public class GeometryTools {
 	}
 
     /**
-     * Determines the coverage of this containers 2D coordinates. If all atoms
-     * are non-null and have 2D coordinates this method will return 'FULL'. If
-     * one or more atoms does have 2D coordinates and any others atoms are null
-     * or are missing 2D coordinates this method will return PARTIAL. If all atoms
-     * are null or are all missing 2D coordinates this method will return NONE. If
-     * the provided container is null NONE is also returned.
+     * Determines the coverage of this {@link IAtomContainer}'s 2D coordinates. If all atoms are
+     * non-null and have 2D coordinates this method will return {@link CoordinateCoverage#FULL}. If
+     * one or more atoms does have 2D coordinates and any others atoms are null or are missing 2D
+     * coordinates this method will return {@link CoordinateCoverage#PARTIAL}. If all atoms
+     * are null or are all missing 2D coordinates this method will return {@link CoordinateCoverage#NONE}. If
+     * the provided container is null {@link CoordinateCoverage#NONE} is also returned.
      *
      * @param container the container to inspect
-     * @return FULL, PARTIAL or NONE depending on the number of 2D coordinates pressent
+     *
+     * @return {@link CoordinateCoverage#FULL}, {@link CoordinateCoverage#PARTIAL} or {@link CoordinateCoverage#NONE}
+     *         depending on the number of 3D coordinates present
+     *
      * @see CoordinateCoverage
      * @see #has2DCoordinates(org.openscience.cdk.interfaces.IAtomContainer)
      * @see #get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
@@ -1035,7 +1038,8 @@ public class GeometryTools {
 	 *
 	 * @param container the molecule to be considered
      * @return    0 no 2d, 1=some, 2= for each atom
-     * @deprecated use get2DCoordinateCoverage for determining partial coordinates
+     * @deprecated use {@link #get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)} for determining
+     *             partial coordinates
      * @see #get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
 	 */
 	@Deprecated
@@ -1091,7 +1095,7 @@ public class GeometryTools {
 
 
     /**
-     * Determines if all this AtomContainer's atoms contain 3D coordinates. If any atom
+     * Determines if all this {@link IAtomContainer}'s atoms contain 3D coordinates. If any atom
      * is null or has unset 3D coordinates this method will return false. If the provided
      * container is null false is returned.
      *
@@ -1118,15 +1122,18 @@ public class GeometryTools {
     }
 
     /**
-     * Determines the coverage of this containers 3D coordinates. If all atoms
-     * are non-null and have 3D coordinates this method will return 'FULL'. If
-     * one or more atoms does have 3D coordinates and any others atoms are null
-     * or are missing 3D coordinates this method will return PARTIAL. If all atoms
-     * are null or are all missing 3D coordinates this method will return NONE. If
-     * the provided container is null NONE is also returned.
+     * Determines the coverage of this {@link IAtomContainer}'s 3D coordinates. If all atoms are
+     * non-null and have 3D coordinates this method will return {@link CoordinateCoverage#FULL}. If
+     * one or more atoms does have 3D coordinates and any others atoms are null or are missing 3D
+     * coordinates this method will return {@link CoordinateCoverage#PARTIAL}. If all atoms are
+     * null or are all missing 3D coordinates this method will return {@link CoordinateCoverage#NONE}.
+     * If the provided container is null {@link CoordinateCoverage#NONE} is also returned.
      *
      * @param container the container to inspect
-     * @return FULL, PARTIAL or NONE depending on the number of 3D coordinates pressent
+     *
+     * @return {@link CoordinateCoverage#FULL}, {@link CoordinateCoverage#PARTIAL} or {@link CoordinateCoverage#NONE}
+     *         depending on the number of 3D coordinates present
+     *
      * @see CoordinateCoverage
      * @see #has3DCoordinates(org.openscience.cdk.interfaces.IAtomContainer)
      * @see #get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
