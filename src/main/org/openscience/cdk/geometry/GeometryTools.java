@@ -73,7 +73,7 @@ public class GeometryTools {
         LoggingToolFactory.createLoggingTool(GeometryTools.class);
 
     /**
-     * Provides to coverage of coordinates for this molecule.
+     * Provides the coverage of coordinates for this molecule.
      *
      * @see GeometryTools#get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      * @see GeometryTools#get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
@@ -86,7 +86,7 @@ public class GeometryTools {
         FULL,
 
         /**
-         * At least one atom has coordinates but some are missing.
+         * At least one atom has coordinates but not all.
          */
         PARTIAL,
 
