@@ -520,7 +520,7 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(atom2);
         container.addAtom(atom3);
 
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
+        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage(container));
 
     }
 
