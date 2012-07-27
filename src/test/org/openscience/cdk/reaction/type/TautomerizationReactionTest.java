@@ -105,7 +105,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
         
         // reverse process
         IAtomContainerSet setOfReactants2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -119,7 +119,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IAtomContainer product2 = setOfReactions2.getReaction(0).getProducts().getAtomContainer(0);
         
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule,queryAtom));
 	}
 	/**
 	 * A unit test suite for JUnit for acetaldehyde. 
@@ -161,7 +161,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
         
         // reverse process
 		/*manually putting the active center*/
@@ -183,7 +183,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
         IAtomContainer product2 = setOfReactions2.getReaction(0).getProducts().getAtomContainer(0);
         
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule,queryAtom));
 	}
 
 	/**

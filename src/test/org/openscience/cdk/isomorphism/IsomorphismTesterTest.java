@@ -175,6 +175,6 @@ public class IsomorphismTesterTest extends CDKTestCase
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_kekulesmiles);
 
 
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));      
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));      
     }
 }

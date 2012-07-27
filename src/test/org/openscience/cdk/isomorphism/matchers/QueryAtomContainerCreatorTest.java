@@ -79,7 +79,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
     	molecule.addBond(0,4,IBond.Order.SINGLE);
     	molecule.addBond(1,5,IBond.Order.SINGLE);
     	QueryAtomContainer queryContainer1 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query1);
-    	Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(molecule, queryContainer1));
+    	Assert.assertTrue(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer1));
     	
     	// 2,3-dimethyl-2-butene does not match
     	IAtomContainer query2 = builder.newInstance(IAtomContainer.class);
@@ -95,7 +95,7 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
     	molecule.addBond(0,4,IBond.Order.SINGLE);
     	molecule.addBond(1,5,IBond.Order.SINGLE);
     	QueryAtomContainer queryContainer2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query2);
-    	Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(molecule, queryContainer2));
+    	Assert.assertFalse(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer2));
     }
 	
 }

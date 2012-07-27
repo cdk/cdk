@@ -111,7 +111,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
 	}
 	/**
 	 * A unit test suite for JUnit. Reaction: C-C=[O+] => C-[C+]O|
@@ -149,7 +149,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
 	}
 	/**
 	 * A unit test suite for JUnit.

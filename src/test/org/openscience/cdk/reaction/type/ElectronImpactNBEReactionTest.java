@@ -250,7 +250,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
        
        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-       Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
+       Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1,queryAtom));
 		
 	}
 	/**
@@ -314,7 +314,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
        
        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-       Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
+       Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1,queryAtom));
 		
 	}
 	/**
@@ -379,7 +379,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
        
        IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-       Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
+       Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1,queryAtom));
 		
 	}
 	

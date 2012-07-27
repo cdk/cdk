@@ -90,7 +90,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
 
     	IAtomContainer mol1 = createMolecule(molecule_test_2);
     	IAtomContainer mol2 = createMolecule(ethanolamine);
-    	Assert.assertTrue("SubGraph does NOT match", UniversalIsomorphismTester.isSubgraph(mol1, mol2));
+    	Assert.assertTrue("SubGraph does NOT match", new UniversalIsomorphismTester().isSubgraph(mol1, mol2));
 
     	BitSet bs1 = printer.getFingerprint((IAtomContainer) mol1.clone());
     	BitSet bs2 = printer.getFingerprint((IAtomContainer) mol2.clone());

@@ -25,6 +25,7 @@ package org.openscience.cdk.reaction.type;
 
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -60,6 +61,13 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
 	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+	private UniversalIsomorphismTester uiTester;
+
+	@Before
+	public void setUpUITester() {
+		uiTester = new UniversalIsomorphismTester();
+	}
+
 	/**
 	 *  The JUnit setup method
 	 */
@@ -104,7 +112,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(uiTester.isIsomorph(molecule2,queryAtom));
       
 	}
 	/**
@@ -139,7 +147,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(uiTester.isIsomorph(molecule2,queryAtom));
         
 	}
 	/**

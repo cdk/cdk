@@ -121,7 +121,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 	        IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 	        
 	        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-	        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule,queryAtom));
+	        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule,queryAtom));
 	       
 		}
 	/**
@@ -198,7 +198,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		makeSureAtomTypesAreRecognized(molecule2);
 		
 		IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
        
 	}
 	/**
@@ -230,7 +230,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
 
 		IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1,queryAtom));
 
         Assert.assertEquals(1, setOfReactions.getReaction(1).getProductCount());
 
@@ -266,7 +266,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		makeSureAtomTypesAreRecognized(molecule2);
 		
 		queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
        
 	}
 	/**
@@ -311,7 +311,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
 
 	}
 	/**

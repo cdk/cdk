@@ -894,7 +894,7 @@ public class SmilesParserTest extends CDKTestCase {
 				hAdder.addImplicitHydrogens(fromFactory, nextAtom);
 		}
 		CDKHueckelAromaticityDetector.detectAromaticity(fromFactory);
-		boolean result = UniversalIsomorphismTester.isIsomorph(fromFactory,
+		boolean result = new UniversalIsomorphismTester().isIsomorph(fromFactory,
 		fromSmiles);
 		Assert.assertTrue(result);
 	}

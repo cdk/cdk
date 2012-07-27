@@ -149,7 +149,7 @@ public class TemplateHandler
 		{
 			mol2 = templates.get(f);
 			ac2 = molecule.getBuilder().newInstance(IAtomContainer.class,mol2);
-			if (universalIsomorphismTester.isIsomorph(ac1, ac2)) {
+			if (new UniversalIsomorphismTester().isIsomorph(ac1, ac2)) {
 				templates.remove(f);
 				return mol2;
 			}
@@ -176,7 +176,7 @@ public class TemplateHandler
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = templates.get(f);
-			if (universalIsomorphismTester.isIsomorph(molecule, template))
+			if (new UniversalIsomorphismTester().isIsomorph(molecule, template))
 			{
 				List<RMap> list = universalIsomorphismTester.getIsomorphAtomsMap(
 					molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 

@@ -140,7 +140,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
         
 	}
 
@@ -184,7 +184,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
         
 	}
 
@@ -337,7 +337,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         lpcheck.saturate(molecule2);
         makeSureAtomTypesAreRecognized(molecule2);
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
 
 		//////////////////////////////////////////////////
 		
@@ -365,7 +365,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         lpcheck.saturate(molecule3);
         makeSureAtomTypesAreRecognized(molecule3);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule3,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule3,queryAtom));
 
         Assert.assertEquals(12,setOfReactions.getReaction(0).getMappingCount());
 	}

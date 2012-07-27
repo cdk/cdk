@@ -100,11 +100,11 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);//Smiles("[C+]");
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,product1));
+		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1,product1));
 		
 		IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 		IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);//Smiles("[C-]#[O+]");
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product2));
+		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,product2));
        
 	}
 	/**
@@ -140,11 +140,11 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);//Smiles("[C+]");
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,product1));
+		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1,product1));
 		
 		IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 		IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);//Smiles("[C-]#[O+]");
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product2));
+		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,product2));
        
 	}
 	/**

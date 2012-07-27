@@ -737,7 +737,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol=AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(mol);
         String smiles2 = "C1CCCCC1";
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(mol, mol2));
     }
 
     /**

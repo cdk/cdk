@@ -25,6 +25,7 @@
 package org.openscience.cdk.isomorphism;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -50,6 +51,13 @@ import org.openscience.cdk.templates.MoleculeFactory;
  */
 public class SMARTSTest extends CDKTestCase {
 	
+	private UniversalIsomorphismTester uiTester;
+
+	@Before
+	public void setUpUITester() {
+		uiTester = new UniversalIsomorphismTester();
+	}
+
 	@Test public void testStrictSMARTS() throws Exception {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
@@ -62,7 +70,7 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE));
         
-        Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+        Assert.assertFalse(uiTester.isSubgraph(atomContainer, query));
     }
 	
 	@Test public void testSMARTS() throws Exception {
@@ -76,7 +84,7 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE));
         
-        Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+        Assert.assertTrue(uiTester.isSubgraph(atomContainer, query));
     }
 	
     private IAtomContainer createEthane() {
@@ -100,7 +108,7 @@ public class SMARTSTest extends CDKTestCase {
         query1.addAtom(atom1);
         query1.addAtom(atom2);
         query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE));
-        Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(container, query1));
+        Assert.assertTrue(uiTester.isSubgraph(container, query1));
     }
 
 	@Test public void testImplicitHCountAtom2() throws Exception {
@@ -112,7 +120,7 @@ public class SMARTSTest extends CDKTestCase {
         query1.addAtom(atom1);
         query1.addAtom(atom2);
         query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE));
-        Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(container, query1));
+        Assert.assertFalse(uiTester.isSubgraph(container, query1));
     }
 
 	@Test public void testMatchInherited() {
@@ -129,7 +137,7 @@ public class SMARTSTest extends CDKTestCase {
 			query1.addAtom(c1);
 			query1.addAtom(c2);
 			query1.addBond(new OrderQueryBond(c1,c2,CDKConstants.BONDORDER_SINGLE));
-			Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(c,query1));
+			Assert.assertTrue(uiTester.isSubgraph(c,query1));
 			
 			QueryAtomContainer query = new
 			QueryAtomContainer();
@@ -138,7 +146,7 @@ public class SMARTSTest extends CDKTestCase {
 			query.addBond(new AnyOrderQueryBond(c1, c2,
 				CDKConstants.BONDORDER_SINGLE)
 			);
-			Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(c,query));
+			Assert.assertTrue(uiTester.isSubgraph(c,query));
 			
 		} catch (CDKException exception) {
 			Assert.fail(exception.getMessage());

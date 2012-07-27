@@ -451,15 +451,15 @@ public class StructureResonanceGenerator {
 				
 				if(!lookingSymmetry ){
 					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(acClone);
-					if(universalIsomorphismTester.isIsomorph(ss,qAC)){
+					if(new UniversalIsomorphismTester().isIsomorph(ss,qAC)){
 						QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(acClone);
-						if(universalIsomorphismTester.isIsomorph(ss,qAC2))
+						if(new UniversalIsomorphismTester().isIsomorph(ss,qAC2))
 							return true;
 					}
 				}else{
 					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(acClone);
 					CDKHueckelAromaticityDetector.detectAromaticity(ss);
-					if(universalIsomorphismTester.isIsomorph(ss,qAC))
+					if(new UniversalIsomorphismTester().isIsomorph(ss,qAC))
 						return true;
 				}
 				

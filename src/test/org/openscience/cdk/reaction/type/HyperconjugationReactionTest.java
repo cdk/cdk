@@ -121,7 +121,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		molecule2.addBond(1, 2, IBond.Order.SINGLE);
         addExplicitHydrogens(molecule2);
 		
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product));
+		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,product));
 		
 		product = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         /*[H+]*/
@@ -129,7 +129,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule2.getAtom(0).setFormalCharge(1);
 		
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product));
+		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,product));
 	}
 	/**
 	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
@@ -188,7 +188,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
         
 	}
 	/**
@@ -220,7 +220,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 		
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product,queryAtom));
 		
 		product = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
@@ -229,7 +229,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		molecule2.getAtom(0).setFormalCharge(1);
 
 		queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
 	}
 
 	/**

@@ -141,7 +141,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
         
 	}
 
@@ -187,7 +187,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
         
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
         
 	}
 
@@ -435,7 +435,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 		lpcheck.saturate(molecule1);
 		
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,qAC));
+	    Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1,qAC));
         
 	}
 }

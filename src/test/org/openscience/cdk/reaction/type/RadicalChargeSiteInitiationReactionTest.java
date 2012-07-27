@@ -100,7 +100,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
         
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1,queryAtom));
 		
 		IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 		
@@ -108,7 +108,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 
 
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
        
 	}
 	/**

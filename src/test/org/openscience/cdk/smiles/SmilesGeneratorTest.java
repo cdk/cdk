@@ -951,7 +951,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesGenerator sg = new SmilesGenerator();
         String smiles = sg.createSMILES((IAtomContainer) mol);
         IAtomContainer mol2 = sp.parseSmiles(smiles);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(mol, mol2));
     }
 
     

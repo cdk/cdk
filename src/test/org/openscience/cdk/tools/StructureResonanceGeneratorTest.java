@@ -240,7 +240,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //        IAtom atom1 =  molecule1.getAtom(2);
 //        molecule1.addSingleElectron(new SingleElectron(atom1));
 //        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-//		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+//		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 //		
 ////		/*2*/
 ////		Molecule molecule2 = (new SmilesParser()).parseSmiles("CC(O)=CO");
@@ -259,7 +259,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 ////		atom2b.setFormalCharge(1);
 ////		
 ////		qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-////		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(3),qAC));
+////		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(3),qAC));
 //	}
 //
 //	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule)
@@ -309,7 +309,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //		
 //
 //		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-//		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+//		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 //	
 //	}	
 //	/**
@@ -347,7 +347,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 //		molecule.removeLonePair((ILonePair)selectron.get(0));
 //
 //		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-//		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+//		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 //	
 //	}
     /**
@@ -452,7 +452,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		addExplicitHydrogens(molecule2);
         
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 	}
 	/**
 	 * A unit test suite for JUnit: Resonance C-C=C-[C-] <=> C=C-[C-]-C
@@ -490,7 +490,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		 addExplicitHydrogens(molecule2);
 		 
 		 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-	     Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+	     Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 	}
 	/**
 	 * A unit test suite for JUnit: Resonance Formic acid  C(=O)O <=> [C+](-[O-])O <=> C([O-])=[O+]
@@ -531,7 +531,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
         lpcheck.saturate(molecule2);
         
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+	    Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
        
 	}
 
@@ -571,7 +571,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		lpcheck.saturate(molecule1);
 
 		 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-	     Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+	     Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 	}
 	/**
 	 * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
@@ -629,7 +629,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		lpcheck.saturate(molecule1);
 
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
+	    Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
         
 	    IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 	 	molecule2.addAtom(builder.newInstance(IAtom.class,"F"));
@@ -654,7 +654,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
         
         IAtomContainer product2 = setOfMolecules.getAtomContainer(4);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,qAC));
+	    Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2,qAC));
        
 	}
 	/**
@@ -748,7 +748,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		lpcheck.saturate(molecule1);
 
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+	    Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
         
 	    IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 	 	molecule2.addAtom(builder.newInstance(IAtom.class,"F"));
@@ -773,7 +773,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
         
         IAtomContainer product2 = setOfMolecules.getAtomContainer(2);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,qAC));
+	    Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2,qAC));
        
 	}
 	/**
