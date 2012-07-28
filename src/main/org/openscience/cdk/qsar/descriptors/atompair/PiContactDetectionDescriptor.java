@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author         mfe4
  * @cdk.created    2004-11-03
- * @cdk.module     qsar-molecular
+ * @cdk.module     qsarmolecular
  * @cdk.githash
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:piContact
