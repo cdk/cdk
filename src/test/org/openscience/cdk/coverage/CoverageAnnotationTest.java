@@ -130,6 +130,8 @@ abstract public class CoverageAnnotationTest {
 
             if (method.getName().startsWith("access$")) {
             	// skip this test
+            } else if (method.getName().contains("SWITCH_TABLE")) {
+                // skip this test
             } else if (testMethodAnnotation == null) {
                 // if a method does not have the annotation, it's missing a test
                 System.out.println(className + "#" + toString(method) + " does not have a test method");
