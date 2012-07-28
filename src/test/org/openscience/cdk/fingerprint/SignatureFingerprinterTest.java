@@ -59,11 +59,23 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
         }
     }
 
-    @Test(expected=UnsupportedOperationException.class)
-    public void testUnsupportedMethod() throws Exception {
+    @Test
+    public void testBitFingerprint() throws Exception {
     	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
-        fingerprinter.getBitFingerprint(mol);
+        IBitFingerprint bitFP = fingerprinter.getBitFingerprint(mol);
+        Assert.assertNotNull(bitFP);
+        Assert.assertNotSame(0, bitFP.size());
+    }
+
+    @Test
+    public void testCountFingerprint() throws Exception {
+    	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("O(NC)CC");
+        ICountFingerprint bitFP = fingerprinter.getCountFingerprint(mol);
+        Assert.assertNotNull(bitFP);
+        Assert.assertNotSame(0, bitFP.size());
     }
 }

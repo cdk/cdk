@@ -61,7 +61,7 @@ public class SignatureFingerprinter implements IFingerprinter {
         this.signatureDepth = depth;
     }
 
-    @TestMethod("testUnsupportedMethod")
+    @TestMethod("testBitFingerprint")
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
     		return new IntArrayFingerprint(getRawFingerprint(atomContainer));
     }
@@ -88,6 +88,7 @@ public class SignatureFingerprinter implements IFingerprinter {
     }
 
 	@Override
+	@TestMethod("testCountFingerprint")
 	public ICountFingerprint getCountFingerprint(IAtomContainer container)
 			throws CDKException {
 		return new IntArrayCountFingerprint(getRawFingerprint(container));
