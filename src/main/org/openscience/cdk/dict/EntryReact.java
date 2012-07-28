@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+
 /**
  * Entry in a Dictionary for reactions.
  * 
@@ -42,6 +44,7 @@ import java.util.List;
  *
  * @see          Dictionary
  */
+@TestClass("org.openscience.cdk.dict.EntryReactTest")
 public class EntryReact extends Entry{
     
     private List<String> reactionInfo;

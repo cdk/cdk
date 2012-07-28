@@ -38,6 +38,7 @@ import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -52,6 +53,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.depends  xom-1.0.jar
  */
+@TestClass("org.openscience.cdk.dict.OWLFileTest")
 public class OWLFile extends Dictionary {
 
     private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";

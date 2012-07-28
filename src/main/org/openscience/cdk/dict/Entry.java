@@ -31,6 +31,9 @@ package org.openscience.cdk.dict;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Entry in a Dictionary.
  * 
@@ -42,6 +45,7 @@ import java.util.List;
  *
  * @see          Dictionary
  */
+@TestClass("org.openscience.cdk.dict.EntryTest")
 public class Entry {
     
 	private String className;
@@ -51,61 +55,75 @@ public class Entry {
 	private String definition;
 	private String description;
 	private Object rawContent;
-    
+
+	@TestMethod("testConstructor_String_String,testConstructor_IDLowerCasing")
     public Entry(String identifier, String term) {
         this.identifier = identifier.toLowerCase();
         this.label = term;
         this.descriptorInfo = new ArrayList<String>();
     }
     
+    @TestMethod("testConstructor_String")
     public Entry(String identifier) {
     	this(identifier, "");
     }
-    
+
+    @TestMethod("testConstructor")
     public Entry() {
         this("", "");
     }
     
+    @TestMethod("testLabel")
     public void setLabel(String term) {
         this.label = term;
     }
     
+    @TestMethod("testLabel")
     public String getLabel() {
         return this.label;
     }
     
+    @TestMethod("testID")
     public void setID(String identifier) {
         this.identifier = identifier.toLowerCase();
     }
     
+    @TestMethod("testID")
     public String getID() {
         return this.identifier;
     }
 
+    @TestMethod("testDefinition")
     public String getDefinition() {
     	return this.definition;
     }
     
+    @TestMethod("testDefinition")
     public void setDefinition(String definition) {
     	this.definition = definition;
     }
-    
+
+    @TestMethod("testDescription")
     public String getDescription() {
     	return this.description;
     }
 
+    @TestMethod("testDescription")
     public void setDescription(String description) {
     	this.description = description;
     }
-    
+
+    @TestMethod("testDescriptorMetadata")
     public void setDescriptorMetadata(String metadata) {
         this.descriptorInfo.add( metadata );
     }
-    
+
+    @TestMethod("testDescriptorMetadata")
     public List<String> getDescriptorMetadata() {
         return this.descriptorInfo;
     }
-    
+
+    @TestMethod("testToString")
     public String toString() {
         return "Entry[" + getID() + "](" + getLabel() + ")";
     }
@@ -113,6 +131,7 @@ public class Entry {
 	/**
 	 * @return Returns the rawContent.
 	 */
+    @TestMethod("testRawContent")
 	public Object getRawContent() {
 		return rawContent;
 	}
@@ -120,6 +139,7 @@ public class Entry {
 	/**
 	 * @param rawContent The rawContent to set.
 	 */
+    @TestMethod("testRawContent")
 	public void setRawContent(Object rawContent) {
 		this.rawContent = rawContent;
 	}
@@ -127,6 +147,7 @@ public class Entry {
 	/**
 	 * @return Returns the className.
 	 */
+    @TestMethod("testClassName")
 	public String getClassName() {
 		return className;
 	}
@@ -134,6 +155,7 @@ public class Entry {
 	/**
 	 * @param className The className to set.
 	 */
+    @TestMethod("testClassName")
 	public void setClassName(String className) {
 		this.className = className;
 	}

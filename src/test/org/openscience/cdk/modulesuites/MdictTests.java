@@ -26,6 +26,11 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.DictCoverageTest;
 import org.openscience.cdk.dict.DictDBReactTest;
 import org.openscience.cdk.dict.DictDBTest;
+import org.openscience.cdk.dict.DictionaryTest;
+import org.openscience.cdk.dict.EntryReactTest;
+import org.openscience.cdk.dict.EntryTest;
+import org.openscience.cdk.dict.OWLFileTest;
+import org.openscience.cdk.dict.OWLReactTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -38,6 +43,11 @@ import org.openscience.cdk.dict.DictDBTest;
 @SuiteClasses(value={
     DictCoverageTest.class,
     DictDBTest.class,
-    DictDBReactTest.class
+    DictDBReactTest.class,
+    EntryTest.class,
+    EntryReactTest.class,
+    DictionaryTest.class,
+    OWLFileTest.class,
+    OWLReactTest.class
 })
 public class MdictTests {}

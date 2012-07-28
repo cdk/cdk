@@ -1,9 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2012  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -21,25 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.coverage;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
+package org.openscience.cdk.dict;
 
 /**
- * TestSuite that runs all the sample tests.
- *
  * @cdk.module test-dict
  */
-public class DictCoverageTest extends CoverageAnnotationTest {
+public class OWLReactTest extends EntryTest {
 
-    private final static String CLASS_LIST = "dict.javafiles";
-    
-    @BeforeClass public static void setUp() throws Exception {
-        loadClassList(CLASS_LIST, DictCoverageTest.class.getClassLoader());
-    }
-
-    @Test public void testCoverage() {
-        super.runCoverageTest();
-    }
 }

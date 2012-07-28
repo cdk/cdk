@@ -33,6 +33,8 @@ import java.io.Reader;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
@@ -52,6 +54,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * @cdk.keyword    dictionary
  * @cdk.module     dict
  */
+@TestClass("org.openscience.cdk.dict.DictionaryTest")
 public class Dictionary {
 
     private Hashtable<String, Entry> entries;
@@ -99,7 +102,8 @@ public class Dictionary {
         }
         return dict;
     }
-    
+
+    @TestMethod("testAddEntry")
     public void addEntry(Entry entry) {
         entries.put(entry.getID().toLowerCase(), entry);
     }
@@ -116,21 +120,26 @@ public class Dictionary {
         return entryArray;
     }
     
+    @TestMethod("testAddEntry")
     public boolean hasEntry(String identifier) {
         return entries.containsKey(identifier);
     }
     
+    @TestMethod("testAddEntry")
     public Entry getEntry(String identifier) {
         return entries.get(identifier);
     }
-    
+
+    @TestMethod("testAddEntry")
     public int size() {
     	return entries.size();
     }
 
+    @TestMethod("testNS")
     public void setNS(String nameSpace) {
         ownNS = nameSpace;
     }
+    @TestMethod("testNS")
     public String getNS() {
         return ownNS;
     }
