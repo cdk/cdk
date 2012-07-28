@@ -224,8 +224,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
 
         IFingerprinter fp = new PubchemFingerprinter();
-        BitSet bs1 = fp.getFingerprint(mol1);
-        BitSet bs2 = fp.getFingerprint(mol2);
+        BitSet bs1 = fp.getBitFingerprint(mol1).asBitSet();
+        BitSet bs2 = fp.getBitFingerprint(mol2).asBitSet();
 
         class FpRunner implements Callable<BitSet> {
             IAtomContainer mol;
@@ -236,7 +236,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
                 BitSet fp = null;
                 IFingerprinter fpr = new PubchemFingerprinter();
                 try {
-                    fp = fpr.getFingerprint(mol);
+                    fp = fpr.getBitFingerprint(mol).asBitSet();
                 } catch (CDKException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
