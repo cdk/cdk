@@ -86,6 +86,7 @@ public class DescriptorEngine {
     public static final int ATOMIC = 1;
     public static final int BOND = 2;
     public static final int MOLECULAR = 3;
+    public static final int ATOMPAIR = 4;
 
     private Dictionary dict = null;
     private List<String> classNames = null;
@@ -97,7 +98,7 @@ public class DescriptorEngine {
     /**
      * Instantiates the DescriptorEngine.
      * <p/>
-     * This constructir instantiates the engine but does not perform any initialization. As a result calling
+     * This constructor instantiates the engine but does not perform any initialization. As a result calling
      * the <code>process()</code> method will fail. To use the engine via this constructor you should use
      * the following code
      * <p/>
@@ -166,6 +167,9 @@ public class DescriptorEngine {
                 break;
             case MOLECULAR:
                 classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular", jarFileNames);
+                break;
+            case ATOMPAIR:
+                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atompair", jarFileNames);
                 break;
         }
         descriptors = instantiateDescriptors(classNames);

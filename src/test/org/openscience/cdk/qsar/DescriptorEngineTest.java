@@ -141,5 +141,15 @@ public class    DescriptorEngineTest extends CDKTestCase {
         engine.process(molecule);
 
     }
+
+    @Test
+    public void testLoadingOfAtomPairDescriptors() {
+    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMPAIR);
+    	Assert.assertNotNull(engine);
+    	int loadedDescriptors = engine.getDescriptorInstances().size(); 
+    	Assert.assertNotSame(0, loadedDescriptors);
+    	Assert.assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
+    	Assert.assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
+    }
 }
 
