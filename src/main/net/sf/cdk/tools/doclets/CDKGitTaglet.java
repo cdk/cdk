@@ -38,7 +38,8 @@ import com.sun.tools.doclets.Taglet;
 public class CDKGitTaglet implements Taglet {
     
     private static final String NAME = "cdk.githash";
-    private final static Pattern pathPattern = Pattern.compile(".*/(src/.*\\.java)");
+    private final static Pattern pathPattern = Pattern.compile("^(src/.*\\.java)");
+    private final String BRANCH = "cdk-1.4.x";
     
     public String getName() {
         return NAME;
@@ -95,20 +96,19 @@ public class CDKGitTaglet implements Taglet {
     }
 
     private String expand(Tag tag) {
-    	// Tag only returns the file name, not the path (anymore)
-    	if (true)
-    	    return "<a href=\"https://github.com/cdk/cdk/tree/cdk-1.4.x/src/main/org/openscience/cdk\" target=\"_blank\">cdk-1.4.x</a>";
-
     	// create the URL
     	SourcePosition file = tag.position();
-    	String path = correctSlashes(file.file().getAbsolutePath());
-    	Matcher matcher = pathPattern.matcher(path);
+    	String pathAndFile = file.file().toString();
+    	pathAndFile = pathAndFile.substring(pathAndFile.indexOf("src/main"));
+    	pathAndFile = correctSlashes(pathAndFile);
+    	Matcher matcher = pathPattern.matcher(pathAndFile);
     	if (matcher.matches()) {
-	    String url = "http://cdk.git.sourceforge.net/git/gitweb.cgi?p=cdk;a=blob;f=" + 
-		matcher.group(1) + ";hb=HEAD";
-        	return "<a href=\"" + url + "\" target=\"_blank\">HEAD</a>";
+    		String url = "https://github.com/cdk/cdk/tree/" + BRANCH + "/" + 
+    				matcher.group(1);
+    		System.out.println("URL: " + url);
+        	return "<a href=\"" + url + "\" target=\"_blank\">" + BRANCH + "</a>";
     	} else {
-    		System.out.println("Could not resolve class name from: " + path);
+    		System.out.println("Could not resolve class name from: " + pathAndFile);
     	}
     	return "";
     }
