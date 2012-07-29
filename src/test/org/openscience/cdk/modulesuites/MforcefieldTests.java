@@ -1,9 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -21,7 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-
 package org.openscience.cdk.modulesuites;
 
 import org.junit.runner.RunWith;
@@ -29,6 +23,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.coverage.ForcefieldCoverageTest;
+import org.openscience.cdk.modeling.builder3d.MMFF94BasedParameterSetReaderTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -38,6 +33,7 @@ import org.openscience.cdk.coverage.ForcefieldCoverageTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     ForcefieldCoverageTest.class,
-    MMFF94PartialChargesTest.class
+    MMFF94PartialChargesTest.class,
+    MMFF94BasedParameterSetReaderTest.class
 })
 public class MforcefieldTests {}
