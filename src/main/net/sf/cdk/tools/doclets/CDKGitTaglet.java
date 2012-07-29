@@ -39,7 +39,7 @@ public class CDKGitTaglet implements Taglet {
     
     private static final String NAME = "cdk.githash";
     private final static Pattern pathPattern = Pattern.compile("^(src/.*\\.java)");
-    private final String BRANCH = "cdk-1.4.x";
+    private final String BRANCH = "master";
     
     public String getName() {
         return NAME;
