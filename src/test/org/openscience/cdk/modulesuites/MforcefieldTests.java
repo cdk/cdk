@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.coverage.ForcefieldCoverageTest;
+import org.openscience.cdk.modeling.builder3d.ForceFieldConfiguratorTest;
 import org.openscience.cdk.modeling.builder3d.MMFF94BasedParameterSetReaderTest;
 
 /**
@@ -34,6 +35,7 @@ import org.openscience.cdk.modeling.builder3d.MMFF94BasedParameterSetReaderTest;
 @SuiteClasses(value={
     ForcefieldCoverageTest.class,
     MMFF94PartialChargesTest.class,
-    MMFF94BasedParameterSetReaderTest.class
+    MMFF94BasedParameterSetReaderTest.class,
+    ForceFieldConfiguratorTest.class
 })
 public class MforcefieldTests {}

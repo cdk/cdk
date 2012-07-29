@@ -46,8 +46,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * 
  * @author danielszisz
  * @version 01/04/2012
- * @module test-modelbuilder3d
- * 
+ * @cdk.module test-forcefield
  */
 public class ForceFieldConfiguratorTest  {
 

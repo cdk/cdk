@@ -1,9 +1,4 @@
-/* $RCSfile$    
- * $Author: egonw $    
- * $Date: 2006-03-30 00:42:34 +0200 (Thu, 30 Mar 2006) $    
- * $Revision: 5865 $
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -21,13 +16,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-
 package org.openscience.cdk.modulesuites;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.Builder3dCoverageTest;
+import org.openscience.cdk.modeling.builder3d.AtomPlacer3DTest;
+import org.openscience.cdk.modeling.builder3d.AtomTetrahedralLigandPlacer3DTest;
+import org.openscience.cdk.modeling.builder3d.FurtherAtomPlacer3DTest;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3DTest;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
@@ -42,6 +39,9 @@ import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descripto
     Builder3dCoverageTest.class,
     ModelBuilder3DTest.class,
     PartialTChargeMMFF94DescriptorTest.class,
-    TemplateHandler3DTest.class
+    TemplateHandler3DTest.class,
+    FurtherAtomPlacer3DTest.class,
+    AtomTetrahedralLigandPlacer3DTest.class,
+    AtomPlacer3DTest.class
 })
 public class Mbuilder3dTests {}
