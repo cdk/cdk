@@ -171,7 +171,7 @@ public class CDKMCS {
                 IQueryAtom qAtom = (IQueryAtom) atom2;
                 return qAtom.matches(sourceGraph.getAtom(0));
             } else {
-                String atomSymbol = atom.getSymbol();
+                String atomSymbol = atom2.getSymbol();
                 return sourceGraph.getAtom(0).getSymbol().equals(atomSymbol);
             }
         }
