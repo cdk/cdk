@@ -39,6 +39,7 @@ import java.util.List;
  * 
  * @author danielszisz
  * @created 05/14/2012
+ * @cdk.module test-builder3d
  */
 public class FurtherTemplateHandler3DTest {
 	

@@ -25,6 +25,7 @@ import org.openscience.cdk.coverage.Builder3dCoverageTest;
 import org.openscience.cdk.modeling.builder3d.AtomPlacer3DTest;
 import org.openscience.cdk.modeling.builder3d.AtomTetrahedralLigandPlacer3DTest;
 import org.openscience.cdk.modeling.builder3d.FurtherAtomPlacer3DTest;
+import org.openscience.cdk.modeling.builder3d.FurtherTemplateHandler3DTest;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3DTest;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
@@ -42,6 +43,7 @@ import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descripto
     TemplateHandler3DTest.class,
     FurtherAtomPlacer3DTest.class,
     AtomTetrahedralLigandPlacer3DTest.class,
-    AtomPlacer3DTest.class
+    AtomPlacer3DTest.class,
+    FurtherTemplateHandler3DTest.class
 })
 public class Mbuilder3dTests {}
