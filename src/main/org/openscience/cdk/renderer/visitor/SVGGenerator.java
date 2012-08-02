@@ -663,7 +663,7 @@ public class SVGGenerator implements IDrawVisitor {
         double[] b = this.transformPoint(line.endX, line.endY);
         newline();
 		svg.append(String.format(
-				"<line x1=\"%4.2d\" y1=\"%4.2f\" x2=\"%4.2f\" y2=\"%4.2f\" " +
+				"<line x1=\"%4.2f\" y1=\"%4.2f\" x2=\"%4.2f\" y2=\"%4.2f\" " +
 				"style=\"stroke:black; stroke-width:"+w+"px;\" />",
 				a[0],
 				a[1],
@@ -725,7 +725,7 @@ public class SVGGenerator implements IDrawVisitor {
         
         newline();
 		svg.append(String.format(
-				"<polyline points=\"%s,%s %s,%s %s,%s %s,%s %s,%s\""+
+				"<polyline points=\"%4.2f,%4.2f %4.2f,%4.2f %4.2f,%4.2f %4.2f,%4.2f %4.2f,%4.2f\" "+
 					"style=\"fill:none;"+
 					"stroke:black;stroke-width:1\"/>", 
 				pA[0],pA[1],
