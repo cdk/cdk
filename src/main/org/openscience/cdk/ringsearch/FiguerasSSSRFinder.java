@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -82,9 +82,9 @@ public class FiguerasSSSRFinder {
 		//full set of atoms in the structure and on to store the numbers
 		//of the nodes that have been trimmed away.
 		//Furhter there is a Vector nodesN2 to store the number of N2 nodes
-		List fullSet = new Vector();
-		List trimSet = new Vector();
-		List nodesN2 = new Vector();
+		List<IAtom> fullSet = new ArrayList<IAtom>();
+		List<IAtom> trimSet = new ArrayList<IAtom>();
+		List<IAtom> nodesN2 = new ArrayList<IAtom>();
 		
 		initPath(molecule);
 		logger.debug("molecule.getAtomCount(): " + molecule.getAtomCount());				
@@ -215,13 +215,13 @@ public class FiguerasSSSRFinder {
 		Queue queue = new Queue();
 		/* Initialize a path Vector for each node */
 		//Vector pfad1,pfad2;
-		List path[] = new Vector[OKatoms];
-		List intersection = new Vector();
-		List ring = new Vector();
+		List<List<IAtom>> path = new ArrayList<List<IAtom>>(OKatoms);
+		List<IAtom> intersection = new ArrayList<IAtom>();
+		List<IAtom> ring = new ArrayList<IAtom>();
 		for (int f = 0; f < OKatoms; f++)
 		{
-			path[f] = new Vector();		
-			((List)molecule.getAtom(f).getProperty(PATH)).clear();
+			path.set(f, new ArrayList<IAtom>());
+			((List<IAtom>)molecule.getAtom(f).getProperty(PATH)).clear();
 		}
 		// Initialize the queue with nodes attached to rootNode
 		neighbors = molecule.getConnectedAtomsList(rootNode);
@@ -232,15 +232,15 @@ public class FiguerasSSSRFinder {
 			// push the f-st node onto our FIFO queue	
 			// after assigning rootNode as its source
 			queue.push(neighbor);
-			((List)neighbor.getProperty(PATH)).add(rootNode);
-			((List)neighbor.getProperty(PATH)).add(neighbor);
+			((List<IAtom>)neighbor.getProperty(PATH)).add(rootNode);
+			((List<IAtom>)neighbor.getProperty(PATH)).add(neighbor);
 		}
 		while (queue.size() > 0){	
 			node = (IAtom)queue.pop();
 			mAtoms = molecule.getConnectedAtomsList(node);
 			for (int f = 0; f < mAtoms.size(); f++){
 				mAtom = (IAtom)mAtoms.get(f);
-				if (mAtom != ((List)node.getProperty(PATH)).get(((Vector)node.getProperty(PATH)).size() - 2)){
+				if (mAtom != ((List)node.getProperty(PATH)).get(((List<IAtom>)node.getProperty(PATH)).size() - 2)){
 					if (((List)mAtom.getProperty(PATH)).size() > 0){
 						intersection = getIntersection((List)node.getProperty(PATH), (List)mAtom.getProperty(PATH));
 						if (intersection.size() == 1){
@@ -251,7 +251,7 @@ public class FiguerasSSSRFinder {
 							logger.debug("path2  ", ((List)mAtom.getProperty(PATH)));
 							logger.debug("rootNode  ", rootNode);
 							logger.debug("ring   ", ring);
-							ring = getUnion(((Vector)node.getProperty(PATH)), ((Vector)mAtom.getProperty(PATH)));
+							ring = getUnion((List)node.getProperty(PATH), (List) mAtom.getProperty(PATH));
 							return prepareRing(ring,molecule);
 						}
 					}
@@ -260,8 +260,8 @@ public class FiguerasSSSRFinder {
 						// if path[mNumber] is null
 					    // update the path[mNumber]							
 						//pfad2 = (Vector)node.getProperty(PATH);
-						mAtom.setProperty(PATH, (Vector)((Vector)node.getProperty(PATH)).clone());
-						((List)mAtom.getProperty(PATH)).add(mAtom);
+						mAtom.setProperty(PATH, new ArrayList<IAtom>((List<IAtom>)node.getProperty(PATH)));
+						((List<IAtom>)mAtom.getProperty(PATH)).add(mAtom);
 						//pfad1 = (Vector)mAtom.getProperty(PATH);
 						// now push the node m onto the queue
 						queue.push(mAtom);	
@@ -341,21 +341,21 @@ public class FiguerasSSSRFinder {
 	{
 	 	for (int i = 0; i < molecule.getAtomCount(); i++) {
 	 		IAtom atom = molecule.getAtom(i);
-			atom.setProperty(PATH, new Vector());
+			atom.setProperty(PATH, new ArrayList<IAtom>());
 	 	}		
 	}
 
 	/**
 	 * Returns a Vector that contains the intersection of Vectors vec1 and vec2
 	 *
-	 * @param   vec1   The first vector
-	 * @param   vec2   The second vector
+	 * @param   list1   The first vector
+	 * @param   list2   The second vector
 	 * @return     
 	 */
-	private  List getIntersection(List vec1, List vec2) {
-		List is = new Vector();		
-		for (int f = 0; f < vec1.size(); f++){
-			if (vec2.contains((IAtom)vec1.get(f))) is.add((IAtom)vec1.get(f));	
+	private  List getIntersection(List<IAtom> list1, List<IAtom> list2) {
+		List is = new ArrayList<IAtom>();
+		for (int f = 0; f < list1.size(); f++){
+			if (list2.contains(list1.get(f))) is.add(list1.get(f));
 		}	
 		return is;
 	}	
@@ -363,16 +363,18 @@ public class FiguerasSSSRFinder {
 	/**
 	 * Returns a Vector that contains the union of Vectors vec1 and vec2
 	 *
-	 * @param   vec1  The first vector
-	 * @param   vec2  The second vector
+	 * @param   list1  The first vector
+	 * @param   list2  The second vector
 	 * @return     
 	 */
-	private  Vector getUnion(Vector vec1, Vector vec2){
-	    // FIXME: the JavaDoc does not describe what happens: that vec1 gets to be the union! 
-		Vector is = (Vector)vec1.clone();
-		for (int f = vec2.size()- 1; f > -1; f--){
-			if (!vec1.contains((IAtom)vec2.elementAt(f))) is.addElement((IAtom)vec2.elementAt(f));	
-		}	
+	private  List<IAtom> getUnion(List<IAtom> list1, List<IAtom> list2){
+	    // FIXME: the JavaDoc does not describe what happens: that vec1 gets to be the union!
+        // jm: pretty sure retainAll would do the trick here but don't want to change the
+        //     functionality as item only present in list1 are not removed (i.e. not union)
+        List<IAtom> is = new ArrayList<IAtom>(list1);
+		for (int f = list2.size()- 1; f > -1; f--){
+			if (!list1.contains(list2.get(f))) is.add(list2.get(f));
+		}
 		return is;
 	}	
 

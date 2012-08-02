@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -163,7 +163,7 @@ public class AtomPlacer
         Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
         occupiedDirection.sub(newDirection);
         logger.debug("distributePartners->occupiedDirection.lenght(): " + occupiedDirection.length());
-        Vector atomsToDraw = new Vector();
+        List<IAtom> atomsToDraw = new ArrayList<IAtom>();
 
         logger.debug("Number of shared atoms: ", placedNeighbours.getAtomCount());
 
@@ -178,7 +178,7 @@ public class AtomPlacer
             logger.debug("Only one neighbour...");
             for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
             {
-                atomsToDraw.addElement(unplacedNeighbours.getAtom(f));
+                atomsToDraw.add(unplacedNeighbours.getAtom(f));
             }
 
             addAngle = Math.PI * 2 / (unplacedNeighbours.getAtomCount() + placedNeighbours.getAtomCount());
@@ -206,7 +206,7 @@ public class AtomPlacer
             logger.debug("First atom...");
             for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
             {
-                atomsToDraw.addElement(unplacedNeighbours.getAtom(f));
+                atomsToDraw.add(unplacedNeighbours.getAtom(f));
             }
 
             addAngle = Math.PI * 2.0 / unplacedNeighbours.getAtomCount();
@@ -301,7 +301,7 @@ public class AtomPlacer
         }
         for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
         {
-            atomsToDraw.addElement(unplacedNeighbours.getAtom(f));
+            atomsToDraw.add(unplacedNeighbours.getAtom(f));
         }
         radius = bondLength;
         startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - atom.getPoint2d().x, startAtom.getPoint2d().y - atom.getPoint2d().y);
@@ -468,7 +468,7 @@ public class AtomPlacer
         double x;
         double y;
         logger.debug("populatePolygonCorners->startAngle: ", Math.toDegrees(angle));
-        Vector points = new Vector();
+        List<Point2d> points = new ArrayList<Point2d>(atomsToDraw.size());
         //IAtom atom = null;
 
         logger.debug("  centerX:", rotationCenter.x);
@@ -489,13 +489,13 @@ public class AtomPlacer
             newY = y + rotationCenter.y;
             logger.debug("  newX:", newX);
             logger.debug("  newY:", newY);
-            points.addElement(new Point2d(newX, newY));
+            points.add(new Point2d(newX, newY));
 		}
 
         for (int i = 0; i < atomsToDraw.size(); i++)
         {
             IAtom connectAtom = atomsToDraw.get(i);
-            connectAtom.setPoint2d((Point2d) points.elementAt(i));
+            connectAtom.setPoint2d((Point2d) points.get(i));
             connectAtom.setFlag(CDKConstants.ISPLACED, true);
             
             if (logger.isDebugEnabled() && connectAtom != null) {
@@ -623,8 +623,8 @@ public class AtomPlacer
             pathes[f].addAtom(startAtom);
 
         }
-        Vector startSphere = new Vector();
-        startSphere.addElement(startAtom);
+        List<IAtom> startSphere = new ArrayList<IAtom>();
+        startSphere.add(startAtom);
         breadthFirstSearch(molecule, startSphere, pathes);
         for (int f = 0; f < molecule.getAtomCount(); f++)
         {
@@ -662,19 +662,19 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public  void breadthFirstSearch(IAtomContainer ac, Vector sphere, IAtomContainer[] pathes) throws CDKException
+    public  void breadthFirstSearch(IAtomContainer ac, List<IAtom> sphere, IAtomContainer[] pathes) throws CDKException
     {
         IAtom atom = null;
         IAtom nextAtom = null;
         int atomNr;
         int nextAtomNr;
         //IAtomContainer path = null;
-        Vector newSphere = new Vector();
+        List<IAtom> newSphere = new ArrayList<IAtom>();
         logger.debug("Start of breadthFirstSearch");
 
         for (int f = 0; f < sphere.size(); f++)
         {
-            atom = (IAtom) sphere.elementAt(f);
+            atom = sphere.get(f);
             if (!atom.getFlag(CDKConstants.ISINRING))
             {
                 atomNr = ac.getAtomNumber(atom);
@@ -700,7 +700,7 @@ public class AtomPlacer
                         logger.debug("New path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
                         if (ac.getConnectedBondsCount(nextAtom) > 1)
                         {
-                            newSphere.addElement(nextAtom);
+                            newSphere.add(nextAtom);
                         }
                     }
                 }
@@ -710,7 +710,7 @@ public class AtomPlacer
         {
             for (int f = 0; f < newSphere.size(); f++)
             {
-                ((IAtom) newSphere.elementAt(f)).setFlag(CDKConstants.VISITED, true);
+                newSphere.get(f).setFlag(CDKConstants.VISITED, true);
             }
             breadthFirstSearch(ac, newSphere, pathes);
         }
@@ -778,12 +778,12 @@ public class AtomPlacer
      *      atoms in an AtomContainer
      *@exception  java.lang.Exception  Description of the Exception
      */
-    public String listNumbers(IAtomContainer mol, Vector ac) throws java.lang.Exception
+    public String listNumbers(IAtomContainer mol, List<IAtom> ac) throws java.lang.Exception
     {
         String s = "Numbers: ";
         for (int f = 0; f < ac.size(); f++)
         {
-            s += (mol.getAtomNumber((IAtom) ac.elementAt(f)) + 1) + " ";
+            s += (mol.getAtomNumber((IAtom) ac.get(f)) + 1) + " ";
         }
         return s;
     }
