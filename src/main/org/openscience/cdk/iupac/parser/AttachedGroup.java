@@ -24,8 +24,9 @@
 
 package org.openscience.cdk.iupac.parser;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Holds data on a specific functional group or substituent.
@@ -38,7 +39,7 @@ public class AttachedGroup {
     /** The name of the group */
     private String name = "";
     /** The collection of locations the group is attached to */
-    private Vector locations = new Vector();
+    private List<Token> locations = new ArrayList<Token>();
     /** The length of the substituent chain */
     private int length = 0;
     
@@ -47,14 +48,14 @@ public class AttachedGroup {
     }
     
     /** Creates a new instance of AttachedGroup with a Sting denoting the functional group */
-    public AttachedGroup (Vector locations, String name)
+    public AttachedGroup (List<Token> locations, String name)
     {
         setLocations (locations);
         setName (name);
     }
     
     /** Creates a new instance of AttachedGroup with an int denoting the length of the substituent chain */
-    public AttachedGroup (Vector locations, int length)
+    public AttachedGroup (List<Token> locations, int length)
     {
         setLocations (locations);
         setLength (length);
@@ -80,7 +81,7 @@ public class AttachedGroup {
      * @return Value of property locations.
      *
      */
-    public java.util.Vector getLocations() {
+    public List<Token> getLocations() {
         return locations;
     }
     
@@ -88,7 +89,7 @@ public class AttachedGroup {
      * @param locations New value of property locations.
      *
      */
-    public void setLocations(java.util.Vector locations) {
+    public void setLocations(List<Token> locations) {
         this.locations = locations;
     }
     

@@ -25,7 +25,7 @@
 package org.openscience.cdk.iupac.parser;
 
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -65,7 +65,7 @@ public class MoleculeBuilder
     /**
      * Builds the main chain which may act as a foundation for futher working groups.
      *
-     * @param mainChain The parsed prefix which depicts the chain's length.
+ * @param mainChain The parsed prefix which depicts the chain's length.
      * @param isMainCyclic A flag to show if the molecule is a ring. 0 means not a ring, 1 means is a ring.
      * @return A Molecule containing the requested chain.
      */
@@ -102,12 +102,12 @@ public class MoleculeBuilder
      * @param attachedGroups A vector of AttachedGroup's representing functional groups.
      * @see #addFunGroup
      */
-    private void buildFunGroups(Vector attachedGroups)
+    private void buildFunGroups(List<AttachedGroup> attachedGroups)
     {
-        Iterator groupsIterator = attachedGroups.iterator();
+        Iterator<AttachedGroup> groupsIterator = attachedGroups.iterator();
         while (groupsIterator.hasNext())
         {
-            AttachedGroup attachedGroup = (AttachedGroup) groupsIterator.next();
+            AttachedGroup attachedGroup = groupsIterator.next();
             
             Iterator locationsIterator = attachedGroup.getLocations().iterator();
             while (locationsIterator.hasNext())
@@ -483,12 +483,12 @@ public class MoleculeBuilder
      *
      * @param attachedSubstituents A vector of AttachedGroup's representing substituents.
      */
-    private void addHeads(Vector attachedSubstituents)
+    private void addHeads(List<AttachedGroup> attachedSubstituents)
     {
-        Iterator substituentsIterator = attachedSubstituents.iterator();
+        Iterator<AttachedGroup> substituentsIterator = attachedSubstituents.iterator();
         while (substituentsIterator.hasNext())
         {
-            AttachedGroup attachedSubstituent = (AttachedGroup) substituentsIterator.next();
+            AttachedGroup attachedSubstituent = substituentsIterator.next();
             
             Iterator locationsIterator = attachedSubstituent.getLocations().iterator();
             while (locationsIterator.hasNext())
@@ -528,8 +528,8 @@ public class MoleculeBuilder
      * @param isMainCyclic An indiacation of if the main chain is cyclic.
      * @return The molecule as built from the parsed tokens.
      */
-    protected IAtomContainer buildMolecule(int mainChain, Vector attachedSubstituents
-    , Vector attachedGroups, boolean isMainCyclic, String name) throws
+    protected IAtomContainer buildMolecule(int mainChain, List<AttachedGroup> attachedSubstituents
+    , List<AttachedGroup> attachedGroups, boolean isMainCyclic, String name) throws
     ParseException, CDKException
     {
         //Set up the molecle's name

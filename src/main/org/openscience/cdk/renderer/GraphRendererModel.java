@@ -26,6 +26,8 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.math.IFunction;
 
@@ -48,8 +50,8 @@ public class GraphRendererModel
   private String xtitle = "X title"; // Title of the x axis
   private String ytitle = "Y title"; // Title of the y axis
 
-  private java.util.Vector functions = new java.util.Vector();
-  private java.util.Vector colors = new java.util.Vector();
+  private List<IFunction> functions = new ArrayList<IFunction>();
+  private List<Color>     colors    = new ArrayList<Color>();
 
   /** Paints the function normal */
   public final static int NORMAL = 0;
@@ -207,7 +209,7 @@ public class GraphRendererModel
       colors.add(color);
     }
     else
-      colors.setElementAt(color, functions.indexOf(function));
+      colors.set(functions.indexOf(function), color);
   }
 
   /**
@@ -223,7 +225,7 @@ public class GraphRendererModel
    */
   public IFunction getFunction(int index)
   {
-    return (IFunction) functions.elementAt(index);
+    return functions.get(index);
   }
 
   /**
@@ -231,6 +233,6 @@ public class GraphRendererModel
    */
   public Color getFunctionColor(int index)
   {
-    return (Color) colors.elementAt(index);
+    return colors.get(index);
   }
 }
