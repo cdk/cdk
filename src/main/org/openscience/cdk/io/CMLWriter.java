@@ -99,6 +99,7 @@ import java.util.List;
  * @cdk.depends      jumbo50.jar
  * @cdk.require      java1.5+
  * @cdk.bug          1565563
+ * @cdk.iooptions
  *
  * @see java.io.FileWriter
  * @see java.io.StringWriter
