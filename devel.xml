@@ -1,0 +1,151 @@
+<project name="CDK" default="dist-all" basedir=".">
+
+        <property file="build.props"/>
+
+        <!-- directories -->
+        <property name="build" value="build" />
+        <property name="build.src" value="${build}/src" />
+        <property name="sourcedist" value="sourcedist" />
+        <property name="dist" value="dist" />
+        <property name="doc" value="doc" />
+        <property name="src" value="src" />
+        <property name="lib" value="jar" />
+        <property name="devellib" value="develjar" />
+        <property name="src.tests" value="${src}/test/org/openscience/cdk/test" />
+        <property name="reports.tests" value="reports" />
+        <property name="appjars.dir" value="${dist}/appjars" />
+        <property name="metainf" value="${src}/META-INF" />
+ 
+        <!-- jar file names for libraries used for compiling -->
+        <property name="javaccjar" value="javacc.jar" />
+        <property name="antcontribjar" value="ant-contrib-1.0b3.jar" />
+        <property name="vecmathjar" value="vecmath1.2-1.14.jar" />
+        <property name="log4jjar" value="log4j.jar" />
+        <property name="jgraphtjar" value="jgrapht-0.6.0.jar" />
+        <property name="junitjar" value="junit-4.10.jar" />
+        <property name="xercesjar" value="xercesImpl-2.9.0.jar" />
+
+        <property environment="env" />
+
+    <!-- Include the JavaNCSS goodies -->
+    <taskdef name="javancss" classname="javancss.JavancssAntTask">
+        <classpath>
+            <pathelement location="${devellib}/${javaccjar}"/>
+            <pathelement location="${devellib}/javancss.jar"/>
+            <pathelement location="${devellib}/ccl.jar"/>
+            <pathelement location="${devellib}/jhbasic.jar"/>
+        </classpath>
+    </taskdef>
+    <!-- Include the ant-contrib goodies -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="${devellib}/${antcontribjar}"/>
+        </classpath>
+    </taskdef>
+
+    <target id="info" name="info" depends="check">
+            <!-- Gives information about the building process. -->
+            <echo message="Platform:" />
+            <echo message="             OS: ${os.name}" />
+            <echo message="   Architecture: ${os.arch}" />
+            <echo message="        Version: ${os.version}" />
+            <echo message=" Mac OS/X found: ${isMacOsX}" />
+            <echo message="" />
+            <echo message="Java/Ant Environment:" />
+            <echo message="   Java version: ${java.version}" />
+            <echo message="    Java vendor: ${java.vendor}" />
+            <echo message="       Java dir: ${java.home}" />
+            <echo message="   Java ext dir: ${java.ext.dirs}" />
+            <echo message="    Ant version: ${ant.version}" />
+            <echo message="    ${ANT_HOME}: ${ant.home}" />
+            <echo message="       hasAnt17: ${hasAnt17}" />
+            <echo message="" />
+            <echo message="CDK Environment:" />
+            <echo message="    CDK version: ${version}" />
+            <echo message="      build.xml: $Id$" />
+            <echo message="    Junit found: ${junit.present}" />
+            <echo message=" --- required libraries ---" />
+            <echo message="  Vecmath found: ${vecmath.present}" />
+            <echo message="    Log4j found: ${log4j.present}" />
+            <echo message="  JGraphT found: ${jgrapht.present}" />
+            <echo message=" --- distributed (but optional) libraries ---" />
+            <echo message="   CMLDOM found: ${cmllibs.present}" />
+        </target>
+
+    <!-- See what platform were on -->
+    
+        <target id="checkPlatforms" name="checkPlatforms">
+            <condition property="isMacOsX">
+                <and>
+                    <os family="mac"/>
+                    <os family="unix"/>
+                </and>
+            </condition>
+        </target>
+
+    <target name="checkCopyright" id="checkCopyright" depends="check, customize">
+        <echo>Checking copyright info...</echo>
+        <mkdir dir="${build}" />
+        <javac includes="net/sf/cdk/tools/copyright/CheckCopyrightStatements.java"
+            srcdir="${src}/main/" destdir="${build}" optimize="${optimization}"
+            debug="${debug}" deprecation="${deprecation}"/>
+        <java classpath="${build}" classname="net.sf.cdk.tools.copyright.CheckCopyrightStatements">
+              <arg value="${src}/META-INF"/>
+              <arg value="${src}/main"/>
+              <arg value="${build}"/>
+        </java>
+    </target>
+
+    <target name="javancss" id="javancss" depends="runDoclet">
+        <mkdir dir="${build}" />
+        <echo>Calculating source statistics...</echo>
+	<javancss srcdir="${src}/main" includes="**/*.java"
+            generateReport="true"
+            outputfile="${build}/cdk_metrics.xml"
+            format="plain"
+	    classMetrics="false"
+	    functionMetrics="false"
+	/>
+	<javancss srcdir="${src}/test" includes="**/*.java"
+            generateReport="true"
+            outputfile="${build}/cdktest_metrics.xml"
+            format="plain"
+	    classMetrics="false"
+	    functionMetrics="false"
+	/>
+    </target>
+
+    <!-- Regenerate template fingerprints in case the fingerprint code has been updated
+	 so that fingerprint bits are different from a previous version -->
+    <target name="makefp3d" id="makefp3d">
+      <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
+      <gunzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz"
+	      dest="${src}/main/org/openscience/cdk/modeling/builder3d/data/" />
+      <java classname="org.openscience.cdk.modeling.builder3d.TemplateExtractor">
+	<classpath>
+	  <pathelement location="jar/${jgraphtjar}"/>
+          <pathelement location="jar/${xercesjar}"/>
+          <pathelement location="jar/${vecmathjar}"/>
+          <pathelement path="${dist}/jar/cdk-builder3dtools.jar" />
+          <pathelement path="${dist}/jar/cdk-interfaces.jar" />
+          <pathelement path="${dist}/jar/cdk-nonotify.jar" />
+          <pathelement path="${dist}/jar/cdk-standard.jar" />
+          <pathelement path="${dist}/jar/cdk-core.jar" />
+          <pathelement path="${dist}/jar/cdk-io.jar" />
+          <pathelement path="${dist}/jar/cdk-ioformats.jar" />
+          <pathelement path="${dist}/jar/cdk-data.jar" />
+          <pathelement path="${dist}/jar/cdk-isomorphism.jar" />
+          <pathelement path="${dist}/jar/cdk-fingerprint.jar" />
+	</classpath>
+	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf" />
+	<arg value="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt" />
+	<arg value="True" />
+	<arg value="True" />
+      </java>
+      <gzip src="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt"
+	    destfile="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz" />
+      <delete file="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf"/>
+      <delete file="${src}/main/org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt"/>
+    </target>
+
+</project>
