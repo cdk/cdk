@@ -31,6 +31,7 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -111,6 +112,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
     @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
+        if (IChemModel.class.equals(classObject)) return true;
+        if (IReaction.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;

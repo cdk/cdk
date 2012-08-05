@@ -44,6 +44,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -157,6 +158,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
+        if (IReaction.class.equals(classObject)) return true;
+        if (IReactionSet.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IReaction.class.equals(interfaces[i])) return true;

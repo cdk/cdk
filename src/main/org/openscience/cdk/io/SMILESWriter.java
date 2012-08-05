@@ -39,6 +39,7 @@ import java.io.Writer;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -130,6 +131,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
+        if (IMolecule.class.equals(classObject)) return true;
+        if (IMoleculeSet.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMoleculeSet.class.equals(interfaces[i])) return true;
