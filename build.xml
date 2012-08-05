@@ -37,7 +37,7 @@
 
          <property environment="env" />
 
-    <!-- Include the ant-contrib goodies -->
+    <!-- Include the JavaNCSS goodies -->
     <taskdef name="javancss" classname="javancss.JavancssAntTask">
         <classpath>
             <pathelement location="${basedir}/develjar/javacc.jar"/>
@@ -46,7 +46,7 @@
             <pathelement location="${basedir}/develjar/jhbasic.jar"/>
         </classpath>
     </taskdef>
-    <!-- Include the JavaNCSS goodies -->
+    <!-- Include the ant-contrib goodies -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
             <pathelement location="${basedir}/develjar/ant-contrib-1.0b3.jar"/>
