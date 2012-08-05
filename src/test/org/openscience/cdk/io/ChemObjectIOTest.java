@@ -35,17 +35,19 @@ import org.openscience.cdk.debug.DebugChemFile;
 import org.openscience.cdk.debug.DebugChemModel;
 import org.openscience.cdk.debug.DebugMolecule;
 import org.openscience.cdk.debug.DebugReaction;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
-import org.openscience.cdk.nonotify.NNAtomContainer;
-import org.openscience.cdk.nonotify.NNAtomContainerSet;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NNChemModel;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.nonotify.NNMoleculeSet;
 import org.openscience.cdk.nonotify.NNReaction;
 
 /**
@@ -115,6 +117,25 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         boolean oneAccepted = false;
         for (IChemObject object : acceptableChemObjects) {
             if (chemObjectIO.accepts(object.getClass())) {
+                oneAccepted = true;
+            }
+        }
+        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction, IRGroupQuery", oneAccepted);
+    }
+
+    @SuppressWarnings("rawtypes")
+	protected static Class[] acceptableChemObjectClasses = {
+        IChemFile.class, IChemModel.class, IMolecule.class, IReaction.class, IRGroupQuery.class
+    };
+
+    /**
+     * @cdk.bug 3553780
+     */
+    @SuppressWarnings("unchecked")
+	@Test public void testAcceptsAtLeastOneChemObjectClass() {
+        boolean oneAccepted = false;
+        for (Class<? extends IChemObject> clazz : acceptableChemObjectClasses) {
+            if (chemObjectIO.accepts(clazz)) {
                 oneAccepted = true;
             }
         }
