@@ -9,7 +9,6 @@
 
     <property name="src" value="src" />
     <property name="javadoc.dir" value="doc/cdk-javadoc-${version}" />
-    <property name="doxygen.dir" value="doc/doxygen" />
 
     <property name="pathtojava3d" value="" />
 
@@ -32,21 +31,6 @@
             <include name="*.jar" />
         </fileset>
     </path>
-
-    <taskdef name="doxygen" classname="org.doxygen.tools.DoxygenTask"
-            classpath="develjar/ant_doxygen.jar" />
-
-    <target name="doxygen" id="doxygen">
-        <mkdir dir="${doxygen.dir}" />
-        <doxygen>
-            <property name="INPUT" value="src/" />
-            <property name="PROJECT_NAME" value="The Chemistry Development Kit" />
-            <property name="OUTPUT_DIRECTORY" value="${doxygen.dir}" />
-            <property name="OPTIMIZE_OUTPUT_JAVA" value="YES" />
-            <property name="UML_LOOK" value="YES" />
-            <property name="ALIASES" value='"cdk.module=Is part of the CDK module:"' />
-        </doxygen>
-    </target>
 
     <target name="html" depends="compileTaglets">
         <mkdir dir="${javadoc.dir}" />
