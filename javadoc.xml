@@ -44,7 +44,7 @@
                  author="true" version="true" use="true"
                  public="true"
                  encoding="UTF-8"
-                 windowtitle="CDK API - version ${TODAY_SVN}">
+                 windowtitle="CDK ${version} API - created on ${TODAY_SVN}">
             <classpath>
                 <pathelement location="." />
                 <fileset dir="jar">
