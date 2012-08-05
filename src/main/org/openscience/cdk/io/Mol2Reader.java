@@ -113,6 +113,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
 
     @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
+        if (IChemFile.class.equals(classObject)) return true;
+        if (IChemModel.class.equals(classObject)) return true;
+        if (IMolecule.class.equals(classObject)) return true;
         Class[] interfaces = classObject.getInterfaces();
         for (Class anInterface : interfaces) {
             if (IChemModel.class.equals(anInterface)) return true;

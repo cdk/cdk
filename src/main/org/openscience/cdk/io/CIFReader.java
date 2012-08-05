@@ -124,6 +124,7 @@ public class CIFReader extends DefaultChemObjectReader {
 
     @TestMethod("testAccepts")
     public boolean accepts(Class testClass) {
+        if (IChemFile.class.equals(testClass)) return true;
 		Class[] interfaces = testClass.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;

@@ -124,6 +124,9 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
+        if (IChemFile.class.equals(classObject)) return true;
+        if (IChemModel.class.equals(classObject)) return true;
+        if (IReaction.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;

@@ -106,6 +106,7 @@ public class HINReader extends DefaultChemObjectReader {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
+        if (IChemFile.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
         for (Class anInterface : interfaces) {
             if (IChemFile.class.equals(anInterface)) return true;
