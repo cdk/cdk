@@ -40,16 +40,16 @@
     <!-- Include the JavaNCSS goodies -->
     <taskdef name="javancss" classname="javancss.JavancssAntTask">
         <classpath>
-            <pathelement location="${basedir}/develjar/javacc.jar"/>
-            <pathelement location="${basedir}/develjar/javancss.jar"/>
-            <pathelement location="${basedir}/develjar/ccl.jar"/>
-            <pathelement location="${basedir}/develjar/jhbasic.jar"/>
+            <pathelement location="${devellib}/javacc.jar"/>
+            <pathelement location="${devellib}/javancss.jar"/>
+            <pathelement location="${devellib}/ccl.jar"/>
+            <pathelement location="${devellib}/jhbasic.jar"/>
         </classpath>
     </taskdef>
     <!-- Include the ant-contrib goodies -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
-            <pathelement location="${basedir}/develjar/ant-contrib-1.0b3.jar"/>
+            <pathelement location="${devellib}/ant-contrib-1.0b3.jar"/>
         </classpath>
     </taskdef>
 
