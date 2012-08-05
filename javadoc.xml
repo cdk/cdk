@@ -77,7 +77,20 @@
             <taglet name="net.sf.cdk.tools.doclets.CDKThreadSafeTaglet" path="jar/xom-1.1.jar:src/main" />
             <taglet name="net.sf.cdk.tools.doclets.CDKThreadNonSafeTaglet" path="jar/xom-1.1.jar:src/main" />
             <taglet name="net.sf.cdk.tools.doclets.CDKGitTaglet" path="jar/xom-1.1.jar:src/main" />
-            <taglet name="net.sf.cdk.tools.doclets.CDKIOOptionsTaglet" path="jar/xom-1.1.jar:src/main" />
+            <taglet name="net.sf.cdk.tools.doclets.CDKIOOptionsTaglet" path="jar/xom-1.1.jar:src/main">
+              <path>
+                <pathelement location="." />
+                <fileset dir="dist/jar">
+                  <include name="*.jar" />
+                </fileset>
+                <fileset dir="${lib}">
+                  <include name="*.jar" />
+                </fileset>
+                <fileset dir="${lib}/jena">
+                  <include name="*.jar" />
+                </fileset>
+              </path>
+            </taglet>
             <packageset dir="${src}/main" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
             </packageset>
