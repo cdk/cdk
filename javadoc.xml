@@ -47,10 +47,14 @@
                  windowtitle="CDK ${version} API - created on ${TODAY_SVN}">
             <classpath>
                 <pathelement location="." />
-                <fileset dir="jar">
+                <fileset dir="${lib}">
                     <include name="*.jar" />
                 </fileset>
-                <fileset dir="jar/jena">
+                <pathelement location="." />
+                <fileset dir="${lib}/jena">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="${devellib}">
                     <include name="*.jar" />
                 </fileset>
                  <dirset dir="src/main">
