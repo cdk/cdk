@@ -54,6 +54,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * 
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.CTXReaderTest")
 public class CTXReader extends DefaultChemObjectReader {

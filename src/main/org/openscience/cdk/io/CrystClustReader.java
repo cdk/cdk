@@ -48,6 +48,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * @cdk.module extra
  * @cdk.githash
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.CrystClustReaderTest")
 public class CrystClustReader extends DefaultChemObjectReader {

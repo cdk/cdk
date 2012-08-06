@@ -48,6 +48,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @see org.openscience.cdk.io.PCCompoundASNReader
  * 

@@ -52,6 +52,7 @@ import java.util.Iterator;
  * @cdk.module io
  * @cdk.githash
  * @cdk.created 2004-01-27
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.HINWriterTest")
 public class HINWriter extends DefaultChemObjectWriter {

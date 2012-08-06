@@ -77,6 +77,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.module  pdb
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author      Edgar Luttmann
  * @author      Bradley Smith <bradley@baysmith.com>

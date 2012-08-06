@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module smiles
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @see org.openscience.cdk.io.SMILESReader
  * 

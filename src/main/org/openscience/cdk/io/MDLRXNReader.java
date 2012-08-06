@@ -60,6 +60,7 @@ import java.util.StringTokenizer;
  *
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author     Egon Willighagen
  * @cdk.created    2003-07-24

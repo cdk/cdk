@@ -92,6 +92,7 @@ import java.util.regex.Pattern;
  *
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author     steinbeck
  * @author     Egon Willighagen

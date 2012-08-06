@@ -55,6 +55,7 @@ import java.io.Writer;
  *
  * @cdk.module  smiles
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @cdk.keyword file format, SMILES
  */

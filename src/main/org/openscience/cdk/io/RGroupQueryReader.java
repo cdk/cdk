@@ -67,6 +67,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @cdk.keyword Rgroup
  * @cdk.keyword R group

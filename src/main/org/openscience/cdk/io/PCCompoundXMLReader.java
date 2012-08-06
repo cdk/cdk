@@ -49,6 +49,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  *
  * @cdk.module  io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @cdk.keyword file format, PubChem Compound XML
  */

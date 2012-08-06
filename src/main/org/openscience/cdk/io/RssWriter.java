@@ -46,6 +46,7 @@ import org.openscience.cdk.libio.cml.Convertor;
  *
  * @cdk.module       libiocml
  * @cdk.githash
+ * @cdk.iooptions
  * @cdk.builddepends xom-1.0.jar
  *
  * @author Stefan Kuhn

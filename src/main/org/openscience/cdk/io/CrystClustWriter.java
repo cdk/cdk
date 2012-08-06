@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module extra
  * @cdk.githash
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.CrystClustWriterTest")
 public class CrystClustWriter extends DefaultChemObjectWriter {

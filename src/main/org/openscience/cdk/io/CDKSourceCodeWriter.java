@@ -69,6 +69,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2003-10-01
  * 
  * @cdk.keyword file format, CDK source code
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.CDKSourceCodeWriterTest")
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {

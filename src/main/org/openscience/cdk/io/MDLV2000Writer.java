@@ -88,6 +88,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module  io
  * @cdk.githash
+ * @cdk.iooptions
  * @cdk.keyword file format, MDL molfile
  */
 @TestClass("org.openscience.cdk.io.MDLV2000WriterTest")

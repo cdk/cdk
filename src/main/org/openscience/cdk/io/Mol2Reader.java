@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @author Egon Willighagen
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  * @cdk.created 2003-08-21
  * @cdk.keyword file format, Mol2
  */

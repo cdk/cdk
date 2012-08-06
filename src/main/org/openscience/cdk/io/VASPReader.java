@@ -57,6 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module extra
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author  Fabian Dortu <Fabian.Dortu@wanadoo.be>
  */
