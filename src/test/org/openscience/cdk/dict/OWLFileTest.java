@@ -1,4 +1,4 @@
-/* Copyright (C) 2012  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2012-2013  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -18,9 +18,23 @@
  */
 package org.openscience.cdk.dict;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+
 /**
  * @cdk.module test-dict
  */
-public class OWLFileTest extends EntryTest {
+public class OWLFileTest extends AbstractDictionaryTest {
+	
+	@Before
+	public void setTestClass() {
+		super.setTestClass(new OWLFile());
+	}
+
+	@After
+	public void testTestClass() {
+		Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLFile"));
+	}
 
 }

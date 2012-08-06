@@ -18,35 +18,23 @@
  */
 package org.openscience.cdk.dict;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Before;
 
 /**
  * @cdk.module test-dict
  */
-public class DictionaryTest extends EntryTest {
-
-	@Test
-	public void testNS() {
-		Dictionary dict = new Dictionary();
-		Assert.assertNotNull(dict);
-		Assert.assertNull(dict.getNS());
-		dict.setNS("http://www.namespace.example.org/");
-		Assert.assertEquals("http://www.namespace.example.org/", dict.getNS());
+public class DictionaryTest extends AbstractDictionaryTest {
+	
+	@Before
+	public void setTestClass() {
+		super.setTestClass(new Dictionary());
 	}
 
-	@Test
-	public void testAddEntry() {
-		Dictionary dict = new Dictionary();
-		Assert.assertNotNull(dict);
-		Assert.assertEquals(0, dict.size());
-		Assert.assertFalse(dict.hasEntry("someidentifier"));
-		Entry entry = new Entry();
-		entry.setID("someidentifier");
-		dict.addEntry(entry);
-		Assert.assertEquals(1, dict.size());
-		Assert.assertTrue(dict.hasEntry("someidentifier"));
-		Assert.assertEquals(entry, dict.getEntry("someidentifier"));
+	@After
+	public void testTestClass() {
+		Assert.assertTrue(getTestClass().getClass().getName().endsWith(".Dictionary"));
 	}
 
 }

@@ -18,9 +18,23 @@
  */
 package org.openscience.cdk.dict;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+
 /**
  * @cdk.module test-dict
  */
-public class OWLReactTest extends EntryTest {
+public class OWLReactTest extends AbstractDictionaryTest {
+	
+	@Before
+	public void setTestClass() {
+		super.setTestClass(new OWLReact());
+	}
+
+	@After
+	public void testTestClass() {
+		Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLReact"));
+	}
 
 }

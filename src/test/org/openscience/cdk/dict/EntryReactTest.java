@@ -18,9 +18,33 @@
  */
 package org.openscience.cdk.dict;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * @cdk.module test-dict
  */
-public class EntryReactTest extends EntryTest {
+public class EntryReactTest extends AbstractEntryTest {
+
+	@Before
+	public void setTestClass() {
+		super.setTestClass(new EntryReact("someID"));
+	}
+
+	@After
+	public void testTestedClass() {
+		Assert.assertTrue(super.getTestClass() instanceof EntryReact);
+	}
+
+	@Test
+	@Override // customize because there is no constructor without any parameters
+	public void testID() {
+		Entry entry = getTestClass();
+		Assert.assertEquals("someid", entry.getID());
+		entry.setID("identifier");
+		Assert.assertEquals("identifier", entry.getID());
+	}
 
 }
