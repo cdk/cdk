@@ -80,19 +80,6 @@ public class CDKIOOptionsTaglet implements Taglet {
     }
 
     public String toString(Tag tag) {
-        return "<DT><B>IO options: </B><DD>"
-               + expand(tag) + "</DD>\n";
-    }
-    
-    public String toString(Tag[] tags) {
-        if (tags.length == 0) {
-            return null;
-        } else {
-            return toString(tags[0]);
-        }
-    }
-
-    private String expand(Tag tag) {
     	// create a table with IOOptions
     	StringBuffer tableContent = new StringBuffer();
     	SourcePosition file = tag.position();
@@ -105,20 +92,35 @@ public class CDKIOOptionsTaglet implements Taglet {
 			Object ioInstance = ioClass.newInstance();
 			if (ioInstance instanceof IChemObjectIO) {
 				IChemObjectIO objectIO = (IChemObjectIO)ioInstance;
-	    		tableContent.append("<table>");			
+				if (objectIO.getIOSettings().length == 0) return ""; 
+	    		tableContent.append("<table>");
 	    		for (IOSetting setting : objectIO.getIOSettings()) {
 	    			tableContent.append("<tr>");
-	    			tableContent.append("<td>" + setting.getName() + "</td>");
-	    			tableContent.append("<td></td>");
+	    			tableContent.append("<td><b>" + setting.getName() + "</b></td>");
+	    			tableContent.append(
+	    				"<td>" + setting.getQuestion() +
+	    				" [Default: " + setting.getDefaultSetting() + "]</td>"
+	    			);
 	    			tableContent.append("</tr>");
 	    		}
 	    		tableContent.append("</table>");
+			} else {
+				return "";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
 		}
-    	return tableContent.toString();
+    	return "<DT><B>IO options: </B><DD>"
+                + tableContent.toString() + "</DD>\n";
+    }
+    
+    public String toString(Tag[] tags) {
+        if (tags.length == 0) {
+            return null;
+        } else {
+            return toString(tags[0]);
+        }
     }
 
 }
