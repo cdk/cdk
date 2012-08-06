@@ -88,6 +88,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * @cdk.keyword file format
  * @cdk.keyword output
  * @cdk.keyword log file
+ * @cdk.iooptions
  * 
  * @author Bradley A. Smith
  * 

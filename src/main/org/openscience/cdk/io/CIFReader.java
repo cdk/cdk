@@ -72,6 +72,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author  E.L. Willighagen
  * @cdk.created 2003-10-12
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.CIFReaderTest")
 public class CIFReader extends DefaultChemObjectReader {

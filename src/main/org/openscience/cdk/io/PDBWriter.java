@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * 
  * @author      Gilleain Torrance <gilleain.torrance@gmail.com>
  * @cdk.module io
+ * @cdk.iooptions
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.io.PDBWriterTest")

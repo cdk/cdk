@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module  io
  * @cdk.githash
+ * @cdk.iooptions
  * @cdk.keyword file format, MDL SD file
  */
 @TestClass("org.openscience.cdk.io.SDFWriterTest")

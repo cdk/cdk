@@ -60,6 +60,7 @@ import java.util.regex.Pattern;
  *
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2006
