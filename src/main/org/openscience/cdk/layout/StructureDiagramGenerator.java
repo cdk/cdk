@@ -264,11 +264,7 @@ public class StructureDiagramGenerator
 		//IAtom[] atoms = shallowCopy.getAtoms();
 		for (IAtom curAtom : shallowCopy.atoms()) {
 			if (curAtom.getSymbol().equals("H")) {
-				int bondsFromCurAtom=0;
-				for (IBond bond : shallowCopy.bonds())
-					if(bond.contains (curAtom))
-						++bondsFromCurAtom;
-				if (bondsFromCurAtom < 2) {
+				if (shallowCopy.getConnectedBondsCount(curAtom) < 2) {
 					shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
 					curAtom.setPoint2d(null);
 				}
