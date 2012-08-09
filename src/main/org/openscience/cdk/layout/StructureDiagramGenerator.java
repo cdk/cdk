@@ -25,8 +25,7 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -262,12 +261,16 @@ public class StructureDiagramGenerator
 		IMolecule shallowCopy = molecule.getBuilder().newInstance(IMolecule.class,molecule);
 		// delete single-bonded H's from
 		//IAtom[] atoms = shallowCopy.getAtoms();
-		for (IAtom curAtom : shallowCopy.atoms()) {
-			if (curAtom.getSymbol().equals("H")) {
-				if (shallowCopy.getConnectedBondsCount(curAtom) < 2) {
-					shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
-					curAtom.setPoint2d(null);
-				}
+		Map<IAtom,Integer> single_h = new HashMap<IAtom,Integer>();
+		for (IBond curBond : shallowCopy.bonds()) {
+			boolean first = curBond.getAtom(0).getSymbol().equals("H");
+			boolean second = curBond.getAtom(1).getSymbol().equals("H");
+			if (first && !second)  single_h.put(curBond.getAtom(0), 0);
+			if (!first && second)  single_h.put(curBond.getAtom(1), 0);
+		}
+		for (IAtom curAtom : single_h.keySet()) {
+			if (shallowCopy.getConnectedBondsCount(curAtom) == 1) {
+				shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
 			}
 		}
 		// do layout on the shallow copy
