@@ -27,16 +27,22 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.InputStream;
 
 /**
  * Checks the functionality of the TopologicalEquivalentClass.
  *
+ * @author      Junfeng Hao
+ * @author      Luis F. de Figueiredo
+ * @cdk.created 2003-09-26
  * @cdk.module test-extra
  */
 public class EquivalentClassPartitionerTest extends CDKTestCase
@@ -264,4 +270,142 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 
         int[] classes = partitioner.getTopoEquivClassbyHuXu(mol);
     }
+
+    /**
+     * Test if aromatic bonds are being considered as such.
+     * Azulene has an aromatic outer ring and if bonds are considered only as a sequence of single and double bonds
+     * then the atoms closing the rings will be assigned to different classes (and all other atoms as well) because
+     * there will be a different number of single and double bonds on opposite sides of the symmetry axis.
+     *
+     * @throws Exception
+     * @cdk.bug 3562476
+     */
+    @Test
+    public void testAromaticSystem() throws Exception {
+
+        IAtomContainer mol = MoleculeFactory.makeAzulene();
+        Assert.assertNotNull("Created molecule was null", mol);
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
+        int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
+        char[] arrEquivalent = new char[mol.getAtomCount()];
+        for (int i = 1; i < equivalentClass.length; i++)
+            arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
+        String strEquivalent = new String(arrEquivalent);
+
+        Assert.assertNotNull("Equivalent class was null",
+                             equivalentClass);
+        Assert.assertEquals("Unexpected equivalent class length",
+                            mol.getAtomCount() + 1,
+                            equivalentClass.length);
+        Assert.assertEquals("Wrong number of equivalent classes",
+                            6, equivalentClass[0]);//number of Class
+        Assert.assertEquals("Wrong class assignment","1232145654",strEquivalent);
+    }
+
+
+    /**
+     * Test the equivalent classes method in alpha-pinene
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testAlphaPinene() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Assert.assertNotNull("Created molecule was null", mol);
+        EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
+        int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
+        char[] arrEquivalent = new char[mol.getAtomCount()];
+        for (int i = 1; i < equivalentClass.length; i++)
+            arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
+        String strEquivalent = new String(arrEquivalent);
+        Assert.assertNotNull("Equivalent class was null",
+                equivalentClass);
+        Assert.assertEquals("Wrong number of equivalent classes",
+                9, equivalentClass[0]);
+        Assert.assertEquals("Wrong class assignment","1234567899",strEquivalent);
+    }
+
+    /**
+     * Test the equivalent classes method in pyrimidine
+     * Tests if the position of the single and double bonds in an aromatic ring matter
+     * to assign a class.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testPyrimidine() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makePyrimidine();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Assert.assertNotNull("Created molecule was null", mol);
+        EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
+        int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
+        char[] arrEquivalent = new char[mol.getAtomCount()];
+        for (int i = 1; i < equivalentClass.length; i++)
+            arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
+        String strEquivalent = new String(arrEquivalent);
+        Assert.assertNotNull("Equivalent class was null",
+                equivalentClass);
+        Assert.assertEquals("Wrong number of equivalent classes",
+                4, equivalentClass[0]);
+        Assert.assertEquals("Wrong class assignment","123214",strEquivalent);
+    }
+
+    /**
+     * Test the equivalent classes method in biphenyl,
+     * a molecule with two aromatic systems. It has 2 symmetry axis.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testBiphenyl() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makeBiphenyl();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Assert.assertNotNull("Created molecule was null", mol);
+        EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
+        int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
+        char[] arrEquivalent = new char[mol.getAtomCount()];
+        for (int i = 1; i < equivalentClass.length; i++)
+            arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
+        String strEquivalent = new String(arrEquivalent);
+        Assert.assertNotNull("Equivalent class was null",
+                equivalentClass);
+        Assert.assertEquals("Wrong number of equivalent classes",
+                4, equivalentClass[0]);
+        Assert.assertEquals("Wrong class assignment","123432123432",strEquivalent);
+    }
+
+    /**
+     * Test the equivalent classes method in imidazole,
+     * an aromatic molecule with a proton that can be exchanged between two aromatic nitrogens.
+     * The method should have failed because only one tautomer is considered,
+     * but there is no priority class for nodes of type ArNH to distinguish the nitrogens.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testImidazole() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makeImidazole();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Assert.assertNotNull("Created molecule was null", mol);
+        EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
+        int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
+        char[] arrEquivalent = new char[mol.getAtomCount()];
+        for (int i = 1; i < equivalentClass.length; i++)
+            arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
+        String strEquivalent = new String(arrEquivalent);
+        Assert.assertNotNull("Equivalent class was null",
+                equivalentClass);
+        Assert.assertEquals("Wrong number of equivalent classes",
+                3, equivalentClass[0]);
+        Assert.assertEquals("Wrong class assignment","12321",strEquivalent);
+    }
+
 }

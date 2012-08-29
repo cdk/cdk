@@ -27,6 +27,7 @@ import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.coverage.ExtraCoverageTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
+import org.openscience.cdk.graph.invariant.EquivalentClassPartitionerTest;
 import org.openscience.cdk.index.CASNumberTest;
 import org.openscience.cdk.io.ShelXWriterTest;
 import org.openscience.cdk.iupac.ParserTest;
@@ -54,6 +55,7 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
     ShelXWriterTest.class,
     BremserPredictorTest.class,
     ParserTest.class,
-    ReactionChainTest.class    
+    ReactionChainTest.class,
+    EquivalentClassPartitionerTest.class
 })
 public class MextraTests {}
