@@ -29,6 +29,7 @@ import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.fingerprint.KlekotaRothFingerprinterTest;
 import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
 import org.openscience.cdk.fingerprint.PubchemFingerprinterTest;
+import org.openscience.cdk.fingerprint.ShortestPathFingerprinterTest;
 import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.LingoSimilarityTest;
 import org.openscience.cdk.similarity.TanimotoTest;
@@ -49,6 +50,7 @@ import org.openscience.cdk.similarity.TanimotoTest;
     DistanceMomentTest.class,
     TanimotoTest.class,
     LingoSimilarityTest.class,
-    KlekotaRothFingerprinterTest.class
+    KlekotaRothFingerprinterTest.class,
+	ShortestPathFingerprinterTest.class
 })
 public class MfingerprintTests {}
