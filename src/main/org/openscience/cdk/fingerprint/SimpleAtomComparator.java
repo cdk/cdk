@@ -27,7 +27,7 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.*;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * <P> This code returns a sorted set of atoms for a container according to its
@@ -41,22 +41,18 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  * 
  */
-public class SimpleAtomCanonicalisation {
-
-	/**
-	 * @param container the container
-	 * @return canonicalized atoms
-	 */
-	public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
-		
-		List<IAtom> canonicalizedVertexList = new LinkedList<IAtom>();
-		int i = 0;
-		for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
-			IAtom atom = it.next();
-			canonicalizedVertexList.add(i, atom);
-			i++;
+class SimpleAtomComparator implements Comparator<IAtom> {
+	@Override
+	public int compare(IAtom o1, IAtom o2) {
+		if (!(o1 instanceof IChemObject) || !(o2 instanceof IChemObject)) {
+			throw new ClassCastException();
 		}
-		Collections.sort(canonicalizedVertexList, new SimpleAtomComparator());
-		return canonicalizedVertexList;
-	}
+		if (o1.getSymbol().equalsIgnoreCase(o2.getSymbol())) {
+			if (o1.getHybridization() != null && o2.getHybridization() != null) {
+				return o1.getHybridization().compareTo(o2.getHybridization());
+			}
+			return 0;
+		}
+		return 10 * o1.getSymbol().compareToIgnoreCase(o2.getSymbol());
+	} 
 }
