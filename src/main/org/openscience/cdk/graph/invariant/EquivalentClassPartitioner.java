@@ -41,8 +41,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  *
  *@author      Junfeng Hao
+ *@author      Luis F. de Figueiredo
  *@cdk.created 2003-09-24
  *@cdk.dictref blue-obelisk:perceiveGraphSymmetry
+ *@cdk.module extra
  */
 public class EquivalentClassPartitioner
 {
@@ -74,9 +76,21 @@ public class EquivalentClassPartitioner
 		apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);
 		layerNumber=1;
 		nodeNumber=atomContainer.getAtomCount();
-		for(int i=1;i<atomContainer.getAtomCount();i++)
-			for(int j=0;j<i;j++)
+
+		for(int i=1;i<atomContainer.getAtomCount();i++){
+			for(int j=0;j<i;j++){
+                // define the number of layer equal to the longest path obtained
+                // by calculating the all-pair-shortest path
 				if(apspMatrix[i][j]>layerNumber)layerNumber=apspMatrix[i][j];
+                // correct adjacency matrix to consider aromatic bonds as such
+                if(adjaMatrix[i][j]>0) {
+                    adjaMatrix[i][j] = (atomContainer.getBond(atomContainer.getAtom(i),
+                            atomContainer.getAtom(j)).getFlag(CDKConstants.ISAROMATIC))? 1.5 : adjaMatrix[i][j];
+                    adjaMatrix[j][i]= adjaMatrix[i][j];
+                }
+            }
+
+        }
 		nodeMatrix=new double[nodeNumber][layerNumber+1];
 		bondMatrix=new double[nodeNumber][layerNumber];
 		weight=new double[nodeNumber+1];
@@ -130,6 +144,7 @@ public class EquivalentClassPartitioner
 				 {
 					if(bond0.getOrder()==IBond.Order.SINGLE)nodeSequence[i]=14;//HO-
 					else if(bond0.getOrder()==IBond.Order.DOUBLE)nodeSequence[i]=16;//O=
+                    //missing the case of an aromatic double bond
 				 }
 				 else if(atom.getSymbol().equals("N"))
 				 {
@@ -173,7 +188,8 @@ public class EquivalentClassPartitioner
 					 else if((bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.TRIPLE) &&
 						 (bond0.getOrder()==IBond.Order.TRIPLE || bond1.getOrder()==IBond.Order.TRIPLE))
 						nodeSequence[i]=9;//-C#
-					else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
+					 // case 3 would not allow to reach this statement as there is no aromatic bond order
+                     if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=11;//ArCH
 				}
 				else if(atom.getSymbol().equals("N"))
@@ -191,8 +207,10 @@ public class EquivalentClassPartitioner
 					else if((bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE) &&
 						 (bond0.getOrder()==IBond.Order.TRIPLE || bond1.getOrder()==IBond.Order.TRIPLE))
 						nodeSequence[i]=29;//-N# with charge=+1
-					else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
+					// case 3 would not allow to reach this statement as there is no aromatic bond order
+                    if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=30;//ArN
+                    // there is no way to distinguish between ArNH and ArN as bonds to protons are not considered
 				}
 				else if(atom.getSymbol().equals("O"))
 				{
@@ -231,11 +249,13 @@ public class EquivalentClassPartitioner
 						 nodeSequence[i]=4;//>C-
 					 else if(bond0.getOrder()==IBond.Order.DOUBLE || bond1.getOrder()==IBond.Order.DOUBLE ||bond2.getOrder()==IBond.Order.DOUBLE)
 						 nodeSequence[i]=8;//>C=
-					 else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC) && bond2.getFlag(CDKConstants.ISAROMATIC))
+                     // case 2 would not allow to reach this statement because there is always a double bond (pi system) around an aromatic atom
+                     if((bond0.getFlag(CDKConstants.ISAROMATIC) || bond1.getFlag(CDKConstants.ISAROMATIC) || bond2.getFlag(CDKConstants.ISAROMATIC)) &&
+                             (bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE || bond2.getOrder()==IBond.Order.SINGLE))
+                         nodeSequence[i]=12;//ArC-
+                     // case 3 would not allow to reach this statement
+                     if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC) && bond2.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=13;//ArC
-					 else if((bond0.getFlag(CDKConstants.ISAROMATIC) || bond1.getFlag(CDKConstants.ISAROMATIC) || bond2.getFlag(CDKConstants.ISAROMATIC)) &&
-						 (bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE || bond2.getOrder()==IBond.Order.SINGLE))
-						nodeSequence[i]=12;//ArC-
 				 }
 				 else if(atom.getSymbol().equals("N"))
 				 {
