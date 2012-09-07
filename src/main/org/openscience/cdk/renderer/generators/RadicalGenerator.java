@@ -66,7 +66,7 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         // XXX : is this the best option?
         final double ATOM_RADIUS =
             ((AtomRadius)model.getParameter(AtomRadius.class)).
-            getValue();
+            getValue()/ model.getParameter(Scale.class).getValue();
         
         double modelRadius = SCREEN_RADIUS /
             model.getParameter(Scale.class).getValue();
@@ -80,13 +80,13 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
             double xRadius = point.x;
             double yRadius = point.y;
             if (align == 1) {
-                xRadius += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                xRadius += ATOM_RADIUS*2+singleElectronsPerAtom.get(atom)*modelRadius;
             } else if (align == -1) {
-                xRadius -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                xRadius -= ATOM_RADIUS*2+singleElectronsPerAtom.get(atom)*modelRadius;
             } else if (align == 2) {
-                yRadius += ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                yRadius += ATOM_RADIUS*2+singleElectronsPerAtom.get(atom)*modelRadius;
             } else if (align == -2) {
-                yRadius -= ATOM_RADIUS+singleElectronsPerAtom.get(atom)*ATOM_RADIUS;
+                yRadius -= ATOM_RADIUS*2+singleElectronsPerAtom.get(atom)*modelRadius;
             }
             singleElectronsPerAtom.put(atom, singleElectronsPerAtom.get(atom)+1);
             group.add(
