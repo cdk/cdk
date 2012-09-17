@@ -134,44 +134,57 @@ public class CDKConstants {
 
     /** Flag that is set if the chemobject is placed (somewhere).
      */
-    public final static int ISPLACED = 0;
+    public final static int ISPLACED                 = 0x0001;  // 1 << 0
     /** Flag that is set when the chemobject is part of a ring.
      */
-    public final static int ISINRING = 1;
+    public final static int ISINRING                 = 0x0002; // 1 << 1
     /** Flag that is set when the chemobject is part of a ring.
      */
-    public final static int ISNOTINRING = 2;
+    public final static int ISNOTINRING              = 0x0004; // 1 << 2
     /** Flag that is set if a chemobject is part of an aliphatic chain.
      */
-    public final static int ISALIPHATIC = 3;
+    public final static int ISALIPHATIC              = 0x0008; // 1 << 3 etc.
     /** Flag is set if chemobject has been visited.
      */
-    public final static int VISITED = 4; // Use in tree searches
+    public final static int VISITED                  = 0x0010; // Use in tree searches // 1 << 4
     /** Flag is set if chemobject is part of an aromatic system. */
-    public final static int ISAROMATIC = 5;
+    public final static int ISAROMATIC               = 0x0020;  // 1 << 5
     /** Flag is set if chemobject is part of a conjugated system. */
-    public final static int ISCONJUGATED = 6;
+    public final static int ISCONJUGATED             = 0x0040;  // 1 << 6
     /** Flag is set if a chemobject is mapped to another chemobject.
      *  It is used for example in subgraph isomorphism search.
      */
-    public final static int MAPPED = 7;
+    public final static int MAPPED                   = 0x0080;  // 1 << 7
 
     /** Sets to true if the atom is an hydrogen bond donor. */
-    public final static int IS_HYDROGENBOND_DONOR = 8;
+    public final static int IS_HYDROGENBOND_DONOR    = 0x0100;  // 1 << 8
     /** Sets to true if the atom is an hydrogen bond acceptor. */
-    public final static int IS_HYDROGENBOND_ACCEPTOR = 9;
+    public final static int IS_HYDROGENBOND_ACCEPTOR = 0x0200;  // 1 << 9
         
     /** Flag is set if a chemobject has reactive center.
      *  It is used for example in reaction.
      */
-    public static final int REACTIVE_CENTER = 10;
+    public static final int REACTIVE_CENTER          = 0x0400;  // 1 << 10
     /** Flag is set if an atom could be typed.
      */
-    public static final int IS_TYPEABLE = 11;
+    public static final int IS_TYPEABLE              = 0x0800;  // 1 << 11
+
     /**
-     * Maximum flags array index.
+     * Maximum flags array index. Please update this if the value exceeds 16 -
+     * the flags are currently stored as a single short value (16-bit) in the
+     * ChemObject implementations.
      */
     public final static int MAX_FLAG_INDEX = 12;
+
+    // array of flags is initialised using the static constructor
+    public final static int[] FLAG_MASKS = new int[MAX_FLAG_INDEX + 1];
+
+    static {
+        for(int i = 0 ; i < FLAG_MASKS.length; i++)
+            FLAG_MASKS[i] = 1 << i;
+    }
+
+
     /**
      * Flag used for JUnit testing the pointer functionality.
      */
