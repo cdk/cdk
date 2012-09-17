@@ -36,8 +36,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,11 +47,11 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -139,6 +139,25 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
+	@Test (timeout=5000)
+	public void testBridgedHydrogen() throws Exception {
+		IMolecule inputStructure = new Molecule();
+		IAtom carbon1 = new Atom("C");
+		IAtom carbon2 = new Atom("C");
+		IAtom bridgingHydrogen = new Atom("H");
+		inputStructure.addAtom(carbon1);
+		inputStructure.addAtom(bridgingHydrogen);
+		inputStructure.addAtom(carbon2);
+		inputStructure.addBond(0,1, IBond.Order.SINGLE);
+		inputStructure.addBond(1,2, IBond.Order.SINGLE);
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		sdg.setUseTemplates(true);
+		sdg.setMolecule(inputStructure);
+		sdg.generateExperimentalCoordinates(new Vector2d(0, 1));
+		IAtomContainer structureWithCoordinates = sdg.getMolecule();
+		System.out.println(structureWithCoordinates.getAtomCount());
+		assertTrue(GeometryTools.has2DCoordinates(structureWithCoordinates));
+	}
 
 	/**
 	 *  A unit test for JUnit
