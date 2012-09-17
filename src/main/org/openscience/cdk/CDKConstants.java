@@ -172,7 +172,7 @@ public class CDKConstants {
     /**
      * Maximum flags array index. Please update this if the value exceeds 16 -
      * the flags are currently stored as a single short value (16-bit) in the
-     * ChemObject implementations.
+     * ChemObject implementations (default, silent and query).
      */
     public final static int MAX_FLAG_INDEX = 12;
 

@@ -77,7 +77,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
 	 *  per object should be more than enough.
 	 */
-	private boolean[] flags;
+	private short flags; // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
 
 	/**
 	 *  The ID is null by default.
@@ -90,7 +90,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
 	public ChemObject()
 	{
-		flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
 		chemObjectListeners = null;
 		properties = null;
 		identifier = null;
@@ -105,8 +104,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	public ChemObject(IChemObject chemObject) {
 		// copy the flags
 		boolean[] oldflags = chemObject.getFlags();
-		flags = new boolean[oldflags.length];
-		System.arraycopy(oldflags, 0, flags, 0, flags.length);
+		flags = chemObject.getFlagValue().shortValue();
 		// copy the identifier
 		identifier = chemObject.getID();
 	}	
@@ -301,8 +299,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	{
 		ChemObject clone = (ChemObject)super.clone();
 		// clone the flags
-		clone.flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-        System.arraycopy(flags, 0, clone.flags, 0, flags.length);
+		clone.flags = getFlagValue().shortValue();
         // clone the properties
 		if (properties != null) {
 			Map<Object, Object> clonedHashtable = new HashMap<Object, Object>();
@@ -363,33 +360,40 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 
 
 	/**
-	 *  Sets the value of some flag.
-	 *
-	 *@param  flag_type   Flag to set
-	 *@param  flag_value  Value to assign to flag
-	 *@see                #getFlag
+	 * @inheritDoc
 	 */
-	public void setFlag(int flag_type, boolean flag_value)
+    @Override
+	public void setFlag(int mask, boolean value)
 	{
-		flags[flag_type] = flag_value;
-		notifyChanged();
+        // set/unset a bit in the flags value
+        if (value)
+            flags |= mask;
+        else
+            flags &= ~(mask);
+        notifyChanged();
 	}
 
 
-	/**
-	 *  Returns the value of some flag.
-	 *
-	 *@param  flag_type  Flag to retrieve the value of
-	 *@return            true if the flag <code>flag_type</code> is set
-	 *@see               #setFlag
-	 */
-	public boolean getFlag(int flag_type)
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean getFlag(int mask)
 	{
-		return flags[flag_type];
+        return (flags & mask) != 0;
 	}
 
 
-	/**
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public Short getFlagValue() {
+        return flags;
+    }
+
+
+    /**
 	 *  Sets the properties of this object.
 	 *
 	 *@param  properties  a Hashtable specifying the property values
@@ -414,7 +418,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 * @see                #getFlags
 	 */
     public void setFlags(boolean[] flagsNew){
-        flags=flagsNew;
+        for(int i = 0; i < flagsNew.length ; i++)
+            setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
         notifyChanged();
     }
 
@@ -425,7 +430,13 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *@see       #setFlags
 	 */
     public boolean[] getFlags(){
-        return(flags);
+        // could use a list a invoke .toArray() on the return
+        boolean[] flagArray = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+        for(int i = 0 ; i < CDKConstants.FLAG_MASKS.length; i++){
+            int mask = CDKConstants.FLAG_MASKS[i];
+            flagArray[i] = getFlag(mask);
+        }
+        return flagArray;
     }
 
 	/**

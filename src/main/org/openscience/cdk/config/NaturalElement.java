@@ -60,6 +60,7 @@ public final class NaturalElement implements IElement {
 
 	// unsupported methods
 
+    @Override public Number getFlagValue() { return null; }
 	@Override public void setProperty(Object description, Object property) {}
 	@Override public void removeProperty(Object description) {}
 	@Override public Object getProperty(Object description) { return null; }

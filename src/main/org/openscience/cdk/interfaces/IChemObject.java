@@ -153,23 +153,42 @@ public interface IChemObject extends ICDKObject {
 	public void setID(String identifier);
 
 	/**
-	 * Sets the value of some flag.
-	 *
-	 * @param  flag_type   Flag to set
-	 * @param  flag_value  Value to assign to flag
-	 * @see                #getFlag
+	 * Sets the value of some flag. The flag is a mask from a given
+     * CDKConstant (e.g. {@link org.openscience.cdk.CDKConstants#ISAROMATIC}
+     * or {@link org.openscience.cdk.CDKConstants#VISITED}).
+     *
+     * <pre>{@code
+     * // set this chem object to be aromatic
+     * chemObject.setFlag(CDKConstants.ISAROMATIC, Boolean.TRUE);
+     * // ...
+     * // indicate we have visited this chem object
+     * chemObject.setFlag(CDKConstants.VISITED, Boolean.TRUE);
+     * }</pre>
+     *
+     * @param  mask   flag to set the value for
+	 * @param  value  value to assign to flag
+	 * @see           #getFlag
+     * @see           org.openscience.cdk.CDKConstants
 	 */
-	public void setFlag(int flag_type, boolean flag_value);
+	public void setFlag(int mask, boolean value);
 
 
 	/**
-	 * Returns the value of some flag.
+	 * Returns the value of a given flag. The flag is a mask from a given
+     * CDKConstant (e.g. {@link org.openscience.cdk.CDKConstants#ISAROMATIC}).
+     *
+     * <pre>{@code
+     * if(chemObject.getFlag(CDKConstants.ISAROMATIC)){
+     *     // handle aromatic flag on this chem object
+     * }
+     * }</pre>
 	 *
-	 * @param  flag_type  Flag to retrieve the value of
-	 * @return            true if the flag <code>flag_type</code> is set
-	 * @see               #setFlag
+	 * @param  mask  flag to retrieve the value of
+	 * @return       true if the flag <code>flag_type</code> is set
+	 * @see          #setFlag
+     * @see          org.openscience.cdk.CDKConstants
 	 */
-	public boolean getFlag(int flag_type);
+	public boolean getFlag(int mask);
 
 	/**
 	 * Sets the properties of this object.
@@ -180,20 +199,37 @@ public interface IChemObject extends ICDKObject {
 	public void setProperties(Map<Object,Object> properties);
     
 	/**
-	 * Sets the whole set of flags.
+	 * Sets the whole set of flags. This set will iteratively invoke
+     * {@link #setFlag(int, boolean)} for each value in the array and
+     * use {@link org.openscience.cdk.CDKConstants#FLAG_MASKS} to look
+     * up the correct mask. If only a single flag is being set it is a lot
+     * faster to use {@link #setFlag(int, boolean)}.
 	 *
-	 * @param  flagsNew    the new flags.
+	 * @param  newFlags    the new flags to set.
+     * @see                #setFlag(int, boolean)
 	 * @see                #getFlags
 	 */
-    public void setFlags(boolean[] flagsNew);
+    public void setFlags(boolean[] newFlags);
 
 	/**
-	 * Returns the whole set of flags.
+	 * Returns the whole set of flags. This method will create a new array on
+     * each invocation and it is recommend you use {@link #getFlagValue()}
+     * if you need all the flags. For individual flags please use {@link #getFlag(int)}
 	 *
 	 * @return    the flags.
 	 * @see       #setFlags
+     * @see       #getFlag(int)
+     * @see       #getFlagValue()
 	 */
     public boolean[] getFlags();
+
+    /**
+     * Access the internal value used to store the flags. The flags are stored
+     * on a single numeric value and are set/cleared.
+     *
+     * @return numeric representation of the flags
+     */
+    public Number getFlagValue();
 
     /**
      * Returns a one line description of this IChemObject.

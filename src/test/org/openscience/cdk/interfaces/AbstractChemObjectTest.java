@@ -104,7 +104,6 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     }
     
     @Test public void testGetFlags(){
-      System.out.println("Test flags:");
       IChemObject chemObject=newChemObject();
       chemObject.setFlag(CDKConstants.ISINRING,true);
       IChemObject chemObject2=newChemObject();

@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -36,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * @cdk.module  isomorphism
  * @cdk.githash
  */
-public class QueryChemObject {
+public class QueryChemObject implements IChemObject {
 
     /**
      * List for listener administration.
@@ -61,10 +62,9 @@ public class QueryChemObject {
      *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
      *  per object should be more than enough.
      */
-    private boolean[] flags;
+    private short flags; // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
 
     public QueryChemObject() {
-        flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
         chemObjectListeners = null;
         properties = null;
         identifier = null;
@@ -272,28 +272,26 @@ public class QueryChemObject {
     }
 
     /**
-     *  Sets the value of some flag.
-     *
-     *@param  flag_type   Flag to set
-     *@param  flag_value  Value to assign to flag
-     *@see                #getFlag
+     * @inheritDoc
      */
-    public void setFlag(int flag_type, boolean flag_value)
+    @Override
+    public void setFlag(int mask, boolean value)
     {
-        flags[flag_type] = flag_value;
+        // set/unset a bit in the flags value
+        if (value)
+            flags |= mask;
+        else
+            flags &= ~(mask);
         notifyChanged();
     }
 
     /**
-     *  Returns the value of some flag.
-     *
-     *@param  flag_type  Flag to retrieve the value of
-     *@return            true if the flag <code>flag_type</code> is set
-     *@see               #setFlag
+     * @inheritDoc
      */
-    public boolean getFlag(int flag_type)
+    @Override
+    public boolean getFlag(int mask)
     {
-        return flags[flag_type];
+        return (flags & mask) != 0;
     }
 
     /**
@@ -316,23 +314,35 @@ public class QueryChemObject {
     private boolean doNotification = true;
 
     /**
-     * Sets the whole set of flags.
-     *
-     * @param  flagsNew    the new flags.
-     * @see                #getFlags
+     * @inheritDoc
      */
+    @Override
     public void setFlags(boolean[] flagsNew){
-        flags=flagsNew;
+        for(int i = 0; i < flagsNew.length ; i++)
+            setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
     }
 
     /**
-     * Returns the whole set of flags.
-     *
-     *@return    the flags.
-     *@see       #setFlags
+     * @inheritDoc
      */
+    @Override
     public boolean[] getFlags(){
-        return(flags);
+        // could use a list a invoke .toArray() on the return
+        boolean[] flagArray = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+        for(int i = 0 ; i < CDKConstants.FLAG_MASKS.length; i++){
+            int mask = CDKConstants.FLAG_MASKS[i];
+            flagArray[i] = getFlag(mask);
+        }
+        return flagArray;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public Short getFlagValue(){
+        return flags;
     }
 
     public void setNotification(boolean bool) {

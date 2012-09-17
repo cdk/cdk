@@ -437,6 +437,17 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
+
+    /**
+     * This field is not used by this immutable hydrogen.
+     *
+     * @return null.
+     */
+    @Override
+    public Number getFlagValue() {
+        return null;
+    }
+
     /** {@inheritDoc}} */
     /**
      * This field is not used by this immutable hydrogen.
