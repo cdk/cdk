@@ -165,7 +165,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
     public DescriptorValue calculate(IAtomContainer container) {
         boolean[] originalFlag4 = new boolean[container.getAtomCount()];
         for (int i=0; i<originalFlag4.length; i++) {
-            originalFlag4[i] = container.getAtom(i).getFlag(4);
+            originalFlag4[i] = container.getAtom(i).getFlag(CDKConstants.VISITED);
         }
         if (checkAromaticity) {
             try {
@@ -210,7 +210,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
         }
         // restore original flag values
         for (int i=0; i<originalFlag4.length; i++) {
-            container.getAtom(i).setFlag(4, originalFlag4[i]);
+            container.getAtom(i).setFlag(CDKConstants.VISITED, originalFlag4[i]);
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

@@ -196,12 +196,12 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(5,true);
+        mol.setFlag(CDKConstants.ISAROMATIC,true);
         
         Assert.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(2, ac.getAtomCount());
-        Assert.assertTrue(ac.getFlag(5));
+        Assert.assertTrue(ac.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test public void testRemoveHydrogensZeroHydrogenCounts() throws IOException, ClassNotFoundException, CDKException{
@@ -282,7 +282,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(5,true);
+        mol.setFlag(CDKConstants.ISAROMATIC,true);
         
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(
         	mol.getConnectedAtomsList(mol.getAtom(0))
@@ -306,7 +306,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(5,true);
+        mol.setFlag(CDKConstants.ISAROMATIC,true);
         
         IBond[] bonds = AtomContainerManipulator.getBondArray(
         	mol.getConnectedBondsList(mol.getAtom(0))
@@ -330,7 +330,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(5,true);
+        mol.setFlag(CDKConstants.ISAROMATIC,true);
         
         IBond[] bonds = AtomContainerManipulator.getBondArray(mol);
         Assert.assertEquals(5, bonds.length);
@@ -354,7 +354,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        mol.setFlag(5,true);
+        mol.setFlag(CDKConstants.ISAROMATIC,true);
         
         Assert.assertEquals(mol.getAtom(0), AtomContainerManipulator.getAtomById(mol, "a1"));
         Assert.assertEquals(mol.getAtom(1), AtomContainerManipulator.getAtomById(mol, "a2"));

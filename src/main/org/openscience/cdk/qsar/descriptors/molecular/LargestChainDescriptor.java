@@ -185,7 +185,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
         //logger.debug("LargestChainDescriptor");
         boolean[] originalFlag4 = new boolean[container.getAtomCount()];
         for (int i=0; i<originalFlag4.length; i++) {
-            originalFlag4[i] = container.getAtom(i).getFlag(4);
+            originalFlag4[i] = container.getAtom(i).getFlag(CDKConstants.VISITED);
         }
     	if (checkRingSystem) {
             IRingSet rs;

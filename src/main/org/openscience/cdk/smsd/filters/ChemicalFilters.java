@@ -472,11 +472,11 @@ public class ChemicalFilters {
         IAtomContainer product = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
 
         for (IAtom eAtom : Educt.atoms()) {
-            eAtom.setFlag(0, false);
+            eAtom.setFlag(CDKConstants.ISPLACED, false);
         }
 
         for (IAtom pAtom : product.atoms()) {
-            pAtom.setFlag(0, false);
+            pAtom.setFlag(CDKConstants.ISPLACED, false);
         }
 
         if (MCSAtomSolution != null) {
@@ -487,8 +487,8 @@ public class ChemicalFilters {
                 IAtom eAtom = Educt.getAtom(ENum);
                 IAtom pAtom = product.getAtom(PNum);
 
-                eAtom.setFlag(0, true);
-                pAtom.setFlag(0, true);
+                eAtom.setFlag(CDKConstants.ISPLACED, true);
+                pAtom.setFlag(CDKConstants.ISPLACED, true);
             }
         }
 
@@ -784,8 +784,8 @@ public class ChemicalFilters {
 
     private double getBondEnergy(IBond bond, BondEnergies bondEnergy) {
         double energy = 0.0;
-        if ((bond.getAtom(0).getFlag(0) == true && bond.getAtom(1).getFlag(0) == false)
-                || (bond.getAtom(0).getFlag(0) == false && bond.getAtom(1).getFlag(0) == true)) {
+        if ((bond.getAtom(0).getFlag(CDKConstants.ISPLACED) == true && bond.getAtom(1).getFlag(CDKConstants.ISPLACED) == false)
+                || (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) == false && bond.getAtom(1).getFlag(CDKConstants.ISPLACED) == true)) {
             Integer val = bondEnergy.getEnergies(bond.getAtom(0), bond.getAtom(1), bond.getOrder());
             if (val != null) {
                 energy = val;

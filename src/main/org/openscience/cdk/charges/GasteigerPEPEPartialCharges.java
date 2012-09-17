@@ -80,7 +80,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	private int STEP_SIZE = 5;
 	private AtomTypeFactory factory;
 	/** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
-	private static int ISCHANGEDFC = 0;
+	private static int ISCHANGEDFC = 0x1;
 	
 	/** Corresponds an empirical influence between the electrostatic potential and
 	 * the neighbours.*/
