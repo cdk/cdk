@@ -265,12 +265,11 @@ public class BondManipulator {
      * @param  secondBond second bond to compare
      * @return            The maximum bond order found
      */
-    @TestMethod("testGetMaximumBondOrder_IBond_IBond")
+    @TestMethod("testGetMaximumBondOrder_IBond_IBond,testGetMaximumBondOrder_IBond_IBond_null")
     public static IBond.Order getMaximumBondOrder(IBond firstBond, IBond secondBond) {
-    	if (isHigherOrder(firstBond.getOrder(), secondBond.getOrder()))
-    		return firstBond.getOrder();
-    	else
-    		return secondBond.getOrder();
+        if(firstBond == null || secondBond == null)
+            throw new IllegalArgumentException("null instance of IBond provided");
+    	return getMaximumBondOrder(firstBond.getOrder(), secondBond.getOrder());
 	}
 
     /**
@@ -280,10 +279,18 @@ public class BondManipulator {
      * @param  secondOrder second bond order to compare
      * @return             The maximum bond order found
      */
-    @TestMethod("testGetMaximumBondOrder_Order_Order")
+    @TestMethod("testGetMaximumBondOrder_Order_Order,testGetMaximumBondOrder_Unset_Unset")
     public static IBond.Order getMaximumBondOrder(IBond.Order firstOrder, IBond.Order secondOrder) {
-    	if (firstOrder == Order.UNSET) return secondOrder;
-    	if (secondOrder == Order.UNSET) return firstOrder;
+    	if (firstOrder == Order.UNSET) {
+            if(secondOrder == Order.UNSET)
+                throw new IllegalArgumentException("Both bond orders are unset");
+            return secondOrder;
+        }
+    	if (secondOrder == Order.UNSET) {
+            if(firstOrder == Order.UNSET)
+                throw new IllegalArgumentException("Both bond orders are unset");
+            return firstOrder;
+        }
 
     	if (isHigherOrder(firstOrder, secondOrder))
     		return firstOrder;

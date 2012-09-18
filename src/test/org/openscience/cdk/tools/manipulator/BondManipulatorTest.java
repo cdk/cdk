@@ -177,6 +177,18 @@ public class BondManipulatorTest extends CDKTestCase {
 		Assert.assertEquals(IBond.Order.DOUBLE, BondManipulator.getMaximumBondOrder(bond1, bond2));
 	}
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetMaximumBondOrder_IBond_IBond_null() {
+		IBond bond1 = new Bond(); bond1.setOrder(IBond.Order.UNSET);
+		IBond bond2 = new Bond(); bond2.setOrder(IBond.Order.DOUBLE);
+		BondManipulator.getMaximumBondOrder(null, bond2);
+	}
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testGetMaximumBondOrder_Unset_Unset() {
+		BondManipulator.getMaximumBondOrder(IBond.Order.UNSET, IBond.Order.UNSET);
+	}
+
     @Test
     public void testGetMaximumBondOrder_Order_Order() {
 		Assert.assertEquals(
