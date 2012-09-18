@@ -1478,7 +1478,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
     
     @Test public void testAllene() throws Exception {
-    	IMolecule mol = new Molecule();
+    	IAtomContainer mol = new AtomContainer();
         IAtom atom1 = new Atom("C");
         IAtom atom2 = new Atom("C");
         IAtom atom3 = new Atom("C");
