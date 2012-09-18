@@ -35,6 +35,11 @@
         <property name="arg3" value="" />
         <property name="arg4" value="" />
 
+        <!-- jvm arguments -->
+        <property name="jvmarg.cdk.debugging" value="true"
+                  description="print debug logging statements"/>
+        <property name="jvmarg.cdk.stdout" value="true"/>
+
         <!-- jar file names for libraries used for compiling -->
         <property name="javaccjar" value="javacc.jar" />
         <property name="antcontribjar" value="ant-contrib-1.0b3.jar" />
@@ -1124,7 +1129,8 @@
 -Dtestclass=&lt;class>.">
                 <echo message="Running test class: testclass=${testclass}"/>
                 <java classname="org.openscience.cdk.${testclass}" fork="yes" maxmemory="512m">
-                    <jvmarg value="-Dcdk.debugging=true"/>
+                    <jvmarg value="-Dcdk.debugging=${jvmarg.cdk.debugging}"/>
+                    <jvmarg value="-Dcdk.debug.stdout=${jvmarg.cdk.stdout}"/>
                     <classpath>
                         <fileset dir="${dist}/jar/">
                                 <include name="*.jar" />
@@ -1139,12 +1145,12 @@
                 </java>
         </target>
 
-        <target id="junit-test" name="junit-test" depends="dist-all,test-dist-all,noJunit" 
+        <target id="junit-test" name="junit-test" depends="dist-all,jarTestdata,test-dist-all,noJunit"
                 description="Runs one specific JUnit test suite (org.openscience.cdk.&lt;class>) with -Dtestclass=&lt;class>.">
-                <echo message="JUnit tests class: testclass=${testclass}"/>
-                <junit printsummary="yes" haltonfailure="no" fork="yes">
-                    <jvmarg value="-Dcdk.debugging=true"/>
-                    <jvmarg value="-Dcdk.debug.stdout=true"/>
+                <echo message="JUnit tests class: testclass=${testclass} [JVM Arguments: cdk.debugging=${cdk.debugging}, ${jvmarg.cdk.stdout}]"/>
+                <junit printsummary="yes" haltonfailure="no" fork="yes" maxmemory="512m">
+                    <jvmarg value="-Dcdk.debugging=${jvmarg.cdk.debugging}"/>
+                    <jvmarg value="-Dcdk.debug.stdout=${jvmarg.cdk.stdout}"/>
                     <classpath>
                         <fileset dir="${dist}/jar/">
                                 <include name="*.jar" />
@@ -1170,14 +1176,13 @@
         <target id="run" name="run" depends="dist-all" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
-                    <!--jvmarg value="-Dcdk.debugging=true"/>
-                    <jvmarg value="-Dcdk.debug.stdout=true"/-->
- 
-		    <arg value="${arg1}" />
-                   <arg value="${arg2}" />
-                   <arg value="${arg3}" />
-                   <arg value="${arg4}" />
-                   <classpath>
+                    <jvmarg value="-Dcdk.debugging=${jvmarg.cdk.debugging}"/>
+                    <jvmarg value="-Dcdk.debug.stdout=${jvmarg.cdk.stdout}"/>
+                    <arg value="${arg1}" />
+                    <arg value="${arg2}" />
+                    <arg value="${arg3}" />
+                    <arg value="${arg4}" />
+                    <classpath>
                         <fileset dir="${dist}/jar">
                                 <include name="*.jar" />
                         </fileset>
