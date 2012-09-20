@@ -34,6 +34,9 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @cdk.module test-inchi
@@ -142,5 +145,21 @@ public class InChIGeneratorFactoryTest {
     		"InChI=1/ClH/h1H", DefaultChemObjectBuilder.getInstance(), new ArrayList<String>()
     	);
     	Assert.assertNotNull(parser);
+    }
+
+
+    @Test public void testSMILESConversion_TopologicalCentre() throws CDKException {
+
+        // (2R,3R,4S,5R,6S)-3,5-dimethylheptane-2,4,6-triol
+        SmilesParser   parser    = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.parseSmiles("C[C@@H](O)[C@@H](C)[C@@H](O)[C@H](C)[C@H](C)O");
+
+        InChIGenerator generator = InChIGeneratorFactory.getInstance().getInChIGenerator(container);
+
+        String expected = "InChI=1S/C9H20O3/c1-5(7(3)10)9(12)6(2)8(4)11/h5-12H,1-4H3/t5-,6-,7-,8+,9-/m1/s1";
+        String actual   = generator.getInchi();
+
+        Assert.assertEquals("Incorrect InCHI generated for topological centre", expected, actual);
+
     }
 }
