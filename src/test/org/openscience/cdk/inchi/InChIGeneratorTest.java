@@ -25,7 +25,10 @@ import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -627,6 +630,54 @@ public class InChIGeneratorTest extends CDKTestCase {
         Assert.assertEquals(
             "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1",
             genD.getInchi()
+        );
+    }
+
+    @Test
+    public void testTetrahedralStereo() throws Exception {
+        // L-Alanine
+        IAtomContainer acL = new AtomContainer();
+        IAtom[] ligandAtoms = new IAtom[4];
+        IAtom a1 = new Atom("C");
+        IAtom a1H = new Atom("H");
+        ligandAtoms[0] = a1H;
+        IAtom a2 = new Atom("C");
+        ligandAtoms[1] = a2;
+        IAtom a3 = new Atom("N");
+        ligandAtoms[2] = a3;
+        IAtom a4 = new Atom("C");
+        ligandAtoms[3] = a4;
+        IAtom a5 = new Atom("O");
+        IAtom a6 = new Atom("O");
+        a1.setImplicitHydrogenCount(0);
+        a3.setImplicitHydrogenCount(2);
+        a4.setImplicitHydrogenCount(3);
+        a5.setImplicitHydrogenCount(1);
+        acL.addAtom(a1);
+        acL.addAtom(a1H);
+        acL.addAtom(a2);
+        acL.addAtom(a3);
+        acL.addAtom(a4);
+        acL.addAtom(a5);
+        acL.addAtom(a6);
+        
+        acL.addBond(new Bond(a1, a1H, CDKConstants.BONDORDER_SINGLE));
+        acL.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
+        acL.addBond(new Bond(a1, a3, CDKConstants.BONDORDER_SINGLE));
+        acL.addBond(new Bond(a1, a4, CDKConstants.BONDORDER_SINGLE));
+        acL.addBond(new Bond(a2, a5, CDKConstants.BONDORDER_SINGLE));
+        acL.addBond(new Bond(a2, a6, CDKConstants.BONDORDER_DOUBLE));
+
+        ITetrahedralChirality chirality = new TetrahedralChirality(
+        	a1, ligandAtoms, Stereo.ANTI_CLOCKWISE
+        );
+        acL.addStereoElement(chirality);
+
+        InChIGenerator genL = getFactory().getInChIGenerator(acL);
+        Assert.assertEquals(INCHI_RET.OKAY, genL.getReturnStatus());
+        Assert.assertEquals(
+            "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
+            genL.getInchi()
         );
     }
 }
