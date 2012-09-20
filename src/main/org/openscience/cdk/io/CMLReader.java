@@ -246,7 +246,8 @@ public class CMLReader extends DefaultChemObjectReader {
 
     @TestMethod("testClose")
     public void close() throws IOException {
-        input.close();
+        if(input != null)
+            input.close();
     }
 
 }
