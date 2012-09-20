@@ -65,6 +65,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module  io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @cdk.keyword file format, Polymorph Predictor (tm)
  *

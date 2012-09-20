@@ -66,6 +66,7 @@ import java.io.StringReader;
  *
  * @cdk.module  smiles
  * @cdk.githash
+ * @cdk.iooptions
  * @cdk.keyword file format, SMILES
  *
  * @see org.openscience.cdk.io.iterator.IteratingSMILESReader

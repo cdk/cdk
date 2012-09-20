@@ -60,6 +60,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * This MDL RXN reader uses the MDLV2000 reader to read each mol file
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author     Egon Willighagen
  * @author 	   Thomas Kuhn
