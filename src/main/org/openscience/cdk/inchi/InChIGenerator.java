@@ -54,6 +54,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -365,6 +368,32 @@ public class InChIGenerator {
                 input.addStereo0D(new JniInchiStereo0D(atC, at0, at1, at2, at3,
                         INCHI_STEREOTYPE.TETRAHEDRAL, p));
             }
+        }
+        // Process tetrahedral stereo elements
+        for (IStereoElement stereoElem : atomContainer.stereoElements()) {
+        	if (stereoElem instanceof ITetrahedralChirality) {
+        		ITetrahedralChirality chirality = (ITetrahedralChirality)stereoElem;
+        		IAtom[] surroundingAtoms = chirality.getLigands();
+        		Stereo stereoType = chirality.getStereo();
+
+        		JniInchiAtom atC = (JniInchiAtom) atomMap.get(chirality.getChiralAtom());
+                JniInchiAtom at0 = (JniInchiAtom) atomMap.get(surroundingAtoms[0]);
+                JniInchiAtom at1 = (JniInchiAtom) atomMap.get(surroundingAtoms[1]);
+                JniInchiAtom at2 = (JniInchiAtom) atomMap.get(surroundingAtoms[2]);
+                JniInchiAtom at3 = (JniInchiAtom) atomMap.get(surroundingAtoms[3]);
+                INCHI_PARITY p = INCHI_PARITY.UNKNOWN;
+                if (stereoType == Stereo.ANTI_CLOCKWISE) {
+                    p = INCHI_PARITY.ODD;
+                } else if (stereoType == Stereo.CLOCKWISE) {
+                    p = INCHI_PARITY.EVEN;
+                } else {
+                    throw new CDKException("Unknown tetrahedral chirality");
+                }
+
+                JniInchiStereo0D jniStereo = new JniInchiStereo0D(atC, at0, at1, at2, at3,
+                        INCHI_STEREOTYPE.TETRAHEDRAL, p);
+                input.addStereo0D(jniStereo);
+        	}
         }
         
         try {
