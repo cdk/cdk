@@ -25,9 +25,12 @@ import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import javax.vecmath.Point2d;
@@ -277,8 +280,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         Assert.assertEquals(genZ.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.getInchi());
     }
-    
-    
+
     /**
      * Tests 3D coordinates are correctly passed to InChI.
      * 
@@ -678,6 +680,41 @@ public class InChIGeneratorTest extends CDKTestCase {
         Assert.assertEquals(
             "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
             genL.getInchi()
+        );
+    }
+
+    @Test public void testDoubleBondStereochemistry() throws Exception {
+        // (E)-1,2-dichloroethene
+        IAtomContainer acE = new AtomContainer();
+        IAtom a1E = new Atom("C");
+        IAtom a2E = new Atom("C");
+        IAtom a3E = new Atom("Cl");
+        IAtom a4E = new Atom("Cl");
+        a1E.setImplicitHydrogenCount(1);
+        a2E.setImplicitHydrogenCount(1);
+        acE.addAtom(a1E);
+        acE.addAtom(a2E);
+        acE.addAtom(a3E);
+        acE.addAtom(a4E);
+
+        acE.addBond(new Bond(a1E, a2E, CDKConstants.BONDORDER_DOUBLE));
+        acE.addBond(new Bond(a1E, a3E, CDKConstants.BONDORDER_SINGLE));
+        acE.addBond(new Bond(a2E, a4E, CDKConstants.BONDORDER_SINGLE));
+
+        IBond[] ligands = new IBond[2];
+        ligands[0] = acE.getBond(1);
+        ligands[1] = acE.getBond(2);
+        IDoubleBondStereochemistry stereo = new DoubleBondStereochemistry(
+        	acE.getBond(0), ligands, org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE
+        );
+        acE.addStereoElement(stereo);
+
+        InChIGenerator genE = getFactory().getInChIGenerator(acE);
+        Assert.assertEquals(INCHI_RET.OKAY, genE.getReturnStatus());
+        System.out.println(genE.getMessage());
+        Assert.assertEquals(
+            "InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+",
+            genE.getInchi()
         );
     }
 }
