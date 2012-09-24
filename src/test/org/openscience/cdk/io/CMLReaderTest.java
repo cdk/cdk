@@ -22,14 +22,23 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * TestCase for reading CML files.
@@ -38,17 +47,85 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new CMLReader(), "data/cml/3.cml");
     }
 
-    @Test public void testAccepts() {
-    	Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+
+    @Test
+    public void testAccepts() {
+        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
-    @Test(expected=CDKException.class)
+
+    @Test(expected = CDKException.class)
     public void testSetReader_Reader() throws Exception {
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         chemObjectIO.setReader(new InputStreamReader(ins));
+    }
+
+
+    /**
+     * Ensure stereoBond content is read if the usual "dictRef" attribute is not
+     * supplied
+     *
+     * @cdk.bug 3557907
+     */
+    @Test
+    public void testBug3557907() throws FileNotFoundException, CDKException {
+
+        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol.cml");
+        CMLReader reader = new CMLReader(in);
+        IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+
+        Assert.assertNotNull("ChemFile was Null", cfile);
+
+        List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
+
+        Assert.assertEquals("Expected a single atom container", 1, containers.size());
+
+        IAtomContainer container = containers.get(0);
+
+        Assert.assertNotNull("Null atom container read", container);
+
+        IBond bond = container.getBond(2);
+
+        Assert.assertNotNull("Null bond", bond);
+
+        Assert.assertEquals("Expected Wedge (Up) Bond",
+                            IBond.Stereo.UP, bond.getStereo());
+
+    }
+
+
+    /**
+     * Ensure correct atomic numbers are read and does not default to 1
+     *
+     * @cdk.bug 3553328
+     */
+    @Test
+    public void testBug3553328() throws FileNotFoundException, CDKException {
+
+        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol.cml");
+        CMLReader reader = new CMLReader(in);
+        IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+
+        Assert.assertNotNull("ChemFile was Null", cfile);
+
+        List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
+
+        Assert.assertEquals("Expected a single atom container", 1, containers.size());
+
+        IAtomContainer container = containers.get(0);
+
+        Assert.assertNotNull("Null atom container read", container);
+
+        for(IAtom atom : container.atoms()){
+            Assert.assertEquals("Incorrect atomic number",
+                                PeriodicTable.getAtomicNumber(atom.getSymbol()),
+                                atom.getAtomicNumber());
+        }
+
     }
 }
