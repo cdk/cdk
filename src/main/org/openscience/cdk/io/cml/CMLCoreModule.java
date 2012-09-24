@@ -59,6 +59,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import org.xml.sax.Attributes;
 
 /**
@@ -827,6 +828,11 @@ public class CMLCoreModule implements ICMLModule {
                 }
                 formalCharges.add(charge);
             }
+        } else if ("bondStereo".equals(name)){
+            if(!currentChars.isEmpty()){
+                bondStereo.add(currentChars);
+                stereoGiven = Boolean.TRUE;
+            }
         } else if ("float".equals(name)) {
             if (BUILTIN.equals("x3")) {
                 x3.add(cData.trim());
@@ -1367,6 +1373,8 @@ public class CMLCoreModule implements ICMLModule {
                     	atomEnumeration.put((String)elid.get(i), currentAtom);
                 }
                 currentAtom.setSymbol(symbol);
+                if(!hasAtomicNumbers || atomicNumbers.get(i) == null)
+                    currentAtom.setAtomicNumber(PeriodicTable.getAtomicNumber(symbol));
             }
 
             if (has3D) {
