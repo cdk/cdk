@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<cml>
+    <MDocument>
+        <MChemicalStruct>
+            <!-- A very molecule to test bug 3553328 and 3557907
+                 - 3553328: Atoms missing explicit atomic number default to 1.
+                 - 3557907: Only support for bond stereo with attribute dictRef
+            -->
+            <molecule molID="m1">
+                <atomArray>
+                    <atom id="a1" elementType="C"
+                          x2="-1.3200000524520874" y2="-1.815000057220459"/>
+                    <atom id="a2" elementType="N"
+                          x2="0.013679069375948316" y2="-2.585000057220459"/>
+                    <atom id="a3" elementType="C"
+                          x2="-2.6536791742801227" y2="-2.5850000572204594"/>
+                    <atom id="a4" elementType="O"
+                          x2="-1.3200000524520874" y2="-0.27500005722045895"/>
+                </atomArray>
+                <bondArray>
+                    <bond atomRefs2="a1 a2" order="1"/>
+                    <bond atomRefs2="a1 a3" order="1"/>
+                    <bond atomRefs2="a1 a4" order="1">
+                        <bondStereo>W</bondStereo>
+                    </bond>
+                </bondArray>
+            </molecule>
+        </MChemicalStruct>
+    </MDocument>
+</cml>
