@@ -827,6 +827,11 @@ public class CMLCoreModule implements ICMLModule {
                 }
                 formalCharges.add(charge);
             }
+        } else if ("bondStereo".equals(name)){
+            if(!currentChars.isEmpty()){
+                bondStereo.add(currentChars);
+                stereoGiven = Boolean.TRUE;
+            }
         } else if ("float".equals(name)) {
             if (BUILTIN.equals("x3")) {
                 x3.add(cData.trim());
@@ -1367,6 +1372,8 @@ public class CMLCoreModule implements ICMLModule {
                     	atomEnumeration.put((String)elid.get(i), currentAtom);
                 }
                 currentAtom.setSymbol(symbol);
+                if(!hasAtomicNumbers)
+                    currentAtom.setAtomicNumber(PeriodicTable.getAtomicNumber(symbol));
             }
 
             if (has3D) {
