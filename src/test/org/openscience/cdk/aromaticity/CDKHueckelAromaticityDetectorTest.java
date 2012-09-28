@@ -49,7 +49,6 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -767,8 +766,20 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(aromaticForm);
         Assert.assertTrue(isAromatic);
 
-        String diff = AtomContainerDiff.diff(aromaticForm, kekuleForm);
-        Assert.assertTrue("There should be no difference between these molecules", diff.equals(""));
+        // double bond locations may alter. So, we can expect things like in a 'diff': "BondDiff{order:SINGLE/DOUBLE}"
+        // but, we should not see aromaticity differences
+        for (IAtom atom : aromaticForm.atoms()) {
+        	if ("C".equals(atom.getSymbol())) {
+        		Assert.assertEquals("C.sp2", atom.getAtomTypeName());
+        		Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        	}
+        }
+        for (IAtom atom : kekuleForm.atoms()) {
+        	if ("C".equals(atom.getSymbol())) {
+        		Assert.assertEquals("C.sp2", atom.getAtomTypeName());
+        		Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        	}
+        }
     }
 
     /**
