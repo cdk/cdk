@@ -25,6 +25,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest;
+import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetectorTest;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest;
 import org.openscience.cdk.coverage.StandardCoverageTest;
 import org.openscience.cdk.dict.DictRefTest;
@@ -185,6 +186,7 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     EStateAtomTypeMatcherTest.class,
     AtomContainerComparatorTest.class,
     CDKHueckelAromaticityDetectorTest.class,
+    DoubleBondAcceptingAromaticityDetectorTest.class,
     HOSECodeGeneratorTest.class,
     LonePairElectronCheckerTest.class ,
     StereoToolTest.class,

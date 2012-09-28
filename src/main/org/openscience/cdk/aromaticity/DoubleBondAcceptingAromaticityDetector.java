@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007,2012  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -47,17 +45,10 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * This aromaticity detector detects the aromaticity based on the H&uuml;ckel
  * 4n+2 pi-electrons rule applied to isolated ring systems. It assumes
  * CDK atom types to be perceived with the {@link CDKAtomTypeMatcher} or with
- * any compatible class. For example:
- * <pre>
- * Molecule molecule = MoleculeFactory.makePyridineOxide();
- * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
- * CDKHueckelAromaticityDetector.detectAromaticity(molecule);
- * </pre>
+ * any compatible class.
  * 
- * <p>Important to note is that this aromaticity detector does not allow aromatic
- * ring atoms to have double bonds pointing outwards from the ring, and thus not
- * having pi electrons shared with other ring atoms. If such double bonds are not
- * important, have a look at the {@link DoubleBondAcceptingAromaticityDetector}.
+ * <p>But unlike the {@link CDKHueckelAromaticityDetector}, this one accepts
+ * ring atoms with double bonds pointing out of the ring.
  *
  * @author         egonw
  * @cdk.module     standard
@@ -65,10 +56,10 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * @cdk.created    2007-10-05
  * 
  * @see org.openscience.cdk.CDKConstants
- * @see DoubleBondAcceptingAromaticityDetector
+ * @see CDKHueckelAromaticityDetector
  */
 @TestClass("org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest")
-public class CDKHueckelAromaticityDetector {
+public class DoubleBondAcceptingAromaticityDetector {
 
 	private static AtomTypeFactory factory = null;
 
@@ -99,29 +90,22 @@ public class CDKHueckelAromaticityDetector {
 			IRingSet singleRings = new SSSRFinder(isolatedSystem).findSSSR();
 			Iterator<IAtomContainer> singleRingsIterator = singleRings.atomContainers().iterator();
 			int maxRingSize = 20;
-			boolean atLeastOneRingIsSprouted = false;
 			boolean allRingsAreAromatic = true;
 			// test single rings in SSSR
 			while (singleRingsIterator.hasNext()) {
 				IAtomContainer singleRing = singleRingsIterator.next();
 				if (singleRing.getAtomCount() > maxRingSize) maxRingSize = singleRing.getAtomCount();
-				if (isRingSystemSproutedWithNonRingDoubleBonds(atomContainer, singleRing)) {
-//					OK, this ring is not aromatic
-					atLeastOneRingIsSprouted = true;
-					allRingsAreAromatic = false;
-				} else {
-					// possibly aromatic
-				    boolean ringIsAromatic = isHueckelValid(singleRing);
-					foundSomeAromaticity |= ringIsAromatic;
-					allRingsAreAromatic &= ringIsAromatic;
-					if (ringIsAromatic) markRingAtomsAndBondsAromatic(singleRing);
-				}
+				// possibly aromatic
+				boolean ringIsAromatic = isHueckelValid(singleRing);
+				foundSomeAromaticity |= ringIsAromatic;
+				allRingsAreAromatic &= ringIsAromatic;
+				if (ringIsAromatic) markRingAtomsAndBondsAromatic(singleRing);
 			}
 			// OK, what about the one larger ring (if no aromaticity found in SSSR)?
-			if (!allRingsAreAromatic && !atLeastOneRingIsSprouted &&
-				singleRings.getAtomContainerCount() <= 3) {
+			if (!allRingsAreAromatic && singleRings.getAtomContainerCount() <= 3) {
 				// every ring system consisting of more than two rings is too difficult
-				Iterator<IAtomContainer> allRingsIterator = new AllRingsFinder().findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers().iterator();
+				Iterator<IAtomContainer> allRingsIterator =
+					new AllRingsFinder().findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers().iterator();
 				while (allRingsIterator.hasNext()) {
 					// there should be exactly three rings, of which only one has a size larger
 					// than the two previous ones
@@ -198,30 +182,6 @@ public class CDKHueckelAromaticityDetector {
         return false;
 	}
 
-    /**
-	 * Determines if the isolatedRingSystem has attached double bonds, which are not part of the ring system itself,
-	 * and not part of any other ring system. Exceptions: a N.sp2.3 nitrogen with a double ring to an
-	 * oxygen outwards.
-	 */
-	private static boolean isRingSystemSproutedWithNonRingDoubleBonds(IAtomContainer fullContainer, IAtomContainer isolatedRingSystem) {
-		Iterator<IAtom> atoms = isolatedRingSystem.atoms().iterator();
-		while (atoms.hasNext()) {
-		    IAtom atom = atoms.next();
-			Iterator<IBond> neighborBonds = fullContainer.getConnectedBondsList(atom).iterator();
-			while (neighborBonds.hasNext()) {
-				IBond neighborBond = neighborBonds.next();
-				if (!neighborBond.getFlag(CDKConstants.ISINRING) &&
-					neighborBond.getOrder() == CDKConstants.BONDORDER_DOUBLE ||
-					neighborBond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
-				    if (!("N.sp2.3".equals(atom.getAtomTypeName()) &&
-				        "O.sp2".equals(neighborBond.getConnectedAtom(atom).getAtomTypeName())))
-				        return true;
-				}
-			}
-		}
-		return false;
-	}
-	
 	private static int getLonePairCount(IAtom atom) {
 		Integer count = (Integer)atom.getProperty(CDKConstants.LONE_PAIR_COUNT);
 		if (count == null) {
