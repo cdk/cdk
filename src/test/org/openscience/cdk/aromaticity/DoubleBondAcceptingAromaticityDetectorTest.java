@@ -19,10 +19,15 @@
  */
 package org.openscience.cdk.aromaticity;
 
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -42,14 +47,8 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author steinbeck
@@ -720,8 +719,20 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         isAromatic = DoubleBondAcceptingAromaticityDetector.detectAromaticity(aromaticForm);
         Assert.assertTrue(isAromatic);
 
-        String diff = AtomContainerDiff.diff(aromaticForm, kekuleForm);
-        Assert.assertTrue("There should be no difference between these molecules", diff.equals(""));
+        // double bond locations may alter. So, we can expect things like in a 'diff': "BondDiff{order:SINGLE/DOUBLE}"
+        // but, we should not see aromaticity differences
+        for (IAtom atom : aromaticForm.atoms()) {
+        	if ("C".equals(atom.getSymbol())) {
+        		Assert.assertEquals("C.sp2", atom.getAtomTypeName());
+        		Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        	}
+        }
+        for (IAtom atom : kekuleForm.atoms()) {
+        	if ("C".equals(atom.getSymbol())) {
+        		Assert.assertEquals("C.sp2", atom.getAtomTypeName());
+        		Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        	}
+        }
     }
 
     /**
