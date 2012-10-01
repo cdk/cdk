@@ -25,6 +25,8 @@ package org.openscience.cdk.config;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -38,11 +40,13 @@ import org.openscience.cdk.interfaces.IElement;
  * @cdk.module  standard 
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.config.NaturalElementTest")
 public final class NaturalElement implements IElement {
 	
 	private String element;
 	private Integer atomicNumber;
 
+	@TestMethod("testSymbol,testMassNumber")
 	protected NaturalElement(String element, Integer atomicNumber) {
 		this.element = element;
 		this.atomicNumber = atomicNumber;
@@ -60,7 +64,7 @@ public final class NaturalElement implements IElement {
 
 	// unsupported methods
 
-    @Override public Number getFlagValue() { return null; }
+    @Override @TestMethod("testGetFlagValueZeroDefault") public Number getFlagValue() { return (short)0; }
 	@Override public void setProperty(Object description, Object property) {}
 	@Override public void removeProperty(Object description) {}
 	@Override public Object getProperty(Object description) { return null; }
