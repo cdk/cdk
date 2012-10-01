@@ -111,6 +111,11 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
       Assert.assertTrue(chemObject2.getFlag(CDKConstants.ISINRING));
     }
 
+    @Test public void testGetFlagValueZeroDefault(){
+        IChemObject chemObject = newChemObject();
+        Assert.assertEquals((short)0, chemObject.getFlagValue());
+      }
+
     @Test public void testGetFlags_Array(){
         IChemObject chemObject=newChemObject();
         chemObject.setFlag(CDKConstants.ISINRING, true);
