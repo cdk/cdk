@@ -21,6 +21,7 @@
 	<classpathentry kind="lib" path="develjar/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="develjar/groovy.jar"/>
 	<classpathentry kind="lib" path="develjar/antlr.jar"/>
+	<classpathentry kind="lib" path="jar/commons-math3-3.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="jar/signatures-1.0.jar"/>
 	<classpathentry kind="lib" path="jar/jena/jena.jar"/>
