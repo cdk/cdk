@@ -122,6 +122,28 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNotSame((short)0, chemObject.getFlagValue());
     }
 
+    /**
+     * Different flags are reflected by different numbers.
+     */
+    @Test public void testGetFlagValueDifferentFlags(){
+        IChemObject chemObject = newChemObject();
+        chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
+        IChemObject chemObject2 = newChemObject();
+        chemObject2.setFlag(CDKConstants.VISITED, true);
+        Assert.assertNotSame(chemObject.getFlagValue(), chemObject2.getFlagValue());
+    }
+
+    /**
+     * The number is always the same for the same flag.
+     */
+    @Test public void testGetFlagValueSameFlag(){
+        IChemObject chemObject = newChemObject();
+        chemObject.setFlag(CDKConstants.ISPLACED, true);
+        IChemObject chemObject2 = newChemObject();
+        chemObject2.setFlag(CDKConstants.ISPLACED, true);
+        Assert.assertEquals(chemObject.getFlagValue(), chemObject2.getFlagValue());
+    }
+
     @Test public void testGetFlags_Array(){
         IChemObject chemObject=newChemObject();
         chemObject.setFlag(CDKConstants.ISINRING, true);
