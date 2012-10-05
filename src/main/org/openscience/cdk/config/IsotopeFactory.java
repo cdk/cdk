@@ -23,6 +23,12 @@
  */
 package org.openscience.cdk.config;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
@@ -33,12 +39,6 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a
@@ -315,11 +315,12 @@ public class IsotopeFactory
     }
 
 	/**
-	 *  Configures an atom. Finds the correct element type
-	 *  by looking at the atoms element symbol.
+	 * Configures an atom. Finds the correct element type
+	 * by looking at the atoms element symbol. If the element symbol is not recognized, it will
+	 * throw an {@link IllegalArgumentException}.
 	 *
-	 *@param  atom  The atom to be configured
-	 *@return       The configured atom
+	 * @param  atom  The atom to be configured
+	 * @return       The configured atom
 	 */
     @TestMethod("testConfigure_IAtom")
     public IAtom configure(IAtom atom)
@@ -329,6 +330,8 @@ public class IsotopeFactory
         if (atom.getMassNumber() == null) isotope = getMajorIsotope(atom.getSymbol());
         else isotope = getIsotope(atom.getSymbol(), atom.getMassNumber());
 
+        if (isotope == null)
+        	throw new IllegalArgumentException("Cannot configure an unrecognized element: " + atom);
 		return configure(atom, isotope);
 	}
 

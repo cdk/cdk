@@ -57,6 +57,7 @@ import java.util.StringTokenizer;
  * @cdk.created 2004-01-27
  *
  * @cdk.keyword file format, HIN 
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.HINReaderTest")
 public class HINReader extends DefaultChemObjectReader {

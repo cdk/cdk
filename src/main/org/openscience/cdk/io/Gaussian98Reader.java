@@ -74,6 +74,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @author Christoph Steinbeck
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.Gaussian98ReaderTest")
 public class Gaussian98Reader extends DefaultChemObjectReader {

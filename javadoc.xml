@@ -9,7 +9,6 @@
 
     <property name="src" value="src" />
     <property name="javadoc.dir" value="doc/cdk-javadoc-${version}" />
-    <property name="doxygen.dir" value="doc/doxygen" />
 
     <property name="pathtojava3d" value="" />
 
@@ -33,21 +32,6 @@
         </fileset>
     </path>
 
-    <taskdef name="doxygen" classname="org.doxygen.tools.DoxygenTask"
-            classpath="develjar/ant_doxygen.jar" />
-
-    <target name="doxygen" id="doxygen">
-        <mkdir dir="${doxygen.dir}" />
-        <doxygen>
-            <property name="INPUT" value="src/" />
-            <property name="PROJECT_NAME" value="The Chemistry Development Kit" />
-            <property name="OUTPUT_DIRECTORY" value="${doxygen.dir}" />
-            <property name="OPTIMIZE_OUTPUT_JAVA" value="YES" />
-            <property name="UML_LOOK" value="YES" />
-            <property name="ALIASES" value='"cdk.module=Is part of the CDK module:"' />
-        </doxygen>
-    </target>
-
     <target name="html" depends="compileTaglets">
         <mkdir dir="${javadoc.dir}" />
 
@@ -59,13 +43,18 @@
         <javadoc destdir="${javadoc.dir}"
                  author="true" version="true" use="true"
                  public="true"
-                 windowtitle="CDK API - version ${TODAY_SVN}">
+                 encoding="UTF-8"
+                 windowtitle="CDK ${version} API - created on ${TODAY_SVN}">
             <classpath>
                 <pathelement location="." />
-                <fileset dir="jar">
+                <fileset dir="${lib}">
                     <include name="*.jar" />
                 </fileset>
-                <fileset dir="jar/jena">
+                <pathelement location="." />
+                <fileset dir="${lib}/jena">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="${devellib}">
                     <include name="*.jar" />
                 </fileset>
                  <dirset dir="src/main">
@@ -88,6 +77,20 @@
             <taglet name="net.sf.cdk.tools.doclets.CDKThreadSafeTaglet" path="jar/xom-1.1.jar:src/main" />
             <taglet name="net.sf.cdk.tools.doclets.CDKThreadNonSafeTaglet" path="jar/xom-1.1.jar:src/main" />
             <taglet name="net.sf.cdk.tools.doclets.CDKGitTaglet" path="jar/xom-1.1.jar:src/main" />
+            <taglet name="net.sf.cdk.tools.doclets.CDKIOOptionsTaglet" path="jar/xom-1.1.jar:src/main">
+              <path>
+                <pathelement location="." />
+                <fileset dir="dist/jar">
+                  <include name="*.jar" />
+                </fileset>
+                <fileset dir="${lib}">
+                  <include name="*.jar" />
+                </fileset>
+                <fileset dir="${lib}/jena">
+                  <include name="*.jar" />
+                </fileset>
+              </path>
+            </taglet>
             <packageset dir="${src}/main" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
             </packageset>

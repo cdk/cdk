@@ -105,7 +105,6 @@ public class CDKGitTaglet implements Taglet {
     	if (matcher.matches()) {
     		String url = "https://github.com/cdk/cdk/tree/" + BRANCH + "/" + 
     				matcher.group(1);
-    		System.out.println("URL: " + url);
         	return "<a href=\"" + url + "\" target=\"_blank\">" + BRANCH + "</a>";
     	} else {
     		System.out.println("Could not resolve class name from: " + pathAndFile);

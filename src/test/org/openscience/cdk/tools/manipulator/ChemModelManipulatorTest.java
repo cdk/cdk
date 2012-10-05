@@ -302,7 +302,15 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     	Assert.assertEquals(10, uniq.size());
     }
 
-    
+    /**
+     * @cdk.bug 3530861
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testGetRelevantAtomContainer_NonExistentAtom() {
+    	IChemModel model = new org.openscience.cdk.silent.ChemModel();
+    	ChemModelManipulator.getRelevantAtomContainer(model, new org.openscience.cdk.silent.Atom());
+    }
+
 }
 
 

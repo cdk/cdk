@@ -55,6 +55,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *
  * @cdk.module  extra
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author Egon Willighagen
  *

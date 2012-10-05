@@ -147,6 +147,9 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 */
     @TestMethod("testAssignGasteigerPiPartialCharges_IAtomContainer_Boolean")
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
+    	// ensure the container is an IMolecule
+    	if (!(ac instanceof IMolecule))
+    		ac = ac.getBuilder().newInstance(IMolecule.class, ac);
 
         // we save the aromaticity flags for the input molecule so that
         // we can add them back before we return

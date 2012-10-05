@@ -61,6 +61,7 @@ import org.xml.sax.XMLReader;
  * @cdk.githash
  * @cdk.keyword file format, CML
  * @cdk.bug     1544406
+ * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.CMLReaderTest")
 public class CMLReader extends DefaultChemObjectReader {
@@ -245,7 +246,8 @@ public class CMLReader extends DefaultChemObjectReader {
 
     @TestMethod("testClose")
     public void close() throws IOException {
-        input.close();
+        if(input != null)
+            input.close();
     }
 
 }

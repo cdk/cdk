@@ -70,6 +70,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author Egon Willighagen
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  */
 public class Gaussian03Reader extends DefaultChemObjectReader {
 

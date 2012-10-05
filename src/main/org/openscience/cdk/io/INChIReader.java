@@ -57,6 +57,7 @@ import org.xml.sax.XMLReader;
  *
  * @cdk.module extra
  * @cdk.githash
+ * @cdk.iooptions
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2004-05-17

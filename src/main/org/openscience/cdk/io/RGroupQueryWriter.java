@@ -57,6 +57,7 @@ import org.openscience.cdk.isomorphism.matchers.RGroupList;
  *
  * @cdk.module io
  * @cdk.githash
+ * @cdk.iooptions
  * @cdk.keyword Rgroup
  * @cdk.keyword R group
  * @cdk.keyword R-group
