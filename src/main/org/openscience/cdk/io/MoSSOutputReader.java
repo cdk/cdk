@@ -119,6 +119,8 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
     @TestMethod("testAccepts")
     public boolean accepts(Class testClass) {
+		if (IMoleculeSet.class.equals(testClass)) return true;
+		if (IChemFile.class.equals(testClass)) return true;
         Class[] interfaces = testClass.getInterfaces();
         for (int i=0; i<interfaces.length; i++) {
             if (IAtomContainerSet.class.equals(interfaces[i])) return true;
