@@ -99,6 +99,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
 	@TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
+		if (IMolecule.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
