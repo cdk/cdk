@@ -709,9 +709,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 } else if (order == 4) {                
                     // aromatic bond                	
                     if (stereo != null) {
-                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE, stereo);
+                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.UNSET, stereo);
                     } else {
-                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+                        newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.UNSET);
                     }
                     // mark both atoms and the bond as aromatic and raise the SINGLE_OR_DOUBLE-flag
                     newBond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);

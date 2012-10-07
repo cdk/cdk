@@ -970,6 +970,19 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
+    public void testBondOrderFour() throws Exception {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mdlWithBond4.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule  = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        Assert.assertEquals(9, molecule.getAtomCount());
+        Assert.assertEquals(IBond.Order.UNSET, molecule.getBond(0).getOrder());
+        Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        Assert.assertEquals(IBond.Order.SINGLE, molecule.getBond(1).getOrder());
+        Assert.assertFalse(molecule.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+    }
+
+    @Test
     public void testAtomParity() throws CDKException, IOException{
         
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
