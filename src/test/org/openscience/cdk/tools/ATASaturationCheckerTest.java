@@ -25,7 +25,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -33,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -67,7 +66,7 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
 	@Test
 	public void testASimpleCarbonRing() throws Exception {
 		// First we create a simple carbon ring to play with... 
-		IMolecule mol = new Molecule();
+		IAtomContainer mol = new AtomContainer();
 		IAtomType carbon = new AtomType(Elements.CARBON);
 		
 		IAtom a0 = new Atom("C");
@@ -336,7 +335,7 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
     public void testLargeBioclipseUseCase() throws Exception {
         // Should have 14 double bonds
         String smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
-        IMolecule molecule = sp.parseSmiles(smiles);
+        IAtomContainer molecule = sp.parseSmiles(smiles);
 
         atasc.decideBondOrder(molecule, true);
 
@@ -650,7 +649,7 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
 	
 	@Test
 	public void testButadiene() throws Exception {
-		IMolecule mol = new Molecule();
+		IAtomContainer mol = new AtomContainer();
 		IAtomType carbon = new AtomType(Elements.CARBON);
 		
 		IAtom a0 = new Atom("C");

@@ -31,7 +31,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.DeduceBondSystemTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;

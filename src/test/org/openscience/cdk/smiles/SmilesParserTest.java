@@ -72,7 +72,7 @@ public class SmilesParserTest extends CDKTestCase {
 	  @Test (timeout=1000)
 	  public void testSingleOrDoubleFlag() throws Exception {
 		  String smiles = "c1cccn1c2cccn2";
-		  IMolecule mol = sp.parseSmiles(smiles);
+		  IAtomContainer mol = sp.parseSmiles(smiles);
 		  assertAtomTypesPerceived(mol);
 		  // Let's check the atoms first...
 		  Assert.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
