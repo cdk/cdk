@@ -38,7 +38,6 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -141,7 +140,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	@Test (timeout=5000)
 	public void testBridgedHydrogen() throws Exception {
-		IMolecule inputStructure = new Molecule();
+		IAtomContainer inputStructure = new AtomContainer();
 		IAtom carbon1 = new Atom("C");
 		IAtom carbon2 = new Atom("C");
 		IAtom bridgingHydrogen = new Atom("H");
