@@ -50,6 +50,7 @@ import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -6373,6 +6374,47 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
       
         String[] expectedTypes = {"Ru.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test
+    public void test_n_planar3_sp2_aromaticity() throws Exception {
+
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+
+        // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
+        IAtomContainer pyrrole = builder.newInstance(IAtomContainer.class);
+
+        IAtom n1 = builder.newInstance(IAtom.class,"N");
+        IAtom c2 = builder.newInstance(IAtom.class,"C");
+        IAtom c3 = builder.newInstance(IAtom.class,"C");
+        IAtom c4 = builder.newInstance(IAtom.class,"C");
+        IAtom c5 = builder.newInstance(IAtom.class,"C");
+
+        IBond b1 = builder.newInstance(IBond.class,n1, c2, IBond.Order.SINGLE);
+        b1.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b2 = builder.newInstance(IBond.class,c2, c3, IBond.Order.SINGLE);
+        b2.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b3 = builder.newInstance(IBond.class,c3, c4, IBond.Order.SINGLE);
+        b3.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b4 = builder.newInstance(IBond.class,c4, c5, IBond.Order.SINGLE);
+        b4.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b5 = builder.newInstance(IBond.class,c5, n1, IBond.Order.SINGLE);
+        b5.setFlag(CDKConstants.ISAROMATIC, true);
+
+        pyrrole.addAtom(n1);
+        pyrrole.addAtom(c2);
+        pyrrole.addAtom(c3);
+        pyrrole.addAtom(c4);
+        pyrrole.addAtom(c5);
+        pyrrole.addBond(b1);
+        pyrrole.addBond(b2);
+        pyrrole.addBond(b3);
+        pyrrole.addBond(b4);
+        pyrrole.addBond(b5);
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pyrrole);
+
+        Assert.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
     }
     
     /*
