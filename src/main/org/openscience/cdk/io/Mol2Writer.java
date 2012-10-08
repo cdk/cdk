@@ -111,7 +111,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-        if (IMolecule.class.equals(classObject)) return true;
+        if (IAtomContainer.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
         for (Class anInterface : interfaces) {
             if (IAtomContainer.class.equals(anInterface)) return true;

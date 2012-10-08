@@ -136,7 +136,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (ICrystal.class.equals(classObject)) return true;
-        if (IMolecule.class.equals(classObject)) return true;
+        if (IAtomContainer.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (ICrystal.class.equals(interfaces[i])) return true;

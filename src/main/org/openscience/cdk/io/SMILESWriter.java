@@ -131,8 +131,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-        if (IMolecule.class.equals(classObject)) return true;
-        if (IMoleculeSet.class.equals(classObject)) return true;
+        if (IAtomContainer.class.equals(classObject)) return true;
+        if (IAtomContainerSet.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IAtomContainerSet.class.equals(interfaces[i])) return true;

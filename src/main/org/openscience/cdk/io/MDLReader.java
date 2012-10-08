@@ -151,7 +151,7 @@ public class MDLReader extends DefaultChemObjectReader {
     public boolean accepts(Class classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (IChemModel.class.equals(classObject)) return true;
-        if (IMolecule.class.equals(classObject)) return true;
+        if (IAtomContainer.class.equals(classObject)) return true;
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
