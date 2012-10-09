@@ -968,6 +968,7 @@ public class DeduceBondSystemTool {
                 logger.error("Failed to clone molecule: ", e.getMessage());
                 logger.debug(e);
             }
+        if (combi == null) return combi;
 
         //Only work on the relevant ring bonds
         IRingSet ringset = removeExtraRings(combi);
