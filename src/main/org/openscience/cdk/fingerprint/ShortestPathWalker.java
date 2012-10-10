@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  *
  */
-class ShortestPathWalker {
+public class ShortestPathWalker {
 
     private static final long serialVersionUID = 0x3b728f46;
     private final IAtomContainer atomContainer;
@@ -86,15 +86,10 @@ class ShortestPathWalker {
         pseudoAtoms.clear();
         traverseShortestPaths();
 
-        for (Iterator<StringBuilder> it = allPaths.iterator(); it.hasNext();) {
-            StringBuilder s = it.next();
-            String s1 = s.toString().trim();
-            if (s1.equals("")) {
-                continue;
-            }
-            if (!cleanPath.contains(s1)) {
-                cleanPath.add(s1);
-            }
+        for (StringBuilder s : allPaths) {
+            String clean = s.toString().trim();
+            if (!clean.isEmpty())
+                cleanPath.add(clean);
         }
     }
 
