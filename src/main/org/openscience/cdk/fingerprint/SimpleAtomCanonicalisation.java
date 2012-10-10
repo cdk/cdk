@@ -54,13 +54,10 @@ public class SimpleAtomCanonicalisation {
     @TestMethod("testCanonicalizeAtoms")
 	public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
 		
-		List<IAtom> canonicalizedVertexList = new LinkedList<IAtom>();
-		int i = 0;
-		for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
-			IAtom atom = it.next();
-			canonicalizedVertexList.add(i, atom);
-			i++;
-		}
+		List<IAtom> canonicalizedVertexList = new ArrayList<IAtom>();
+        for (IAtom atom : container.atoms()) {
+            canonicalizedVertexList.add(atom);
+        }
 		Collections.sort(canonicalizedVertexList, new SimpleAtomComparator());
 		return canonicalizedVertexList;
 	}
