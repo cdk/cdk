@@ -13,3 +13,4 @@ cdk-atomtype.jar
 cdk-valencycheck.jar
 cdk-pdb.jar
 cdk-log4j.jar
+cdk-test-standard.jar

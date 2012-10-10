@@ -565,6 +565,9 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="builder3d,builder3dtools"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="group"/>
     </target>
 
     <target id="test-dist-all" name="test-dist-all" description="test-dist-all">
@@ -603,6 +606,9 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-renderextra"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-group"/>
     </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
@@ -710,6 +716,7 @@
                     <include name="cdk-smsd.jar"/>
                     <include name="cdk-iordf.jar"/>
                     <include name="cdk-signature.jar"/>
+                    <include name="cdk-group.jar"/>
                     <include name="cdk-qm.jar"/>
                     <include name="cdk-tautomer.jar"/>
                 </fileset>
@@ -787,6 +794,7 @@
 		    <include name="cdk-atomtype.jar"/>
                     <include name="cdk-signature.jar"/>
                     <include name="cdk-tautomer.jar"/>
+                    <include name="cdk-group.jar"/>
                 </fileset>
             </unjar>
 
@@ -888,6 +896,7 @@
                     <include name="cdk-test-signature.jar"/>
 		    <include name="cdk-test-cip.jar"/>
                     <include name="cdk-test-tautomer.jar"/>
+                    <include name="cdk-test-group.jar"/>
                 </fileset>
             </unjar>
 
@@ -1096,7 +1105,7 @@
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,fragment,sdg,
                       ioformats,log4j,smsd,signature,iordf,cip,tautomer,
-                      isomorphism,renderbasic,renderawt,silent"/>
+                      isomorphism,renderbasic,renderawt,silent,group"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
