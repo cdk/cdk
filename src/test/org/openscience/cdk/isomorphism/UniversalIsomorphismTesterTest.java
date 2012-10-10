@@ -490,6 +490,21 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		}
     }
 
+    @Test
+    public void testSingleAtomMismatching() throws Exception {
+
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+
+        IAtomContainer target = sp.parseSmiles("C");
+        IAtomContainer query = sp.parseSmiles("N");
+
+        Assert.assertFalse("Single carbon and nitrogen should not match",
+                           UniversalIsomorphismTester.isIsomorph(target, query));
+        Assert.assertFalse("Single nitrogen and carbon should not match",
+                           UniversalIsomorphismTester.isIsomorph(query, target));
+
+    }
+
     /**
      * @cdk.bug 2888845
      * @throws Exception
