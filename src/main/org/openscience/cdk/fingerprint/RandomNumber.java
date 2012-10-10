@@ -44,6 +44,8 @@ public class RandomNumber implements Serializable {
 
     private static final long serialVersionUID = 23345464573453571L;
 
+    private final RandomGenerator rg = new RandomAdaptor(new MersenneTwister());
+
     /**
      * Mersenne Twister Random Number for a hashcode within a range between 0 to maximum
      *
@@ -52,8 +54,8 @@ public class RandomNumber implements Serializable {
      * @return
      */
     @TestMethod("testGenerateMersenneTwisterRandomNumber")
-    public static int generateMersenneTwisterRandomNumber(int maximum, long hashCode) {
-        RandomGenerator rg = new RandomAdaptor(new MersenneTwister(hashCode));
+    public int generateMersenneTwisterRandomNumber(int maximum, long hashCode) {
+        rg.setSeed(hashCode);
         return rg.nextInt(maximum);
     }
 }
