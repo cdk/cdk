@@ -6420,6 +6420,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1S/C4H5N/c1-2-4-5-3-1/h1-5H
+     * @throws Exception
+     */
     @Test
     public void test_n_planar3_sp2_aromaticity() throws Exception {
 
@@ -6455,6 +6459,68 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         pyrrole.addBond(b3);
         pyrrole.addBond(b4);
         pyrrole.addBond(b5);
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pyrrole);
+
+        Assert.assertEquals(pyrrole.getAtom(0).getHybridization().name(), "PLANAR3");
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C4H5N/c1-2-4-5-3-1/h1-5H
+     * @throws Exception
+     */
+    @Test
+    public void test_n_planar3_sp2_aromaticity_explicitH() throws Exception {
+
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+
+        // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
+        IAtomContainer pyrrole = builder.newInstance(IAtomContainer.class);
+
+        IAtom n1 = builder.newInstance(IAtom.class,"N");
+        IAtom c2 = builder.newInstance(IAtom.class,"C");
+        IAtom c3 = builder.newInstance(IAtom.class,"C");
+        IAtom c4 = builder.newInstance(IAtom.class,"C");
+        IAtom c5 = builder.newInstance(IAtom.class,"C");
+
+        IBond b1 = builder.newInstance(IBond.class,n1, c2, IBond.Order.SINGLE);
+        b1.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b2 = builder.newInstance(IBond.class,c2, c3, IBond.Order.SINGLE);
+        b2.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b3 = builder.newInstance(IBond.class,c3, c4, IBond.Order.SINGLE);
+        b3.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b4 = builder.newInstance(IBond.class,c4, c5, IBond.Order.SINGLE);
+        b4.setFlag(CDKConstants.ISAROMATIC, true);
+        IBond b5 = builder.newInstance(IBond.class,c5, n1, IBond.Order.SINGLE);
+        b5.setFlag(CDKConstants.ISAROMATIC, true);
+
+        pyrrole.addAtom(n1);
+        pyrrole.addAtom(c2);
+        pyrrole.addAtom(c3);
+        pyrrole.addAtom(c4);
+        pyrrole.addAtom(c5);
+        pyrrole.addBond(b1);
+        pyrrole.addBond(b2);
+        pyrrole.addBond(b3);
+        pyrrole.addBond(b4);
+        pyrrole.addBond(b5);
+
+        // add explicit hydrogens
+        IAtom h1 = builder.newInstance(IAtom.class, "H");
+        IAtom h2 = builder.newInstance(IAtom.class, "H");
+        IAtom h3 = builder.newInstance(IAtom.class, "H");
+        IAtom h4 = builder.newInstance(IAtom.class, "H");
+        IAtom h5 = builder.newInstance(IAtom.class, "H");
+        pyrrole.addAtom(h1);
+        pyrrole.addAtom(h2);
+        pyrrole.addAtom(h3);
+        pyrrole.addAtom(h4);
+        pyrrole.addAtom(h5);
+        pyrrole.addBond(builder.newInstance(IBond.class, n1, h1));
+        pyrrole.addBond(builder.newInstance(IBond.class, c2, h2));
+        pyrrole.addBond(builder.newInstance(IBond.class, c3, h3));
+        pyrrole.addBond(builder.newInstance(IBond.class, c4, h4));
+        pyrrole.addBond(builder.newInstance(IBond.class, c5, h5));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pyrrole);
 

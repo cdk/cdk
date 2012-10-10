@@ -913,23 +913,47 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
-    private boolean isSingleHeteroAtom(IAtom atom, IAtomContainer atomContainer) {
+    /**
+     * Determines whether the bonds (up to two spheres away) are only to non
+     * hetroatoms. Currently used in N.planar3 perception of (e.g. pyrrole).
+     *
+     * @param atom an atom to test
+     * @param container container of the atom
+     *
+     * @return whether the atom's only bonds are to hetroatoms
+     * @see #perceiveNitrogens(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IAtom)
+     */
+    private boolean isSingleHeteroAtom(IAtom atom, IAtomContainer container) {
 
-        for (IAtom atom1 : atomContainer.getConnectedAtomsList(atom)) {
-            if (atomContainer.getBond(atom, atom1).getFlag(CDKConstants.ISAROMATIC) && !atom1.getSymbol().equals("C")) {
-                return false;
-            } else if (atomContainer.getBond(atom, atom1).getFlag(CDKConstants.ISAROMATIC)) {
-                for (IAtom atom2 : atomContainer.getConnectedAtomsList(atom1)) {
-                    if (atom2 != atom && atomContainer.getBond(atom1, atom2).getFlag(CDKConstants.ISAROMATIC) &&
-                            !atom2.getSymbol().equals("C")) {
-                        return false;
-                    }
-                }
-            } else {
+        List<IAtom> connected = container.getConnectedAtomsList(atom);
+
+        for (IAtom atom1 : connected) {
+
+            boolean aromatic = container.getBond(atom, atom1).getFlag(CDKConstants.ISAROMATIC);
+
+            // ignoring non-aromatic bonds
+            if(!aromatic)
                 continue;
+
+            // found a hetroatom - we're not a single hetroatom
+            if(!"C".equals(atom1.getSymbol()))
+                return false;
+
+            // check the second sphere
+            for (IAtom atom2 : container.getConnectedAtomsList(atom1)) {
+
+                if (atom2 != atom
+                   && container.getBond(atom1, atom2).getFlag(CDKConstants.ISAROMATIC)
+                   && !"C".equals(atom2.getSymbol())) {
+                        return false;
+                }
+
             }
+
         }
+
         return true;
+
     }
 
     private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
