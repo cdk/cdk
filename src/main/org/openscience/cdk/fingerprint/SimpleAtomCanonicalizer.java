@@ -44,8 +44,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  * 
  */
-@TestClass("org.openscience.cdk.fingerprint.SimpleAtomCanonicalisationTest")
-public class SimpleAtomCanonicalisation {
+@TestClass("org.openscience.cdk.fingerprint.SimpleAtomCanonicalizerTest")
+public class SimpleAtomCanonicalizer {
 
 	/**
 	 * @param container the container

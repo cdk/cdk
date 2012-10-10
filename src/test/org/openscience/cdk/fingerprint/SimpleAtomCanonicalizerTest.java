@@ -17,14 +17,14 @@ import java.util.List;
  * @author John May
  * @cdk.module test-fingerprint
  */
-public class SimpleAtomCanonicalizationTest {
+public class SimpleAtomCanonicalizerTest {
 
     @Test public void testCanonicalizeAtoms() throws CDKException {
 
         IAtomContainer container = MoleculeFactory.makeAdenine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 
-        Collection<IAtom> atoms = new SimpleAtomCanonicalisation().canonicalizeAtoms(container);
+        Collection<IAtom> atoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);
 
         List<IAtom> mutable = new ArrayList<IAtom>(atoms);
         for(IAtom atom : mutable.subList(0, 5)){

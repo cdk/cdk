@@ -100,7 +100,7 @@ public class ShortestPathWalker {
         /*
          * Canonicalisation of atoms for reporting unique paths with consistency
          */
-        Collection<IAtom> canonicalizeAtoms = new SimpleAtomCanonicalisation().canonicalizeAtoms(atomContainer);
+        Collection<IAtom> canonicalizeAtoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(atomContainer);
         for (IAtom sourceAtom : canonicalizeAtoms) {
             StringBuilder sb = new StringBuilder();
             setAtom(sourceAtom, sb);
