@@ -36,7 +36,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author Syed Asad Rahman (2012) 
  * @cdk.keyword fingerprint 
  * @cdk.keyword similarity 
- * @cdk.module standard 
+ * @cdk.module fingerprint
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.RandomNumberTest")

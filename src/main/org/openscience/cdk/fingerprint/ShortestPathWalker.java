@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @author Syed Asad Rahman (2012) 
  * @cdk.keyword fingerprint 
  * @cdk.keyword similarity 
- * @cdk.module standard 
+ * @cdk.module fingerprint
  * @cdk.githash
  *
  */
