@@ -45,7 +45,7 @@ public class RandomNumber implements Serializable {
 
     private static final long serialVersionUID = 23345464573453571L;
 
-    private final RandomGenerator rg = new RandomAdaptor(new MersenneTwister());
+    private transient final RandomGenerator rg = new RandomAdaptor(new MersenneTwister());
 
     /**
      * Mersenne Twister Random Number for a hashcode within a range between 0 to n.
