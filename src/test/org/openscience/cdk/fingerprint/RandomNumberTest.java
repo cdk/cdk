@@ -1,7 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2012   Syed Asad Rahman <asad@ebi.ac.uk>
- *           
+/*
+ * Copyright (C) 2012 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,37 +21,36 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 package org.openscience.cdk.fingerprint;
 
-import java.io.Serializable;
-import org.apache.commons.math3.random.MersenneTwister;
-import org.apache.commons.math3.random.RandomAdaptor;
-import org.apache.commons.math3.random.RandomGenerator;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * @author Syed Asad Rahman (2012) 
- * @cdk.keyword fingerprint 
- * @cdk.keyword similarity 
- * @cdk.module standard 
- * @cdk.githash
+ * Unit tests for the {@link RandomNumber}.
+ *
+ * @author John May
+ * @cdk.module test-fingerprint
  */
-@TestClass("org.openscience.cdk.fingerprint.RandomNumberTest")
-public class RandomNumber implements Serializable {
+public class RandomNumberTest {
 
-    private static final long serialVersionUID = 23345464573453571L;
+    private RandomNumber rn = new RandomNumber();
 
     /**
-     * Mersenne Twister Random Number for a hashcode within a range between 0 to maximum
-     *
-     * @param maximum
-     * @param hashCode
-     * @return
+     * Tests the pseudorandom number generation to make sure we alway generate
+     * the same "next" random number.
      */
-    @TestMethod("testGenerateMersenneTwisterRandomNumber")
-    public static int generateMersenneTwisterRandomNumber(int maximum, long hashCode) {
-        RandomGenerator rg = new RandomAdaptor(new MersenneTwister(hashCode));
-        return rg.nextInt(maximum);
+    @Test
+    public void testGenerateMersenneTwisterRandomNumber() {
+
+        Assert.assertEquals("Expected next random number to be 444",
+                            444,
+                            rn.generateMersenneTwisterRandomNumber(1024, 42));
+        Assert.assertEquals("Expected next random number to be 748",
+                            748,
+                            rn.generateMersenneTwisterRandomNumber(1024, 444));
+
     }
+
 }
