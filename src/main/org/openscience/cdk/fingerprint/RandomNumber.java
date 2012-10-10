@@ -1,5 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
+/*
  * Copyright (C) 2012   Syed Asad Rahman <asad@ebi.ac.uk>
  *           
  *
@@ -33,6 +32,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 /**
+ * Generates pseudorandom numbers using the MersenneTwister method from commons-math.
+ *
  * @author Syed Asad Rahman (2012) 
  * @cdk.keyword fingerprint 
  * @cdk.keyword similarity 
@@ -47,15 +48,15 @@ public class RandomNumber implements Serializable {
     private final RandomGenerator rg = new RandomAdaptor(new MersenneTwister());
 
     /**
-     * Mersenne Twister Random Number for a hashcode within a range between 0 to maximum
+     * Mersenne Twister Random Number for a hashcode within a range between 0 to n.
      *
-     * @param maximum
-     * @param hashCode
-     * @return
+     * @param n the maximum value the
+     * @param seed the seed for the next pseudorandom number
+     * @return next pseudorandom number
      */
     @TestMethod("testGenerateMersenneTwisterRandomNumber")
-    public int generateMersenneTwisterRandomNumber(int maximum, long hashCode) {
-        rg.setSeed(hashCode);
-        return rg.nextInt(maximum);
+    public int generateMersenneTwisterRandomNumber(int n, long seed) {
+        rg.setSeed(seed);
+        return rg.nextInt(n);
     }
 }
