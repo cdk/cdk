@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -898,6 +899,40 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
                 Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
             }
         }
+    }
+
+    /**
+     * Tests that 1-4 benzoquinone is detected to be aromatic by the DoubleBondAcceptingAromaticityDetector but
+     * not the CDKHueckelAromaticityDetector
+     */
+    @Test public void testBenzoquinone() throws Exception {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtomContainer benzoquinone = MoleculeFactory.makeCyclohexane();
+
+        benzoquinone.getBond(1).setOrder(IBond.Order.DOUBLE);
+        benzoquinone.getBond(4).setOrder(IBond.Order.DOUBLE);
+
+        IAtom o7 = builder.newInstance(IAtom.class, "O");
+        IAtom o8 = builder.newInstance(IAtom.class, "O");
+
+        IBond c1o7 = builder.newInstance(IBond.class, benzoquinone.getAtom(0), o7, IBond.Order.DOUBLE);
+        IBond c4o8 = builder.newInstance(IBond.class, benzoquinone.getAtom(3), o8, IBond.Order.DOUBLE);
+
+        benzoquinone.addAtom(o7);
+        benzoquinone.addAtom(o8);
+        benzoquinone.addBond(c1o7);
+        benzoquinone.addBond(c4o8);
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzoquinone);
+
+        Assert.assertFalse("Hueckel method detect aromaticity",
+                           CDKHueckelAromaticityDetector.detectAromaticity(benzoquinone));
+        Assert.assertTrue("DoubleBond Accepting AromaticityDetector method did not detect aromaticity",
+                           DoubleBondAcceptingAromaticityDetector.detectAromaticity(benzoquinone));
+
+
     }
 
 }
