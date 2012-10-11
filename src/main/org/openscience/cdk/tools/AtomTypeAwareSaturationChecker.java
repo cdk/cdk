@@ -77,6 +77,9 @@ IDeduceBondOrderTool {
 	 */
 	public void decideBondOrder(IAtomContainer atomContainer, 
 			boolean atomsSaturated) throws CDKException {
+		if (atomContainer.getBondCount() == 0)
+			// In this case the atom only has implicit bonds, and then it wan't be aromatic
+			return;
 		startBond = 0;
 		int saturnatedAtoms = 0;
 		int[] bestGuess = { startBond, saturnatedAtoms };

@@ -706,5 +706,16 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
     	}
     	Assert.assertEquals(4, doubleBondCount);
 	}
-	
+
+	@Test
+	public void testOnlyOneAtom() throws CDKException {
+		/* If all bonds in the molecule are implicit, 
+		 * then it was noticed that the SatChecker failed */
+		IAtomContainer mol = sp.parseSmiles("C");
+
+		int preBondCount = mol.getBondCount();
+		atasc.decideBondOrder(mol);
+
+		Assert.assertEquals(preBondCount, mol.getBondCount());
+	}
 }
