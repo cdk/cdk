@@ -718,4 +718,18 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
 
 		Assert.assertEquals(preBondCount, mol.getBondCount());
 	}
+	
+	@Test
+	public void testBug3394() {
+		IMolecule mol;
+		try {
+			mol = sp.parseSmiles("OCC1OC(O)C(O)C(Op2(OC3C(O)C(O)OC(CO)C3O)np(OC4C(O)C(O)OC(CO)C4O)(OC5C(O)C(O)OC(CO)C5O)np(OC6C(O)C(O)OC(CO)C6O)(OC7C(O)C(O)OC(CO)C7O)n2)C1O");
+			atasc.decideBondOrder(mol);
+		} catch (InvalidSmilesException e) {
+			Assert.fail("SMILES failed");
+		} catch (CDKException e) {
+			Assert.fail("ATASatChecer failed");
+		}
+		
+	}
 }
