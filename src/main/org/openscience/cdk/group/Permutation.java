@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 /**
@@ -37,6 +38,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module group
  *
  */
+@TestClass("org.openscience.cdk.group.PermutationTest")
 public class Permutation {
 
     /**
@@ -77,19 +79,25 @@ public class Permutation {
     public Permutation(Permutation other) {
         this.values = other.values.clone();
     }
-    
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
+
+    /**
+     * @inheritDoc
      */
-    @TestMethod("equalsTest")
+    @Override
+    @TestMethod("equalsTest,equalsTest_null,equalsTest_difference")
     public boolean equals(Object other) {
-        if (other instanceof Permutation) {
-            return Arrays.equals(values, ((Permutation)other).values);
-        } else {
-            return false;
-        }
+
+        if(this == other) return true;
+        if(other == null || getClass() != other.getClass()) return false;
+
+        return Arrays.equals(values, ((Permutation) other).values);
+
     }
-    
+
+    /**
+     * @inheritDoc
+     */
+    @Override
     public int hashCode() {
     	return Arrays.hashCode(values);
     }
@@ -187,9 +195,15 @@ public class Permutation {
      * Alter a permutation by setting it to the values in the other permutation.
      * 
      * @param other the other permutation to use
+     * @throws IllegalArgumentException thrown if the permutations are of different
+     *                                  size
      */
     @TestMethod("setToTest")
     public void setTo(Permutation other) {
+
+        if(this.values.length != other.values.length)
+            throw new IllegalArgumentException("permutations are different size");
+
         for (int i = 0; i < this.values.length; i++) {
             this.values[i] = other.values[i];
         }
@@ -235,8 +249,8 @@ public class Permutation {
         int n = this.values.length;
         boolean[] p = new boolean[n];
         Arrays.fill(p, true);
-        
-        StringBuffer sb = new StringBuffer();
+
+        StringBuilder sb = new StringBuilder();
         int j = 0;
         for (int i = 0; i < n; i++) {
             if (p[i]) {
@@ -255,10 +269,11 @@ public class Permutation {
         }
         return sb.toString();
     }
-    
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
+
+    /**
+     * @inheritDoc
      */
+    @Override
     public String toString() {
         return Arrays.toString(this.values);
     }

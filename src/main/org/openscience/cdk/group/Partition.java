@@ -24,10 +24,12 @@ package org.openscience.cdk.group;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 /**
@@ -38,6 +40,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author maclean
  * @cdk.module group
  */
+@TestClass("org.openscience.cdk.group.PartitionTest")
 public class Partition {
 
     /**
@@ -69,13 +72,13 @@ public class Partition {
     /**
      * Constructor to make a partition from an array of int arrays.
      * 
-     * @param other the partition to copy
+     * @param cellData the partition to copy
      */
     @TestMethod("cellDataConstructor")
     public Partition(int[][] cellData) {
         this();
-        for (int i = 0; i < cellData.length; i++) {
-            addCell(cellData[i]);
+        for (int[] aCellData : cellData) {
+            addCell(aCellData);
         }
     }
     
@@ -95,19 +98,31 @@ public class Partition {
         }
         return unit;
     }
-    
+
+    /**
+     * @inheritDoc
+     */
+    @TestMethod("equalsTest,equalsTest_different,equalsTest_null")
+    @Override
     public boolean equals(Object o) {
-    	if (o instanceof Partition) {
-    		Partition other = (Partition) o;
-    		return this.cells.equals(other.cells);
-    	}
-    	return false;
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Partition partition = (Partition) o;
+
+        return cells != null ? cells.equals(partition.cells) : partition.cells == null;
+
     }
-    
+
+    /**
+     * @inheritDoc
+     */
+    @Override
     public int hashCode() {
-    	return cells.hashCode();
+    	return cells != null ? cells.hashCode() : 0;
     }
-    
+
     /**
      * Gets the size of the partition, in terms of the number of cells.
      * 
@@ -141,9 +156,7 @@ public class Partition {
     @TestMethod("isDiscreteTest")
     public boolean isDiscrete() {
         for (SortedSet<Integer> cell : cells) {
-            if (cell.size() == 1) {
-                continue;
-            } else {
+            if (cell.size() != 1) {
                 return false;
             }
         }
@@ -306,7 +319,7 @@ public class Partition {
     @TestMethod("getIndexOfFirstNonDiscreteCellTest")
     public int getIndexOfFirstNonDiscreteCell() {
         for (int i = 0; i < this.cells.size(); i++) {
-            if (this.cells.get(i).size() > 1) return i;
+            if (!isDiscreteCell(i)) return i;
         }
         return -1;  // XXX
     }
@@ -394,10 +407,11 @@ public class Partition {
     public SortedSet<Integer> copyBlock(int cellIndex) {
         return new TreeSet<Integer>(this.cells.get(cellIndex));
     }
-    
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
+
+    /**
+     * @inheritDoc
      */
+    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("[");
@@ -424,11 +438,17 @@ public class Partition {
      * Parse a string like "[0,2|1,3]" to form the partition; cells are 
      * separated by '|' characters and elements within the cell by commas.
      * 
-     * @param strForm
+     * @param strForm the partition in string form
      * @return the partition corresponding to the string
+     * @throws IllegalArgumentException thrown if the provided strFrom is
+     *         null or empty
      */
     @TestMethod("fromStringTest")
     public static Partition fromString(String strForm) {
+
+        if(strForm == null || strForm.isEmpty())
+            throw new IllegalArgumentException("null or empty string provided");
+
         Partition p = new Partition();
         int index = 0;
         if (strForm.charAt(0) == '[') {

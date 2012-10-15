@@ -67,7 +67,22 @@ public class PermutationTest extends CDKTestCase {
 		Permutation b = new Permutation(1, 2, 0, 3);
 		Assert.assertEquals(a, b);
 	}
-	
+
+	@Test
+	public void equalsTest_null() {
+		Permutation a = new Permutation(1, 2, 0, 3);
+		Assert.assertNotSame(a, null);
+	}
+
+    @Test
+	public void equalsTest_difference() {
+		Permutation a = new Permutation(1, 2, 0, 3);
+		Permutation b = new Permutation(1, 0, 2, 3);
+		Assert.assertNotSame(a, b);
+	}
+
+
+
 	@Test
 	public void isIdentityTest() {
 		int size = 4;
@@ -129,6 +144,13 @@ public class PermutationTest extends CDKTestCase {
 		a.setTo(b);
 		Assert.assertTrue(a.isIdentity());
 	}
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setToTest_differentLength() {
+        Permutation a = new Permutation(1, 0, 2);
+        Permutation b = new Permutation(0, 1);
+        a.setTo(b);
+    }
 	
 	@Test
 	public void multiplyTest() {

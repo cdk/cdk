@@ -272,4 +272,25 @@ public class PartitionTest extends CDKTestCase {
         Assert.assertEquals(2, p.size());
         Assert.assertEquals(4, p.numberOfElements());
     }
+
+    @Test
+    public void equalsTest_null() {
+        Partition p = new Partition(new int[][]{{0}, {1}});
+        Assert.assertNotSame(p, null);
+    }
+
+    @Test
+    public void equalsTest_different() {
+        Partition p = new Partition(new int[][]{{0}, {1}});
+        Partition o = new Partition(new int[][]{{1}, {0}});
+        Assert.assertNotSame(p, o);
+    }
+
+    @Test
+    public void equalsTest() {
+        Partition p = new Partition(new int[][]{{0}, {1}});
+        Partition o = new Partition(new int[][]{{0}, {1}});
+        Assert.assertEquals(p, o);
+    }
+
 }

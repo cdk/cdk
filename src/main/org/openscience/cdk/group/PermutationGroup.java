@@ -25,6 +25,7 @@ package org.openscience.cdk.group;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 
@@ -75,6 +76,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module group
  * 
  */
+@TestClass("org.openscience.cdk.group.PermutationGroup")
 public class PermutationGroup {
     
     /**
@@ -410,10 +412,11 @@ public class PermutationGroup {
         }
         return size;
     }
-    
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
+
+    /**
+     * @inheritDoc
      */
+    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("Base = ").append(base).append("\n");
