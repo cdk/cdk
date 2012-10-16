@@ -57,6 +57,7 @@ import org.openscience.cdk.libio.cml.ICMLCustomizer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -112,7 +113,6 @@ import java.util.List;
 public class CMLWriter extends DefaultChemObjectWriter {
 
     private OutputStream output;
-    private Writer writer;
 
     private BooleanIOSetting cmlIds;
     private BooleanIOSetting namespacedOutput;
@@ -132,26 +132,29 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * class given as parameter. The CML code will be valid CML code with a
      * XML header. Only one object can be stored.
      *
-     * @param out Writer to redirect the output to.
+     * @param writer Writer to redirect the output to.
      */
-    public CMLWriter(Writer out) {
-        this.writer = out;
-        output = new OutputStream() {
-			public void write(int anInt) throws IOException {
-				writer.write(anInt);
-			}
+    public CMLWriter(final Writer writer) {
+
+        // OutputStream doesn't handle encoding - the serializers read/write in the same format we're okay
+        logger.warn("possible loss of encoding when using a Writer with CMLWriter");
+        this.output = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                writer.write(b);
+            }
         };
+
         initIOSettings();
     }
 
     public CMLWriter(OutputStream output) {
         this.output = output;
-        writer = null;
         initIOSettings();
     }
     
     public CMLWriter() {
-        this(new StringWriter());
+        this(new ByteArrayOutputStream());
     }
 
     public void registerCustomizer(ICMLCustomizer customizer) {
@@ -166,14 +169,21 @@ public class CMLWriter extends DefaultChemObjectWriter {
         return CMLFormat.getInstance();
     }
     
-    public void setWriter(Writer writer) throws CDKException {
-        this.writer = writer;
+    public void setWriter(final Writer writer) throws CDKException {
+
+        // OutputStream doesn't handle encoding - the serializers read/write in the same format we're okay
+        logger.warn("possible loss of encoding when using a Writer with CMLWriter");
+        this.output = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                writer.write(b);
+            }
+        };
+
     }
 
     public void setWriter(OutputStream output) throws CDKException {
-    	//TODO dont know what the intention here is, but without this line it is not working...
     	this.output = output;
-    	setWriter(new OutputStreamWriter(output));
     }
     
     /**
@@ -181,7 +191,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
      */
     @TestMethod("testClose")
     public void close() throws IOException {
-        output.close();
+        if(output != null)
+            output.close();
     }
 
 	@TestMethod("testAccepts")
