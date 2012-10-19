@@ -333,6 +333,9 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         StringBuilder data = new StringBuilder();
         while (str.trim().length() > 0) {
             logger.debug("data line: ", currentLine);
+			if(data.length() > 0) {
+				str = System.getProperty("line.separator") + str;
+			}
             data.append(str);
             currentLine = input.readLine();
             str = new String(currentLine).trim();
