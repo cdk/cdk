@@ -119,14 +119,15 @@ public class InChIGenerator {
      * InChI library requires, then calls the library.
      * 
      * @param atomContainer      AtomContainer to generate InChI for.
+     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws org.openscience.cdk.exception.CDKException if there is an
      * error during InChI generation
      */
     @TestMethod("testGetInchiFromChlorineAtom,testGetInchiFromLithiumIon,testGetStandardInchiFromChlorine37Atom")
-    protected InChIGenerator(IAtomContainer atomContainer) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
         try {
             input = new JniInchiInput("");
-            generateInchiFromCDKAtomContainer(atomContainer);
+            generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
         } catch (JniInchiException jie) {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
@@ -142,12 +143,14 @@ public class InChIGenerator {
      * @param options   Space delimited string of options to pass to InChI library.
      *                  Each option may optionally be preceded by a command line
      *                  switch (/ or -).
+     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, String options) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, String options, boolean ignoreAromaticBonds) throws
+            CDKException {
         try {
             input = new JniInchiInput(options);
-            generateInchiFromCDKAtomContainer(atomContainer);
+            generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
         } catch (JniInchiException jie) {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
@@ -162,12 +165,14 @@ public class InChIGenerator {
      * 
      * @param atomContainer     AtomContainer to generate InChI for.
      * @param options           List of INCHI_OPTION.
+     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> options) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> options,
+                             boolean ignoreAromaticBonds) throws CDKException {
         try {
             input = new JniInchiInput(options);
-            generateInchiFromCDKAtomContainer(atomContainer);
+            generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
         } catch (JniInchiException jie) {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
@@ -182,7 +187,7 @@ public class InChIGenerator {
      * @param atomContainer      AtomContainer to generate InChI for.
      * @throws CDKException
      */
-    private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer) throws CDKException {
+    private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
         this.atomContainer = atomContainer;
         
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
@@ -296,7 +301,7 @@ public class InChIGenerator {
             // Get bond order
             INCHI_BOND_TYPE order;
             IBond.Order bo = bond.getOrder();
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            if (!ignore && bond.getFlag(CDKConstants.ISAROMATIC)) {
             	order = INCHI_BOND_TYPE.ALTERN;
             } else if (bo == CDKConstants.BONDORDER_SINGLE) {
                 order = INCHI_BOND_TYPE.SINGLE;

@@ -30,13 +30,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-inchi
@@ -161,5 +162,40 @@ public class InChIGeneratorFactoryTest {
 
         Assert.assertEquals("Incorrect InCHI generated for topological centre", expected, actual);
 
+    }
+
+    /**
+     * Tests the aromatic bonds option in the InChI factory class.
+     */
+    @Test public void testInChIGenerator_AromaticBonds() throws CDKException {
+
+        // create a fairly complex aromatic molecule
+        IAtomContainer tetrazole = MoleculeFactory.makeTetrazole();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tetrazole);
+        CDKHueckelAromaticityDetector.detectAromaticity(tetrazole);
+
+        InChIGeneratorFactory inchiFactory = InChIGeneratorFactory.getInstance();
+
+        // include aromatic bonds by default
+        InChIGenerator genAromaticity1 = inchiFactory.getInChIGenerator(tetrazole);
+
+        // exclude aromatic bonds
+        inchiFactory.setIgnoreAromaticBonds(true);
+        InChIGenerator genNoAromaticity = inchiFactory.getInChIGenerator(tetrazole);
+
+        // include aromatic bonds again
+        inchiFactory.setIgnoreAromaticBonds(false);
+        InChIGenerator genAromaticity2 = inchiFactory.getInChIGenerator(tetrazole);
+
+        // with the aromatic bonds included, no InChI can be generated
+        Assert.assertEquals("return status was not in error",
+                            INCHI_RET.ERROR, genAromaticity1.getReturnStatus());
+        Assert.assertEquals("return status was not in error",
+                            INCHI_RET.ERROR, genAromaticity2.getReturnStatus());
+        // excluding the aromatic bonds gives the normal InChI
+        Assert.assertEquals("return status was not okay",
+                            INCHI_RET.OKAY, genNoAromaticity.getReturnStatus());
+        Assert.assertEquals("InChIs did not match",
+                            "InChI=1S/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)", genNoAromaticity.getInchi());
     }
 }

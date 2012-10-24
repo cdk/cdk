@@ -70,7 +70,12 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public class InChIGeneratorFactory {
  
     private static InChIGeneratorFactory INSTANCE;
-    
+
+    /**
+     * If the CDK aromaticity flag should be ignored and the bonds treated solely as single and double bonds.
+     */
+    private boolean ignoreAromaticBonds = false;
+
     /**
      * <p>Constructor for InChIGeneratorFactory. Ensures that native code
      * required for InChI/Structure interconversion is available, otherwise
@@ -104,6 +109,31 @@ public class InChIGeneratorFactory {
             return INSTANCE;
         }
     }
+
+    /**
+     * Sets whether aromatic bonds should be treated as single and double bonds for the InChI generation. The bond type
+     * INCHI_BOND_TYPE.ALTERN is considered special in contrast to single, double, and triple bonds,
+     * and is not bulletproof. If the molecule has clearly defined single and double bonds,
+     * the option can be used to force the class not to use the alternating bond type.
+     * <p/>
+     * http://www.inchi-trust.org/fileadmin/user_upload/html/inchifaq/inchi-faq.html#16.3
+     *
+     * @param ignore if aromatic bonds should be treated as bonds of type single and double
+     */
+    public void setIgnoreAromaticBonds(boolean ignore) {
+
+        ignoreAromaticBonds = ignore;
+    }
+
+    /**
+     * Returns whether aromatic bonds are treated as single and double bonds for the InChI generation.
+     *
+     * @return if aromatic bonds are treated as bonds of type single and double
+     */
+    public boolean getIgnoreAromaticBonds() {
+
+        return ignoreAromaticBonds;
+    }
     
     /**
      * Gets an Standard InChI generator for a {@link IAtomContainer}.
@@ -115,7 +145,7 @@ public class InChIGeneratorFactory {
     @TestMethod("testGetInChIGenerator_IAtomContainer")
     public InChIGenerator getInChIGenerator(IAtomContainer container) 
                           throws CDKException {
-        return(new InChIGenerator(container));
+        return(new InChIGenerator(container, ignoreAromaticBonds));
     }
     
     /**
@@ -130,7 +160,7 @@ public class InChIGeneratorFactory {
     public InChIGenerator getInChIGenerator(IAtomContainer container, 
                                             String options) 
                           throws CDKException {
-        return(new InChIGenerator(container, options));
+        return(new InChIGenerator(container, options, ignoreAromaticBonds));
     }
     
     /**
@@ -144,7 +174,7 @@ public class InChIGeneratorFactory {
     @TestMethod("testGetInChIGenerator_IAtomContainer_List")
     public InChIGenerator getInChIGenerator(IAtomContainer container, 
                                             List<INCHI_OPTION> options) throws CDKException {
-        return(new InChIGenerator(container, options));
+        return(new InChIGenerator(container, options, ignoreAromaticBonds));
     }
     
     /**
