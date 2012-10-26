@@ -171,4 +171,8 @@ public class DebugReactionSet extends ReactionSet
 		super.removeReaction(reaction);
 	}
 
+    public boolean isEmpty() {
+        logger.debug("Checking if reaction set is empty: ", super.isEmpty());
+    	return super.isEmpty();
+    }
 }

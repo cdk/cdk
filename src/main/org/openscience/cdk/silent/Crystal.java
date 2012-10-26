@@ -246,4 +246,10 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
         cAxis = new Vector3d(0.0, 0.0, 0.0);
     }
 
+    /**
+     * Returns true if this Crystal has no atoms.
+     */
+    public boolean isEmpty() {
+    	return aAxis == null;
+    }
 }

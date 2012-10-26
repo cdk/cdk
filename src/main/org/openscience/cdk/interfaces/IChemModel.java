@@ -91,6 +91,12 @@ public interface IChemModel extends IChemObject {
      * @see       #getReactionSet
      */
     public void setReactionSet(IReactionSet sor);
-    
+
+    /**
+     * Returns true if this ChemModel is empty.
+     * 
+     */
+    public boolean isEmpty();
+
 }
 

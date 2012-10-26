@@ -166,11 +166,16 @@ public interface IAtomContainerSet extends IChemObject {
 	 */
 	public int getAtomContainerCount();
 
-        /**
-         * Sort the AtomContainers using a provided Comparator.
-         * 
-         * @param comparator defines the sorting method
-         */
-        public void sortAtomContainers( Comparator<IAtomContainer> comparator);
+    /**
+      * Sort the AtomContainers using a provided Comparator.
+      * 
+      * @param comparator defines the sorting method
+      */
+    public void sortAtomContainers( Comparator<IAtomContainer> comparator);
+
+    /**
+     * Returns true if this IAtomContainerSet is empty.
+     */
+    public boolean isEmpty();
 }
 

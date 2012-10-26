@@ -139,5 +139,4 @@ public interface ICrystal extends IAtomContainer {
      * @see           #getZ
      */
     public void setZ(Integer value);
-
 }

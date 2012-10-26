@@ -86,4 +86,8 @@ public interface IRingSet extends IAtomContainerSet {
 	 */
 	public boolean contains(IAtomContainer container);
 	
+    /**
+     * Returns true if this IRingSet has no atoms.
+     */
+    public boolean isEmpty();
 }

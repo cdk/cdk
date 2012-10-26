@@ -255,5 +255,4 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
         bAxis = new Vector3d(0.0, 0.0, 0.0);
         cAxis = new Vector3d(0.0, 0.0, 0.0);
     }
-
 }

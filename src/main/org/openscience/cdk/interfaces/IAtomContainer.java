@@ -629,6 +629,15 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 */
 	public boolean contains(IElectronContainer electronContainer);
 
+    /**
+     * Indicates whether this container is empty. The container is considered empty if
+     * there are no atoms. Bonds are not checked as a graph with no vertexes can not
+     * have edges.
+     *
+     * @return whether the container is empty
+     */
+    public boolean isEmpty();
+
 }
 
 

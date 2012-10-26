@@ -262,5 +262,21 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	{
 		notifyChanged(event);
 	}
+	
+    /**
+     * Returns true if this ChemModel has no atoms.
+     */
+    public boolean isEmpty() 
+	{
+    	if (setOfMolecules != null && !setOfMolecules.isEmpty())
+    		return false;
+    	if (setOfReactions != null && !setOfReactions.isEmpty())
+    		return false;
+    	if (ringSet != null && !ringSet.isEmpty())
+    		return false;
+        if (crystal != null && !crystal.isEmpty())
+    		return false;
+		return true;
+	}
 }
 
