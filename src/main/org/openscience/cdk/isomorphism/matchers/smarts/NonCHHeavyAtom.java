@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher any heavy atom that is not C or H.
@@ -40,8 +41,8 @@ public class NonCHHeavyAtom extends SMARTSAtom {
 	 * Creates a new instance
 	 *
 	 */
-	public NonCHHeavyAtom() {
-
+	public NonCHHeavyAtom(IChemObjectBuilder builder) {
+        super(builder);
 	}
 
 	/* (non-Javadoc)

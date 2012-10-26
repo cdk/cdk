@@ -879,7 +879,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
                 bondAtom1=bond.getAtom(1);
                 if ((bondAtom0.getSymbol().equals("C") && bondAtom1.getSymbol().equals("N")) || (bondAtom0.getSymbol().equals("N") && bondAtom1.getSymbol().equals("C"))&& bond.getOrder() == IBond.Order.SINGLE){
                     aminoAcid.removeBond(bondAtom0,bondAtom1);
-                    aminoAcid.addBond(new AnyOrderQueryBond((IQueryAtom)bondAtom0,(IQueryAtom)bondAtom1,IBond.Order.SINGLE));
+                    aminoAcid.addBond(new AnyOrderQueryBond((IQueryAtom)bondAtom0,(IQueryAtom)bondAtom1,IBond.Order.SINGLE, atomContainer.getBuilder()));
                     break;
                 }
             }
@@ -935,18 +935,18 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 
 //		 ortho oxygen pair
         //AtomContainer orthopair = sp.parseSmiles("OCCO");
-        QueryAtomContainer orthopair=new QueryAtomContainer();
-        AromaticAtom atom1=new AromaticAtom();
+        QueryAtomContainer orthopair=new QueryAtomContainer(atomContainer.getBuilder());
+        AromaticAtom atom1=new AromaticAtom(atomContainer.getBuilder());
         atom1.setSymbol("C");
-        AromaticAtom atom2=new AromaticAtom();
+        AromaticAtom atom2=new AromaticAtom(atomContainer.getBuilder());
         atom2.setSymbol("C");
-        SymbolQueryAtom atom3=new SymbolQueryAtom();
+        SymbolQueryAtom atom3=new SymbolQueryAtom(atomContainer.getBuilder());
         atom3.setSymbol("O");
-        SymbolQueryAtom atom4=new SymbolQueryAtom();
+        SymbolQueryAtom atom4=new SymbolQueryAtom(atomContainer.getBuilder());
         atom4.setSymbol("O");
-        orthopair.addBond(new AromaticQueryBond(atom1,atom2,IBond.Order.SINGLE));
-        orthopair.addBond(new OrderQueryBond(atom1,atom3,IBond.Order.SINGLE));
-        orthopair.addBond(new OrderQueryBond(atom2,atom4,IBond.Order.SINGLE));
+        orthopair.addBond(new AromaticQueryBond(atom1,atom2,IBond.Order.SINGLE, atomContainer.getBuilder()));
+        orthopair.addBond(new OrderQueryBond(atom1,atom3,IBond.Order.SINGLE, atomContainer.getBuilder()));
+        orthopair.addBond(new OrderQueryBond(atom2,atom4,IBond.Order.SINGLE, atomContainer.getBuilder()));
 
         try {
             if (universalIsomorphismTester.isSubgraph(ac, orthopair)) {

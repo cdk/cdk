@@ -21,6 +21,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This smarts atom matches aliphatic atom with element symbol specified
@@ -37,8 +38,8 @@ public class AliphaticSymbolAtom extends SMARTSAtom {
 	 *
 	 * @param symbol the atom symbol
 	 */
-	public AliphaticSymbolAtom(String symbol) {
-		super();
+	public AliphaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
+		super(builder);
 		setFlag(CDKConstants.ISAROMATIC, false);
 		setSymbol(symbol);
 	}

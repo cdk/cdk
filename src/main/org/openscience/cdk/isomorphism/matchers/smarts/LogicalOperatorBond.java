@@ -21,6 +21,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
@@ -47,6 +48,10 @@ public class LogicalOperatorBond extends SMARTSBond {
      * Right child
      */
     private IQueryBond right;
+
+    public LogicalOperatorBond(IChemObjectBuilder builder){
+        super(builder);
+    }
 
     public IQueryBond getLeft() {
         return left;

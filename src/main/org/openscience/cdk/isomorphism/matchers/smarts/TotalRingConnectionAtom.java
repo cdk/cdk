@@ -31,6 +31,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the number of ring connections of the checked Atom with
@@ -47,7 +48,8 @@ public class TotalRingConnectionAtom extends SMARTSAtom {
 	 *
 	 * @param ringConn number of ring connections
 	 */
-	public TotalRingConnectionAtom(int ringConn) {
+	public TotalRingConnectionAtom(int ringConn, IChemObjectBuilder builder) {
+        super(builder);
 		this.setProperty(CDKConstants.RING_CONNECTIONS, ringConn);
 	}
 

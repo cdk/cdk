@@ -30,6 +30,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
@@ -48,7 +49,8 @@ public class PeriodicGroupNumberAtom extends SMARTSAtom {
 	 *
 	 * @param groupNumber the periodic group number
 	 */
-	public PeriodicGroupNumberAtom(int groupNumber) {
+	public PeriodicGroupNumberAtom(int groupNumber, IChemObjectBuilder builder) {
+        super(builder);
 		this.groupNumber = groupNumber;
 	}
 

@@ -26,6 +26,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
@@ -117,8 +118,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      *  Constructs an empty AtomContainer.
      */
-    public QueryAtomContainer() {
-        this(10, 10, 0, 0);
+    public QueryAtomContainer(IChemObjectBuilder builder) {
+        this(10, 10, 0, 0,
+             builder);
     }
 
 
@@ -129,8 +131,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *
      * @param  container  An AtomContainer to copy the atoms and electronContainers from
      */
-    public QueryAtomContainer(IAtomContainer container)
+    public QueryAtomContainer(IAtomContainer container, IChemObjectBuilder builder)
     {
+        super(builder);
         this.atomCount = container.getAtomCount();
         this.bondCount = container.getBondCount();
         this.lonePairCount = container.getLonePairCount();
@@ -172,8 +175,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *@param  seCount          Number of single electrons to be in this container
      *
      */
-    public QueryAtomContainer(int atomCount, int bondCount, int lpCount, int seCount)
+    public QueryAtomContainer(int atomCount, int bondCount, int lpCount, int seCount,
+                              IChemObjectBuilder builder)
     {
+        super(builder);
         this.atomCount = 0;
         this.bondCount = 0;
         this.lonePairCount = 0;

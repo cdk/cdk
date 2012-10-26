@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -95,6 +96,9 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
      */
     private Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints;
 
+    public RGroupQuery(IChemObjectBuilder builder){
+        super(builder);
+    }
 
     /**
      * Returns all R# type atoms (pseudo atoms) found in the root structure

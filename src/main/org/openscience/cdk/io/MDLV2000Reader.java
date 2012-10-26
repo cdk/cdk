@@ -723,7 +723,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
                 else {
                     queryBondCount++;
-                    newBond = new CTFileQueryBond();
+                    newBond = new CTFileQueryBond(molecule.getBuilder());
                     IAtom[] bondAtoms = {a1,a2};
                     newBond.setAtoms(bondAtoms);
                     newBond.setOrder(null);
@@ -743,7 +743,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             if(queryBondCount==0)          
                 outputContainer = molecule;
             else {
-                outputContainer = new QueryAtomContainer();
+                outputContainer = new QueryAtomContainer(molecule.getBuilder());
             }
 
             outputContainer.setProperty(CDKConstants.TITLE, title);

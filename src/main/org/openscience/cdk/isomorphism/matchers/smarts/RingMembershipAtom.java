@@ -21,6 +21,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 
 /**
@@ -37,7 +38,8 @@ public class RingMembershipAtom extends SMARTSAtom {
 	 */
 	private int numSSSR;
 
-	public RingMembershipAtom(int num) {
+	public RingMembershipAtom(int num, IChemObjectBuilder builder) {
+        super(builder);
 		this.numSSSR = num;
 	}
 

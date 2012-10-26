@@ -97,7 +97,7 @@ public class MACCSFingerprinter implements IFingerprinter {
         int bitsetLength = keys.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+        SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.getBuilder());
         for (int i = 0; i < keys.length; i++) {
             String smarts = keys[i].getSmarts();
             if (smarts.equals("?")) continue;

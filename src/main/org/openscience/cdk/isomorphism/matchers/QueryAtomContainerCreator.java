@@ -45,7 +45,7 @@ public class QueryAtomContainerCreator {
      *@return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createBasicQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
         }
@@ -57,11 +57,13 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE));
+                                      IBond.Order.SINGLE,
+                                      container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      bond.getOrder()));
+                                      bond.getOrder(),
+                                      container.getBuilder()));
             }
         }
         return queryContainer;
@@ -75,7 +77,7 @@ public class QueryAtomContainerCreator {
      * @return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createSymbolAndBondOrderQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
         }
@@ -88,7 +90,8 @@ public class QueryAtomContainerCreator {
             	new OrderQueryBondOrderOnly(
             		(IQueryAtom) queryContainer.getAtom(index1),
                     (IQueryAtom) queryContainer.getAtom(index2),
-                    bond.getOrder()
+                    bond.getOrder(),
+                    container.getBuilder()
                 )
             );
         }
@@ -103,7 +106,7 @@ public class QueryAtomContainerCreator {
      *@return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createSymbolAndChargeQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(container.getAtom(i)));
         }
@@ -115,18 +118,20 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE));
+                                      IBond.Order.SINGLE,
+                                      container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      bond.getOrder()));
+                                      bond.getOrder(),
+                                      container.getBuilder()));
             }
         }
         return queryContainer;
     }    
     
     public static QueryAtomContainer createSymbolChargeIDQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolChargeIDQueryAtom(container.getAtom(i)));
         }
@@ -138,11 +143,13 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE));
+                                      IBond.Order.SINGLE,
+                                      container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      bond.getOrder()));
+                                      bond.getOrder(),
+                                      container.getBuilder()));
             }
         }
         return queryContainer;
@@ -157,13 +164,13 @@ public class QueryAtomContainerCreator {
      *@return              The new QueryAtomContainer created from container
      */
     public static QueryAtomContainer createAnyAtomContainer(IAtomContainer container, boolean aromaticity) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
 
         for (int i = 0; i < container.getAtomCount(); i++) {
         	if (aromaticity && container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
-                queryContainer.addAtom(new AromaticAtom());
+                queryContainer.addAtom(new AromaticAtom(container.getBuilder()));
             } else {
-                queryContainer.addAtom(new AnyAtom());
+                queryContainer.addAtom(new AnyAtom(container.getBuilder()));
             }
         }
 
@@ -175,11 +182,13 @@ public class QueryAtomContainerCreator {
             if (aromaticity && bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                         (IQueryAtom) queryContainer.getAtom(index2),
-                        IBond.Order.SINGLE));
+                        IBond.Order.SINGLE,
+                        container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                         (IQueryAtom) queryContainer.getAtom(index2),
-                        bond.getOrder()));
+                        bond.getOrder(),
+                        container.getBuilder()));
             }
         }
         return queryContainer;
@@ -196,13 +205,13 @@ public class QueryAtomContainerCreator {
      * @return The new QueryAtomContainer
      */
     public static QueryAtomContainer createAnyAtomAnyBondContainer(IAtomContainer container, boolean aromaticity) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
 
         for (int i = 0; i < container.getAtomCount(); i++) {
             if (aromaticity && container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
-                queryContainer.addAtom(new AromaticAtom());
+                queryContainer.addAtom(new AromaticAtom(container.getBuilder()));
             } else {
-                queryContainer.addAtom(new AnyAtom());
+                queryContainer.addAtom(new AnyAtom(container.getBuilder()));
             }
         }
 
@@ -213,7 +222,8 @@ public class QueryAtomContainerCreator {
             int index2 = container.getAtomNumber(bond.getAtom(1));
             queryContainer.addBond(new AnyOrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                     (IQueryAtom) queryContainer.getAtom(index2),
-                    bond.getOrder()));
+                    bond.getOrder(),
+                    container.getBuilder()));
         }
         return queryContainer;
     }
@@ -227,10 +237,10 @@ public class QueryAtomContainerCreator {
      *@return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createAnyAtomForPseudoAtomQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
         for (int i = 0; i < container.getAtomCount(); i++) {
         	if (container.getAtom(i) instanceof IPseudoAtom) {
-				queryContainer.addAtom(new AnyAtom());
+				queryContainer.addAtom(new AnyAtom(container.getBuilder()));
 			}
         	else {
         		queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
@@ -245,11 +255,13 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE));
+                                      IBond.Order.SINGLE,
+                                      container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      bond.getOrder()));
+                                      bond.getOrder(),
+                                      container.getBuilder()));
             }
         }
         return queryContainer;

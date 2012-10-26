@@ -20,6 +20,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
@@ -46,6 +47,10 @@ public class LogicalOperatorAtom extends SMARTSAtom {
      * Right child
      */
     private IQueryAtom right;
+
+    public LogicalOperatorAtom(IChemObjectBuilder builder){
+        super(builder);
+    }
 
     public IQueryAtom getLeft() {
         return left;

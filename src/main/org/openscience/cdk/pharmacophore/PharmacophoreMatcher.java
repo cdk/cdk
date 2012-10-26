@@ -379,7 +379,7 @@ public class PharmacophoreMatcher {
 
     private IAtomContainer getPharmacophoreMolecule(IAtomContainer atomContainer) throws CDKException {
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+        SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.getBuilder());
         IAtomContainer pharmacophoreMolecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         // lets loop over each pcore query atom

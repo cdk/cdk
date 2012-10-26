@@ -21,6 +21,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This smarts bond matches any bond that is in a ring.
@@ -36,7 +37,8 @@ public class RingBond extends SMARTSBond {
 	 * Creates a new instance
 	 *
 	 */
-	public RingBond() {
+	public RingBond(IChemObjectBuilder builder) {
+        super(builder);
 		this.setFlag(CDKConstants.ISINRING, true);
 	}
 

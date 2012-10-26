@@ -21,6 +21,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This smarts atom matches any atom with a certain number of explicit
@@ -41,15 +42,15 @@ public class ExplicitConnectionAtom extends SMARTSAtom {
 	/**
 	 * Creates a new instance.
 	 */
-	public ExplicitConnectionAtom() {
-		super();
+	public ExplicitConnectionAtom(IChemObjectBuilder builder) {
+		super(builder);
 	}
 
 	/**
 	 * Creates a new instance.
 	 */
-	public ExplicitConnectionAtom(int connection) {
-		super();
+	public ExplicitConnectionAtom(int connection, IChemObjectBuilder builder) {
+		super(builder);
 		this.numOfConnection = connection;
 	}
 

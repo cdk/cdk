@@ -25,6 +25,7 @@ import java.io.StringReader;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.smiles.smarts.parser.ASTStart;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 
@@ -41,7 +42,7 @@ public class SmartsQueryVisitorTest extends CDKTestCase {
     public void visit(String smarts) throws Exception {
     	SMARTSParser parser = new SMARTSParser(new StringReader(smarts));
     	ASTStart start = parser.Start();
-    	SmartsQueryVisitor visitor = new SmartsQueryVisitor();
+    	SmartsQueryVisitor visitor = new SmartsQueryVisitor(DefaultChemObjectBuilder.getInstance());
     	visitor.visit(start, null);
     }
     

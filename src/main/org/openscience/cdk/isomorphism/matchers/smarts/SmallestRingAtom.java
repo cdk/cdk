@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This smarts atom matches any atom with the smallest SSSR size being a 
@@ -40,7 +41,8 @@ public class SmallestRingAtom extends SMARTSAtom {
 	 */
 	private int smallestRingSize;
 
-	public SmallestRingAtom(int size) {
+	public SmallestRingAtom(int size, IChemObjectBuilder builder) {
+        super(builder);
 		this.smallestRingSize = size;
 	}
 

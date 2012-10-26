@@ -20,6 +20,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
@@ -35,6 +36,11 @@ public class RingIdentifierAtom extends SMARTSAtom {
 	private static final long serialVersionUID = -6812146026923460637L;
 	private IQueryAtom atom;
 	private IQueryBond ringBond;
+
+    public RingIdentifierAtom(IChemObjectBuilder builder){
+        super(builder);
+    }
+
 	/* (non-Javadoc)
 	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
 	 */

@@ -76,7 +76,7 @@ public class EStateFingerprinter implements IFingerprinter {
         int bitsetLength = PATTERNS.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+        SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.getBuilder());
         for (int i = 0; i < PATTERNS.length; i++) {
             sqt.setSmarts(PATTERNS[i]);
             boolean status = sqt.matches(atomContainer);

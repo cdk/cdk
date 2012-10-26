@@ -25,6 +25,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
@@ -42,8 +43,8 @@ public class AromaticQueryBond extends SMARTSBond {
      * Creates a new instance
      *
      */
-    public AromaticQueryBond() {
-    	super();
+    public AromaticQueryBond(IChemObjectBuilder builder) {
+    	super(builder);
     	setFlag(CDKConstants.ISAROMATIC, true);
     }
     
@@ -51,8 +52,8 @@ public class AromaticQueryBond extends SMARTSBond {
      * Creates a new instance
      *
      */
-    public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order) {
-    	super(atom1, atom2, order);
+    public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
+    	super(atom1, atom2, order, builder);
     	setFlag(CDKConstants.ISAROMATIC, true);
     }    
     

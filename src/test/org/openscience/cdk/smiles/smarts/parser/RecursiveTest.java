@@ -45,7 +45,7 @@ public class RecursiveTest extends CDKTestCase {
     private int nqmatch;
 
     public void match(String smarts, String smiles) throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts);
+        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
         CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
@@ -315,7 +315,7 @@ public class RecursiveTest extends CDKTestCase {
             ins, DefaultChemObjectBuilder.getInstance()
         );
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]");
+        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
         int nmatch = 0;
         int nmol = 0;
         while (reader.hasNext()) {

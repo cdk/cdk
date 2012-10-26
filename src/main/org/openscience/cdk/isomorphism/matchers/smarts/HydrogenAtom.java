@@ -22,6 +22,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import java.util.List;
 
@@ -42,8 +43,8 @@ public class HydrogenAtom extends SMARTSAtom {
 	 * Creates a new instance.
 	 *
 	 */
-	public HydrogenAtom() {
-		super();
+	public HydrogenAtom(IChemObjectBuilder builder) {
+		super(builder);
 	}
 
 	/* (non-Javadoc)

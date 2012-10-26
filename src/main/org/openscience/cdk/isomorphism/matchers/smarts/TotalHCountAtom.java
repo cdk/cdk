@@ -25,6 +25,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the formal charge of the Atom. This cannot be matched
@@ -38,7 +39,8 @@ public class TotalHCountAtom extends SMARTSAtom {
 
 	private static final long serialVersionUID = -3532280322660394553L;
 
-	public TotalHCountAtom(int hCount) {
+	public TotalHCountAtom(int hCount, IChemObjectBuilder builder) {
+        super(builder);
 		setProperty(CDKConstants.TOTAL_H_COUNT, hCount);
 	}
 

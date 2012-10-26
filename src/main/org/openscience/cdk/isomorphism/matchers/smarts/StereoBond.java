@@ -20,6 +20,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This query bond matches bonds with specific stereo type. It is not 
@@ -32,6 +33,10 @@ import org.openscience.cdk.interfaces.IBond;
 public class StereoBond extends SMARTSBond {
 
 	private static final long serialVersionUID = 3529688197057645996L;
+
+    public StereoBond(IChemObjectBuilder builder){
+        super(builder);
+    }
 
 	public boolean matches(IBond bond) {
         if (this.getOrder() != bond.getOrder()) {

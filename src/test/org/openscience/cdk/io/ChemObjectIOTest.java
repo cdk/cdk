@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.debug.DebugAtomContainer;
 import org.openscience.cdk.debug.DebugChemFile;
@@ -106,7 +107,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     protected static IChemObject[] acceptableChemObjects = {
         new ChemFile(), new ChemModel(), new AtomContainer(),
-        new Reaction(), new RGroupQuery()
+        new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())
     };
 
     @Test public void testAcceptsAtLeastOneChemObject() {

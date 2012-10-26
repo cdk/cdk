@@ -26,6 +26,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -65,9 +66,9 @@ public class AcidicGroupCountDescriptor implements IMolecularDescriptor {
      * Creates a new {@link AcidicGroupCountDescriptor}.
      */
     @TestMethod("testConstructor")
-    public AcidicGroupCountDescriptor() throws CDKException {
+    public AcidicGroupCountDescriptor(IChemObjectBuilder builder) throws CDKException {
         for (String smarts : SMARTS_STRINGS) {
-            tools.add(new SMARTSQueryTool(smarts));
+            tools.add(new SMARTSQueryTool(smarts, builder));
         }
         this.checkAromaticity = true;
     }

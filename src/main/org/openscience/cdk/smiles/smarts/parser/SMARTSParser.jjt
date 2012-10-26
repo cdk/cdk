@@ -40,6 +40,7 @@ import java.util.Stack;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This parser implements a nearly complete subset of the SMARTS syntax as defined on
@@ -81,14 +82,14 @@ public class SMARTSParser {
 	 * This method parses a Smarts String and returns an instance of 
 	 * <code>QueryAtomContainer</code>
 	 */
-	public static QueryAtomContainer parse(String smarts) {
+	public static QueryAtomContainer parse(String smarts, IChemObjectBuilder builder) {
         QueryAtomContainer container = null;
         StringReader reader = new StringReader(smarts);
         try {
             SMARTSParser parser = new SMARTSParser(reader);
             ASTStart start = parser.Start();
             org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor visitor 
-            	= new org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor();
+            	= new org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor(builder);
             container = (QueryAtomContainer)start.jjtAccept(visitor, null);
         } catch (ParseException exception) {
             throw new IllegalArgumentException("The string " + smarts + " is not a valid" +

@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the total valency of the Atom.
@@ -44,7 +45,8 @@ public class ConnectionCountAtom extends SMARTSAtom {
      *
      * @param count
      */
-    public ConnectionCountAtom(int count) {
+    public ConnectionCountAtom(int count, IChemObjectBuilder builder) {
+        super(builder);
         this.setProperty(CC_PROP, count);
     }
 

@@ -32,6 +32,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matches an atom using total number of connections.
@@ -46,7 +47,8 @@ public class TotalConnectionAtom extends SMARTSAtom {
 	/**
 	 * Creates a new instance.
 	 */
-	public TotalConnectionAtom(int count) {
+	public TotalConnectionAtom(int count, IChemObjectBuilder builder) {
+        super(builder);
 		this.setProperty(CDKConstants.TOTAL_CONNECTIONS, count);
 	}
 	

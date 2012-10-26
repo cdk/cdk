@@ -23,10 +23,12 @@
  */
 package org.openscience.cdk.pharmacophore;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 
 import java.util.ArrayList;
@@ -50,7 +52,8 @@ public class PharmacophoreQuery extends QueryAtomContainer {
     private List<Object> exclusionVolumes;
 
     public PharmacophoreQuery() {
-        super();
+        // builder should be injected but this is difficult as this class is create in static methods
+        super(DefaultChemObjectBuilder.getInstance());
         exclusionVolumes = new ArrayList<Object>();
     }
 

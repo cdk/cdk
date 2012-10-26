@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the total valency of the Atom.
@@ -37,7 +38,8 @@ public class TotalValencyAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = -8067867220731999668L;
     
-    public TotalValencyAtom(int valency) {
+    public TotalValencyAtom(int valency, IChemObjectBuilder builder) {
+        super(builder);
         setValency(valency);
     }
     

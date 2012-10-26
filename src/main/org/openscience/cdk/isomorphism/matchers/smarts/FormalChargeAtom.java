@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the formal charge of the Atom.
@@ -41,7 +42,8 @@ public class FormalChargeAtom extends SMARTSAtom {
      *
      * @param charge
      */
-    public FormalChargeAtom(int charge) {
+    public FormalChargeAtom(int charge, IChemObjectBuilder builder) {
+        super(builder);
         this.formalCharge = charge;
     }
     

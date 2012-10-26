@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -117,6 +118,8 @@ public class SMARTSQueryTool {
     private IAtomContainer atomContainer = null;
     private QueryAtomContainer query = null;
 
+    private final IChemObjectBuilder builder;
+
     private List<List<Integer>> matchingAtoms = null;
 
     // a simplistic cache to store parsed SMARTS queries
@@ -132,7 +135,9 @@ public class SMARTSQueryTool {
      *
      * @throws IllegalArgumentException if the SMARTS string can not be handled
      */
-    public SMARTSQueryTool(String smarts) {
+    public SMARTSQueryTool(String smarts,
+                           IChemObjectBuilder builder) {
+        this.builder = builder;
         this.smarts = smarts;
         try {
             initializeQuery();
@@ -486,7 +491,7 @@ public class SMARTSQueryTool {
         matchingAtoms = null;
         query = cache.get(smarts);
         if (query == null) {
-            query = SMARTSParser.parse(smarts);
+            query = SMARTSParser.parse(smarts, builder);
             cache.put(smarts, query);
         }
     }

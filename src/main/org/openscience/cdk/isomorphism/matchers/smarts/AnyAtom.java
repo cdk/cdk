@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher any Atom.
@@ -39,7 +40,8 @@ public class AnyAtom extends SMARTSAtom {
     /**
      * Creates a new instance
      */
-    public AnyAtom() {
+    public AnyAtom(IChemObjectBuilder builder) {
+        super(builder);
     }
     
     /* (non-Javadoc)

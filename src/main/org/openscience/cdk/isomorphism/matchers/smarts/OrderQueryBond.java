@@ -25,6 +25,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matches a bond with a certain bond order.
@@ -45,8 +46,8 @@ public class OrderQueryBond extends SMARTSBond {
      *
      * @param order the order of bond
      */
-    public OrderQueryBond(IBond.Order order) {
-    	super();
+    public OrderQueryBond(IBond.Order order, IChemObjectBuilder builder) {
+    	super(builder);
     	this.setOrder(order);
     }
     

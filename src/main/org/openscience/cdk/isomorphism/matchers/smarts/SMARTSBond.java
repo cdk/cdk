@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
@@ -39,10 +40,12 @@ public class SMARTSBond extends QueryBond implements IQueryBond {
     
     private static final long serialVersionUID = 6164978147730140061L;
 
-    public SMARTSBond() {}
+    public SMARTSBond(IChemObjectBuilder builder) {
+        super(builder);
+    }
     
-    public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order) {
-        super(atom1, atom2, order);
+    public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
+        super(atom1, atom2, order, builder);
     }
 
 	public boolean matches(IBond bond) {

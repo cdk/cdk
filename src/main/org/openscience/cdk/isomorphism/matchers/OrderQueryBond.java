@@ -26,6 +26,7 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module isomorphism
@@ -35,11 +36,12 @@ public class OrderQueryBond extends QueryBond implements IQueryBond {
 
     private static final long serialVersionUID = 2292654937621883661L;
 
-    public OrderQueryBond() {
+    public OrderQueryBond(IChemObjectBuilder builder) {
+        super(builder);
     }
 
-    public OrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order) {
-        super(atom1, atom2, order);
+    public OrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
+        super(atom1, atom2, order, builder);
     }
     
 	public boolean matches(IBond bond) {

@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  *  A QueryAtom that matches all symbols but those in this container. You may
@@ -45,7 +46,9 @@ public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
     /**
      *  Constructor for the InverseSymbolSetQueryAtom object
      */
-    public InverseSymbolSetQueryAtom() { }
+    public InverseSymbolSetQueryAtom(IChemObjectBuilder builder) {
+        super(builder);
+    }
     public void setOperator(String str){}
 
     /**

@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module  isomorphism
@@ -33,10 +34,12 @@ public class SymbolChargeIDQueryAtom extends QueryAtom implements IQueryAtom {
     
     private static final long serialVersionUID = 3328313175614956150L;
 
-    public SymbolChargeIDQueryAtom() {}
+    public SymbolChargeIDQueryAtom(IChemObjectBuilder builder) {
+        super(builder);
+    }
     
     public SymbolChargeIDQueryAtom(IAtom atom) {
-        super(atom.getSymbol());
+        super(atom.getSymbol(), atom.getBuilder());
         setFormalCharge(atom.getFormalCharge());
         setID(atom.getID());
     }

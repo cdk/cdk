@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matches an atom with chirality property. It is not implemented yet. 
@@ -77,8 +78,8 @@ public class ChiralityAtom extends SMARTSAtom {
      * Creates a new instance
      *
      */
-    public ChiralityAtom() {
-    	super();
+    public ChiralityAtom(IChemObjectBuilder builder) {
+    	super(builder);
     }
 
     public boolean matches(IAtom atom) {

@@ -31,6 +31,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the hybridization state of an atom.
@@ -48,7 +49,8 @@ public class HybridizationNumberAtom extends SMARTSAtom {
      *
      * @param hybridizationNumber the hybridiation
      */
-    public HybridizationNumberAtom(int hybridizationNumber) {
+    public HybridizationNumberAtom(int hybridizationNumber, IChemObjectBuilder builder) {
+        super(builder);
         switch (hybridizationNumber) {
             case 1:
                 hybridization = IAtomType.Hybridization.SP1;

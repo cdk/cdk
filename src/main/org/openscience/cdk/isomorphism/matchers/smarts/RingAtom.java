@@ -32,6 +32,8 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
 import java.util.ArrayList;
 
 /**
@@ -52,7 +54,8 @@ public class RingAtom extends SMARTSAtom {
 	 *
 	 * @param ringSize
 	 */
-	public RingAtom(int ringSize) {
+	public RingAtom(int ringSize, IChemObjectBuilder builder) {
+        super(builder);
 		this.ringSize = ringSize;
 	}
 

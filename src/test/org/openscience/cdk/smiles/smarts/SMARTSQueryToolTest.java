@@ -55,14 +55,14 @@ public class SMARTSQueryToolTest extends CDKTestCase {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testLexicalError() throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide");
+        SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide", DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
     public void testQueryTool() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
-        SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         Assert.assertTrue(status);
@@ -98,7 +98,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     public void testQueryToolSingleAtomCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
-        SMARTSQueryTool querytool = new SMARTSQueryTool("C");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         Assert.assertTrue(status);
@@ -111,7 +111,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     public void testQueryToolResetSmarts() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
-        SMARTSQueryTool querytool = new SMARTSQueryTool("C");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         Assert.assertTrue(status);
@@ -135,7 +135,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
         CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
-        SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         Assert.assertTrue(status);
@@ -152,7 +152,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
         CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
-        SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         Assert.assertTrue(status);
@@ -184,7 +184,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         indole = smilesParser.parseSmiles(indoleSmiles);
 
-        SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles);
+        SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, DefaultChemObjectBuilder.getInstance());
         Assert.assertTrue(querytool.matches(indole));
     }
 
@@ -198,7 +198,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         IAtom carbon = methane.getBuilder().newInstance(IAtom.class,Elements.CARBON);
         methane.addAtom(carbon);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("CC");
+        SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());
         boolean matches = sqt.matches(methane);
         Assert.assertFalse(matches);
 

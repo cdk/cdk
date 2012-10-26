@@ -25,6 +25,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module  isomorphism
@@ -127,11 +128,14 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     /** The atomic number for this element giving their position in the periodic table. */
     protected Integer atomicNumber = (Integer) CDKConstants.UNSET;
 
-    public QueryAtom(String symbol) {
+    public QueryAtom(String symbol, IChemObjectBuilder builder) {
+        this(builder);
         this.symbol = symbol;
     }
 
-    public QueryAtom() {}
+    public QueryAtom(IChemObjectBuilder builder) {
+        super(builder);
+    }
 
     /**
      *  Sets the partial charge of this atom.

@@ -25,8 +25,9 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-/**
+ /**
  * This matcher any aromatic atom. This assumes that aromaticity in the molecule
  * has been perceived.
  *
@@ -41,7 +42,8 @@ public class AromaticAtom extends SMARTSAtom {
      * Creates a new instance
      *
      */
-    public AromaticAtom() {
+    public AromaticAtom(IChemObjectBuilder builder) {
+        super(builder);
     	setFlag(CDKConstants.ISAROMATIC, true);
     }
 

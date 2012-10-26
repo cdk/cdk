@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module  isomorphism
@@ -34,10 +35,12 @@ public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
     private static final long serialVersionUID = -5774610415273279451L;
     private String ID;
     private int HCount=0;
-    public SymbolQueryAtom() {}
+    public SymbolQueryAtom(IChemObjectBuilder builder) {
+        super(builder);
+    }
     
     public SymbolQueryAtom(IAtom atom) {
-        super(atom.getSymbol());
+        super(atom.getSymbol(), atom.getBuilder());
     }
     public void setHCount(int m_HCount){
        HCount = m_HCount;

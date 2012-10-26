@@ -30,6 +30,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 
 /**
@@ -65,8 +66,8 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
     /**
      * Constructs an empty query bond.
      */
-    public QueryBond() {
-        this(null, null, null, IQueryBond.Stereo.NONE);
+    public QueryBond(IChemObjectBuilder builder) {
+        this(null, null, null, IQueryBond.Stereo.NONE, builder);
         atomCount = 0;
     }
 
@@ -77,8 +78,8 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
      * @param atom1 the first Atom in the query bond
      * @param atom2 the second Atom in the query bond
      */
-    public QueryBond(IAtom atom1, IAtom atom2) {
-        this(atom1, atom2, IQueryBond.Order.SINGLE, IQueryBond.Stereo.NONE);
+    public QueryBond(IAtom atom1, IAtom atom2, IChemObjectBuilder builder) {
+        this(atom1, atom2, IQueryBond.Order.SINGLE, IQueryBond.Stereo.NONE, builder);
     }
 
 
@@ -89,8 +90,8 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
      * @param atom2 the second Atom in the query bond
      * @param order the query bond order
      */
-    public QueryBond(IAtom atom1, IAtom atom2, Order order) {
-        this(atom1, atom2, order, IQueryBond.Stereo.NONE);
+    public QueryBond(IAtom atom1, IAtom atom2, Order order, IChemObjectBuilder builder) {
+        this(atom1, atom2, order, IQueryBond.Stereo.NONE, builder);
     }
 
     /**
@@ -98,7 +99,8 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
      *
      * @param atoms An array of IAtom containing the atoms constituting the query bond
      */
-    public QueryBond(IAtom[] atoms) {
+    public QueryBond(IAtom[] atoms, IChemObjectBuilder builder) {
+        super(builder);
         this.atoms = new IAtom[atoms.length];
         System.arraycopy(atoms, 0, this.atoms, 0, atoms.length);
         atomCount = this.atoms.length;
@@ -110,7 +112,8 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
      * @param atoms An array of IAtom containing the atoms constituting the query bond
      * @param order The order of the query bond
      */
-    public QueryBond(IAtom[] atoms, Order order) {
+    public QueryBond(IAtom[] atoms, Order order, IChemObjectBuilder builder) {
+        super(builder);
         this.atoms = new IAtom[atoms.length];
         System.arraycopy(atoms, 0, this.atoms, 0, atoms.length);
         atomCount = this.atoms.length;
@@ -127,7 +130,8 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
      * @param order  the query bond order
      * @param stereo a descriptor the stereochemical orientation of this query bond
      */
-    public QueryBond(IAtom atom1, IAtom atom2, Order order, IQueryBond.Stereo stereo) {
+    public QueryBond(IAtom atom1, IAtom atom2, Order order, IQueryBond.Stereo stereo, IChemObjectBuilder builder) {
+        super(builder);
         atoms = new IAtom[2];
         atoms[0] = atom1;
         atoms[1] = atom2;

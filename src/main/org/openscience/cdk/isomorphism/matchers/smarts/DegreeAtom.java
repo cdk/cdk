@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the number of connections of the checked Atom
@@ -37,7 +38,8 @@ public class DegreeAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = 2623272739045200480L;
     
-    public DegreeAtom(int charge) {
+    public DegreeAtom(int charge, IChemObjectBuilder builder) {
+        super(builder);
         setFormalCharge(charge);
     }
     

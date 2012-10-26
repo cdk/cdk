@@ -30,9 +30,11 @@ import java.util.StringTokenizer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.isomorphism.matchers.QueryChemObject;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -76,6 +78,8 @@ public class TemplateHandler3DTest extends CDKTestCase {
             new BufferedReader ( new InputStreamReader ( ins ) ),
             10
         );
+        QueryChemObject obj = new QueryChemObject(DefaultChemObjectBuilder.getInstance());
+        obj.getBuilder();
         for(int i=0; i<data.size(); i++){
         	IBitFingerprint bs = data.get(i);
         	Assert.assertEquals(bsmb[i], bs);

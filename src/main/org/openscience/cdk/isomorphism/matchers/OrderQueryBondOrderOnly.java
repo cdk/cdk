@@ -25,6 +25,7 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * <code>IQueryBond</code> that matches IBond object only based on bond order, and
@@ -37,11 +38,12 @@ public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
 
     private static final long serialVersionUID = 2292654937621883661L;
 
-    public OrderQueryBondOrderOnly() {
+    public OrderQueryBondOrderOnly(IChemObjectBuilder builder) {
+        super(builder);
     }
 
-    public OrderQueryBondOrderOnly(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order) {
-        super(atom1, atom2, order);
+    public OrderQueryBondOrderOnly(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
+        super(atom1, atom2, order, builder);
     }
     
 	public boolean matches(IBond bond) {

@@ -19,6 +19,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
@@ -32,7 +33,8 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 public abstract class SMARTSAtom extends QueryAtom implements
         IQueryAtom {
 
-    public SMARTSAtom() {
+    public SMARTSAtom(IChemObjectBuilder builder) {
+        super(builder);
     }
 
     public boolean matches(IAtom atom) {

@@ -62,7 +62,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 	}
 
     private int[] match(String smarts, String smiles) throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts);
+        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
         boolean status = sqt.matches(atomContainer);
@@ -85,7 +85,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer atomContainer = cList.get(0);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h1,h2,H1,H2;!$(NC=O)]");
+        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h1,h2,H1,H2;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
         boolean status = sqt.matches(atomContainer);
         Assert.assertEquals(true, status);
 
@@ -102,7 +102,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testRGraphBond() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("CC=O");
+        QueryAtomContainer query = SMARTSParser.parse("CC=O", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query c:c: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -111,7 +111,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testAromaticBond() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("c:c");
+        QueryAtomContainer query = SMARTSParser.parse("c:c", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query c:c: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -123,7 +123,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testSingleBond() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("C-C");
+        QueryAtomContainer query = SMARTSParser.parse("C-C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C-C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -138,7 +138,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testDoubleBond() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("C=C");
+        QueryAtomContainer query = SMARTSParser.parse("C=C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C=C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -153,7 +153,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testTripleBond() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("C#C");
+        QueryAtomContainer query = SMARTSParser.parse("C#C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C#C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -168,7 +168,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testAnyOrderBond() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("C~C");
+        QueryAtomContainer query = SMARTSParser.parse("C~C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C~C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -183,7 +183,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testAnyAtom() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("C*C");
+        QueryAtomContainer query = SMARTSParser.parse("C*C", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query C*C: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -199,7 +199,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
 
     @Test public void testAliphaticAtom() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("CAC");
+        QueryAtomContainer query = SMARTSParser.parse("CAC", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query CAC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -214,7 +214,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testAromaticAtom() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("aaa");
+        QueryAtomContainer query = SMARTSParser.parse("aaa", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query CaC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -226,7 +226,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testSymbolQueryAtom() throws Exception {
-        QueryAtomContainer query = SMARTSParser.parse("CCC");
+        QueryAtomContainer query = SMARTSParser.parse("CCC", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query CAC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 

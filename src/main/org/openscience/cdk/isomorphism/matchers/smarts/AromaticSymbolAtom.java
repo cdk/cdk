@@ -21,6 +21,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This class matches aromatic atom with element symbol specified.
@@ -32,8 +33,8 @@ import org.openscience.cdk.interfaces.IAtom;
 public class AromaticSymbolAtom extends SMARTSAtom {
 	private static final long serialVersionUID = -2887357588636946195L;
 
-	public AromaticSymbolAtom(String symbol) {
-		super();
+	public AromaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
+		super(builder);
 		setFlag(CDKConstants.ISAROMATIC, true);
 		setSymbol(symbol);
 	}

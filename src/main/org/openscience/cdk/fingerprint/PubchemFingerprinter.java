@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
@@ -94,8 +95,8 @@ public class PubchemFingerprinter implements IFingerprinter {
     private byte[] m_bits;
 
     private SMARTSQueryTool sqt;
-    public PubchemFingerprinter() {
-    	sqt = new SMARTSQueryTool("C");
+    public PubchemFingerprinter(IChemObjectBuilder builder) {
+    	sqt = new SMARTSQueryTool("C", builder);
         m_bits = new byte[(FP_SIZE + 7) >> 3];
     }
 
@@ -369,7 +370,9 @@ public class PubchemFingerprinter implements IFingerprinter {
                 "Input is not a proper PubChem base64 encoded fingerprint");
         }
 
-        PubchemFingerprinter pc = new PubchemFingerprinter();
+        // note the IChemObjectBuilder is passed as null because the SMARTSQueryTool
+        // isn't needed when decoding
+        PubchemFingerprinter pc = new PubchemFingerprinter(null);
         for (int i = 0; i < pc.m_bits.length; ++i) {
             pc.m_bits[i] = fp[i + 4];
         }

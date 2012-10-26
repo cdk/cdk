@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  *  A QueryAtom that matches all symbols in this container. You may add symbols
@@ -50,7 +51,9 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
     /**
      *  Constructor for the SymbolSetQueryAtom object
      */
-    public SymbolSetQueryAtom() { }
+    public SymbolSetQueryAtom(IChemObjectBuilder builder) {
+        super(builder);
+    }
     public void setOperator(String str){}
 
     /**

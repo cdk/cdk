@@ -29,6 +29,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This class matches an atom based on the atomic mass.
@@ -43,7 +44,8 @@ public class MassAtom extends SMARTSAtom{
      *
      * @param mass
      */
-    public MassAtom(int mass) {
+    public MassAtom(int mass, IChemObjectBuilder builder) {
+        super(builder);
         this.setMassNumber(mass);
     }
 

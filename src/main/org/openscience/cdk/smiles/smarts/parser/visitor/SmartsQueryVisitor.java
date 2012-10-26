@@ -26,6 +26,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -137,10 +138,16 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	private boolean isParsingRS;
 	// Recursive smarts query
 	private IQueryAtomContainer rsQuery;
+
+    private final IChemObjectBuilder builder;
+
+    public SmartsQueryVisitor(IChemObjectBuilder builder){
+        this.builder = builder;
+    }
 	
 	public Object visit(ASTRingIdentifier node, Object data) {
 		IQueryAtom atom = (IQueryAtom)data;
-		RingIdentifierAtom ringIdAtom = new RingIdentifierAtom();
+		RingIdentifierAtom ringIdAtom = new RingIdentifierAtom(builder);
 		ringIdAtom.setAtom(atom);
 		IQueryBond bond;
 		if (node.jjtGetNumChildren() == 0) { // implicit bond
@@ -171,9 +178,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 						if (ringIdAtom.getRingBond() == null) {
 							if (atom instanceof AromaticSymbolAtom && 
 									recursiveRingAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
-								ringBond = new AromaticQueryBond();
+								ringBond = new AromaticQueryBond(builder);
 							} else {
-								ringBond = new RingBond();
+								ringBond = new RingBond(builder);
 							}
 						} else {
 							ringBond = ringIdAtom.getRingBond();
@@ -198,9 +205,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 						if (ringIdAtom.getRingBond() == null) {
 							if (atom instanceof AromaticSymbolAtom && 
 									ringAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
-								ringBond = new AromaticQueryBond();
+								ringBond = new AromaticQueryBond(builder);
 							} else {
-								ringBond = new RingBond();
+								ringBond = new RingBond(builder);
 							}
 						} else {
 							ringBond = ringIdAtom.getRingBond();
@@ -223,13 +230,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(
 			SmartsQueryVisitor.class);
-	
-	/**
-	 * Creates a new instance
-	 */
-	public SmartsQueryVisitor() {
-		super();
-	}
+
 	
 	public Object visit(SimpleNode node, Object data) {
 		return null;
@@ -249,7 +250,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		List<IAtomContainer> atomContainers = new ArrayList<IAtomContainer>();
 		for (int i = 0; i < node.jjtGetNumChildren(); i++) {
 			ringAtoms = new RingIdentifierAtom[10];
-			query = new QueryAtomContainer();
+			query = new QueryAtomContainer(builder);
 			node.jjtGetChild(i).jjtAccept(this, null);
 			atomContainers.add(query);
 		}
@@ -266,7 +267,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (data != null) { // this is a sub smarts
 			bond = (SMARTSBond)((Object[])data)[1];	
 			if (bond == null) { // since no bond was specified it could be aromatic or single
-                bond = new AromaticOrSingleQueryBond();
+                bond = new AromaticOrSingleQueryBond(builder);
 				bond.setAtoms(new IAtom[] {atom, (SMARTSAtom)((Object[])data)[0]});
 			} else {
 				bond.setAtoms(new IAtom[] {(SMARTSAtom)((Object[])data)[0], atom});
@@ -285,7 +286,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			} else if (child instanceof ASTAtom) {
 				SMARTSAtom newAtom = (SMARTSAtom)child.jjtAccept(this, null);
 				if (bond == null) { // since no bond was specified it could be aromatic or single
-                    bond = new AromaticOrSingleQueryBond();
+                    bond = new AromaticOrSingleQueryBond(builder);
 				}
 				bond.setAtoms(new IAtom[] {atom, newAtom});
 				if (isParsingRS) {
@@ -310,7 +311,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	public Object visit(ASTNotBond node, Object data) {
 		Object left = node.jjtGetChild(0).jjtAccept(this, data);
 		if (node.getType() == SMARTSParserConstants.NOT) {
-		LogicalOperatorBond bond = new LogicalOperatorBond();
+		LogicalOperatorBond bond = new LogicalOperatorBond(builder);
 		bond.setOperator("not");
 		bond.setLeft((IQueryBond) left);
 		return bond;
@@ -324,7 +325,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorBond bond = new LogicalOperatorBond();
+		LogicalOperatorBond bond = new LogicalOperatorBond(builder);
 		bond.setOperator("and");
 		bond.setLeft((IQueryBond) left);
 		IQueryBond right = (IQueryBond) node.jjtGetChild(1).jjtAccept(this,
@@ -338,7 +339,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorBond bond = new LogicalOperatorBond();
+		LogicalOperatorBond bond = new LogicalOperatorBond(builder);
 		bond.setOperator("and");
 		bond.setLeft((IQueryBond) left);
 		IQueryBond right = (IQueryBond) node.jjtGetChild(1).jjtAccept(this,
@@ -352,7 +353,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorBond bond = new LogicalOperatorBond();
+		LogicalOperatorBond bond = new LogicalOperatorBond(builder);
 		bond.setOperator("or");
 		bond.setLeft((IQueryBond) left);
 		IQueryBond right = (IQueryBond) node.jjtGetChild(1).jjtAccept(this,
@@ -366,7 +367,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorBond bond = new LogicalOperatorBond();
+		LogicalOperatorBond bond = new LogicalOperatorBond(builder);
 		bond.setOperator("and");
 		bond.setLeft((IQueryBond) left);
 		IQueryBond right = (IQueryBond) node.jjtGetChild(1).jjtAccept(this,
@@ -379,54 +380,54 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		SMARTSBond bond = null;
 		switch (node.getBondType()) {
 		case SMARTSParserConstants.S_BOND:
-			bond = new OrderQueryBond(IBond.Order.SINGLE);
+			bond = new OrderQueryBond(IBond.Order.SINGLE, builder);
 			break;
 		case SMARTSParserConstants.D_BOND:
-			bond = new OrderQueryBond(IBond.Order.DOUBLE);
+			bond = new OrderQueryBond(IBond.Order.DOUBLE, builder);
 			break;
 		case SMARTSParserConstants.T_BOND:
-			bond = new OrderQueryBond(IBond.Order.TRIPLE);
+			bond = new OrderQueryBond(IBond.Order.TRIPLE, builder);
 			break;
 		case SMARTSParserConstants.ANY_BOND:
-			bond = new AnyOrderQueryBond();
+			bond = new AnyOrderQueryBond(builder);
 			break;
 		case SMARTSParserConstants.AR_BOND:
-			bond = new AromaticQueryBond();
+			bond = new AromaticQueryBond(builder);
 			break;
 		case SMARTSParserConstants.R_BOND:
-			bond = new RingBond();
+			bond = new RingBond(builder);
 			break;
 		case SMARTSParserConstants.UP_S_BOND:
-			bond = new StereoBond();
+			bond = new StereoBond(builder);
 			bond.setOrder(IBond.Order.SINGLE);
 			bond.setStereo(IBond.Stereo.UP);
 			break;
 		case SMARTSParserConstants.DN_S_BOND:
-			bond = new StereoBond();
+			bond = new StereoBond(builder);
 			bond.setOrder(IBond.Order.SINGLE);
 			bond.setStereo(IBond.Stereo.DOWN);
 			break;
 		case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
-			LogicalOperatorBond logical = new LogicalOperatorBond();
+			LogicalOperatorBond logical = new LogicalOperatorBond(builder);
 			logical.setOperator("or");
-			StereoBond bond1 = new StereoBond();
+			StereoBond bond1 = new StereoBond(builder);
 			bond1.setOrder(IBond.Order.SINGLE);
 			bond1.setStereo(IBond.Stereo.UP);
 			logical.setLeft(bond1);
-			StereoBond bond2 = new StereoBond();
+			StereoBond bond2 = new StereoBond(builder);
 			bond2.setOrder(IBond.Order.SINGLE);
 			bond2.setStereo((IBond.Stereo)CDKConstants.UNSET);
 			logical.setRight(bond2);
 			bond = logical;
 			break;
 		case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
-			logical = new LogicalOperatorBond();
+			logical = new LogicalOperatorBond(builder);
 			logical.setOperator("or");
-			bond1 = new StereoBond();
+			bond1 = new StereoBond(builder);
 			bond1.setOrder(IBond.Order.SINGLE);
 			bond1.setStereo(IBond.Stereo.DOWN);
 			logical.setLeft(bond1);
-			bond2 = new StereoBond();
+			bond2 = new StereoBond(builder);
 			bond2.setOrder(IBond.Order.SINGLE);
 			bond2.setStereo((IBond.Stereo)CDKConstants.UNSET);
 			logical.setRight(bond2);
@@ -440,7 +441,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTRecursiveSmartsExpression node, Object data) {
-		rsQuery = new QueryAtomContainer();
+		rsQuery = new QueryAtomContainer(builder);
 		recursiveRingAtoms = new RingIdentifierAtom[10];
 		isParsingRS = true;
 		node.jjtGetChild(0).jjtAccept(this, null);
@@ -463,87 +464,87 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 				|| "s".equals(symbol) || "p".equals(symbol) || "as".equals(symbol)
 				|| "se".equals(symbol)) {
 			String atomSymbol = symbol.substring(0,1).toUpperCase() + symbol.substring(1);
-			atom = new AromaticSymbolAtom(atomSymbol);
+			atom = new AromaticSymbolAtom(atomSymbol, builder);
 		} else {
-			atom = new AliphaticSymbolAtom(symbol);
+			atom = new AliphaticSymbolAtom(symbol, builder);
 		}
 		return atom;
 	}
 
 	public Object visit(ASTTotalHCount node, Object data) {
-		return new TotalHCountAtom(node.getCount());
+		return new TotalHCountAtom(node.getCount(), builder);
 	}
 
 	public Object visit(ASTImplicitHCount node, Object data) {
-		return new ImplicitHCountAtom(node.getCount());
+		return new ImplicitHCountAtom(node.getCount(), builder);
 	}
 
 	public Object visit(ASTExplicitConnectivity node, Object data) {
-		return new ExplicitConnectionAtom(node.getNumOfConnection());
+		return new ExplicitConnectionAtom(node.getNumOfConnection(), builder);
 	}
 
 	public Object visit(ASTAtomicNumber node, Object data) {
-		return new AtomicNumberAtom(node.getNumber());
+		return new AtomicNumberAtom(node.getNumber(), builder);
 	}
 
     public Object visit(ASTHybrdizationNumber node, Object data) {
-        return new HybridizationNumberAtom(node.getHybridizationNumber());
+        return new HybridizationNumberAtom(node.getHybridizationNumber(), builder);
     }
 
     public Object visit(ASTCharge node, Object data) {
 		if (node.isPositive()) {
-			return new FormalChargeAtom(node.getCharge());
+			return new FormalChargeAtom(node.getCharge(), builder);
 		} else {
-			return new FormalChargeAtom(0 - node.getCharge());
+			return new FormalChargeAtom(0 - node.getCharge(), builder);
 		}
 	}
 
 	public Object visit(ASTRingConnectivity node, Object data) {
-		return new TotalRingConnectionAtom(node.getNumOfConnection());
+		return new TotalRingConnectionAtom(node.getNumOfConnection(), builder);
 	}
 
     public Object visit(ASTPeriodicGroupNumber node, Object data) {
-        return new PeriodicGroupNumberAtom(node.getGroupNumber());
+        return new PeriodicGroupNumberAtom(node.getGroupNumber(), builder);
     }
 
     public Object visit(ASTTotalConnectivity node, Object data) {
-		return new TotalConnectionAtom(node.getNumOfConnection());
+		return new TotalConnectionAtom(node.getNumOfConnection(), builder);
 	}
 
 	public Object visit(ASTValence node, Object data) {
-		return new TotalValencyAtom(node.getOrder());
+		return new TotalValencyAtom(node.getOrder(), builder);
 	}
 
 	public Object visit(ASTRingMembership node, Object data) {
-		return new RingMembershipAtom(node.getNumOfMembership());
+		return new RingMembershipAtom(node.getNumOfMembership(), builder);
 	}
 
 	public Object visit(ASTSmallestRingSize node, Object data) {
-		return new SmallestRingAtom(node.getSize());
+		return new SmallestRingAtom(node.getSize(), builder);
 	}
 
 	public Object visit(ASTAliphatic node, Object data) {
-        return new AliphaticAtom();
+        return new AliphaticAtom(builder);
 	}
 
     public Object visit(ASTNonCHHeavyAtom node, Object data) {
-        return new NonCHHeavyAtom();
+        return new NonCHHeavyAtom(builder);
     }
 
     public Object visit(ASTAromatic node, Object data) {
-        return new AromaticAtom();
+        return new AromaticAtom(builder);
 	}
 
 	public Object visit(ASTAnyAtom node, Object data) {
-        return new AnyAtom();
+        return new AnyAtom(builder);
 	}
 
 	public Object visit(ASTAtomicMass node, Object data) {
-        return new MassAtom(node.getMass());
+        return new MassAtom(node.getMass(), builder);
 	}
 
 	public Object visit(ASTChirality node, Object data) {
-		ChiralityAtom atom = new ChiralityAtom();
+		ChiralityAtom atom = new ChiralityAtom(builder);
 		atom.setDegree(node.getDegree());
 		atom.setClockwise(node.isClockwise());
 		atom.setUnspecified(node.isUnspecified());
@@ -555,7 +556,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom();
+		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
 		atom.setOperator("and");
 		atom.setLeft((IQueryAtom) left);
 		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
@@ -569,7 +570,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom();
+		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
 		atom.setOperator("or");
 		atom.setLeft((IQueryAtom) left);
 		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
@@ -581,7 +582,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	public Object visit(ASTNotExpression node, Object data) {
 		Object left = node.jjtGetChild(0).jjtAccept(this, data);
 		if (node.getType() == SMARTSParserConstants.NOT) {
-		LogicalOperatorAtom atom = new LogicalOperatorAtom();
+		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
 		atom.setOperator("not");
 		atom.setLeft((IQueryAtom) left);
 		return atom;
@@ -594,7 +595,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom();
+		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
 		atom.setOperator("and");
 		atom.setLeft((IQueryAtom) left);
 		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
@@ -608,7 +609,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom();
+		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
 		atom.setOperator("and");
 		atom.setLeft((IQueryAtom) left);
 		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
@@ -621,31 +622,31 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		IQueryAtom atom = null;
 		String symbol = node.getSymbol();
 		if ("*".equals(symbol)) {
-			atom = new AnyAtom();
+			atom = new AnyAtom(builder);
 		} else if ("A".equals(symbol)) {
-			atom = new AliphaticAtom();
+			atom = new AliphaticAtom(builder);
 		} else if ("a".equals(symbol)) {
-			atom = new AromaticAtom();
+			atom = new AromaticAtom(builder);
 		} else if ("o".equals(symbol) || "n".equals(symbol)
 				|| "c".equals(symbol) || "s".equals(symbol)
 				|| "p".equals(symbol) || "as".equals(symbol)
 				|| "se".equals(symbol)) {
 			String atomSymbol = symbol.substring(0,1).toUpperCase() + symbol.substring(1);
-			atom = new AromaticSymbolAtom(atomSymbol);
+			atom = new AromaticSymbolAtom(atomSymbol, builder);
 		} else if ("H".equals(symbol)) {
-			atom = new HydrogenAtom();
+			atom = new HydrogenAtom(builder);
 			atom.setSymbol(symbol.toUpperCase());
             atom.setMassNumber(1);
 		} else if ("D".equals(symbol)) {
-			atom = new HydrogenAtom();
+			atom = new HydrogenAtom(builder);
 			atom.setSymbol(symbol.toUpperCase());
             atom.setMassNumber(2);
 		} else if ("T".equals(symbol)) {
-			atom = new HydrogenAtom();
+			atom = new HydrogenAtom(builder);
 			atom.setSymbol(symbol.toUpperCase());
             atom.setMassNumber(3);
 		} else {
-			atom = new AliphaticSymbolAtom(symbol);
+			atom = new AliphaticSymbolAtom(symbol, builder);
 		}
 		return atom;
 	}

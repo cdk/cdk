@@ -145,7 +145,7 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 		RGroupQueryWriter rgw = new RGroupQueryWriter (sw);
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(file);
 		RGroupQueryReader reader = new RGroupQueryReader(ins);
-		RGroupQuery rGroupQuery  = (RGroupQuery)reader.read(new RGroupQuery());
+		RGroupQuery rGroupQuery  = (RGroupQuery)reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
 		rgw.write(rGroupQuery);
 		String out = sw.toString();
 		return out;

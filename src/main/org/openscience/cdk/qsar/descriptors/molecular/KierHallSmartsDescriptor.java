@@ -405,7 +405,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
 
         int[] counts = new int[smarts.length];
         try {
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+            SMARTSQueryTool sqt = new SMARTSQueryTool("C", container.getBuilder());
             for (int i = 0; i < smarts.length; i++) {
                 sqt.setSmarts(smarts[i]);
                 boolean status = sqt.matches(atomContainer);

@@ -73,7 +73,7 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
 	 * @param query
 	 */
 	public RecursiveSmartsAtom(IQueryAtomContainer query) {
-		super();
+		super(query.getBuilder());
 		this.recursiveQuery = query;
 	}
 	

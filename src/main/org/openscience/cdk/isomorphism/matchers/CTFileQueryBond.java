@@ -24,6 +24,8 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Captures query bond types defined in the CTFile.
@@ -51,6 +53,9 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
         ANY
     }
 
+    public CTFileQueryBond(IChemObjectBuilder builder){
+        super(builder);
+    }
     /**
      * The type of this bond.
      */

@@ -25,6 +25,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -62,9 +63,9 @@ public class BasicGroupCountDescriptor implements IMolecularDescriptor {
      * Creates a new {@link BasicGroupCountDescriptor}.
      */
     @TestMethod("testConstructor")
-    public BasicGroupCountDescriptor() throws CDKException {
+    public BasicGroupCountDescriptor(IChemObjectBuilder builder) throws CDKException {
         for (String smarts : SMARTS_STRINGS) {
-            tools.add(new SMARTSQueryTool(smarts));
+            tools.add(new SMARTSQueryTool(smarts, builder));
         }
     }
 
