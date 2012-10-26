@@ -83,4 +83,9 @@ public interface IReactionSet extends IChemObject {
      * @param relevantReaction
      */
     public void removeReaction(IReaction relevantReaction);
+    
+    /**
+     * Returns true if this IReactionSet is empty.
+     */
+    public boolean isEmpty();
 }

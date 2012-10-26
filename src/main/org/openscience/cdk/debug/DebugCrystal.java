@@ -601,4 +601,8 @@ public class DebugCrystal extends Crystal
 		super.stateChanged(event);
 	}
 
+    public boolean isEmpty() {
+        logger.debug("Checking if crystal is empty: ", super.isEmpty());
+    	return super.isEmpty();
+    }
 }

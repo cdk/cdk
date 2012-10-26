@@ -547,4 +547,13 @@ public class DebugAtomContainer extends AtomContainer
         return DebugChemObjectBuilder.getInstance();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean isEmpty() {
+        logger.debug("AtomContainer.isEmpty(): ", atomCount == 0);
+        return atomCount == 0;
+    }
+
 }

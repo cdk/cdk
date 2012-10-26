@@ -1721,8 +1721,15 @@ public class AtomContainer extends ChemObject
 	public void stateChanged(IChemObjectChangeEvent event)
 	{
 		notifyChanged(event);
-	}   
+	}
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean isEmpty() {
+    	return atomCount == 0;
+    }
 }
 
 

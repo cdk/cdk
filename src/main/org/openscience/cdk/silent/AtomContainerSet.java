@@ -370,13 +370,19 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	public void stateChanged(IChemObjectChangeEvent event) {}
 
 
-        /**
-         * Sort the AtomContainers using a provided Comparator
-         * @param comparator defines the sorting method
-         */
-        public void sortAtomContainers(Comparator<IAtomContainer> comparator) {
-            Arrays.sort(atomContainers, comparator);
-        }
+    /**
+     * Sort the AtomContainers using a provided Comparator
+     * @param comparator defines the sorting method
+     */
+    public void sortAtomContainers(Comparator<IAtomContainer> comparator) {
+        Arrays.sort(atomContainers, comparator);
+    }
 
+    /**
+     * Returns true if this IAtomContainerSet has no atoms.
+     */
+    public boolean isEmpty() {
+    	return atomContainerCount == 0;
+    }
 }
 

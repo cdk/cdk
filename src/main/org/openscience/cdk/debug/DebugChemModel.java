@@ -184,4 +184,18 @@ public class DebugChemModel extends ChemModel
 		super.setReactionSet(sor);
 	}
 
+    public boolean isEmpty() 
+	{
+    	boolean res = true;
+    	if (setOfMolecules != null && !setOfMolecules.isEmpty())
+    		res = false;
+    	if (setOfReactions != null && !setOfReactions.isEmpty())
+    		res = false;
+    	if (ringSet != null && !ringSet.isEmpty())
+    		res = false;
+        if (crystal != null && !crystal.isEmpty())
+    		res = false;
+        logger.debug("Checking if chemModel is empty: ", res);
+		return res;
+	}
 }

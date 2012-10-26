@@ -228,5 +228,18 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	 *@param  event  A change event pointing to the source of the change
 	 */
 	public void stateChanged(IChemObjectChangeEvent event) {}
+
+    public boolean isEmpty() 
+	{
+    	if (setOfMolecules != null && !setOfMolecules.isEmpty())
+    		return false;
+    	if (setOfReactions != null && !setOfReactions.isEmpty())
+    		return false;
+    	if (ringSet != null && !ringSet.isEmpty())
+    		return false;
+        if (crystal != null && !crystal.isEmpty())
+    		return false;
+		return true;
+	}
 }
 

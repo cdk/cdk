@@ -221,4 +221,8 @@ public class DebugAtomContainerSet extends AtomContainerSet
 		return super.getAtomContainerCount();
 	}
 
+    public boolean isEmpty() {
+    	logger.debug("Checking if the atom container set empty: ", atomContainerCount == 0);
+    	return atomContainerCount == 0;
+    }
 }
