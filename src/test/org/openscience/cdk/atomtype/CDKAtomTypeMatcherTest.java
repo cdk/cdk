@@ -539,6 +539,38 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1/H2Se/h1H2
+     */
+    @Test public void testH2Se_oneImplH() throws Exception {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Se");
+        se.setImplicitHydrogenCount(1);
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class,se, h1, IBond.Order.SINGLE);
+
+        mol.addAtom(se);
+        mol.addAtom(h1);
+        mol.addBond(b1);
+
+        String[] expectedTypes = {"Se.3", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1/H2Se/h1H2
+     */
+    @Test public void testH2Se_twoImplH() throws Exception {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Se");
+        se.setImplicitHydrogenCount(2);
+        mol.addAtom(se);
+
+        String[] expectedTypes = {"Se.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testH2S_Hybridization() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");
