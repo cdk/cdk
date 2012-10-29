@@ -571,6 +571,17 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testSelenide() throws Exception {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+        IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Se");
+        se.setImplicitHydrogenCount(0);
+        se.setFormalCharge(-2);
+        mol.addAtom(se);
+
+        String[] expectedTypes = {"Se.2minus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testH2S_Hybridization() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"S");

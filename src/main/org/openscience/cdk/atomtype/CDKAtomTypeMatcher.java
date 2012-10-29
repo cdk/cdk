@@ -289,6 +289,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                     && atomContainer.getConnectedAtomsCount(atom) == 3) {
                 IAtomType type = getAtomType("Se.plus.3");
                 if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if ((atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == -2)
+                    && atomContainer.getConnectedAtomsCount(atom) == 0) {
+                IAtomType type = getAtomType("Se.2minus");
+                if (isAcceptable(atom, atomContainer, type)) return type;
             }
         }
         return null;

@@ -2121,6 +2121,14 @@
     <at:piBondCount>0</at:piBondCount>
   </at:AtomType> 
 
+  <at:AtomType rdf:ID="Se.2minus">
+    <at:formalCharge>-2</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Se"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:lonePairCount>4</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType> 
+
   <at:AtomType rdf:ID="Se.plus.3">
     <at:formalCharge>1</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Se"/>
