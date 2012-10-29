@@ -646,6 +646,7 @@
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/renderbasic.libdepends"/>
+                    <includesfile name="${metainf}/renderextra.libdepends"/>
                     <includesfile name="${metainf}/renderawt.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
@@ -695,6 +696,7 @@
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-renderbasic.jar"/>
+                    <include name="cdk-renderextra.jar"/>
                     <include name="cdk-renderawt.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
@@ -774,6 +776,7 @@
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-renderbasic.jar"/>
+                    <include name="cdk-renderextra.jar"/>
                     <include name="cdk-renderawt.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
@@ -1098,7 +1101,7 @@
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
                       structgen,libiomd,libiocml,formula,render,extra,sdg,
                       ioformats,log4j,smsd,signature,iordf,cip,tautomer,
-                      isomorphism,renderbasic,renderawt,silent"/>
+                      isomorphism,renderbasic,renderawt,renderextra,silent"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
