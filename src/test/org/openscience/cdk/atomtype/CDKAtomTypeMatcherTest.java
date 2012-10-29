@@ -4416,6 +4416,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class, "Se");
+        a1.setImplicitHydrogenCount(0);
         a1.setFormalCharge(0);
         mol.addAtom(a1);
       
