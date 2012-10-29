@@ -247,8 +247,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (atom.getFormalCharge() != CDKConstants.UNSET
                     && atom.getFormalCharge() == 0) {
                 if (atomContainer.getConnectedAtomsCount(atom) == 0) {
-                    IAtomType type = getAtomType("Se.3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                	if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() == 0 ) {
+                		IAtomType type = getAtomType("Se.2");
+                		if (isAcceptable(atom, atomContainer, type)) return type;
+                	} else {
+                		IAtomType type = getAtomType("Se.3");
+                		if (isAcceptable(atom, atomContainer, type)) return type;
+                	}
                 } else if (atomContainer.getConnectedAtomsCount(atom) == 1) {
 
                     if (doublebondcount == 1) {
