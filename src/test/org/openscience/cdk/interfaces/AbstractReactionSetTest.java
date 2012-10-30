@@ -201,4 +201,22 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         }
     }
 
+    @Test public void testIsEmpty() {
+
+        IReactionSet set = (IReactionSet) newChemObject();
+
+        Assert.assertTrue("new reaction set should be empty", set.isEmpty());
+
+        set.addReaction(set.getBuilder().newInstance(IReaction.class));
+
+        Assert.assertFalse("reaction set with a single reaction should not be empty",
+                           set.isEmpty());
+
+        set.removeAllReactions();
+
+        Assert.assertTrue("reaction set with all reactions removed should be empty",
+                           set.isEmpty());
+
+    }
+
 }
