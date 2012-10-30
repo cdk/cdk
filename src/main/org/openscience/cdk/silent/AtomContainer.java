@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -1670,6 +1671,7 @@ public class AtomContainer extends ChemObject
     /**
      * @inheritDoc
      */
+    @TestMethod("testIsEmpty")
     @Override
     public boolean isEmpty() {
         return atomCount == 0;

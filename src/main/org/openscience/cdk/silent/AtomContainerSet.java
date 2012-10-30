@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.silent;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -379,8 +380,10 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
     }
 
     /**
-     * Returns true if this IAtomContainerSet has no atoms.
+     * @inheritDoc
      */
+    @TestMethod("testIsEmpty")
+    @Override
     public boolean isEmpty() {
     	return atomContainerCount == 0;
     }

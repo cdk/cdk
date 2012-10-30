@@ -24,6 +24,7 @@
 
 package org.openscience.cdk;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 import java.io.Serializable;
@@ -258,8 +259,10 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	}
 	
     /**
-     * Returns true if this ChemModel has no atoms.
+     * @inheritDoc
      */
+    @TestMethod("testIsEmpty_MoleculeSet,testIsEmpty_RingSet,testIsEmpty_Crystal,testIsEmpty_ReactionSet")
+    @Override
     public boolean isEmpty() 
 	{
     	if (setOfMolecules != null && !setOfMolecules.isEmpty())

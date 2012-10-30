@@ -362,4 +362,23 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
             changed = false;
         }
     }
+
+    @Test public void testIsEmpty() {
+
+        IAtomContainerSet set = (IAtomContainerSet) newChemObject();
+
+        Assert.assertTrue("new container set should be empty", set.isEmpty());
+
+        set.addAtomContainer(set.getBuilder().newInstance(IMolecule.class));
+
+        Assert.assertFalse("container set with a single container should not be empty",
+                           set.isEmpty());
+
+        set.removeAllAtomContainers();
+
+        Assert.assertTrue("container set with all containers removed should be empty",
+                          set.isEmpty());
+
+    }
+
 }

@@ -19,6 +19,7 @@
 
 package org.openscience.cdk.silent;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 import java.io.Serializable;
@@ -229,6 +230,11 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	 */
 	public void stateChanged(IChemObjectChangeEvent event) {}
 
+    /**
+     * @inheritDoc
+     */
+    @TestMethod("testIsEmpty_MoleculeSet,testIsEmpty_RingSet,testIsEmpty_Crystal,testIsEmpty_ReactionSet")
+    @Override
     public boolean isEmpty() 
 	{
     	if (setOfMolecules != null && !setOfMolecules.isEmpty())

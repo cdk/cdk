@@ -21,6 +21,8 @@ package org.openscience.cdk.silent;
 import java.io.Serializable;
 import java.util.Iterator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IReaction;
@@ -239,8 +241,10 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	}
 	
     /**
-     * Returns true if this ReactionSet has no atoms.
+     * @inheritDoc
      */
+    @TestMethod("testIsEmpty")
+    @Override
     public boolean isEmpty() {
     	return reactionCount == 0;
     }

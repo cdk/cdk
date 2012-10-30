@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -2174,4 +2175,39 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertTrue(mol.contains(se));
         Assert.assertFalse(mol.contains(se1));
     }
+
+    @Test public void testIsEmpty() throws Exception {
+
+        IAtomContainer container = (IAtomContainer) newChemObject();
+
+        Assert.assertTrue("new atom container was not empty",
+                          container.isEmpty());
+
+        IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
+
+        container.addAtom(c1);
+        container.addAtom(c2);
+
+        Assert.assertFalse("atom container contains 2 atoms but was empty",
+                          container.isEmpty());
+
+        container.addBond(container.getBuilder().newInstance(IBond.class, c1, c2));
+
+        Assert.assertFalse("atom container contains 2 atoms and 1 bond but was empty",
+                           container.isEmpty());
+
+        container.removeAtom(c1);
+        container.removeAtom(c2);
+
+        Assert.assertThat("atom contains contains no bonds",
+                          container.getBondCount(),
+                          CoreMatchers.is(1));
+
+        Assert.assertTrue("atom contains contains no atoms but was not empty",
+                          container.isEmpty());
+
+
+    }
+
 }

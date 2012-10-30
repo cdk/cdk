@@ -27,8 +27,12 @@ package org.openscience.cdk.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 
 /**
  * Checks the functionality of {@link IRingSet} implementations.
@@ -369,6 +373,26 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
                 Assert.fail("The list of connected rings contains duplicates.");
             foundRings.add(connectedRing);
         }
+    }
+
+    @Test public void testIsEmpty() {
+
+        IRingSet ringSet = (IRingSet) newChemObject();
+
+        Assert.assertThat("new ringset should be empty",
+                          ringSet.isEmpty(), is(true));
+
+        ringSet.addAtomContainer(ringSet.getBuilder().newInstance(IAtomContainer.class));
+
+        Assert.assertThat("ringset with an atom container should not be empty",
+                          ringSet.isEmpty(), is(not(true)));
+
+        ringSet.removeAllAtomContainers();
+
+        Assert.assertThat("ringset with removed atom containers should be empty",
+                          ringSet.isEmpty(), is(true));
+
+
     }
   
 }

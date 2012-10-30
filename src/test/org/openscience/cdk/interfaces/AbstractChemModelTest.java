@@ -301,4 +301,89 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
             changed = false;
         }
     }
+
+    @Test public void testIsEmpty() {
+        IChemModel chemModel = (IChemModel) newChemObject();
+        Assert.assertTrue("new chem model is empty", chemModel.isEmpty());
+    }
+
+    @Test public void testIsEmpty_MoleculeSet() {
+
+            IChemModel chemModel = (IChemModel) newChemObject();
+            IChemObjectBuilder builder = chemModel.getBuilder();
+
+            Assert.assertNotNull(chemModel);
+            Assert.assertTrue(chemModel.isEmpty());
+
+            IAtom        atom = builder.newInstance(IAtom.class);
+            IMolecule    mol  = builder.newInstance(IMolecule.class);
+            IMoleculeSet mset = builder.newInstance(IMoleculeSet.class);
+
+            mol.addAtom(atom);
+            mset.addMolecule(mol);
+            chemModel.setMoleculeSet(mset);
+            Assert.assertFalse("chem model with a molecule set should not be empty",
+                               chemModel.isEmpty());
+            mol.removeAtom(atom);
+            Assert.assertFalse("chem model with a (empty) molecule set should not be empty",
+                               chemModel.isEmpty());
+            chemModel.setMoleculeSet(null);
+            Assert.assertTrue("chemo model with no molecule set should be empty",
+                              chemModel.isEmpty());
+    }
+
+    @Test public void testIsEmpty_ReactionSet() {
+
+        IChemModel model = (IChemModel) newChemObject();
+        IChemObjectBuilder builder = model.getBuilder();
+
+        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IReaction reaction = builder.newInstance(IReaction.class);
+
+        reaction.addReactant(molecule);
+
+        IReactionSet set = builder.newInstance(IReactionSet.class);
+        model.setReactionSet(set);
+        Assert.assertTrue("model has an empty reaction set and should be empty", model.isEmpty());
+        set.addReaction(reaction);
+        Assert.assertFalse("model has a reaction set and should not be empty", model.isEmpty());
+        model.setReactionSet(null);
+        Assert.assertTrue("model has no reaction set", model.isEmpty());
+
+
+    }
+
+    @Test public void testIsEmpty_RingSet() {
+
+        IChemModel model = (IChemModel) newChemObject();
+        IChemObjectBuilder builder = model.getBuilder();
+
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+        IRingSet ringset = builder.newInstance(IRingSet.class);
+
+        Assert.assertTrue(model.isEmpty());
+        model.setRingSet(ringset);
+        Assert.assertTrue(model.isEmpty());
+        ringset.addAtomContainer(container);
+        Assert.assertFalse(model.isEmpty());
+        model.setRingSet(null);
+        Assert.assertTrue(model.isEmpty());
+
+    }
+
+    @Test public void testIsEmpty_Crystal() {
+
+        IChemModel model = (IChemModel) newChemObject();
+        IChemObjectBuilder builder = model.getBuilder();
+
+        ICrystal crystal = builder.newInstance(ICrystal.class);
+        model.setCrystal(crystal);
+        Assert.assertTrue(model.isEmpty());
+        crystal.addAtom(builder.newInstance(IAtom.class, "C"));
+        Assert.assertFalse(model.isEmpty());
+        model.setCrystal(null);
+        Assert.assertTrue(model.isEmpty());
+
+    }
+
 }
