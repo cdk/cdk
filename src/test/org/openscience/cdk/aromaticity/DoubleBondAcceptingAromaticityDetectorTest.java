@@ -55,7 +55,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @author steinbeck
  * @author egonw
  * @cdk.module test-standard
- * @cdk.created 2002-10-06
  */
 public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
