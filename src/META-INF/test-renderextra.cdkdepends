@@ -9,3 +9,4 @@ cdk-data.jar
 cdk-nonotify.jar
 cdk-test.jar
 cdk-test-renderbasic.jar
+cdk-silent.jar
