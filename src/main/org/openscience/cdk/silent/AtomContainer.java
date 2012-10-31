@@ -1293,12 +1293,14 @@ public class AtomContainer extends ChemObject
 	}
 
 	/**
-	 * Removes all atoms and bond from this container.
+	 * @inheritDoc
 	 */
+    @Override
 	public void removeAllElements() {
 		removeAllElectronContainers();
         atoms = new IAtom[growArraySize];
         atomCount = 0;
+        stereoElements.clear();
 	}
 
 
