@@ -1385,16 +1385,6 @@ public class AtomContainer extends ChemObject
 			            IBond.Stereo stereo)
 	{
 		IBond bond = getBuilder().newInstance(IBond.class,getAtom(atom1), getAtom(atom2), order, stereo);
-
-		if (contains(bond))
-		{
-			return;
-		}
-
-		if (bondCount >= bonds.length)
-		{
-			growBondArray();
-		}
 		addBond(bond);
 		/* no notifyChanged() here because addBond(bond) does 
 		   it already */
@@ -1411,11 +1401,6 @@ public class AtomContainer extends ChemObject
 	public void addBond(int atom1, int atom2, IBond.Order order)
 	{
 		IBond bond = getBuilder().newInstance(IBond.class,getAtom(atom1), getAtom(atom2), order);
-
-		if (bondCount >= bonds.length)
-		{
-			growBondArray();
-		}
 		addBond(bond);
 		/* no notifyChanged() here because addBond(bond) does 
 		   it already */
