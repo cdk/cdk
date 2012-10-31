@@ -692,7 +692,7 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     		Assert.fail("I expected an exception, because this constructor does not exist.");
     	} catch (Exception exception) {
     		String message = exception.getMessage();
-    		Assert.assertTrue(message.contains("Candidates are"));
+    		Assert.assertTrue("But got this message instead: " + message, message.contains("Candidates are"));
     	}
     }
 }
