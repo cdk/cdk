@@ -71,6 +71,15 @@ public class DebugAtomContainer extends AtomContainer
         super.addStereoElement(parity);
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public void setStereoElements(List<IStereoElement> elements) {
+        logger.debug("Setting stereo elements: ", elements);
+        super.setStereoElements(elements);
+    }
+
     public Iterable<IStereoElement> stereoElements() {
         logger.debug("Getting stereo elements.");
         return super.stereoElements();

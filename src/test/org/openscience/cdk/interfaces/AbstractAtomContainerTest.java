@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -422,6 +424,37 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
     }
 
+
+
+
+    @Test public void testSetStereoElements_List() {
+
+        IAtomContainer container = (IAtomContainer) newChemObject();
+
+        Assert.assertThat("empty container had stereo elements", container.stereoElements().iterator().hasNext(), is(false));
+
+        List<IStereoElement> dbElements = new ArrayList<IStereoElement>();
+        dbElements.add(new DoubleBondStereochemistry(null,
+                                                   new IBond[2],
+                                                   IDoubleBondStereochemistry.Conformation.TOGETHER));
+        container.setStereoElements(dbElements);
+        Iterator<IStereoElement> first = container.stereoElements().iterator();
+        Assert.assertThat("container did not have stereo elements", first.hasNext(), is(true));
+        Assert.assertThat("expected element to equal set element (double bond)", first.next(), is(dbElements.get(0)));
+        Assert.assertThat("container had more then one stereo element", first.hasNext(), is(false));
+
+        List<IStereoElement> tetrahedralElements = new ArrayList<IStereoElement>();
+        tetrahedralElements.add(new TetrahedralChirality(null, new IAtom[4], ITetrahedralChirality.Stereo.CLOCKWISE));
+        container.setStereoElements(tetrahedralElements);
+        Iterator<IStereoElement> second = container.stereoElements().iterator();
+        Assert.assertThat("container did not have stereo elements", second.hasNext(), is(true));
+        Assert.assertThat("expected element to equal set element (tetrahedral)", second.next(), is(tetrahedralElements.get(0)));
+        Assert.assertThat("container had more then one stereo element", second.hasNext(), is(false));
+
+
+
+
+    }
 
 //    @Test public void testGetConnectedBonds_IAtom() {
 //        // acetone molecule
