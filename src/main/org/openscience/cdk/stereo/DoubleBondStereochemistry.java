@@ -67,12 +67,14 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 
 	/** {@inheritDoc} */
 	@Override
+    @TestMethod("testBuilder")
 	public IChemObjectBuilder getBuilder() {
 		return this.builder;
 	}
 
 	/** {@inheritDoc} */
 	@Override
+	@TestMethod("testGetBonds")
 	public IBond[] getBonds() {
 		IBond[] arrayCopy = new IBond[2];
         System.arraycopy(ligandBonds, 0, arrayCopy, 0, 2);
@@ -81,12 +83,14 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 
 	/** {@inheritDoc} */
 	@Override
+	@TestMethod("testGetStereoBond")
 	public IBond getStereoBond() {
 		return this.stereoBond;
 	}
 
 	/** {@inheritDoc} */
 	@Override
+	@TestMethod("testGetStereo")
 	public Conformation getStereo() {
 		return this.stereo;
 	}
