@@ -199,6 +199,14 @@ public class AtomContainer extends ChemObject
         stereoElements.add(element);
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public void setStereoElements(List<IStereoElement> elements) {
+        this.stereoElements = elements;
+    }
+
     /** {@inheritDoc} */
     public Iterable<IStereoElement> stereoElements() {
         return new Iterable<IStereoElement>() {

@@ -54,6 +54,14 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      */
     public void addStereoElement(IStereoElement element);
 
+
+    /**
+     * Set the stereo elements - this will replace the existing instance
+     * with a new instance.
+     * @param elements the new stereo elements
+     */
+    public void setStereoElements(List<IStereoElement> elements);
+
     /**
      * Returns the stereo elements defined for this atom container.
      *
