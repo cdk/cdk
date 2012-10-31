@@ -538,7 +538,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	public void removeAtomAndConnectedElectronContainers(IAtom atom);
 
 	/**
-	 * Removes all atoms and bond from this container.
+	 * Removes all atoms, bonds and stereo elements from this container.
 	 */
 	public void removeAllElements();
 
