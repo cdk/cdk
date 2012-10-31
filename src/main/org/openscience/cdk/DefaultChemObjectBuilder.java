@@ -167,7 +167,6 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
         } else if (clazz.isAssignableFrom(IMolecularFormula.class)) {
             if (params.length == 0) return (T)new MolecularFormula();
         } else if (clazz.isAssignableFrom(ITetrahedralChirality.class)) {
-            System.out.println(params.length);
             if (params.length == 3 &&
                 params[0] instanceof IAtom &&
                 params[1] instanceof IAtom[] &&
