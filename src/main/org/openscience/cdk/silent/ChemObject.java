@@ -237,17 +237,14 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		// clone the flags
 		clone.flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
         System.arraycopy(flags, 0, clone.flags, 0, flags.length);
-        // clone the properties
+
+        // clone the properties - using the HashMap copy constructor
+        // this does not deep copy all objects but this was not done
+        // originally
 		if (properties != null) {
-			Map<Object, Object> clonedHashtable = new HashMap<Object, Object>();
-			Iterator<Object> keys = properties.keySet().iterator();
-			while (keys.hasNext()) {
-				Object key = keys.next();
-				Object value = properties.get(key);
-				clonedHashtable.put(key, value);
-			}
-			clone.properties = clonedHashtable;
+			clone.properties = new HashMap<Object, Object>(getProperties());
 		}
+
 		return clone;
 	}
 

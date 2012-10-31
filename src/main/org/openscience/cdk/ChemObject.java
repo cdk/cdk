@@ -300,20 +300,17 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	public Object clone() throws CloneNotSupportedException
 	{
 		ChemObject clone = (ChemObject)super.clone();
+
 		// clone the flags
 		clone.flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
         System.arraycopy(flags, 0, clone.flags, 0, flags.length);
-        // clone the properties
-		if (properties != null) {
-			Map<Object, Object> clonedHashtable = new HashMap<Object, Object>();
-			Iterator<Object> keys = properties.keySet().iterator();
-			while (keys.hasNext()) {
-				Object key = keys.next();
-				Object value = properties.get(key);
-				clonedHashtable.put(key, value);
-			}
-			clone.properties = clonedHashtable;
-		}
+
+        // clone the properties - using the HashMap copy constructor
+        // this doesn't deep clone the keys/values but this wasn't happening
+        // already
+		if (properties != null)
+            clone.properties = new HashMap<Object, Object>(getProperties());
+
 		// delete all listeners
 		clone.chemObjectListeners = null;
 		return clone;
