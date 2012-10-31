@@ -33,8 +33,11 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -158,10 +161,24 @@ public class Polymer extends Molecule implements java.io.Serializable, IPolymer
             }
         }
 
+        // create a mapping of the original atoms/bonds to the cloned atoms/bonds
+        // we need this mapping to correctly clone bonds, single/paired electrons
+        // and stereo elements
+        // - the expected size stop the map be resized - method from Google Guava
+        Map<IAtom,IAtom> atomMap = new HashMap<IAtom, IAtom>(atomCount >= 3
+                                                                     ? atomCount + atomCount / 3
+                                                                     : atomCount + 1);
+        Map<IBond,IBond> bondMap = new HashMap<IBond, IBond>(bondCount >= 3
+                                                                     ? bondCount + bondCount / 3
+                                                                     : bondCount + 1);
+
         // now consider atoms that are not associated with any monomer
         for (IAtom atom : atoms()) {
-            if (!atomIsInMonomer(atom))
-                clone.addAtom((IAtom) atom.clone());
+            if (!atomIsInMonomer(atom)) {
+                IAtom cloned = (IAtom) atom.clone();
+                clone.addAtom(cloned);
+                atomMap.put(atom, cloned);
+            }
         }
 
         // since we already removed bonds we'll have to add them back
@@ -170,10 +187,11 @@ public class Polymer extends Molecule implements java.io.Serializable, IPolymer
 			newBond = (IBond)bond.clone();
 			IAtom[] newAtoms = new IAtom[bond.getAtomCount()];
 			for (int j = 0; j < bond.getAtomCount(); ++j) {
-				newAtoms[j] = clone.getAtom(getAtomNumber(bond.getAtom(j)));
+				newAtoms[j] = atomMap.get(bond.getAtom(j));
 			}
 			newBond.setAtoms(newAtoms);
             clone.addBond(newBond);
+            bondMap.put(bond, newBond);
         }
 
         // put back lone pairs
@@ -183,7 +201,7 @@ public class Polymer extends Molecule implements java.io.Serializable, IPolymer
             lp = getLonePair(i);
             newLp = (ILonePair) lp.clone();
             if (lp.getAtom() != null) {
-                newLp.setAtom(clone.getAtom(getAtomNumber(lp.getAtom())));
+                newLp.setAtom(atomMap.get(lp.getAtom()));
             }
             clone.addLonePair(newLp);
         }
@@ -195,7 +213,7 @@ public class Polymer extends Molecule implements java.io.Serializable, IPolymer
             singleElectron = getSingleElectron(i);
             newSingleElectron = (ISingleElectron) singleElectron.clone();
             if (singleElectron.getAtom() != null) {
-                newSingleElectron.setAtom(clone.getAtom(getAtomNumber(singleElectron.getAtom())));
+                newSingleElectron.setAtom(atomMap.get(singleElectron.getAtom()));
             }
             clone.addSingleElectron(newSingleElectron);
         }

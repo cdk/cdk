@@ -25,8 +25,10 @@ package org.openscience.cdk;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -1573,73 +1575,92 @@ public class AtomContainer extends ChemObject
 	 * @see       #shallowCopy
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		IAtom[] newAtoms;
-		IAtomContainer clone = (IAtomContainer) super.clone();
-        // start from scratch
-		clone.removeAllElements();
-        // clone all atoms
-		for (int f = 0; f < getAtomCount(); f++) {
-			clone.addAtom((IAtom) getAtom(f).clone());
-		}
-        // clone bonds
-		IBond bond;
-		IBond newBond;
-		for (int i = 0; i < getBondCount(); ++i) {
-			bond = getBond(i);
-			newBond = (IBond)bond.clone();
-			newAtoms = new IAtom[bond.getAtomCount()];
-			for (int j = 0; j < bond.getAtomCount(); ++j) {
-				newAtoms[j] = clone.getAtom(getAtomNumber(bond.getAtom(j)));
-			}
-			newBond.setAtoms(newAtoms);
-			clone.addBond(newBond);
-		}
-		ILonePair lp;
-		ILonePair newLp;
-		for (int i = 0; i < getLonePairCount(); ++i) {
-			lp = getLonePair(i);
-			newLp = (ILonePair)lp.clone();
-			if (lp.getAtom() != null) {
-			    newLp.setAtom(clone.getAtom(getAtomNumber(lp.getAtom())));
-			}
-			clone.addLonePair(newLp);
-		}
-		ISingleElectron se;
-		ISingleElectron newSe;
-		for (int i = 0; i < getSingleElectronCount(); ++i) {
-			se = getSingleElectron(i);
-			newSe = (ISingleElectron)se.clone();
-			if (se.getAtom() != null) {
-			    newSe.setAtom(clone.getAtom(getAtomNumber(se.getAtom())));
-			}
-			clone.addSingleElectron(newSe);
-		}
-//		for (int f = 0; f < getElectronContainerCount(); f++) {
-//			electronContainer = this.getElectronContainer(f);
-//			newEC = getBuilder().newElectronContainer();
-//			if (electronContainer instanceof IBond) {
-//				IBond bond = (IBond) electronContainer;
-//				newEC = (IElectronContainer)bond.clone();
-//				newAtoms = new IAtom[bond.getAtomCount()];
-//				for (int g = 0; g < bond.getAtomCount(); g++) {
-//					newAtoms[g] = clone.getAtom(getAtomNumber(bond.getAtom(g)));
-//				}
-//				((IBond) newEC).setAtoms(newAtoms);
-//			} else if (electronContainer instanceof ILonePair) {
-//				IAtom atom = ((ILonePair) electronContainer).getAtom();
-//				newEC = (ILonePair)electronContainer.clone();
-//				((ILonePair) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
-//            } else if (electronContainer instanceof ISingleElectron) {
-//            	IAtom atom = ((ISingleElectron) electronContainer).getAtom();
-//                newEC = (ISingleElectron)electronContainer.clone();
-//                ((ISingleElectron) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
-//			} else {
-//				//logger.debug("Expecting EC, got: " + electronContainer.getClass().getName());
-//				newEC = (IElectronContainer) electronContainer.clone();
-//			}
-//			clone.addElectronContainer(newEC);
-//		}
-		return clone;
+
+        // this is pretty wasteful as we need to delete most the data
+        // we can't simply create an empty instance as the sub classes (e.g. AminoAcid)
+        // would have a ClassCastException when they invoke clone
+        IAtomContainer clone = (IAtomContainer) super.clone();
+
+        // remove existing elements - we need to set the stereo elements list as list.clone() doesn't
+        // work as expected and will also remove all elements from the original
+        clone.setStereoElements(new ArrayList<IStereoElement>(stereoElements.size()));
+        clone.removeAllElements();
+
+        // create a mapping of the original atoms/bonds to the cloned atoms/bonds
+        // we need this mapping to correctly clone bonds, single/paired electrons
+        // and stereo elements
+        // - the expected size stop the map be resized - method from Google Guava
+        Map<IAtom,IAtom> atomMap = new HashMap<IAtom, IAtom>(atomCount >= 3
+                                                                     ? atomCount + atomCount / 3
+                                                                     : atomCount + 1);
+        Map<IBond,IBond> bondMap = new HashMap<IBond, IBond>(bondCount >= 3
+                                                                     ? bondCount + bondCount / 3
+                                                                     : bondCount + 1);
+
+
+
+
+        // clone atoms
+		IAtom[] atoms = new IAtom[this.atomCount];
+        for(int i = 0; i < atoms.length; i++) {
+
+            atoms[i] = (IAtom) this.atoms[i].clone();
+            atomMap.put(this.atoms[i], atoms[i]);
+        }
+        clone.setAtoms(atoms);
+
+
+
+        // clone bonds using a the mappings from the original to the clone
+        IBond[] bonds = new IBond[this.bondCount];
+        for(int i = 0; i < bonds.length; i++){
+
+            IBond   original = this.bonds[i];
+            IBond   bond     = (IBond) original.clone();
+            int     n        = bond.getAtomCount();
+            IAtom[] members  = new IAtom[n];
+
+            for(int j = 0; j < n; j++) {
+                members[j] = atomMap.get(original.getAtom(j));
+            }
+
+            bond.setAtoms(members);
+            bondMap.put(this.bonds[i], bond);
+            bonds[i] = bond;
+        }
+        clone.setBonds(bonds);
+
+
+
+        // clone lone pairs (we can't use an array to buffer as there is no setLonePairs())
+        for (int i = 0; i < lonePairCount; i++) {
+
+            ILonePair original = this.lonePairs[i];
+            ILonePair pair     = (ILonePair) original.clone();
+
+            if(pair.getAtom() != null)
+                pair.setAtom(atomMap.get(original.getAtom()));
+
+            clone.addLonePair(pair);
+        }
+
+
+
+        // clone single electrons (we can't use an array to buffer as there is no setSingleElectrons())
+        for (int i = 0; i < singleElectronCount; i++) {
+
+            ISingleElectron original = this.singleElectrons[i];
+            ISingleElectron electron = (ISingleElectron) original.clone();
+
+            if(electron.getAtom() != null)
+                electron.setAtom(atomMap.get(original.getAtom()));
+
+            clone.addSingleElectron(electron);
+        }
+
+
+  		return clone;
+
 	}
 
 	/**
