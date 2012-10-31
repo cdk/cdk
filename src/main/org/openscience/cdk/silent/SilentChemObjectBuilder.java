@@ -174,7 +174,6 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
                 params[0] instanceof IMolecularFormula)
                 return (T)new AdductFormula((IMolecularFormula)params[0]);
         } else if (clazz.isAssignableFrom(ITetrahedralChirality.class)) {
-            System.out.println(params.length);
             if (params.length == 3 &&
                 params[0] instanceof IAtom &&
                 params[1] instanceof IAtom[] &&
