@@ -73,4 +73,10 @@ public interface IAminoAcid extends IMonomer {
      */
     public void addCTerminus(IAtom atom);
 
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IAminoAcid clone() throws CloneNotSupportedException;
 }

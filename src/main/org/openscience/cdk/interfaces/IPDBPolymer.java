@@ -75,5 +75,10 @@ public interface IPDBPolymer extends IBioPolymer {
 	 * @return Collection containing the PDBStructure in the PDBPolymer
 	 */
 	public Collection<IPDBStructure> getStructures();
-	
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IPDBPolymer clone() throws CloneNotSupportedException;
 }

@@ -144,7 +144,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
   TODO it's not clear why we need to remove all elements after the clone
   Looks like we should only clone the monomer related stuff
    */
-    public Object clone() throws CloneNotSupportedException {
+    public IPolymer clone() throws CloneNotSupportedException {
     	Polymer clone = (Polymer)super.clone();
         clone.removeAllElements();
         clone.monomers = new Hashtable<String, IMonomer>();

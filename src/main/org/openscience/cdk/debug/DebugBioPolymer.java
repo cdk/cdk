@@ -524,8 +524,8 @@ public class DebugBioPolymer extends BioPolymer
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IBioPolymer clone() throws CloneNotSupportedException {
+        IBioPolymer clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {

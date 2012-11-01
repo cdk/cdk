@@ -114,7 +114,15 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 		// don't return the original
 		return new ArrayList<String>(sequentialListOfMonomers);
 	}
-	
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IPDBPolymer clone() throws CloneNotSupportedException {
+        return (IPDBPolymer) super.clone();
+    }
+
 	public String toString() {
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("PDBPolymer(");

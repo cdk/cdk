@@ -523,8 +523,8 @@ public class DebugStrand extends Strand
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IStrand clone() throws CloneNotSupportedException {
+        IStrand clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {

@@ -1521,7 +1521,7 @@ public class AtomContainer extends ChemObject
 	 * @return    The cloned object
 	 * @see       #shallowCopy
 	 */
-	public Object clone() throws CloneNotSupportedException {
+	public IAtomContainer clone() throws CloneNotSupportedException {
 
 
         // this is pretty wasteful as we need to delete most the data

@@ -542,8 +542,8 @@ public class DebugAtomContainer extends AtomContainer
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IAtomContainer clone() throws CloneNotSupportedException {
+        IAtomContainer clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {

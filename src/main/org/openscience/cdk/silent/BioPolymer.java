@@ -265,7 +265,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         return stringContent.toString();
     }
 
-    public Object clone() throws CloneNotSupportedException {
+    public IBioPolymer clone() throws CloneNotSupportedException {
     	BioPolymer clone = (BioPolymer)super.clone();
         clone.strands.clear();
         for (Iterator<String> strands = clone.getStrandNames().iterator(); strands.hasNext();) {

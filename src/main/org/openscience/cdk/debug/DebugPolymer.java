@@ -523,8 +523,8 @@ public class DebugPolymer extends Polymer
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IPolymer clone() throws CloneNotSupportedException {
+        IPolymer clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {

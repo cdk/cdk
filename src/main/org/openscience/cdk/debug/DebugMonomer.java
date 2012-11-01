@@ -521,10 +521,10 @@ public class DebugMonomer extends Monomer
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IMonomer clone() throws CloneNotSupportedException {
+        IMonomer clone = null;
         try {
-        	clone = super.clone();
+        	clone = (IMonomer) super.clone();
         } catch (Exception exception) {
         	logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
         	logger.debug(exception);
