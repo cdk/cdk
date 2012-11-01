@@ -97,6 +97,14 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer{
 		return resSeq;
 	}
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IPDBMonomer clone() throws CloneNotSupportedException {
+        return (IPDBMonomer) super.clone();
+    }
+
 	public void setResSeq(String resSeq) {
 		this.resSeq = resSeq;
 	}

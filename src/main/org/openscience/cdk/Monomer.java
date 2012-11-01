@@ -118,7 +118,15 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 		notifyChanged();
 	}
 
-	public String toString() {
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IMonomer clone() throws CloneNotSupportedException {
+        return (IMonomer) super.clone();
+    }
+
+    public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Monomer{").append(this.hashCode());
 		if (getMonomerName() != null) {

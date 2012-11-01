@@ -139,7 +139,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      *
      * @return    The cloned object
      */
-    public Object clone() throws CloneNotSupportedException {
+    public IAminoAcid clone() throws CloneNotSupportedException {
         AminoAcid clone = (AminoAcid) super.clone();
         // copying the new N-terminus and C-terminus pointers
         if (getNTerminus() != null)

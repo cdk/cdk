@@ -125,4 +125,10 @@ public interface IStrand extends IAtomContainer {
 	 * @return Map containing the monomers in the strand.
 	 */
 	public Map<String,IMonomer> getMonomers();
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IStrand clone() throws CloneNotSupportedException;
 }

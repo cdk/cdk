@@ -531,8 +531,8 @@ public class DebugCrystal extends Crystal
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public ICrystal clone() throws CloneNotSupportedException {
+        ICrystal clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {

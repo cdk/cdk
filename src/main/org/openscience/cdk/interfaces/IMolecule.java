@@ -33,5 +33,10 @@ package org.openscience.cdk.interfaces;
  */
 public interface IMolecule extends IAtomContainer {
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IMolecule clone() throws CloneNotSupportedException;
 }
 

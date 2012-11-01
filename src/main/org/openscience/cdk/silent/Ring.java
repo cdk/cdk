@@ -146,8 +146,17 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
         }
 		return orderSum;
 	}
-	
-	public String toString() {
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IRing clone() throws CloneNotSupportedException {
+        return (IRing) super.clone();
+    }
+
+
+    public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Ring(");
 		buffer.append(super.toString());

@@ -89,4 +89,9 @@ public interface IPolymer extends IMolecule {
 	 */
 	public void removeMonomer(String name);
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IPolymer clone() throws CloneNotSupportedException;
 }

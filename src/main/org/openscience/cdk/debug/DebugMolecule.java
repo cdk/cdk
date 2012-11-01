@@ -533,8 +533,8 @@ public class DebugMolecule extends Molecule
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IMolecule clone() throws CloneNotSupportedException {
+        IMolecule clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {

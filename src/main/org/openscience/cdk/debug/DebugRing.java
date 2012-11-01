@@ -546,8 +546,8 @@ public class DebugRing extends Ring
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IRing clone() throws CloneNotSupportedException {
+        IRing clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {

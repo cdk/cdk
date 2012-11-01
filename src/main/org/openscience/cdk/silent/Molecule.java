@@ -99,8 +99,8 @@ public class Molecule extends AtomContainer implements Serializable, IMolecule, 
         return description.toString();
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public IMolecule clone() throws CloneNotSupportedException {
+        return (IMolecule) super.clone();
     }
 }
 

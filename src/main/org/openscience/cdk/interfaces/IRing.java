@@ -61,5 +61,10 @@ public interface IRing extends IAtomContainer {
 	 * @return the sum of all bond orders in the ring
 	 */
 	public int getBondOrderSum();
-	
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IRing clone() throws CloneNotSupportedException;
 }

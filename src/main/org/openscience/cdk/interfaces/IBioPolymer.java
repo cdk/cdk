@@ -136,5 +136,10 @@ public interface IBioPolymer extends IPolymer {
 	 * @return hashtable containing the strands in the Polymer
 	 */
 	public Map<String,IStrand> getStrands();
-	
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IBioPolymer clone() throws CloneNotSupportedException;
 }

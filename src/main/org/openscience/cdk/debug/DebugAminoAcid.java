@@ -521,8 +521,8 @@ public class DebugAminoAcid extends AminoAcid
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
+	public IAminoAcid clone() throws CloneNotSupportedException {
+        IAminoAcid clone = null;
         try {
         	clone = super.clone();
         } catch (Exception exception) {
