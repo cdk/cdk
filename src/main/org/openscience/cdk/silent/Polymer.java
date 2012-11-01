@@ -212,6 +212,11 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
             clone.addSingleElectron(newSingleElectron);
         }
 
+        // map each stereo element to a new instance in the clone
+        for(IStereoElement element : stereoElements){
+            clone.addStereoElement(element.map(atomMap, bondMap));
+        }
+
         return clone;
     }
 
