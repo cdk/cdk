@@ -1606,6 +1606,13 @@ public class AtomContainer extends ChemObject
         }
 
 
+
+        // map each stereo element to a new instance in the clone
+        for(IStereoElement element : stereoElements){
+            clone.addStereoElement(element.map(atomMap, bondMap));
+        }
+
+
         return clone;
 
 
