@@ -151,7 +151,11 @@ public class AtomContainer extends ChemObject
 		this.lonePairs = new ILonePair[this.lonePairCount];
 		this.singleElectrons = new ISingleElectron[this.singleElectronCount];
 		
-		stereoElements = new ArrayList<IStereoElement>(atomCount/2);
+		stereoElements = new ArrayList<IStereoElement>(atomCount / 2);
+
+        for(IStereoElement element : container.stereoElements()){
+            addStereoElement(element);
+        }
 
 		for (int f = 0; f < container.getAtomCount(); f++) {
 			atoms[f] = container.getAtom(f);
