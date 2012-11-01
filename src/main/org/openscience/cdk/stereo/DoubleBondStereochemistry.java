@@ -24,9 +24,13 @@ package org.openscience.cdk.stereo;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
+
+import java.util.Map;
 
 /**
  * Stereochemistry specification for double bonds. See {@link IDoubleBondStereochemistry} for
@@ -97,4 +101,22 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 		return this.stereo;
 	}
 
+    @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
+    @Override
+    public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
+
+        if(bonds == null)
+            throw new IllegalArgumentException("null bond mapping provided");
+
+        // map the double bond and the connected ligand bonds
+        IBond   doubleBond  = stereoBond != null ? bonds.get(stereoBond) : null;
+        IBond[] connected   = new IBond[ligandBonds.length];
+
+        for(int i = 0; i < connected.length; i++){
+            if(ligandBonds[i] != null)
+                connected[i] = bonds.get(ligandBonds[i]);
+        }
+
+        return new DoubleBondStereochemistry(doubleBond, connected, stereo);
+    }
 }

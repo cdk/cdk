@@ -29,10 +29,21 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
 
 /**
  * @cdk.module test-core
@@ -109,6 +120,129 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         for (int i=0; i<ligands.length; i++) {
             Assert.assertEquals(ligands[i], stereo.getBonds()[i]);
         }
+    }
+
+    @Test public void testMap_Map_Map() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom c2 = builder.newInstance(IAtom.class, "C");
+        IAtom o3 = builder.newInstance(IAtom.class, "O");
+        IAtom o4 = builder.newInstance(IAtom.class, "O");
+
+        IBond c1c2 = builder.newInstance(IBond.class, c1, c2, Order.DOUBLE);
+        IBond c1o3 = builder.newInstance(IBond.class, c1, o3, Order.SINGLE);
+        IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
+
+        // new stereo element
+        DoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2,
+                                                                          new IBond[]{c1o3,c2o4},
+                                                                          Conformation.OPPOSITE);
+
+        // clone the atoms and place in a map
+        Map<IBond,IBond> mapping = new HashMap<IBond,IBond>();
+        IBond c1c2clone = (IBond) c1c2.clone(); mapping.put(c1c2, c1c2clone);
+        IBond c1o3clone = (IBond) c1o3.clone(); mapping.put(c1o3, c1o3clone);
+        IBond c2o4clone = (IBond) c2o4.clone(); mapping.put(c2o4, c2o4clone);
+
+        // map the existing element a new element
+        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, mapping);
+
+        Assert.assertThat("mapped chiral atom was the same as the original",
+                          mapped.getStereoBond(), is(not(sameInstance(original.getStereoBond()))));
+        Assert.assertThat("mapped chiral atom was not the clone",
+                          mapped.getStereoBond(), is(sameInstance(c1c2clone)));
+
+        IBond[] originalBonds = original.getBonds();
+        IBond[] mappedBonds   = mapped.getBonds();
+
+        Assert.assertThat("first bond was te same as the original",
+                          mappedBonds[0], is(not(sameInstance(originalBonds[0]))));
+        Assert.assertThat("first mapped bond was not the clone",
+                          mappedBonds[0], is(sameInstance(c1o3clone)));
+        Assert.assertThat("second bond was te same as the original",
+                          mappedBonds[1], is(not(sameInstance(originalBonds[1]))));
+        Assert.assertThat("second mapped bond was not the clone",
+                          mappedBonds[1], is(sameInstance(c2o4clone)));
+
+        Assert.assertThat("stereo was not mapped",
+                          mapped.getStereo(), is(original.getStereo()));
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMap_Null_Map() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom c2 = builder.newInstance(IAtom.class, "C");
+        IAtom o3 = builder.newInstance(IAtom.class, "O");
+        IAtom o4 = builder.newInstance(IAtom.class, "O");
+
+        IBond c1c2 = builder.newInstance(IBond.class, c1, c2, Order.DOUBLE);
+        IBond c1o3 = builder.newInstance(IBond.class, c1, o3, Order.SINGLE);
+        IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
+
+        // new stereo element
+        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2,
+                                                                           new IBond[]{c1o3,c2o4},
+                                                                           Conformation.OPPOSITE);
+
+        // map the existing element a new element - should through an IllegalArgumentException
+        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, null);
+
+    }
+
+    @Test
+    public void testMap_Map_Map_NullElement() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        // new stereo element
+        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(null,
+                                                                            new IBond[2],
+                                                                            null);
+
+
+        // map the existing element a new element
+        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
+
+        Assert.assertNull(mapped.getStereoBond());
+        Assert.assertNull(mapped.getBonds()[0]);
+        Assert.assertNull(mapped.getBonds()[1]);
+        Assert.assertNull(mapped.getStereo());
+
+    }
+
+    @Test
+    public void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom c2 = builder.newInstance(IAtom.class, "C");
+        IAtom o3 = builder.newInstance(IAtom.class, "O");
+        IAtom o4 = builder.newInstance(IAtom.class, "O");
+
+        IBond c1c2 = builder.newInstance(IBond.class, c1, c2, Order.DOUBLE);
+        IBond c1o3 = builder.newInstance(IBond.class, c1, o3, Order.SINGLE);
+        IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
+
+        // new stereo element
+        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2,
+                                                                            new IBond[]{c1o3,c2o4},
+                                                                            Conformation.OPPOSITE);
+
+        // map the existing element a new element - should through an IllegalArgumentException
+        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
+
+        Assert.assertNull(mapped.getStereoBond());
+        Assert.assertNull(mapped.getBonds()[0]);
+        Assert.assertNull(mapped.getBonds()[1]);
+        Assert.assertNotNull(mapped.getStereo());
+
     }
 
     @Test

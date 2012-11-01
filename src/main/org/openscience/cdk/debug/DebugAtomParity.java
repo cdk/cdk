@@ -21,10 +21,15 @@
 package org.openscience.cdk.debug;
 
 import org.openscience.cdk.AtomParity;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Debugging data class.
@@ -35,6 +40,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DebugAtomParity extends AtomParity
     implements IAtomParity {
+
 
     private static final long serialVersionUID = 6305428844566539948L;
 
@@ -55,7 +61,35 @@ public class DebugAtomParity extends AtomParity
 		return super.getSurroundingAtoms();
 	}
 
-	public int getParity() {
+    /**
+     * @inheritDoc
+     */
+    @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
+    @Override
+    public IAtomParity map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
+
+        logger.debug("Mapping atom parity: " + atoms);
+
+        if(atoms == null) // not using bond mapping
+            throw new IllegalArgumentException("null atom mapping provided");
+
+        IAtom[] neighbors = getSurroundingAtoms();
+
+        // could map neighbours with a for loop but we need to pull individuals
+        // atoms for the constructor
+        return new DebugAtomParity(
+                getAtom()  != null ? atoms.get(getAtom()) : null,
+                neighbors[0] != null ? atoms.get(neighbors[0]) : null,
+                neighbors[1] != null ? atoms.get(neighbors[1]) : null,
+                neighbors[2] != null ? atoms.get(neighbors[2]) : null,
+                neighbors[3] != null ? atoms.get(neighbors[3]) : null,
+                getParity()
+        );
+
+    }
+
+
+    public int getParity() {
 		logger.debug("Getting atom parity: ", super.getParity());
 		return super.getParity();
 	}
