@@ -25,8 +25,12 @@ package org.openscience.cdk.stereo;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+
+import java.util.Map;
 
 /**
  * Stereochemistry specification for quadrivalent atoms. See {@link ITetrahedralChirality} for
@@ -105,6 +109,31 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     @TestMethod("testBuilder")
     public IChemObjectBuilder getBuilder() {
         return builder;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
+    @Override
+    public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
+
+        // don't check bond map as we don't use it
+        if(atoms == null)
+            throw new IllegalArgumentException("null atom mapping provided");
+
+        // convert the chiral atom and it's ligands to their equivalent
+        IAtom   chiral  = chiralAtom != null ? atoms.get(chiralAtom) : null;
+        IAtom[] ligands = new IAtom[ligandAtoms.length];
+
+        for (int i = 0; i < ligands.length; i++) {
+            if(ligandAtoms[i] != null)
+                ligands[i] = atoms.get(ligandAtoms[i]);
+        }
+
+        // create a new tetrahedral instance with the mapped chiral atom and ligands
+        return new TetrahedralChirality(chiral, ligands, stereo);
+
     }
 
     /**

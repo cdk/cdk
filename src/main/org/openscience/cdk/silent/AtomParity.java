@@ -23,9 +23,12 @@
 package org.openscience.cdk.silent;
 
 import java.io.Serializable;
+import java.util.Map;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -146,7 +149,31 @@ public class AtomParity implements IAtomParity, Serializable  {
         clone.neighbors[3] = (IAtom)(neighbors[3].clone());
         return clone;
     }
-    
+
+    /**
+     * @inheritDoc
+     */
+    @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
+    @Override
+    public IAtomParity map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
+
+        if(atoms == null) // not using bond mapping
+            throw new IllegalArgumentException("null atom mapping provided");
+
+        // could map neighbours with a for loop but we need to pull individuals
+        // atoms for the constructor
+        return new AtomParity(
+                centralAtom  != null ? atoms.get(centralAtom) : null,
+                neighbors[0] != null ? atoms.get(neighbors[0]) : null,
+                neighbors[1] != null ? atoms.get(neighbors[1]) : null,
+                neighbors[2] != null ? atoms.get(neighbors[2]) : null,
+                neighbors[3] != null ? atoms.get(neighbors[3]) : null,
+                parity
+        );
+
+    }
+
+
     public IChemObjectBuilder getBuilder() {
         return SilentChemObjectBuilder.getInstance();
     }

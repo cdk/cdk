@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Map;
+
 /**
  * Represents the concept of an atom parity identifying the stereochemistry
  * around an atom, given four neighbouring atoms.
@@ -58,7 +60,14 @@ public interface IAtomParity extends IStereoElement {
      * @return The parity value
      */
     public int getParity();
-    
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IAtomParity map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
+
+
 }
 
 

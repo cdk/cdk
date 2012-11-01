@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Map;
+
 /**
  * Stereochemistry specification for double bond stereochemistry. The data model defines the double
  * atoms and two ligands attached to those two atoms, linearly connected with the double bond in the
@@ -65,4 +67,10 @@ public interface IDoubleBondStereochemistry extends IStereoElement {
      * @return the {@link Conformation} for this stereo element.
      */
     public Conformation getStereo();
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 }

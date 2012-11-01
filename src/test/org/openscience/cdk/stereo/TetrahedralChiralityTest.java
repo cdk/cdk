@@ -31,8 +31,19 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import sun.font.CoreMetrics;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
 
 /**
  * @cdk.module test-core
@@ -115,6 +126,143 @@ public class TetrahedralChiralityTest extends CDKTestCase {
             Assert.assertEquals(ligands[i], chirality.getLigands()[i]);
         }
     }
+
+    @Test public void testMap_Map_Map() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom o2 = builder.newInstance(IAtom.class, "O");
+        IAtom n3 = builder.newInstance(IAtom.class, "N");
+        IAtom c4 = builder.newInstance(IAtom.class, "C");
+        IAtom h5 = builder.newInstance(IAtom.class, "H");
+
+        // new stereo element
+        ITetrahedralChirality original = new TetrahedralChirality(c1,
+                                                                new IAtom[]{o2,n3,c4,h5},
+                                                                Stereo.CLOCKWISE);
+
+        // clone the atoms and place in a map
+        Map<IAtom,IAtom> mapping = new HashMap<IAtom,IAtom>();
+        IAtom c1clone = (IAtom) c1.clone(); mapping.put(c1, c1clone);
+        IAtom o2clone = (IAtom) o2.clone(); mapping.put(o2, o2clone);
+        IAtom n3clone = (IAtom) n3.clone(); mapping.put(n3, n3clone);
+        IAtom c4clone = (IAtom) c4.clone(); mapping.put(c4, c4clone);
+        IAtom h5clone = (IAtom) h5.clone(); mapping.put(h5, h5clone);
+
+        // map the existing element a new element
+        ITetrahedralChirality mapped = original.map(mapping, Collections.EMPTY_MAP);
+
+        Assert.assertThat("mapped chiral atom was the same as the original",
+                          mapped.getChiralAtom(), is(not(sameInstance(original.getChiralAtom()))));
+        Assert.assertThat("mapped chiral atom was not the clone",
+                          mapped.getChiralAtom(), is(sameInstance(c1clone)));
+
+        IAtom[] originalLigands = original.getLigands();
+        IAtom[] mappedLigands   = mapped.getLigands();
+
+        Assert.assertThat("first ligand was te same as the original",
+                          mappedLigands[0], is(not(sameInstance(originalLigands[0]))));
+        Assert.assertThat("first mapped ligand was not the clone",
+                          mappedLigands[0], is(sameInstance(o2clone)));
+        Assert.assertThat("second ligand was te same as the original",
+                          mappedLigands[1], is(not(sameInstance(originalLigands[1]))));
+        Assert.assertThat("second mapped ligand was not the clone",
+                          mappedLigands[1], is(sameInstance(n3clone)));
+        Assert.assertThat("third ligand was te same as the original",
+                          mappedLigands[2], is(not(sameInstance(originalLigands[2]))));
+        Assert.assertThat("third mapped ligand was not the clone",
+                          mappedLigands[2], is(sameInstance(c4clone)));
+        Assert.assertThat("forth ligand was te same as the original",
+                          mappedLigands[3], is(not(sameInstance(originalLigands[3]))));
+        Assert.assertThat("forth mapped ligand was not the clone",
+                          mappedLigands[3], is(sameInstance(h5clone)));
+
+        Assert.assertThat("stereo was not mapped",
+                          mapped.getStereo(), is(original.getStereo()));
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMap_Null_Map() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom o2 = builder.newInstance(IAtom.class, "O");
+        IAtom n3 = builder.newInstance(IAtom.class, "N");
+        IAtom c4 = builder.newInstance(IAtom.class, "C");
+        IAtom h5 = builder.newInstance(IAtom.class, "H");
+
+        // new stereo element
+        ITetrahedralChirality original = new TetrahedralChirality(c1,
+                                                                 new IAtom[]{o2,n3,c4,h5},
+                                                                 Stereo.CLOCKWISE);
+
+
+        // map the existing element a new element - should through an IllegalArgumentException
+        ITetrahedralChirality mapped = original.map(null, Collections.EMPTY_MAP);
+
+    }
+
+    @Test
+    public void testMap_Map_Map_NullElement() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom o2 = builder.newInstance(IAtom.class, "O");
+        IAtom n3 = builder.newInstance(IAtom.class, "N");
+        IAtom c4 = builder.newInstance(IAtom.class, "C");
+        IAtom h5 = builder.newInstance(IAtom.class, "H");
+
+        // new stereo element
+        ITetrahedralChirality original = new TetrahedralChirality(null,
+                                                                 new IAtom[4],
+                                                                 null);
+
+
+        // map the existing element a new element
+        ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
+
+        Assert.assertNull(mapped.getChiralAtom());
+        Assert.assertNull(mapped.getLigands()[0]);
+        Assert.assertNull(mapped.getLigands()[1]);
+        Assert.assertNull(mapped.getLigands()[2]);
+        Assert.assertNull(mapped.getLigands()[3]);
+        Assert.assertNull(mapped.getStereo());
+
+    }
+
+    @Test
+    public void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom o2 = builder.newInstance(IAtom.class, "O");
+        IAtom n3 = builder.newInstance(IAtom.class, "N");
+        IAtom c4 = builder.newInstance(IAtom.class, "C");
+        IAtom h5 = builder.newInstance(IAtom.class, "H");
+
+        // new stereo element
+        ITetrahedralChirality original = new TetrahedralChirality(c1,
+                                                                 new IAtom[]{o2,n3,c4,h5},
+                                                                 Stereo.CLOCKWISE);
+
+
+        // map the existing element a new element - should through an IllegalArgumentException
+        ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
+
+        Assert.assertNull(mapped.getChiralAtom());
+        Assert.assertNull(mapped.getLigands()[0]);
+        Assert.assertNull(mapped.getLigands()[1]);
+        Assert.assertNull(mapped.getLigands()[2]);
+        Assert.assertNull(mapped.getLigands()[3]);
+        Assert.assertNotNull(mapped.getStereo());
+
+    }
+
 
     @Test
     public void testToString() {

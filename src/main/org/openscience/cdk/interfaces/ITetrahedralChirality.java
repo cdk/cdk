@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Map;
+
 /**
  * Stereochemistry specification for quadrivalent atoms. The data model defines the central, chiral {@link IAtom},
  * and its four ligand {@link IAtom}s, directly bonded to the chiral atom via an {@link IBond}. The ordering of the
@@ -62,5 +64,13 @@ public interface ITetrahedralChirality extends IStereoElement {
      * @return the {@link Stereo} for this stereo element.
      */
     public Stereo getStereo();
+
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
+
 
 }

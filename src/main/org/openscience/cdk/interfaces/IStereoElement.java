@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Map;
+
 /**
  * Represents the concept of a stereo element in the molecule. Stereo elements can be
  * that of quadrivalent atoms, cis/trans isomerism around double bonds, but also include
@@ -34,6 +36,23 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword stereochemistry
  */
 public interface IStereoElement extends ICDKObject {
+
+    /**
+     * Map the atoms/bonds in this instance to a new stereo element using the
+     * provided atom/bond mapping. This allows the stereo element to be transferred
+     * between a cloned or aligned (i.e. isomorphic) chemical graph.
+     * <p/>
+     * If no mapping is found for a given atom or bond it is replaced with a null
+     * reference. However the provided atom and bonds maps must not be null.
+     *
+     * @param atoms non-null atom mapping, used to convert the original atoms to their mapped
+     *              counterparts
+     * @param bonds non-null bond mapping, used to convert the original bonds to their mapped
+     *              counterparts
+     * @return a new stereo element in the same configuration but with atoms/bonds
+     *         replaced with their mapped equivalence.
+     */
+    public IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 
 }
 
