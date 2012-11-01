@@ -1553,6 +1553,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     public void stateChanged(IChemObjectChangeEvent event)
     {
         notifyChanged(event);
-    }   
+    }
+
+    /** {@inheritDoc} */
+	@Override
+	public boolean isEmpty() {
+		return atomCount == 0;
+	}   
 }
 
