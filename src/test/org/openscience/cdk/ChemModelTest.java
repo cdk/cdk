@@ -28,10 +28,9 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -64,10 +63,10 @@ public class ChemModelTest extends AbstractChemModelTest {
 	    Assert.assertTrue(chemModel.isEmpty());
 	    
 	    IAtom atom = new Atom("N");
-	    IMolecule mol = new Molecule();
-	    IMoleculeSet mset = new MoleculeSet();
+	    IAtomContainer mol = new AtomContainer();
+	    IAtomContainerSet mset = new AtomContainerSet();
 	    mol.addAtom(atom);
-	    mset.addMolecule(mol);
+	    mset.addAtomContainer(mol);
 	    chemModel.setMoleculeSet(mset);
 	    Assert.assertFalse(chemModel.isEmpty());
 	    mol.removeAtom(atom);

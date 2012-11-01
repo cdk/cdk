@@ -31,7 +31,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,12 +38,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -65,7 +64,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test
     public void testDetectAromaticity_IAtomContainer() throws Exception {
-        IMolecule mol = makeAromaticMolecule();
+        IAtomContainer mol = makeAromaticMolecule();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         boolean isAromatic = DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol);
@@ -96,7 +95,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test public void testNMethylPyrrol() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("c1ccn(C)c1");
+        IAtomContainer mol = sp.parseSmiles("c1ccn(C)c1");
         Assert.assertTrue("Expected the molecule to be aromatic.", DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -110,7 +109,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     }
 
     @Test public void testPyridine() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("N"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0,1,IBond.Order.SINGLE);
@@ -142,7 +141,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     }
 
     @Test public void testCyclopentadienyl() throws Exception {
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setFormalCharge(-1);
         for (int i=1; i<5; i++) {
@@ -161,13 +160,13 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     }
 
     @Test public void testPyridineOxide() throws Exception {
-		Molecule molecule = MoleculeFactory.makePyridineOxide();
+    	IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule));
 	}
 
     @Test public void testPyridineOxide_SP2() throws Exception {
-		Molecule molecule = MoleculeFactory.makePyridineOxide();
+    	IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
 		Iterator<IBond> bonds = molecule.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
 		for (int i=0; i<6; i++) {
@@ -180,7 +179,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test public void testFuran() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("c1cocc1");
+        IAtomContainer mol = sp.parseSmiles("c1cocc1");
         Assert.assertTrue("Molecule is not detected aromatic", DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -210,7 +209,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
                         true,
                         true
                 };
-        Molecule molecule = MoleculeFactory.makeAzulene();
+        IAtomContainer molecule = MoleculeFactory.makeAzulene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Expected the molecule to be aromatic.", DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -224,7 +223,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit. The N has to be counted correctly.
      */
     @Test public void testIndole() throws Exception {
-        Molecule molecule = MoleculeFactory.makeIndole();
+    	IAtomContainer molecule = MoleculeFactory.makeIndole();
         boolean testResults[] = {
                 true,
                 true,
@@ -252,7 +251,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit. The N has to be counted correctly.
      */
     @Test public void testPyrrole() throws Exception {
-        Molecule molecule = MoleculeFactory.makePyrrole();
+    	IAtomContainer molecule = MoleculeFactory.makePyrrole();
         boolean testResults[] = {
                 true,
                 true,
@@ -276,7 +275,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit
      */
     @Test public void testThiazole() throws Exception {
-        Molecule molecule = MoleculeFactory.makeThiazole();
+    	IAtomContainer molecule = MoleculeFactory.makeThiazole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Molecule is not detected as aromatic", DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule));
 
@@ -297,7 +296,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         //boolean testResults[] = {true, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
+        IAtomContainer mol = sp.parseSmiles("C1CCCc2c1cccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
@@ -322,7 +321,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test public void testSFBug956924() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+        IAtomContainer mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
         Assert.assertEquals(IAtomType.Hybridization.PLANAR3, mol.getAtom(0).getHybridization());
         for (int f = 1; f < mol.getAtomCount(); f++) {
             Assert.assertEquals(IAtomType.Hybridization.SP2, mol.getAtom(f).getHybridization());
@@ -344,7 +343,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         boolean testResults[] = {false, false, false, false, false, false, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IMolecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
+        IAtomContainer mol = sp.parseSmiles("O=c1cccccc1"); // tropone
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertFalse(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         Assert.assertEquals(testResults.length, mol.getAtomCount());
@@ -355,7 +354,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testNoxide() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
+        IAtomContainer mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
     }
@@ -413,7 +412,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/porphyrin.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         isAromatic = DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
@@ -453,7 +452,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug698152.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
@@ -466,7 +465,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit
      */
     @Test public void testQuinone() throws Exception {
-        Molecule molecule = MoleculeFactory.makeQuinone();
+        IAtomContainer molecule = MoleculeFactory.makeQuinone();
         boolean[] testResults = {false, true, true, true, true, true, true, false};
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -484,7 +483,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         String filename = "data/mdl/bug1328739.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class));
+        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
@@ -502,7 +501,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      * A unit test for JUnit
      */
     @Test public void testBenzene() throws Exception {
-        Molecule molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -512,7 +511,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testCyclobutadiene() throws Exception {
         // anti-aromatic
-        Molecule molecule = MoleculeFactory.makeCyclobutadiene();
+        IAtomContainer molecule = MoleculeFactory.makeCyclobutadiene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         Assert.assertFalse(DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule));
@@ -521,8 +520,8 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         }
     }
 
-    private IMolecule makeAromaticMolecule() {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
+    private IAtomContainer makeAromaticMolecule() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"C");
         a1.setPoint2d(new Point2d(329.99999999999994, 971.0));
         mol.addAtom(a1);
@@ -584,7 +583,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void test3Amino2MethylPyridine() throws Exception {
 
-        IMolecule mol = new Molecule();
+        IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"N");
         a1.setPoint2d(new Point2d(3.7321, 1.345));
         mol.addAtom(a1);
@@ -757,7 +756,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
      */
     @Test public void testAnotherNitrogen_SP2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("c1cnc2s[cH][cH]n12");
+        IAtomContainer mol = sp.parseSmiles("c1cnc2s[cH][cH]n12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
@@ -773,7 +772,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testAromaticNOxide() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("O=n1ccccc1");
+        IAtomContainer mol = sp.parseSmiles("O=n1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
@@ -790,7 +789,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testAromaticNOxideCharged() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("[O-][n+]1ccccc1");
+        IAtomContainer mol = sp.parseSmiles("[O-][n+]1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertFalse(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
@@ -801,7 +800,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testSMILES() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C=1N=CNC=1");
+        IAtomContainer mol = sp.parseSmiles("C=1N=CNC=1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms())
@@ -813,7 +812,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testSMILES2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("OCN1C=CN=C1");
+        IAtomContainer mol = sp.parseSmiles("OCN1C=CN=C1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (int i=2; i<=6; i++) {
@@ -827,7 +826,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
     @Test public void testSMILES3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("OC(=O)N1C=CN=C1");
+        IAtomContainer mol = sp.parseSmiles("OC(=O)N1C=CN=C1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (int i=3; i<=7; i++) {
@@ -845,7 +844,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void test3001616() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("OC(=O)N1C=NC2=CC=CC=C12");
+        IAtomContainer mol = sp.parseSmiles("OC(=O)N1C=NC2=CC=CC=C12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
@@ -878,7 +877,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testBug2853035() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = sp.parseSmiles("C(=O)c1cnn2ccccc12");
+        IAtomContainer mol = sp.parseSmiles("C(=O)c1cnn2ccccc12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {

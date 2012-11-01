@@ -369,7 +369,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
 
         Assert.assertTrue("new container set should be empty", set.isEmpty());
 
-        set.addAtomContainer(set.getBuilder().newInstance(IMolecule.class));
+        set.addAtomContainer(set.getBuilder().newInstance(IAtomContainer.class));
 
         Assert.assertFalse("container set with a single container should not be empty",
                            set.isEmpty());

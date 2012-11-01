@@ -316,11 +316,11 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
             Assert.assertTrue(chemModel.isEmpty());
 
             IAtom        atom = builder.newInstance(IAtom.class);
-            IMolecule    mol  = builder.newInstance(IMolecule.class);
-            IMoleculeSet mset = builder.newInstance(IMoleculeSet.class);
+            IAtomContainer    mol  = builder.newInstance(IAtomContainer.class);
+            IAtomContainerSet mset = builder.newInstance(IAtomContainerSet.class);
 
             mol.addAtom(atom);
-            mset.addMolecule(mol);
+            mset.addAtomContainer(mol);
             chemModel.setMoleculeSet(mset);
             Assert.assertFalse("chem model with a molecule set should not be empty",
                                chemModel.isEmpty());
@@ -337,7 +337,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         IChemModel model = (IChemModel) newChemObject();
         IChemObjectBuilder builder = model.getBuilder();
 
-        IMolecule molecule = builder.newInstance(IMolecule.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IReaction reaction = builder.newInstance(IReaction.class);
 
         reaction.addReactant(molecule);
