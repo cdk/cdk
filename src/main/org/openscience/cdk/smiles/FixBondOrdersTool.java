@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
  * <li>Requires molecule with all rings to be solved being marked aromatic
  * (SP2/Planar3 atoms). All bonds to non-ring atoms need to be fully defined
  * (including implicit H atoms)
- * <ul>
+ * </ul>
  *
  * @author Kevin Lawson
  * @author Lucy Entwistle
