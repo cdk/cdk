@@ -404,7 +404,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         IStereoElement element = elements.next();
 
-        Assert.assertEquals("cloned element was incorrect class", element.getClass(), chirality.getClass());
+        Assert.assertEquals("cloned element was incorrect class", chirality.getClass(), element.getClass());
         assertThat("too many stereo elements", elements.hasNext(), is(not(true)));
 
         // we've tested the class already  - cast is okay
@@ -472,7 +472,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         IStereoElement element = elements.next();
 
-        Assert.assertEquals("cloned element was incorrect class", element.getClass(), dbStereo.getClass());
+        Assert.assertEquals("cloned element was incorrect class", dbStereo.getClass(), element.getClass());
         assertThat("too many stereo elements", elements.hasNext(), is(not(true)));
 
         // we've tested the class already - cast is okay
@@ -546,7 +546,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         IStereoElement element = elements.next();
 
-        Assert.assertEquals("cloned element was incorrect class", element.getClass(), chirality.getClass());
+        Assert.assertEquals("cloned element was incorrect class", chirality.getClass(), element.getClass());
         assertThat("too many stereo elements", elements.hasNext(), is(not(true)));
 
         // we've tested the class already  - cast is okay
