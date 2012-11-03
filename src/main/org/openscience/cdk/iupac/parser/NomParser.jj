@@ -1,6 +1,5 @@
 options {
 STATIC=false;
-OPTIMIZE_TOKEN_MANAGER=true;
 FORCE_LA_CHECK=true;
 }
 
