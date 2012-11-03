@@ -77,6 +77,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(6, ringSubstructure.getBondCount());
     }
 
+    /**
+     * @cdk.bug 1254
+     */
     @Test
     public void testGetTotalHydrogenCount_IAtomContainer() throws IOException, ClassNotFoundException, CDKException {
         IAtomContainer mol = new AtomContainer(); // ethene
@@ -93,7 +96,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 5, IBond.Order.SINGLE);
         Assert.assertEquals(6, mol.getAtomCount());
         Assert.assertEquals(5, mol.getBondCount());
-        Assert.assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
+        // total includes explicit and implicit (we don't have any implicit to 4 is expected)
+        Assert.assertEquals(4, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
         
     @Test public void testConvertImplicitToExplicitHydrogens_IAtomContainer() throws Exception {
@@ -594,6 +598,22 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(1.0, totalCharge, 0.01);
     }
 
+    /**
+     * @cdk.bug 1254
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testCountExplicitH_Null_IAtom() {
+        AtomContainerManipulator.countExplicitHydrogens(null, DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class));
+    }
+
+    /**
+     * @cdk.bug 1254
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testCountExplicitH_IAtomContainer_Null() {
+        AtomContainerManipulator.countExplicitHydrogens(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class), null);
+    }
+
     @Test
     public void testCountExplicitH() {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -646,6 +666,39 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         }
         Assert.assertEquals(6, AtomContainerManipulator.countHydrogens(container, atom1));
         
+    }
+
+    /**
+     * @cdk.bug 1254
+     */
+    @Test
+    public void testGetImplicitHydrogenCount_unperceived() throws Exception {
+        IAtomContainer container = MoleculeFactory.makeAdenine();
+        Assert.assertEquals("Container has not been atom-typed - should have 0 implicit hydrogens",
+                            0,
+                            AtomContainerManipulator.getImplicitHydrogenCount(container));
+    }
+
+    /**
+     * @cdk.bug 1254
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetImplicitHydrogenCount_null() throws Exception {
+        AtomContainerManipulator.getImplicitHydrogenCount(null);
+    }
+
+    /**
+     * @cdk.bug 1254
+     */
+    @Test
+    public void testGetImplicitHydrogenCount_adenine() throws Exception {
+        IAtomContainer container = MoleculeFactory.makeAdenine();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance()).addImplicitHydrogens(container);
+        Assert.assertEquals("Adenine should have 5 implicit hydrogens",
+                            5,
+                            AtomContainerManipulator.getImplicitHydrogenCount(container));
+
     }
 
     @Test

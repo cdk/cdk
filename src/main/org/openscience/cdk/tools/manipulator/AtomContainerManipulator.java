@@ -33,6 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -94,7 +95,7 @@ public class AtomContainerManipulator {
                 substructure.removeAtomAndConnectedElectronContainers(atom);
             }
         }
-        
+
         return substructure;
     }
 
@@ -266,20 +267,64 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Count the total number of hydrogens (implicit and explicit).
+     * Counts the number of hydrogens on the provided IAtomContainer. As this
+     * method will sum all implicit hydrogens on each atom it is important to
+     * ensure the atoms have already been perceived (and thus have an implicit
+     * hydrogen count) (see. {@link #percieveAtomTypesAndConfigureAtoms}).
      *
-     * @param atomContainer the atom container to consider
-     * @return The summed implicit hydrogens of all atoms in this AtomContainer.
+     * @param container the container to count the hydrogens on
+     * @return the total number of hydrogens
+     * @see org.openscience.cdk.interfaces.IAtom#getImplicitHydrogenCount()
+     * @see #percieveAtomTypesAndConfigureAtoms
+     * @throws IllegalArgumentException if the provided container was null
      */
     @TestMethod("testGetTotalHydrogenCount_IAtomContainer,testGetTotalHydrogenCount_IAtomContainer_zeroImplicit,testGetTotalHydrogenCount_IAtomContainer_nullImplicit,testGetTotalHydrogenCount_ImplicitHydrogens")
-    public static int getTotalHydrogenCount(IAtomContainer atomContainer) {
-        int hCount = 0;
-        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            Integer ihcount = atomContainer.getAtom(i).getImplicitHydrogenCount();
-            if (ihcount != CDKConstants.UNSET)
-                hCount += ihcount;
+    public static int getTotalHydrogenCount(IAtomContainer container) {
+        if(container == null)
+            throw new IllegalArgumentException("null container provided");
+        int hydrogens = 0;
+        for (IAtom atom : container.atoms()) {
+
+            if(Elements.HYDROGEN.getSymbol().equals(atom.getSymbol())) {
+                hydrogens++;
+            }
+
+            // rare but a hydrogen may have an implicit hydrogen so we don't use 'else'
+            Integer implicit = atom.getImplicitHydrogenCount();
+            if (implicit != null) {
+                hydrogens += implicit;
+            }
+
         }
-        return hCount;
+        return hydrogens;
+    }
+
+
+    /**
+     * Counts the number of implicit hydrogens on the provided IAtomContainer.
+     * As this method will sum all implicit hydrogens on each atom it is
+     * important to ensure the atoms have already been perceived (and thus have
+     * an implicit hydrogen count) (see.
+     * {@link #percieveAtomTypesAndConfigureAtoms}).
+     *
+     * @param container the container to count the implicit hydrogens on
+     * @return the total number of implicit hydrogens
+     * @see org.openscience.cdk.interfaces.IAtom#getImplicitHydrogenCount()
+     * @see #percieveAtomTypesAndConfigureAtoms
+     * @throws IllegalArgumentException if the provided container was null
+     */
+    @TestMethod("testGetImplicitHydrogenCount_unperceived,testGetImplicitHydrogenCount_null,testGetImplicitHydrogenCount_adenine")
+    public static int getImplicitHydrogenCount(IAtomContainer container){
+        if(container == null)
+            throw new IllegalArgumentException("null container provided");
+        int count = 0;
+        for(IAtom atom : container.atoms()){
+            Integer implicit = atom.getImplicitHydrogenCount();
+            if(implicit != null) {
+                count += implicit;
+            }
+        }
+        return count;
     }
 
     /**
@@ -287,14 +332,17 @@ public class AtomContainerManipulator {
      *
      * @param atomContainer the atom container to consider
      * @return The number of explicit hydrogens on the given IAtom.
+     * @throws IllegalArgumentException if either the container or atom were null
      */
-    @TestMethod("testCountExplicitH")
+    @TestMethod("testCountExplicitH,testCountExplicitH_IAtomContainer_Null,testCountExplicitH_Null_IAtom")
     public static int countExplicitHydrogens(IAtomContainer atomContainer, IAtom atom) {
-    	int hCount = 0;
-        for (IAtom iAtom : atomContainer.getConnectedAtomsList(atom)) {
-            IAtom connectedAtom = iAtom;
-            if (connectedAtom.getSymbol().equals("H"))
+        if(atomContainer == null || atom == null )
+            throw new IllegalArgumentException("null container or atom provided");
+        int hCount = 0;
+        for (IAtom connected : atomContainer.getConnectedAtomsList(atom)) {
+            if (Elements.HYDROGEN.getSymbol().equals(connected.getSymbol())) {
                 hCount++;
+            }
         }
         return hCount;
     }
