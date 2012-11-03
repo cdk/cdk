@@ -3,3 +3,4 @@ jgrapht-0.6.0.jar
 vecmath*.jar
 cmlxom-2.5-b1.jar
 xom*.jar
+commons-math*.jar
