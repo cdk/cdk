@@ -72,6 +72,23 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         };
     }
 
+    /**
+     * Unit test ensures an exception is thrown if more the two elements are
+     * passed to the constructor. When IDoubleBondStereoChemistry.getBonds()
+     * is invoked the fixed size array is copied to an array of size 2. If
+     * more then 2 bonds are given they would be truncated.
+     *
+     * @cdk.bug 1273
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructor_TooManyBonds() {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        new DoubleBondStereochemistry(builder.newInstance(IBond.class),
+                                      new IBond[3], Conformation.OPPOSITE);
+    }
+
     @Test
     public void testConstructor() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(

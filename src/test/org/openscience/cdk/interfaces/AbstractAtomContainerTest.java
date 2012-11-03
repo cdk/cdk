@@ -354,7 +354,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
      * Unit test to ensure that the stereo elements remain intact on cloning a
      * container. This test ensures tetrahedral chirality is preserved
      *
-     * @cdk.bug 1###
+     * @cdk.bug 1264
      * @throws Exception
      */
     @Test public void testClone_IStereoElement_Tetrahedral() throws Exception {
@@ -430,7 +430,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
      * Unit test to ensure that the stereo elements remain intact on cloning a
      * container. This test ensures DoubleBondStereochemistry is preserved
      *
-     * @cdk.bug 1###
+     * @cdk.bug 1264
      * @throws Exception
      */
     @Test public void testClone_IStereoElement_DoubleBond() throws Exception {
@@ -496,7 +496,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
      * Unit test to ensure that the stereo elements remain intact on cloning a
      * container. This test ensures AtomParity is preserved
      *
-     * @cdk.bug 1###
+     * @cdk.bug 1264
      * @throws Exception
      */
     @Test public void testClone_IStereoElement_AtomParity() throws Exception {
@@ -821,7 +821,40 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(0, container.getAtomCount());
         Assert.assertEquals(0, container.getBondCount());
     }
-    
+
+    /**
+     * Unit test ensures that stereo-elements are removed from a container
+     * when {@link IAtomContainer#removeAllElements()} is invoked.
+     * @cdk.bug 1270
+     */
+    @Test public void testRemoveAllElements_StereoElements() {
+
+        IAtomContainer container = (IAtomContainer)newChemObject();
+        container.addStereoElement(new TetrahedralChirality(container.getBuilder().newInstance(IAtom.class),
+                                                            new IAtom[4],
+                                                            ITetrahedralChirality.Stereo.CLOCKWISE));
+
+        int count = 0;
+        for (IStereoElement element : container.stereoElements()) {
+            count++;
+        }
+
+        assertThat("no stereo elements were added", count, is(1));
+
+        count = 0;
+
+        assertThat("count did not reset", count, is(0));
+
+        container.removeAllElements();
+
+        for (IStereoElement element : container.stereoElements()) {
+            count++;
+        }
+
+        assertThat("stereo elements were not removed", count, is(0));
+
+    }
+
     @Test public void testRemoveAtom_int() {
     	IAtomContainer acetone = (IAtomContainer)newChemObject();
         IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
