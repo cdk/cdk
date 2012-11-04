@@ -188,4 +188,44 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    /**
+     * Ensures that {@code <bondStereo dictRef="cml:"/>} doesn't cause an exception
+     *
+     * @cdk.bug 1275
+     */
+    @Test
+    public void testBug1275() throws CDKException, IOException {
+
+        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
+        CMLReader reader = new CMLReader(in);
+        try {
+            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+
+
+            Assert.assertNotNull("ChemFile was null", cfile);
+
+            List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
+
+            Assert.assertEquals("expected a single atom container", 1, containers.size());
+
+            IAtomContainer container = containers.get(0);
+
+            Assert.assertNotNull("null atom container read", container);
+
+            // we check here that the malformed dictRef doesn't throw an exception
+            Assert.assertEquals("expected non-stereo bond",
+                                IBond.Stereo.NONE, container.getBond(0).getStereo());
+            Assert.assertEquals("expected Wedge (Up) Bond",
+                                IBond.Stereo.UP, container.getBond(1).getStereo());
+            Assert.assertEquals("expected non-stereo bond",
+                                IBond.Stereo.NONE, container.getBond(2).getStereo());
+
+        } finally {
+            reader.close();
+        }
+
+    }
+
+
+
 }
