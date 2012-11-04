@@ -132,8 +132,8 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
      * @return
      */
     private boolean isBondTypeMatch(IBond targetBond) {
-        int reactantBondType = queryBond.getOrder().ordinal();
-        int productBondType = targetBond.getOrder().ordinal();
+        int reactantBondType = queryBond.getOrder().numeric();
+        int productBondType = targetBond.getOrder().numeric();
         if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
                 && (reactantBondType == productBondType)) {
             return true;

@@ -269,10 +269,6 @@ public class CIPTool {
      * @return int reflecting the duplication number
      */
     private static int getDuplication(Order order) {
-        if (order == Order.SINGLE) return 1;
-        if (order == Order.DOUBLE) return 2;
-        if (order == Order.TRIPLE) return 3;
-        if (order == Order.QUADRUPLE) return 4;
-        return 0;
+        return order == null ? 0 : order.numeric();
     }
 }

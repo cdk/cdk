@@ -374,7 +374,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         else if (Order.QUADRUPLE  == bond.getOrder())
                             throw new CDKException("MDL molfiles do not support quadruple bonds.");
                         else
-                            bondType=(int)bond.getOrder().ordinal()+1;
+                            bondType = bond.getOrder().numeric();
                         line += formatMDLInt(bondType,3);
                             
         		line += "  ";

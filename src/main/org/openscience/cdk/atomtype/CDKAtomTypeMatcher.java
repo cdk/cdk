@@ -2567,7 +2567,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	}
 
     	// confirm correct bond orders
-    	if (type.getProperty(CDKConstants.PI_BOND_COUNT) != null && container.getMaximumBondOrder(atom).ordinal() + 1 > (Integer) type.getProperty(CDKConstants.PI_BOND_COUNT) + 1)
+    	if (type.getProperty(CDKConstants.PI_BOND_COUNT) != null && container.getMaximumBondOrder(atom).numeric()  > (Integer) type.getProperty(CDKConstants.PI_BOND_COUNT) + 1)
     		return false;
     		
     	// confirm correct valency

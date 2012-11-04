@@ -114,7 +114,7 @@ public class QueryProcessor {
 
             Integer indexI = query.getAtomNumber(query.getBond(atomIndex).getAtom(0));
             Integer indexJ = query.getAtomNumber(query.getBond(atomIndex).getAtom(1));
-            Integer order = query.getBond(atomIndex).getOrder().ordinal() + 1;
+            Integer order = query.getBond(atomIndex).getOrder().numeric();
 
 //            System.out.println(AtomI + "= , =" + AtomJ );
             for (Integer unMappedAtomIndex = 0; unMappedAtomIndex < unmapped_numA; unMappedAtomIndex++) {
@@ -164,7 +164,7 @@ public class QueryProcessor {
             Integer indexJ = query.getAtomNumber(query.getBond(atomIndex).getAtom(1));
             Integer order = 0;
             if (query.getBond(atomIndex).getOrder() != null) {
-                order = query.getBond(atomIndex).getOrder().ordinal() + 1;
+                order = query.getBond(atomIndex).getOrder().numeric();
             }
 
 //            System.out.println(AtomI + "= , =" + AtomJ );

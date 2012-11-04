@@ -345,18 +345,18 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertTrue(dbst.isOK(enol));
 		
 		// now check whether it did the right thing
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(0).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom1
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(0).getOrder().ordinal() + enol.getBond(1).getOrder().ordinal()); // around atom2
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(1).getOrder().ordinal() + enol.getBond(2).getOrder().ordinal()); // around atom3
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(2).getOrder().ordinal() + enol.getBond(3).getOrder().ordinal()); // around atom4
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(3).getOrder().ordinal() + enol.getBond(4).getOrder().ordinal()); // around atom5
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(4).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom6
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(0).getOrder().numeric() + enol.getBond(5).getOrder().numeric()); // around atom1
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(0).getOrder().numeric() + enol.getBond(1).getOrder().numeric()); // around atom2
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(1).getOrder().numeric() + enol.getBond(2).getOrder().numeric()); // around atom3
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(2).getOrder().numeric() + enol.getBond(3).getOrder().numeric()); // around atom4
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(3).getOrder().numeric() + enol.getBond(4).getOrder().numeric()); // around atom5
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(4).getOrder().numeric() + enol.getBond(5).getOrder().numeric()); // around atom6
 	}
 
 	/**
@@ -410,17 +410,17 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertTrue(dbst.isOK(enol));
 		
 		// now check whether it did the right thing
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(0).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom1
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(0).getOrder().ordinal() + enol.getBond(1).getOrder().ordinal()); // around atom2
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(1).getOrder().ordinal() + enol.getBond(2).getOrder().ordinal()); // around atom3
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(2).getOrder().ordinal() + enol.getBond(3).getOrder().ordinal()); // around atom4
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(3).getOrder().ordinal() + enol.getBond(4).getOrder().ordinal()); // around atom5
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				enol.getBond(4).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom6
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(0).getOrder().numeric() + enol.getBond(5).getOrder().numeric()); // around atom1
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(0).getOrder().numeric() + enol.getBond(1).getOrder().numeric()); // around atom2
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(1).getOrder().numeric() + enol.getBond(2).getOrder().numeric()); // around atom3
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(2).getOrder().numeric() + enol.getBond(3).getOrder().numeric()); // around atom4
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(3).getOrder().numeric() + enol.getBond(4).getOrder().numeric()); // around atom5
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				enol.getBond(4).getOrder().numeric() + enol.getBond(5).getOrder().numeric()); // around atom6
 	}
 }

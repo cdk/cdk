@@ -927,18 +927,13 @@ public class AtomContainer extends ChemObject
 		double count = 0;
 		for (int i = 0; i < bondCount; i++)
 		{
-			if (bonds[i].contains(atom)) {
-				if (bonds[i].getOrder() == IBond.Order.SINGLE) {
-					count += 1;
-				} else if (bonds[i].getOrder() == IBond.Order.DOUBLE) {
-					count += 2;
-				} else if (bonds[i].getOrder() == IBond.Order.TRIPLE) {
-					count += 3;
-				} else if (bonds[i].getOrder() == IBond.Order.QUADRUPLE) {
-					count += 4;
-				}
-			}
-		}
+            if(bonds[i].contains(atom)) {
+                IBond.Order order = bonds[i].getOrder();
+                if(order != null){
+                    count += order.numeric();
+                }
+            }
+ 		}
 		return count;
 	}
 
@@ -953,7 +948,7 @@ public class AtomContainer extends ChemObject
 		IBond.Order max = IBond.Order.SINGLE;
 		for (int i = 0; i < bondCount; i++) {
 			if (bonds[i].contains(atom) && 
-				bonds[i].getOrder().ordinal() > max.ordinal()) {
+				bonds[i].getOrder().numeric() > max.numeric()) {
 				max = bonds[i].getOrder();
 			}
 		}
@@ -973,7 +968,7 @@ public class AtomContainer extends ChemObject
 		IBond.Order min = IBond.Order.QUADRUPLE;
 		for (int i = 0; i < bondCount; i++) {
 			if (bonds[i].contains(atom) &&
-				bonds[i].getOrder().ordinal() < min.ordinal()) {
+				bonds[i].getOrder().numeric() < min.numeric()) {
 				min = bonds[i].getOrder();
 			}
 		}

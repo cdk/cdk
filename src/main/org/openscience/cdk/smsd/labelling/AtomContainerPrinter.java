@@ -60,7 +60,7 @@ public class AtomContainerPrinter {
             int a1N = atomContainer.getAtomNumber(a1);
             String a0S = a0.getSymbol();
             String a1S = a1.getSymbol();
-            int o = bond.getOrder().ordinal();
+            int o = bond.getOrder().numeric();
             if (a0N < a1N) {
                 edges.add(new Edge(a0N, a1N, o, a0S, a1S));
             } else {
