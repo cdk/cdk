@@ -36,6 +36,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -70,7 +71,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
      * Ensure stereoBond content is read if the usual "dictRef" attribute is not
      * supplied
      *
-     * @cdk.bug 3557907
+     * @cdk.bug 1248
      */
     @Test
     public void testBug3557907() throws FileNotFoundException, CDKException {
@@ -102,7 +103,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     /**
      * Ensure correct atomic numbers are read and does not default to 1
      *
-     * @cdk.bug 3553328
+     * @cdk.bug 1245
      */
     @Test
     public void testBug3553328() throws FileNotFoundException, CDKException {
@@ -126,6 +127,65 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
                                 PeriodicTable.getAtomicNumber(atom.getSymbol()),
                                 atom.getAtomicNumber());
         }
-
     }
+
+    /**
+     * Ensures that when multiple stereo is set the dictRef is favoured
+     * and the charContent is not used. Here is an example of what we expect
+     * to read.
+     *
+     * <pre>{@code
+     * <bond atomRefs2="a1 a4" order="1">
+     *     <bondStereo dictRef="cml:W"/> <!-- should be W -->
+     * </bond>
+     *
+     * <bond atomRefs2="a1 a4" order="1">
+     *     <bondStereo>W</bondStereo> <!-- should be W -->
+     * </bond>
+     *
+     * <bond atomRefs2="a1 a4" order="1">
+     *    <bondStereo dictRef="cml:W">W</bondStereo> <!-- should be W -->
+     * </bond>
+     *
+     * <bond atomRefs2="a1 a4" order="1">
+     *    <bondStereo dictRef="cml:W">H</bondStereo> <!-- should be W -->
+     * </bond>
+     * }</pre>
+     *
+     * @cdk.bug 1274
+     * @see #testBug1248()
+     */
+    @Test
+    public void testBug1274() throws CDKException, IOException {
+
+        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
+        CMLReader reader = new CMLReader(in);
+        try {
+            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+
+
+            Assert.assertNotNull("ChemFile was null", cfile);
+
+            List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
+
+            Assert.assertEquals("expected a single atom container", 1, containers.size());
+
+            IAtomContainer container = containers.get(0);
+
+            Assert.assertNotNull("null atom container read", container);
+
+            // we check here that the charContent is not used and also that more then
+            // one stereo isn't set
+            Assert.assertEquals("expected non-stereo bond",
+                                IBond.Stereo.NONE, container.getBond(0).getStereo());
+            Assert.assertEquals("expected Hatch (Down) Bond",
+                                IBond.Stereo.DOWN, container.getBond(1).getStereo());
+            Assert.assertEquals("expected non-stereo bond",
+                                IBond.Stereo.NONE, container.getBond(2).getStereo());
+
+        } finally {
+            reader.close();
+        }
+    }
+
 }
