@@ -710,7 +710,7 @@ public class Convertor {
 //            scalar.setDataType("xsd:float");
             scalar.setDictRef("cdk:bondOrder");
             scalar.setTitle("order");
-            scalar.setValue(cdkBond.getOrder().ordinal()+1);
+            scalar.setValue(cdkBond.getOrder().numeric());
             cmlBond.appendChild(scalar);
         }
         if (cdkBond.getFlag(CDKConstants.ISAROMATIC)) {

@@ -108,7 +108,7 @@ public class TargetProcessor {
 
             Integer indexI = target.getAtomNumber(target.getBond(atomIndex).getAtom(0));
             Integer indexJ = target.getAtomNumber(target.getBond(atomIndex).getAtom(1));
-            Integer order = target.getBond(atomIndex).getOrder().ordinal() + 1;
+            Integer order = target.getBond(atomIndex).getOrder().numeric();
 
             for (int b = 0; b < unmapped_numB; b++) {
                 if (unmapped_atoms_molB.get(b).equals(indexI)) {

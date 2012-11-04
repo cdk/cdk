@@ -285,18 +285,18 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check whether it did the right thing
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond1.getOrder().ordinal() + bond2.getOrder().ordinal()); // around atom2
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond2.getOrder().ordinal() + bond3.getOrder().ordinal()); // around atom3
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond3.getOrder().ordinal() + bond4.getOrder().ordinal()); // around atom4
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond4.getOrder().ordinal() + bond5.getOrder().ordinal()); // around atom5
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond5.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom6
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond1.getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond1.getOrder().numeric() + bond2.getOrder().numeric()); // around atom2
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond2.getOrder().numeric() + bond3.getOrder().numeric()); // around atom3
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond3.getOrder().numeric() + bond4.getOrder().numeric()); // around atom4
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond4.getOrder().numeric() + bond5.getOrder().numeric()); // around atom5
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond5.getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
 	}
 	
 	/**
@@ -390,18 +390,18 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check whether it did the right thing
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond1.getOrder().ordinal() + bond2.getOrder().ordinal()); // around atom2
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond2.getOrder().ordinal() + bond3.getOrder().ordinal()); // around atom3
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond3.getOrder().ordinal() + bond4.getOrder().ordinal()); // around atom4
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(),
-				bond4.getOrder().ordinal() + bond5.getOrder().ordinal()); // around atom5
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond5.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom6
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond1.getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond1.getOrder().numeric() + bond2.getOrder().numeric()); // around atom2
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond2.getOrder().numeric() + bond3.getOrder().numeric()); // around atom3
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond3.getOrder().numeric() + bond4.getOrder().numeric()); // around atom4
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond4.getOrder().numeric() + bond5.getOrder().numeric()); // around atom5
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
+				bond5.getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
 	}
 	
 	private void addHydrogens(IAtomContainer container, IAtom atom, int numberOfHydrogens) {

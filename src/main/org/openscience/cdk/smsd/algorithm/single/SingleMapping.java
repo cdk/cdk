@@ -135,8 +135,8 @@ public class SingleMapping {
 
                         double totalOrder = 0;
                         for (IBond bond : Bonds) {
-                            Order bondOrder = bond.getOrder();
-                            totalOrder += bondOrder.ordinal() + be.getEnergies(bond);
+                            Order order = bond.getOrder();
+                            totalOrder += order.numeric() + be.getEnergies(bond);
                         }
                         if (targetAtom.getFormalCharge() != sourceAtom.getFormalCharge()) {
                             totalOrder += 0.5;
@@ -164,8 +164,8 @@ public class SingleMapping {
 
                         double totalOrder = 0;
                         for (IBond bond : Bonds) {
-                            Order bondOrder = bond.getOrder();
-                            totalOrder += bondOrder.ordinal() + be.getEnergies(bond);
+                            Order order = bond.getOrder();
+                            totalOrder += order.numeric() + be.getEnergies(bond);
                         }
                         if (targetAtom.getFormalCharge() != sourceAtom.getFormalCharge()) {
                             totalOrder += 0.5;
@@ -194,8 +194,8 @@ public class SingleMapping {
 
                         double totalOrder = 0;
                         for (IBond bond : Bonds) {
-                            Order bondOrder = bond.getOrder();
-                            totalOrder += bondOrder.ordinal() + be.getEnergies(bond);
+                            Order order = bond.getOrder();
+                            totalOrder += order.numeric() + be.getEnergies(bond);
                         }
                         if (sourceAtoms.getFormalCharge() != targetAtom.getFormalCharge()) {
                             totalOrder += 0.5;

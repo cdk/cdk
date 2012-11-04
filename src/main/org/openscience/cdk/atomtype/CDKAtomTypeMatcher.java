@@ -2596,7 +2596,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	}
 
     	// confirm correct bond orders
-		IBond.Order typeOrder = type.getMaxBondOrder(); 
+        IBond.Order typeOrder = type.getMaxBondOrder(); 
     	if (typeOrder != null) {
     		for (IBond bond : container.getConnectedBondsList(atom)) {
     			IBond.Order order = bond.getOrder();

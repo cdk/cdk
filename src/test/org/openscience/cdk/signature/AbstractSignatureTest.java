@@ -49,7 +49,7 @@ public class AbstractSignatureTest {
         for (IBond bond : mol.bonds()) {
             IAtom aa = bond.getAtom(0);
             IAtom ab = bond.getAtom(1);
-            int o = bond.getOrder().ordinal() + 1;
+            int o = bond.getOrder().numeric();
             int x = mol.getAtomNumber(aa);
             int y = mol.getAtomNumber(ab);
             if (x < y) {

@@ -137,19 +137,14 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
 	 */
 	public int getBondOrderSum()
 	{
-		int orderSum = 0;
-		for (int i = 0; i < getBondCount(); i++) {
-			if (getBond(i).getOrder() == IBond.Order.SINGLE) {
-				orderSum += 1;
-			} else if (getBond(i).getOrder() == IBond.Order.DOUBLE) {
-				orderSum += 2;
-			} else if (getBond(i).getOrder() == IBond.Order.TRIPLE) {
-				orderSum += 3;
-			} else if (getBond(i).getOrder() == IBond.Order.QUADRUPLE) {
-				orderSum += 4;
-			}
+		int sum = 0;
+        for (int i = 0; i < getBondCount(); i++) {
+            IBond.Order order = getBond(i).getOrder();
+            if(order != null) {
+	            sum += order.numeric();
+            }
         }
-		return orderSum;
+		return sum;
 	}
 
     /**

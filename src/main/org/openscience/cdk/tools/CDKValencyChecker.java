@@ -92,9 +92,9 @@ public class CDKValencyChecker implements IValencyChecker {
         
         int typeMaxBondOrder = piBondCount + 1;   
         int typeBondOrderSum = formalNeighborCount + piBondCount;
-        
-        if (bondOrderSum + hcount == typeBondOrderSum && 
-        	maxBondOrder.ordinal() <= typeMaxBondOrder) {
+
+        if (bondOrderSum + hcount == typeBondOrderSum &&
+        	maxBondOrder.numeric() <= typeMaxBondOrder) {
         	return true;
         }
 		return false;

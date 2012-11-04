@@ -353,16 +353,10 @@ public class BondManipulator {
     public static int getSingleBondEquivalentSum(Iterator<IBond> bonds) {
 		int sum = 0;
 		while (bonds.hasNext()) {
-			IBond nextBond = bonds.next();
-			if (nextBond.getOrder() == IBond.Order.SINGLE) {
-				sum += 1;
-			} else if (nextBond.getOrder() == IBond.Order.DOUBLE) {
-				sum += 2;
-			} else if (nextBond.getOrder() == IBond.Order.TRIPLE) {
-				sum += 3;
-			} else if (nextBond.getOrder() == IBond.Order.QUADRUPLE) {
-				sum += 4;
-			}
+            IBond.Order order = bonds.next().getOrder();
+            if(order != null) {
+                sum += order.numeric();
+            }
 		}
 		return sum;
 	}

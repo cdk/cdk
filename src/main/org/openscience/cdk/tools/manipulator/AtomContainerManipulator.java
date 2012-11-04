@@ -801,14 +801,9 @@ public class AtomContainerManipulator {
     public static int getSingleBondEquivalentSum(IAtomContainer container) {
 		int sum = 0;
         for (IBond bond : container.bonds()) {
-            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-                sum += 1;
-            } else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-                sum += 2;
-            } else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
-                sum += 3;
-            } else if (bond.getOrder() == CDKConstants.BONDORDER_QUADRUPLE) {
-                sum += 4;
+            IBond.Order order = bond.getOrder();
+            if(order != null) {
+                sum += order.numeric();
             }
         }
 		return sum;
@@ -870,16 +865,11 @@ public class AtomContainerManipulator {
 	public static double getBondOrderSum(IAtomContainer container, IAtom atom) {
 		double count = 0;
 		for (IBond bond : container.getConnectedBondsList(atom)) {
-			if (bond.getOrder() == IBond.Order.SINGLE) {
-				count += 1.0;
-			} else if (bond.getOrder() == IBond.Order.DOUBLE) {
-				count += 2.0;
-			} else if (bond.getOrder() == IBond.Order.TRIPLE) {
-				count += 3.0;
-			} else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
-				count += 4.0;
-			}
-		}
+            IBond.Order order = bond.getOrder();
+            if(order != null) {
+                count += order.numeric();
+            }
+        }
 		return count;
 	}
 
