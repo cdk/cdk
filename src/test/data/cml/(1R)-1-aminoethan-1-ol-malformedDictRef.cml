@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<cml>
+    <MDocument>
+        <MChemicalStruct>
+            <!-- A very simple molecule to test bug 1275
+                 - when dictRef is incomplete it should not throw an exception
+            -->
+            <molecule molID="m1">
+                <atomArray>
+                    <atom id="a1" elementType="C"
+                          x2="-1.3200000524520874" y2="-1.815000057220459"/>
+                    <atom id="a2" elementType="N"
+                          x2="0.013679069375948316" y2="-2.585000057220459"/>
+                    <atom id="a3" elementType="C"
+                          x2="-2.6536791742801227" y2="-2.5850000572204594"/>
+                    <atom id="a4" elementType="O"
+                          x2="-1.3200000524520874" y2="-0.27500005722045895"/>
+                </atomArray>
+                <bondArray>
+                    <bond atomRefs2="a1 a2" order="1"/>
+                    <bond atomRefs2="a1 a4" order="1">
+                        <!-- the dictRef is incomplete and should not be used -->
+                        <bondStereo dictRef="cml:">W</bondStereo>
+                    </bond>
+                    <bond atomRefs2="a1 a3" order="1"/>
+                </bondArray>
+            </molecule>
+        </MChemicalStruct>
+    </MDocument>
+</cml>
