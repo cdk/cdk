@@ -46,13 +46,38 @@ public interface IBond extends IElectronContainer {
      * 
      */
 	public enum Order {
-		SINGLE,
-		DOUBLE,
-		TRIPLE,
-		QUADRUPLE,
-		UNSET
+		SINGLE(1),
+		DOUBLE(2),
+		TRIPLE(3),
+		QUADRUPLE(4),
+		UNSET(0);
+
+        private final Integer bondedElectronPairs;
+
+        private Order(Integer bondedElectronPairs){
+            this.bondedElectronPairs = bondedElectronPairs;
+        }
+
+        /**
+         * Access a numeric value for the number of bonded electron pairs.
+         * <p/>
+         * <pre>{@code
+         * Order.SINGLE.numeric()    // 1
+         * Order.DOUBLE.numeric()    // 2
+         * Order.TRIPLE.numeric()    // 3
+         * Order.QUADRUPLE.numeric() // 4
+         * Order.UNSET.numeric()     // 0
+         * }</pre>
+         *
+         * @return number of bonded electron pairs
+         */
+        public Integer numeric(){
+            return bondedElectronPairs;
+        }
+
 	}
-	
+
+
 	/**
 	 * Enumeration of possible stereo types of two-atom bonds. The
 	 * Stereo type defines not just define the stereochemistry, but also the
