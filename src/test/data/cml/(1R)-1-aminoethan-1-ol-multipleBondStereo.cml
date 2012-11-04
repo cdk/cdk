@@ -2,9 +2,10 @@
 <cml>
     <MDocument>
         <MChemicalStruct>
-            <!-- A very simple molecule to test bug 1245 and 1248
-                 - 1245: Atoms missing explicit atomic number default to 1.
-                 - 1248: Only support for bond stereo with attribute dictRef
+            <!-- A very simple molecule to test bug 1274
+                - The bondStereo should use the dictRef attribute when both dictRef and
+                  charContent is available.
+                - The bond stereo should only be set for this single bond
             -->
             <molecule molID="m1">
                 <atomArray>
@@ -19,10 +20,12 @@
                 </atomArray>
                 <bondArray>
                     <bond atomRefs2="a1 a2" order="1"/>
-                    <bond atomRefs2="a1 a3" order="1"/>
                     <bond atomRefs2="a1 a4" order="1">
-                        <bondStereo>W</bondStereo>
+                        <!-- this is bad formatting - but we should favour the dictRef
+                             a logging error should shown for this case -->
+                        <bondStereo dictRef="cml:H">W</bondStereo>
                     </bond>
+                    <bond atomRefs2="a1 a3" order="1"/>
                 </bondArray>
             </molecule>
         </MChemicalStruct>
