@@ -29,6 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.IoCoverageTest;
 import org.openscience.cdk.io.CDKSourceCodeWriterTest;
 import org.openscience.cdk.io.CIFReaderTest;
+import org.openscience.cdk.io.CMLReaderTest;
 import org.openscience.cdk.io.CTXReaderTest;
 import org.openscience.cdk.io.ChemObjectIOInstantionTests;
 import org.openscience.cdk.io.CrystClustReaderTest;
@@ -77,6 +78,7 @@ import org.openscience.cdk.io.program.Mopac7WriterTest;
 @SuiteClasses(value={
     IoCoverageTest.class,
     CMLIOTests.class,
+    CMLReaderTest.class,
     CrystClustReaderTest.class,
     CDKSourceCodeWriterTest.class,
     CIFReaderTest.class,
