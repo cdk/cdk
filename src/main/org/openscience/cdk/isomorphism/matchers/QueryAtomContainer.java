@@ -1447,9 +1447,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      * @return    The cloned object
      * @see       #shallowCopy
      */
-    public Object clone() throws CloneNotSupportedException {
+    public IQueryAtomContainer clone() throws CloneNotSupportedException {
         IAtom[] newAtoms;
-        IAtomContainer clone = (IAtomContainer) super.clone();
+        IQueryAtomContainer clone = (IQueryAtomContainer) super.clone();
         // start from scratch
         clone.removeAllElements();
         // clone all atoms
@@ -1559,6 +1559,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 	@Override
 	public boolean isEmpty() {
 		return atomCount == 0;
+	}
+
+
+	@Override
+	public void setStereoElements(List<IStereoElement> elements) {
+		throw new UnsupportedOperationException();
 	}   
 }
 
