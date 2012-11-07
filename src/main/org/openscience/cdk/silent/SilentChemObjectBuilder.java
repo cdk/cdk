@@ -199,7 +199,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
 	    // try loading the implementation
 	    try {
             Class impl = this.getClass().getClassLoader().loadClass(
-                "org.openscience.cdk." + className
+                "org.openscience.cdk.silent." + className
             );
             buffer.append(" Candidates are: ");
             Constructor[] constructors = impl.getConstructors();
