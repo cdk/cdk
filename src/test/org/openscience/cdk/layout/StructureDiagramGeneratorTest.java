@@ -39,6 +39,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -910,6 +911,25 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
         );
   }
 
+  /**	
+   * Tests case where calling generateExperimentalCoordinates
+   * threw an NPE.
+   * 
+   * @throws Exception if the test failed
+   * @cdk.bug 1269
+  */
+@Test (timeout=5000, expected=CDKException.class)
+public void testBug1269() throws Exception {
+     
+     SmilesParser sp = 
+         new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+     String smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
+     IMolecule mol = sp.parseSmiles(smiles);
+
+     StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+     sdg.setMolecule(mol);
+     sdg.generateExperimentalCoordinates(new Vector2d(0, 1));
+}
 
 }
 
