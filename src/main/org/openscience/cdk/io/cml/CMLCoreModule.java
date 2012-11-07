@@ -554,9 +554,11 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("bondStereo".equals(name)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("dictRef")) {
-                	if (atts.getValue(i).startsWith("cml:"))
-                	bondStereo.add(atts.getValue(i).substring(4));
-                    stereoGiven=true;
+                    String value = atts.getValue(i);
+                	if (value.startsWith("cml:") && value.length() > 4) {
+                	    bondStereo.add(value.substring(4));
+                        stereoGiven=true;
+                    }
                 }
             }
         } else if ("bondType".equals(name)) {
