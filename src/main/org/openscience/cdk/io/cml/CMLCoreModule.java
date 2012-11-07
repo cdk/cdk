@@ -829,7 +829,7 @@ public class CMLCoreModule implements ICMLModule {
                 formalCharges.add(charge);
             }
         } else if ("bondStereo".equals(name)){
-            if(!currentChars.isEmpty()){
+            if(!currentChars.isEmpty() && !stereoGiven){
                 bondStereo.add(currentChars);
                 stereoGiven = Boolean.TRUE;
             }
