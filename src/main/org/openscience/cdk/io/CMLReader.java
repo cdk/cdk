@@ -181,6 +181,8 @@ public class CMLReader extends DefaultChemObjectReader {
 		
 		if (IChemFile.class.equals(classObject))
 			return true;
+	    Class superClass = classObject.getSuperclass();
+	    if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 
