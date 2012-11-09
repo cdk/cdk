@@ -962,5 +962,27 @@ public void testBug1269() throws Exception {
      sdg.generateExperimentalCoordinates(new Vector2d(0, 1));
 }
 
+  /**
+   * Does the SDG handle non-connected molecules?
+   * 
+   * @cdk.bug 1279
+   */
+  @Test (timeout=5000)
+  public void testBug1279() throws Exception {
+      
+      SmilesParser sp = 
+          new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+      String smiles = 
+          "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
+        
+      IMolecule mol = sp.parseSmiles(smiles);
+
+      StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+      sdg.setMolecule(mol);
+      sdg.generateCoordinates(new Vector2d(0, 1));
+      mol = sdg.getMolecule();
+      assertTrue(GeometryTools.has2DCoordinates(mol));
+  }
+
 }
 
