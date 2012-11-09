@@ -398,6 +398,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	    } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
 	        IAtomType type = getAtomType("C.sp2");
 	        if (isAcceptable(atom, atomContainer, type)) return type;
+	    } else if (hasOneOrMoreSingleOrDoubleBonds(atomContainer, atom)) {
+	        IAtomType type = getAtomType("C.sp2");
+	        if (isAcceptable(atom, atomContainer, type)) return type;
 	    } else if (isCharged(atom)) {
 	        if (atom.getFormalCharge() == 1) {
 	            if (atomContainer.getConnectedBondsCount(atom) == 0) {
