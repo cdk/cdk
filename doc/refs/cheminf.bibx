@@ -1174,6 +1174,14 @@ Method </bibtex:title>
     
   </bibtex:entry>
 
+  <bibtex:entry id="pfuchs">
+    <bibtex:misc>
+      <bibtex:author>Phillip Paul Fuchs</bibtex:author>
+      <bibtex:title>Permute It, Comparable Pseudo-Code Representations</bibtex:title>
+      <bibtex:url>http://www.oocities.org/permute_it/pseudo2.html</bibtex:url>
+    </bibtex:misc>
+  </bibtex:entry>
+
   <bibtex:entry id="Klekota01112008">
   	<bibtex:article>
       <bibtex:author>Klekota, Justin and Roth, Frederick P.</bibtex:author>

@@ -46,7 +46,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * }</pre>
  * <p/>
- * The permutation code here is based on a tutorial by Phillip P. Fuchs.
+ * The permutation code here is based on a tutorial by Phillip Paul Fuchs
+ * {@cdk.cite pfuchs}.
  *
  * @author         steinbeck
  * @see            <a href="http://www.oocities.org/permute_it/pseudo2.html">
