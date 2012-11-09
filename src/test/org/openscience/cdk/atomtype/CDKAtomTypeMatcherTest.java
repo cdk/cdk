@@ -2125,6 +2125,25 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
+    @Test public void testPyrrole_SingleOrDouble() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.planar3",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		IAtomContainer molecule = MoleculeFactory.makePyrrole();
+		for (IBond bond : molecule.bonds()) {
+			bond.setOrder(IBond.Order.UNSET);
+			bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+		}
+		for (IAtom atom : molecule.atoms()) {
+			atom.setImplicitHydrogenCount(1);
+		}
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
     @Test public void testPyrroleAnion() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
@@ -2270,6 +2289,23 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 		};
 		IAtomContainer molecule = MoleculeFactory.makePyridine();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void testPyridine_SingleOrDouble() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		IAtomContainer molecule = MoleculeFactory.makePyridine();
+		for (IBond bond : molecule.bonds()) {
+			bond.setOrder(IBond.Order.UNSET);
+			bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+		}
+		assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
     @Test public void testPyridineDirect() throws Exception {

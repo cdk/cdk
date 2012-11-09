@@ -857,6 +857,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (atomContainer.getConnectedBondsCount(atom) == 0) {
             IAtomType type = getAtomType("N.sp3");
             if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (hasOneOrMoreSingleOrDoubleBonds(atomContainer, atom)) {
+        	int connectedAtoms = atomContainer.getConnectedAtomsCount(atom) +
+        		(atom.getImplicitHydrogenCount() == CDKConstants.UNSET
+        		    ? 0
+        			: atom.getImplicitHydrogenCount());
+        	if (connectedAtoms == 3) {
+            	IAtomType type = getAtomType("N.planar3");
+            	if (isAcceptable(atom, atomContainer, type)) return type;
+        	}
+        	IAtomType type = getAtomType("N.sp2");
+        	if (isAcceptable(atom, atomContainer, type)) return type;
         } else { // OK, use bond order info
             IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
             if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
