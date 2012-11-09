@@ -1,10 +1,5 @@
 /*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2012  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,7 +20,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.graph;
 
@@ -34,21 +28,32 @@ import java.util.Iterator;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * This class allows to iterate trough the set of all possible
- * permutations of the atom order in a given atom container. 
- * It allows to check for a dependency of algorithm results 
- * on the atom order.
- * 
- * <p>The permutation code here is based on a pseudo code example 
- * on a tutorial site created and maintained by Phillip P. Fuchs:
- * <a href="http://www.geocities.com/permute_it/pseudo2.html">http://www.geocities.com/permute_it/pseudo2.html</a>.
- * 
- *@author         steinbeck
+ * This class iterates through all possible permutations of the atom order in a
+ * given atom container. These permutations ensure that the results of an
+ * algorithm are independent of atom order.
+ * <p/>
+ * <pre>{@code
+ *
+ * IAtomContainer        container = ...;
+ * AtomContainerPermutor permutor  = new AtomContainerAtomPermutor(container);
+ *
+ * while (permutor.hasNext()) {
+ *     IAtomContainer permutation = permutor.next();
+ * }
+ *
+ * }</pre>
+ * <p/>
+ * The permutation code here is based on a tutorial by Phillip P. Fuchs.
+ *
+ * @author         steinbeck
+ * @see            <a href="http://www.oocities.org/permute_it/pseudo2.html">
+ *                 Phillip P. Fuchs Tutorial</a>
  * @cdk.githash
- *@cdk.created    2005-05-04
- *@cdk.keyword    permutation
+ * @cdk.created    2005-05-04
+ * @cdk.keyword    permutation
  */
 public class AtomContainerAtomPermutor extends AtomContainerPermutor
 {
