@@ -866,7 +866,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		// test completed, no timeout occured
 	}
 
-  /**
+	  /**
      * For the SMILES compound below (the largest molecule in Chembl) a
      * handful of atoms had invalid (NaN) Double coordinates.
      * 
@@ -911,7 +911,38 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
         );
   }
 
-  /**	
+    /**
+     * The following SMILES compound gets null cordinates.
+     *
+     * @throws Exception if the test failed
+     * @cdk.bug 1234
+     */
+    @Test(timeout = 5000, expected = CDKException.class)
+    public void testBug1234() throws Exception {
+
+        SmilesParser sp =
+                new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        String smiles =
+                "C1C1";
+
+        IMolecule mol = sp.parseSmiles(smiles);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setMolecule(mol);
+        sdg.generateCoordinates(new Vector2d(0, 1));
+        mol = sdg.getMolecule();
+
+        int invalidCoordCount = 0;
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getPoint2d() == null) {
+                invalidCoordCount++;
+            }
+        }
+        Assert.assertEquals("No 2d coordinates should be null",
+                            0, invalidCoordCount);
+
+    }
+
+  /**
    * Tests case where calling generateExperimentalCoordinates
    * threw an NPE.
    * 
