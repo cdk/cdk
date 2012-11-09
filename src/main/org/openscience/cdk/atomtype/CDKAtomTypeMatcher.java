@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Atom Type matcher that perceives atom types as defined in the CDK atom type list
@@ -469,7 +470,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
-    private boolean hasOneSingleElectron(IAtomContainer atomContainer, IAtom atom) {
+    private boolean hasOneOrMoreSingleOrDoubleBonds(IAtomContainer atomContainer, IAtom atom) {
+    	for (IBond bond : atomContainer.getConnectedBondsList(atom)) {
+    		if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) return true;
+    	}
+		return false;
+	}
+
+	private boolean hasOneSingleElectron(IAtomContainer atomContainer, IAtom atom) {
 	    Iterator<ISingleElectron> singleElectrons = atomContainer.singleElectrons().iterator();
 	    while (singleElectrons.hasNext()) {
 	    	if (singleElectrons.next().contains(atom)) return true;
@@ -2574,8 +2582,19 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	}
 
     	// confirm correct bond orders
-    	if (type.getProperty(CDKConstants.PI_BOND_COUNT) != null && container.getMaximumBondOrder(atom).ordinal() + 1 > (Integer) type.getProperty(CDKConstants.PI_BOND_COUNT) + 1)
-    		return false;
+		IBond.Order typeOrder = type.getMaxBondOrder(); 
+    	if (typeOrder != null) {
+    		for (IBond bond : container.getConnectedBondsList(atom)) {
+    			IBond.Order order = bond.getOrder();
+    			if (order != CDKConstants.UNSET) {
+    				if (BondManipulator.isHigherOrder(order, typeOrder)) return false;
+    			} else if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
+    				if (BondManipulator.isHigherOrder(IBond.Order.DOUBLE, typeOrder)) return false;
+    			} else {
+    				return false;
+    			}
+    		}
+    	}
     		
     	// confirm correct valency
     	if (type.getValency() != CDKConstants.UNSET && container.getBondOrderSum(atom) > type.getValency())
