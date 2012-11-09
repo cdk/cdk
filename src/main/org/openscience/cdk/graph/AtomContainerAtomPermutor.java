@@ -74,10 +74,10 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 	
 	IAtomContainer makeResult()
 	{
-		Atom[] atoms = new Atom[objects.length];
+		IAtom[] atoms = new IAtom[objects.length];
 		for (int f = 0; f < objects.length; f++)
 		{
-			atoms[f] = ((Atom)objects[f]);	
+			atoms[f] = (IAtom) objects[f];
 		}
 		IAtomContainer ac = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
 		ac.setAtoms(atoms);
