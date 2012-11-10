@@ -921,11 +921,11 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
     public void testBug1234() throws Exception {
 
         SmilesParser sp =
-                new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+                new SmilesParser(SilentChemObjectBuilder.getInstance());
         String smiles =
                 "C1C1";
 
-        IMolecule mol = sp.parseSmiles(smiles);
+        IAtomContainer mol = sp.parseSmiles(smiles);
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         sdg.setMolecule(mol);
         sdg.generateCoordinates(new Vector2d(0, 1));
@@ -953,9 +953,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 public void testBug1269() throws Exception {
      
      SmilesParser sp = 
-         new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+         new SmilesParser(SilentChemObjectBuilder.getInstance());
      String smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
-     IMolecule mol = sp.parseSmiles(smiles);
+     IAtomContainer mol = sp.parseSmiles(smiles);
 
      StructureDiagramGenerator sdg = new StructureDiagramGenerator();
      sdg.setMolecule(mol);
@@ -971,11 +971,11 @@ public void testBug1269() throws Exception {
   public void testBug1279() throws Exception {
       
       SmilesParser sp = 
-          new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+          new SmilesParser(SilentChemObjectBuilder.getInstance());
       String smiles = 
           "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
         
-      IMolecule mol = sp.parseSmiles(smiles);
+      IAtomContainer mol = sp.parseSmiles(smiles);
 
       StructureDiagramGenerator sdg = new StructureDiagramGenerator();
       sdg.setMolecule(mol);
