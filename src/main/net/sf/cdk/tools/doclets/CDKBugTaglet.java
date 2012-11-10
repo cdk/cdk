@@ -94,7 +94,12 @@ public class CDKBugTaglet implements Taglet {
     }
 
     private String expand(Tag tag) {
-        return "<a href=\"http://sourceforge.net/tracker/index.php?func=detail&group_id=20024&atid=120024&aid="
-               + tag.text() + "\">" + tag.text() + "</a>";
+    	String tagText = tag.text(); 
+    	if (Integer.valueOf(tagText) > 100000) {
+    		return "<a href=\"http://sourceforge.net/tracker/index.php?func=detail&group_id=20024&atid=120024&aid="
+    				+ tagText + "\">" + tagText + "</a>";
+    	} else {
+    		return "<a href=\"https://sourceforge.net/p/cdk/bugs/" + tagText + "/\">" + tagText + "</a>";
+    	}
     }
 }
