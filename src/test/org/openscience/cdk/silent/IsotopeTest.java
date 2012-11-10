@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2012  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -27,10 +23,10 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -80,6 +76,46 @@ public class IsotopeTest extends AbstractIsotopeTest {
         Assert.assertEquals(6, i.getAtomicNumber().intValue());
         Assert.assertEquals(12.001, i.getExactMass(), 0.001);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+
+    @Test public void testCompare_MassNumber() {
+    	Isotope iso = new Isotope("C");
+    	iso.setMassNumber(12);
+    	Isotope iso2 = new Isotope("C");
+    	iso2.setMassNumber((int)12.0);
+        Assert.assertTrue(iso.compare(iso2));
+    }
+
+    @Test public void testCompare_MassNumberIntegers() {
+    	Isotope iso = new Isotope("C");
+    	iso.setMassNumber(new Integer(12));
+    	Isotope iso2 = new Isotope("C");
+    	iso2.setMassNumber(new Integer(12));
+        Assert.assertTrue(iso.compare(iso2));
+    }
+
+    @Test public void testCompare_MassNumberIntegers_ValueOf() {
+    	Isotope iso = new Isotope("C");
+    	iso.setMassNumber(Integer.valueOf(12));
+    	Isotope iso2 = new Isotope("C");
+    	iso2.setMassNumber(Integer.valueOf(12));
+        Assert.assertTrue(iso.compare(iso2));
+    }
+
+    @Test public void testCompare_ExactMass() {
+    	Isotope iso = new Isotope("C");
+    	iso.setExactMass(12.000000);
+    	Isotope iso2 = new Isotope("C");
+    	iso2.setExactMass(12.0);
+        Assert.assertTrue(iso.compare(iso2));
+    }
+
+    @Test public void testCompare_NaturalAbundance() {
+    	Isotope iso = new Isotope("C");
+    	iso.setNaturalAbundance(12.000000);
+    	Isotope iso2 = new Isotope("C");
+    	iso2.setNaturalAbundance(12.0);
+        Assert.assertTrue(iso.compare(iso2));
     }
 
     // Overwrite default methods: no notifications are expected!
