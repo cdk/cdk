@@ -172,8 +172,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
+		if (IAtomContainer.class.equals(classObject)) return true;
+		if (IChemFile.class.equals(classObject)) return true;
+		if (IChemModel.class.equals(classObject)) return true;
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
 		return false;

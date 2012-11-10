@@ -135,6 +135,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IAtomContainerSet.class.equals(interfaces[i])) return true;
 		}
+		if (IAtomContainer.class.equals(classObject)) return true;
+		if (IChemFile.class.equals(classObject)) return true;
+		if (IChemModel.class.equals(classObject)) return true;
+		if (IAtomContainerSet.class.equals(classObject)) return true;
 	    Class superClass = classObject.getSuperclass();
 	    if (superClass != null) return this.accepts(superClass);
 		return false;

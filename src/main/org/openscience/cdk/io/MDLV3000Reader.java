@@ -128,8 +128,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
+		if (IAtomContainer.class.equals(classObject)) return true;
     Class superClass = classObject.getSuperclass();
     if (superClass != null) return this.accepts(superClass);
 		return false;
