@@ -24,6 +24,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CDKConstantsTest;
 import org.openscience.cdk.CDKTest;
+import org.openscience.cdk.DynamicFactoryTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherFilesTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherSMILESTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
@@ -108,6 +109,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     PathToolsTest.class,
     TetrahedralChiralityTest.class,
     DoubleBondStereochemistryTest.class,
-    SpanningTreeTest.class
+    SpanningTreeTest.class,
+    DynamicFactoryTest.class
 })
 public class McoreTests {}
