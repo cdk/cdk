@@ -1084,13 +1084,23 @@ public class StructureDiagramGenerator
 
 	/**
 	 *  Set the bond length used for laying out the molecule.
-	 *  The defaut value is 1.5.
+	 *  The default value is 1.5.
 	 *
 	 *  @param  bondLength  The new bondLength value
 	 */
 	public void setBondLength(double bondLength)
 	{
 		this.bondLength = bondLength;
+	}
+	
+	/**
+	 *  Returns the bond length used for laying out the molecule.
+	 *  
+	 *  @return The current bond length
+	 */
+	public double getBondLength()
+	{
+		return bondLength;
 	}
 
 	/**
