@@ -162,6 +162,23 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
 
     }
 
+    /**
+     * Access the singleton instance of this SilentChemObjectBuilder. <p/>
+     * <pre>{@code
+     *
+     * // get the builder instance
+     * IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+     *
+     * // using the builder...
+     * // create an IAtom using the default constructor
+     * IAtom atom = builder.newInstance(IAtom.class);
+     *
+     * // create a carbon atom
+     * IAtom c1 = builder.newInstance(IAtom.class, "C");
+     * }</pre>
+     *
+     * @return a SilentChemObjectBuilder instance
+     */
 	public static IChemObjectBuilder getInstance() {
 		if (instance == null) {
 			instance = new SilentChemObjectBuilder();
@@ -169,6 +186,9 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
 		return instance;
 	}
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException {
         return factory.ofClass(clazz, params);

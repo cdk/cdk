@@ -423,7 +423,26 @@ public class DynamicFactory {
         return register(key, creator);
     }
 
-
+    /**
+     * Register a constructor key with a defined {@link Creator}. The key
+     * defines the interface and parameters of the creation and the creator
+     * actually creates the object. <p/>
+     *
+     * <pre>{@code
+     *     // import static org.openscience.cdk.DynamicFactory.key;
+     *     factory.register(key(IBond.class, IAtom[].class),
+     *                      new BasicCreator<IAtom>(null) {
+     *                          public IAtom create(Object[] objects) {
+     *                              return new Bond((IAtom[]) objects);
+     *                          }
+     *                      });
+     * }</pre>
+     *
+     * @param key construction key, defines interface and parameter types
+     * @param creator creates the actual object
+     * @param <T> type of object that will be created
+     * @return the registered creator - null if not registered
+     */
     @TestMethod("testOfClass_Wrapping")
     public <T> Creator<T> register(ConstructorKey key, Creator<T> creator) {
 
