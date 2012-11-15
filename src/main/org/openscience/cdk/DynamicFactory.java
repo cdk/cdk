@@ -828,7 +828,7 @@ public class DynamicFactory {
      * A simple class based key which allows a key to use an object array for
      * it's parameter types.
      */
-    private static class ObjectBasedKey extends ConstructorKey {
+    private final static class ObjectBasedKey extends ConstructorKey {
 
         private final Class<?> intf;
         private final Object[] params;
@@ -879,7 +879,7 @@ public class DynamicFactory {
      * A simple class based key which allows a key to use a class array for it's
      * parameter types.
      */
-    private static class ClassBasedKey extends ConstructorKey {
+    private final static class ClassBasedKey extends ConstructorKey {
 
         private final Class<?> intf;
         private final Class<?>[] params;
@@ -957,6 +957,9 @@ public class DynamicFactory {
          */
         @Override
         public boolean equals(Object o) {
+
+            if(o == null || !(o instanceof ConstructorKey))
+                return false;
 
             ConstructorKey that = (ConstructorKey) o;
 
