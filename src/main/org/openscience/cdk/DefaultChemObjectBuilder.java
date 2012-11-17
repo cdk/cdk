@@ -1,4 +1,5 @@
 /* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
+ *               2012  John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -17,13 +18,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk;
-
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
 
 import org.openscience.cdk.formula.AdductFormula;
 import org.openscience.cdk.formula.MolecularFormula;
@@ -44,6 +38,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IFragmentAtom;
@@ -67,384 +62,145 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStructure;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
- * A helper class to instantiate a {@link ICDKObject} for the original CDK
- * implementation.
+ * A factory class to provide implementation independent {@link ICDKObject}s.
+ * <p/>
+ * <pre>{@code
+ *     IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+ *
+ *     IAtom a = builder.newInstance(IAtom.class);
+ *     IAtom c12 = builder.newInstance(IAtom.class, "C");
+ *     IAtom c13 = builder.newInstance(IAtom.class,
+ *                                     builder.newInstance(IIsotope.class,
+ *                                                         "C", 13));
+ * }</pre>
  *
  * @author        egonw
+ * @author        john may
  * @cdk.module    data
  * @cdk.githash
  */
 public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 
 	private static IChemObjectBuilder instance = null;
-	
-	private DefaultChemObjectBuilder() {}
+    private final DynamicFactory factory = new DynamicFactory(200);
 
+	private DefaultChemObjectBuilder() {
+
+        // self reference required for stereo-elements
+        final IChemObjectBuilder self = this;
+
+        // elements
+        factory.register(IAtom.class,         Atom.class);
+        factory.register(IPseudoAtom.class,   PseudoAtom.class);
+        factory.register(IElement.class,      Element.class);
+        factory.register(IAtomType.class,     AtomType.class);
+        factory.register(IFragmentAtom.class, FragmentAtom.class);
+        factory.register(IPDBAtom.class,      PDBAtom.class);
+        factory.register(IIsotope.class,      Isotope.class);
+
+        // electron containers
+        factory.register(IBond.class,              Bond.class);
+        factory.register(IElectronContainer.class, ElectronContainer.class);
+        factory.register(ISingleElectron.class,    SingleElectron.class);
+        factory.register(ILonePair.class,          LonePair.class);
+
+        // atom containers
+        factory.register(IAtomContainer.class, AtomContainer.class);
+        factory.register(IRing.class,          Ring.class);
+        factory.register(ICrystal.class,       Crystal.class);
+        factory.register(IPolymer.class,       Polymer.class);
+        factory.register(IPDBPolymer.class,    PDBPolymer.class);
+        factory.register(IMonomer.class,       Monomer.class);
+        factory.register(IPDBMonomer.class,    PDBMonomer.class);
+        factory.register(IBioPolymer.class,    BioPolymer.class);
+        factory.register(IPDBStructure.class,  PDBStructure.class);
+        factory.register(IAminoAcid.class,     AminoAcid.class);
+        factory.register(IStrand.class,        Strand.class);
+
+        // reactions
+        factory.register(IReaction.class,       Reaction.class);
+        factory.register(IReactionScheme.class, ReactionScheme.class);
+
+        // formula
+        factory.register(IMolecularFormula.class, MolecularFormula.class);
+        factory.register(IAdductFormula.class,    AdductFormula.class);
+
+        // chem object sets
+        factory.register(IAtomContainerSet.class,    AtomContainerSet.class);
+        factory.register(IMolecularFormulaSet.class, MolecularFormulaSet.class);
+        factory.register(IReactionSet.class,         ReactionSet.class);
+        factory.register(IRingSet.class,             RingSet.class);
+        factory.register(IChemModel.class,           ChemModel.class);
+        factory.register(IChemFile.class,            ChemFile.class);
+        factory.register(IChemSequence.class,        ChemSequence.class);
+
+        // stereo components (requires some modification after instantiation)
+        factory.register(IAtomParity.class, AtomParity.class);
+        factory.register(ITetrahedralChirality.class,
+                         TetrahedralChirality.class,
+                         new DynamicFactory.CreationModifier<TetrahedralChirality>() {
+                             @Override
+                             public void modify(TetrahedralChirality instance) {
+                                 instance.setBuilder(self);
+                             }
+                         });
+        factory.register(IDoubleBondStereochemistry.class,
+                         DoubleBondStereochemistry.class,
+                         new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
+                             @Override
+                             public void modify(DoubleBondStereochemistry instance) {
+                                 instance.setBuilder(self);
+                             }
+                         });
+
+        // miscellaneous
+        factory.register(IMapping.class,    Mapping.class);
+        factory.register(IChemObject.class, ChemObject.class);
+
+    }
+
+    /**
+     * Access the singleton instance of this DefaultChemObjectBuilder. <p/>
+     * <pre>{@code
+     *
+     * // get the builder instance
+     * IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+     *
+     * // using the builder...
+     * // create an IAtom using the default constructor
+     * IAtom atom = builder.newInstance(IAtom.class);
+     *
+     * // create a carbon atom
+     * IAtom c1 = builder.newInstance(IAtom.class, "C");
+     * }</pre>
+     *
+     * @return a DefaultChemObjectBuilder instance
+     */
 	public static IChemObjectBuilder getInstance() {
 		if (instance == null) {
 			instance = new DefaultChemObjectBuilder();
 		}
 		return instance;
 	}
-	
-	@SuppressWarnings("unchecked")
-    public <T extends ICDKObject>T newInstance(
-	    Class<T> clazz, Object... params)
-	{
-        if (IElement.class.isAssignableFrom(clazz)) {
-            return newElementInstance(clazz, params);
-        } else if (IElectronContainer.class.isAssignableFrom(clazz)) {
-            return newElectronContainerInstance(clazz, params);
-        } else if (IAminoAcid.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new AminoAcid();
-        } else if (IChemFile.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new ChemFile();
-        } else if (IChemModel.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new ChemModel();
-        } else if (IChemSequence.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new ChemSequence();
-        } else if (IPDBMonomer.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new PDBMonomer();
-        } else if (IMonomer.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new Monomer();
-        } else if (IStrand.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new Strand();
-        } else if (IPDBPolymer.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new PDBPolymer();
-        } else if (IBioPolymer.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new BioPolymer();
-        } else if (IReaction.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new Reaction();
-        } else if (IReactionScheme.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new ReactionScheme();
-        } else if (IReactionSet.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new ReactionSet();
-        } else if (IPolymer.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new Polymer();
-        } else if (IRingSet.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new RingSet();
-        } else if (IAtomContainerSet.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new AtomContainerSet();
-        } else if (IAtomContainer.class.isAssignableFrom(clazz)) {
-            return newAtomContainerInstance(clazz, params);
-        } else if (IMapping.class.isAssignableFrom(clazz)) {
-            if (params.length == 2 &&
-                params[0] instanceof IChemObject &&
-                params[1] instanceof IChemObject) {
-                return (T)new Mapping((IChemObject)params[0], (IChemObject)params[1]);
-            }
-        } else if (IChemObject.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) return (T)new ChemObject();
-            if (params.length == 1 &&
-                params[0] instanceof IChemObject)
-                return (T)new ChemObject((IChemObject)params[0]);
-        } else if (clazz.isAssignableFrom(IAtomParity.class)) {
-            if (params.length == 6 &&
-                params[0] instanceof IAtom &&
-                params[1] instanceof IAtom &&
-                params[2] instanceof IAtom &&
-                params[3] instanceof IAtom &&
-                params[4] instanceof IAtom &&
-                params[5] instanceof Integer)
-                return (T)new AtomParity(
-                    (IAtom)params[0],
-                    (IAtom)params[1],
-                    (IAtom)params[2],
-                    (IAtom)params[3],
-                    (IAtom)params[4],
-                    (Integer)params[5]
-                );
-        } else if (clazz.isAssignableFrom(IPDBStructure.class)) {
-            if (params.length == 0) return (T)new PDBStructure();
-        } else if (clazz.isAssignableFrom(IMolecularFormula.class)) {
-            if (params.length == 0) return (T)new MolecularFormula();
-        } else if (clazz.isAssignableFrom(ITetrahedralChirality.class)) {
-            if (params.length == 3 &&
-                params[0] instanceof IAtom &&
-                params[1] instanceof IAtom[] &&
-                params[2] instanceof Stereo) {
-                TetrahedralChirality chirality = new TetrahedralChirality(
-                    (IAtom)params[0], (IAtom[])params[1], (Stereo)params[2]
-                );
-                chirality.setBuilder(this);
-                return (T)chirality;
-            }
-        } else if (clazz.isAssignableFrom(IMolecularFormulaSet.class)) {
-            if (params.length == 0) return (T)new MolecularFormulaSet();
-            if (params.length == 1 &&
-                params[0] instanceof IMolecularFormula)
-                return (T)new MolecularFormulaSet((IMolecularFormula)params[0]);
-        } else if (clazz.isAssignableFrom(IAdductFormula.class)) {
-            if (params.length == 0) return (T)new AdductFormula();
-            if (params.length == 1 &&
-                params[0] instanceof IMolecularFormula)
-                return (T)new AdductFormula((IMolecularFormula)params[0]);
-        }
 
-	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
-	}
 
-	private String getNoConstructorFoundMessage(Class clazz) {
-	    StringBuffer buffer = new StringBuffer();
-	    String className = clazz.getName().substring(32);
-	    buffer.append("No constructor found for ");
-	    buffer.append(className);
-	    buffer.append(" with the given number of parameters.");
-
-	    // try loading the implementation
-	    try {
-            Class impl = this.getClass().getClassLoader().loadClass(
-                "org.openscience.cdk." + className
-            );
-            buffer.append(" Candidates are: ");
-            Constructor[] constructors = impl.getConstructors();
-            for (int i=0; i<constructors.length; i++) {
-                buffer.append(className).append('(');
-                Class[] params = constructors[i].getParameterTypes();
-                for (int j=0; j<params.length; j++) {
-                    buffer.append(params[j].getName().substring(
-                        params[j].getName().lastIndexOf('.') + 1
-                    ));
-                    if ((j+1)<params.length) buffer.append(", ");
-                }
-                buffer.append(')');
-                if ((i+1)<constructors.length) buffer.append(", ");
-            }
-        } catch (ClassNotFoundException e) {
-            // ok, then we do without suggestions
-        }
-        return buffer.toString();
-	}
-	
-    @SuppressWarnings("unchecked")
-    private <T extends ICDKObject>T newAtomContainerInstance(
-            Class<T> clazz, Object... params)
-    {
-        if (ICrystal.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) {
-                return (T)new Crystal();
-            } else if (params.length == 1 &&
-                params[0] instanceof IAtomContainer) {
-                return (T)new Crystal((IAtomContainer)params[0]);
-            }
-        } else if (IRing.class.isAssignableFrom(clazz)) {
-            if (params.length == 0) {
-                return (T)new Ring();
-            } else if (params.length == 1) {
-                if (params[0] instanceof IAtomContainer) {
-                    return (T)new Ring((IAtomContainer)params[0]);
-                } else if (params[0] instanceof Integer) {
-                    return (T)new Ring((Integer)params[0]);
-                } 
-            } else if (params.length == 2 &&
-                    params[0] instanceof Integer &&
-                    params[1] instanceof String) {
-                return (T)new Ring((Integer)params[0], (String)params[1]);
-            }
-        } else {
-            if (params.length == 0) {
-                return (T)new AtomContainer();
-            } else if (params.length == 1 &&
-                params[0] instanceof IAtomContainer) {
-                return (T)new AtomContainer((IAtomContainer)params[0]);
-            } else if (params.length == 4 &&
-                    params[0] instanceof Integer &&
-                    params[1] instanceof Integer &&
-                    params[2] instanceof Integer &&
-                    params[3] instanceof Integer) {
-                return (T)new AtomContainer(
-                    (Integer)params[0], (Integer)params[1], (Integer)params[2], (Integer)params[3]
-                );
-            }
-        }
-
-        throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public <T extends ICDKObject>T newInstance(Class<T> clazz, Object... params) {
+        return factory.ofClass(clazz, params);
     }
 
-	@SuppressWarnings("unchecked")
-    private <T extends ICDKObject>T newElementInstance(
-	        Class<T> clazz, Object... params)
-	{
-	    if (IFragmentAtom.class.isAssignableFrom(clazz)) {
-	        if (params.length == 0) return (T)new FragmentAtom();
-	    } else if (IPDBAtom.class.isAssignableFrom(clazz)) {
-	        if (params.length == 1) {
-	            if (params[0] instanceof String)   return (T)new PDBAtom((String)params[0]);
-	            if (params[0] instanceof IElement) return (T)new PDBAtom((IElement)params[0]);
-	        } else  if (params.length == 2 &&
-	                params[0] instanceof String &&
-	                params[1] instanceof Point3d) {
-	            return (T)new PDBAtom((String)params[0], (Point3d)params[1]);
-	        }
-	    } else if (IPseudoAtom.class.isAssignableFrom(clazz)) {
-	        if (params.length == 0) return (T)new PseudoAtom();
-	        if (params.length == 1) {
-	            if (params[0] instanceof String)   return (T)new PseudoAtom((String)params[0]);
-	            if (params[0] instanceof IElement) return (T)new PseudoAtom((IElement)params[0]);
-	        } else  if (params.length == 2 && params[0] instanceof String) {
-	            if (params[1] instanceof Point2d)
-	                return (T)new PseudoAtom((String)params[0], (Point2d)params[1]);
-	            if (params[1] instanceof Point3d)
-	                return (T)new PseudoAtom((String)params[0], (Point3d)params[1]);
-	        }
-	    } else if (IAtom.class.isAssignableFrom(clazz)) {
-	        if (params.length == 0) return (T)new Atom();
-	        if (params.length == 1) {
-	            if (params[0] instanceof String)   return (T)new Atom((String)params[0]);
-	            if (params[0] instanceof IElement) return (T)new Atom((IElement)params[0]);
-	        } else  if (params.length == 2 && params[0] instanceof String) {
-	            if (params[1] instanceof Point2d)
-	                return (T)new Atom((String)params[0], (Point2d)params[1]);
-	            if (params[1] instanceof Point3d)
-	                return (T)new Atom((String)params[0], (Point3d)params[1]);
-	        }
-        } else if (IAtomType.class.isAssignableFrom(clazz)) {
-            if (params.length == 1) {
-                if (params[0] instanceof String)
-                    return (T)new AtomType((String)params[0]);
-                if (params[0] instanceof IElement)
-                    return (T)new AtomType((IElement)params[0]);
-            } else if (params.length == 2 &&
-                    params[0] instanceof String &&
-                    params[1] instanceof String) {
-                return (T)new AtomType(
-                    (String)params[0], (String)params[1]
-                );
-            }
-        } else if (IIsotope.class.isAssignableFrom(clazz)) {
-            if (params.length == 1) {
-                if (params[0] instanceof IElement) return (T)new Isotope((IElement)params[0]);
-                if (params[0] instanceof String) return (T)new Isotope((String)params[0]);
-            } else if (params.length == 2 &&
-                    params[0] instanceof String &&
-                    params[1] instanceof Integer) {
-                return (T)new Isotope(
-                    (String)params[0], (Integer)params[1]
-                );
-            } else if (params.length == 4 &&
-                    params[0] instanceof Integer &&
-                    params[1] instanceof String &&
-                    params[2] instanceof Double &&
-                    params[3] instanceof Double) {
-                return (T)new Isotope(
-                    (Integer)params[0], (String)params[1],
-                    (Double)params[2], (Double)params[3]
-                );
-            } else if (params.length == 5 &&
-                    params[0] instanceof Integer &&
-                    params[1] instanceof String &&
-                    params[2] instanceof Integer &&
-                    params[3] instanceof Double &&
-                    params[4] instanceof Double) {
-                return (T)new Isotope(
-                    (Integer)params[0], (String)params[1], (Integer)params[2],
-                    (Double)params[3], (Double)params[4]
-                );
-            }
-        } else {
-            if (params.length == 0) {
-                return (T)new Element();
-            } else if (params.length == 1) {
-                if (params[0] instanceof String)
-                    return (T)new Element((String)params[0]);
-                if (params[0] instanceof IElement)
-                    return (T)new Element((IElement)params[0]);
-            } else if (params.length == 2 &&
-                    params[0] instanceof String &&
-                    params[1] instanceof Integer) {
-                return (T)new Element(
-                    (String)params[0], (Integer)params[1]
-                );
-            }
-	    }
 
-	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
-	}
-	
-	@SuppressWarnings("unchecked")
-    private <T extends ICDKObject>T newElectronContainerInstance(
-            Class<T> clazz, Object... params)
-    {
-	    if (IBond.class.isAssignableFrom(clazz)) {
-	        if (params.length == 0) {
-	            return (T)new Bond();
-	        } else if (params.length == 2 &&
-	                params[0] instanceof IAtom &&
-	                params[1] instanceof IAtom) {
-	            return (T)new Bond((IAtom)params[0], (IAtom)params[1]);
-	        } else if (params.length == 3 &&
-	                params[0] instanceof IAtom &&
-	                params[1] instanceof IAtom &&
-	                params[2] instanceof IBond.Order) {
-	            return (T)new Bond(
-	                (IAtom)params[0], (IAtom)params[1], (IBond.Order)params[2]
-	            );
-	        } else if (params.length == 4 &&
-	                params[0] instanceof IAtom &&
-	                params[1] instanceof IAtom &&
-	                params[2] instanceof IBond.Order &&
-	                params[3] instanceof IBond.Stereo) {
-	            return (T)new Bond(
-	                (IAtom)params[0], (IAtom)params[1],
-	                (IBond.Order)params[2], (IBond.Stereo)params[3]
-	            );
-	        } else if (params[params.length-1] instanceof IBond.Order) {
-	            // the IBond(IAtom[], IBond.Order) constructor
-	            boolean allIAtom = true;
-	            int orderIndex = params.length-1;
-	            List<IAtom> atoms = new ArrayList<IAtom>();
-	            for (int i=0; i<(orderIndex-1) && allIAtom; i++) {
-	                if (!(params[i] instanceof IAtom)) {
-	                    allIAtom = false;
-	                    atoms.add((IAtom)params[i]);
-	                }
-	            }
-	            if (allIAtom) {
-	                return (T)new Bond(
-	                    atoms.toArray(new IAtom[atoms.size()]),
-	                    (IBond.Order)params[orderIndex]
-	                );
-	            }
-	        } else {
-	            // the IBond(IAtom[]) constructor
-	            boolean allIAtom = true;
-	            for (int i=0; i<params.length && allIAtom; i++) {
-	            	System.out.println(params[i]);
-	                if (!(params[i] instanceof IAtom)) allIAtom = false;
-	            }
-	            if (allIAtom) {
-	                return (T)new Bond((IAtom[])params);
-	            }
-	        }
-	    } else if (ILonePair.class.isAssignableFrom(clazz)) {
-	        if (params.length == 0) {
-	            return (T)new LonePair();
-	        } else if (params.length == 1 &&
-	                params[0] instanceof IAtom) {
-	            return (T)new LonePair((IAtom)params[0]);
-	        }
-	    } else if (ISingleElectron.class.isAssignableFrom(clazz)) {
-	        if (params.length == 0) {
-	            return (T)new SingleElectron();
-	        } else if (params.length == 1 &&
-	                params[0] instanceof IAtom) {
-	            return (T)new SingleElectron((IAtom)params[0]);
-	        }
-	    } else {
-	        if (params.length == 0) return (T)new ElectronContainer();
-	    }
-
-	    throw new IllegalArgumentException(getNoConstructorFoundMessage(clazz));
-    }
-	
 }
 
 
