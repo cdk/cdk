@@ -268,16 +268,40 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *@see                 #setProperty
 	 *@see                 #removeProperty
 	 */
-	public Object getProperty(Object description)
+	public <T> T getProperty(Object description)
 	{
-        if (properties != null) {
-            return lazyProperties().get(description);
+        // can't check the type
+        @SuppressWarnings("unchecked")
+        T value = (T) lazyProperties().get(description);
+        return value;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public <T> T getProperty(Object description, Class<T> c)
+    {
+        Object value = lazyProperties().get(description);
+
+        if(c.isInstance(value)) {
+
+            @SuppressWarnings("unchecked")
+            T typed = (T) value;
+            return typed;
+
+        } else if(value != null){
+            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected " + c
+                    .getSimpleName() + " got " + value.getClass().getSimpleName());
         }
+
         return null;
-	}
+
+    }
 
 
-	/**
+
+    /**
 	 *  Returns a Map with the IChemObject's properties.
 	 *
 	 *@return    The object's properties as an Hashtable

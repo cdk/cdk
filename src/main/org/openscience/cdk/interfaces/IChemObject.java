@@ -117,16 +117,72 @@ public interface IChemObject extends ICDKObject {
 	public void removeProperty(Object description);
 
 	/**
-	 * Returns a property for the IChemObject.
-	 *
+	 * Returns a property for the IChemObject - the object is automatically
+     * cast to the required type. This does however mean if the wrong type is
+     * provided then a runtime ClassCastException will be thrown.
+     *
+	 * <p/>
+     * <pre>{@code
+     *
+     *     IAtom atom = new Atom("C");
+     *     atom.setProperty("number", 1); // set an integer property
+     *
+     *     // access the property and automatically cast to an int
+     *     Integer number = atom.getProperty("number");
+     *
+     *     // if the method is in a chain or needs to be nested the type
+     *     // can be provided
+     *     methodAcceptingInt(atom.getProperty("number", Integer.class));
+     *
+     *     // the type cannot be checked and so...
+     *     String number = atom.getProperty("number"); // ClassCastException
+     *
+     *     // if the type is provided a more meaningful error is thrown
+     *     atom.getProperty("number", String.class); // IllegalArgumentException
+     *
+     * }</pre>
 	 * @param  description  An object description of the property (most likely a
 	 *                      unique string)
+     * @param  <T>          generic return type
 	 * @return              The object containing the property. Returns null if
-	 *                      propert is not set.
+	 *                      property is not set.
 	 * @see                 #setProperty
+     * @see                 #getProperty(Object, Class)
 	 * @see                 #removeProperty
 	 */
-	public Object getProperty(Object description);
+	public <T> T getProperty(Object description);
+
+
+    /**
+     * Access a property of the given description and cast the specified class.
+     * <p/>
+     * <pre>{@code
+     *
+     *     IAtom atom = new Atom("C");
+     *     atom.setProperty("number", 1); // set an integer property
+     *
+     *     // access the property and automatically cast to an int
+     *     Integer number = atom.getProperty("number");
+     *
+     *     // if the method is in a chain or needs to be nested the type
+     *     // can be provided
+     *     methodAcceptingInt(atom.getProperty("number", Integer.class));
+     *
+     *     // the type cannot be checked and so...
+     *     String number = atom.getProperty("number"); // ClassCastException
+     *
+     *     // if the type is provided a more meaningful error is thrown
+     *     atom.getProperty("number", String.class); // IllegalArgumentException
+     *
+     * }</pre>
+     * @param description description of a property (normally a string)
+     * @param c           type of the value to be returned
+     * @param <T>         generic type (of provided class)
+     * @return the value stored for the specified description.
+     * @see #getProperty(Object)
+     * @see #setProperties(java.util.Map)
+     */
+    public <T> T getProperty(Object description, Class<T> c);
 
 	/**
 	 *  Returns a Map with the IChemObject's properties.

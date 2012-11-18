@@ -90,10 +90,21 @@ public class DebugChemObject extends ChemObject
 		super.removeProperty(description);
 	}
 
-	public Object getProperty(Object description) {
+	public <T> T getProperty(Object description) {
 		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
 		return super.getProperty(description);
 	}
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public <T> T getProperty(Object description, Class<T> c)
+    {
+        logger.debug("Getting property of description: ", description
+                     + " and type " + c.getSimpleName());
+        return super.getProperty(description);
+    }
 
 	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");

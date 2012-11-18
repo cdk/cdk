@@ -46,6 +46,7 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     @Test public void testChemObject() {
         IChemObject chemObject = new ChemObject();
         Assert.assertNotNull(chemObject);
+        String value = chemObject.getProperty("hello");
     }
 
     @Test public void testChemObject_IChemObject() {

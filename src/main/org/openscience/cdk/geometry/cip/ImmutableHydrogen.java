@@ -492,6 +492,18 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
+    /**
+     * This field is not used by this immutable hydrogen.
+     *
+     * @param  description The value will be disregarded.
+     * @return null.
+     */
+    @Override
+    @TestMethod("testReturnsNull")
+    public <T> T getProperty(Object description, Class<T> c) {
+        return null;
+    }
+
     /** {@inheritDoc}} */
     @TestMethod("testListenerStuff")
     public void notifyChanged() {}

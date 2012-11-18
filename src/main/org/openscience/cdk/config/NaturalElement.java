@@ -67,7 +67,8 @@ public final class NaturalElement implements IElement {
     @Override @TestMethod("testGetFlagValueZeroDefault") public Number getFlagValue() { return (short)0; }
 	@Override public void setProperty(Object description, Object property) {}
 	@Override public void removeProperty(Object description) {}
-	@Override public Object getProperty(Object description) { return null; }
+	@Override public <T> T getProperty(Object description) { return null; }
+	@Override public <T> T getProperty(Object description, Class<T> c) { return null; }
 	@Override public Map<Object, Object> getProperties() { return null; }
 	@Override public String getID() { return null; }
 	@Override public void setID(String identifier) {}
