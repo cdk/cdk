@@ -25,6 +25,7 @@ package org.openscience.cdk.group;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -406,6 +407,21 @@ public class Partition {
     @TestMethod("copyBlockTest")
     public SortedSet<Integer> copyBlock(int cellIndex) {
         return new TreeSet<Integer>(this.cells.get(cellIndex));
+    }
+    
+    /**
+     * Sort the cells in increasing order.
+     */
+    @TestMethod("orderTest")
+    public void order() {
+        Collections.sort(cells, new Comparator<SortedSet<Integer>>() {
+
+            @Override
+            public int compare(SortedSet<Integer> cellA, SortedSet<Integer> cellB) {
+                return cellA.first().compareTo(cellB.first());
+            }
+
+        });
     }
 
     /**

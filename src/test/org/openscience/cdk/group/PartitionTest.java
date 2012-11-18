@@ -292,5 +292,15 @@ public class PartitionTest extends CDKTestCase {
         Partition o = new Partition(new int[][]{{0}, {1}});
         Assert.assertEquals(p, o);
     }
+    
+    @Test
+    public void orderTest() {
+        Partition p = new Partition(new int[][]{{1, 3}, {0, 2}});
+        p.order();
+        SortedSet<Integer> cell0 = p.getCell(0);
+        SortedSet<Integer> cell1 = p.getCell(1);
+        Assert.assertTrue(cell0.first() < cell1.first());
+        Assert.assertTrue(cell0.last() < cell1.last());
+    }
 
 }
