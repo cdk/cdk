@@ -73,6 +73,21 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNull(chemObject.getProperty("dummy"));
     }
 
+    @Test public void testGetProperty_Object_Class() {
+        IChemObject chemObject = newChemObject();
+        Assert.assertNull(chemObject.getProperty("dummy", String.class));
+        chemObject.setProperty("dummy", 5);
+        Assert.assertNotNull(chemObject.getProperty("dummy", Integer.class));
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetProperty_Object_ClassCast() {
+        IChemObject chemObject = newChemObject();
+        chemObject.setProperty("dummy", 5);
+        Assert.assertNull(chemObject.getProperty("dummy", String.class));
+    }
+
     @Test public void testRemoveProperty_Object() {
         IChemObject chemObject = newChemObject();
         String cDescription = new String("description");

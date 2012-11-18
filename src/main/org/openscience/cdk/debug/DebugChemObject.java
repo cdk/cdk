@@ -23,6 +23,7 @@ package org.openscience.cdk.debug;
 import java.util.Map;
 
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -98,6 +99,7 @@ public class DebugChemObject extends ChemObject
     /**
      * @inheritDoc
      */
+    @TestMethod("testGetProperty_Object_Class,testGetProperty_Object_ClassCast")
     @Override
     public <T> T getProperty(Object description, Class<T> c)
     {
