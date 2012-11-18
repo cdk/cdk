@@ -302,5 +302,11 @@ public class PartitionTest extends CDKTestCase {
         Assert.assertTrue(cell0.first() < cell1.first());
         Assert.assertTrue(cell0.last() < cell1.last());
     }
+    
+    @Test
+    public void inSameCellTest() {
+        Partition p = new Partition(new int[][]{{0, 2}, {1, 3}});
+        Assert.assertTrue(p.inSameCell(1, 3));
+    }
 
 }

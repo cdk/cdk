@@ -423,6 +423,25 @@ public class Partition {
 
         });
     }
+    
+    
+    /**
+     * Check that two elements are in the same cell of the partition.
+     * 
+     * @param elementI an element in the partition
+     * @param elementJ an element in the partition
+     * @return true if both elements are in the same cell
+     */
+    @TestMethod("inSameCellTest")
+    public boolean inSameCell(int elementI, int elementJ) {
+        for (int cellIndex = 0; cellIndex < size(); cellIndex++) {
+            SortedSet<Integer> cell = getCell(cellIndex); 
+            if (cell.contains(elementI) && cell.contains(elementJ)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * @inheritDoc
