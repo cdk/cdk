@@ -272,6 +272,13 @@ public class PartitionTest extends CDKTestCase {
         Assert.assertEquals(2, p.size());
         Assert.assertEquals(4, p.numberOfElements());
     }
+	
+	@Test
+    public void fromStringTest2() {
+        Partition p = Partition.fromString("[0|1,2,3]");
+        Assert.assertEquals(2, p.size());
+        Assert.assertEquals(4, p.numberOfElements());
+    }
 
     @Test
     public void equalsTest_null() {

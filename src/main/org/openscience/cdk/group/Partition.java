@@ -516,7 +516,12 @@ public class Partition {
             } else if (c == '|') {
                 int element = Integer.parseInt(
                         strForm.substring(numStart, index));
-                p.addToCell(currentCell, element);
+                if (currentCell == -1) {
+                    p.addCell(element);
+                    currentCell = 0;
+                } else {
+                    p.addToCell(currentCell, element);
+                }
                 currentCell++;
                 p.addCell();
                 numStart = -1;
