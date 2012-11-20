@@ -21,6 +21,15 @@ package org.openscience.cdk.modulesuites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.openscience.cdk.group.AbstractDiscretePartitionRefinerTest;
+import org.openscience.cdk.group.AtomDiscretePartitionRefinerTest;
+import org.openscience.cdk.group.AtomEquitablePartitionRefinerTest;
+import org.openscience.cdk.group.AtomGroupTests;
+import org.openscience.cdk.group.AtomPermutationTests;
+import org.openscience.cdk.group.BondDiscretePartitionRefinerTest;
+import org.openscience.cdk.group.BondEquitablePartitionRefinerTest;
+import org.openscience.cdk.group.BondGroupTests;
+import org.openscience.cdk.group.DisjointSetForestTest;
 import org.openscience.cdk.group.PartitionTest;
 import org.openscience.cdk.group.PermutationGroupTest;
 import org.openscience.cdk.group.PermutationTest;
@@ -32,8 +41,17 @@ import org.openscience.cdk.group.PermutationTest;
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
-    PartitionTest.class,
-    PermutationTest.class,
-    PermutationGroupTest.class,
+        AbstractDiscretePartitionRefinerTest.class,
+        AtomDiscretePartitionRefinerTest.class,
+        AtomEquitablePartitionRefinerTest.class,
+        AtomGroupTests.class,
+        AtomPermutationTests.class,
+        BondDiscretePartitionRefinerTest.class,
+        BondEquitablePartitionRefinerTest.class,
+        BondGroupTests.class,
+        DisjointSetForestTest.class,
+        PartitionTest.class,
+        PermutationTest.class,
+        PermutationGroupTest.class
 })
 public class MgroupTests {}

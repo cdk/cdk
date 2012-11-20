@@ -1,0 +1,185 @@
+/* Copyright (C) 2012  Gilleain Torrance <gilleain.torrance@gmail.com>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+package org.openscience.cdk.group;
+
+import java.util.Arrays;
+
+import junit.framework.Assert;
+
+import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+/**
+ * @author maclean
+ * @cdk.module test-group
+ */
+public class BondDiscretePartitionRefinerTest extends CDKTestCase {
+    
+    public static IChemObjectBuilder builder = 
+            SilentChemObjectBuilder.getInstance();
+    
+    @Test
+    public void defaultConstructorTest() {
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        Assert.assertNotNull(refiner);
+    }
+    
+    @Test
+    public void advancedConstructorTest() {
+        boolean ignoreBondOrder = true;
+        BondDiscretePartitionRefiner refiner = 
+                new BondDiscretePartitionRefiner(ignoreBondOrder);
+        Assert.assertNotNull(refiner);
+    }
+    
+    @Test
+    public void resetTest() {
+        String acpString1 = "C0C1C2 0:1(1),1:2(1)";
+        IAtomContainer ac1 = AtomContainerPrinter.fromString(acpString1, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(ac1);
+        Assert.assertEquals(refiner.getConnectivity(0, 1), 1);
+        Assert.assertEquals(refiner.getVertexCount(), 2);
+        
+        refiner.reset();
+        
+        String acpString2 = "C0C1C2 0:1(1),0:2(1),1:2(1)";
+        IAtomContainer ac2 = AtomContainerPrinter.fromString(acpString2, builder);
+        refiner.refine(ac2);
+        Assert.assertEquals(refiner.getConnectivity(0, 2), 1);
+        Assert.assertEquals(refiner.getVertexCount(), 3);
+    }
+    
+    @Test
+    public void getBondPartitionTest() {
+        String acpString = "C0C1C2C3O4 0:1(2),0:4(1),1:2(1),2:3(2),3:4(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        Partition bondPartition = refiner.getBondPartition(ac);
+        Partition expected = Partition.fromString("0,3|1,4|2");
+        Assert.assertEquals(expected, bondPartition);
+    }
+    
+    @Test
+    public void refine_StartingPartitionTest() {
+        Partition partition = Partition.fromString("0,1|2,3");
+        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(ac, partition);
+        PermutationGroup autG = refiner.getAutomorphismGroup();
+        Assert.assertEquals(2, autG.order());
+    }
+    
+    @Test
+    public void refine_IgnoreBondOrderTest() {
+        String acpString = "C0C1C2C3 0:1(2),0:3(1),1:2(1),2:3(2)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        boolean ignoreBondOrder = true;
+        BondDiscretePartitionRefiner refiner = 
+                new BondDiscretePartitionRefiner(ignoreBondOrder);
+        refiner.refine(ac);
+        PermutationGroup autG = refiner.getAutomorphismGroup();
+        Assert.assertEquals(8, autG.order());
+    }
+    
+    @Test
+    public void refineTest() {
+        String acpString = "C0C1O2O3 0:1(1),0:3(1),1:2(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(ac);
+        PermutationGroup autG = refiner.getAutomorphismGroup();
+        Assert.assertEquals(2, autG.order());
+    }
+    
+    @Test
+    public void isCanonical_TrueTest() {
+        String acpString = "C0C1C2O3 0:1(2),0:2(1),1:3(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        Assert.assertTrue(refiner.isCanonical(ac));
+    }
+    
+    @Test
+    public void isCanonical_FalseTest() {
+        String acpString = "C0C1C2O3 0:1(2),0:3(1),1:2(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        Assert.assertFalse(refiner.isCanonical(ac));
+    }
+    
+    @Test
+    public void getAutomorphismGroupTest() {
+        String acpString = "C0C1C2O3 0:1(2),0:2(1),1:3(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        PermutationGroup autG = refiner.getAutomorphismGroup(ac); 
+        Assert.assertNotNull(autG);
+        Assert.assertEquals(1, autG.order());
+    }
+    
+    @Test
+    public void getAutomorphismGroup_StartingGroupTest() {
+        String acpString = "C0C1C2C3 0:1(1),0:2(1),1:3(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        Permutation flip = new Permutation(1, 0, 3, 2);
+        PermutationGroup autG = new PermutationGroup(4, Arrays.asList(flip));
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.getAutomorphismGroup(ac, autG); 
+        Assert.assertNotNull(autG);
+        Assert.assertEquals(8, autG.order());
+    }
+    
+    @Test
+    public void getAutomorphismGroup_StartingPartitionTest() {
+        Partition partition = Partition.fromString("0,1|2,3");
+        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        PermutationGroup autG = refiner.getAutomorphismGroup(ac, partition);
+        Assert.assertEquals(2, autG.order());
+    }
+    
+    @Test
+    public void getVertexCountTest() {
+        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(ac);
+        Assert.assertEquals(ac.getAtomCount(), refiner.getVertexCount());
+    }
+    
+    @Test
+    public void getConnectivityTest() {
+        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(ac);
+        Assert.assertEquals(1, refiner.getConnectivity(0, 1));
+    }
+
+}
