@@ -235,11 +235,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         vertexB.add(normal);
         vertexC.sub(normal);
         this.graphics.setColor(wedge.color);
-        if (wedge.isDashed) {
+        if (wedge.type == WedgeLineElement.TYPE.DASHED) {
             this.drawDashedWedge(vertexA, vertexB, vertexC);
-        } else {
+        } else if (wedge.type == WedgeLineElement.TYPE.WEDGED) {
             this.drawFilledWedge(vertexA, vertexB, vertexC);
-        }
+        } else if (wedge.type == WedgeLineElement.TYPE.INDIFF) {
+			this.drawIndiffWedge(vertexA, vertexB, vertexC);
+		}
     }
     
     private void drawFilledWedge(
@@ -283,6 +285,44 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
         this.graphics.setStroke(storedStroke);
     }
+
+	private void drawIndiffWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
+		// store the current stroke
+		Stroke storedStroke = this.graphics.getStroke();
+		this.graphics.setStroke(new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
+		// calculate the distances between lines
+		double distance = vertexB.distance(vertexA);
+		double gapFactor = 0.05;
+		double gap = distance * gapFactor;
+		double numberOfDashes = distance / gap;
+		double displacement = 0;
+
+		// draw by interpolating along the edges of the triangle
+		Point2d point1 = new Point2d();
+		boolean flip = false;
+		point1.interpolate(vertexA, vertexB, displacement);
+		int[] p1T = this.transformPoint(point1.x, point1.y);
+		displacement += gapFactor;
+		for (int i = 0; i < numberOfDashes; i++) {
+			Point2d point2 = new Point2d();
+			if (flip) {
+				point2.interpolate(vertexA, vertexC, displacement);
+			} else {
+				point2.interpolate(vertexA, vertexB, displacement);
+			}
+			flip = !flip;
+			int[] p2T = this.transformPoint(point2.x, point2.y);
+			this.graphics.drawLine(p1T[0], p1T[1], p2T[0], p2T[1]);
+			if (distance * (displacement + gapFactor) >= distance) {
+				break;
+			} else {
+				p1T = p2T;
+				displacement += gapFactor;
+			}
+		}
+		this.graphics.setStroke(storedStroke);
+	}
     
     private void visit(AtomSymbolElement atomSymbol) {
         this.graphics.setFont(this.fontManager.getFont());

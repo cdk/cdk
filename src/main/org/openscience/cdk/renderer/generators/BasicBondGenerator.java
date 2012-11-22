@@ -431,24 +431,28 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         return new LineElement(u.x, u.y, w.x, w.y, width, color);
     }
 
-    private IRenderingElement generateStereoElement(
-            IBond bond, RendererModel model) {
+	private IRenderingElement generateStereoElement(
+			IBond bond, RendererModel model) {
 
-        IBond.Stereo stereo = bond.getStereo();
-        boolean dashed = false;
-        Direction dir = Direction.toSecond;
-        if (stereo == IBond.Stereo.DOWN ||
-                stereo == IBond.Stereo.DOWN_INVERTED)
-            dashed = true;
-        if (stereo == IBond.Stereo.DOWN_INVERTED ||
-                stereo == IBond.Stereo.UP_INVERTED)
-            dir = Direction.toFirst;
+		IBond.Stereo stereo = bond.getStereo();
+		WedgeLineElement.TYPE type = WedgeLineElement.TYPE.WEDGED;
+		Direction dir = Direction.toSecond;
+		if (stereo == IBond.Stereo.DOWN ||
+				stereo == IBond.Stereo.DOWN_INVERTED)
+			type = WedgeLineElement.TYPE.DASHED;
+		if (stereo == IBond.Stereo.UP_OR_DOWN ||
+				stereo == IBond.Stereo.UP_OR_DOWN_INVERTED)
+			type = WedgeLineElement.TYPE.INDIFF;
+		if (stereo == IBond.Stereo.DOWN_INVERTED ||
+				stereo == IBond.Stereo.UP_INVERTED ||
+				stereo == IBond.Stereo.UP_OR_DOWN_INVERTED)
+			dir = Direction.toFirst;
 
-        IRenderingElement base = generateBondElement(
-                bond, IBond.Order.SINGLE, model);
-        return new WedgeLineElement(
-                (LineElement)base, dashed, dir, getColorForBond(bond, model));
-    }
+		IRenderingElement base = generateBondElement(
+				bond, IBond.Order.SINGLE, model);
+		return new WedgeLineElement(
+				(LineElement) base, type, dir, getColorForBond(bond, model));
+	}
 
     /**
      * Check to see if a bond is a double bond.

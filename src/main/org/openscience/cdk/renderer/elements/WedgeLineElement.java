@@ -33,12 +33,19 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.renderer.elements.WedgeLineElementTest")
 public class WedgeLineElement extends LineElement {
 
-    /**
-     * If true, the wedge should be rendered as a dashed triangle.
-     */
-    public final boolean isDashed;
+	/**
+	 * If the bond is dashed ,wedged, or "up_or_down", i.e., not defined.
+	 */
+	public enum TYPE {
+		DASHED, WEDGED, INDIFF
+	}
 
-    /**
+	/**
+	 * The type of the bond (dashed, wedged, not defined).
+	 */
+	public final TYPE type;
+
+	/**
      * The direction indicates which way the wedge gets thicker.
      */
     public final Direction direction;
@@ -60,15 +67,15 @@ public class WedgeLineElement extends LineElement {
      * @param x2 the x-coordinate of the second point
      * @param y2 the y-coordinate of the second point
      * @param width the width of the wedge
-     * @param dashed if true, the wedge should be dashed
+     * @param type the bond is dashed ,wedged, or "up_or_down", i.e., not defined.
      * @param direction the direction of the thickness
      * @param color the color of the wedge
      */
     @TestMethod("testConstructor")
     public WedgeLineElement(double x1, double y1, double x2, double y2,
-            double width, boolean dashed, Direction direction, Color color) {
+            double width, TYPE type, Direction direction, Color color) {
         super(x1, y1, x2, y2, width, color);
-        this.isDashed = dashed;
+        this.type = type;
         this.direction = direction;
     }
 
@@ -76,18 +83,18 @@ public class WedgeLineElement extends LineElement {
      * Make a wedge along the given line element.
      * 
      * @param element the line element to use as the basic geometry
-     * @param dashed if true, the wedge should be dashed
+     * @param type if the bond is dashed ,wedged, or "up_or_down", i.e., not defined
      * @param direction the direction of the thickness
      * @param color the color of the wedge
      */
     @TestMethod("testConstructor_LineElement")
-    public WedgeLineElement(LineElement element, boolean dashed,
+    public WedgeLineElement(LineElement element, TYPE type,
             Direction direction, Color color) {
         this(direction == Direction.toFirst ? element.secondPointX : element.firstPointX,
              direction == Direction.toFirst ? element.secondPointY : element.firstPointY,
              direction == Direction.toFirst ? element.firstPointX : element.secondPointX,
              direction == Direction.toFirst ? element.firstPointY : element.secondPointY,
-             element.width, dashed, direction, color);
+             element.width, type, direction, color);
     }
 
     /**
