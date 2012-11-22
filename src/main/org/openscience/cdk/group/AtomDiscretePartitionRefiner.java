@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -313,7 +314,9 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
                     connectedIndices.put(index, 1);
                 } else {
                     IBond bond = atomContainer.getBond(atom, connected);
-                    connectedIndices.put(index, bond.getOrder().numeric());
+                    boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC); 
+                    int orderNumber = (isArom)? 5 : bond.getOrder().numeric();
+                    connectedIndices.put(index, orderNumber);
                 }
             }
             table.add(connectedIndices);

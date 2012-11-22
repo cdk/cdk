@@ -10,3 +10,4 @@ cdk-graph.jar
 cdk-silent.jar
 cdk-smiles.jar
 cdk-valencycheck.jar
+cdk-extra.jar

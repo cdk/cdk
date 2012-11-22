@@ -28,9 +28,12 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @author maclean
@@ -180,6 +183,72 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(ac);
         Assert.assertEquals(1, refiner.getConnectivity(0, 1));
+    }
+    
+    // NOTE : the following tests are from bug 1250 by Luis F. de Figueiredo
+    // and mostly test for aromatic bonds 
+    
+    @Test
+    public void testAzulene() throws Exception {
+
+        IAtomContainer mol = MoleculeFactory.makeAzulene();
+        Assert.assertNotNull("Created molecule was null", mol);
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(mol);
+        Partition autP = refiner.getAutomorphismPartition();
+        
+        Assert.assertEquals("Wrong number of equivalent classes", 6, autP.size());
+        Partition expected = Partition.fromString("0,3|1,2|4,10|5,8|6,7|9");
+        Assert.assertEquals("Wrong class assignment", expected, autP);
+    }
+    
+    /**
+     * Test the equivalent classes method in pyrimidine
+     * Tests if the position of the single and double bonds in an aromatic ring matter
+     * to assign a class.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testPyrimidine() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makePyrimidine();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Assert.assertNotNull("Created molecule was null", mol);
+        
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(mol);
+        Partition autP = refiner.getAutomorphismPartition();
+        
+        Assert.assertEquals("Wrong number of equivalent classes", 3, autP.size());
+        Partition expected = Partition.fromString("0,3|1,2|4,5");
+        Assert.assertEquals("Wrong class assignment", expected, autP);
+    }
+
+    /**
+     * Test the equivalent classes method in biphenyl,
+     * a molecule with two aromatic systems. It has 2 symmetry axis.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testBiphenyl() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makeBiphenyl();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Assert.assertNotNull("Created molecule was null", mol);
+        
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(mol);
+        Partition autP = refiner.getAutomorphismPartition();
+        
+        Assert.assertEquals("Wrong number of equivalent classes", 4, autP.size());
+        Partition expected = Partition.fromString("0,5,7,12|1,4,8,11|2,3,9,10|6");
+        Assert.assertEquals("Wrong class assignment", expected, autP);
     }
 
 }

@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -158,7 +159,9 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
                 // doesn't matter what it is, so long as it's constant
                 boS = "1"; 
             } else {
-                boS = String.valueOf(bond.getOrder().numeric());
+                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC); 
+                int orderNumber = (isArom)? 5 : bond.getOrder().numeric();
+                boS = String.valueOf(orderNumber);
             }
             String bondString;
             if (el0.compareTo(el1) < 0) {
