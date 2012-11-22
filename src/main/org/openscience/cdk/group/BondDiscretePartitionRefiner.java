@@ -290,6 +290,19 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         return super.getAutomorphismGroup();
     }
     
+    /**
+     * Get the automorphism partition (equivalence classes) of the bonds.
+     * 
+     * @param atomContainer the molecule to calculate equivalence classes for
+     * @return a partition of the bonds into equivalence classes
+     */
+    @TestMethod("getAutomorphismPartitionTest")
+    public Partition getAutomorphismPartition(IAtomContainer atomContainer) {
+        setup(atomContainer);
+        super.refine(getBondPartition(atomContainer));
+        return super.getAutomorphismPartition();
+    }
+    
     private void setup(IAtomContainer atomContainer) {
         // have to setup the connection table before making the group 
         // otherwise the size may be wrong

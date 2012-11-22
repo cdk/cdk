@@ -191,6 +191,17 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
         Assert.assertEquals(orderN, refiner.getConnectivity(1, 2));
     }
     
+    @Test
+    public void getAutomorphismPartitionTest() {
+        String acpString = "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1)," +
+                           "4:5(2),5:6(1),6:7(2),7:8(1),8:9(2),5:9(1),0:9(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
+        Partition autP = refiner.getAutomorphismPartition(ac);
+        Partition expected = Partition.fromString("0|1|2|3|4|5|6|7|8|9");
+        Assert.assertEquals(expected, autP);
+    }
+    
     // NOTE : the following tests are from bug 1250 by Luis F. de Figueiredo
     // and mostly test for aromatic bonds 
     

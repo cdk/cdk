@@ -293,6 +293,19 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         super.refine(initialPartition);
         return super.getAutomorphismGroup();
     }
+    
+    /**
+     * Get the automorphism partition (equivalence classes) of the atoms.
+     * 
+     * @param atomContainer the molecule to calculate equivalence classes for
+     * @return a partition of the atoms into equivalence classes
+     */
+    @TestMethod("getAutomorphismPartitionTest")
+    public Partition getAutomorphismPartition(IAtomContainer atomContainer) {
+        setup(atomContainer);
+        super.refine(getElementPartition(atomContainer));
+        return super.getAutomorphismPartition();
+    }
 
     /**
      * Makes a lookup table for the connection between atoms, to avoid looking
