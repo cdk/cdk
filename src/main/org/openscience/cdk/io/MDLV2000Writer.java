@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,6 +105,38 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     // regular expression to capture R groups with attached numbers
     private Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
+
+	/**
+	 * Enumeration of all valid radical values.
+	 */
+	public enum SPIN_MULTIPLICITY {
+
+		NONE(0, 0),
+		SINGLET_SPIN(2, 1),
+		DOUBLET_SPIN(1, 2),
+		TRIPLET_SPIN(3, 3);
+
+		// the radical SDF value
+		private final int value;
+		// the corresponding number of single electrons
+		private final int singleElectrons;
+
+		private SPIN_MULTIPLICITY(int value, int singleElectrons) {
+			this.value = value;
+			this.singleElectrons = singleElectrons;
+		}
+
+		public int getValue() {
+			return value;
+		}
+
+		public int getSingleElectrons() {
+			return singleElectrons;
+		}
+	}
+
+	private static final int NN8 = 8;
+	private static final int WIDTH = 3;
 
     private BooleanIOSetting forceWriteAs2DCoords;
     
@@ -495,7 +528,42 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.newLine();
             }
         }
-        
+
+		// write radical information
+		if (container.getSingleElectronCount() > 0) {
+			Map<Integer, SPIN_MULTIPLICITY> atomIndexSpinMap = new LinkedHashMap<Integer, SPIN_MULTIPLICITY>();
+			for (int i = 0; i < container.getAtomCount(); i++) {
+				int eCount = container.getConnectedSingleElectronsCount(container.getAtom(i));
+				switch (eCount) {
+					case 0:
+						continue;
+					case 1:
+						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.SINGLET_SPIN);
+						break;
+					case 2:
+						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DOUBLET_SPIN);
+						break;
+					case 3:
+						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.TRIPLET_SPIN);
+						break;
+					default:
+						logger.debug("Invalid number of radicals found: " + eCount);
+						break;
+				}
+			}
+			Iterator<Map.Entry<Integer, SPIN_MULTIPLICITY>> iterator = atomIndexSpinMap.entrySet().iterator();
+			for (int i = 0; i < atomIndexSpinMap.size(); i += NN8) {
+				if (atomIndexSpinMap.size() - i <= NN8) {
+					writer.write("M  RAD" + formatMDLInt(atomIndexSpinMap.size() - i, WIDTH));
+					writeRadicalPattern(iterator, i);
+				} else {
+					writer.write("M  RAD" + formatMDLInt(NN8, WIDTH));
+					writeRadicalPattern(iterator, i);
+				}
+				writer.newLine();
+			}
+		}
+
         // write formal isotope information
         for (int i = 0; i < container.getAtomCount(); i++) {
         	IAtom atom = container.getAtom(i);
@@ -567,6 +635,19 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.newLine();
         writer.flush();
     }
+
+	private void writeRadicalPattern(Iterator<Map.Entry<Integer, SPIN_MULTIPLICITY>> iterator,
+									 int i) throws IOException {
+
+		Map.Entry<Integer, SPIN_MULTIPLICITY> entry = iterator.next();
+		writer.write(" ");
+		writer.write(formatMDLInt(entry.getKey() + 1, WIDTH));
+		writer.write(" ");
+		writer.write(formatMDLInt(entry.getValue().getValue(), WIDTH));
+
+		i = i + 1;
+		if (i < NN8 && iterator.hasNext()) writeRadicalPattern(iterator, i);
+	}
 
 	/**
 	 * Formats an integer to fit into the connection table and changes it 

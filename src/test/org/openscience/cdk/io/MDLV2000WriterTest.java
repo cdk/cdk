@@ -532,4 +532,72 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
 
 
+	@Test
+	public void testSingleSingletRadical() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleSingletRadical.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		StringWriter sw =new StringWriter();
+		MDLV2000Writer writer = new MDLV2000Writer(sw);
+		writer.write(molecule);
+		writer.close();
+
+		Assert.assertTrue(sw.toString().contains("M  RAD  1   2   1"));
+	}
+
+	@Test
+	public void testSingleDoubletRadical() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleDoubletRadical.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		StringWriter sw =new StringWriter();
+		MDLV2000Writer writer = new MDLV2000Writer(sw);
+		writer.write(molecule);
+		writer.close();
+
+		Assert.assertTrue(sw.toString().contains("M  RAD  1   2   2"));
+	}
+
+	@Test
+	public void testSingleTripletRadical() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleTripletRadical.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		StringWriter sw =new StringWriter();
+		MDLV2000Writer writer = new MDLV2000Writer(sw);
+		writer.write(molecule);
+		writer.close();
+
+		Assert.assertTrue(sw.toString().contains("M  RAD  1   2   3"));
+	}
+
+	@Test
+	public void testMultipleRadicals() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/multipleRadicals.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		StringWriter sw =new StringWriter();
+		MDLV2000Writer writer = new MDLV2000Writer(sw);
+		writer.write(molecule);
+		writer.close();
+
+		Assert.assertTrue(sw.toString().contains("M  RAD  8   1   2   2   2   3   2   4   2   5   2   6   2   7   2   8   2"));
+		Assert.assertTrue(sw.toString().contains("M  RAD  1   9   2"));
+	}
 }

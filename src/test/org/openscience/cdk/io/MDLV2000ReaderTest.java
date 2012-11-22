@@ -1005,5 +1005,61 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(chiralCentre);
         
     }
+
+	@Test
+	public void testSingleSingletRadical() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleSingletRadical.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 2);
+	}
+
+	@Test
+	public void testSingleDoubletRadical() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleDoubletRadical.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 1);
+	}
+
+	@Test
+	public void testSingleTripletRadical() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleTripletRadical.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 3);
+	}
+
+	@Test
+	public void testMultipleRadicals() throws Exception {
+
+		InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/multipleRadicals.mol");
+		MDLV2000Reader reader = new MDLV2000Reader(in);
+		IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+		molecule = reader.read(molecule);
+		reader.close();
+
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(2)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(3)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(5)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(6)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(7)) == 1);
+		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(8)) == 1);
+	}
     
 }
