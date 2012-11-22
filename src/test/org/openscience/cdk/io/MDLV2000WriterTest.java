@@ -392,4 +392,109 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.indexOf("Leu") != -1);
     }
 
+
+    /**
+     * @cdk.bug 1263
+     * @throws Exception
+     */
+    @Test
+    public void testWritePseudoAtoms_LongLabel() throws Exception {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+
+        IAtom c1   = builder.newInstance(IAtom.class, "C");
+        IAtom tRNA = builder.newInstance(IPseudoAtom.class, "tRNA");
+
+        container.addAtom(c1);
+        container.addAtom(tRNA);
+
+        StringWriter sw = new StringWriter();
+        MDLV2000Writer writer = new MDLV2000Writer(sw);
+        writer.write(container);
+
+        String output = sw.toString();
+
+        Assert.assertTrue(output.contains("A    2"));
+        Assert.assertTrue(output.contains("tRNA"));
+
+
+    }
+
+    /**
+     * Checks that null atom labels are handled correctly.
+     */
+    @Test
+    public void testWritePseudoAtoms_nullLabel() throws Exception {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+
+        IAtom       c1       = builder.newInstance(IAtom.class,       "C");
+        IPseudoAtom nullAtom = builder.newInstance(IPseudoAtom.class, "");
+        nullAtom.setLabel(null);
+
+        container.addAtom(c1);
+        container.addAtom(nullAtom);
+
+        StringWriter sw = new StringWriter();
+        MDLV2000Writer writer = new MDLV2000Writer(sw);
+        writer.write(container);
+
+        String output = sw.toString();
+        Assert.assertTrue(output.contains("R"));
+
+    }
+
+    /**
+     * When there are more then 16 R Groups these should be wrapped
+     * @throws Exception
+     */
+    @Test
+    public void testRGPLine_Multiline() throws Exception {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+
+        for(int i = 1; i < 20; i++)
+            container.addAtom(builder.newInstance(IPseudoAtom.class,
+                                                  "R" + i));
+
+        StringWriter sw = new StringWriter();
+        MDLV2000Writer writer = new MDLV2000Writer(sw);
+        writer.write(container);
+
+        String output = sw.toString();
+        Assert.assertTrue(output.contains("M  RGP  8   1   1   2   2   3   3   4   4   5   5   6   6   7   7   8   8"));
+        Assert.assertTrue(output.contains("M  RGP  8   9   9  10  10  11  11  12  12  13  13  14  14  15  15  16  16"));
+        Assert.assertTrue(output.contains("M  RGP  3  17  17  18  18  19  19"));
+
+    }
+
+    @Test
+    public void testAlaias_TruncatedLabel() throws Exception {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer container = builder.newInstance(IAtomContainer.class);
+
+        String label = "This is a very long label - almost too long. it should be cut here -> and the rest is truncated";
+
+        container.addAtom(builder.newInstance(IPseudoAtom.class,
+                                              label));
+
+        StringWriter sw = new StringWriter();
+        MDLV2000Writer writer = new MDLV2000Writer(sw);
+        writer.write(container);
+
+        String output = sw.toString();
+
+        Assert.assertTrue(output.contains("This is a very long label - almost too long. it should be cut here ->"));
+        // make sure the full label wasn't output
+        Assert.assertFalse(output.contains(label));
+
+
+    }
+
+
+
 }
