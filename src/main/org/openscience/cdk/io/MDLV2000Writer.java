@@ -384,8 +384,21 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             line += "  0  0  0";
 
             if (container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null) {
-        	    int value = ((Integer)container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue();
-        	    line += formatMDLInt(value, 3);
+				Object atomAtomMapping = container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+				if (atomAtomMapping instanceof String) {
+					try {
+						int value = Integer.parseInt((String) atomAtomMapping);
+						line += formatMDLInt(value, 3);
+					} catch (NumberFormatException exception) {
+						line += formatMDLInt(0, 3);
+						logger.warn("Skipping atom-atom mapping, invalid value: " + atomAtomMapping);
+					}
+				} else if (atomAtomMapping instanceof Integer) {
+					int value = (Integer) atomAtomMapping;
+					line += formatMDLInt(value, 3);
+				} else {
+					line += formatMDLInt(0, 3);
+				}
        	    } else {
         	    line += formatMDLInt(0, 3);
         	}

@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Properties;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -90,7 +92,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         molecule.addAtom(new PseudoAtom("*"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
-        
+
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         Assert.assertTrue(writer.toString().indexOf("M  END") != -1);
@@ -105,14 +107,14 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         Atom atom = new Atom("C");
         atom.setMassNumber(14);
         molecule.addAtom(atom);
-        
+
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
         //logger.debug("MDL output for testBug1212219: " + output);
         Assert.assertTrue(output.indexOf("M  ISO  1   1  14") != -1);
     }
-    
+
     @Test public void testWriteValence() throws Exception {
     	StringWriter writer = new StringWriter();
     	IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
@@ -129,7 +131,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.indexOf("0  0  0  0  0  1  0  0  0  0  0  0") != -1);
         Assert.assertTrue(output.indexOf("0  0  0  0  0 15  0  0  0  0  0  0") != -1);
     }
-    
+
     @Test public void testWriteAtomAtomMapping() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
@@ -141,6 +143,39 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.indexOf("0  0  0  0  0  0  0  0  0  1  0  0") != -1);
         Assert.assertTrue(output.indexOf("0  0  0  0  0  0  0  0  0 15  0  0") != -1);
     }
+
+	/**
+	 * Tests if String atom atom mappings are parsed correctly
+	 */
+	@Test public void testWriteStringAtomAtomMapping() throws Exception {
+		StringWriter writer = new StringWriter();
+		IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+		molecule.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"1");
+		molecule.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"15");
+		MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
+		mdlWriter.write(molecule);
+		String output = writer.toString();
+		Assert.assertTrue(output.contains("0  0  0  0  0  0  0  0  0  1  0  0"));
+		Assert.assertTrue(output.contains("0  0  0  0  0  0  0  0  0 15  0  0"));
+	}
+
+	/**
+	 * Tests if non-valid atom atom mappings are ignored by the reader.
+	 */
+	@Test public void testWriteInvalidAtomAtomMapping() throws Exception {
+		StringWriter writer = new StringWriter();
+		IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+		molecule.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"1a");
+		molecule.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"15");
+		MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
+		mdlWriter.write(molecule);
+		String output = writer.toString();
+		Pattern p = Pattern.compile(".*V2000.*    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  " +
+		"0  0.*    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0 15  0  0.*",
+		Pattern.MULTILINE|Pattern.DOTALL);
+		Matcher m = p.matcher(output);
+		Assert.assertTrue(m.matches());
+	}
     
     /**
      * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
