@@ -179,17 +179,26 @@ public class CanonicalLabeler {
    * @param v the invariance pair vector
    * @cdk.todo    can this be done in one loop?
    */
-  private void sortArrayList(ArrayList v) {
-    Collections.sort(v, new Comparator() {
-      public int compare(Object o1, Object o2) {
-        return (int) (((InvPair) o1).getCurr() - ((InvPair) o2).getCurr());
-      }
-    });
-    Collections.sort(v, new Comparator() {
-      public int compare(Object o1, Object o2) {
-        return (int) (((InvPair) o1).getLast() - ((InvPair) o2).getLast());
-      }
-    });
+  private void sortArrayList(List<InvPair> v) {
+      Collections.sort(v, new Comparator<InvPair>() {
+          public int compare(InvPair o1, InvPair o2) {
+              if (o1.getCurr() > o2.getCurr())
+                  return +1;
+              if (o1.getCurr() < o2.getCurr())
+                  return -1;
+              return 0;
+          }
+      });
+      Collections.sort(v, new Comparator<InvPair>() {
+          @Override
+          public int compare(InvPair o1, InvPair o2) {
+              if (o1.getLast() > o2.getLast())
+                  return +1;
+              if (o1.getLast() < o2.getLast())
+                  return -1;
+              return 0;
+          }
+      });
   }
 
   /**
