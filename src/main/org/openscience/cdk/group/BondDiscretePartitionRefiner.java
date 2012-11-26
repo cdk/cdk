@@ -90,7 +90,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * The connectivity between bonds; two bonds are connected 
      * if they share an atom.
      */
-    private Map<Integer, List<Integer>> connectionTable;
+    private int[][] connectionTable;
     
     /**
      * Specialised option to allow generating automorphisms that ignore the bond order.
@@ -120,7 +120,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     @Override
     @TestMethod("getVertexCountTest")
     public int getVertexCount() {
-        return connectionTable.size();
+        return connectionTable.length;
     }
 
     /** 
@@ -129,11 +129,26 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     @Override
     @TestMethod("getConnectivityTest")
     public int getConnectivity(int i, int j) {
-        if (connectionTable.containsKey(i) && connectionTable.get(i).contains(j)) {
-            return 1;
-        } else {
-            return 0;
+        int indexInRow;
+        int maxRowIndex = connectionTable[i].length;
+        for (indexInRow = 0; indexInRow < maxRowIndex; indexInRow++) {
+            if (connectionTable[i][indexInRow] == j) {
+                return 1;
+            }
         }
+        return 0;
+    }
+    
+    /**
+     * Used by the equitable refiner to get the indices of bonds connected to
+     * the bond at <code>bondIndex</code>.
+     * 
+     * @param bondIndex the index of the incident bond
+     * @return an array of bond indices
+     */
+    @TestMethod("getConnectedIndicesTest")
+    public int[] getConnectedIndices(int bondIndex) {
+        return connectionTable[bondIndex];
     }
 
     /**
@@ -205,9 +220,9 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Refine an atom container, which has the side effect of calculating
      * the automorphism group.
      * 
-     * If the group is needed afterwards, call {@link #getGroup} instead of 
-     * {@link #getAutomorphismGroup} otherwise the refine method will be
-     * called twice.
+     * If the group is needed afterwards, call {@link #getAutomorphismGroup()}
+     * instead of {@link #getAutomorphismGroup(IAtomContainer)} otherwise the
+     * refine method will be called twice.
      * 
      * @param atomContainer the atomContainer to refine
      */
@@ -312,32 +327,63 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         
         int size = getVertexCount();
         PermutationGroup group = new PermutationGroup(new Permutation(size));
-        super.setup(group, new BondEquitablePartitionRefiner(connectionTable));
+        super.setup(group, new BondEquitablePartitionRefiner(this));
     }
     
     private void setup(IAtomContainer atomContainer, PermutationGroup group) {
         setupConnectionTable(atomContainer);
-        super.setup(group, new BondEquitablePartitionRefiner(connectionTable));
+        super.setup(group, new BondEquitablePartitionRefiner(this));
     }
     
     private void setupConnectionTable(IAtomContainer atomContainer) {
-        connectionTable = new HashMap<Integer, List<Integer>>();
         int bondCount = atomContainer.getBondCount();
+        // unfortunately, we have to sort the bonds
+        List<IBond> bonds = new ArrayList<IBond>();
+        Map<String, IBond> bondMap = new HashMap<String, IBond>();
         for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++) {
-            IBond bondI = atomContainer.getBond(bondIndexI);
+            IBond bond = atomContainer.getBond(bondIndexI); 
+            bonds.add(bond);
+            int a0 = atomContainer.getAtomNumber(bond.getAtom(0));
+            int a1 = atomContainer.getAtomNumber(bond.getAtom(1));
+            String boS;
+            if (ignoreBondOrders) {
+                // doesn't matter what it is, so long as it's constant
+                boS = "1"; 
+            } else {
+                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC); 
+                int orderNumber = (isArom)? 5 : bond.getOrder().numeric();
+                boS = String.valueOf(orderNumber);
+            }
+            String bondString;
+            if (a0 < a1) {
+                bondString = a0 + "," + boS + "," + a1;
+            } else {
+                bondString = a1 + "," + boS + "," + a0;
+            }
+            bondMap.put(bondString, bond);
+        }
+
+        List<String> keys = new ArrayList<String>(bondMap.keySet());
+        Collections.sort(keys);
+        for (String key : keys) {
+            bonds.add(bondMap.get(key));
+        }
+        
+        connectionTable = new int[bondCount][];
+        for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++) {
+            IBond bondI = bonds.get(bondIndexI);
+            List<Integer> connectedBondIndices = new ArrayList<Integer>();
             for (int bondIndexJ = 0; bondIndexJ < bondCount; bondIndexJ++) {
                 if (bondIndexI == bondIndexJ) continue;
-                IBond bondJ = atomContainer.getBond(bondIndexJ);
+                IBond bondJ = bonds.get(bondIndexJ);
                 if (bondI.isConnectedTo(bondJ)) {
-                    List<Integer> connections;
-                    if (connectionTable.containsKey(bondIndexI)) {
-                        connections = connectionTable.get(bondIndexI);
-                    } else {
-                        connections = new ArrayList<Integer>();
-                        connectionTable.put(bondIndexI, connections);
-                    }
-                    connections.add(bondIndexJ);
+                    connectedBondIndices.add(bondIndexJ);
                 }
+            }
+            int connBondCount = connectedBondIndices.size();
+            connectionTable[bondIndexI] = new int[connBondCount];
+            for (int index = 0; index < connBondCount; index++) {
+                connectionTable[bondIndexI][index] = connectedBondIndices.get(index); 
             }
         }
     }

@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -40,22 +38,20 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("BondEquitablePartitionRefinerTest")
 public class BondEquitablePartitionRefiner extends
         AbstractEquitablePartitionRefiner implements IEquitablePartitionRefiner {
-    
+
     /**
-     * The connections between bonds in the atom container, expressed as a map
-     * between bond indices. So, for each bond, there is a mapping to other bonds
-     * it is connected to.
+     * A reference to the discrete refiner, which has the connectivity info.
      */
-    private Map<Integer, List<Integer>> connectionTable;
+    private BondDiscretePartitionRefiner discreteRefiner;
     
     /**
      * Make an equitable partition refiner using the supplied connection table.
      * 
-     * @param connectionTable the connections between vertices
+     * @param discreteRefiner the connections between vertices
      */
     @TestMethod("constructorTest")
-    public BondEquitablePartitionRefiner(Map<Integer, List<Integer>> connectionTable) {
-        this.connectionTable = connectionTable;
+    public BondEquitablePartitionRefiner(BondDiscretePartitionRefiner discreteRefiner) {
+        this.discreteRefiner = discreteRefiner;
     }
 
     /**
@@ -63,10 +59,9 @@ public class BondEquitablePartitionRefiner extends
      */
     @Override
     @TestMethod("neighboursInBlockTest")
-    public int neighboursInBlock(Set<Integer> block, int vertexIndex) {
+    public int neighboursInBlock(Set<Integer> block, int bondIndex) {
         int neighbours = 0;
-        List<Integer> connectedBonds = connectionTable.get(vertexIndex); 
-        for (int connected : connectedBonds) {
+        for (int connected : discreteRefiner.getConnectedIndices(bondIndex)) {
             if (block.contains(connected)) {
                 neighbours++;
             }
@@ -80,7 +75,7 @@ public class BondEquitablePartitionRefiner extends
     @Override
     @TestMethod("getVertexCountTest")
     public int getVertexCount() {
-        return connectionTable.size();
+        return discreteRefiner.getVertexCount();
     }
 
 }

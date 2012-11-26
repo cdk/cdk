@@ -186,6 +186,19 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
     }
     
     @Test
+    public void getConnectedIndicesTest() {
+        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+        refiner.refine(ac);
+        int[] expected = new int[] { 0, 3 };
+        int[] observed = refiner.getConnectedIndices(1);
+        Assert.assertTrue("Expected : " + Arrays.toString(expected)
+                         + " but was " + Arrays.toString(observed),
+                Arrays.equals(expected, observed));
+    }
+    
+    @Test
     public void getAutomorphismPartitionTest() {
         String acpString = "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1)," +
         		           "4:5(2),5:6(1),6:7(2),7:8(1),8:9(2),5:9(1),0:9(1)";

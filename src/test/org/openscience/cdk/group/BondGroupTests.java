@@ -29,6 +29,8 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -37,9 +39,13 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class BondGroupTests extends CDKTestCase {
     
+    private static final IChemObjectBuilder builder =
+            SilentChemObjectBuilder.getInstance();
+    
     public IAtomContainer getMol(String smiles) throws InvalidSmilesException {
         SmilesParser parser = 
             new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        parser.setPreservingAromaticity(true);
         return parser.parseSmiles(smiles);
     }
     
@@ -51,12 +57,14 @@ public class BondGroupTests extends CDKTestCase {
 
     @Test
     public void cycloButane() throws InvalidSmilesException {
-        test(getMol("C1CCC1"), 8);
+        test(AtomContainerPrinter.fromString(
+                "C0C1C2C3 0:1(1),1:2(1),2:3(1),0:3(1)", builder), 8);
     }
     
     @Test
     public void cycloButadiene() throws InvalidSmilesException {
-        test(getMol("C1=CC=C1"), 4);
+        test(AtomContainerPrinter.fromString(
+                "C0C1C2C3 0:1(2),1:2(1),2:3(2),0:3(1)", builder), 4);
     }
     
     @Test
@@ -66,12 +74,18 @@ public class BondGroupTests extends CDKTestCase {
     
     @Test
     public void napthaleneA() throws InvalidSmilesException {
-        test(getMol("C1=CC=C2C=CC=CC2=C1"), 2);
+        test(AtomContainerPrinter.fromString(
+                "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1),4:5(2)," +
+                "5:6(1),6:7(2),7:8(1),3:8(1),8:9(2),0:9(1)", 
+                builder), 2);
     }
     
     @Test
     public void napthaleneB() throws InvalidSmilesException {
-        test(getMol("C1=CC=CC2=C1C=CC=C2"), 4);
+        test(AtomContainerPrinter.fromString(
+                "C0C1C2C3C4C5C6C7C8C9 0:1(1),1:2(2),2:3(1),3:4(1),4:5(2)," +
+                "5:6(1),6:7(2),7:8(1),3:8(2),8:9(1),0:9(2)", 
+                SilentChemObjectBuilder.getInstance()), 4);
     }
     
 }

@@ -1,8 +1,6 @@
 package org.openscience.cdk.group;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import junit.framework.Assert;
@@ -16,24 +14,33 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
     
-    public Map<Integer, Integer> makeMap(int... keyValPairs) {
-        assert keyValPairs.length % 2 == 0;
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (int i = 0; i < keyValPairs.length; i += 2) {
-            map.put(keyValPairs[i], keyValPairs[i + 1]);
-        }
-        return map;
+    public MockAtomRefiner makeExampleTable() {
+        int[][] table = new int[4][];
+        table[0] = new int[] { 1, 2 };
+        table[1] = new int[] { 0, 3 };
+        table[2] = new int[] { 0, 3 };
+        table[3] = new int[] { 1, 2 };
+        return new MockAtomRefiner(table);
     }
     
-    public Map<Integer, Integer>[] makeExampleTable() {
-        @SuppressWarnings("unchecked")
-        Map<Integer, Integer>[] table = 
-                (Map<Integer, Integer>[]) new HashMap[4];
-        table[0] = makeMap(1, 2, 2, 1);
-        table[1] = makeMap(0, 2, 3, 1);
-        table[2] = makeMap(0, 1, 3, 1);
-        table[3] = makeMap(1, 1, 2, 1);
-        return table;
+    public class MockAtomRefiner extends AtomDiscretePartitionRefiner {
+
+        public int[][] connections;
+
+        public MockAtomRefiner(int[][] connections) {
+            this.connections = connections;
+        }
+
+        @Override
+        public int getVertexCount() {
+            return connections.length;
+        }
+        
+        @Override
+        public int[] getConnectedIndices(int vertexI) {
+            return connections[vertexI];
+        }
+
     }
     
     @Test

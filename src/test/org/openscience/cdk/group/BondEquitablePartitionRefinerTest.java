@@ -1,10 +1,6 @@
 package org.openscience.cdk.group;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import junit.framework.Assert;
@@ -18,13 +14,33 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class BondEquitablePartitionRefinerTest extends CDKTestCase {
     
-    public Map<Integer, List<Integer>> makeExampleTable() {
-        Map<Integer, List<Integer>> table = new HashMap<Integer, List<Integer>>();
-        table.put(0, Arrays.asList(1, 2));
-        table.put(1, Arrays.asList(0, 3));
-        table.put(2, Arrays.asList(0, 3));
-        table.put(3, Arrays.asList(1, 2));
-        return table;
+    public MockBondRefiner makeExampleTable() {
+        int[][] table = new int[4][];
+        table[0] = new int[] { 1, 2 };
+        table[1] = new int[] { 0, 3 };
+        table[2] = new int[] { 0, 3 };
+        table[3] = new int[] { 1, 2 };
+        return new MockBondRefiner(table);
+    }
+    
+    public class MockBondRefiner extends BondDiscretePartitionRefiner {
+
+        public int[][] connections;
+
+        public MockBondRefiner(int[][] connections) {
+            this.connections = connections;
+        }
+
+        @Override
+        public int getVertexCount() {
+            return connections.length;
+        }
+        
+        @Override
+        public int[] getConnectedIndices(int vertexI) {
+            return connections[vertexI];
+        }
+
     }
     
     @Test

@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -37,24 +36,21 @@ public class AtomEquitablePartitionRefiner extends
         AbstractEquitablePartitionRefiner implements IEquitablePartitionRefiner {
     
     /**
-     * The bonds in the atom container, expressed as a list of maps from 
-     * connected atoms to bond orders. So, for each atom, there is a map from
-     * all connected atoms to the bond orders for the bond between them.
+     * A reference to the discrete refiner, which has the connectivity info.
      */
-    private final Map<Integer, Integer>[] connectionTable;
-    
-    public AtomEquitablePartitionRefiner(Map<Integer, Integer>[] connectionTable) {
-        this.connectionTable = connectionTable;
-    }
+    private final AtomDiscretePartitionRefiner discreteRefiner;
 
+    public AtomEquitablePartitionRefiner(AtomDiscretePartitionRefiner discreteRefiner) {
+        this.discreteRefiner = discreteRefiner;
+    }
+    
     /**
      * @inheritDoc
      */
     @Override
-    public int neighboursInBlock(Set<Integer> block, int vertexIndex) {
+    public int neighboursInBlock(Set<Integer> block, int atomIndex) {
         int neighbours = 0;
-        Map<Integer, Integer> connectedOrders = connectionTable[vertexIndex]; 
-        for (int connected : connectedOrders.keySet()) {
+        for (int connected : discreteRefiner.getConnectedIndices(atomIndex)) {
             if (block.contains(connected)) {
                 neighbours++;
             }
@@ -67,7 +63,7 @@ public class AtomEquitablePartitionRefiner extends
      */
     @Override
     public int getVertexCount() {
-        return connectionTable.length;
+        return discreteRefiner.getVertexCount();
     }
 
 }
