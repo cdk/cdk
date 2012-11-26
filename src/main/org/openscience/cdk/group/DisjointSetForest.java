@@ -34,13 +34,15 @@ import org.openscience.cdk.annotations.TestMethod;
  * 
  * @author maclean
  * @cdk.module group
+ * @cdk.keywords union-find
  */
 @TestClass("DisjointSetForestTest")
 public class DisjointSetForest {
     
     /**
      * The sets stored as pointers to their parents. The root of each
-     * set is stored as the size of the set.
+     * set is stored as the negated size of the set - ie a set of size
+     * 5 with a root element 2 will mean forest[2] = -5.
      */
     private int[] forest;
     
@@ -58,8 +60,12 @@ public class DisjointSetForest {
     }
     
     /**
-     * @param i
-     * @return
+     * Get the value of the forest at this index - note that this will <i>not</i>
+     * necessarily give the set for that element : use {@link #getSets} after
+     * union-ing elements.
+     *  
+     * @param i the index in the forest
+     * @return the value at this index
      */
     @TestMethod("getTest")
     public int get(int i) {

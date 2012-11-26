@@ -39,12 +39,12 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  */
 @TestClass("org.openscience.cdk.group.PermutationTest")
-public class Permutation {
+public final class Permutation {
 
     /**
      * The elements of the permutation.
      */
-    private int[] values;
+    private final int[] values;
 
     /**
      * Constructs an identity permutation with <code>size</code> elements.

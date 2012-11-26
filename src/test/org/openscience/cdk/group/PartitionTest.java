@@ -176,8 +176,7 @@ public class PartitionTest extends CDKTestCase {
 		for (int i = 0; i < partitionSize; i++) {
 			partition.addSingletonCell(i);
 		}
-		Permutation permutation = new Permutation(permutationSize);
-		partition.setAsPermutation(permutation, permutationSize);
+		Permutation permutation =  partition.setAsPermutation(permutationSize);
 		for (int i = 0; i < permutationSize; i++) {
 			Assert.assertEquals(i, permutation.get(i));
 		}

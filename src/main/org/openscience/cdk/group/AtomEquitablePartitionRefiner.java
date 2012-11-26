@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,15 +41,19 @@ public class AtomEquitablePartitionRefiner extends
      * connected atoms to bond orders. So, for each atom, there is a map from
      * all connected atoms to the bond orders for the bond between them.
      */
-    private List<Map<Integer, Integer>> connectionTable;
+    private final Map<Integer, Integer>[] connectionTable;
     
-    public AtomEquitablePartitionRefiner(List<Map<Integer, Integer>> connectionTable) {
+    public AtomEquitablePartitionRefiner(Map<Integer, Integer>[] connectionTable) {
         this.connectionTable = connectionTable;
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
     public int neighboursInBlock(Set<Integer> block, int vertexIndex) {
         int neighbours = 0;
-        Map<Integer, Integer> connectedOrders = connectionTable.get(vertexIndex); 
+        Map<Integer, Integer> connectedOrders = connectionTable[vertexIndex]; 
         for (int connected : connectedOrders.keySet()) {
             if (block.contains(connected)) {
                 neighbours++;
@@ -59,9 +62,12 @@ public class AtomEquitablePartitionRefiner extends
         return neighbours;
     }
     
+    /**
+     * @inheritDoc
+     */
     @Override
     public int getVertexCount() {
-        return connectionTable.size();
+        return connectionTable.length;
     }
 
 }

@@ -73,7 +73,7 @@ public abstract class AbstractDiscretePartitionRefiner {
     private PermutationGroup group;
     
     /**
-     * A refiner - it is necessary to call {@link setup} before use.
+     * A refiner - it is necessary to call {@link #setup} before use.
      */
     @TestMethod("emptyConstructor")
     public AbstractDiscretePartitionRefiner() {
@@ -102,7 +102,7 @@ public abstract class AbstractDiscretePartitionRefiner {
     
     /**
      * Setup the group and refiner; it is important to call this method before
-     * calling {@link refine} otherwise the refinement process will fail.
+     * calling {@link #refine} otherwise the refinement process will fail.
      * 
      * @param group a group (possibly empty) of automorphisms
      * @param refiner the equitable refiner
@@ -180,13 +180,14 @@ public abstract class AbstractDiscretePartitionRefiner {
     }
     
     /**
-     * Get the upper-half of the adjacency matrix under the permutation
-     * @param p
-     * @return
+     * Get the upper-half of the adjacency matrix under the permutation.
+     * 
+     * @param p a permutation of the adjacency matrix
+     * @return a string containing the permuted values of half the matrix
      */
     @TestMethod("getHalfMatrixStringTest")
     public String getHalfMatrixString(Permutation permutation) {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(permutation.size());
         int size = permutation.size();
         for (int indexI = 0; indexI < size - 1; indexI++) {
             for (int indexJ = indexI + 1; indexJ < size; indexJ++) {
@@ -301,7 +302,7 @@ public abstract class AbstractDiscretePartitionRefiner {
         
         Result result = Result.BETTER;
         if (bestExist) {
-            finer.setAsPermutation(pi1, firstNonDiscreteCell);
+            pi1 = finer.setAsPermutation(firstNonDiscreteCell);
             result = compareRowwise(pi1);
         }
         
@@ -328,19 +329,24 @@ public abstract class AbstractDiscretePartitionRefiner {
                         
                         this.refine(group, nextPartition);
                         
-                        Permutation permF = new Permutation(vertexCount);
-                        Permutation invF = new Permutation(vertexCount);
+                        int[] permF = new int[vertexCount];
+                        int[] invF = new int[vertexCount];
+                        for (int i = 0; i < vertexCount; i++) {
+                            permF[i] = i;
+                            invF[i] = i;
+                        }
                         
                         for (int j = 0; j <= firstNonDiscreteCell; j++) {
                             int x = nextPartition.getFirstInCell(j);
-                            int i = invF.get(x);
-                            int h = permF.get(j);
-                            permF.set(j, x);
-                            permF.set(i, h);
-                            invF.set(h, i);
-                            invF.set(x, j);
+                            int i = invF[x];
+                            int h = permF[j];
+                            permF[j] = x;
+                            permF[i] = h;
+                            invF[h] = i;
+                            invF[x] = j;
                         }
-                        group.changeBase(permF);
+                        Permutation pPermF = new Permutation(permF);
+                        group.changeBase(pPermF);
                         for (int j = 0; j < vertexCount; j++) {
                             Permutation g = group.get(firstNonDiscreteCell, j);
                             if (g != null) {

@@ -205,8 +205,8 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Refine an atom container, which has the side effect of calculating
      * the automorphism group.
      * 
-     * If the group is needed afterwards, call getGroup() instead of 
-     * {@link getAutomorphismGroup} otherwise the refine method will be
+     * If the group is needed afterwards, call {@link #getGroup} instead of 
+     * {@link #getAutomorphismGroup} otherwise the refine method will be
      * called twice.
      * 
      * @param atomContainer the atomContainer to refine
@@ -220,7 +220,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Refine a bond partition based on the connectivity in the atom container.
      * 
      * @param partition the initial partition of the bonds
-     * @param container the atom container to use
+     * @param atomContainer the atom container to use
      */
     @TestMethod("refine_StartingPartitionTest")
     public void refine(IAtomContainer atomContainer, Partition partition) {
@@ -230,7 +230,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     
     /**
      * Checks if the atom container is canonical. Note that this calls 
-     * {@link refine} first. 
+     * {@link #refine} first. 
      * 
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
@@ -246,7 +246,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Gets the automorphism group of the atom container. By default it uses an
      * initial partition based on the bond 'types' (so all the C-C bonds are in
      * one cell, all the C=N in another, etc). If this behaviour is not 
-     * desired, then use the {@link ignoreBondOrders} flag in the constructor.
+     * desired, then use the {@link #ignoreBondOrders} flag in the constructor.
      * 
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
@@ -279,7 +279,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Get the automorphism group of the molecule given an initial partition.
      * 
      * @param atomContainer the atom container to use
-     * @param initialPartiton an initial partition of the bonds
+     * @param initialPartition an initial partition of the bonds
      * @return the automorphism group starting with this partition
      */
     @TestMethod("getAutomorphismGroup_StartingPartitionTest")

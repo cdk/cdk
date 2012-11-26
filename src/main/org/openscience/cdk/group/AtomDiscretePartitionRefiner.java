@@ -90,7 +90,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     /**
      * A convenience lookup table for atom-atom connections
      */
-    private List<Map<Integer, Integer>> connectionTable;
+    private Map<Integer, Integer>[] connectionTable;
     
     /**
      * Specialised option to allow generating automorphisms 
@@ -132,7 +132,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     @Override
     @TestMethod("getVertexCountTest")
     public int getVertexCount() {
-        return connectionTable.size();
+        return connectionTable.length;
     }
 
     /**
@@ -141,8 +141,8 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     @Override
     @TestMethod("getConnectivityTest")
     public int getConnectivity(int i, int j) {
-        if (connectionTable.get(i).containsKey(j)) {
-            return connectionTable.get(i).get(j);
+        if (connectionTable[i].containsKey(j)) {
+            return connectionTable[i].get(j);
         } else {
             return 0;
         }
@@ -209,8 +209,8 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Refine an atom container, which has the side effect of calculating
      * the automorphism group.
      * 
-     * If the group is needed afterwards, call getGroup() instead of 
-     * {@link getAutomorphismGroup} otherwise the refine method will be
+     * If the group is needed afterwards, call {@link #getGroup} instead of 
+     * {@link #getAutomorphismGroup} otherwise the refine method will be
      * called twice.
      * 
      * @param atomContainer the atomContainer to refine
@@ -234,7 +234,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     
     /**
      * Checks if the atom container is canonical. Note that this calls 
-     * {@link refine} first. 
+     * {@link #refine} first. 
      * 
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
@@ -250,7 +250,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Gets the automorphism group of the atom container. By default it uses an
      * initial partition based on the element symbols (so all the carbons are in
      * one cell, all the nitrogens in another, etc). If this behaviour is not 
-     * desired, then use the {@link ignoreElements} flag in the constructor.
+     * desired, then use the {@link #ignoreElements} flag in the constructor.
      * 
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
@@ -283,7 +283,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Get the automorphism group of the molecule given an initial partition.
      * 
      * @param atomContainer the atom container to use
-     * @param initialPartiton an initial partition of the atoms
+     * @param initialPartition an initial partition of the atoms
      * @return the automorphism group starting with this partition
      */
     @TestMethod("getAutomorphismGroup_StartingPartitionTest")
@@ -311,17 +311,25 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Makes a lookup table for the connection between atoms, to avoid looking
      * through the bonds each time.
      * 
+     * @param atomContainer the atom 
      * @return a connection table of atom indices to connected atom indices
      */
-    private List<Map<Integer, Integer>> makeConnectionTable(
+    private Map<Integer, Integer>[] makeConnectionTable(
             IAtomContainer atomContainer) {
-        List<Map<Integer, Integer>> table = 
-                new ArrayList<Map<Integer, Integer>>();
-        for (int atomIndex = 0; atomIndex < atomContainer.getAtomCount(); atomIndex++) {
+        int atomCount = atomContainer.getAtomCount();
+        
+        @SuppressWarnings("unchecked")
+        Map<Integer, Integer>[] table = 
+                (Map<Integer, Integer>[]) new HashMap[atomCount];
+        
+        for (int atomIndex = 0; atomIndex < atomCount; atomIndex++) {
             IAtom atom = atomContainer.getAtom(atomIndex);
+            List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+            int nAtoms = connectedAtoms.size();
+            int initialSize = nAtoms > 3 ? 1 + nAtoms + nAtoms / 3 : nAtoms;
             Map<Integer, Integer> connectedIndices = 
-                    new HashMap<Integer, Integer>();
-            for (IAtom connected : atomContainer.getConnectedAtomsList(atom)) {
+                    new HashMap<Integer, Integer>(initialSize);
+            for (IAtom connected : connectedAtoms) {
                 int index = atomContainer.getAtomNumber(connected);
                 if (ignoreBondOrders) {
                     connectedIndices.put(index, 1);
@@ -332,7 +340,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
                     connectedIndices.put(index, orderNumber);
                 }
             }
-            table.add(connectedIndices);
+            table[atomIndex] = connectedIndices;
         }
         return table;
     }

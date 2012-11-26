@@ -1,9 +1,7 @@
 package org.openscience.cdk.group;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,12 +25,14 @@ public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
         return map;
     }
     
-    public List<Map<Integer, Integer>> makeExampleTable() {
-        List<Map<Integer, Integer>> table = new ArrayList<Map<Integer, Integer>>();
-        table.add(makeMap(1, 2, 2, 1));
-        table.add(makeMap(0, 2, 3, 1));
-        table.add(makeMap(0, 1, 3, 1));
-        table.add(makeMap(1, 1, 2, 1));
+    public Map<Integer, Integer>[] makeExampleTable() {
+        @SuppressWarnings("unchecked")
+        Map<Integer, Integer>[] table = 
+                (Map<Integer, Integer>[]) new HashMap[4];
+        table[0] = makeMap(1, 2, 2, 1);
+        table[1] = makeMap(0, 2, 3, 1);
+        table[2] = makeMap(0, 1, 3, 1);
+        table[3] = makeMap(1, 1, 2, 1);
         return table;
     }
     
