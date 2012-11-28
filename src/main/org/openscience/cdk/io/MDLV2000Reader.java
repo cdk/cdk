@@ -925,14 +925,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 if ("D".equals(pseudo.getLabel())) {
 					IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
-                    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class,"H", 2);
-                    isotopeFactory.configure(newAtom, isotope);               
+                    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class, 1, "H", 2, 2.014101778, 0.0115);
+					isotopeFactory.configure(newAtom, isotope);
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
                 } else if ("T".equals(pseudo.getLabel())) {
                     IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
-				    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class,"H", 3);
-				    isotopeFactory.configure(newAtom, isotope);               
+				    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class, 1, "H", 3, 3.016049278, 0d);
+				    isotopeFactory.configure(newAtom, isotope);
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
 				}
 			}

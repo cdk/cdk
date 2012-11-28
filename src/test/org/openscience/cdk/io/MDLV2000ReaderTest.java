@@ -25,9 +25,18 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -48,14 +57,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 
 
 /**
@@ -865,6 +866,18 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(3, deuteriumCount);
     }
 
+	@Test
+	public void testDeuteriumProperties() throws Exception {
+		String filename = "data/mdl/chemblMolregno5369.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
+		IAtomContainer molecule = new AtomContainer();
+		molecule = reader.read(molecule);
+		IAtom deuterium = molecule.getAtom(molecule.getAtomCount() - 1);
+		Assert.assertTrue(1 == deuterium.getAtomicNumber());
+		Assert.assertTrue(2.014101778 == deuterium.getExactMass());
+	}
+
     @Test public void testTritium() throws Exception {
         String filename = "data/mdl/chemblMolregno7039.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -877,6 +890,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 tritiumCount++;
         Assert.assertEquals(1, tritiumCount);
     }
+
+	@Test public void testTritiumProperties() throws Exception {
+		String filename = "data/mdl/chemblMolregno7039.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
+		IAtomContainer molecule = new AtomContainer();
+		molecule = reader.read(molecule);
+		IAtom tritium = molecule.getAtom(molecule.getAtomCount() - 1);
+		Assert.assertTrue(1 == tritium.getAtomicNumber());
+		Assert.assertTrue(3.016049278 == tritium.getExactMass());
+	}
 
     /**
      * Test that R-groups at higher atom numbers (>9) are read correctly
