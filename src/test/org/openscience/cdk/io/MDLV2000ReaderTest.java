@@ -859,6 +859,18 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(3, deuteriumCount);
     }
 
+	@Test
+	public void testDeuteriumProperties() throws Exception {
+		String filename = "data/mdl/chemblMolregno5369.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
+		IAtomContainer molecule = new AtomContainer();
+		molecule = reader.read(molecule);
+		IAtom deuterium = molecule.getAtom(molecule.getAtomCount() - 1);
+		Assert.assertTrue(1 == deuterium.getAtomicNumber());
+		Assert.assertTrue(2.014101778 == deuterium.getExactMass());
+	}
+
     @Test public void testTritium() throws Exception {
         String filename = "data/mdl/chemblMolregno7039.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -871,6 +883,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 tritiumCount++;
         Assert.assertEquals(1, tritiumCount);
     }
+
+	@Test public void testTritiumProperties() throws Exception {
+		String filename = "data/mdl/chemblMolregno7039.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
+		IAtomContainer molecule = new AtomContainer();
+		molecule = reader.read(molecule);
+		IAtom tritium = molecule.getAtom(molecule.getAtomCount() - 1);
+		Assert.assertTrue(1 == tritium.getAtomicNumber());
+		Assert.assertTrue(3.016049278 == tritium.getExactMass());
+	}
 
     /**
      * Tests a molfile with 'query' bond types (in this case bond type == 8 (any)).
