@@ -183,7 +183,7 @@ public class DynamicFactoryTest {
                                     DynamicFactoryTestMock.class.getConstructor(String.class),
                                     modifier));
 
-        assertNotNull(factory.ofClass(ICDKObject.class));
+        assertNotNull(factory.ofClass(ICDKObject.class, "empty"));
 
 
         // verify the modifier was invoked once
