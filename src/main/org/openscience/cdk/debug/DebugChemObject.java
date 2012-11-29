@@ -105,7 +105,7 @@ public class DebugChemObject extends ChemObject
     {
         logger.debug("Getting property of description: ", description
                      + " and type " + c.getSimpleName());
-        return super.getProperty(description);
+        return super.getProperty(description, c);
     }
 
 	public Map<Object,Object> getProperties() {
