@@ -33,14 +33,9 @@ import java.io.Writer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
@@ -101,9 +96,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
-
-    // regular expression to capture R groups with attached numbers
-    private Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
 
     private BooleanIOSetting forceWriteAs2DCoords;
     
@@ -255,8 +247,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 	 */
     public void writeMolecule(IAtomContainer container) throws Exception {
         String line = "";
-        Map<Integer,Integer> rgroups = null;
-        Map<Integer,String>  aliases = null;
+        List<Integer> rgroupList=null;
         // write header block
         // lines get shortened to 80 chars, that's in the spec
         String title = (String)container.getProperty(CDKConstants.TITLE);
@@ -316,54 +307,18 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         	if(container.getAtom(f) instanceof IPseudoAtom){
         		//according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
         		IPseudoAtom pseudoAtom = (IPseudoAtom) container.getAtom(f);
-                String      label      = pseudoAtom.getLabel();
-                if(label == null) // set to empty string if null
-                    label = "";
-
-                // firstly check if it's a numbered R group
-                Matcher matcher = NUMERED_R_GROUP.matcher(label);
-        		if (pseudoAtom.getSymbol().equals("R")
-                        && !label.isEmpty()
-                        && matcher.matches()) {
-
-                    line += "R# ";
-                    if (rgroups==null) {
-                        // we use a tree map to ensure the output order is always the same
-        				rgroups = new TreeMap<Integer, Integer>();
+        		if (pseudoAtom.getSymbol().equals("R") && pseudoAtom.getLabel().length()>1) {
+        			line += "R# ";
+        			if (rgroupList==null) {
+        				rgroupList = new ArrayList<Integer>();
         			}
-                    rgroups.put(f + 1, Integer.parseInt(matcher.group(1)));
-
+        			Integer rGroupNumber = new Integer(pseudoAtom.getLabel().substring(1)); 
+        			rgroupList.add(f+1); 
+        			rgroupList.add(rGroupNumber);
+        			
         		}
-                // not a numbered R group - note the symbol may still be R
-        		else {
-
-                    // note: no distinction made between alias and pseudo atoms - normally
-                    //       aliases maintain their original symbol while pseudo atoms are
-                    //       written with a 'A' in the atom block
-
-                    // if the label is longer then 3 characters we need
-                    // to use an alias.
-                    if(label.length() > 3) {
-
-                        if(aliases == null)
-                            aliases = new TreeMap<Integer, String>();
-
-
-                        aliases.put(f + 1, label); // atom index to alias
-
-                        line += formatMDLString(atom.getSymbol(), 3);
-
-                    } else { // label is short enough to fit in the atom block
-
-                        // make sure it's not empty
-                        if(!label.isEmpty())
-                            line += formatMDLString(label, 3);
-                        else
-                            line += formatMDLString(atom.getSymbol(), 3);
-
-                    }
-                }
-
+        		else
+        			line += formatMDLString(((IPseudoAtom) container.getAtom(f)).getLabel(), 3);
         	}else{
         		line += formatMDLString(container.getAtom(f).getSymbol(), 3);
         	}
@@ -499,51 +454,24 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
 
         //write RGP line (max occurrence is 16 data points per line)
-        if (rgroups!=null) {
-            StringBuilder rgpLine=new StringBuilder();
-        	int cnt = 0;
-
-            // the order isn't guarantied but as we index with the atom
-            // number this isn't an issue
-            for(Map.Entry<Integer,Integer> e : rgroups.entrySet()) {
-                rgpLine.append(formatMDLInt(e.getKey(),   4));
-                rgpLine.append(formatMDLInt(e.getValue(), 4));
-                cnt++;
-                if(cnt == 8){
-                    rgpLine.insert(0, "M  RGP" + formatMDLInt(cnt, 3));
-                    writer.write(rgpLine.toString());
-                    writer.newLine();
-                    rgpLine = new StringBuilder();
-                    cnt = 0;
-                }
-            }
-            if(cnt != 0) {
-                rgpLine.insert(0, "M  RGP" + formatMDLInt(cnt, 3));
-                writer.write(rgpLine.toString());
-                writer.newLine();
-            }
-
-
-        }
-
-        // write atom aliases
-        if(aliases != null){
-
-            for (Map.Entry<Integer, String> e : aliases.entrySet()){
-
-                writer.write("A" + formatMDLInt(e.getKey(), 5));
-                writer.newLine();
-
-                String label = e.getValue();
-
-                // fixed width file - doubtful someone would have a label > 70 but trim if they do
-                if(label.length() > 70)
-                    label = label.substring(0, 70);
-
-                writer.write(label);
-                writer.newLine();
-
-            }
+        if (rgroupList!=null) {
+        	StringBuffer rgpLine=new StringBuffer();
+        	int cnt=0;
+        	for (int i=1; i<= rgroupList.size(); i++) {
+        		
+        		rgpLine.append(formatMDLInt((rgroupList.get(i-1)), 4));
+        		i++;
+        		rgpLine.append(formatMDLInt((rgroupList.get(i-1)), 4));
+        		
+        		cnt++;
+        		if (i==rgroupList.size() || i==16 ) { 
+                	rgpLine.insert(0, "M  RGP"+formatMDLInt(cnt, 3));
+                	writer.write(rgpLine.toString());
+            		writer.newLine();
+            		rgpLine=new StringBuffer();
+            		cnt=0;
+        		}
+        	}
         }
         
         // close molecule
