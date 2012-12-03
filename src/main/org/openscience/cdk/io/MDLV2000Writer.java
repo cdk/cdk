@@ -32,14 +32,11 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,9 +109,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 	public enum SPIN_MULTIPLICITY {
 
 		NONE(0, 0),
-		SINGLET_SPIN(2, 1),
-		DOUBLET_SPIN(1, 2),
-		TRIPLET_SPIN(3, 3);
+		SINGLET(2, 1),
+		DOUBLET(1, 2),
+		TRIPLET(3, 3);
 
 		// the radical SDF value
 		private final int value;
@@ -126,16 +123,28 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 			this.singleElectrons = singleElectrons;
 		}
 
+		/**
+		 * Radical value for the spin multiplicity in the properties block.
+		 *
+		 * @return the radical value
+		 */
 		public int getValue() {
 			return value;
 		}
 
+		/**
+		 * The number of single electrons that correspond to the spin multiplicity.
+		 *
+		 * @return the number of single electrons
+		 */
 		public int getSingleElectrons() {
 			return singleElectrons;
 		}
 	}
 
+	// number of entries on line; value = 1 to 8
 	private static final int NN8 = 8;
+	// spacing between entries on line
 	private static final int WIDTH = 3;
 
     private BooleanIOSetting forceWriteAs2DCoords;
@@ -538,13 +547,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 					case 0:
 						continue;
 					case 1:
-						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.SINGLET_SPIN);
+						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.SINGLET);
 						break;
 					case 2:
-						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DOUBLET_SPIN);
+						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DOUBLET);
 						break;
 					case 3:
-						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.TRIPLET_SPIN);
+						atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.TRIPLET);
 						break;
 					default:
 						logger.debug("Invalid number of radicals found: " + eCount);

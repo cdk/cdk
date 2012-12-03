@@ -33,6 +33,7 @@ import java.util.regex.Matcher;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,6 +58,9 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -507,7 +511,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test
-    public void testAlaias_TruncatedLabel() throws Exception {
+    public void testAlias_TruncatedLabel() throws Exception {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
@@ -546,7 +550,12 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-		Assert.assertTrue(sw.toString().contains("M  RAD  1   2   1"));
+        String[] lines = sw.toString().split("\n");
+
+        assertThat("incorrect file length",
+                   lines.length, is(9));
+        assertThat("incorrect radical output",
+                   lines[7], is("M  RAD  1   2   1"));
 	}
 
 	@Test
@@ -563,7 +572,13 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-		Assert.assertTrue(sw.toString().contains("M  RAD  1   2   2"));
+        String[] lines = sw.toString().split("\n");
+
+        assertThat("incorrect file length",
+                   lines.length, is(9));
+        assertThat("incorrect radical output",
+                   lines[7], is("M  RAD  1   2   2"));
+
 	}
 
 	@Test
@@ -580,7 +595,12 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-		Assert.assertTrue(sw.toString().contains("M  RAD  1   2   3"));
+        String[] lines = sw.toString().split("\n");
+
+        assertThat("incorrect file length",
+                   lines.length, is(9));
+        assertThat("incorrect radical output",
+                   lines[7], is("M  RAD  1   2   3"));
 	}
 
 	@Test
@@ -597,7 +617,14 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-		Assert.assertTrue(sw.toString().contains("M  RAD  8   1   2   2   2   3   2   4   2   5   2   6   2   7   2   8   2"));
-		Assert.assertTrue(sw.toString().contains("M  RAD  1   9   2"));
+        String[] lines = sw.toString().split("\n");
+
+        assertThat("incorrect file length",
+                   lines.length, is(24));
+        assertThat("incorrect radical output on line 22",
+                   lines[21], is("M  RAD  8   1   2   2   2   3   2   4   2   5   2   6   2   7   2   8   2"));
+        assertThat("incorrect radical output on line 23",
+                   lines[22], is("M  RAD  1   9   2"));
+
 	}
 }

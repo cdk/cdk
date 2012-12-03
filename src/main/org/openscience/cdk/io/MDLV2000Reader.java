@@ -858,13 +858,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 								IAtom radical = outputContainer.getAtom(atomNumber - 1);
 								switch (spinMultiplicity) {
 									case 1:
-										spin = MDLV2000Writer.SPIN_MULTIPLICITY.DOUBLET_SPIN;
+										spin = MDLV2000Writer.SPIN_MULTIPLICITY.DOUBLET;
 										break;
 									case 2:
-										spin = MDLV2000Writer.SPIN_MULTIPLICITY.SINGLET_SPIN;
+										spin = MDLV2000Writer.SPIN_MULTIPLICITY.SINGLET;
 										break;
 									case 3:
-										spin = MDLV2000Writer.SPIN_MULTIPLICITY.TRIPLET_SPIN;
+										spin = MDLV2000Writer.SPIN_MULTIPLICITY.TRIPLET;
 										break;
 									default:
 										logger.debug("Invalid spin multiplicity found: " + spinMultiplicity);

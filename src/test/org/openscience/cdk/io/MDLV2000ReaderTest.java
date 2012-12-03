@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,6 +58,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -1015,7 +1018,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 		molecule = reader.read(molecule);
 		reader.close();
 
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 2);
+        assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)), is(2));
 	}
 
 	@Test
@@ -1027,7 +1030,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 		molecule = reader.read(molecule);
 		reader.close();
 
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 1);
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)), is(1));
 	}
 
 	@Test
@@ -1039,7 +1042,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 		molecule = reader.read(molecule);
 		reader.close();
 
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 3);
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)), is(3));
 	}
 
 	@Test
@@ -1051,15 +1054,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 		molecule = reader.read(molecule);
 		reader.close();
 
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(2)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(3)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(5)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(6)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(7)) == 1);
-		Assert.assertTrue(molecule.getConnectedSingleElectronsCount(molecule.getAtom(8)) == 1);
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(2)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(3)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(5)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(6)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(7)), is(1));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(8)), is(1));
 	}
     
 }
