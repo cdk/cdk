@@ -121,7 +121,11 @@ public class RingFilter {
     	 * {@inheritDoc}
     	 */
         public int compare(List<?> o1, List<?> o2) {
-            return o1.size() - o2.size();
+            if(o1.size() > o2.size())
+                return +1;
+            if(o1.size() < o2.size())
+                return -1;
+            return 0;
         }
     }
 }
