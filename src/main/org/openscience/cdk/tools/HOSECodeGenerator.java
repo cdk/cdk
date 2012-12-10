@@ -733,25 +733,33 @@ public class HOSECodeGenerator implements java.io.Serializable
     /**
      *The compare method, compares by canonical label of atoms
      *
-     * @param  obj1  The first TreeNode
-     * @param  obj2  The second TreeNode
+     * @param  a  The first TreeNode
+     * @param  b  The second TreeNode
      * @return       -1,0,1
      */
-    public int compare(TreeNode obj1, TreeNode obj2) {
-    	if(obj1==null || obj2==null || ((TreeNode) obj1).getAtom()==null || ((TreeNode) obj2).getAtom()==null)
-    		return 0;
-    	Long label1 = (Long)((TreeNode) obj1).getAtom().getProperty(InvPair.CANONICAL_LABEL);
-    	Long label2 = (Long)((TreeNode) obj2).getAtom().getProperty(InvPair.CANONICAL_LABEL);
-    	if(label1==null || label2==null)
-    		return 0;
-    	if (label1.intValue() < label2.intValue()) {
-    		return (-1);
-    	}
-    	if (label1.intValue() > label2.intValue()) {
-    		return (1);
-    	}
-    	return (0);
+    public int compare(TreeNode a, TreeNode b) {
+        return label(a).compareTo(label(b));
     }
+
+    /**
+     * Access the canonical label for the given tree node's atom. If any component is null
+     * then {@link Long#MIN_VALUE} is return thus sorting that object in lower order.
+     * @param node a tree node to get the label from
+     * @return canonical label value
+     */
+    private Long label(TreeNode node){
+        if(node == null)
+            return Long.MIN_VALUE;
+        IAtom atom = node.getAtom();
+        if(atom == null)
+            return Long.MIN_VALUE;
+        // cast can be removed in master
+        Long label = (Long) atom.getProperty(InvPair.CANONICAL_LABEL);
+        if(label == null)
+            return Long.MIN_VALUE;
+        return label;
+    }
+
   }
     
   /**
