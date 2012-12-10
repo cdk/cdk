@@ -653,11 +653,15 @@ public class SmilesGenerator
 				{
 					public int compare(IAtom o1, IAtom o2)
 					{
-						return (int) (
-						    (Long) o1.getProperty(InvPair.CANONICAL_LABEL) -
-						    (Long) o2.getProperty(InvPair.CANONICAL_LABEL)
-						);
+						return label(o1).compareTo(label(o2));
 					}
+
+                    private Long label(IAtom atom){
+                        // cast can be removed in master
+                        Long label = (Long) atom.getProperty(InvPair.CANONICAL_LABEL);
+                        return label != null ? label : Long.MIN_VALUE;
+                    }
+
 				});
 		}
 		return v;
