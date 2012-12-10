@@ -649,13 +649,13 @@ public class SmilesGenerator
 		if (v.size() > 1)
 		{
 			Collections.sort(v,
-				new Comparator()
+				new Comparator<IAtom>()
 				{
-					public int compare(Object o1, Object o2)
+					public int compare(IAtom o1, IAtom o2)
 					{
 						return (int) (
-						    (Long) ((IAtom) o1).getProperty(InvPair.CANONICAL_LABEL) -
-						    (Long) ((IAtom) o2).getProperty(InvPair.CANONICAL_LABEL)
+						    (Long) o1.getProperty(InvPair.CANONICAL_LABEL) -
+						    (Long) o2.getProperty(InvPair.CANONICAL_LABEL)
 						);
 					}
 				});

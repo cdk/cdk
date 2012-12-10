@@ -220,17 +220,16 @@ public class SingleMapping {
         mappings = sortedMap;
     }
 
-    private <K, V> Map<K, V> sortByValue(Map<K, V> map) {
-        List list = new LinkedList(map.entrySet());
-        Collections.sort(list, new Comparator() {
+    private <K, V extends Comparable<V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K,V>> list = new LinkedList<Map.Entry<K,V>>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<K,V>>() {
 
-            public int compare(Object object1, Object object2) {
-                return ((Comparable) ((Map.Entry<K, V>) (object1)).getValue()).compareTo(((Map.Entry<K, V>) (object2)).getValue());
+            public int compare(Map.Entry<K,V> object1, Map.Entry<K,V> object2) {
+                return object1.getValue().compareTo(object2.getValue());
             }
         });
         Map<K, V> result = new LinkedHashMap<K, V>();
-        for (Iterator it = list.iterator(); it.hasNext();) {
-            Map.Entry<K, V> entry = (Map.Entry<K, V>) it.next();
+        for (Map.Entry<K, V> entry : list) {
             result.put(entry.getKey(), entry.getValue());
         }
         return result;

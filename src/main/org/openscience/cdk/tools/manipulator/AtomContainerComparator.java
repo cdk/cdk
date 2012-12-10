@@ -96,17 +96,9 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
       return 1;
     if (o2 == null)
       return -1;
-    
-    // Check for correct instances
-    if (!(o1 instanceof IAtomContainer) && !(o2 instanceof IAtomContainer))
-      return 0;
-    if (!(o1 instanceof IAtomContainer))
-      return -1;
-    if (!(o2 instanceof IAtomContainer))
-      return 1;
-    
-    IAtomContainer atomContainer1 = (IAtomContainer) o1;
-    IAtomContainer atomContainer2 = (IAtomContainer) o2;
+
+    IAtomContainer atomContainer1 = o1;
+    IAtomContainer atomContainer2 = o2;
     
     // 1. Compare atom count
     if (atomContainer1.getAtomCount() > atomContainer2.getAtomCount())

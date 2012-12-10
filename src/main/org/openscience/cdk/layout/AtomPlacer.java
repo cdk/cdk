@@ -73,15 +73,13 @@ public class AtomPlacer
      */
      IAtomContainer molecule = null;
 
-    final  Comparator ATOM_ORDER =
-        new Comparator()
+    final  Comparator<IAtom> ATOM_ORDER =
+        new Comparator<IAtom>()
         {
-            public int compare(Object o1, Object o2)
+            public int compare(IAtom o1, IAtom o2)
             {
-                IAtom a1 = (IAtom) o1;
-                IAtom a2 = (IAtom) o2;
-                int i1 = ((Integer) a1.getProperty("Weight")).intValue();
-                int i2 = ((Integer) a2.getProperty("Weight")).intValue();
+                int i1 = ((Integer) o1.getProperty("Weight"));
+                int i2 = ((Integer) o1.getProperty("Weight"));
                 if (i1 < i2)
                 {
                     return -1;
