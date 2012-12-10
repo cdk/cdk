@@ -44,19 +44,29 @@ public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContai
      * Compare two AtomContainers based on their 2D position.
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
-    public int compare(IAtomContainer atCont1, IAtomContainer atCont2) {
-        if(atCont1!=null && atCont2!=null) {
-            Point2d p1= GeometryTools.get2DCenter(atCont1);
-            Point2d p2= GeometryTools.get2DCenter(atCont2);
-            if (p1!=null && p2!=null) {
-                if (p1.x!=p2.x) {
-                    return new Double(p1.x).compareTo(new Double(p2.x));
-                }
-                else {
-                    return new Double(p1.y).compareTo(new Double(p2.y));
-                }
-            }
-        }
+    public int compare(IAtomContainer a, IAtomContainer b) {
+
+        Point2d p1 = center(a);
+        Point2d p2 = center(b);
+
+        if(p1.x > p2.x)
+            return +1;
+        if(p1.x < p2.x)
+            return -1;
+        if(p1.y > p2.y)
+            return +1;
+        if(p1.y < p2.y)
+            return -1;
+
         return 0;
+
     }
+
+    /* minimum point to use when an null container is provided */
+    private static final Point2d MINIMUM = new Point2d(Double.MIN_VALUE, Double.MIN_VALUE);
+
+    private static Point2d center(IAtomContainer container){
+        return container != null ? GeometryTools.get2DCenter(container) : MINIMUM;
+    }
+
 }
