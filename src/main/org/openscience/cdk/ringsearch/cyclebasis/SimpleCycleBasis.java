@@ -57,13 +57,13 @@ import java.util.*;
 public class SimpleCycleBasis {
 	
 	private List edgeList;
-	private List cycles;
+	private List<SimpleCycle> cycles;
 	private UndirectedGraph graph;
 	
 	private boolean isMinimized = false;
 	private HashMap edgeIndexMap;
 	
-	public SimpleCycleBasis (List cycles, List edgeList, UndirectedGraph graph) {
+	public SimpleCycleBasis (List<SimpleCycle> cycles, List edgeList, UndirectedGraph graph) {
 		this.edgeList = edgeList;
 		this.cycles = cycles;
 		this.graph = graph;
@@ -73,7 +73,7 @@ public class SimpleCycleBasis {
 	
 	
 	public SimpleCycleBasis (UndirectedGraph graph) {
-		this.cycles = new ArrayList();
+		this.cycles = new ArrayList<SimpleCycle>();
 		this.edgeList = new ArrayList();
 		this.graph = graph;
 		
@@ -256,7 +256,7 @@ public class SimpleCycleBasis {
 			// Construct auxiliary graph gu
 			AuxiliaryGraph gu = new AuxiliaryGraph(graph, u);
 			
-			SimpleCycle shortestCycle = (SimpleCycle) cycles.get(i);
+			SimpleCycle shortestCycle = cycles.get(i);
 			
 			Iterator vertexIterator = graph.vertexSet().iterator();
 			while (vertexIterator.hasNext()) {
@@ -504,7 +504,7 @@ public class SimpleCycleBasis {
 			}
 			
 			if (isEssential) {
-				result.add((SimpleCycle)cycles.get(i));
+				result.add(cycles.get(i));
 			}
 			
 		}
@@ -596,11 +596,11 @@ public class SimpleCycleBasis {
 	
 	public List equivalenceClasses() {
 		int[] weight = weightVector();
-		
-		Object[] cyclesArray = (Object[]) cycles.toArray();
-		Arrays.sort(cyclesArray, new Comparator() {
-			public int compare(Object o1, Object o2) {
-				return (int) (((SimpleCycle)o1).weight() - ((SimpleCycle)o2).weight());
+
+        SimpleCycle[] cyclesArray = cycles.toArray(new SimpleCycle[cycles.size()]);
+		Arrays.sort(cyclesArray, new Comparator<SimpleCycle>() {
+			public int compare(SimpleCycle o1, SimpleCycle o2) {
+				return (int) ((o1).weight() - (o2).weight());
 			}
 		});
 		
