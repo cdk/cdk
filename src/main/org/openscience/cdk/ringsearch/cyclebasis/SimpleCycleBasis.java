@@ -600,7 +600,11 @@ public class SimpleCycleBasis {
         SimpleCycle[] cyclesArray = cycles.toArray(new SimpleCycle[cycles.size()]);
 		Arrays.sort(cyclesArray, new Comparator<SimpleCycle>() {
 			public int compare(SimpleCycle o1, SimpleCycle o2) {
-				return (int) ((o1).weight() - (o2).weight());
+				if(o1.weight() > o2.weight())
+                    return +1;
+                if(o1.weight() < o2.weight())
+                    return -1;
+                return 0;
 			}
 		});
 		
