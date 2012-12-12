@@ -77,20 +77,25 @@ public class AtomPlacer
     final  Comparator<IAtom> ATOM_ORDER =
         new Comparator<IAtom>()
         {
-            public int compare(IAtom o1, IAtom o2)
+            public int compare(IAtom a, IAtom b)
             {
-                int i1 = ((Integer) o1.getProperty("Weight"));
-                int i2 = ((Integer) o1.getProperty("Weight"));
-                if (i1 < i2)
-                {
-                    return -1;
-                }
-                if (i1 == i2)
-                {
-                    return 0;
-                }
-                return 1;
+                return weight(a).compareTo(weight(b));
             }
+
+            /**
+             * Access the weight property of the provided atom. If the weight is
+             * not set (i.e. <i>null</i>) then {@link Integer#MIN_VALUE} is
+             * returned. This allows atoms with no weight to sort lower then
+             * those with weight.
+             *
+             * @param atom an atom to obtain the weight property from
+             * @return the weight value or minimum integer value if null
+             */
+            private Integer weight(IAtom atom){
+                Integer weight = (Integer) atom.getProperty("Weight");
+                return weight != null ? weight : Integer.MIN_VALUE;
+            }
+
         };
 
 
