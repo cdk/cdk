@@ -28,11 +28,9 @@
  */
 package org.openscience.cdk.ringsearch.cyclebasis;
 
-import java.util.Arrays;
-
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
@@ -48,7 +46,7 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 	private static SimpleGraph g;
 	private static SimpleCycleBasis basis;
 
-	@BeforeClass public static void setUp() {
+	@Before public void setUp() {
 		g = new SimpleGraph();
 		g.addVertex( "a" );
 		g.addVertex( "b" );
