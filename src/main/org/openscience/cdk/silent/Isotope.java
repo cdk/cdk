@@ -280,9 +280,25 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
             return false;
         }
         Isotope isotope = (Isotope)object;
-        return massNumber == isotope.massNumber &&
-                exactMass == isotope.exactMass &&
-                naturalAbundance == isotope.naturalAbundance;
+        if (isotope.getMassNumber() != null && massNumber != null &&
+            isotope.getMassNumber().intValue() != this.getMassNumber().intValue())
+            return false;
+        if (isotope.getMassNumber() == null && massNumber != null)
+            return false;
+        if (isotope.getExactMass() != null && exactMass != null) {
+            double diff = Math.abs(isotope.getExactMass().doubleValue() - this.getExactMass().doubleValue());
+            if (diff > 0.0000001) return false;
+        }
+        if (isotope.getExactMass() == null && exactMass != null)
+            return false;
+        if (isotope.getNaturalAbundance() != null && naturalAbundance != null) {
+            double diff = Math.abs(isotope.getNaturalAbundance().doubleValue() - this.getNaturalAbundance().doubleValue());
+            if (diff > 0.0000001) return false;
+        }
+        if (isotope.getNaturalAbundance() == null && naturalAbundance != null)
+            return false;
+
+        return true;
     }
     
     public Object clone() throws CloneNotSupportedException {
