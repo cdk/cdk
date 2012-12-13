@@ -90,11 +90,11 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(accessor, 5);
 
-        assertTrue(factory.implmentorsOf(IAtom.class).isEmpty());
+        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         factory.register(mock.getClass());
 
-        assertFalse(factory.implmentorsOf(IAtom.class).isEmpty());
+        assertFalse(factory.implementorsOf(IAtom.class).isEmpty());
 
     }
 
@@ -121,21 +121,21 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implmentorsOf(IAtom.class).isEmpty());
+        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         // register the mock class
         factory.register(IAtom.class, mock.getClass());
 
-        assertFalse(factory.implmentorsOf(IAtom.class).isEmpty());
+        assertFalse(factory.implementorsOf(IAtom.class).isEmpty());
 
         // Atom is a subclass of Element so we can actually register it as
         // element too
 
-        assertTrue(factory.implmentorsOf(IElement.class).isEmpty());
+        assertTrue(factory.implementorsOf(IElement.class).isEmpty());
 
         factory.register(IElement.class, mock.getClass());
 
-        assertFalse(factory.implmentorsOf(IElement.class).isEmpty());
+        assertFalse(factory.implementorsOf(IElement.class).isEmpty());
 
     }
 
@@ -144,7 +144,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implmentorsOf(ICDKObject.class).isEmpty());
+        assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
 
         // register the mock class
         factory.register(ICDKObject.class, DynamicFactoryTestMock.class);
@@ -240,7 +240,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implmentorsOf(IAtom.class).isEmpty());
+        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         // register the mock class
         factory.register(IAtom.class, mock.getClass());
@@ -259,7 +259,7 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.implmentorsOf(IAtom.class).isEmpty());
+        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
 
         // register the mock class
         factory.register(IAtom.class, mock.getClass());
@@ -299,19 +299,19 @@ public class DynamicFactoryTest {
         IElement element = mock(MockedElement.class);
         IElement atom = mock(MockedAtom.class);
 
-        assertThat(factory.implmentorsOf(IElement.class).size(), is(0));
+        assertThat(factory.implementorsOf(IElement.class).size(), is(0));
 
         factory.register(IElement.class,
                          element.getClass());
 
-        assertThat(factory.implmentorsOf(IElement.class).size(), is(1));
+        assertThat(factory.implementorsOf(IElement.class).size(), is(1));
 
 
         factory.register(IElement.class,
                          atom.getClass());
 
-        assertThat(factory.implmentorsOf(IElement.class).size(), is(2));
-        assertThat(factory.implmentorsOf(IElement.class).size(), is(2));
+        assertThat(factory.implementorsOf(IElement.class).size(), is(2));
+        assertThat(factory.implementorsOf(IElement.class).size(), is(2));
     }
 
 

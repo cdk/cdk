@@ -669,7 +669,7 @@ public class DynamicFactory {
      * @return set of implementation classes (empty if none found)
      */
     @TestMethod("testImplementationsOf")
-    public <T extends ICDKObject> Set<Class<?>> implmentorsOf(Class<T> intf) {
+    public <T extends ICDKObject> Set<Class<?>> implementorsOf(Class<T> intf) {
         Set<Class<?>> implementations = new HashSet<Class<?>>(5);
         for (ConstructorKey key : lookup.getConstructors(intf)) {
             implementations.add(get(key).getDeclaringClass());
