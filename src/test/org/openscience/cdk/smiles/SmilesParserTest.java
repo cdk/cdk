@@ -2348,6 +2348,12 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertNotNull(mol);
     }
 
+    /** @cdk.bug 1234 */
+    @Test(expected=CDKException.class)
+    public void testBug1234() throws Exception {
+    	sp.parseSmiles("C1C1");
+    }
+
     @Test
     public void testFormalNeighborBount() throws CDKException, CloneNotSupportedException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
