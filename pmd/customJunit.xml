@@ -5,7 +5,7 @@
     This ruleset checks the CDK sources for bad code.
   </description>
 
-  <rule ref="rulesets/junit.xml">
+  <rule ref="rulesets/java/junit.xml">
     <exclude name="JUnitAssertionsShouldIncludeMessage"/>
   </rule>
   

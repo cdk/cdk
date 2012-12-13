@@ -11,10 +11,10 @@
 
   <!-- The rule sets that come with PMD -->
 
-  <rule ref="rulesets/basic.xml"/>
-  <rule ref="rulesets/unusedcode.xml"/>
-  <rule ref="rulesets/imports.xml"/>
-  <rule ref="rulesets/migrating_to_junit4.xml"/>
+  <rule ref="rulesets/java/basic.xml"/>
+  <rule ref="rulesets/java/unusedcode.xml"/>
+  <rule ref="rulesets/java/imports.xml"/>
+  <rule ref="rulesets/java/migrating_to_junit4.xml"/>
 
   <!-- Rules specific for CDK -->
 

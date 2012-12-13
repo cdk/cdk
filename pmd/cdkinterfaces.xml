@@ -9,7 +9,7 @@
   <rule name="MoleculeFieldType"
         language="java"
         message="Use the IMolecule interfaces instead of the Molecule implementation"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -36,7 +36,7 @@
   <rule name="AtomFieldType"
         language="java"
         message="Use the IAtom interfaces instead of the Atom implementation"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -63,7 +63,7 @@
   <rule name="BondFieldType"
         language="java"
         message="Use the IBond interfaces instead of the Bond implementation"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -90,7 +90,7 @@
   <rule name="InstanceOfMolecule"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -117,7 +117,7 @@
   <rule name="InstanceOfAtom"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -144,7 +144,7 @@
   <rule name="InstanceOfPseudoAtom"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -171,7 +171,7 @@
   <rule name="InstanceOfBond"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -198,7 +198,7 @@
   <rule name="InstanceOfLonePair"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -225,7 +225,7 @@
   <rule name="InstanceOfSingleElectron"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -252,7 +252,7 @@
   <rule name="InstanceOfIsotope"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -279,7 +279,7 @@
   <rule name="InstanceOfAtomType"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -306,7 +306,7 @@
   <rule name="InstanceOfElement"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).
@@ -333,7 +333,7 @@
   <rule name="InstanceOfAtomContainer"
         language="java"
         message="Use instanceof against interfaces not implementations"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
        Programming against the CDK interfaces allows users to pick their favorite
        implementation (nonotify, datadebug).

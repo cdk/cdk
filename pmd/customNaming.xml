@@ -5,14 +5,15 @@
     This ruleset checks the CDK sources for bad code.
   </description>
 
-  <rule ref="rulesets/naming.xml">
+  <rule ref="rulesets/java/naming.xml">
     <exclude name="LongVariable"/>
     <exclude name="BooleanGetMethodName"/>
   </rule>
 
   <rule name="CDK_LongVariable"
         message="Avoid excessively long variable names like {0}"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        language="java">
     <description>
       Detects when a field, formal or local variable is declared with a long name.
       This rule customized the default LongVariable rule by allowing names of a
