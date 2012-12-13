@@ -35,6 +35,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -954,9 +955,11 @@ public class SmilesParser {
 
 
 	/**
-	 *  We call this method when a ring (depicted by a number) has been found.
+	 * We call this method when a ring (depicted by a number) has been found.
+	 *
+	 * @throws CDKException when a ring closure error was found 
 	 */
-	private void handleRing(IAtom atom)
+	private void handleRing(IAtom atom) throws CDKException
 	{
 		logger.debug("handleRing():");
 		IBond.Order bondStat = bondStatusForRingClosure;
@@ -973,6 +976,10 @@ public class SmilesParser {
 			replaceTemplateAtomInStereos(templateAtom, atom);
 			if (chiralityInfo.containsKey(atom))
 			    addAtomToActiveChiralities(atom, partner);
+			// OK, I am about to make a ring bond, but I will first check if that bond is
+			// not connecting to already connected atoms, like in C1C1.
+			if (molecule.getConnectedAtomsList(atom).contains(partner))
+				throw new CDKException("SMILES strings cannot ring close two directly connected atoms.");
 			bond = builder.newInstance(IBond.class,atom, partner, bondStat);
 			if (bondIsAromatic) {
                 bond.setFlag(CDKConstants.ISAROMATIC, true);
