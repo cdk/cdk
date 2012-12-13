@@ -67,9 +67,8 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("C(F)(F)");
         addExplicitHydrogens(mol);
-        System.out.println("mol.getAtom(0).getSymbol() = " + mol.getAtom(0).getSymbol());
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
-        Assert.assertEquals(5, retval.length(), 0.000001);
+        Assert.assertEquals(5, retval.length());
         Assert.assertTrue(Double.isNaN(retval.get(3)));
         Assert.assertTrue(Double.isNaN(retval.get(4)));        
     }
