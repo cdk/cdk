@@ -7,7 +7,8 @@
 
   <rule name="CDK_MissingLoggerStatementInCatch"
         message="Catched Exceptions must report to CDK's LoggingTool"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        language="java">
     <description>
       Detects missing LoggingTool.debug(Exception) calls in the catch blocks
       of try statements. The LoggingTool instance is assumed to be named logger.
@@ -26,7 +27,8 @@
 
   <rule name="TestClassAnnotationForMethod"
         message="Methods should be annotated with TestMethod, not TestClass."
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        language="java">
     <description>
       Detects methods annotated with @TestClass, where @TestMethod is supposed
       to be used.
@@ -45,7 +47,8 @@
 
   <rule name="TestMethodAnnotationForClass"
         message="Classes should be annotated with TestClass, not TestMethod."
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        language="java">
     <description>
       Detects classes annotated with @TestMethod, where @TestClass is supposed
       to be used.
@@ -66,7 +69,7 @@
   
    rule name="CDK_MoreThanOneLoggingToolInstantiated"
         message="More than one LoggingTool is instantiated"
-        class="net.sourceforge.pmd.rules.XPathRule">
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
     <description>
       Detects instantiation of more than one LoggingTool.
     </description>
