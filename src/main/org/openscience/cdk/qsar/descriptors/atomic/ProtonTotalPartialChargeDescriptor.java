@@ -159,12 +159,14 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
 
         protonPartialCharge.add(localAtom.getCharge());
+        int hydrogenNeighbors = 0;
         for (IAtom neighboor : neighboors) {
             if (neighboor.getSymbol().equals("H")) {
+            	hydrogenNeighbors++;
                 protonPartialCharge.add(neighboor.getCharge());
             }
         }
-        int remainder = MAX_PROTON_COUNT - neighboors.size() + 1;
+        int remainder = MAX_PROTON_COUNT - (hydrogenNeighbors + 1);
         for (int i = 0; i < remainder; i++) protonPartialCharge.add(Double.NaN);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
