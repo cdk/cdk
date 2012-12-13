@@ -9,9 +9,9 @@
     <path id="pmd.classpath">
         <pathelement location="${build}"/>
         <fileset dir="${lib}">
-          <include name="asm-3.1.jar"/>
+          <include name="asm-3.2.jar"/>
           <include name="junit-4.4.jar"/>
-          <include name="pmd-4.2.5.jar"/>
+          <include name="pmd-5.0.1.jar"/>
           <include name="jaxen-1.1.1.jar"/>
         </fileset>
     </path>
@@ -113,6 +113,9 @@
           <includesfile name="${build}/${module}.javafiles"/>
         </fileset>
       </pmd>
+      <xslt basedir="${reports.tests}/pmd-unused" destdir="${reports.tests}/pmd"
+            includes="${module}.xml"
+            extension=".html" style="pmd/wz-pmd-report.xslt"/>
     </target>
 
 </project>
