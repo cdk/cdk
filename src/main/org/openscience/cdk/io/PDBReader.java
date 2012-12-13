@@ -173,11 +173,13 @@ public class PDBReader extends DefaultChemObjectReader {
 	}
 	
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 		}
+		if (IChemFile.class.equals(classObject))
+			return true;
 		Class superClass = classObject.getSuperclass();
 	    if (superClass != null) return this.accepts(superClass);
 		return false;
