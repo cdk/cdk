@@ -9,3 +9,4 @@ cdk-data.jar
 cdk-nonotify.jar
 cdk-valencycheck.jar
 cdk-io.jar
+cdk-testdata.jar
