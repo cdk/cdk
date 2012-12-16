@@ -29,9 +29,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-standard
@@ -58,6 +60,16 @@ public class AbstractFingerprinterTest extends CDKTestCase {
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IMolecule substructure = (IMolecule)reader.read(new Molecule());
 
+        // these molecules are different resonance forms of the same molecule
+        // make sure aromaticity is detected. although some fingerprinters do this
+        // one should not expected all implementations to do so.
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superstructure);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(substructure);
+        CDKHueckelAromaticityDetector.detectAromaticity(superstructure);
+        CDKHueckelAromaticityDetector.detectAromaticity(substructure);
+
+
+
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(superstructure);
         BitSet subBS = fingerprinter.getFingerprint(substructure);
@@ -79,6 +91,14 @@ public class AbstractFingerprinterTest extends CDKTestCase {
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IMolecule substructure = (IMolecule)reader.read(new Molecule());
+
+        // these molecules are different resonance forms of the same molecule
+        // make sure aromaticity is detected. although some fingerprinters do this
+        // one should not expected all implementations to do so.
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superstructure);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(substructure);
+        CDKHueckelAromaticityDetector.detectAromaticity(superstructure);
+        CDKHueckelAromaticityDetector.detectAromaticity(substructure);
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(superstructure);
@@ -127,6 +147,14 @@ public class AbstractFingerprinterTest extends CDKTestCase {
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IMolecule structure2 = (IMolecule)reader.read(new Molecule());
+
+        // these molecules are different resonance forms of the same molecule
+        // make sure aromaticity is detected. although some fingerprinters do this
+        // one should not expected all implementations to do so.
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure1);
+        CDKHueckelAromaticityDetector.detectAromaticity(structure2);
+        CDKHueckelAromaticityDetector.detectAromaticity(structure1);
 
         IFingerprinter fingerprinter = getFingerprinter();
         BitSet superBS = fingerprinter.getFingerprint(structure2);
