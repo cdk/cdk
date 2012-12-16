@@ -88,6 +88,7 @@ public class DistanceMoment {
      * @return A 12 element array containing the descriptors.
      * @throws CDKException if there are no 3D coordinates
      */
+    @TestMethod("testGenerateMoments")
     public static float[] generateMoments(IAtomContainer atomContainer) throws CDKException {
         // lets check if we have 3D coordinates
         Iterator<IAtom> atoms;
