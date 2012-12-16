@@ -344,6 +344,7 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @return The fingerprint as a byte array
      * @see #getFingerprint(org.openscience.cdk.interfaces.IAtomContainer)
      */
+    @TestMethod("testGetFingerprintAsBytes")
     public byte[] getFingerprintAsBytes() {
         return m_bits;
     }
@@ -354,6 +355,7 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @param enc The Base64 encoded fingerprint
      * @return A BitSet corresponding to the input fingerprint
      */
+    @TestMethod("testDecode,testDecode_invalid")
     public static BitSet decode(String enc) {
         byte[] fp = base64Decode(enc);
         if (fp.length < 4) {
