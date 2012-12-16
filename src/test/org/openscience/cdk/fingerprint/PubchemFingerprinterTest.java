@@ -25,6 +25,7 @@
 package org.openscience.cdk.fingerprint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -62,7 +63,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     @Test
-    public void getsize() throws Exception {
+    public void testGetSize() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         Assert.assertEquals(881, printer.getSize());
     }
@@ -185,7 +186,55 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
           Assert.assertEquals(ref, fp);
       }
-    
+
+    @Test
+    public void testGetFingerprintAsBytes() throws CDKException {
+
+        IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
+        adder.addImplicitHydrogens(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        PubchemFingerprinter printer = new PubchemFingerprinter();
+        BitSet fp = printer.getFingerprint(mol);
+
+        byte[] actual   = printer.getFingerprintAsBytes();
+        byte[] expected = Arrays.copyOf(toByteArray(fp), actual.length);
+
+        Assert.assertArrayEquals(expected, actual);
+
+    }
+
+    // adapted from: http://stackoverflow.com/questions/6197411/converting-from-bitset-to-byte-array
+    public static byte[] toByteArray(BitSet bits) {
+        byte[] bytes = new byte[bits.length() / 8 + 1];
+        for (int i = 0; i < bits.length(); i++) {
+            if (bits.get(i)) {
+                bytes[i/8] |= 1<<(7-i%8);
+            }
+        }
+        return bytes;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDecode_invalid(){
+        PubchemFingerprinter.decode("a");
+    }
+
+    @Test
+    public void testDecode(){
+        BitSet bitSet = PubchemFingerprinter.decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+        int[] setBits = new int[]{ 0,   9,   10,  178, 179, 255, 283, 284, 332, 344, 355, 370,
+                                   371, 384, 416, 434, 441, 446, 470, 490, 516, 520, 524, 552,
+                                   556, 564, 570, 578, 582, 584, 595, 599, 603, 608, 618, 634,
+                                   640, 660, 664, 668, 677, 678, 679};
+        for(int set : setBits ){
+            Assert.assertTrue("bit " + set + " was not set", bitSet.get(set));
+        }
+    }
 
     @Test
     public void testBenzene() throws CDKException {
