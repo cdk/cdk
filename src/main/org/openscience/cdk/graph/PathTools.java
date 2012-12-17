@@ -450,8 +450,15 @@ public class PathTools {
      * @param end           The ending atom
      * @return A <code>List</code> containing the atoms in the shortest path between <code>start</code> and
      *         <code>end</code> inclusive
+     * @see ShortestPaths
+     * @see ShortestPaths#atomsTo(IAtom)
+     * @see AllShortestPaths
+     * @deprecated This implementation recalculates all shortest paths from the start atom
+     *             for each method call and does not indicate if there are equally short paths
+     *             from the start to the end. Replaced by {@link ShortestPaths#atomsTo(IAtom)}
      */
     @TestMethod("testGetShortestPath_IAtomContainer_IAtom_IAtom")
+    @Deprecated
     public static List<IAtom> getShortestPath(IAtomContainer atomContainer, IAtom start, IAtom end) {
         int natom = atomContainer.getAtomCount();
         int endNumber = atomContainer.getAtomNumber(end);
