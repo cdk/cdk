@@ -199,7 +199,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
         PubchemFingerprinter printer = new PubchemFingerprinter();
-        BitSet fp = printer.getFingerprint(mol);
+        BitSet fp = printer.getBitFingerprint(mol).asBitSet();
 
         byte[] actual   = printer.getFingerprintAsBytes();
         byte[] expected = Arrays.copyOf(toByteArray(fp), actual.length);
