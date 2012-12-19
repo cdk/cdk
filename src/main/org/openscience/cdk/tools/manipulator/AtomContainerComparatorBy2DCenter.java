@@ -63,7 +63,7 @@ public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContai
     }
 
     /* minimum point to use when an null container is provided */
-    private static final Point2d MINIMUM = new Point2d(Double.MIN_VALUE, Double.MIN_VALUE);
+    private static final Point2d MINIMUM = new Point2d(Double.MAX_VALUE, Double.MAX_VALUE);
 
     private static Point2d center(IAtomContainer container){
         return container != null ? GeometryTools.get2DCenter(container) : MINIMUM;
