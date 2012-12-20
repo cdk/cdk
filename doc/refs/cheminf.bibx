@@ -5,6 +5,18 @@
 
   <!-- This file is preferably edited in jEdit with the XML plugin installed -->
 
+  <bibtex:entry id="AiresDeSousa2002">
+    <bibtex:article>
+      <bibtex:author>Aires-de-Sousa, J. and Hemmer, M.C. and Gasteiger, J.</bibtex:author>
+      <bibtex:title>Prediction of 1H NMR Chemical Shifts Using Neural Networks</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Mod.</bibtex:journal>
+      <bibtex:year>2002</bibtex:year>
+      <bibtex:volume>74</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>80-90</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
   <bibtex:entry id="BER2001">
     <bibtex:misc>
       <bibtex:author>Bernstein, H.J.</bibtex:author>
