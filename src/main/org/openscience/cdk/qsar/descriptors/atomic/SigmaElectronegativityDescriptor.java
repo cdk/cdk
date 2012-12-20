@@ -1,10 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -37,9 +31,11 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  Sigma electronegativity is given by X = a + bq + c(q*q)
+ * Atomic descriptor that reflects that Gasteiger-Marsili sigma electronegativity.
+ * The used approach is given by <pre>X = a + bq + c(q*q)</pre> where a, b, and c are
+ * the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
+ * calculation it uses the {@link Electronegativity} class.
  *
-  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
