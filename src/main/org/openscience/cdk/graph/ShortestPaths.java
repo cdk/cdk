@@ -34,37 +34,35 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Determine all the shortest paths from a given start atom to any other
- * connected atom. <p/>
+ * Find and reconstruct the shortest paths from a given start atom to any other
+ * connected atom. The number of shortest paths ({@link #nPathsTo(int)}) and the
+ * distance ({@link #distanceTo(int)}) can be accessed before reconstructing all
+ * the paths. When no path is found (i.e. not-connected) an empty path is always
+ * returned. <p/>
  *
- * The number of shortest paths ({@link #nPathsTo(int)}) and the distance
- * ({@link #distanceTo(int)}) can be accessed before building all the paths.
- * When no path is found (i.e. not-connected) an empty path is returned. <p/>
- *
- * <pre>{@code
+ * <blockquote><pre>
  * IAtomContainer benzene = MoleculeFactory.makeBenzene();
  *
  * IAtom c1 = benzene.getAtom(0);
  * IAtom c4 = benzene.getAtom(3);
  *
- * // shortest paths from c1
+ * // shortest paths from C1
  * ShortestPaths sp = new ShortestPaths(benzene, c1);
  *
- * // count the number of paths from C1 to C4
+ * // number of paths from C1 to C4
  * int nPaths = sp.nPathsTo(c4);
  *
- * // check the distance between C1 to C4
+ * // distance between C1 to C4
  * int distance = sp.distanceTo(c4);
  *
- * // access the first path to the C4
- * // note: first path is determined by storage order
+ * // reconstruct a path to the C4 - determined by storage order
  * int[] path = sp.pathTo(c4);
  *
- * // access both paths
+ * // reconstruct all paths
  * int[][] paths = sp.pathsTo(c4);
  * int[] org = paths[0];  // paths[0] == path
  * int[] alt = paths[1];
- * }</pre>
+ * </pre></blockquote>
  *
  * <p/> If shortest paths from multiple start atoms are required {@link
  * AllShortestPaths} will have a small performance advantage. Please use {@link
@@ -73,6 +71,7 @@ import java.util.List;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  * @see AllShortestPaths
  * @see org.openscience.cdk.graph.matrix.TopologicalMatrix
  */
@@ -82,7 +81,7 @@ public final class ShortestPaths {
     /* empty path when no valid path was found */
     private static final int[] EMPTY_PATH = new int[0];
 
-    /* empty path when no valid path was found */
+    /* empty paths when no valid path was found */
     private static final int[][] EMPTY_PATHS = new int[0][];
 
     /* route to each vertex */
@@ -99,17 +98,17 @@ public final class ShortestPaths {
     private final IAtomContainer container;
 
     /**
-     * Construct a new shortest paths tool for a single start atom. If shortest
+     * Create a new shortest paths tool for a single start atom. If shortest
      * paths from multiple start atoms are required {@link AllShortestPaths}
      * will have a small performance advantage.
      *
-     * @param container an atom container to build
+     * @param container an atom container to find the paths of
      * @param start     the start atom to which all shortest paths will be
      *                  computed
      * @see AllShortestPaths
      */
     @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
-    public ShortestPaths(IAtomContainer container, IAtom start) {
+    private ShortestPaths(IAtomContainer container, IAtom start) {
         this(toAdjList(container), container, container.getAtomNumber(start));
     }
 
@@ -120,7 +119,7 @@ public final class ShortestPaths {
      * representation does not need to be rebuilt for a different start atom.
      *
      * @param adjacent  adjacency list representation - built from {@link
-     *                  #toAdjList(org.openscience.cdk.interfaces.IAtomContainer)}
+     *                  #toAdjList(IAtomContainer)}
      * @param container container used to access atoms and their indices
      * @param start     the start atom index of the shortest paths
      */
@@ -196,28 +195,25 @@ public final class ShortestPaths {
 
 
     /**
-     * Compute the first shortest path from the <i>start</i> vertex to the
-     * provided <i>end</i> vertex. The path is an inclusive fixed size array in
-     * order of the vertices to visit. If multiple shortest paths are available
-     * the first shortest path is determined by storage order of adjacent
-     * vertices.
+     * Reconstruct a shortest path to the provided <i>end</i> vertex. The path
+     * is an inclusive fixed size array of vertex indices. If there are multiple
+     * shortest paths the first shortest path is determined by vertex storage
+     * order. When there is no path an empty array is returned. It is considered
+     * there to be no path if the end vertex belongs to the same container but
+     * is a member of a different fragment, or the vertex is not present in the
+     * container at all.
      *
-     * If there is no path to the <i>end</i> atom an empty array is returned. It
-     * is considered there to be no valid path if a) the vertex belongs to the
-     * same container but is a member of a different fragment, or b) The atom
-     * not present in the container at all.
-     *
-     * <pre>{@code
+     * <pre>
      * ShortestPaths sp = ...;
      *
-     * // get first path
+     * // reconstruct first path
      * int[] path = sp.pathTo(5);
      *
-     * // it can be more robust to check if there is only one path
+     * // check there is only one path
      * if(sp.nPathsTo(5) == 1){
-     *     int[] path = sp.pathTo(5); // get the first path
+     *     int[] path = sp.pathTo(5); // reconstruct the path
      * }
-     * }</pre>
+     * </pre>
      *
      * @param end the <i>end</i> vertex to find a path to
      * @return path from the <i>start</i> to the <i>end</i> vertex
@@ -240,29 +236,26 @@ public final class ShortestPaths {
 
 
     /**
-     * Compute the first shortest path from the <i>start</i> atom to the
-     * provided <i>end</i> atom. The path is an inclusive fixed size array in
-     * order of the vertices to visit. If multiple shortest paths are available
-     * the first shortest path is determined by storage order of adjacent
-     * vertices.
+     * Reconstruct a shortest path to the provided <i>end</i> atom. The path is
+     * an inclusive fixed size array of vertex indices. If there are multiple
+     * shortest paths the first shortest path is determined by vertex storage
+     * order. When there is no path an empty array is returned. It is considered
+     * there to be no path if the end atom belongs to the same container but is
+     * a member of a different fragment, or the atom is not present in the
+     * container at all.<p/>
      *
-     * If there is no path to the <i>end</i> atom an empty array is returned. It
-     * is considered there to be no valid path if a) the vertex belongs to the
-     * same container but is a member of a different fragment, or b) The atom
-     * not present in the container at all.
-     *
-     * <pre>{@code
+     * <pre>
      * ShortestPaths sp   = ...;
      * IAtom         end  = ...;
      *
-     * // get first path
+     * // reconstruct first path
      * int[] path = sp.pathTo(end);
      *
-     * // it can be more robust to check if there is only one path
+     * // check there is only one path
      * if(sp.nPathsTo(end) == 1){
-     *     int[] path = sp.pathTo(end); // get the first path
+     *     int[] path = sp.pathTo(end); // reconstruct the path
      * }
-     * }</pre>
+     * </pre>
      *
      * @param end the <i>end</i> vertex to find a path to
      * @return path from the <i>start</i> to the <i>end</i> vertex
@@ -280,31 +273,33 @@ public final class ShortestPaths {
 
 
     /**
-     * Compute all shortest paths from the given <i>start</i> vertex to the
-     * provided <i>end</i> vertex. The path is an inclusive fixed size array in
-     * order of the vertices to visit. <p/>
+     * Reconstruct all shortest paths to the provided <i>end</i> vertex. The
+     * paths are <i>n</i> (where n is {@link #nPathsTo(int)}) inclusive fixed
+     * size arrays of vertex indices. When there is no path an empty array is
+     * returned. It is considered there to be no path if the end vertex belongs
+     * to the same container but is a member of a different fragment, or the
+     * vertex is not present in the container at all.<p/>
      *
      * <b>Important:</b> for every possible branch the number of possible paths
-     * doubles. This method will happily generate tens of thousands of possible
-     * paths and although the chance of finding such a molecule is highly
-     * unlikely (e.g. C60 fullerene has at maximum six shortest paths to every
-     * other atom). It is advisable to check how many paths there are first with
-     * {@link #nPathsTo(int)}.
+     * doubles and could be in the order of tens of thousands. Although the
+     * chance of finding such a molecule is highly unlikely (C720 fullerene has
+     * at maximum 1024 paths). It is safer to check the number of paths ({@link
+     * #nPathsTo(int)}) before attempting to reconstruct all shortest paths.
      *
-     * <pre>{@code
+     * <pre>
      * int           threshold = 20;
      * ShortestPaths sp        = ...;
      *
-     * // get shortest paths
+     * // reconstruct shortest paths
      * int[][] paths = sp.pathsTo(5);
      *
-     * // only get shortest paths if there are below a given threshold
+     * // only reconstruct shortest paths below a threshold
      * if(sp.nPathsTo(5) < threshold){
-     *     int[][] path = sp.pathTo(5); // get shortest paths
+     *     int[][] path = sp.pathsTo(5); // reconstruct shortest paths
      * }
-     * }</pre>
+     * </pre>
      *
-     * @param end the end atom
+     * @param end the end vertex
      * @return all shortest paths from the start to the end vertex
      */
     @TestMethod("testPathsTo_Int_Simple,testPathsTo_Int_Benzene,testPathsTo_Int_Spiroundecane," +
@@ -320,30 +315,32 @@ public final class ShortestPaths {
 
 
     /**
-     * Compute all shortest paths from the given <i>start</i> atom to the
-     * provided <i>end</i> atom. The path is an inclusive fixed size array in
-     * order of the vertices to visit. <p/>
+     * Reconstruct all shortest paths to the provided <i>end</i> vertex. The
+     * paths are <i>n</i> (where n is {@link #nPathsTo(int)}) inclusive fixed
+     * size arrays of vertex indices. When there is no path an empty array is
+     * returned. It is considered there to be no path if the end vertex belongs
+     * to the same container but is a member of a different fragment, or the
+     * vertex is not present in the container at all. <p/>
      *
      * <b>Important:</b> for every possible branch the number of possible paths
-     * doubles. This method will happily generate tens of thousands of possible
-     * paths and although the chance of finding such a molecule is highly
-     * unlikely (e.g. C60 fullerene has at maximum 6 shortest paths to every
-     * other atom). It is advisable to check how many paths there are first with
-     * {@link #nPathsTo(int)}.
+     * doubles and could be in the order of tens of thousands. Although the
+     * chance of finding such a molecule is highly unlikely (C720 fullerene has
+     * at maximum 1024 paths). It is safer to check the number of paths ({@link
+     * #nPathsTo(int)}) before attempting to reconstruct all shortest paths.
      *
-     * <pre>{@code
+     * <pre>
      * int           threshold = 20;
      * ShortestPaths sp        = ...;
      * IAtom         end       = ...;
      *
-     * // get shortest paths
+     * // reconstruct all shortest paths
      * int[][] paths = sp.pathsTo(end);
      *
-     * // only get shortest paths if there are below a given threshold
+     * // only reconstruct shortest paths below a threshold
      * if(sp.nPathsTo(end) < threshold){
-     *     int[][] path = sp.pathTo(end); // get shortest paths
+     *     int[][] path = sp.pathsTo(end); // reconstruct shortest paths
      * }
-     * }</pre>
+     * </pre>
      *
      * @param end the end atom
      * @return all shortest paths from the start to the end vertex
@@ -358,28 +355,25 @@ public final class ShortestPaths {
 
 
     /**
-     * Compute the first shortest path from the <i>start</i> vertex to the
-     * provided <i>end</i> vertex. The path is an inclusive fixed size array in
-     * order of the atoms to visit. If multiple shortest paths are available the
-     * first shortest path of atoms is determined by storage order of adjacent
-     * vertices.
+     * Reconstruct a shortest path to the provided <i>end</i> vertex. The path
+     * is an inclusive fixed size array {@link IAtom}s. If there are multiple
+     * shortest paths the first shortest path is determined by vertex storage
+     * order. When there is no path an empty array is returned. It is considered
+     * there to be no path if the end vertex belongs to the same container but
+     * is a member of a different fragment, or the vertex is not present in the
+     * container at all.
      *
-     * If there is no path to the <i>end</i> atom an empty array of atoms is
-     * returned. It is considered there to be no valid path if a) the vertex
-     * belongs to the same container but is a member of a different fragment, or
-     * b) The vertex not present in the container at all.
+     * <pre>
+     * ShortestPaths sp = ...;
      *
-     * <pre>{@code
-     * ShortestPaths sp   = ...;
-     *
-     * // get first path to vertex 5
+     * // reconstruct a shortest path
      * IAtom[] path = sp.atomsTo(5);
      *
-     * // it can be more robust to check if there is only one path
+     * // ensure single shortest path
      * if(sp.nPathsTo(5) == 1){
-     *     IAtom[] path = sp.atomsTo(5); // get the first path to vertex 5
+     *     IAtom[] path = sp.atomsTo(5); // reconstruct shortest path
      * }
-     * }</pre>
+     * </pre>
      *
      * @param end the <i>end</i> vertex to find a path to
      * @return path from the <i>start</i> to the <i>end</i> atoms as fixed size
@@ -405,29 +399,27 @@ public final class ShortestPaths {
 
 
     /**
-     * Compute the first shortest path from the <i>start</i> atom to the
-     * provided <i>end</i> atom. The path is an inclusive fixed size array in
-     * order of the atoms to visit. If multiple shortest paths are available the
-     * first shortest path of atoms is determined by storage order of adjacent
-     * vertices.
+     * Reconstruct a shortest path to the provided <i>end</i> atom. The path is
+     * an inclusive fixed size array {@link IAtom}s. If there are multiple
+     * shortest paths the first shortest path is determined by vertex storage
+     * order. When there is no path an empty array is returned. It is considered
+     * there to be no path if the end atom belongs to the same container but is
+     * a member of a different fragment, or the atom is not present in the
+     * container at all.
      *
-     * If there is no path to the <i>end</i> atom an empty array of atoms is
-     * returned. It is considered there to be no valid path if a) the atom
-     * belongs to the same container but is a member of a different fragment, or
-     * b) The atom not present in the container at all.
      *
-     * <pre>{@code
+     * <pre>
      * ShortestPaths sp   = ...;
      * IAtom         end  = ...;
      *
-     * // get first path
+     * // reconstruct a shortest path
      * IAtom[] path = sp.atomsTo(end);
      *
-     * // it can be more robust to check if there is only one path
+     * // ensure single shortest path
      * if(sp.nPathsTo(end) == 1){
-     *     IAtom[] path = sp.atomsTo(end); // get the first path
+     *     IAtom[] path = sp.atomsTo(end); // reconstruct shortest path
      * }
-     * }</pre>
+     * </pre>
      *
      * @param end the <i>end</i> atom to find a path to
      * @return path from the <i>start</i> to the <i>end</i> atoms as fixed size
@@ -444,20 +436,17 @@ public final class ShortestPaths {
 
 
     /**
-     * Access the number of possible paths from the <i>start</i> to the
-     * <i>end</i> vertex. If there is no valid path to the <i>end</i> the number
-     * of paths is 0. It is considered there to be no valid path if a) the
+     * Access the number of possible paths to the <i>end</i> vertex. When there
+     * is no path 0 is returned. It is considered there to be no path if the end
      * vertex belongs to the same container but is a member of a different
-     * fragment, or b) The vertex not present in the container at all.
+     * fragment, or the vertex is not present in the container at all.<p/>
      *
      * <pre>
-     * {@code
      * ShortestPaths sp   = ...;
      *
-     * sp.nPathsTo(5); // number of paths to vertex 5
+     * sp.nPathsTo(5); // number of paths
      *
      * sp.nPathsTo(-1); // returns 0 - there are no paths
-     * }
      * </pre>
      *
      * @param end the <i>end</i> vertex to which the number of paths will be
@@ -474,22 +463,19 @@ public final class ShortestPaths {
 
 
     /**
-     * Access the number of possible paths from the <i>start</i> to the
-     * <i>end</i> atom. If there is no valid path to the <i>end</i> the number
-     * of paths is 0. It is considered there to be no valid path if a) the atom
-     * belongs to the same container but is a member of a different fragment, or
-     * b) The atom not present in the container at all.
+     * Access the number of possible paths to the <i>end</i> atom. When there is
+     * no path 0 is returned. It is considered there to be no path if the end
+     * atom belongs to the same container but is a member of a different
+     * fragment, or the atom is not present in the container at all.<p/>
      *
      * <pre>
-     * {@code
      * ShortestPaths sp   = ...;
      * IAtom         end  = ...l
      *
-     * sp.nPathsTo(end); // number of paths to vertex end
+     * sp.nPathsTo(end); // number of paths
      *
      * sp.nPathsTo(null);           // returns 0 - there are no paths
      * sp.nPathsTo(new Atom("C"));  // returns 0 - there are no paths
-     * }
      * </pre>
      *
      * @param end the <i>end</i> vertex to which the number of paths will be
@@ -506,27 +492,26 @@ public final class ShortestPaths {
 
 
     /**
-     * Access the distance from the <i>start</i> to the given <i>end</i> vertex.
-     * If the two are not connected the distance is returned as {@link
-     * Integer#MAX_VALUE}. Formally, there is a path if the distance is less
-     * then the number of atoms.
+     * Access the distance to the provided <i>end</i> vertex. If the two are not
+     * connected the distance is returned as {@link Integer#MAX_VALUE}.
+     * Formally, there is a path if the distance is less then the number of
+     * vertices.
      *
-     * <pre>{@code
+     * <pre>
      * IAtomContainer container = ...;
      * ShortestPaths  sp        = ...; // start = 0
      *
      * int n = container.getAtomCount();
      *
-     * if( sp.distanceTo(5) < n ) {
+     * if(sp.distanceTo(5) < n) {
      *     // these is a path from 0 to 5
      * }
-     *
-     * }</pre>
+     * </pre>
      *
      * Conveniently the distance is also the index of the last vertex in the
      * path.
      *
-     * <pre>{@code
+     * <pre>
      * IAtomContainer container = ...;
      * ShortestPaths  sp        = ...;  // start = 0
      *
@@ -535,7 +520,7 @@ public final class ShortestPaths {
      * int start = path[0];
      * int end   = path[sp.distanceTo(5)];
      *
-     * }</pre>
+     * </pre>
      *
      * @param end vertex to measure the distance to
      * @return distance to this vertex
@@ -551,12 +536,12 @@ public final class ShortestPaths {
 
 
     /**
-     * Access the distance from the <i>start</i> to the given <i>end</i> atom.
-     * If the two are not connected the distance is returned as {@link
-     * Integer#MAX_VALUE}. Formally, there is a path if the distance is less
-     * then the number of atoms.
+     * Access the distance to the provided <i>end</i> atom. If the two are not
+     * connected the distance is returned as {@link Integer#MAX_VALUE}.
+     * Formally, there is a path if the distance is less then the number of
+     * atoms.
      *
-     * <pre>{@code
+     * <pre>
      * IAtomContainer container = ...;
      * ShortestPaths  sp        = ...; // start atom
      * IAtom          end       = ...;
@@ -567,12 +552,12 @@ public final class ShortestPaths {
      *     // these is a path from start to end
      * }
      *
-     * }</pre>
+     * </pre>
      *
      * Conveniently the distance is also the index of the last vertex in the
      * path.
      *
-     * <pre>{@code
+     * <pre>
      * IAtomContainer container = ...;
      * ShortestPaths  sp        = ...; // start atom
      * IAtom          end       = ...;
@@ -580,7 +565,7 @@ public final class ShortestPaths {
      * int atoms = sp.atomsTo(end);
      * // end == atoms[sp.distanceTo(end)];
      *
-     * }</pre>
+     * </pre>
      *
      * @param end atom to measure the distance to
      * @return distance to the given atom
@@ -739,7 +724,7 @@ public final class ShortestPaths {
             int[][] leftPaths = left.toPaths(n);
             int[][] rightPaths = right.toPaths(n);
 
-            // expand the left paths to a capacity which can also accommodate the right paths also
+            // expand the left paths to a capacity which can also accommodate the right paths
             int[][] paths = Arrays.copyOf(leftPaths, leftPaths.length + rightPaths.length);
 
             // copy the right paths in to the expanded left paths

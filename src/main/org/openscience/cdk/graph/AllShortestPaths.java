@@ -40,26 +40,26 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Determine the shortest paths from all atoms in a molecule.
+ * Utility to determine the shortest paths between all pairs of atoms in a
+ * molecule.
  *
- *
- * <pre>{@code
+ * <blockquote><pre>
  * IAtomContainer   benzene       = MoleculeFactory.makeBenzene();
  * AllShortestPaths shortestPaths = new AllShortestPaths(benzene);
  *
- * for (int i = 0; i < benzene.getAtomCount(); i++) {
+ * for (int i = 0; i &lt; benzene.getAtomCount(); i++) {
  *
  *     // only to half the comparisons, we can reverse the
  *     // path[] to get all j to i
- *     for (int j = i + 1; j < benzene.getAtomCount(); j++) {
+ *     for (int j = i + 1; j &lt; benzene.getAtomCount(); j++) {
  *
- *         // compute shortest path from i to j
+ *         // reconstruct shortest path from i to j
  *         int[] path = shortestPaths.from(i).pathTo(j);
  *
- *         // compute all shortest paths from i to j
+ *         // reconstruct all shortest paths from i to j
  *         int[][] paths = shortestPaths.from(i).pathsTo(j);
  *
- *         // compute the atoms in the path from i to j
+ *         // reconstruct the atoms in the path from i to j
  *         IAtom[] atoms = shortestPaths.from(i).atomsTo(j);
  *
  *         // access the number of paths from i to j
@@ -70,19 +70,24 @@ import java.util.Map;
  *
  *     }
  * }
- * }</pre>
+ * </pre></blockquote>
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  * @see ShortestPaths
  */
 @TestClass("org.openscience.cdk.graph.AllShortestPathsTest")
 public final class AllShortestPaths {
 
-    private final IAtomContainer container;
+    private final IAtomContainer  container;
     private final ShortestPaths[] shortestPaths;
 
-
+    /**
+     * Create a new all shortest paths utility for an {@link IAtomContainer}.
+     *
+     * @param container the molecule of which to find the shortest paths
+     */
     @TestMethod("testConstruction_Null,testConstruction_Empty")
     public AllShortestPaths(IAtomContainer container) {
 
@@ -91,7 +96,7 @@ public final class AllShortestPaths {
 
         int n = container.getAtomCount();
 
-        this.container = container;
+        this.container     = container;
         this.shortestPaths = new ShortestPaths[n];
 
         // for each atom construct the ShortestPaths object
@@ -104,7 +109,7 @@ public final class AllShortestPaths {
     /**
      * Access the shortest paths object for provided start vertex.
      *
-     * <pre>{@code
+     * <blockquote><pre>
      * AllShortestPaths asp = ...;
      *
      * // access explicitly
@@ -112,7 +117,7 @@ public final class AllShortestPaths {
      *
      * // or chain method calls
      * int[] path = asp.from(0).pathTo(5);
-     * }</pre>
+     * </pre></blockquote>
      *
      * @param start the start vertex of the path
      * @return The shortest paths from the given state vertex
@@ -120,13 +125,15 @@ public final class AllShortestPaths {
      */
     @TestMethod("testFrom_Int_Benzene")
     public ShortestPaths from(int start) {
-        return (start < 0 || start >= shortestPaths.length) ? EMPTY_SHORTEST_PATHS : shortestPaths[start];
+        return (start < 0 || start >= shortestPaths.length)
+                ? EMPTY_SHORTEST_PATHS
+                : shortestPaths[start];
     }
 
     /**
      * Access the shortest paths object for provided start atom.
      *
-     * <pre>{@code
+     * <blockquote><pre>
      * AllShortestPaths asp = ...;
      * IAtom start, end = ...;
      *
@@ -140,8 +147,7 @@ public final class AllShortestPaths {
      *
      * // first atom path from start to end atom
      * IAtom[] atoms = asp.from(start).atomTo(end);
-     *
-     * }</pre>
+     * </pre></blockquote>
      *
      * @param start the start atom of the path
      * @return The shortest paths from the given state vertex
@@ -155,8 +161,8 @@ public final class AllShortestPaths {
 
 
     /**
-     * an empty atom container so we can handle invalid vertices/atoms better. Note
-     * very pretty but we can't access the domain model from cdk-core.
+     * an empty atom container so we can handle invalid vertices/atoms better.
+     * Not very pretty but we can't access the domain model from cdk-core.
      */
     private static final IAtomContainer EMPTY_CONTAINER = new IAtomContainer() {
 
