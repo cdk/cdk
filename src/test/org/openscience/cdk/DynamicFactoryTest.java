@@ -252,6 +252,42 @@ public class DynamicFactoryTest {
 
     }
 
+    /**
+     * Check we get an exception when we try to build from a non-interface
+     * @throws Exception
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testOfConcrete_Params() throws Exception {
+
+        IAtom mock = mock(MockedAtom.class);
+
+        DynamicFactory factory = new DynamicFactory(5);
+
+        assertTrue(factory.implementorsOf(IAtom.class).isEmpty());
+
+        // register the mock class
+        factory.register(IAtom.class, mock.getClass());
+
+        // ofClass -> illegal argument, non-interface
+        IAtom instance = factory.ofClass(mock.getClass(), this);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOfConcrete() throws Exception {
+
+        DynamicFactory factory = new DynamicFactory(5);
+
+        assertTrue(factory.implementorsOf(ICDKObject.class).isEmpty());
+
+        // register the mock class
+        factory.register(ICDKObject.class, DynamicFactoryTestMock.class);
+
+        // ofClass -> illegal argument, non-interface
+        ICDKObject instance = factory.ofClass(DynamicFactoryTestMock.class);
+
+    }
+
     @Test
     public void testOfClass_WithParams() throws Exception {
 

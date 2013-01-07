@@ -528,11 +528,16 @@ public class DynamicFactory {
      * @return an implementation of provided interface
      * @throws IllegalArgumentException thrown if the implementation can not be
      *                                  constructed
+     * @throws IllegalArgumentException thrown if the provided class is not an
+     *                                  interface
      */
     @TestMethod("testOfClass_WithParams,testOfClass_Wrapping")
     public <T extends ICDKObject> T ofClass(Class<T> intf, Object... objects) {
 
         try {
+
+            if(!intf.isInterface())
+                throw new IllegalArgumentException("expected interface, got " + intf.getClass());
 
             Creator<T> constructor = get(new ObjectBasedKey(intf, objects));
             return constructor.create(objects);
@@ -557,11 +562,16 @@ public class DynamicFactory {
      *         default constructor.
      * @throws IllegalArgumentException thrown if the implementation can not be
      *                                  constructed
+     * @throws IllegalArgumentException thrown if the provided class is not an
+     *                                  interface
      */
     @TestMethod("testOfClass")
     public <T extends ICDKObject> T ofClass(Class<T> intf) {
 
         try {
+
+            if(!intf.isInterface())
+                throw new IllegalArgumentException("expected interface, got " + intf.getClass());
 
             Creator<T> creator = get(new ClassBasedKey(intf, EMPTY_CLASS_ARRAY));
             return creator.create(null); // throws an exception if no impl was found
