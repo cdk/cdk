@@ -108,7 +108,7 @@ public final class ShortestPaths {
      * @see AllShortestPaths
      */
     @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
-    private ShortestPaths(IAtomContainer container, IAtom start) {
+    public ShortestPaths(IAtomContainer container, IAtom start) {
         this(toAdjList(container), container, container.getAtomNumber(start));
     }
 
