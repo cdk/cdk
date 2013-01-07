@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-import sun.font.CoreMetrics;
 
 import java.util.Collections;
 import java.util.HashMap;
