@@ -39,8 +39,8 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *
  * @author Syed Asad Rahman (2012)
  * @author John May (2013)
- * @cdk.keyword fingerprint 
- * @cdk.keyword similarity 
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
  *
@@ -111,13 +111,10 @@ public class ShortestPathWalker {
          */
         Collection<IAtom> canonicalizeAtoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);
         for (IAtom sourceAtom : canonicalizeAtoms) {
-            StringBuilder sb = new StringBuilder();
-            setAtom(sourceAtom, sb);
-            if (!allPaths.contains(sb)) {
-                allPaths.add(sb);
-            }
+
+            allPaths.add(new StringBuilder(encode(new int[]{container.getAtomNumber(sourceAtom)})));
+
             for (IAtom sinkAtom : canonicalizeAtoms) {
-                sb = new StringBuilder();
                 if (sourceAtom == sinkAtom) {
                     continue;
                 }
@@ -125,36 +122,51 @@ public class ShortestPathWalker {
                 if (shortestPath == null || shortestPath.isEmpty() || shortestPath.size() < 2) {
                     continue;
                 }
-                //System.out.println("Path length " + shortestPath.size());
-                IAtom atomCurrent = shortestPath.get(0);
-                for (int i = 1; i < shortestPath.size(); i++) {
-                    IAtom atomNext = shortestPath.get(i);
-                    setAtom(atomCurrent, sb);
-                    sb.append(getBondSymbol(container.getBond(atomCurrent, atomNext)));
-                    atomCurrent = atomNext;
-                }
-                setAtom(atomCurrent, sb);
-                allPaths.add(sb);
+                allPaths.add(new StringBuilder(encode(toIndexedPath(shortestPath))));
             }
         }
     }
 
-    private void setAtom(IAtom atomCurrent, StringBuilder sb) {
-        if (atomCurrent instanceof IPseudoAtom) {
-            if (!pseudoAtoms.contains(atomCurrent.getSymbol())) {
-                pseudoAtoms.add(nPseudoAtoms, atomCurrent.getSymbol());
-                nPseudoAtoms += 1;
+    // temporary method whilst refactoring
+    private int[] toIndexedPath(List<IAtom> atoms){
+        int[] path = new int[atoms.size()];
+        for(int i = 0; i < path.length; i++)
+            path[i] = container.getAtomNumber(atoms.get(i));
+        return path;
+    }
+
+    /**
+     * Encode the provided path of atoms to a string.
+     *
+     * @param path inclusive array of vertex indices
+     * @return encoded path
+     */
+    private String encode(int[] path) {
+
+        StringBuilder sb = new StringBuilder(path.length * 3);
+
+        for (int i = 0, n = path.length - 1; i <= n; i++) {
+
+            IAtom atom = container.getAtom(path[i]);
+
+            sb.append(toAtomPattern(atom));
+
+            if(atom instanceof IPseudoAtom) {
+                pseudoAtoms.add(atom.getSymbol());
+                // potential bug, although the atoms are canonical we cannot guarantee the order we will visit them.
+                sb.append(PeriodicTable.getElementCount() + pseudoAtoms.size());
             }
-            sb.append((char) (PeriodicTable.getElementCount()
-                    + pseudoAtoms.indexOf(atomCurrent.getSymbol()) + 1));
-        } else {
-            Integer atnum = PeriodicTable.getAtomicNumber(atomCurrent.getSymbol());
-            if (atnum != null) {
-                sb.append(toAtomPattern(atomCurrent));
-            } else {
-                sb.append((char) PeriodicTable.getElementCount() + 1);
+
+            // if we are not at the last index add the connecting bond
+            if(i < n){
+                IBond bond = container.getBond(container.getAtom(path[i]),
+                                               container.getAtom(path[i + 1]));
+                sb.append(getBondSymbol(bond));
             }
+
         }
+
+        return sb.toString();
     }
 
     private String toAtomPattern(IAtom atom) {
