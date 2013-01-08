@@ -202,7 +202,7 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
         List<Integer> paths = new ArrayList<Integer>();
         int patternIndex = 0;
 
-        for (String s : walker.getPaths()) {
+        for (String s : walker.paths()) {
             int toHashCode = s.hashCode();
             paths.add(patternIndex, toHashCode);
             patternIndex++;

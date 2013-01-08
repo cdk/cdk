@@ -29,12 +29,10 @@ import java.util.*;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllShortestPaths;
-import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  *
@@ -46,7 +44,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  *
  */
-public class ShortestPathWalker {
+public final class ShortestPathWalker {
 
     /* container which is being traversed */
     private final IAtomContainer container;
@@ -58,41 +56,36 @@ public class ShortestPathWalker {
     private final List<String> pseudoAtoms;
 
     /**
-     *
-     * @param atomContainer
-     * @throws CloneNotSupportedException
-     * @throws CDKException
+     * Create a new shortest path walker for a given container.
+     * @param container the molecule to encode the shortest paths
      */
-    public ShortestPathWalker(IAtomContainer atomContainer) {
-        this.paths = new HashSet<String>();
-        this.container = atomContainer;
+    public ShortestPathWalker(IAtomContainer container) {
+        this.paths       = new TreeSet<String>();
+        this.container   = container;
         this.pseudoAtoms = new ArrayList<String>();
-        findPaths();
+        traverse();
     }
 
     /**
+     * Access a set of all shortest paths.
      * @return the paths
      */
-    public Set<String> getPaths() {
+    public Set<String> paths() {
         return Collections.unmodifiableSet(paths);
     }
 
     /**
-     * @return the paths
+     * Access the number of unique encode paths traversed.
+     * @return the number paths
      */
     public int getPathCount() {
         return paths.size();
     }
 
-    private void findPaths() {
-        pseudoAtoms.clear();
-        traverseShortestPaths();
-    }
-
-    /*
-     * This module generates shortest path between two atoms
+    /**
+     * Traverse all-pairs of shortest-paths within a chemical graph.
      */
-    private void traverseShortestPaths() {
+    private void traverse() {
 
         // All-Pairs Shortest-Paths (APSP)
         AllShortestPaths apsp = new AllShortestPaths(container);
@@ -101,6 +94,7 @@ public class ShortestPathWalker {
 
             paths.add(toAtomPattern(container.getAtom(i)));
 
+            // only do the comparison for i,j the reverse the path for j,i
             for (int j = i + 1; j < n; j++) {
 
                 int[] path = apsp.from(i).pathTo(j);
@@ -115,9 +109,9 @@ public class ShortestPathWalker {
     }
 
     /**
-     * Reverse an array of integers
+     * Reverse an array of integers.
      *
-     * @param src array to reverse     *
+     * @param src array to reverse
      * @return reversed copy of <i>src</i>
      */
     private int[] reverse(int[] src) {
@@ -158,7 +152,7 @@ public class ShortestPathWalker {
                 // sb.append(PeriodicTable.getElementCount() + pseudoAtoms.size());
             }
 
-            // if we are not at the last index add the connecting bond
+            // if we are not at the last index, add the connecting bond
             if(i < n){
                 IBond bond = container.getBond(container.getAtom(path[i]),
                                                container.getAtom(path[i + 1]));
@@ -170,6 +164,13 @@ public class ShortestPathWalker {
         return sb.toString();
     }
 
+    /**
+     * Convert an atom to a string representation. Currently this method just
+     * returns the symbol but in future may include other properties, such as, stereo
+     * descriptor and charge.
+     * @param atom The atom to encode
+     * @return encoded atom
+     */
     private String toAtomPattern(IAtom atom) {
         return atom.getSymbol();
     }
@@ -179,7 +180,7 @@ public class ShortestPathWalker {
      *
      * @param bond Description of the Parameter
      * @return The bondSymbol value
-     */
+     *]\     */
     private char getBondSymbol(IBond bond) {
         if (isSP2Bond(bond)) {
             return '@';
@@ -206,6 +207,9 @@ public class ShortestPathWalker {
         return bond.getFlag(CDKConstants.ISAROMATIC);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
