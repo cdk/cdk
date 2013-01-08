@@ -56,9 +56,6 @@ public class ShortestPathWalker {
     /* list of encoded pseudo atoms */
     private final List<String> pseudoAtoms;
 
-    /* number of pseudo atoms */
-    private int nPseudoAtoms;
-
     /* to be removed */
     private final Set<StringBuilder> allPaths;
 
@@ -72,7 +69,6 @@ public class ShortestPathWalker {
         this.paths = new HashSet<String>();
         this.container = atomContainer;
         this.pseudoAtoms = new ArrayList<String>();
-        this.nPseudoAtoms = 0;
         this.allPaths = new HashSet<StringBuilder>();
         findPaths();
     }
@@ -154,7 +150,7 @@ public class ShortestPathWalker {
             if(atom instanceof IPseudoAtom) {
                 pseudoAtoms.add(atom.getSymbol());
                 // potential bug, although the atoms are canonical we cannot guarantee the order we will visit them.
-                sb.append(PeriodicTable.getElementCount() + pseudoAtoms.size());
+                // sb.append(PeriodicTable.getElementCount() + pseudoAtoms.size());
             }
 
             // if we are not at the last index add the connecting bond
