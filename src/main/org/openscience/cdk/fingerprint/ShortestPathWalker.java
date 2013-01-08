@@ -106,15 +106,15 @@ public class ShortestPathWalker {
          * Canonicalisation of atoms for reporting unique paths with consistency
          */
         Collection<IAtom> canonicalizeAtoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);
-        for (IAtom sourceAtom : canonicalizeAtoms) {
+        for (int i = 0, n = container.getAtomCount(); i < n; i++) {
 
-            allPaths.add(new StringBuilder(encode(new int[]{container.getAtomNumber(sourceAtom)})));
+            allPaths.add(new StringBuilder(encode(new int[]{i})));
 
-            for (IAtom sinkAtom : canonicalizeAtoms) {
-                if (sourceAtom == sinkAtom) {
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
                     continue;
                 }
-                List<IAtom> shortestPath = PathTools.getShortestPath(container, sourceAtom, sinkAtom);
+                List<IAtom> shortestPath = PathTools.getShortestPath(container, container.getAtom(i), container.getAtom(j));
                 if (shortestPath == null || shortestPath.isEmpty() || shortestPath.size() < 2) {
                     continue;
                 }
