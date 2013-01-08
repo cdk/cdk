@@ -113,14 +113,6 @@ public class ShortestPathWalker {
         }
     }
 
-    // temporary method whilst refactoring
-    private int[] toIndexedPath(List<IAtom> atoms){
-        int[] path = new int[atoms.size()];
-        for(int i = 0; i < path.length; i++)
-            path[i] = container.getAtomNumber(atoms.get(i));
-        return path;
-    }
-
     /**
      * Encode the provided path of atoms to a string.
      *
