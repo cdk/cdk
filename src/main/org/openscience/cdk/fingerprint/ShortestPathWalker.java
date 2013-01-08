@@ -28,6 +28,7 @@ package org.openscience.cdk.fingerprint;
 import java.util.*;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.AllShortestPaths;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -102,10 +103,10 @@ public class ShortestPathWalker {
      * This module generates shortest path between two atoms
      */
     private void traverseShortestPaths() {
-        /*
-         * Canonicalisation of atoms for reporting unique paths with consistency
-         */
-        Collection<IAtom> canonicalizeAtoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);
+
+        // All-Pairs Shortest-Paths (APSP)
+        AllShortestPaths apsp = new AllShortestPaths(container);
+
         for (int i = 0, n = container.getAtomCount(); i < n; i++) {
 
             allPaths.add(new StringBuilder(encode(new int[]{i})));
@@ -114,11 +115,10 @@ public class ShortestPathWalker {
                 if (i == j) {
                     continue;
                 }
-                List<IAtom> shortestPath = PathTools.getShortestPath(container, container.getAtom(i), container.getAtom(j));
-                if (shortestPath == null || shortestPath.isEmpty() || shortestPath.size() < 2) {
+                int[] path = apsp.from(i).pathTo(j);
+                if(path.length == 0 || path.length < 2)
                     continue;
-                }
-                allPaths.add(new StringBuilder(encode(toIndexedPath(shortestPath))));
+                allPaths.add(new StringBuilder(encode(path)));
             }
         }
     }
