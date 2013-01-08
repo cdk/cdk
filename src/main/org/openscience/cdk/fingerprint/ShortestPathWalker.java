@@ -49,7 +49,7 @@ public final class ShortestPathWalker {
     /* container which is being traversed */
     private final IAtomContainer container;
 
-    /* set of atom paths */
+    /* set of encoded atom paths */
     private final Set<String> paths;
 
     /* list of encoded pseudo atoms */
@@ -60,10 +60,9 @@ public final class ShortestPathWalker {
      * @param container the molecule to encode the shortest paths
      */
     public ShortestPathWalker(IAtomContainer container) {
-        this.paths       = new TreeSet<String>();
         this.container   = container;
-        this.pseudoAtoms = new ArrayList<String>();
-        traverse();
+        this.pseudoAtoms = new ArrayList<String>(5);
+        this.paths       = Collections.unmodifiableSet(traverse());
     }
 
     /**
@@ -85,7 +84,9 @@ public final class ShortestPathWalker {
     /**
      * Traverse all-pairs of shortest-paths within a chemical graph.
      */
-    private void traverse() {
+    private Set<String> traverse() {
+
+        Set<String> paths = new TreeSet<String>();
 
         // All-Pairs Shortest-Paths (APSP)
         AllShortestPaths apsp = new AllShortestPaths(container);
@@ -94,7 +95,7 @@ public final class ShortestPathWalker {
 
             paths.add(toAtomPattern(container.getAtom(i)));
 
-            // only do the comparison for i,j the reverse the path for j,i
+            // only do the comparison for i,j then reverse the path for j,i
             for (int j = i + 1; j < n; j++) {
 
                 int[] path = apsp.from(i).pathTo(j);
@@ -106,6 +107,9 @@ public final class ShortestPathWalker {
 
             }
         }
+
+        return paths;
+
     }
 
     /**
