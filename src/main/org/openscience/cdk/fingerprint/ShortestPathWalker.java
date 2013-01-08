@@ -101,16 +101,39 @@ public class ShortestPathWalker {
 
             paths.add(toAtomPattern(container.getAtom(i)));
 
-            for (int j = 0; j < n; j++) {
-                if (i == j) {
-                    continue;
-                }
+            for (int j = i + 1; j < n; j++) {
+
                 int[] path = apsp.from(i).pathTo(j);
                 if(path.length == 0 || path.length < 2)
                     continue;
+
                 paths.add(encode(path));
+                paths.add(encode(reverse(path)));
+
             }
         }
+    }
+
+    /**
+     * Reverse an array of integers
+     *
+     * @param src array to reverse     *
+     * @return reversed copy of <i>src</i>
+     */
+    private int[] reverse(int[] src) {
+        int[] dest = Arrays.copyOf(src, src.length);
+        int left = 0;
+        int right = src.length - 1;
+
+        while (left < right) {
+            // swap the values at the left and right indices
+            dest[left] = src[right];
+            dest[right] = src[left];
+
+            // move the left and right index pointers in toward the center
+            left++; right--;
+        }
+        return dest;
     }
 
     /**
