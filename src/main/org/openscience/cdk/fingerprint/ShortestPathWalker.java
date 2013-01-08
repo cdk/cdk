@@ -1,6 +1,6 @@
-/* $Revision$ $Author$ $Date$
- *
+/*
  * Copyright (C) 2012   Syed Asad Rahman <asad@ebi.ac.uk>
+ *               2013   John May         <jwmay@users.sf.net>
  *           
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -37,7 +37,8 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  *
- * @author Syed Asad Rahman (2012) 
+ * @author Syed Asad Rahman (2012)
+ * @author John May (2013)
  * @cdk.keyword fingerprint 
  * @cdk.keyword similarity 
  * @cdk.module fingerprint
@@ -46,11 +47,19 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class ShortestPathWalker {
 
-    private static final long serialVersionUID = 0x3b728f46;
-    private final IAtomContainer atomContainer;
-    private final Set<String> cleanPath;
+    /* container which is being traversed */
+    private final IAtomContainer container;
+
+    /* set of atom paths */
+    private final Set<String> paths;
+
+    /* list of encoded pseudo atoms */
     private final List<String> pseudoAtoms;
-    private int pseduoAtomCounter;
+
+    /* number of pseudo atoms */
+    private int nPseudoAtoms;
+
+    /* to be removed */
     private final Set<StringBuilder> allPaths;
 
     /**
@@ -60,26 +69,26 @@ public class ShortestPathWalker {
      * @throws CDKException
      */
     public ShortestPathWalker(IAtomContainer atomContainer) {
-        this.cleanPath = new HashSet<String>();
-        this.atomContainer = atomContainer;
+        this.paths = new HashSet<String>();
+        this.container = atomContainer;
         this.pseudoAtoms = new ArrayList<String>();
-        this.pseduoAtomCounter = 0;
+        this.nPseudoAtoms = 0;
         this.allPaths = new HashSet<StringBuilder>();
         findPaths();
     }
 
     /**
-     * @return the cleanPath
+     * @return the paths
      */
     public Set<String> getPaths() {
-        return Collections.unmodifiableSet(cleanPath);
+        return Collections.unmodifiableSet(paths);
     }
 
     /**
-     * @return the cleanPath
+     * @return the paths
      */
     public int getPathCount() {
-        return cleanPath.size();
+        return paths.size();
     }
 
     private void findPaths() {
@@ -89,7 +98,7 @@ public class ShortestPathWalker {
         for (StringBuilder s : allPaths) {
             String clean = s.toString().trim();
             if (!clean.isEmpty())
-                cleanPath.add(clean);
+                paths.add(clean);
         }
     }
 
@@ -100,7 +109,7 @@ public class ShortestPathWalker {
         /*
          * Canonicalisation of atoms for reporting unique paths with consistency
          */
-        Collection<IAtom> canonicalizeAtoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(atomContainer);
+        Collection<IAtom> canonicalizeAtoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);
         for (IAtom sourceAtom : canonicalizeAtoms) {
             StringBuilder sb = new StringBuilder();
             setAtom(sourceAtom, sb);
@@ -112,7 +121,7 @@ public class ShortestPathWalker {
                 if (sourceAtom == sinkAtom) {
                     continue;
                 }
-                List<IAtom> shortestPath = PathTools.getShortestPath(atomContainer, sourceAtom, sinkAtom);
+                List<IAtom> shortestPath = PathTools.getShortestPath(container, sourceAtom, sinkAtom);
                 if (shortestPath == null || shortestPath.isEmpty() || shortestPath.size() < 2) {
                     continue;
                 }
@@ -121,7 +130,7 @@ public class ShortestPathWalker {
                 for (int i = 1; i < shortestPath.size(); i++) {
                     IAtom atomNext = shortestPath.get(i);
                     setAtom(atomCurrent, sb);
-                    sb.append(getBondSymbol(atomContainer.getBond(atomCurrent, atomNext)));
+                    sb.append(getBondSymbol(container.getBond(atomCurrent, atomNext)));
                     atomCurrent = atomNext;
                 }
                 setAtom(atomCurrent, sb);
@@ -133,8 +142,8 @@ public class ShortestPathWalker {
     private void setAtom(IAtom atomCurrent, StringBuilder sb) {
         if (atomCurrent instanceof IPseudoAtom) {
             if (!pseudoAtoms.contains(atomCurrent.getSymbol())) {
-                pseudoAtoms.add(pseduoAtomCounter, atomCurrent.getSymbol());
-                pseduoAtomCounter += 1;
+                pseudoAtoms.add(nPseudoAtoms, atomCurrent.getSymbol());
+                nPseudoAtoms += 1;
             }
             sb.append((char) (PeriodicTable.getElementCount()
                     + pseudoAtoms.indexOf(atomCurrent.getSymbol()) + 1));
@@ -187,7 +196,7 @@ public class ShortestPathWalker {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (String path : cleanPath) {
+        for (String path : paths) {
             sb.append(path).append("->");
         }
         return sb.toString();
