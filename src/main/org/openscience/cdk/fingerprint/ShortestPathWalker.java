@@ -57,9 +57,6 @@ public class ShortestPathWalker {
     /* list of encoded pseudo atoms */
     private final List<String> pseudoAtoms;
 
-    /* to be removed */
-    private final Set<StringBuilder> allPaths;
-
     /**
      *
      * @param atomContainer
@@ -70,7 +67,6 @@ public class ShortestPathWalker {
         this.paths = new HashSet<String>();
         this.container = atomContainer;
         this.pseudoAtoms = new ArrayList<String>();
-        this.allPaths = new HashSet<StringBuilder>();
         findPaths();
     }
 
@@ -91,12 +87,6 @@ public class ShortestPathWalker {
     private void findPaths() {
         pseudoAtoms.clear();
         traverseShortestPaths();
-
-        for (StringBuilder s : allPaths) {
-            String clean = s.toString().trim();
-            if (!clean.isEmpty())
-                paths.add(clean);
-        }
     }
 
     /*
@@ -109,7 +99,7 @@ public class ShortestPathWalker {
 
         for (int i = 0, n = container.getAtomCount(); i < n; i++) {
 
-            allPaths.add(new StringBuilder(encode(new int[]{i})));
+            paths.add(toAtomPattern(container.getAtom(i)));
 
             for (int j = 0; j < n; j++) {
                 if (i == j) {
@@ -118,7 +108,7 @@ public class ShortestPathWalker {
                 int[] path = apsp.from(i).pathTo(j);
                 if(path.length == 0 || path.length < 2)
                     continue;
-                allPaths.add(new StringBuilder(encode(path)));
+                paths.add(encode(path));
             }
         }
     }
