@@ -55,6 +55,9 @@ public final class ShortestPathWalker {
     /* list of encoded pseudo atoms */
     private final List<String> pseudoAtoms;
 
+    /* maximum number of shortest paths, when there is more then one path */
+    private static final int MAX_SHORTEST_PATHS = 5;
+
     /**
      * Create a new shortest path walker for a given container.
      * @param container the molecule to encode the shortest paths
@@ -98,12 +101,17 @@ public final class ShortestPathWalker {
             // only do the comparison for i,j then reverse the path for j,i
             for (int j = i + 1; j < n; j++) {
 
-                int[] path = apsp.from(i).pathTo(j);
-                if(path.length == 0 || path.length < 2)
-                    continue;
+                int nPaths = apsp.from(i).nPathsTo(j);
 
-                paths.add(encode(path));
-                paths.add(encode(reverse(path)));
+                // only encode when there is a manageable number of paths
+                if (nPaths > 0 && nPaths < MAX_SHORTEST_PATHS) {
+
+                    for(int[] path : apsp.from(i).pathsTo(j)){
+                        paths.add(encode(path));
+                        paths.add(encode(reverse(path)));
+                    }
+
+                }
 
             }
         }

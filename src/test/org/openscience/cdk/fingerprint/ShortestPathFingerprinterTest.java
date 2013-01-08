@@ -64,7 +64,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         IAtomContainer mol2 = MoleculeFactory.makePyrrole();
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
         IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
-        Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 35, bs1.cardinality());
+        Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 37, bs1.cardinality());
         IBitFingerprint bs2 = fingerprinter.getBitFingerprint(mol2);
         Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
     }
@@ -179,7 +179,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        junit.framework.Assert.assertEquals(16, fingerprint1.cardinality());
+        junit.framework.Assert.assertEquals(15, fingerprint1.cardinality());
     }
 
     @Test
