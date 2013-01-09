@@ -38,17 +38,17 @@ import static org.junit.Assert.assertThat;
  * @author John May
  * @cdk.module test-core
  */
-public class AllShortestPathsTest {
+public class AllPairsShortestPathsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_Null() {
-        new AllShortestPaths(null);
+        new AllPairsShortestPaths(null);
     }
 
     @Test
     public void testConstruction_Empty() {
 
-        AllShortestPaths asp = new AllShortestPaths(new AtomContainer());
+        AllPairsShortestPaths asp = new AllPairsShortestPaths(new AtomContainer());
 
         // all vs all fro -10 -> 10
         for (int i = -10; i < 10; i++) {
@@ -72,7 +72,7 @@ public class AllShortestPathsTest {
     public void testFrom_Atom_Benzene() throws Exception {
 
         IAtomContainer benzene = MoleculeFactory.makeBenzene();
-        AllShortestPaths asp = new AllShortestPaths(benzene);
+        AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);
 
         IAtom c1 = benzene.getAtom(0);
         IAtom c2 = benzene.getAtom(1);
@@ -125,7 +125,7 @@ public class AllShortestPathsTest {
     public void testFrom_Int_Benzene() throws Exception {
 
         IAtomContainer benzene = MoleculeFactory.makeBenzene();
-        AllShortestPaths asp = new AllShortestPaths(benzene);
+        AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);
 
         //    1 - 2
         //  /       \

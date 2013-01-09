@@ -65,14 +65,14 @@ import java.util.List;
  * </pre></blockquote>
  *
  * <p/> If shortest paths from multiple start atoms are required {@link
- * AllShortestPaths} will have a small performance advantage. Please use {@link
+ * AllPairsShortestPaths} will have a small performance advantage. Please use {@link
  * org.openscience.cdk.graph.matrix.TopologicalMatrix} if only the shortest
  * distances between atoms is required.
  *
  * @author John May
  * @cdk.module core
  * @cdk.githash
- * @see AllShortestPaths
+ * @see AllPairsShortestPaths
  * @see org.openscience.cdk.graph.matrix.TopologicalMatrix
  */
 @TestClass("org.openscience.cdk.graph.ShortestPathsTest")
@@ -99,13 +99,13 @@ public final class ShortestPaths {
 
     /**
      * Create a new shortest paths tool for a single start atom. If shortest
-     * paths from multiple start atoms are required {@link AllShortestPaths}
+     * paths from multiple start atoms are required {@link AllPairsShortestPaths}
      * will have a small performance advantage.
      *
      * @param container an atom container to find the paths of
      * @param start     the start atom to which all shortest paths will be
      *                  computed
-     * @see AllShortestPaths
+     * @see AllPairsShortestPaths
      */
     @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
     public ShortestPaths(IAtomContainer container, IAtom start) {
@@ -114,7 +114,7 @@ public final class ShortestPaths {
 
 
     /**
-     * Internal constructor for use by {@link AllShortestPaths}. This
+     * Internal constructor for use by {@link AllPairsShortestPaths}. This
      * constructor allows the passing of adjacency list directly so the
      * representation does not need to be rebuilt for a different start atom.
      *

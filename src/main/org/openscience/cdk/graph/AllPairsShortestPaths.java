@@ -44,8 +44,8 @@ import java.util.Map;
  * molecule.
  *
  * <blockquote><pre>
- * IAtomContainer   benzene       = MoleculeFactory.makeBenzene();
- * AllShortestPaths shortestPaths = new AllShortestPaths(benzene);
+ * IAtomContainer        benzene = MoleculeFactory.makeBenzene();
+ * AllPairsShortestPaths apsp    = new AllPairsShortestPaths(benzene);
  *
  * for (int i = 0; i &lt; benzene.getAtomCount(); i++) {
  *
@@ -54,19 +54,19 @@ import java.util.Map;
  *     for (int j = i + 1; j &lt; benzene.getAtomCount(); j++) {
  *
  *         // reconstruct shortest path from i to j
- *         int[] path = shortestPaths.from(i).pathTo(j);
+ *         int[] path = apsp.from(i).pathTo(j);
  *
  *         // reconstruct all shortest paths from i to j
- *         int[][] paths = shortestPaths.from(i).pathsTo(j);
+ *         int[][] paths = apsp.from(i).pathsTo(j);
  *
  *         // reconstruct the atoms in the path from i to j
- *         IAtom[] atoms = shortestPaths.from(i).atomsTo(j);
+ *         IAtom[] atoms = apsp.from(i).atomsTo(j);
  *
  *         // access the number of paths from i to j
- *         int nPaths = shortestPaths.from(i).nPathsTo(j);
+ *         int nPaths = apsp.from(i).nPathsTo(j);
  *
  *         // access the distance from i to j
- *         int distance = shortestPaths.from(i).nPathsTo(j);
+ *         int distance = apsp.from(i).nPathsTo(j);
  *
  *     }
  * }
@@ -77,8 +77,8 @@ import java.util.Map;
  * @cdk.githash
  * @see ShortestPaths
  */
-@TestClass("org.openscience.cdk.graph.AllShortestPathsTest")
-public final class AllShortestPaths {
+@TestClass("org.openscience.cdk.graph.AllPairsShortestPathsTest")
+public final class AllPairsShortestPaths {
 
     private final IAtomContainer  container;
     private final ShortestPaths[] shortestPaths;
@@ -89,7 +89,7 @@ public final class AllShortestPaths {
      * @param container the molecule of which to find the shortest paths
      */
     @TestMethod("testConstruction_Null,testConstruction_Empty")
-    public AllShortestPaths(IAtomContainer container) {
+    public AllPairsShortestPaths(IAtomContainer container) {
 
         // toAdjList performs null check
         int[][] adjacent = ShortestPaths.toAdjList(container);
@@ -110,7 +110,7 @@ public final class AllShortestPaths {
      * Access the shortest paths object for provided start vertex.
      *
      * <blockquote><pre>
-     * AllShortestPaths asp = ...;
+     * AllPairsShortestPaths apsp = ...;
      *
      * // access explicitly
      * ShortestPaths sp = asp.from(0);
@@ -134,7 +134,7 @@ public final class AllShortestPaths {
      * Access the shortest paths object for provided start atom.
      *
      * <blockquote><pre>
-     * AllShortestPaths asp = ...;
+     * AllPairsShortestPaths apsp = ...;
      * IAtom start, end = ...;
      *
      * // access explicitly

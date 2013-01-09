@@ -45,7 +45,7 @@ import org.openscience.cdk.coverage.CoreCoverageTest;
 import org.openscience.cdk.exception.CDKExceptionTest;
 import org.openscience.cdk.exception.NoSuchAtomExceptionTest;
 import org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest;
-import org.openscience.cdk.graph.AllShortestPathsTest;
+import org.openscience.cdk.graph.AllPairsShortestPathsTest;
 import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.ShortestPathsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
@@ -115,7 +115,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     TetrahedralChiralityTest.class,
     DoubleBondStereochemistryTest.class,
     SpanningTreeTest.class,
-    AllShortestPathsTest.class,
+    AllPairsShortestPathsTest.class,
     ShortestPathsTest.class,
     DynamicFactoryTest.class,
 

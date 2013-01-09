@@ -452,7 +452,7 @@ public class PathTools {
      *         <code>end</code> inclusive
      * @see ShortestPaths
      * @see ShortestPaths#atomsTo(IAtom)
-     * @see AllShortestPaths
+     * @see AllPairsShortestPaths
      * @deprecated This implementation recalculates all shortest paths from the start atom
      *             for each method call and does not indicate if there are equally short paths
      *             from the start to the end. Replaced by {@link ShortestPaths#atomsTo(IAtom)}

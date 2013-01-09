@@ -27,8 +27,7 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.*;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.AllShortestPaths;
+import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -92,7 +91,7 @@ public final class ShortestPathWalker {
         Set<String> paths = new TreeSet<String>();
 
         // All-Pairs Shortest-Paths (APSP)
-        AllShortestPaths apsp = new AllShortestPaths(container);
+        AllPairsShortestPaths apsp = new AllPairsShortestPaths(container);
 
         for (int i = 0, n = container.getAtomCount(); i < n; i++) {
 
