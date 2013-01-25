@@ -596,22 +596,29 @@ public class DynamicFactory {
      * @throws IllegalArgumentException thrown if a key is provided which cannot
      *                                  be resolved.
      */
+    @SuppressWarnings("unchecked")
     private <T> Creator<T> get(ConstructorKey key) {
 
-
-        @SuppressWarnings("unchecked")
         Creator<T> creator = (Creator<T>) cache.get(key);
-
 
         if (creator != null) {
             return creator;
         } else {
-            creator = find(key);
-            return register(key, creator); // avoids invoking find again
+            synchronized (lock) {
+                // if the creator is still null... try and find one and register it
+                if((creator = (Creator<T>) cache.get(key)) == null) {
+                    creator = find(key);
+                    creator = register(key, creator); // avoids invoking find again
+                }
+            }
         }
+
+        return creator;
 
     }
 
+    /* thread lock for finding new constructors */
+    private final Object lock = new Object();
 
     /**
      * Find a constructor whose parameters are assignable from the provided
