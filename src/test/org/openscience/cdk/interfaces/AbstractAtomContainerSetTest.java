@@ -27,6 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
 
+
 /**
  * Checks the functionality of {@link IAtomContainerSet} implementations.
  *
@@ -57,6 +58,78 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assert.assertEquals(1, som.getAtomContainer(0).getAtomCount());
         Assert.assertNotNull(som.getAtomContainer(1));
         Assert.assertEquals(2, som.getAtomContainer(1).getAtomCount());
+    }
+
+    /**
+     * Ensures that sort method of the AtomContainerSet does not include nulls
+     * in the comparator. This is tested using a comparator which sorts null
+     * values as low and thus to the start of an array. By adding two (non-null)
+     * values and sorting we should see that the first two values are not null
+     * despite giving a comparator which sorts null as low.
+     *
+     * @cdk.bug 1291
+     */
+    @Test public void testSort_BrokenComparator() {
+
+        IAtomContainerSet set = (IAtomContainerSet) newChemObject();
+
+        IChemObjectBuilder builder = set.getBuilder();
+
+        IAtomContainer a = builder.newInstance(IAtomContainer.class);
+        IAtomContainer b = builder.newInstance(IAtomContainer.class);
+
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        b.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        set.addAtomContainer(a);
+        set.addAtomContainer(b);
+
+        // this comparator is deliberately broken but serves for the test
+        //  - null should be a high value (Interger.MAX)
+        //  - also, avoid boxed primitives in comparators
+        set.sortAtomContainers(new Comparator<IAtomContainer>() {
+
+            @Override public int compare(IAtomContainer o1, IAtomContainer o2) {
+                return size(o1).compareTo(size(o2));
+            }
+
+            public Integer size(IAtomContainer container) {
+                return container == null ? Integer.MIN_VALUE
+                                         : container.getAtomCount();
+            }
+
+        });
+
+        // despite null being low, the two atom containers should
+        // still be in the first slot
+        Assert.assertNotNull(set.getAtomContainer(0));
+        Assert.assertNotNull(set.getAtomContainer(1));
+        Assert.assertNull(set.getAtomContainer(2));
+
+    }
+
+    /**
+     * Ensure that sort is not called on an empty set. We can verify this
+     * by thrown an exception if compare() is invoked.
+     */
+    @Test public void testSort_empty() {
+
+        IAtomContainerSet set = (IAtomContainerSet) newChemObject();
+
+        Comparator<IAtomContainer> comparator = new Comparator<IAtomContainer>() {
+            @Override public int compare(IAtomContainer o1, IAtomContainer o2) {
+                throw new IllegalStateException("comparator should never be called");
+            }
+        };
+
+        try {
+            set.sortAtomContainers(comparator);
+        } catch (IllegalStateException ex) {
+            Assert.fail("compare() should not be called");
+        }
+
     }
 
     @Test public void testGetAtomContainerCount() {
