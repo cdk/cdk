@@ -393,7 +393,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @param comparator defines the sorting method
      */
     public void sortAtomContainers(Comparator<IAtomContainer> comparator) {
-        Arrays.sort(atomContainers, comparator);
+        Arrays.sort(atomContainers, 0, atomContainerCount, comparator);
     }
 
     /**
