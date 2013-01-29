@@ -23,11 +23,14 @@ package org.openscience.cdk.interfaces;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -61,6 +64,52 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assert.assertEquals(1, som.getAtomContainer(0).getAtomCount());
         Assert.assertNotNull(som.getAtomContainer(1));
         Assert.assertEquals(2, som.getAtomContainer(1).getAtomCount());
+    }
+
+    /**
+     * ensure coefficients are sorted also
+     */
+    @Test public void testSort_Coefficients() {
+
+        IAtomContainerSet set = (IAtomContainerSet) newChemObject();
+
+        IChemObjectBuilder builder = set.getBuilder();
+
+        IAtomContainer a = builder.newInstance(IAtomContainer.class);
+        IAtomContainer b = builder.newInstance(IAtomContainer.class);
+
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        b.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        set.addAtomContainer(a, 1);
+        set.addAtomContainer(b, 2);
+
+        assertThat(set.getAtomContainer(0), is(a));
+        assertThat(set.getMultiplier(0),    is(1D));
+        assertThat(set.getAtomContainer(1), is(b));
+        assertThat(set.getMultiplier(1),    is(2D));
+
+
+        // sort by atom container count
+        set.sortAtomContainers(new Comparator<IAtomContainer>() {
+            @Override public int compare(IAtomContainer o1, IAtomContainer o2) {
+                int n = o1.getAtomCount();
+                int m = o2.getAtomCount();
+                if(n > m)
+                    return +1;
+                if(n < m)
+                    return -1;
+                return 0;
+            }
+        });
+
+        assertThat(set.getAtomContainer(0), is(b));
+        assertThat(set.getMultiplier(0),    is(2D));
+        assertThat(set.getAtomContainer(1), is(a));
+        assertThat(set.getMultiplier(1),    is(1D));
+
     }
 
     /**
