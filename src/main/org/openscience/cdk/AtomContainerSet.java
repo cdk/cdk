@@ -113,8 +113,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		atomContainerCount = 0;
 		notifyChanged();
 	}
-	
-	
+
+
 	/**
 	 * Removes an AtomContainer from this container.
 	 *
@@ -133,7 +133,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
 	/**
 	 * Replace the AtomContainer at a specific position (array has to be large enough).
-	 * 
+	 *
 	 * @param position   position in array for AtomContainer
 	 * @param container  the replacement AtomContainer
 	 */
@@ -144,7 +144,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		container.addListener(this);
 		notifyChanged();
 	}
-	
+
 	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
 	 *
@@ -245,7 +245,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
 	/**
 	 *  Get an iterator for this AtomContainerSet.
-     * 
+     *
      * @return A new Iterator for this AtomContainerSet.
 	 */
 	public Iterable<IAtomContainer> atomContainers() {
@@ -262,7 +262,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      */
 	private class AtomContainerIterator implements Iterator<IAtomContainer> {
 		private int pointer = 0;
-    	
+
         public boolean hasNext() {
             return pointer < atomContainerCount;
         }
@@ -275,7 +275,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
             removeAtomContainer(--pointer);
         }
 	}
-	
+
 
 	/**
 	 * Returns the AtomContainer at position <code>number</code> in the
@@ -389,11 +389,34 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
 
     /**
-     * Sort the AtomContainers using a provided Comparator
+     * Sort the AtomContainers and multipliers using a provided Comparator
      * @param comparator defines the sorting method
      */
-    public void sortAtomContainers(Comparator<IAtomContainer> comparator) {
-        Arrays.sort(atomContainers, 0, atomContainerCount, comparator);
+    @TestMethod("testSortAtomContainers_Comparator_Null,testSort_Coefficients,testSort_BrokenComparator,testSort_empty")
+    public void sortAtomContainers(final Comparator<IAtomContainer> comparator) {
+
+        // need to use boxed primitives as we can't customise sorting of int primitives
+        Integer[] indexes = new Integer[atomContainerCount];
+        for(int i = 0; i < indexes.length; i++)
+            indexes[i] = i;
+
+        // proxy the index comparison to the atom container comparator
+        Arrays.sort(indexes, new Comparator<Integer>(){
+            @Override public int compare(Integer o1, Integer o2) {
+                return comparator.compare(atomContainers[o1], atomContainers[o2]);
+            }
+        });
+
+        // copy the original arrays (we could modify in place with swaps but this is cleaner)
+        IAtomContainer[] containersTmp  = Arrays.copyOf(atomContainers, indexes.length);
+        Double[]         multipliersTmp = Arrays.copyOf(multipliers, indexes.length);
+
+        // order the arrays based on the order of the indices
+        for(int i = 0; i < indexes.length; i++) {
+            atomContainers[i] = containersTmp[indexes[i]];
+            multipliers[i]    = multipliersTmp[indexes[i]];
+        }
+
     }
 
     /**
