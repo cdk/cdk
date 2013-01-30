@@ -469,6 +469,28 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assert.assertEquals(2, som.getAtomContainerCount());
     }
 
+    @Test
+    public void testSortAtomContainers_WithMuliplier() {
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer ac1 = som.getBuilder().newInstance(IAtomContainer.class);
+        som.addAtomContainer(ac1, 2.0);
+        ac1.setProperty("multiplierSortCode", "2");
+        IAtomContainer ac2 = som.getBuilder().newInstance(IAtomContainer.class);
+        som.addAtomContainer(ac2, 1.0);
+        ac2.setProperty("multiplierSortCode", "1");
+        som.sortAtomContainers(new Comparator<IAtomContainer>() {
+            public int compare(IAtomContainer o1, IAtomContainer o2) {
+                return ((String)o1.getProperty("multiplierSortCode")).compareTo((String)o2.getProperty("multiplierSortCode"));
+            }
+        });
+        Assert.assertEquals(2, som.getAtomContainerCount());
+        IAtomContainer newFirstAC = som.getAtomContainer(0);
+        Assert.assertEquals(newFirstAC.getProperty("multiplierSortCode"), "1");
+        // OK, sorting worked as intended
+        // The multiplier should have been resorted too:
+        Assert.assertEquals(1.0, som.getMultiplier(newFirstAC), 0.00001);
+    }
+
     private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         
