@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.interfaces;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -499,4 +502,123 @@ public abstract class AbstractMoleculeSetTest extends AbstractAtomContainerSetTe
         });
         Assert.assertEquals(2, som.getAtomContainerCount());
     }
+
+    /**
+     * ensure coefficients are sorted also
+     */
+    @Test public void testSort_Coefficients() {
+
+        IAtomContainerSet set = (IAtomContainerSet) newChemObject();
+
+        IChemObjectBuilder builder = set.getBuilder();
+
+        IAtomContainer a = builder.newInstance(IMolecule.class);
+        IAtomContainer b = builder.newInstance(IMolecule.class);
+
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        b.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        set.addAtomContainer(a, 1);
+        set.addAtomContainer(b, 2);
+
+        assertThat(set.getAtomContainer(0), is(a));
+        assertThat(set.getMultiplier(0), is(1D));
+        assertThat(set.getAtomContainer(1), is(b));
+        assertThat(set.getMultiplier(1), is(2D));
+
+
+        // sort by atom container count
+        set.sortAtomContainers(new Comparator<IAtomContainer>() {
+            @Override public int compare(IAtomContainer o1, IAtomContainer o2) {
+                int n = o1.getAtomCount();
+                int m = o2.getAtomCount();
+                if (n > m)
+                    return 1;
+                if (n < m)
+                    return -1;
+                return 0;
+            }
+        });
+
+        assertThat(set.getAtomContainer(0), is(b));
+        assertThat(set.getMultiplier(0), is(2D));
+        assertThat(set.getAtomContainer(1), is(a));
+        assertThat(set.getMultiplier(1), is(1D));
+
+    }
+
+    /**
+     * Ensures that sort method of the AtomContainerSet does not include nulls
+     * in the comparator. This is tested using a comparator which sorts null
+     * values as low and thus to the start of an array. By adding two (non-null)
+     * values and sorting we should see that the first two values are not null
+     * despite giving a comparator which sorts null as low.
+     *
+     * @cdk.bug 1291
+     */
+    @Test public void testSort_BrokenComparator() {
+
+        IAtomContainerSet set = (IAtomContainerSet) newChemObject();
+
+        IChemObjectBuilder builder = set.getBuilder();
+
+        IMolecule a = builder.newInstance(IMolecule.class);
+        IMolecule b = builder.newInstance(IMolecule.class);
+
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+        a.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        b.addAtom(builder.newInstance(IAtom.class, "C"));
+
+        set.addAtomContainer(a);
+        set.addAtomContainer(b);
+
+        // this comparator is deliberately broken but serves for the test
+        //  - null should be a high value (Interger.MAX)
+        //  - also, avoid boxed primitives in comparators
+        set.sortAtomContainers(new Comparator<IAtomContainer>() {
+
+            @Override public int compare(IAtomContainer o1, IAtomContainer o2) {
+                return size(o1).compareTo(size(o2));
+            }
+
+            public Integer size(IAtomContainer container) {
+                return container == null ? Integer.MIN_VALUE
+                                         : container.getAtomCount();
+            }
+
+        });
+
+        // despite null being low, the two atom containers should
+        // still be in the first slot
+        Assert.assertNotNull(set.getAtomContainer(0));
+        Assert.assertNotNull(set.getAtomContainer(1));
+        Assert.assertNull(set.getAtomContainer(2));
+
+    }
+
+    @Test
+    public void testSortAtomContainers_WithMuliplier() {
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer ac1 = som.getBuilder().newInstance(IMolecule.class);
+        som.addAtomContainer(ac1, 2.0);
+        ac1.setProperty("multiplierSortCode", "2");
+        IAtomContainer ac2 = som.getBuilder().newInstance(IMolecule.class);
+        som.addAtomContainer(ac2, 1.0);
+        ac2.setProperty("multiplierSortCode", "1");
+        som.sortAtomContainers(new Comparator<IAtomContainer>() {
+            public int compare(IAtomContainer o1, IAtomContainer o2) {
+                return ((String)o1.getProperty("multiplierSortCode")).compareTo((String)o2.getProperty("multiplierSortCode"));
+            }
+        });
+        Assert.assertEquals(2, som.getAtomContainerCount());
+        IAtomContainer newFirstAC = som.getAtomContainer(0);
+        Assert.assertEquals(newFirstAC.getProperty("multiplierSortCode"), "1");
+        // OK, sorting worked as intended
+        // The multiplier should have been resorted too:
+        Assert.assertEquals(1.0, som.getMultiplier(newFirstAC), 0.00001);
+    }
+
 }
