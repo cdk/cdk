@@ -48,6 +48,9 @@ import org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest;
 import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
+import org.openscience.cdk.ringsearch.JumboCyclicVertexSearchTest;
+import org.openscience.cdk.ringsearch.RegularCyclicVertexSearchTest;
+import org.openscience.cdk.ringsearch.RingSearchTest;
 import org.openscience.cdk.stereo.TetrahedralChiralityTest;
 import org.openscience.cdk.stereo.DoubleBondStereochemistryTest;
 import org.openscience.cdk.tools.DataFeaturesTest;
@@ -110,6 +113,11 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     TetrahedralChiralityTest.class,
     DoubleBondStereochemistryTest.class,
     SpanningTreeTest.class,
-    DynamicFactoryTest.class
+    DynamicFactoryTest.class,
+
+    // ring search (more in test-standard)
+    RegularCyclicVertexSearchTest.class,
+    JumboCyclicVertexSearchTest.class,
+    RingSearchTest.class,
 })
 public class McoreTests {}

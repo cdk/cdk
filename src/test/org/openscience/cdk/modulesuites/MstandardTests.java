@@ -77,6 +77,15 @@ import org.openscience.cdk.ringsearch.AllRingsFinderTest;
 import org.openscience.cdk.ringsearch.PathTest;
 import org.openscience.cdk.ringsearch.QueueTest;
 import org.openscience.cdk.ringsearch.RingPartitionerTest;
+import org.openscience.cdk.ringsearch.RingSearchTest_Benzene;
+import org.openscience.cdk.ringsearch.RingSearchTest_BenzylBenzene;
+import org.openscience.cdk.ringsearch.RingSearchTest_Bicyclo;
+import org.openscience.cdk.ringsearch.RingSearchTest_Biphenyl;
+import org.openscience.cdk.ringsearch.RingSearchTest_Empty;
+import org.openscience.cdk.ringsearch.RingSearchTest_Fused;
+import org.openscience.cdk.ringsearch.RingSearchTest_Hexaphenylene;
+import org.openscience.cdk.ringsearch.RingSearchTest_NonCyclic;
+import org.openscience.cdk.ringsearch.RingSearchTest_SpiroRings;
 import org.openscience.cdk.ringsearch.SSSRFinderTest;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasisTest;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasisTest;
@@ -196,6 +205,16 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     StereoToolTest.class,
     VABCVolumeTest.class,
     AtomContainerAtomPermutorTest.class,
-    AtomContainerBondPermutorTest.class
+    AtomContainerBondPermutorTest.class,
+
+    RingSearchTest_Benzene.class,
+    RingSearchTest_BenzylBenzene.class,
+    RingSearchTest_Bicyclo.class,
+    RingSearchTest_Biphenyl.class,
+    RingSearchTest_Empty.class,
+    RingSearchTest_Fused.class,
+    RingSearchTest_Hexaphenylene.class,
+    RingSearchTest_NonCyclic.class,
+    RingSearchTest_SpiroRings.class
 })
 public class MstandardTests {}
