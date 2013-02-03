@@ -21,6 +21,7 @@ package org.openscience.cdk.modulesuites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.openscience.cdk.hash.XorshiftTest;
 
 /**
  * TestSuite for the CDK <code>hash</code> module.
@@ -29,6 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {
+        XorshiftTest.class
 })
 public class MhashTests {
 }
