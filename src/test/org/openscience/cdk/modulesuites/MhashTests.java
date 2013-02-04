@@ -21,6 +21,7 @@ package org.openscience.cdk.modulesuites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.openscience.cdk.hash.AbstractHashGeneratorTest;
 import org.openscience.cdk.hash.XorshiftTest;
 import org.openscience.cdk.hash.seed.BasicAtomEncoderTest;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
@@ -34,7 +35,8 @@ import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
 @SuiteClasses(value = {
         XorshiftTest.class,
         BasicAtomEncoderTest.class,
-        ConjugatedAtomEncoderTest.class
+        ConjugatedAtomEncoderTest.class,
+        AbstractHashGeneratorTest.class,
 })
 public class MhashTests {
 }
