@@ -397,6 +397,17 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="Ihlenfeldt93">
+    <bibtex:article>
+        <bibtex:author>Wolf Dietrich Ihlenfeldt and Johann Gasteiger</bibtex:author>
+        <bibtex:title>Hash Codes for the Identification and Classification of Molecular Structure Elements</bibtex:title>
+        <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
+        <bibtex:year>1993</bibtex:year>
+        <bibtex:volume>15</bibtex:volume>
+        <bibtex:pages>793-813</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="KAB76">
     <bibtex:article>
       <bibtex:author>Kabsch, W.</bibtex:author>
