@@ -82,7 +82,7 @@ public final class ConjugatedAtomEncoder implements AtomEncoder {
         if (encoders == null)
             throw new NullPointerException("null list of encoders");
         if (encoders.isEmpty())
-            throw new IllegalArgumentException("encoders can not be empty");
+            throw new IllegalArgumentException("no encoders provided");
         this.encoders = Collections
                 .unmodifiableList(new ArrayList<AtomEncoder>(encoders));
     }
