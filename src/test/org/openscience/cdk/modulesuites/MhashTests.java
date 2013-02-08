@@ -26,6 +26,7 @@ import org.openscience.cdk.hash.AbstractHashGeneratorTest;
 import org.openscience.cdk.hash.BasicAtomHashGeneratorTest;
 import org.openscience.cdk.hash.BasicMoleculeHashGenerator;
 import org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest;
+import org.openscience.cdk.hash.HashGeneratorMakerTest;
 import org.openscience.cdk.hash.XorshiftTest;
 import org.openscience.cdk.hash.seed.BasicAtomEncoderTest;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
@@ -43,7 +44,8 @@ import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
         ConjugatedAtomEncoderTest.class,
         AbstractHashGeneratorTest.class,
         BasicAtomHashGeneratorTest.class,
-        BasicMoleculeHashGeneratorTest.class
+        BasicMoleculeHashGeneratorTest.class,
+        HashGeneratorMakerTest.class
 })
 public class MhashTests {
 }
