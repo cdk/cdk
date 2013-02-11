@@ -48,6 +48,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Cieplak2001">
+    <bibtex:article>
+      <bibtex:author>Cieplak, T and Wisniewski J. L.</bibtex:author>
+      <bibtex:title>A New Effective Algorithm for the Unambiguous Identification of the Stereochemical Characteristics of Compounds During Their Registration in Databases</bibtex:title>
+      <bibtex:journal>Molecules</bibtex:journal>
+      <bibtex:year>2001</bibtex:year>
+      <bibtex:volume>6</bibtex:volume>      
+      <bibtex:pages>915-926</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Moreau1980">
     <bibtex:article>
       <bibtex:author>Moreau G. and Broto P.</bibtex:author>
