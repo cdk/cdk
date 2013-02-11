@@ -30,6 +30,8 @@ import org.openscience.cdk.hash.HashGeneratorMakerTest;
 import org.openscience.cdk.hash.XorshiftTest;
 import org.openscience.cdk.hash.seed.BasicAtomEncoderTest;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
+import org.openscience.cdk.hash.stereo.BasicPermutationParityTest;
+import org.openscience.cdk.hash.stereo.parity.BasicPermutationParity;
 
 /**
  * TestSuite for the CDK <code>hash</code> module.
@@ -45,7 +47,8 @@ import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
         AbstractHashGeneratorTest.class,
         BasicAtomHashGeneratorTest.class,
         BasicMoleculeHashGeneratorTest.class,
-        HashGeneratorMakerTest.class
+        HashGeneratorMakerTest.class,
+        BasicPermutationParityTest.class,
 })
 public class MhashTests {
 }
