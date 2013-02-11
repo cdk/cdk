@@ -42,7 +42,7 @@ import javax.vecmath.Point3d;
  *      T and Wisniewski, J.L. 2001</a>
  */
 @TestClass("org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest")
-public class Tetrahedral3DParity implements GeometricParity {
+public final class Tetrahedral3DParity implements GeometricParity {
 
     /* array of four 3D coordinates */
     private final Point3d[] coordinates;
