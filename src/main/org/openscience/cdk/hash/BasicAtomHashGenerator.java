@@ -26,6 +26,8 @@ package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.hash.stereo.StereoEncoder;
+import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -73,12 +75,44 @@ public final class BasicAtomHashGenerator extends AbstractHashGenerator
     /* a generator for the initial atom seeds */
     private final AtomHashGenerator seedGenerator;
 
+    /* creates stereo encoders for IAtomContainers */
+    private final StereoEncoderFactory factory;
+
     /* number of cycles to include adjacent invariants */
     private final int depth;
 
     /**
      * Create a basic hash generator using the provided seed generator to
-     * initialise atom invariants.
+     * initialise atom invariants and using the provided stereo factory.
+     *
+     * @param seedGenerator generator to seed the initial values of atoms
+     * @param pseudorandom  pseudorandom number generator used to randomise hash
+     *                      distribution
+     * @param factory       a stereo encoder factory
+     * @param depth         depth of the hashing function, larger values take
+     *                      longer
+     * @throws IllegalArgumentException depth was less then 0
+     * @throws NullPointerException     seed generator or pseudo random was
+     *                                  null
+     * @see SeedGenerator
+     */
+    public BasicAtomHashGenerator(AtomHashGenerator seedGenerator,
+                                  Pseudorandom      pseudorandom,
+                                  StereoEncoderFactory factory,
+                                  int depth) {
+        super(pseudorandom);
+        if (seedGenerator == null)
+            throw new NullPointerException("seed generator cannot be null");
+        if (depth < 0)
+            throw new IllegalArgumentException("depth cannot be less then 0");
+        this.seedGenerator = seedGenerator;
+        this.factory       = factory;
+        this.depth         = depth;
+    }
+
+    /**
+     * Create a basic hash generator using the provided seed generator to
+     * initialise atom invariants and no stereo configuration.
      *
      * @param seedGenerator generator to seed the initial values of atoms
      * @param pseudorandom  pseudorandom number generator used to randomise hash
@@ -91,15 +125,9 @@ public final class BasicAtomHashGenerator extends AbstractHashGenerator
      * @see SeedGenerator
      */
     public BasicAtomHashGenerator(AtomHashGenerator seedGenerator,
-                                  Pseudorandom pseudorandom,
-                                  int depth) {
-        super(pseudorandom);
-        if (seedGenerator == null)
-            throw new NullPointerException("seed generator cannot be null");
-        if (depth < 0)
-            throw new IllegalArgumentException("depth cannot be less then 0");
-        this.seedGenerator = seedGenerator;
-        this.depth = depth;
+                                  Pseudorandom      pseudorandom,
+                                  int depth){
+        this(seedGenerator, pseudorandom, StereoEncoderFactory.EMPTY, depth);
     }
 
     /**
@@ -107,8 +135,10 @@ public final class BasicAtomHashGenerator extends AbstractHashGenerator
      */
     @TestMethod("testGenerate")
     @Override public long[] generate(IAtomContainer container) {
+        int[][] graph = toAdjList(container);
         return generate(seedGenerator.generate(container),
-                        toAdjList(container));
+                        factory.create(container, graph),
+                        graph);
     }
 
     /**
@@ -121,15 +151,18 @@ public final class BasicAtomHashGenerator extends AbstractHashGenerator
      * @return hash codes for atoms
      */
     @TestMethod("testGenerate_Simple,testGenerate_ZeroDepth,testGenerate_Disconnected")
-    long[] generate(long[] current, int[][] graph) {
+    long[] generate(long[] current, StereoEncoder encoder, int[][] graph) {
 
-        int n = graph.length;
-
-        long[] next = new long[n];
+        int    n        = graph.length;
+        long[] next     = copy(current);
 
         // buffers for including adjacent invariants
-        long[] unique = new long[n];
+        long[] unique   = new long[n];
         long[] included = new long[n];
+
+        while (encoder.encode(current, next)) {
+            copy(next, current);
+        }
 
         for (int d = 0; d < depth; d++) {
 
@@ -138,6 +171,10 @@ public final class BasicAtomHashGenerator extends AbstractHashGenerator
             }
 
             copy(next, current);
+
+            while (encoder.encode(current, next)) {
+                copy(next, current);
+            }
 
         }
 

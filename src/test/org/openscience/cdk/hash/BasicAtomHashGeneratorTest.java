@@ -1,6 +1,7 @@
 package org.openscience.cdk.hash;
 
 import org.junit.Test;
+import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -29,6 +30,7 @@ public class BasicAtomHashGeneratorTest {
                                                                  new Xorshift(),
                                                                  0);
 
+        when(seedMock.generate(container)).thenReturn(new long[0]);
         when(container.bonds()).thenReturn(new Iterable<IBond>() {
             @Override public Iterator<IBond> iterator() {
                 return new Iterator<IBond>() {
@@ -63,6 +65,7 @@ public class BasicAtomHashGeneratorTest {
                                                                       0);
 
         assertThat(generator.generate(new long[]{1L, 1L, 1L},
+                                      StereoEncoder.EMPTY,
                                       new int[][]{{}, {}, {}}),
                    is(new long[]{1L, 1L, 1L}));
     }
@@ -78,6 +81,7 @@ public class BasicAtomHashGeneratorTest {
         // there are no neighbours, the values should be rotated
         long expected = generator.distribute(generator.distribute(1));
         assertThat(generator.generate(new long[]{1L, 1L, 1L},
+                                      StereoEncoder.EMPTY,
                                       new int[][]{{}, {}, {}}),
                    is(new long[]{expected,
                                  expected,
@@ -111,6 +115,7 @@ public class BasicAtomHashGeneratorTest {
         };
 
         assertThat(generator.generate(new long[]{1L, 2L, 1L},
+                                      StereoEncoder.EMPTY,
                                       new int[][]{{1}, {0, 2}, {1}}),
                    is(second));
 
