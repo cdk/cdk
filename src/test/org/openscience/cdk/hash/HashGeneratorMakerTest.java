@@ -24,16 +24,19 @@
 
 package org.openscience.cdk.hash;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.hash.seed.AtomEncoder;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
+import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -95,11 +98,12 @@ public class HashGeneratorMakerTest {
         Assert.assertThat(encoders.get(0), is((AtomEncoder) ORBITAL_HYBRIDIZATION));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testChiral() {
-        new HashGeneratorMaker().depth(0)
-                                .chiral()
-                                .atomic();
+    @Test public void testChiral() {
+        AtomHashGenerator generator = new HashGeneratorMaker().depth(0)
+                                                              .elemental()
+                                                              .chiral()
+                                                              .atomic();
+        assertThat(encoder(generator), is(not(StereoEncoderFactory.EMPTY)));
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -126,7 +130,7 @@ public class HashGeneratorMakerTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testEncode_Null(){
+    public void testEncode_Null() {
         new HashGeneratorMaker().encode(null);
     }
 
@@ -193,6 +197,20 @@ public class HashGeneratorMakerTest {
         assertThat(value, is(5));
     }
 
+    public static StereoEncoderFactory encoder(AtomHashGenerator generator) {
+        if (generator instanceof BasicAtomHashGenerator) {
+            try {
+                Field f = generator.getClass().getDeclaredField("factory");
+                f.setAccessible(true);
+                return (StereoEncoderFactory) f.get(generator);
+            } catch (NoSuchFieldException e) {
+                System.err.println(e.getMessage());
+            } catch (IllegalAccessException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return null;
+    }
 
     /**
      * Extract the AtomEncoders using reflection

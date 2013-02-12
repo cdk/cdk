@@ -5,6 +5,11 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.seed.AtomEncoder;
 import org.openscience.cdk.hash.seed.BasicAtomEncoder;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
+import org.openscience.cdk.hash.stereo.StereoEncoder;
+import org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory;
+import org.openscience.cdk.hash.stereo.factory.GeometricTetrahedralEncoderFactory;
+import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -64,6 +69,9 @@ public class HashGeneratorMaker {
     /* ordered set of basic encoders */
     private EnumSet<BasicAtomEncoder> encoderSet = EnumSet
             .noneOf(BasicAtomEncoder.class);
+
+    /* list of stereo encoders */
+    private List<StereoEncoderFactory> stereoEncoders = new ArrayList<StereoEncoderFactory>();
 
     /**
      * Specify the depth of the hash generator. Larger values discriminate more
@@ -149,7 +157,9 @@ public class HashGeneratorMaker {
      */
     @TestMethod("testChiral")
     public HashGeneratorMaker chiral() {
-        throw new UnsupportedOperationException("not yet supported");
+        this.stereoEncoders.add(new GeometricTetrahedralEncoderFactory());
+        this.stereoEncoders.add(new GeometricDoubleBondEncoderFactory());
+        return this;
     }
 
     /**
@@ -181,6 +191,29 @@ public class HashGeneratorMaker {
                   .println("AtomEncoder had fields but should be stateless");
         customEncoders.add(encoder);
         return this;
+    }
+
+    /**
+     * Combines the separate stereo encoder factories into a single factory.
+     *
+     * @return a single stereo encoder factory
+     */
+    private StereoEncoderFactory makeStereoEncoderFactory() {
+        if (stereoEncoders.isEmpty()) {
+            return StereoEncoderFactory.EMPTY;
+        } else if (stereoEncoders.size() == 1) {
+            return stereoEncoders.get(0);
+        } else {
+            StereoEncoderFactory factory = new ConjugatedEncoderFactory(stereoEncoders
+                                                                                .get(0),
+                                                                        stereoEncoders
+                                                                                .get(1));
+            for (int i = 2; i < stereoEncoders.size(); i++) {
+                factory = new ConjugatedEncoderFactory(factory, stereoEncoders
+                        .get(i));
+            }
+            return factory;
+        }
     }
 
     /**
@@ -230,7 +263,73 @@ public class HashGeneratorMaker {
 
         return new BasicAtomHashGenerator(new SeedGenerator(encoder),
                                           new Xorshift(),
+                                          makeStereoEncoderFactory(),
                                           depth);
+    }
+
+    /**
+     * Help class to combined two stereo encoder factories
+     */
+    private final class ConjugatedEncoderFactory
+            implements StereoEncoderFactory {
+        private final StereoEncoderFactory left, right;
+
+        /**
+         * Create a new conjugated encoder factory from the left and right
+         * factories.
+         * @param left encoder factory
+         * @param right encoder factory
+         */
+        private ConjugatedEncoderFactory(StereoEncoderFactory left, StereoEncoderFactory right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        @Override
+        public StereoEncoder create(IAtomContainer container, int[][] graph) {
+            return new ConjugatedEncoder(left.create(container, graph), right
+                    .create(container, graph));
+        }
+    }
+
+    /**
+     * Help class to combined two stereo encoders
+     */
+    private final class ConjugatedEncoder implements StereoEncoder {
+
+        private final StereoEncoder left, right;
+
+        /**
+         * Create a new conjugated encoder from a left and right encoder.
+         * @param left encoder
+         * @param right encoder
+         */
+        private ConjugatedEncoder(StereoEncoder left, StereoEncoder right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        /**
+         * Encodes using the left and then the right encoder.
+         * @param current current invariants
+         * @param next    next invariants
+         * @return whether either encoder modified any values
+         */
+        @Override public boolean encode(long[] current, long[] next) {
+            boolean modified = left.encode(current, next);
+            return right.encode(current, next) || modified;
+        }
+
+        /**
+         * reset the left and right encoders
+         */
+        @Override public void reset() {
+            left.reset();
+            right.reset();
+        }
     }
 
 }
