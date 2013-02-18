@@ -43,10 +43,12 @@ import javax.vecmath.Point2d;
 public final class DoubleBond2DParity implements GeometricParity {
 
     // coordinates of the double bond atoms
-    // x       w
+    // l1      r1
     //  \     /
-    //   u = v
-    private Point2d u, v, x, w;
+    //   l = r
+    //  /     \
+    // l2      r2
+    private Point2d l, r, l1, r1, l2, r2;
 
     /* the area below which we return unspecified parity */
     private static final double THRESHOLD = 0.1;
@@ -61,10 +63,48 @@ public final class DoubleBond2DParity implements GeometricParity {
      */
     public DoubleBond2DParity(Point2d left, Point2d right,
                               Point2d leftSubstituent, Point2d rightSubstituent) {
-        this.u = left;
-        this.v = right;
-        this.x = leftSubstituent;
-        this.w = rightSubstituent;
+        this.l = left;
+        this.r = right;
+        this.l1 = leftSubstituent;
+        this.r1 = rightSubstituent;
+        this.l2 = l;
+        this.r2 = r;
+    }
+
+    /**
+     * Create a new double bond parity for the 2D coordinates of the atoms. This
+     * method is required for cases where both substituents may lie on the same
+     * side of a bond. If one of the sides has two substituents and the other
+     * side has two then you can pass left/right atom of the double bond as
+     * the second substituent.
+     *
+     * <pre>
+     *  l1      r1
+     *   \     /
+     *    l = r
+     *   /
+     *  l2
+     *
+     *  should be passed as:
+     *      new DoubleBond2DParity(l, r, l1, l2, r1, r);
+     * </pre>
+     *
+     * @param left             one atom of the double bond
+     * @param right            the other atom of a double bond
+     * @param leftSubstituent1  first substituent atom connected to the left atom
+     * @param leftSubstituent2  second substituent atom connected to the left atom
+     * @param rightSubstituent1 first substituent atom connected to the right atom
+     * @param rightSubstituent2 second substituent atom connected to the right atom
+     */
+    public DoubleBond2DParity(Point2d left, Point2d right,
+                              Point2d leftSubstituent1, Point2d leftSubstituent2,
+                              Point2d rightSubstituent1, Point2d rightSubstituent2) {
+        this.l = left;
+        this.r = right;
+        this.l1 = leftSubstituent1;
+        this.r1 = rightSubstituent1;
+        this.l2 = leftSubstituent2;
+        this.r2 = rightSubstituent2;
     }
 
     /**
@@ -74,7 +114,7 @@ public final class DoubleBond2DParity implements GeometricParity {
      */
     @TestMethod("opposite,together,unspecified")
     @Override public int parity() {
-        return parity(x, u, v) * parity(w, v, u);
+        return parity(l1, l2, r) * parity(r1, r2, l);
     }
 
     /**
