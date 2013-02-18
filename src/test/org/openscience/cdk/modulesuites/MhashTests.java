@@ -32,6 +32,10 @@ import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
 import org.openscience.cdk.hash.stereo.BasicPermutationParityTest;
 import org.openscience.cdk.hash.stereo.GeometryEncoderTest;
 import org.openscience.cdk.hash.stereo.factory.GeometricTetrahedralEncoderFactoryTest;
+import org.openscience.cdk.hash.stereo.MultiStereoEncoderTest;
+import org.openscience.cdk.hash.stereo.parity.CombinedPermutationParityTest;
+import org.openscience.cdk.hash.stereo.parity.DoubleBond2DParityTest;
+import org.openscience.cdk.hash.stereo.parity.DoubleBond3DParityTest;
 import org.openscience.cdk.hash.stereo.parity.Tetrahedral2DParityTest;
 import org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest;
 
@@ -51,9 +55,13 @@ import org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest;
         BasicMoleculeHashGeneratorTest.class,
         HashGeneratorMakerTest.class,
         BasicPermutationParityTest.class,
+        CombinedPermutationParityTest.class,
         Tetrahedral2DParityTest.class,
         Tetrahedral3DParityTest.class,
+        DoubleBond2DParityTest.class,
+        DoubleBond3DParityTest.class,
         GeometryEncoderTest.class,
+        MultiStereoEncoderTest.class,
         GeometricTetrahedralEncoderFactoryTest.class,
 })
 public class MhashTests {

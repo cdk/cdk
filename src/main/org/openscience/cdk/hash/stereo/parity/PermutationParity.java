@@ -29,9 +29,21 @@ package org.openscience.cdk.hash.stereo.parity;
  *
  * @author John May
  * @cdk.module hash
- * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation, Wikipedia</a>
+ * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of
+ *      a Permutation, Wikipedia</a>
  */
 public interface PermutationParity {
+
+    /**
+     * Identity parity which always returns 1 (even). This is useful for
+     * configurations which do not require ordering, such as, double bonds with
+     * implicit hydrogens.
+     */
+    public static final PermutationParity IDENTITY = new PermutationParity() {
+        @Override public int parity(long[] current) {
+            return 1;
+        }
+    };
 
     /**
      * Calculate the permutation parity of a permutation on the current values.

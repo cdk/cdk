@@ -43,7 +43,7 @@ public final class BasicPermutationParity implements PermutationParity {
      * Create a permutation parity for the provided indices.
      *
      * @param indices sub-array of indices
-     * @throws NullPointerException the provided indices were null
+     * @throws NullPointerException     the provided indices were null
      * @throws IllegalArgumentException less then two indices provided
      */
     @TestMethod("testConstruction_Null,testConstruction_Empty")
@@ -51,7 +51,8 @@ public final class BasicPermutationParity implements PermutationParity {
         if (indices == null)
             throw new NullPointerException("no indices[] provided");
         if (indices.length < 2)
-            throw new IllegalArgumentException("at least 2 incides required");
+            throw new IllegalArgumentException("at least 2 incides required," +
+                                                       "use PermutationParity.IDENTITY for single neighbors");
         this.indices = indices;
     }
 
