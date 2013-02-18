@@ -24,7 +24,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.HashCoverageTest;
 import org.openscience.cdk.hash.AbstractHashGeneratorTest;
 import org.openscience.cdk.hash.BasicAtomHashGeneratorTest;
-import org.openscience.cdk.hash.BasicMoleculeHashGenerator;
 import org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest;
 import org.openscience.cdk.hash.HashGeneratorMakerTest;
 import org.openscience.cdk.hash.XorshiftTest;
@@ -32,7 +31,7 @@ import org.openscience.cdk.hash.seed.BasicAtomEncoderTest;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
 import org.openscience.cdk.hash.stereo.BasicPermutationParityTest;
 import org.openscience.cdk.hash.stereo.GeometryEncoderTest;
-import org.openscience.cdk.hash.stereo.parity.BasicPermutationParity;
+import org.openscience.cdk.hash.stereo.factory.GeometricTetrahedralEncoderFactoryTest;
 import org.openscience.cdk.hash.stereo.parity.Tetrahedral2DParityTest;
 import org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest;
 
@@ -54,7 +53,8 @@ import org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest;
         BasicPermutationParityTest.class,
         Tetrahedral2DParityTest.class,
         Tetrahedral3DParityTest.class,
-        GeometryEncoderTest.class
+        GeometryEncoderTest.class,
+        GeometricTetrahedralEncoderFactoryTest.class,
 })
 public class MhashTests {
 }
