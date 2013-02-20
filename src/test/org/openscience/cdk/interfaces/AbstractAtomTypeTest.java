@@ -300,6 +300,14 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         }
     }
 
+    @Test public void testToString_AtomTypeName() {
+        IAtomType at = (IAtomType)newChemObject();
+        at.setAtomTypeName("N.sp2.3");
+        String description = at.toString();
+        System.out.println(description);
+        Assert.assertTrue(description.contains("N.sp2.3"));
+    }
+
     @Test public void testDefaultFormalCharge() {
         IAtomType atomType = (IAtomType)newChemObject();
         Assert.assertEquals(0, atomType.getFormalCharge().intValue());
