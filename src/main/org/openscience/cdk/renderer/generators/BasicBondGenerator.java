@@ -162,6 +162,16 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     private double overrideBondWidth = -1;
 
     /**
+     * The ideal ring size for the given center proportion.
+     */
+    private int IDEAL_RINGSIZE = 6;
+
+    /**
+     * The minimum ring size factor to ensure a minimum gap.
+     */
+    private double MIN_RINGSIZE_FACTOR = 2.5;
+
+    /**
      * An empty constructor necessary for reflection.
      */
     public BasicBondGenerator() {}
@@ -411,8 +421,9 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         Point2d b = bond.getAtom(1).getPoint2d();
 
         // the proportion to move in towards the ring center
-        double ringDistance = 
-            model.getParameter(TowardsRingCenterProportion.class).getValue();
+        double distanceFactor = model.getParameter(TowardsRingCenterProportion.class).getValue();
+        double ringDistance = distanceFactor * IDEAL_RINGSIZE / ring.getAtomCount();
+        if (ringDistance < distanceFactor / MIN_RINGSIZE_FACTOR) ringDistance = distanceFactor / MIN_RINGSIZE_FACTOR;
 
         Point2d w = new Point2d();
         w.interpolate(a, center, ringDistance);

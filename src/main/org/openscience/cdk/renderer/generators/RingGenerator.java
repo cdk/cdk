@@ -80,6 +80,23 @@ public class RingGenerator extends BasicBondGenerator {
     private IGeneratorParameter<Boolean> cdkStyleAromaticity = new CDKStyleAromaticity();
 
     /**
+     * The maximum ring size for which an aromatic ring should be drawn.
+     */
+    public static class MaxDrawableAromaticRing extends AbstractGeneratorParameter<Integer> {
+
+    	/**
+    	 * The maximum default ring size for which an aromatic ring should be drawn.
+    	 *
+    	 * @return the maximum ring size
+    	 */
+    	public Integer getDefault() {
+
+    		return 8;
+    	}
+    }
+    private IGeneratorParameter<Integer> maxDrawableAromaticRing = new MaxDrawableAromaticRing();
+
+    /**
      * The proportion of a ring bounds to use to draw the ring.
      */
     public static class RingProportion extends
@@ -108,7 +125,8 @@ public class RingGenerator extends BasicBondGenerator {
     /** {@inheritDoc} */
     public IRenderingElement generateRingElements(
             IBond bond, IRing ring, RendererModel model) {
-        if (ringIsAromatic(ring) && showAromaticity.getValue()) {
+    	if (ringIsAromatic(ring) && showAromaticity.getValue()
+    			&& ring.getAtomCount() < maxDrawableAromaticRing.getValue()) {
             ElementGroup pair = new ElementGroup();
             if (cdkStyleAromaticity.getValue()) {
                 pair.add(generateBondElement(bond, IBond.Order.SINGLE, model));
@@ -175,6 +193,7 @@ public class RingGenerator extends BasicBondGenerator {
         pars.addAll(superPars);
         pars.add(cdkStyleAromaticity);
         pars.add(showAromaticity);
+        pars.add(maxDrawableAromaticRing);
         pars.add(ringProportion);
         return pars;
     }
