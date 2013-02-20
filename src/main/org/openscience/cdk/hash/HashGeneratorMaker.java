@@ -2,6 +2,7 @@ package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
 import org.openscience.cdk.hash.seed.AtomEncoder;
 import org.openscience.cdk.hash.seed.BasicAtomEncoder;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
@@ -72,6 +73,9 @@ public class HashGeneratorMaker {
 
     /* list of stereo encoders */
     private List<StereoEncoderFactory> stereoEncoders = new ArrayList<StereoEncoderFactory>();
+
+    /* whether we want to use perturbed hash generators */
+    private boolean perturbed = false;
 
     /**
      * Specify the depth of the hash generator. Larger values discriminate more
@@ -163,14 +167,15 @@ public class HashGeneratorMaker {
     }
 
     /**
-     * Discriminate symmetrical atoms experiencing uniform environments.
+     * Discriminate atoms experiencing uniform environments.
      *
      * @return fluent API reference (self)
      * @throws UnsupportedOperationException not yet implemented
      */
     @TestMethod("testPerturbed")
     public HashGeneratorMaker perturbed() {
-        throw new UnsupportedOperationException("not yet supported");
+        perturbed = true;
+        return this;
     }
 
     /**
@@ -261,6 +266,14 @@ public class HashGeneratorMaker {
 
         AtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
 
+        if (perturbed) {
+            return new PerturbedAtomHashGenerator(new SeedGenerator(encoder),
+                                                  new Xorshift(),
+                                                  makeStereoEncoderFactory(),
+                                                  new MinimumEquivalentCyclicSet(),
+                                                  depth);
+        }
+
         return new BasicAtomHashGenerator(new SeedGenerator(encoder),
                                           new Xorshift(),
                                           makeStereoEncoderFactory(),
@@ -277,7 +290,8 @@ public class HashGeneratorMaker {
         /**
          * Create a new conjugated encoder factory from the left and right
          * factories.
-         * @param left encoder factory
+         *
+         * @param left  encoder factory
          * @param right encoder factory
          */
         private ConjugatedEncoderFactory(StereoEncoderFactory left, StereoEncoderFactory right) {
@@ -304,7 +318,8 @@ public class HashGeneratorMaker {
 
         /**
          * Create a new conjugated encoder from a left and right encoder.
-         * @param left encoder
+         *
+         * @param left  encoder
          * @param right encoder
          */
         private ConjugatedEncoder(StereoEncoder left, StereoEncoder right) {
@@ -314,6 +329,7 @@ public class HashGeneratorMaker {
 
         /**
          * Encodes using the left and then the right encoder.
+         *
          * @param current current invariants
          * @param next    next invariants
          * @return whether either encoder modified any values

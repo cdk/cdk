@@ -26,7 +26,10 @@ import org.openscience.cdk.hash.AbstractHashGeneratorTest;
 import org.openscience.cdk.hash.BasicAtomHashGeneratorTest;
 import org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest;
 import org.openscience.cdk.hash.HashGeneratorMakerTest;
+import org.openscience.cdk.hash.PerturbedAtomHashGeneratorTest;
 import org.openscience.cdk.hash.XorshiftTest;
+import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
+import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSetTest;
 import org.openscience.cdk.hash.seed.BasicAtomEncoderTest;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
 import org.openscience.cdk.hash.stereo.BasicPermutationParityTest;
@@ -64,7 +67,9 @@ import org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest;
         GeometryEncoderTest.class,
         MultiStereoEncoderTest.class,
         GeometricTetrahedralEncoderFactoryTest.class,
-        GeometricDoubleBondEncoderFactoryTest.class
+        GeometricDoubleBondEncoderFactoryTest.class,
+        PerturbedAtomHashGeneratorTest.class,
+        MinimumEquivalentCyclicSetTest.class
 })
 public class MhashTests {
 }

@@ -2,3 +2,6 @@ cdk-annotation.jar
 cdk-interfaces.jar
 cdk-hash.jar
 cdk-test.jar
+cdk-data.jar
+cdk-core.jar
+

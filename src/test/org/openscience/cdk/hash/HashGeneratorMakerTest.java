@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.hash.seed.AtomEncoder;
@@ -39,6 +38,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.openscience.cdk.hash.seed.BasicAtomEncoder.ATOMIC_NUMBER;
 import static org.openscience.cdk.hash.seed.BasicAtomEncoder.FORMAL_CHARGE;
@@ -106,11 +106,13 @@ public class HashGeneratorMakerTest {
         assertThat(encoder(generator), is(not(StereoEncoderFactory.EMPTY)));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testPerturbed() {
-        new HashGeneratorMaker().depth(0)
-                                .perturbed()
-                                .atomic();
+    @Test public void testPerturbed() {
+        AtomHashGenerator g1 = new HashGeneratorMaker().depth(0)
+                                                       .elemental()
+                                                       .perturbed()
+                                                       .atomic();
+
+        assertTrue(g1 instanceof PerturbedAtomHashGenerator);
     }
 
     @Test
