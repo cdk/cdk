@@ -29,9 +29,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Find and reconstruct the shortest paths from a given start atom to any other
@@ -169,12 +169,12 @@ public final class ShortestPaths {
     private void compute(int[][] adjacent) {
 
         // compute from our start vertex
-        List<Integer> queue = new ArrayList<Integer>(adjacent.length);
+        Queue<Integer> queue = new LinkedList<Integer>();
         queue.add(start);
 
         while (!queue.isEmpty()) {
 
-            Integer v = queue.remove(0);
+            Integer v = queue.poll();
             int dist = distTo[v] + 1;
 
             for (int w : adjacent[v]) {
@@ -239,8 +239,8 @@ public final class ShortestPaths {
         if (end < 0 || end >= routeTo.length)
             return EMPTY_PATH;
 
-        return routeTo[end] != null ? routeTo[end].toPath(distTo[end] + 1) : EMPTY_PATH;
-
+        return routeTo[end] != null ? routeTo[end].toPath(distTo[end] + 1)
+                                    : EMPTY_PATH;
     }
 
 
@@ -333,7 +333,8 @@ public final class ShortestPaths {
         if (end < 0 || end >= routeTo.length)
             return EMPTY_PATHS;
 
-        return routeTo[end] != null ? routeTo[end].toPaths(distTo[end] + 1) : EMPTY_PATHS;
+        return routeTo[end] != null ? routeTo[end].toPaths(distTo[end] + 1)
+                                    : EMPTY_PATHS;
     }
 
 
@@ -554,7 +555,8 @@ public final class ShortestPaths {
                         "testDistanceTo_Int_Benzene,testDistanceTo_Int_Spiroundecane," +
                         "testDistanceTo_Int_Pentadecaspiro")
     public int distanceTo(int end) {
-        return (end < 0 || end >= nPathsTo.length) ? Integer.MAX_VALUE : distTo[end];
+        return (end < 0 || end >= nPathsTo.length) ? Integer.MAX_VALUE
+                                                   : distTo[end];
     }
 
 
