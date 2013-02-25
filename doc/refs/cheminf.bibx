@@ -1200,4 +1200,14 @@ Method </bibtex:title>
   	</bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Vismara97">
+    <bibtex:article>
+      <bibtex:author>Vismara, Philippe</bibtex:author>
+      <bibtex:title>Union of all the minimum cycle bases of a graph</bibtex:title>
+      <bibtex:year>1997</bibtex:year> 
+      <bibtex:doi>10.1.1.47.3674</bibtex:doi>
+      <bibtex:URL>http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.3674</bibtex:URL> 
+      <bibtex:journal>Combinatorics</bibtex:journal>
+    </bibtex:article>
+  </bibtex:entry>
 </bibtex:file>

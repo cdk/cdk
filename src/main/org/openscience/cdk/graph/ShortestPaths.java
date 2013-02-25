@@ -93,6 +93,9 @@ public final class ShortestPaths {
     /* number of paths to each vertex */
     private final int[] nPathsTo;
 
+    /* low order paths */
+    private final boolean[] precedes;
+
 
     private final int start;
     private final IAtomContainer container;
@@ -133,6 +136,7 @@ public final class ShortestPaths {
         this.distTo = new int[n];
         this.routeTo = new Route[n];
         this.nPathsTo = new int[n];
+        this.precedes = new boolean[n];
 
         // skip computation for empty molecules
         if (container.isEmpty())
@@ -148,6 +152,7 @@ public final class ShortestPaths {
         distTo[start] = 0;
         routeTo[start] = new Source(start);
         nPathsTo[start] = 1;
+        precedes[start] = true;
 
         compute(adjacent);
 
@@ -179,12 +184,16 @@ public final class ShortestPaths {
                     distTo[w] = dist;
                     routeTo[w] = new SequentialRoute(routeTo[v], w); // append w to the route to v
                     nPathsTo[w] = nPathsTo[v];
+                    precedes[w] = precedes[v] && w < start;
                     queue.add(w);
                 } else if (distTo[w] == dist) {
                     // found path of equal distance, mark as a branch with a new sequential route
                     routeTo[w] = new Branch(routeTo[w],
                                             new SequentialRoute(routeTo[v], w));
                     nPathsTo[w] += nPathsTo[v];
+                    // possible counter intuitive but we don't adjust precedes[]
+                    // as the heuristics still work, this makes sense as we are
+                    // only indicating the first path
                 }
             }
 
@@ -271,6 +280,20 @@ public final class ShortestPaths {
         return pathTo(container.getAtomNumber(end));
     }
 
+    /**
+     * Returns whether the first shortest path from the <i>start</i> to a given
+     * <i>end</i> vertex which only passed through vertices smaller then
+     * <i>start</i>. This is useful for reducing the search space, the idea is
+     * used by {@cdk.cite Vismara97} in the computation of cycle prototypes.
+     *
+     * @param end the end vertex
+     * @return whether the path to the <i>end</i> only passed through vertices
+     *         preceding the <i>start</i>
+     */
+    @TestMethod("testIsPrecedingPathTo_OutOfBounds,testIsPrecedingPathTo")
+    public boolean isPrecedingPathTo(int end) {
+        return (end >= 0 || end < routeTo.length) && precedes[end];
+    }
 
     /**
      * Reconstruct all shortest paths to the provided <i>end</i> vertex. The

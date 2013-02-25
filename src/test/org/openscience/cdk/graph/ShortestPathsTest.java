@@ -38,7 +38,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * unit tests for ShortestPaths.
@@ -125,6 +127,46 @@ public class ShortestPathsTest {
 
         assertArrayEquals(new int[]{0, 1, 2, 3}, paths.pathTo(3));
 
+    }
+
+    @Test
+    public void testIsPrecedingPathTo() {
+        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
+        assertFalse(paths.isPrecedingPathTo(1));
+        assertFalse(paths.isPrecedingPathTo(2));
+        assertFalse(paths.isPrecedingPathTo(3));
+        assertFalse(paths.isPrecedingPathTo(4));
+        assertFalse(paths.isPrecedingPathTo(5));
+
+        paths = new ShortestPaths(benzene, benzene.getAtom(6));
+        assertTrue(paths.isPrecedingPathTo(4));
+        assertTrue(paths.isPrecedingPathTo(3));
+        assertTrue(paths.isPrecedingPathTo(2));
+        assertTrue(paths.isPrecedingPathTo(1));
+        assertTrue(paths.isPrecedingPathTo(0));
+
+        paths = new ShortestPaths(benzene, benzene.getAtom(4));
+        assertFalse(paths.isPrecedingPathTo(5));
+        assertTrue(paths.isPrecedingPathTo(3));
+        assertTrue(paths.isPrecedingPathTo(2));
+        assertTrue(paths.isPrecedingPathTo(1));
+
+        // shortest path to 0 is 4,5,0...
+        assertFalse(paths.isPrecedingPathTo(0));
+        //   1 - 2
+        //  /     \
+        // 0       3
+        //  \     /
+        //   5 - 4
+    }
+
+    @Test
+    public void testIsPrecedingPathTo_OutOfBounds() {
+        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
+        assertFalse(paths.isPrecedingPathTo(-1));
+        assertFalse(paths.isPrecedingPathTo(6)); // 0..5 only
     }
 
     /**
