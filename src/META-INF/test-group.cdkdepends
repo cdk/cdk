@@ -6,7 +6,6 @@ cdk-data.jar
 cdk-test-standard.jar
 cdk-test.jar
 cdk-group.jar
-cdk-graph.jar
 cdk-silent.jar
 cdk-smiles.jar
 cdk-valencycheck.jar
