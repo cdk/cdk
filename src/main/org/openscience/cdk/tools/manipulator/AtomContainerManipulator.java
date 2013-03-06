@@ -36,18 +36,9 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IStereoElement;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -409,6 +400,137 @@ public class AtomContainerManipulator {
         return idList;
     }
 
+    /**
+     * Produces an AtomContainer without explicit non stereo-relevant Hs but with H count from one with Hs.
+     * The new molecule is a deep copy.
+     *
+     * @param atomContainer The AtomContainer from which to remove the hydrogens
+     * @return              The molecule without non stereo-relevant Hs.
+     * @cdk.keyword         hydrogens, removal
+     */
+    @TestMethod("testRemoveNonChiralHydrogens_IAtomContainer")
+    public static IAtomContainer removeNonChiralHydrogens(IAtomContainer atomContainer) {
+
+        Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>(); // maps original atoms to clones.
+        List<IAtom> remove = new ArrayList<IAtom>(); // lists removed Hs.
+
+        // Clone atoms except those to be removed.
+        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);
+        int count = atomContainer.getAtomCount();
+
+        for (int i = 0; i < count; i++) {
+
+            // Clone/remove this atom?
+            IAtom atom = atomContainer.getAtom(i);
+            boolean addToRemove = false;
+            if (atom.getSymbol().equals("H")) {
+                // test whether connected to a single hetero atom only, otherwise keep
+                if (atomContainer.getConnectedAtomsList(atom).size() == 1) {
+                    IAtom neighbour = atomContainer.getConnectedAtomsList(atom).get(0);
+                    // keep if the neighbouring hetero atom has stereo information, otherwise continue checking
+                    Integer stereoParity = neighbour.getStereoParity();
+                    if (stereoParity == null || stereoParity == 0) {
+                        addToRemove = true;
+                        // keep if any of the bonds of the hetero atom have stereo information
+                        for (IBond bond : atomContainer.getConnectedBondsList(neighbour)) {
+                            IBond.Stereo bondStereo = bond.getStereo();
+                            if (bondStereo != null && bondStereo != IBond.Stereo.NONE) addToRemove = false;
+                            IAtom neighboursNeighbour = bond.getConnectedAtom(neighbour);
+                            // remove in any case if the hetero atom is connected to more than one hydrogen
+                            if (neighboursNeighbour.getSymbol().equals("H") && neighboursNeighbour != atom) {
+                                addToRemove = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (addToRemove) remove.add(atom);
+            else addClone(atom, mol, map);
+        }
+
+        // rescue any false positives, i.e., hydrogens that are stereo-relevant
+        // the use of IStereoElement is not fully integrated yet to describe stereo information
+        for (IStereoElement stereoElement : atomContainer.stereoElements()) {
+            if (stereoElement instanceof ITetrahedralChirality) {
+                ITetrahedralChirality tetChirality = (ITetrahedralChirality) stereoElement;
+                for (IAtom atom : tetChirality.getLigands()) {
+                    if (atom.getSymbol().equals("H") && remove.contains(atom)) {
+                        remove.remove(atom);
+                        addClone(atom, mol, map);
+                    }
+                }
+            } else if (stereoElement instanceof IAtomParity) {
+                IAtomParity atomParity= (IAtomParity) stereoElement;
+                for (IAtom atom : atomParity.getSurroundingAtoms()) {
+                    if (atom.getSymbol().equals("H") && remove.contains(atom)) {
+                        remove.remove(atom);
+                        addClone(atom, mol, map);
+                    }
+                }
+            }
+        }
+
+        // Clone bonds except those involving removed atoms.
+        count = atomContainer.getBondCount();
+        for (int i = 0; i < count; i++) {
+            // Check bond.
+            final IBond bond = atomContainer.getBond(i);
+            boolean removedBond = false;
+            final int length = bond.getAtomCount();
+            for (int k = 0; k < length; k++) {
+                if (remove.contains(bond.getAtom(k))) {
+                    removedBond = true;
+                    break;
+                }
+            }
+
+            // Clone/remove this bond?
+            if (!removedBond) {
+                IBond clone = null;
+                try {
+                    clone = (IBond) atomContainer.getBond(i).clone();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+                assert clone != null;
+                clone.setAtoms(new IAtom[]{map.get(bond.getAtom(0)), map.get(bond.getAtom(1))});
+                mol.addBond(clone);
+            }
+        }
+
+        // Recompute hydrogen counts of neighbours of removed Hydrogens.
+        for (IAtom aRemove : remove) {
+            // Process neighbours.
+            for (IAtom iAtom : atomContainer.getConnectedAtomsList(aRemove)) {
+                final IAtom neighb = map.get(iAtom);
+                if (neighb == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
+                neighb.setImplicitHydrogenCount(
+                        (neighb.getImplicitHydrogenCount() == null ? 0 : neighb.getImplicitHydrogenCount()) + 1);
+            }
+        }
+        for(IAtom atom : mol.atoms()){
+            if(atom.getImplicitHydrogenCount()==null)
+                atom.setImplicitHydrogenCount(0);
+        }
+        mol.setProperties(atomContainer.getProperties());
+        mol.setFlags(atomContainer.getFlags());
+
+        return (mol);
+    }
+
+    private static void addClone(IAtom atom, IAtomContainer mol, Map<IAtom, IAtom> map) {
+
+        IAtom clonedAtom = null;
+        try {
+            clonedAtom = (IAtom) atom.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        mol.addAtom(clonedAtom);
+        map.put(atom, clonedAtom);
+    }
 
     /**
      * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
