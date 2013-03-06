@@ -2,7 +2,9 @@ package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.hash.equivalent.EquivalentSetFinder;
 import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
+import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSetUnion;
 import org.openscience.cdk.hash.seed.AtomEncoder;
 import org.openscience.cdk.hash.seed.BasicAtomEncoder;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
@@ -75,7 +77,7 @@ public class HashGeneratorMaker {
     private List<StereoEncoderFactory> stereoEncoders = new ArrayList<StereoEncoderFactory>();
 
     /* whether we want to use perturbed hash generators */
-    private boolean perturbed = false;
+    private EquivalentSetFinder equivSetFinder = null;
 
     /**
      * Specify the depth of the hash generator. Larger values discriminate more
@@ -167,14 +169,61 @@ public class HashGeneratorMaker {
     }
 
     /**
-     * Discriminate atoms experiencing uniform environments.
+     * Discriminate atoms experiencing uniform environments. This method uses
+     * {@link MinimumEquivalentCyclicSet}  to break symmetry but depending on
+     * application one may need a more comprehensive method. Please refer to
+     * {@link #perturbWith(EquivalentSetFinder)} for further configuration
+     * details.
      *
      * @return fluent API reference (self)
-     * @throws UnsupportedOperationException not yet implemented
+     * @see MinimumEquivalentCyclicSet
+     * @see #perturbWith(EquivalentSetFinder)
      */
     @TestMethod("testPerturbed")
     public HashGeneratorMaker perturbed() {
-        perturbed = true;
+        return perturbWith(new MinimumEquivalentCyclicSet());
+    }
+
+    /**
+     * Discriminate atoms experiencing uniform environments using the provided
+     * method. Depending on the level of identity required one can choose how
+     * the atoms a perturbed in an attempt to break symmetry.  As with all
+     * hashing there is always a probability of collision but some of these
+     * collisions may be due to an insufficiency in the algorithm opposed to a
+     * random chance of collision. Currently there are three strategies but one
+     * should choose either to use the fast, but good, heuristic {@link
+     * MinimumEquivalentCyclicSet} or the exact {@link org.openscience.cdk.hash.equivalent.AllEquivalentCyclicSet}.
+     * In practice {@link MinimumEquivalentCyclicSet} is good enough for most
+     * applications but it is important to understand the potential trade off.
+     * The {@link MinimumEquivalentCyclicSetUnion} is provided for demonstration
+     * only, and as such, is deprecated.
+     *
+     * <ul> <li>MinimumEquivalentCyclicSet - fastest, attempt to break symmetry
+     * by changing a single smallest set of the equivalent atoms which occur in
+     * a ring</li> <li><strike>MinimumEquivalentCyclicSetUnion</strike>
+     * (deprecated) - distinguishes more molecules by changing all smallest sets
+     * of the equivalent atoms which occur in a ring. This method is provided
+     * from example only</li> <li>AllEquivalentCyclicSet - slowest,
+     * systematically perturb all equivalent atoms that occur in a ring</li>
+     * </ul>
+     *
+     * At the time of writing (Feb, 2013) the number of known false possibles
+     * found in PubChem-Compound (aprx. 46,000,000 structures) are as follows:
+     *
+     * <ul> <li>MinimumEquivalentCyclicSet - 128 molecules, 64 false positives
+     * (128/2)</li> <li>MinimumEquivalentCyclicSetUnion - 8 molecules, 4 false
+     * positives (8/2)</li> <li>AllEquivalentCyclicSet - 0 molecules</li> </ul>
+     *
+     * @param equivSetFinder equivalent set finder, used to determine which
+     *                       atoms will be perturbed to try and break symmetry.
+     * @return fluent API reference (self)
+     * @see org.openscience.cdk.hash.equivalent.AllEquivalentCyclicSet
+     * @see MinimumEquivalentCyclicSet
+     * @see MinimumEquivalentCyclicSetUnion
+     */
+    @TestMethod("testPerturbedWith")
+    public HashGeneratorMaker perturbWith(EquivalentSetFinder equivSetFinder) {
+        this.equivSetFinder = equivSetFinder;
         return this;
     }
 
@@ -266,11 +315,11 @@ public class HashGeneratorMaker {
 
         AtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
 
-        if (perturbed) {
+        if (equivSetFinder != null) {
             return new PerturbedAtomHashGenerator(new SeedGenerator(encoder),
                                                   new Xorshift(),
                                                   makeStereoEncoderFactory(),
-                                                  new MinimumEquivalentCyclicSet(),
+                                                  equivSetFinder,
                                                   depth);
         }
 

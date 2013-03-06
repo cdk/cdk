@@ -29,7 +29,9 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
 import org.openscience.cdk.hash.seed.BasicAtomEncoder;
+import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -59,6 +61,8 @@ public class PerturbedAtomHashGeneratorTest {
                                                                                                 8));
         MoleculeHashGenerator perturb = new BasicMoleculeHashGenerator(new PerturbedAtomHashGenerator(seeding,
                                                                                                       pseudorandom,
+                                                                                                      StereoEncoderFactory.EMPTY,
+                                                                                                      new MinimumEquivalentCyclicSet(),
                                                                                                       8));
         // basic encoding should say these are the same
         assertThat(basic.generate(m1), is(basic.generate(m2)));
@@ -74,6 +78,8 @@ public class PerturbedAtomHashGeneratorTest {
         Xorshift prng = new Xorshift();
         PerturbedAtomHashGenerator generator = new PerturbedAtomHashGenerator(new SeedGenerator(BasicAtomEncoder.ATOMIC_NUMBER),
                                                                               prng,
+                                                                              StereoEncoderFactory.EMPTY,
+                                                                              new MinimumEquivalentCyclicSet(),
                                                                               8);
         long[][] perturbed = new long[][]{
                 {1, 2, 3, 4},

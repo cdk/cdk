@@ -15,17 +15,40 @@ import java.util.TreeMap;
  * Finds the smallest set of equivalent values are members of a ring. If there
  * are multiple smallest sets then the set with the lowest invariant value is
  * returned. This class is intended to drive the systematic perturbation of the
- * {@link org.openscience.cdk.hash.PerturbedAtomHashGenerator}. The method is
- * different from the original publication {@cdk.cite Ihlenfeldt93} where only
- * non-terminally removable vertices are considered. The method differs as it
- * allows us to make the code more modular. In reality, ring perception
- * provided by {@link RingSearch} is very computationally cheap. <p/><br/> A
- * alternative and (potentially) more robust way may be use the union of all
- * minimum equivalent cyclic sets.
+ * {@link org.openscience.cdk.hash.PerturbedAtomHashGenerator}.
+ *
+ * This method will not distinguish all possible molecules but represents a good
+ * enough approximation to quickly narrow down an identity search. At the time
+ * of writing (Feb, 2013) there are only 128 molecules (64 false positives) in
+ * PubChem-Compound (46E6 molecules) which are not separated. In many data sets
+ * this method will suffice however the exact {@link AllEquivalentCyclicSet} is
+ * provided. <p/><br/>
+ *
+ * This method is currently the default used by the {@link
+ * org.openscience.cdk.hash.HashGeneratorMaker} but can also be explicitly
+ * specified. <blockquote>
+ * <pre>
+ * MoleculeHashGenerator generator =
+ *   new HashGeneratorMaker().depth(6)
+ *                           .elemental()
+ *                           .perturbed() // use this class by default
+ *                           .molecular();
+ *
+ * // explicitly specify the method
+ * MoleculeHashGenerator generator =
+ *   new HashGeneratorMaker().depth(6)
+ *                           .elemental()
+ *                           .perturbWith(new MinimumEquivalentCyclicSet())
+ *                           .molecular();
+ * </pre>
+ * </blockquote>
  *
  * @author John May
  * @cdk.module hash
  * @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
+ * @see MinimumEquivalentCyclicSetUnion
+ * @see AllEquivalentCyclicSet
+ * @see org.openscience.cdk.hash.HashGeneratorMaker
  */
 @TestClass("org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSetTest")
 public final class MinimumEquivalentCyclicSet implements EquivalentSetFinder {
@@ -48,8 +71,8 @@ public final class MinimumEquivalentCyclicSet implements EquivalentSetFinder {
         // divide the invariants into equivalent indexed and ordered sets
         for (int i = 0; i < invariants.length; i++) {
 
-            Long         invariant = invariants[i];
-            Set<Integer> set       = equivalent.get(invariant);
+            Long invariant = invariants[i];
+            Set<Integer> set = equivalent.get(invariant);
 
             if (set == null) {
                 if (ringSearch.cyclic(i)) {
@@ -63,12 +86,12 @@ public final class MinimumEquivalentCyclicSet implements EquivalentSetFinder {
         }
 
         // find the smallest set of equivalent cyclic vertices
-        int          minSize = Integer.MAX_VALUE;
-        Set<Integer> min     = Collections.emptySet();
+        int minSize = Integer.MAX_VALUE;
+        Set<Integer> min = Collections.emptySet();
         for (Map.Entry<Long, Set<Integer>> e : equivalent.entrySet()) {
             Set<Integer> vertices = e.getValue();
-            if (vertices.size() < minSize) {
-                min  = vertices;
+            if (vertices.size() < minSize && vertices.size() > 1) {
+                min = vertices;
                 minSize = vertices.size();
             }
         }

@@ -26,6 +26,7 @@ package org.openscience.cdk.hash;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.hash.equivalent.EquivalentSetFinder;
 import org.openscience.cdk.hash.seed.AtomEncoder;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
 import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -113,6 +115,20 @@ public class HashGeneratorMakerTest {
                                                        .atomic();
 
         assertTrue(g1 instanceof PerturbedAtomHashGenerator);
+    }
+
+    @Test public void testPerturbedWith() throws NoSuchFieldException,
+                                                 IllegalAccessException {
+        EquivalentSetFinder mock = mock(EquivalentSetFinder.class);
+        AtomHashGenerator g1 = new HashGeneratorMaker().depth(0)
+                                                       .elemental()
+                                                       .perturbWith(mock)
+                                                       .atomic();
+
+        assertTrue(g1 instanceof PerturbedAtomHashGenerator);
+        Field field = g1.getClass().getDeclaredField("finder");
+        field.setAccessible(true);
+        assertThat((EquivalentSetFinder) field.get(g1), is(sameInstance(mock)));
     }
 
     @Test
