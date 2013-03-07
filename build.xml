@@ -589,11 +589,11 @@
         	      test-valencycheck,test-smarts,test-standard,test-reaction,
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
-                  test-diff,test-charges,test-inchi,test-formula,
+                  test-diff,test-charges,test-inchi,
                   test-render,test-ioformats,test-log4j,test-cip"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-data,test-qsaratomic,test-qsarbond,
+            list="test-data,test-formula,test-qsaratomic,test-qsarbond,
                   test-pdb,test-smiles,test-extra,test-fragment,test-atomtype,
                   test-structgen,test-iordf,test-silent"/>
         <foreach target="compile-module" param="module" trim="true"

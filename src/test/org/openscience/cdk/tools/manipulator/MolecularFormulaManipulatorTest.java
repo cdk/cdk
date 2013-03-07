@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 
 import java.io.IOException;
@@ -1085,7 +1085,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance());
 
-        IAtomContainer mol = MoleculeFactory.makeBenzene();
+        IAtomContainer mol = TestMoleculeFactory.makeBenzene();
 
         IMolecularFormula f = MolecularFormulaManipulator.getMolecularFormula(mol);
         Assert.assertEquals("C6", MolecularFormulaManipulator.getString(f));
