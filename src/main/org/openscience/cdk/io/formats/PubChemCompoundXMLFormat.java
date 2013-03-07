@@ -34,7 +34,7 @@ public class PubChemCompoundXMLFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private PubChemCompoundXMLFormat() {}
+    public PubChemCompoundXMLFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

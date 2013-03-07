@@ -41,7 +41,7 @@ public class GROMOS96Format implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private GROMOS96Format() {}
+    public GROMOS96Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

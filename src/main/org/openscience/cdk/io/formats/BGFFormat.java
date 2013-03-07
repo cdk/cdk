@@ -39,7 +39,7 @@ public class BGFFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private BGFFormat() {}
+    public BGFFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

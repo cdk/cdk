@@ -32,7 +32,7 @@ public class MOPAC7InputFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private MOPAC7InputFormat() {}
+    public MOPAC7InputFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

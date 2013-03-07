@@ -37,7 +37,7 @@ public class ABINITFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private ABINITFormat() {}
+    public ABINITFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

@@ -37,7 +37,7 @@ public class MDLV3000Format implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private MDLV3000Format() {}
+    public MDLV3000Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

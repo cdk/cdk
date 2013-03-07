@@ -41,7 +41,7 @@ public class TurboMoleFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private TurboMoleFormat() {}
+    public TurboMoleFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

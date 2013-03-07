@@ -39,7 +39,7 @@ public class AlchemyFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private AlchemyFormat() {}
+    public AlchemyFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

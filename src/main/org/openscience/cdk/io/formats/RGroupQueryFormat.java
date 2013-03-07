@@ -40,8 +40,7 @@ public class RGroupQueryFormat implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
-    private RGroupQueryFormat() {
-    }
+    public RGroupQueryFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

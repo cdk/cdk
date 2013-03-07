@@ -40,7 +40,7 @@ public class ChemDrawFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private ChemDrawFormat() {}
+    public ChemDrawFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

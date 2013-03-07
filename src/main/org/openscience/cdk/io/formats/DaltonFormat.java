@@ -38,7 +38,7 @@ public class DaltonFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private DaltonFormat() {}
+    public DaltonFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

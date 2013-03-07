@@ -41,7 +41,7 @@ public class TinkerMM2Format implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private TinkerMM2Format() {}
+    public TinkerMM2Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

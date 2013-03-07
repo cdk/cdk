@@ -39,7 +39,7 @@ public class Gaussian03Format implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private Gaussian03Format() {}
+    public Gaussian03Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

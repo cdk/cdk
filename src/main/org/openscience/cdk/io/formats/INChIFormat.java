@@ -39,7 +39,7 @@ public class INChIFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private INChIFormat() {}
+    public INChIFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

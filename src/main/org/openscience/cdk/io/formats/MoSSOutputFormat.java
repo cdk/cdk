@@ -35,7 +35,7 @@ public class MoSSOutputFormat implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
-    private MoSSOutputFormat() {}
+    public MoSSOutputFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

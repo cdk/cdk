@@ -41,7 +41,7 @@ public class DOCK5Format implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private DOCK5Format() {}
+    public DOCK5Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

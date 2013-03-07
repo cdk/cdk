@@ -37,7 +37,7 @@ public class XYZFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private XYZFormat() {}
+    public XYZFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

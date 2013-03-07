@@ -36,7 +36,7 @@ public class SVGFormat implements IResourceFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private SVGFormat() {}
+    public SVGFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

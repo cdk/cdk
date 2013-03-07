@@ -41,7 +41,7 @@ public class SMARTSFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private SMARTSFormat() {}
+    public SMARTSFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

@@ -39,7 +39,7 @@ public class SDFFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private SDFFormat() {}
+    public SDFFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

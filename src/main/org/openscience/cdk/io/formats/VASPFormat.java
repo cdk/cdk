@@ -37,7 +37,7 @@ public class VASPFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private VASPFormat() {}
+    public VASPFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

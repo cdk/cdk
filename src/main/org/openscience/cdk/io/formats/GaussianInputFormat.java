@@ -39,7 +39,7 @@ public class GaussianInputFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private GaussianInputFormat() {}
+    public GaussianInputFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

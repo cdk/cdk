@@ -37,7 +37,7 @@ public class CTXFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private CTXFormat() {}
+    public CTXFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

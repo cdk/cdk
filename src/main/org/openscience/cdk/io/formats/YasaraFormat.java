@@ -41,7 +41,7 @@ public class YasaraFormat implements IChemFormat {
     
 	private static IResourceFormat myself = null;
 	
-    private YasaraFormat() {}
+    public YasaraFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

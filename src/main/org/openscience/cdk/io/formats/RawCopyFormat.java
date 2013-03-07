@@ -39,7 +39,7 @@ public class RawCopyFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private RawCopyFormat() {}
+    public RawCopyFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

@@ -37,7 +37,7 @@ public class PMPFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private PMPFormat() {}
+    public PMPFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

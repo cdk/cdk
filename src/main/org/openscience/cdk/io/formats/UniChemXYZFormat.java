@@ -40,7 +40,7 @@ public class UniChemXYZFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private UniChemXYZFormat() {}
+    public UniChemXYZFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

@@ -39,7 +39,7 @@ public class QChemFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private QChemFormat() {}
+    public QChemFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

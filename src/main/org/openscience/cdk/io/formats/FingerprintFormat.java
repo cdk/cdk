@@ -40,7 +40,7 @@ public class FingerprintFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private FingerprintFormat() {}
+    public FingerprintFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

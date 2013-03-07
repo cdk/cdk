@@ -37,7 +37,7 @@ public class CrystClustFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private CrystClustFormat() {}
+    public CrystClustFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

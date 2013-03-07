@@ -38,7 +38,7 @@ public class Gaussian92Format implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private Gaussian92Format() {}
+    public Gaussian92Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

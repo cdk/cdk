@@ -37,7 +37,7 @@ public class JMEFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private JMEFormat() {}
+    public JMEFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

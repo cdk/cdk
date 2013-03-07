@@ -40,7 +40,7 @@ public class XEDFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private XEDFormat() {}
+    public XEDFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

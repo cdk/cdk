@@ -42,7 +42,7 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
 	// OK, add some state info
 	boolean isRXN = false;
 	
-    private MDLRXNV3000Format() {}
+    public MDLRXNV3000Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

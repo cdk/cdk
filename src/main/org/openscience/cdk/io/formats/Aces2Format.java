@@ -37,7 +37,7 @@ public class Aces2Format implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private Aces2Format() {}
+    public Aces2Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

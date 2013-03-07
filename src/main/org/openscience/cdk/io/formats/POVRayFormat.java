@@ -41,7 +41,7 @@ public class POVRayFormat implements IResourceFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private POVRayFormat() {}
+    public POVRayFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

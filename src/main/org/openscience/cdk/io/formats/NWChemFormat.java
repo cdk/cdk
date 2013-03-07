@@ -40,7 +40,7 @@ public class NWChemFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private NWChemFormat() {}
+    public NWChemFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

@@ -41,7 +41,7 @@ public class ZindoFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private ZindoFormat() {}
+    public ZindoFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

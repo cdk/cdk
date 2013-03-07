@@ -41,7 +41,7 @@ public class MMODFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private MMODFormat() {}
+    public MMODFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

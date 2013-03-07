@@ -39,7 +39,7 @@ public class ShelXFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private ShelXFormat() {}
+    public ShelXFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

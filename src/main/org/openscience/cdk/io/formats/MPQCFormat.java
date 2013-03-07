@@ -41,7 +41,7 @@ public class MPQCFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private MPQCFormat() {}
+    public MPQCFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

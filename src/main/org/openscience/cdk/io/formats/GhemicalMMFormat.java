@@ -39,7 +39,7 @@ public class GhemicalMMFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private GhemicalMMFormat() {}
+    public GhemicalMMFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

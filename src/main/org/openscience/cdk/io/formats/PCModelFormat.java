@@ -41,7 +41,7 @@ public class PCModelFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private PCModelFormat() {}
+    public PCModelFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

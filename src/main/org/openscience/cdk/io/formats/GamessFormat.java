@@ -39,7 +39,7 @@ public class GamessFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private GamessFormat() {}
+    public GamessFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

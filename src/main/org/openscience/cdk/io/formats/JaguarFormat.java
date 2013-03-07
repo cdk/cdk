@@ -40,7 +40,7 @@ public class JaguarFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private JaguarFormat() {}
+    public JaguarFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

@@ -41,7 +41,7 @@ public class HINFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private HINFormat() {}
+    public HINFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

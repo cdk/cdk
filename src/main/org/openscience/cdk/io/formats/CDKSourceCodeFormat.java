@@ -37,7 +37,7 @@ public class CDKSourceCodeFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private CDKSourceCodeFormat() {}
+    public CDKSourceCodeFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

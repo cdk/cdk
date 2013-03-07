@@ -40,7 +40,7 @@ public class DMol3Format implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
-    private DMol3Format() {}
+    public DMol3Format() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {

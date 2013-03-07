@@ -37,7 +37,7 @@ public class SpartanFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
-    private SpartanFormat() {}
+    public SpartanFormat() {}
     
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
