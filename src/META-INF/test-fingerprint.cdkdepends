@@ -11,10 +11,8 @@ cdk-smiles.jar
 cdk-data.jar
 cdk-silent.jar
 cdk-fingerprint.jar
-cdk-signature.jar
 cdk-extra.jar
 cdk-formula.jar
 cdk-testdata.jar
 cdk-test-standard.jar
 cdk-diff.jar
-cdk-signature.jar

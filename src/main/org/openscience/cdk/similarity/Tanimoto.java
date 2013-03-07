@@ -71,7 +71,7 @@ import java.util.TreeSet;
  *@cdk.keyword    similarity, tanimoto
  * @cdk.module fingerprint
  */
-@TestClass("org.openscience.cdk.similarity.TanimotoTest")
+@TestClass("org.openscience.cdk.similarity.TanimotoTest") // see also SignatureFingerprintTanimotoTest
 public class Tanimoto 
 {
 

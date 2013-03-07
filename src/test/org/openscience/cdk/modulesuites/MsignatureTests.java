@@ -28,6 +28,7 @@ import org.openscience.cdk.signature.MoleculeFromSignatureBuilderTest;
 import org.openscience.cdk.signature.MoleculeSignatureTest;
 import org.openscience.cdk.signature.OrbitTest;
 import org.openscience.cdk.signature.SignatureQuotientGraphTest;
+import org.openscience.cdk.similarity.SignatureFingerprintTanimotoTest;
 
 /**
  * TestSuite that runs all the tests for the CDK <code>signature</code> module.
@@ -42,6 +43,7 @@ import org.openscience.cdk.signature.SignatureQuotientGraphTest;
     MoleculeSignatureTest.class,
     MoleculeFromSignatureBuilderTest.class,
     AtomSignatureTest.class,
-    SignatureFingerprinterTest.class
+    SignatureFingerprinterTest.class,
+    SignatureFingerprintTanimotoTest.class
 })
 public class MsignatureTests {}
