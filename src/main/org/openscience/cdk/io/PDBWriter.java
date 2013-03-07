@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * writing of PDBProtein data structures.
  * 
  * @author      Gilleain Torrance <gilleain.torrance@gmail.com>
- * @cdk.module io
+ * @cdk.module pdb
  * @cdk.iooptions
  * @cdk.githash
  */

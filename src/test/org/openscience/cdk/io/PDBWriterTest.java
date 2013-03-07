@@ -51,12 +51,12 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * TestCase for the PDBWriter class.
  *
- * @cdk.module test-io
+ * @cdk.module test-pdb
  *
  * @author      Egon Willighagen
  * @cdk.created 2001-08-09
@@ -244,7 +244,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     
     @Test
     public void molfactoryRoundtripTest() throws Exception {
-        IAtomContainer original = MoleculeFactory.makePyrrole();
+        IAtomContainer original = TestMoleculeFactory.makePyrrole();
         setCoordinatesToZero(original);
         StringWriter stringWriter = new StringWriter();
         PDBWriter writer = new PDBWriter(stringWriter);

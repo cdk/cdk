@@ -2,6 +2,7 @@ cdk-annotation.jar
 cdk-interfaces.jar
 cdk-core.jar
 cdk-data.jar
+cdk-test-data.jar
 cdk-datadebug.jar
 cdk-io.jar
 cdk-ioformats.jar

@@ -51,7 +51,6 @@ import org.openscience.cdk.io.Mol2ReaderTest;
 import org.openscience.cdk.io.Mol2WriterTest;
 import org.openscience.cdk.io.Mopac7ReaderTest;
 import org.openscience.cdk.io.PCCompoundASNReaderTest;
-import org.openscience.cdk.io.PDBWriterTest;
 import org.openscience.cdk.io.PMPReaderTest;
 import org.openscience.cdk.io.ReaderFactoryTest;
 import org.openscience.cdk.io.SDFReaderTest;
@@ -104,7 +103,6 @@ import org.openscience.cdk.io.program.Mopac7WriterTest;
     Mopac7ReaderTest.class,
     Mopac7WriterTest.class,
     PCCompoundASNReaderTest.class,
-    PDBWriterTest.class,
     PMPReaderTest.class,
     ShelXReaderTest.class,
     SMILESWriterTest.class,
