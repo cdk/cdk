@@ -40,7 +40,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-builder3d
+ * @cdk.module test-qsaratomic
  * @cdk.bug    1627763
  */
 public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {

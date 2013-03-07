@@ -4,7 +4,6 @@ cdk-silent.jar
 cdk-interfaces.jar
 cdk-annotation.jar
 cdk-io.jar
-cdk-qsar.jar
 cdk-standard.jar
 cdk-charges.jar
 cdk-forcefield.jar

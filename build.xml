@@ -563,10 +563,13 @@
             list="renderawt"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
+            list="forcefield"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="forcefield,qsarionpot,iordf"/>
+            list="qsarionpot,iordf"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="builder3d,builder3dtools"/>

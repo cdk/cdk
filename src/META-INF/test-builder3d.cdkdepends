@@ -4,7 +4,6 @@ cdk-data.jar
 cdk-diff.jar
 cdk-silent.jar
 cdk-interfaces.jar
-cdk-qsar.jar
 cdk-io.jar
 cdk-ioformats.jar
 cdk-standard.jar
@@ -19,5 +18,3 @@ cdk-test.jar
 cdk-isomorphism.jar
 cdk-testdata.jar
 cdk-builder3dtools.jar
-cdk-test-qsaratomic.jar
-cdk-test-qsar.jar

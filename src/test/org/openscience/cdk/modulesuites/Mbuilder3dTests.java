@@ -28,7 +28,6 @@ import org.openscience.cdk.modeling.builder3d.FurtherAtomPlacer3DTest;
 import org.openscience.cdk.modeling.builder3d.FurtherTemplateHandler3DTest;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3DTest;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -39,7 +38,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descripto
 @SuiteClasses(value={
     Builder3dCoverageTest.class,
     ModelBuilder3DTest.class,
-    PartialTChargeMMFF94DescriptorTest.class,
     TemplateHandler3DTest.class,
     FurtherAtomPlacer3DTest.class,
     AtomTetrahedralLigandPlacer3DTest.class,
