@@ -31,6 +31,7 @@ import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -57,12 +58,10 @@ import org.openscience.cdk.io.formats.XYZFormat;
  */
 @TestClass("org.openscience.cdk.io.FormatFactoryTest")
 public class FormatFactory {
-    
-    private final static String IO_FORMATS_LIST = "io-formats.set";
 
     private int headerLength;
 
-    private static List<IChemFormatMatcher> formats = null;
+    private List<IChemFormatMatcher> formats = new ArrayList<IChemFormatMatcher>(100);
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -84,28 +83,8 @@ public class FormatFactory {
     }
 
     private void loadFormats() {
-        if (formats == null) {
-            formats = new ArrayList<IChemFormatMatcher>();
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    this.getClass().getClassLoader().getResourceAsStream(IO_FORMATS_LIST)
-                ));
-                int formatCount = 0;
-                while (reader.ready()) {
-                    // load them one by one
-                    String formatName = reader.readLine();
-                    formatCount++;
-                    try {
-                        Class<? extends Object> formatClass = this.getClass().getClassLoader().loadClass(formatName);
-                        Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
-                        IChemFormatMatcher format = (IChemFormatMatcher)getinstanceMethod.invoke(null, new Object[0]);
-                        formats.add(format);
-                    } catch (ClassNotFoundException exception) {
-                    } catch (Exception exception) {
-                    }
-                }
-            } catch (Exception exception) {
-            }
+        for(IChemFormatMatcher format : ServiceLoader.load(IChemFormatMatcher.class)){
+            formats.add(format);
         }
     }
 
