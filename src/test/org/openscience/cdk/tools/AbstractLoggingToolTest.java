@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
 /**
- * @cdk.module test-core
+ * @cdk.module test
  */
 public abstract class AbstractLoggingToolTest extends CDKTestCase {
 	

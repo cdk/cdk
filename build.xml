@@ -523,13 +523,13 @@
         <antcall target="compile-init"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="interfaces,annotation"/>
+            list="interfaces,annotation,log4j"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="core,ioformats"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="silent,data,dict,diff,qm,standard,log4j"/>
+            list="silent,data,dict,diff,qm,standard"/>
         <foreach target="compile-module" param="module" trim="yes"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="datadebug,isomorphism,atomtype,render,valencycheck,

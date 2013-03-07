@@ -86,7 +86,7 @@ package org.openscience.cdk.tools;
  * can be used by the {@link LoggingToolFactory} to instantiate the
  * implementation.
  *
- * @cdk.module  core
+ * @cdk.module  interfaces
  * @cdk.githash
  */
 public interface ILoggingTool {
