@@ -24,8 +24,13 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 
 /**
  * @cdk.module test-ioformats
@@ -98,16 +103,36 @@ abstract public class ResourceFormatTest {
                 String extension = exts[i];
                 Assert.assertNotNull(extension);
                 Assert.assertNotSame(0, extension.length());
-                Assert.assertFalse(
-                    "File name extensions should not contain ',' characters",
-                    extension.contains(",")
-                );
-                Assert.assertFalse(
-                    "File name extensions should not contain '.' characters",
-                    extension.contains(".")
-                );
+                assertFalse(
+                        "File name extensions should not contain ',' characters",
+                        extension.contains(",")
+                           );
+                assertFalse(
+                        "File name extensions should not contain '.' characters",
+                        extension.contains(".")
+                           );
             }
         }
+    }
+
+    @Test public void testHashCode() throws IllegalAccessException,
+                                            InstantiationException {
+        IResourceFormat a = resourceFormat.getClass().newInstance();
+        IResourceFormat b = resourceFormat.getClass().newInstance();
+        assertThat(a.hashCode(), is(b.hashCode()));
+    }
+
+    @Test public void testEquals() throws IllegalAccessException,
+                                            InstantiationException {
+        IResourceFormat a = resourceFormat.getClass().newInstance();
+        IResourceFormat b = resourceFormat.getClass().newInstance();
+        assertThat(a, is(b));
+    }
+
+    @Test public void testEquals_null() throws IllegalAccessException,
+                                            InstantiationException {
+        IResourceFormat a = resourceFormat.getClass().newInstance();
+        assertFalse(a.equals(null));
     }
     
     @Test public void testIsXMLBased() {

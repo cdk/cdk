@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.SpartanFormatTest")
-public class SpartanFormat implements IChemFormatMatcher {
+public class SpartanFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

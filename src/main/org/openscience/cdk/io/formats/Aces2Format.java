@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.Aces2FormatTest")
-public class Aces2Format implements IChemFormatMatcher {
+public class Aces2Format extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

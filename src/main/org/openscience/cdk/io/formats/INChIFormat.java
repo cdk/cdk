@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.INChIFormatTest")
-public class INChIFormat implements IChemFormatMatcher {
+public class INChIFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

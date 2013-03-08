@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.NWChemFormatTest")
-public class NWChemFormat implements IChemFormatMatcher {
+public class NWChemFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

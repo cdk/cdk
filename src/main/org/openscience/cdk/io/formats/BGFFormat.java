@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.BGFFormatTest")
-public class BGFFormat implements IChemFormat {
+public class BGFFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

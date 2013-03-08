@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.Chem3D_Cartesian_2FormatTest")
-public class Chem3D_Cartesian_2Format implements IChemFormat {
+public class Chem3D_Cartesian_2Format extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.JMEFormatTest")
-public class JMEFormat implements IChemFormat {
+public class JMEFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

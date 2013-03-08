@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.PCModelFormatTest")
-public class PCModelFormat implements IChemFormat {
+public class PCModelFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

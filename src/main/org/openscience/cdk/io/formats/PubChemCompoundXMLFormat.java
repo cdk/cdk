@@ -30,7 +30,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set     io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.PubChemCompoundXMLFormatTest")
-public class PubChemCompoundXMLFormat implements IChemFormatMatcher {
+public class PubChemCompoundXMLFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

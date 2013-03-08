@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.GhemicalSPMFormatTest")
-public class GhemicalSPMFormat implements IChemFormatMatcher {
+public class GhemicalSPMFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

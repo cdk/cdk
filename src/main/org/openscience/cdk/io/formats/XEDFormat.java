@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.XEDFormatTest")
-public class XEDFormat implements IChemFormat {
+public class XEDFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

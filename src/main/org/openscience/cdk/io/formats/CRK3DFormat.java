@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.CRK3DFormatTest")
-public class CRK3DFormat implements IChemFormat {
+public class CRK3DFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

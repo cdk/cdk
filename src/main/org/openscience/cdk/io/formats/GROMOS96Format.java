@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.GROMOS96FormatTest")
-public class GROMOS96Format implements IChemFormat {
+public class GROMOS96Format extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

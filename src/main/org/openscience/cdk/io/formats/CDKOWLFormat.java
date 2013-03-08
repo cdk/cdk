@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.CDKOWLFormatTest")
-public class CDKOWLFormat implements IChemFormatMatcher {
+public class CDKOWLFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

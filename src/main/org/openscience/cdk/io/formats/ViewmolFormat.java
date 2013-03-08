@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.ViewmolFormatTest")
-public class ViewmolFormat implements IChemFormat {
+public class ViewmolFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

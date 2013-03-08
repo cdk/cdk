@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.UniChemXYZFormatTest")
-public class UniChemXYZFormat implements IChemFormat {
+public class UniChemXYZFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	

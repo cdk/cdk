@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.Gaussian95FormatTest")
-public class Gaussian95Format implements IChemFormatMatcher {
+public class Gaussian95Format extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

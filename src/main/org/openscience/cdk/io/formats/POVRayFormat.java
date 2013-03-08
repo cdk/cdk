@@ -37,7 +37,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.POVRayFormatTest")
-public class POVRayFormat implements IResourceFormat {
+public class POVRayFormat extends AbstractResourceFormat implements IResourceFormat {
 
 	private static IResourceFormat myself = null;
 	

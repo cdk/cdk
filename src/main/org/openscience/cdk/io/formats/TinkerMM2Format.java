@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.TinkerMM2FormatTest")
-public class TinkerMM2Format implements IChemFormat {
+public class TinkerMM2Format extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
 	
