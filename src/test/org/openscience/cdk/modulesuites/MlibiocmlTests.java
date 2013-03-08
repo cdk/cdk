@@ -23,6 +23,8 @@ package org.openscience.cdk.modulesuites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.openscience.cdk.io.CMLWriterFactoryTest;
+import org.openscience.cdk.io.MDLCMLRoundtripTest;
 import org.openscience.cdk.io.cml.CML2Test;
 import org.openscience.cdk.io.cml.CML2WriterTest;
 import org.openscience.cdk.io.cml.CMLRoundTripTest;
@@ -38,6 +40,8 @@ import org.openscience.cdk.libio.cml.ConvertorTest;
     CML2Test.class,
     CML2WriterTest.class,
     CMLRoundTripTest.class,
-    ConvertorTest.class
+    ConvertorTest.class,
+    CMLWriterFactoryTest.class,
+    MDLCMLRoundtripTest.class
 })
 public class MlibiocmlTests {}
