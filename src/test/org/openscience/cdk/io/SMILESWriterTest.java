@@ -37,7 +37,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * TestCase for the writer for SMILES files.
  *
- * @cdk.module test-io
+ * @cdk.module test-smiles
  *
  * @see org.openscience.cdk.io.SMILESWriter
  */

@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -40,10 +41,13 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
-import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.TestMoleculeFactory;
+
+import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 /**
  * TestCase for the writer MDL SD file writer.
@@ -193,9 +197,13 @@ public class SDFWriterTest extends ChemObjectWriterTest {
      */
     @Test
     public void testIOPropPropagation() throws Exception {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("c1ccccc1CC");
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        IAtomContainer mol = TestMoleculeFactory.makeBenzene();
+        for(IAtom atom : mol.atoms()) {
+            atom.setFlag(ISAROMATIC, true);
+        }
+        for(IBond bond : mol.bonds()) {
+            bond.setFlag(ISAROMATIC, true);
+        }
 
         StringWriter strWriter = new StringWriter();
         SDFWriter writer = new SDFWriter(strWriter);

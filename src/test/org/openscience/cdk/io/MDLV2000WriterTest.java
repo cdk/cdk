@@ -33,7 +33,6 @@ import java.util.regex.Matcher;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,6 +44,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,12 +55,11 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 
 /**
@@ -121,7 +120,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test public void testWriteValence() throws Exception {
     	StringWriter writer = new StringWriter();
-    	IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+    	IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         molecule.getAtom(0).setValency(1);
         molecule.getAtom(1).setValency(0);
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -138,7 +137,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test public void testWriteAtomAtomMapping() throws Exception {
         StringWriter writer = new StringWriter();
-        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         molecule.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,1);
         molecule.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,15);
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -153,7 +152,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 	 */
 	@Test public void testWriteStringAtomAtomMapping() throws Exception {
 		StringWriter writer = new StringWriter();
-		IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+		IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
 		molecule.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"1");
 		molecule.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"15");
 		MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -168,7 +167,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 	 */
 	@Test public void testWriteInvalidAtomAtomMapping() throws Exception {
 		StringWriter writer = new StringWriter();
-		IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+		IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
 		molecule.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"1a");
 		molecule.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,"15");
 		MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -268,7 +267,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test public void testUndefinedStereo() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
       mol.getBond(0).setStereo(IBond.Stereo.UP_OR_DOWN);
       mol.getBond(1).setStereo(IBond.Stereo.E_OR_Z);
       StringWriter writer = new StringWriter();
@@ -296,9 +295,9 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     }
 
     @Test public void testTwoFragmentsWithTitle() throws CDKException{
-        IAtomContainer mol1 = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer mol1 = TestMoleculeFactory.makeAlphaPinene();
         mol1.setProperty(CDKConstants.TITLE,"title1");
-        IAtomContainer mol2 = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer mol2 = TestMoleculeFactory.makeAlphaPinene();
         mol2.setProperty(CDKConstants.TITLE,"title2");
         IChemModel model = mol1.getBuilder().newInstance(IChemModel.class);
         model.setMoleculeSet(mol1.getBuilder().newInstance(IAtomContainerSet.class));
@@ -374,15 +373,19 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
      * @throws Exception
      */
     @Test public void testAromaticBondType4() throws Exception {
-        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        String smiles = "c1ccccc1";
-        IAtomContainer benzene = sp.parseSmiles(smiles);
 
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
+        for(IAtom atom : benzene.atoms()) {
+            atom.setFlag(ISAROMATIC, true);
+        }
+        for(IBond bond : benzene.bonds()) {
+            bond.setFlag(ISAROMATIC, true);
+        }
 
         StringWriter writer = new StringWriter();
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(benzene);
-        Assert.assertTrue(writer.toString().indexOf("2  1  1  0  0  0  0") != -1);
+        Assert.assertTrue(writer.toString().indexOf("1  2  1  0  0  0  0") != -1);
 
 
         writer = new StringWriter();
@@ -393,7 +396,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.addChemObjectIOListener(listener);
         mdlWriter.customizeJob();
         mdlWriter.write(benzene);
-        Assert.assertTrue(writer.toString().indexOf("2  1  4  0  0  0  0") != -1);
+        Assert.assertTrue(writer.toString().indexOf("1  2  4  0  0  0  0") != -1);
     }
     
     @Test

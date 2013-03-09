@@ -29,7 +29,9 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.SmilesCoverageTest;
 import org.openscience.cdk.fingerprint.LingoFingerprinterTest;
 import org.openscience.cdk.io.MoSSOutputReaderTest;
+import org.openscience.cdk.io.SMILES2Mol2WriterTest;
 import org.openscience.cdk.io.SMILESReaderTest;
+import org.openscience.cdk.io.SMILESWriterTest;
 import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
 import org.openscience.cdk.smiles.DeduceBondSystemToolTest;
 import org.openscience.cdk.smiles.FixBondOrdersToolTest;
@@ -46,6 +48,7 @@ import org.openscience.cdk.normalize.NormalizerTest;
 @SuiteClasses(value={
     SmilesCoverageTest.class,
     SMILESReaderTest.class,
+    SMILESWriterTest.class,
     IteratingSMILESReaderTest.class,
     DeduceBondSystemToolTest.class,
     MoSSOutputReaderTest.class,
@@ -53,6 +56,7 @@ import org.openscience.cdk.normalize.NormalizerTest;
     SmilesGeneratorTest.class,
     NormalizerTest.class,
     LingoFingerprinterTest.class,
-    FixBondOrdersToolTest.class
+    FixBondOrdersToolTest.class,
+    SMILES2Mol2WriterTest.class
 })
 public class MsmilesTests {}
