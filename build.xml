@@ -594,7 +594,7 @@
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-formula,test-qsaratomic,test-qsarbond,
-                  test-pdb,test-smiles,test-extra,test-fragment,test-atomtype,
+                  test-pdb,test-pdbcml,test-smiles,test-extra,test-fragment,test-atomtype,
                   test-structgen,test-iordf,test-silent"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -1147,7 +1147,7 @@
                       io,builder3d,forcefield,valencycheck,charges,reaction,
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
                       qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
-                      structgen,libiomd,libiocml,formula,render,extra,fragment,sdg,
+                      structgen,libiomd,libiocml,pdbcml,formula,render,extra,fragment,sdg,
                       ioformats,log4j,smsd,signature,iordf,cip,tautomer,
                       isomorphism,renderbasic,renderawt,renderextra,silent,group,
                       hash,pdbcml"/>

@@ -16,7 +16,6 @@ cdk-qsarcml.jar
 cdk-atomtype.jar
 cdk-silent.jar
 cdk-pdb.jar
-cdk-pdbcml.jar
 cdk-formula.jar
 cdk-testdata.jar
 cdk-diff.jar

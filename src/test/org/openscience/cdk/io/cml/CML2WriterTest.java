@@ -49,12 +49,9 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.libio.cml.PDBAtomCustomizer;
 import org.openscience.cdk.libio.cml.QSARCustomizer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -63,7 +60,6 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Crystal;
-import org.openscience.cdk.silent.PDBAtom;
 import org.openscience.cdk.silent.Reaction;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -235,25 +231,7 @@ public class CML2WriterTest extends CDKTestCase {
         Assert.assertTrue(cmlContent.indexOf("<molecule id=\"product") != -1);
         Assert.assertTrue(cmlContent.indexOf("<molecule id=\"agent") != -1);
     }
-    
-    @Test public void testPDBAtomCustomization() throws Exception {
-        StringWriter writer = new StringWriter();
-        IAtomContainer molecule = new AtomContainer();
-        IPDBAtom atom = new PDBAtom("C");
-        atom.setName("CA");
-        atom.setResName("PHE");
-        molecule.addAtom(atom);
-        
-        CMLWriter cmlWriter = new CMLWriter(writer);
-        cmlWriter.registerCustomizer(new PDBAtomCustomizer());
-        cmlWriter.write(molecule);
-        String cmlContent = writer.toString();
-        logger.debug("****************************** testPDBAtomCustomization()");
-        logger.debug(cmlContent);
-        logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
-    }
-    
+
     @Test public void testReactionScheme1() throws Exception {
     	StringWriter writer = new StringWriter();
     	IReactionScheme scheme1 = DefaultChemObjectBuilder.getInstance().newInstance(IReactionScheme.class);
