@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 
 /**
- * @cdk.module test-io
+ * @cdk.module test-extra
  */
 public class ZMatrixReaderTest extends ChemObjectIOTest {
 

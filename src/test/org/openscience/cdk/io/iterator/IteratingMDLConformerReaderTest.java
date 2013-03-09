@@ -13,7 +13,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
- * @cdk.module test-io
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.io.MDLReader
  */

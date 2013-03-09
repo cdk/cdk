@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ChemObjectIOTest;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -57,7 +57,7 @@ public class GaussianInputWriterTest extends ChemObjectIOTest {
      * @cdk.bug 2501715
      */
     @Test public void testWrite() throws Exception {
-        IAtomContainer molecule=MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule=TestMoleculeFactory.makeAlphaPinene();
         StringWriter writer = new StringWriter();
         GaussianInputWriter gaussianWriter = new GaussianInputWriter(writer);
         gaussianWriter.write(molecule);

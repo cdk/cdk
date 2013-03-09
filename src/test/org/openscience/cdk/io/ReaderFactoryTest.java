@@ -35,25 +35,15 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.CTXFormat;
-import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.formats.GhemicalSPMFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
-import org.openscience.cdk.io.formats.INChIFormat;
-import org.openscience.cdk.io.formats.INChIPlainTextFormat;
-import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.formats.MDLV3000Format;
@@ -63,11 +53,8 @@ import org.openscience.cdk.io.formats.PubChemASNFormat;
 import org.openscience.cdk.io.formats.PubChemCompoundXMLFormat;
 import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
-import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * TestCase for the instantiation and functionality of the {@link ReaderFactory}.
@@ -91,22 +78,6 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
 
     @Test public void testGhemical() throws Exception {
         expectReader("data/ghemical/ethene.mm1gp", GhemicalSPMFormat.getInstance(), 6, 5);
-    }
-
-    @Test public void testINChI() throws Exception {
-        expectReader("data/inchi/guanine.inchi.xml", INChIFormat.getInstance(), -1, -1);
-    }
-
-    @Test public void testINChIPlainText() throws Exception {
-        expectReader("data/inchi/guanine.inchi", INChIPlainTextFormat.getInstance(), -1, -1);
-    }
-
-    @Test public void testVASP() throws Exception {
-        expectReader("data/vasp/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance(), -1, -1);
-    }
-
-    @Test public void testGamess() throws Exception {
-        expectReader("data/gamess/ch3oh_gam.out", GamessFormat.getInstance(), -1, -1);
     }
 
     @Test public void testCML() throws Exception {

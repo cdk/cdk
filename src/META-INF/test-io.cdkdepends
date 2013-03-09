@@ -8,9 +8,7 @@ cdk-datadebug.jar
 cdk-silent.jar
 cdk-io.jar
 cdk-ioformats.jar
-cdk-extra.jar
 cdk-valencycheck.jar
-cdk-smiles.jar
 cdk-silent.jar
 cdk-test.jar
 cdk-testdata.jar

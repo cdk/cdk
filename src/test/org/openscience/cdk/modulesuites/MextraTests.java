@@ -29,7 +29,13 @@ import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.graph.invariant.EquivalentClassPartitionerTest;
 import org.openscience.cdk.index.CASNumberTest;
+import org.openscience.cdk.io.CrystClustReaderTest;
+import org.openscience.cdk.io.ExtraReaderFactoryTest;
+import org.openscience.cdk.io.GamessReaderTest;
+import org.openscience.cdk.io.INChIPlainTextReaderTest;
+import org.openscience.cdk.io.INChIReaderTest;
 import org.openscience.cdk.io.ShelXWriterTest;
+import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
 import org.openscience.cdk.iupac.ParserTest;
 import org.openscience.cdk.reaction.ReactionChainTest;
 import org.openscience.cdk.tools.BremserPredictorTest;
@@ -51,9 +57,15 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
     HOSECodeAnalyserTest.class,
     DeAromatizationToolTest.class,
     ShelXWriterTest.class,
+    CrystClustReaderTest.class,
+    GamessReaderTest.class,
+    INChIReaderTest.class,
+    INChIPlainTextReaderTest.class,
+    IteratingMDLConformerReaderTest.class,
+    ExtraReaderFactoryTest.class,
     BremserPredictorTest.class,
     ParserTest.class,
     ReactionChainTest.class,
-    EquivalentClassPartitionerTest.class
+    EquivalentClassPartitionerTest.class,
 })
 public class MextraTests {}
