@@ -22,11 +22,13 @@ package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.LonePair;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.tools.diff.tree.IDifference;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
@@ -34,15 +36,25 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 public class LonePairDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        ILonePair bond1 = new LonePair();
+        ILonePair bond1 = mock(ILonePair.class);
         String result = LonePairDiff.diff(bond1, bond1);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        ILonePair bond1 = new LonePair(new Atom("C"));
-        ILonePair bond2 = new LonePair(new Atom("O"));
-        
+
+        IAtom carbon = mock(IAtom.class);
+        IAtom oxygen = mock(IAtom.class);
+
+        when(carbon.getSymbol()).thenReturn("C");
+        when(oxygen.getSymbol()).thenReturn("O");
+
+        ILonePair bond1 = mock(ILonePair.class);
+        ILonePair bond2 = mock(ILonePair.class);
+
+        when(bond1.getAtom()).thenReturn(carbon);
+        when(bond2.getAtom()).thenReturn(oxygen);
+
         String result = LonePairDiff.diff( bond1, bond2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
@@ -52,8 +64,17 @@ public class LonePairDiffTest extends CDKTestCase {
     }
 
     @Test public void testDifference() {
-        ILonePair bond1 = new LonePair(new Atom("C"));
-        ILonePair bond2 = new LonePair(new Atom("O"));
+        IAtom carbon = mock(IAtom.class);
+        IAtom oxygen = mock(IAtom.class);
+
+        when(carbon.getSymbol()).thenReturn("C");
+        when(oxygen.getSymbol()).thenReturn("O");
+
+        ILonePair bond1 = mock(ILonePair.class);
+        ILonePair bond2 = mock(ILonePair.class);
+
+        when(bond1.getAtom()).thenReturn(carbon);
+        when(bond2.getAtom()).thenReturn(oxygen);
 
         IDifference difference = LonePairDiff.difference(bond1, bond2);
         Assert.assertNotNull(difference);

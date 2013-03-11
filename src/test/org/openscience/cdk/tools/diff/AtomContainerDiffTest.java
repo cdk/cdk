@@ -21,16 +21,21 @@
 package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 import java.io.*;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
@@ -38,22 +43,41 @@ import java.io.*;
 public class AtomContainerDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        IAtomContainer container = new AtomContainer();
-        IBond bond1 = new Bond();
-        container.addBond(bond1);
+        IAtomContainer container = mock(IAtomContainer.class);
+        when(container.getElectronContainerCount()).thenReturn(1);
+        when(container.getElectronContainer(0)).thenReturn(mock(IBond.class));
         String result = AtomContainerDiff.diff(container, container);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        IAtomContainer container1 = new AtomContainer();
-        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
-        bond1.setOrder(IBond.Order.SINGLE);
-        container1.addBond(bond1);
-        IAtomContainer container2 = new AtomContainer();
-        IBond bond2 = new Bond(new Atom("C"), new Atom("O"));
-        bond2.setOrder(IBond.Order.DOUBLE);
-        container2.addBond(bond2);
+
+        IAtom carbon = mock(IAtom.class);
+        IAtom oxygen = mock(IAtom.class);
+
+        when(carbon.getSymbol()).thenReturn("C");
+        when(oxygen.getSymbol()).thenReturn("O");
+
+        IBond b1 = mock(IBond.class);
+        IBond b2 = mock(IBond.class);
+
+        when(b1.getOrder()).thenReturn(IBond.Order.SINGLE);
+        when(b2.getOrder()).thenReturn(IBond.Order.DOUBLE);
+
+        when(b1.getAtomCount()).thenReturn(2);
+        when(b2.getAtomCount()).thenReturn(2);
+
+        when(b1.getAtom(0)).thenReturn(carbon);
+        when(b1.getAtom(1)).thenReturn(carbon);
+        when(b2.getAtom(0)).thenReturn(carbon);
+        when(b2.getAtom(1)).thenReturn(oxygen);
+
+        IAtomContainer container1 = mock(IAtomContainer.class);
+        IAtomContainer container2 = mock(IAtomContainer.class);
+        when(container1.getElectronContainerCount()).thenReturn(1);
+        when(container2.getElectronContainerCount()).thenReturn(1);
+        when(container1.getElectronContainer(0)).thenReturn(b1);
+        when(container2.getElectronContainer(0)).thenReturn(b2);
 
         String result = AtomContainerDiff.diff(container1, container2);
         Assert.assertNotNull(result);
@@ -66,17 +90,35 @@ public class AtomContainerDiffTest extends CDKTestCase {
     }
 
     @Test public void testDifference() {
-        IAtomContainer container1 = new AtomContainer();
-        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
-        bond1.setOrder(IBond.Order.SINGLE);
-        container1.addBond(bond1);
-        IAtomContainer container2 = new AtomContainer();
-        IBond bond2 = new Bond(new Atom("C"), new Atom("O"));
-        bond2.setOrder(IBond.Order.DOUBLE);
-        container2.addBond(bond2);
+        IAtom carbon = mock(IAtom.class);
+        IAtom oxygen = mock(IAtom.class);
 
-        IDifference difference = AtomContainerDiff.difference(container1, container2);
-        Assert.assertNotNull(difference);
+        when(carbon.getSymbol()).thenReturn("C");
+        when(oxygen.getSymbol()).thenReturn("O");
+
+        IBond b1 = mock(IBond.class);
+        IBond b2 = mock(IBond.class);
+
+        when(b1.getOrder()).thenReturn(IBond.Order.SINGLE);
+        when(b2.getOrder()).thenReturn(IBond.Order.DOUBLE);
+
+        when(b1.getAtomCount()).thenReturn(2);
+        when(b2.getAtomCount()).thenReturn(2);
+
+        when(b1.getAtom(0)).thenReturn(carbon);
+        when(b1.getAtom(1)).thenReturn(carbon);
+        when(b2.getAtom(0)).thenReturn(carbon);
+        when(b2.getAtom(1)).thenReturn(oxygen);
+
+        IAtomContainer container1 = mock(IAtomContainer.class);
+        IAtomContainer container2 = mock(IAtomContainer.class);
+        when(container1.getElectronContainerCount()).thenReturn(1);
+        when(container2.getElectronContainerCount()).thenReturn(1);
+        when(container1.getElectronContainer(0)).thenReturn(b1);
+        when(container2.getElectronContainer(0)).thenReturn(b2);
+
+        String result = AtomContainerDiff.diff(container1, container2);
+        Assert.assertNotNull(result);
     }
 
     @Test

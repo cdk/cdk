@@ -22,11 +22,14 @@ package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.Element;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.tools.diff.tree.IDifference;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.openscience.cdk.interfaces.IAtomType.Hybridization.PLANAR3;
+import static org.openscience.cdk.interfaces.IAtomType.Hybridization.SP3;
 
 /**
  * @cdk.module test-diff
@@ -34,17 +37,17 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 public class AtomTypeDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        IAtomType element1 = new AtomType(new Element());
+        IAtomType element1 = mock(IAtomType.class);
         String result = AtomTypeDiff.diff(element1, element1);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        IAtomType element1 = new AtomType(new Element());
-        element1.setHybridization(IAtomType.Hybridization.PLANAR3);
-        IAtomType element2 = new AtomType(new Element());
-        element2.setHybridization(IAtomType.Hybridization.SP3);
-        
+        IAtomType element1 = mock(IAtomType.class);
+        IAtomType element2 = mock(IAtomType.class);
+        when(element1.getHybridization()).thenReturn(PLANAR3);
+        when(element2.getHybridization()).thenReturn(SP3);
+
         String result = AtomTypeDiff.diff( element1, element2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
@@ -53,10 +56,10 @@ public class AtomTypeDiffTest extends CDKTestCase {
     }
 
     @Test public void testDifference() {
-        IAtomType element1 = new AtomType(new Element());
-        element1.setHybridization(IAtomType.Hybridization.PLANAR3);
-        IAtomType element2 = new AtomType(new Element());
-        element2.setHybridization(IAtomType.Hybridization.SP3);
+        IAtomType element1 = mock(IAtomType.class);
+        IAtomType element2 = mock(IAtomType.class);
+        when(element1.getHybridization()).thenReturn(PLANAR3);
+        when(element2.getHybridization()).thenReturn(SP3);
 
         IDifference difference = AtomTypeDiff.difference(element1, element2);
         Assert.assertNotNull(difference);

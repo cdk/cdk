@@ -22,11 +22,13 @@ package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
@@ -34,15 +36,34 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 public class BondDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        IBond bond1 = new Bond();
+        IBond bond1 = mock(IBond.class);
         String result = BondDiff.diff(bond1, bond1);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
+
+        IAtom carbon = mock(IAtom.class);
+        IAtom oxygen = mock(IAtom.class);
+
+        when(carbon.getSymbol()).thenReturn("C");
+        when(oxygen.getSymbol()).thenReturn("O");
+
+        IBond bond1 = mock(IBond.class);
+        IBond bond2 = mock(IBond.class);
+
+        when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
+        when(bond2.getOrder()).thenReturn(IBond.Order.DOUBLE);
+
+        when(bond1.getAtomCount()).thenReturn(2);
+        when(bond2.getAtomCount()).thenReturn(2);
+
+        when(bond1.getAtom(0)).thenReturn(carbon);
+        when(bond1.getAtom(1)).thenReturn(carbon);
+        when(bond2.getAtom(0)).thenReturn(carbon);
+        when(bond2.getAtom(1)).thenReturn(oxygen);
+
         bond1.setOrder(IBond.Order.SINGLE);
-        IBond bond2 = new Bond(new Atom("C"), new Atom("O"));
         bond2.setOrder(IBond.Order.DOUBLE);
         
         String result = BondDiff.diff( bond1, bond2 );
@@ -55,9 +76,27 @@ public class BondDiffTest extends CDKTestCase {
     }
 
     @Test public void testDifference() {
-        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
+        IAtom carbon = mock(IAtom.class);
+        IAtom oxygen = mock(IAtom.class);
+
+        when(carbon.getSymbol()).thenReturn("C");
+        when(oxygen.getSymbol()).thenReturn("O");
+
+        IBond bond1 = mock(IBond.class);
+        IBond bond2 = mock(IBond.class);
+
+        when(bond1.getOrder()).thenReturn(IBond.Order.SINGLE);
+        when(bond2.getOrder()).thenReturn(IBond.Order.DOUBLE);
+
+        when(bond1.getAtomCount()).thenReturn(2);
+        when(bond2.getAtomCount()).thenReturn(2);
+
+        when(bond1.getAtom(0)).thenReturn(carbon);
+        when(bond1.getAtom(1)).thenReturn(carbon);
+        when(bond2.getAtom(0)).thenReturn(carbon);
+        when(bond2.getAtom(1)).thenReturn(oxygen);
+
         bond1.setOrder(IBond.Order.SINGLE);
-        IBond bond2 = new Bond(new Atom("C"), new Atom("O"));
         bond2.setOrder(IBond.Order.DOUBLE);
 
         IDifference difference = BondDiff.difference(bond1, bond2);

@@ -22,10 +22,12 @@ package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Element;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.diff.tree.IDifference;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
@@ -33,17 +35,17 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 public class ElementDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        IElement element1 = new Element();
+        IElement element1 = mock(IElement.class);
         String result = ElementDiff.diff(element1, element1);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        IElement element1 = new Element();
-        element1.setSymbol("H");
-        IElement element2 = new Element();
-        element2.setSymbol("C");
-        
+        IElement element1 = mock(IElement.class);
+        IElement element2 = mock(IElement.class);
+        when(element1.getSymbol()).thenReturn("H");
+        when(element2.getSymbol()).thenReturn("C");
+
         String result = ElementDiff.diff( element1, element2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
@@ -52,10 +54,10 @@ public class ElementDiffTest extends CDKTestCase {
     }
 
     @Test public void testDifference() {
-        IElement element1 = new Element();
-        element1.setSymbol("H");
-        IElement element2 = new Element();
-        element2.setSymbol("C");
+        IElement element1 = mock(IElement.class);
+        IElement element2 = mock(IElement.class);
+        when(element1.getSymbol()).thenReturn("H");
+        when(element2.getSymbol()).thenReturn("C");
 
         IDifference difference = ElementDiff.difference(element1, element2);
         Assert.assertNotNull(difference);

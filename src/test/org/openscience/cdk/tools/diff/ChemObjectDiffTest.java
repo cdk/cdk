@@ -23,10 +23,13 @@ package org.openscience.cdk.tools.diff;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.diff.tree.IDifference;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 /**
  * @cdk.module test-diff
@@ -34,16 +37,17 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 public class ChemObjectDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        IChemObject atom1 = new ChemObject();
+        IChemObject atom1 = mock(IChemObject.class);
         String result = ChemObjectDiff.diff(atom1, atom1);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        IChemObject atom1 = new ChemObject();
-        IChemObject atom2 = new ChemObject();
-        atom2.setFlag(CDKConstants.ISAROMATIC, true);
-        
+        IChemObject atom1 = mock(IChemObject.class);
+        IChemObject atom2 = mock(IChemObject.class);
+        when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});
+        when(atom2.getFlags()).thenReturn(new boolean[]{false, true, false});
+
         String result = ChemObjectDiff.diff( atom1, atom2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(
@@ -54,9 +58,10 @@ public class ChemObjectDiffTest extends CDKTestCase {
     }
 
     @Test public void testDifference() {
-        IChemObject atom1 = new ChemObject();
-        IChemObject atom2 = new ChemObject();
-        atom2.setFlag(CDKConstants.ISAROMATIC, true);
+        IChemObject atom1 = mock(IChemObject.class);
+        IChemObject atom2 = mock(IChemObject.class);
+        when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});
+        when(atom2.getFlags()).thenReturn(new boolean[]{false, true, false});
 
         IDifference difference = ChemObjectDiff.difference(atom1, atom2);
         Assert.assertNotNull(difference);

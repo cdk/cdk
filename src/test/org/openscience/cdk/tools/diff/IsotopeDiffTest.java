@@ -22,11 +22,12 @@ package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.diff.tree.IDifference;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
@@ -34,17 +35,17 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 public class IsotopeDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        IIsotope element1 = new Isotope(new Element());
+        IIsotope element1 = mock(IIsotope.class);
         String result = IsotopeDiff.diff(element1, element1);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        IIsotope element1 = new Isotope(new Element());
-        element1.setSymbol("H");
-        IIsotope element2 = new Isotope(new Element());
-        element2.setSymbol("C");
-        
+        IIsotope element1 = mock(IIsotope.class);
+        IIsotope element2 = mock(IIsotope.class);
+        when(element1.getSymbol()).thenReturn("H");
+        when(element2.getSymbol()).thenReturn("C");
+
         String result = IsotopeDiff.diff( element1, element2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
@@ -53,10 +54,10 @@ public class IsotopeDiffTest extends CDKTestCase {
     }
 
     @Test public void testDifference() {
-        IIsotope element1 = new Isotope(new Element());
-        element1.setSymbol("H");
-        IIsotope element2 = new Isotope(new Element());
-        element2.setSymbol("C");
+        IIsotope element1 = mock(IIsotope.class);
+        IIsotope element2 = mock(IIsotope.class);
+        when(element1.getSymbol()).thenReturn("H");
+        when(element2.getSymbol()).thenReturn("C");
 
         IDifference difference = IsotopeDiff.difference(element1, element2);
         Assert.assertNotNull(difference);
