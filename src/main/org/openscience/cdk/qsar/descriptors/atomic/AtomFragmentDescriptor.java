@@ -150,7 +150,7 @@ public class AtomFragmentDescriptor implements IAtomicDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomFragment",
                 this.getClass().getName(),
-                "$Id: eca59abf50a377bba6402e94986d4c08e37f2ecc $",
+                "$Id: fc8bea3e4fb00c73c9fffbf945c724af1574f6e7 $",
                 "The Chemistry Development Kit");
     }
 
@@ -673,11 +673,6 @@ public class AtomFragmentDescriptor implements IAtomicDescriptor {
             IntegerResult lpsdvalueint = (IntegerResult) lpsdvalue.getValue();
             Integer lpsdvaluenumber = lpsdvalueint.intValue();
             Molecule2EndofMol.setProperty(prefix + "_PISystemSize", lpsdvalueint);
-            //Mannhold LogP descriptor
-            MannholdLogPDescriptor logp = new MannholdLogPDescriptor();
-            DescriptorValue logpvalue = logp.calculate(Molecule2EndofMol);
-            DoubleResult logpvaluedouble = (DoubleResult) logpvalue.getValue();
-            Molecule2EndofMol.setProperty(prefix + "_logP", logpvaluedouble);
 
 
             if (prefix.equals("Mol")) {
