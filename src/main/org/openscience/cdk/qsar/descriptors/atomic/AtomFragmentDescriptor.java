@@ -43,19 +43,93 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 /**
  * This class returns the atomic fragment based descriptors.
  * <p/>
- * Described by Rydberg et al
+ * Described by {@cdk.cite Rydberg2013}
  * <p/>
- * <p>This descriptor uses these parameters:
+ * <p>These descriptors uses no parameters.
+ * </p>
+ * <p>The descriptors computed are described in the table below. They are computed for the fragments (atoms positioned) between the atom of interest and the nearest 
+ * "end of branch" or "end of molecule". An end of branch atom is an atom with no other non-hydrogen atom within 3 bonds that have a higher value in the distance matrix.
+ * An end of molecule atom is defined as an atom with the highest value in the distance matrix. In principle, any molecular descriptor that does not require explicit
+ * hydrogen atoms can be computed for these fragments, however, since some fragments can split aromatic rings, not all descriptors will perform well. 
+ * </p>
+ * <p>The descriptors currently implemented are shown in the table below.
+ * </p>
  * <table border="1">
  * <tr>
  * <td>Name</td>
- * <td>Default</td>
  * <td>Description</td>
  * </tr>
  * <tr>
- * <td></td>
- * <td></td>
- * <td>no parameters</td>
+ * <td>Mol_bonds2end</td>
+ * <td>Bonds between atom and end of molecule (from the distance matrix)</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_rotablebonds</td>
+ * <td>Rotable bond count for fragment between atom and end of molecule</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_AtomCount</td>
+ * <td>AtomCount count for non-hydrogen atoms in the fragment between atom and end of molecule</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_TPSA</td>
+ * <td>TPSA for the fragment between atom and end of molecule. Computed using the TPSADescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_TPSAperAtom</td>
+ * <td>Mol_TPSA divided by Mol_AtomCount.</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_Volume</td>
+ * <td>Volume for the fragment between atom and end of molecule. Computed using the VABCDescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_HAcount</td>
+ * <td>Hydrogen bond acceptor count for the fragment between atom and end of molecule. Computed using the HBondAcceptorCountDescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_HDcount</td>
+ * <td>Hydrogen bond donor count for the fragment between atom and end of molecule. Computed using the HBondDonorCountDescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Mol_PIsystemSize</td>
+ * <td>PI system size for the fragment between atom and end of molecule. Computed using the LargestPiSystemDescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_bonds2end</td>
+ * <td>Bonds between atom and end of branch (from the distance matrix)</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_rotablebonds</td>
+ * <td>Rotable bond count for fragment between atom and end of branch</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_AtomCount</td>
+ * <td>AtomCount count for non-hydrogen atoms in the fragment between atom and end of branch</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_TPSA</td>
+ * <td>TPSA for the fragment between atom and end of branch. Computed using the TPSADescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_TPSAperAtom</td>
+ * <td>Branch_TPSA divided by Branch_AtomCount.</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_Volume</td>
+ * <td>Volume for the fragment between atom and end of branch. Computed using the VABCDescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_HAcount</td>
+ * <td>Hydrogen bond acceptor count for the fragment between atom and end of branch. Computed using the HBondAcceptorCountDescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_HDcount</td>
+ * <td>Hydrogen bond donor count for the fragment between atom and end of branch. Computed using the HBondDonorCountDescriptor.</td>
+ * </tr>
+ * <tr>
+ * <td>Branch_PIsystemSize</td>
+ * <td>PI system size for the fragment between atom and end of branch. Computed using the LargestPiSystemDescriptor.</td>
  * </tr>
  * </table>
  *
@@ -76,7 +150,7 @@ public class AtomFragmentDescriptor implements IAtomicDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomFragment",
                 this.getClass().getName(),
-                "$Id$",
+                "$Id: eca59abf50a377bba6402e94986d4c08e37f2ecc $",
                 "The Chemistry Development Kit");
     }
 
