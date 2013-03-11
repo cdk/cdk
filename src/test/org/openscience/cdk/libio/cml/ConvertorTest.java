@@ -28,14 +28,13 @@ package org.openscience.cdk.libio.cml;
 import nu.xom.Document;
 import nu.xom.Serializer;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.libio.md.MDMolecule;
-import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
 
 import java.io.ByteArrayOutputStream;
@@ -49,25 +48,7 @@ public class ConvertorTest extends CDKTestCase {
     /**
      * @cdk.bug 1748257
      */
-    @Test public void testBug1748257 () {
-    	
-    	MDMolecule mol=new MDMolecule();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("H")); // 2
-        mol.addAtom(new Atom("H")); // 3
-        mol.addAtom(new Atom("H")); // 4
-        mol.addAtom(new Atom("H")); // 5
-
-        mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
-        mol.addBond(2, 0, IBond.Order.SINGLE); // 3
-        mol.addBond(3, 0, IBond.Order.SINGLE); // 4
-        mol.addBond(4, 1, IBond.Order.SINGLE); // 5
-        mol.addBond(5, 1, IBond.Order.SINGLE); // 6
-        
-        Convertor convertor=new Convertor(false,"");
-        CMLAtom cmlatom=convertor.cdkAtomToCMLAtom(mol,mol.getAtom(2));
-        Assert.assertEquals(cmlatom.getHydrogenCount(),0);
+    @Ignore("moved to MDMoleculeTest") public void testBug1748257 () {
     }
     
 

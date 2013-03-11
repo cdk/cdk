@@ -41,10 +41,12 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.cml.MDMoleculeConvention;
+import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.libio.cml.MDMoleculeCustomizer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.xmlcml.cml.element.CMLAtom;
 
 /**
  * @cdk.module test-libiomd
@@ -53,6 +55,30 @@ public class MDMoleculeTest extends CDKTestCase {
 
     private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
+
+    /**
+     * @cdk.bug 1748257
+     */
+    @Test public void testBug1748257 () {
+
+        MDMolecule mol=new MDMolecule();
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("H")); // 2
+        mol.addAtom(new Atom("H")); // 3
+        mol.addAtom(new Atom("H")); // 4
+        mol.addAtom(new Atom("H")); // 5
+
+        mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+        mol.addBond(2, 0, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 0, IBond.Order.SINGLE); // 4
+        mol.addBond(4, 1, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 1, IBond.Order.SINGLE); // 6
+
+        Convertor convertor=new Convertor(false,"");
+        CMLAtom cmlatom=convertor.cdkAtomToCMLAtom(mol,mol.getAtom(2));
+        Assert.assertEquals(cmlatom.getHydrogenCount(),0);
+    }
 
     /**
      * Test an MDMolecule with residues and charge groups

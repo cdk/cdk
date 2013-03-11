@@ -4,7 +4,6 @@ cdk-interfaces.jar
 cdk-standard.jar
 cdk-data.jar
 cdk-extra.jar
-cdk-libiomd.jar
 cdk-io.jar
 cdk-test-io.jar
 cdk-ioformats.jar
