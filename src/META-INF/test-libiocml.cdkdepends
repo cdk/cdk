@@ -9,9 +9,6 @@ cdk-test-io.jar
 cdk-ioformats.jar
 cdk-libiocml.jar
 cdk-test.jar
-cdk-qsar.jar
-cdk-qsarmolecular.jar
-cdk-qsarcml.jar
 cdk-atomtype.jar
 cdk-silent.jar
 cdk-pdb.jar

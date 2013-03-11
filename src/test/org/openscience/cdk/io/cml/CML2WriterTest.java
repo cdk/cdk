@@ -52,10 +52,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.libio.cml.QSARCustomizer;
-import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemModel;
@@ -185,25 +181,7 @@ public class CML2WriterTest extends CDKTestCase {
         Assert.assertTrue(cmlContent.indexOf("<atom") != -1); // an Atom has to be present
 	}
 	
-    @Test public void testQSARCustomization() throws Exception {
-        StringWriter writer = new StringWriter();
-        IAtomContainer molecule = MoleculeFactory.makeBenzene();
-        IMolecularDescriptor descriptor = new WeightDescriptor();
 
-        CMLWriter cmlWriter = new CMLWriter(writer);
-        cmlWriter.registerCustomizer(new QSARCustomizer());
-        DescriptorValue value = descriptor.calculate(molecule);
-        molecule.setProperty(value.getSpecification(), value);
-
-        cmlWriter.write(molecule);
-        String cmlContent = writer.toString();
-        logger.debug("****************************** testQSARCustomization()");
-        logger.debug(cmlContent);
-        logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<property") != -1 &&
-        		   cmlContent.indexOf("xmlns:qsar") != -1);
-        Assert.assertTrue(cmlContent.indexOf("#weight\"") != -1);
-    }
     
     @Test public void testReactionCustomization() throws Exception {
     	StringWriter writer = new StringWriter();

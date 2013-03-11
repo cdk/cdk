@@ -53,11 +53,6 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
-import org.openscience.cdk.libio.cml.QSARCustomizer;
-import org.openscience.cdk.qsar.DescriptorSpecification;
-import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -80,7 +75,6 @@ public class CMLRoundTripTest extends CDKTestCase {
 
     @BeforeClass public static void setup() {
         convertor = new Convertor(false, "");
-        convertor.registerCustomizer(new QSARCustomizer());
     }
 
     @Test public void testAtom() throws Exception {
@@ -526,39 +520,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(1, roundTrippedAgent.getAtomCount());
     }
 
-    @Test public void testDescriptorValue_QSAR() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeBenzene();
-        IMolecularDescriptor descriptor = new WeightDescriptor();
 
-        DescriptorValue originalValue = null;
-        originalValue = descriptor.calculate(molecule);
-        molecule.setProperty(originalValue.getSpecification(), originalValue);
-        IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, molecule);
-
-        Assert.assertEquals(1, roundTrippedMol.getProperties().size());
-        System.out.println("" + roundTrippedMol.getProperties().keySet());
-        Object object = roundTrippedMol.getProperties().keySet().toArray()[0];
-        System.out.println("" + object);
-        Assert.assertTrue(object instanceof DescriptorSpecification);
-        DescriptorSpecification spec = (DescriptorSpecification)object;
-        Assert.assertEquals(descriptor.getSpecification().getSpecificationReference(),
-        		     spec.getSpecificationReference());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationIdentifier(),
-   		     spec.getImplementationIdentifier());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationTitle(),
-   		     spec.getImplementationTitle());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationVendor(),
-   		     spec.getImplementationVendor());
-        
-        Object value = roundTrippedMol.getProperty(spec);
-        Assert.assertNotNull(value);
-        Assert.assertTrue(value instanceof DescriptorValue);
-        DescriptorValue descriptorResult = (DescriptorValue)value;
-        Assert.assertEquals(originalValue.getClass().getName(),
-        	descriptorResult.getClass().getName());
-        Assert.assertEquals(originalValue.getValue().toString(),
-            	descriptorResult.getValue().toString());
-    }
 
     @Test public void testDescriptorValue() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
