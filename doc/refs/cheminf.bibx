@@ -1188,4 +1188,19 @@ Method </bibtex:title>
   	</bibtex:article>
   </bibtex:entry>
 
+    <bibtex:entry id="Rydberg 2013">
+  	<bibtex:article>
+      <bibtex:author>Long, Anthony and Rydberg, Patrik.</bibtex:author>
+      <bibtex:title>Enrichment of True Positives from Structural Alerts Through the Use of Novel Atomic Fragment Based Descriptors</bibtex:title>
+      <bibtex:volume>32</bibtex:volume> 
+      <bibtex:number>1</bibtex:number> 
+      <bibtex:pages>81-86</bibtex:pages> 
+      <bibtex:year>2013</bibtex:year> 
+      <bibtex:doi>10.1002/minf.201200092</bibtex:doi>
+      <bibtex:URL>http://onlinelibrary.wiley.com/doi/10.1002/minf.201200092/abstract</bibtex:URL> 
+      <bibtex:eprint>http://onlinelibrary.wiley.com/doi/10.1002/minf.201200092/pdf</bibtex:eprint> 
+      <bibtex:journal>Molecular Informatics</bibtex:journal>
+  	</bibtex:article>
+  </bibtex:entry>
+  
 </bibtex:file>
