@@ -61,7 +61,7 @@ import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Crystal;
 import org.openscience.cdk.silent.Reaction;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -79,7 +79,7 @@ public class CML2WriterTest extends CDKTestCase {
 
     @Test public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();
-		IAtomContainer molecule = MoleculeFactory.makeBenzene();
+		IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         CMLWriter cmlWriter = new CMLWriter(writer);
         

@@ -585,7 +585,7 @@
             list="test"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-interfaces,test-libiocml,test-qsar,test-data,test-io,test-core,
+            list="test-interfaces,test-data,test-libiocml,test-qsar,test-io,test-core,
         	      test-valencycheck,test-smarts,test-standard,test-reaction,
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,

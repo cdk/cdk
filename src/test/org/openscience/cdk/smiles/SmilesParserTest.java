@@ -50,7 +50,7 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -917,7 +917,7 @@ public class SmilesParserTest extends CDKTestCase {
 	@org.junit.Test (timeout=1000)
 	public void testSFBug1274464() throws Exception {
 		IAtomContainer fromSmiles = new	SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles("C1=CC=CC=C1");
-		IAtomContainer fromFactory =	MoleculeFactory.makeBenzene();
+		IAtomContainer fromFactory =	TestMoleculeFactory.makeBenzene();
 		CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(fromFactory.getBuilder());
 		Iterator<IAtom> atoms = fromFactory.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(fromFactory.getBuilder());

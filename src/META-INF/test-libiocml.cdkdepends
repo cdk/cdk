@@ -3,7 +3,7 @@ cdk-core.jar
 cdk-interfaces.jar
 cdk-standard.jar
 cdk-data.jar
-cdk-extra.jar
+cdk-test-data.jar
 cdk-io.jar
 cdk-test-io.jar
 cdk-ioformats.jar

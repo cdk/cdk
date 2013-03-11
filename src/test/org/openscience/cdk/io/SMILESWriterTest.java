@@ -32,7 +32,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * TestCase for the writer for SMILES files.
@@ -55,7 +55,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
 
     @Test public void testWriteSMILESFile() throws Exception {
         StringWriter stringWriter = new StringWriter();
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         SMILESWriter smilesWriter = new SMILESWriter(stringWriter);
         smilesWriter.write(benzene);
         smilesWriter.close();
@@ -64,7 +64,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
 
     @Test public void testWriteAromatic() throws Exception {
         StringWriter stringWriter = new StringWriter();
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         SMILESWriter smilesWriter = new SMILESWriter(stringWriter);
 
         Properties prop = new Properties();

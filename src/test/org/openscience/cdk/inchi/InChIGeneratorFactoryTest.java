@@ -36,7 +36,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static org.junit.Assert.assertFalse;
@@ -174,7 +174,7 @@ public class InChIGeneratorFactoryTest {
     @Test public void testInChIGenerator_AromaticBonds() throws CDKException {
 
         // create a fairly complex aromatic molecule
-        IAtomContainer tetrazole = MoleculeFactory.makeTetrazole();
+        IAtomContainer tetrazole = TestMoleculeFactory.makeTetrazole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(tetrazole);
         CDKHueckelAromaticityDetector.detectAromaticity(tetrazole);
 

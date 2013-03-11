@@ -61,7 +61,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -78,7 +78,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	@Test
     public void testSmilesGenerator()
 	{
-	    IAtomContainer mol2 = MoleculeFactory.makeAlphaPinene();
+	    IAtomContainer mol2 = TestMoleculeFactory.makeAlphaPinene();
 		SmilesGenerator sg = new SmilesGenerator();
 		fixCarbonHCount(mol2);
 		String smiles2 = sg.createSMILES(mol2);
@@ -92,7 +92,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testEthylPropylPhenantren()
 	{
-	    IAtomContainer mol1 = MoleculeFactory.makeEthylPropylPhenantren();
+	    IAtomContainer mol1 = TestMoleculeFactory.makeEthylPropylPhenantren();
         SmilesGenerator sg = new SmilesGenerator();
 		fixCarbonHCount(mol1);
 		String smiles1 = sg.createSMILES(mol1);
@@ -107,7 +107,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testPropylCycloPropane()
 	{
-	    IAtomContainer mol1 = MoleculeFactory.makePropylCycloPropane();
+	    IAtomContainer mol1 = TestMoleculeFactory.makePropylCycloPropane();
         SmilesGenerator sg = new SmilesGenerator();
 		fixCarbonHCount(mol1);
 		String smiles1 = sg.createSMILES(mol1);
@@ -817,7 +817,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	}
 
     @Test public void testIndole() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
@@ -828,7 +828,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     @Test public void testPyrrole() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
@@ -986,14 +986,14 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
     
     @Test public void testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity() throws CDKException{
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         SmilesGenerator sg = new SmilesGenerator(false);
         String smileswithoutaromaticity = sg.createSMILESWithoutCheckForMultipleMolecules(benzene, false, new boolean[benzene.getBondCount()]);
         Assert.assertEquals("C=1C=CC=CC=1", smileswithoutaromaticity);
     }
 
     @Test public void testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity() throws CDKException{
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         SmilesGenerator sg = new SmilesGenerator(true);
         String smileswitharomaticity = sg.createSMILESWithoutCheckForMultipleMolecules(benzene, false, new boolean[benzene.getBondCount()]);
         Assert.assertEquals("c1ccccc1", smileswitharomaticity);
