@@ -39,6 +39,10 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @cdk.module test-inchi
  */
@@ -180,11 +184,14 @@ public class InChIGeneratorFactoryTest {
         InChIGenerator genAromaticity1 = inchiFactory.getInChIGenerator(tetrazole);
 
         // exclude aromatic bonds
+        assertFalse(inchiFactory.getIgnoreAromaticBonds());
         inchiFactory.setIgnoreAromaticBonds(true);
+        assertTrue(inchiFactory.getIgnoreAromaticBonds());
         InChIGenerator genNoAromaticity = inchiFactory.getInChIGenerator(tetrazole);
 
         // include aromatic bonds again
         inchiFactory.setIgnoreAromaticBonds(false);
+        assertFalse(inchiFactory.getIgnoreAromaticBonds());
         InChIGenerator genAromaticity2 = inchiFactory.getInChIGenerator(tetrazole);
 
         // with the aromatic bonds included, no InChI can be generated

@@ -120,8 +120,8 @@ public class InChIGeneratorFactory {
      *
      * @param ignore if aromatic bonds should be treated as bonds of type single and double
      */
+    @TestMethod("testInChIGenerator_AromaticBonds")
     public void setIgnoreAromaticBonds(boolean ignore) {
-
         ignoreAromaticBonds = ignore;
     }
 
@@ -130,8 +130,8 @@ public class InChIGeneratorFactory {
      *
      * @return if aromatic bonds are treated as bonds of type single and double
      */
+    @TestMethod("testInChIGenerator_AromaticBonds")
     public boolean getIgnoreAromaticBonds() {
-
         return ignoreAromaticBonds;
     }
     
