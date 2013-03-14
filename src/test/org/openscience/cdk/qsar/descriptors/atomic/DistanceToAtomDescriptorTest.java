@@ -62,7 +62,7 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 		Atom a2 = new Atom("C"); mol.addAtom(a2); a2.setPoint3d(new Point3d(-1.2492,-0.2810,0.0000));
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
-		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		// mol.addBond(2, 3, IBond.Order.SINGLE); // 3 // jwmay: there is no atom at index 3
 		
 		Assert.assertEquals(2.46, ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue(), 0.1);
 	}
