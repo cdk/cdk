@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * <p>This class generates a CDK IAtomContainer from an InChI string.  It places 
@@ -163,9 +164,10 @@ protected JniInchiInputInchi input;
             
             cAt.setID("a" + i);
             cAt.setSymbol(iAt.getElementType());
+            cAt.setAtomicNumber(PeriodicTable.getAtomicNumber(cAt.getSymbol()));
             
             // Ignore coordinates - all zero
-            
+
             int charge = iAt.getCharge();
             if (charge != 0) {
                 cAt.setFormalCharge(charge);

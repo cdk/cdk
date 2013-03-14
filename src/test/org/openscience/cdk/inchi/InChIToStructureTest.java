@@ -25,10 +25,13 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * TestCase for the {@link InChIToStructure} class.
@@ -44,7 +47,7 @@ public class InChIToStructureTest extends CDKTestCase {
 			"InChI=1S/CH4/h1H4",
 			DefaultChemObjectBuilder.getInstance()
 		);
-		Assert.assertNotNull(parser);
+		assertNotNull(parser);
 	}
 
 	@Test
@@ -54,9 +57,24 @@ public class InChIToStructureTest extends CDKTestCase {
 			DefaultChemObjectBuilder.getInstance()
 		);
 		IAtomContainer container = parser.getAtomContainer();
-		Assert.assertNotNull(container);
+		assertNotNull(container);
 		Assert.assertEquals(1, container.getAtomCount());
 	}
+
+    /** @cdk.bug 1293 */
+    @Test
+    public void nonNullAtomicNumbers() throws CDKException {
+        InChIToStructure parser = new InChIToStructure(
+                "InChI=1S/CH4/h1H4",
+                DefaultChemObjectBuilder.getInstance()
+        );
+        IAtomContainer container = parser.getAtomContainer();
+        for(IAtom atom : container.atoms()){
+            assertNotNull(atom.getAtomicNumber());
+        }
+        assertNotNull(container);
+        Assert.assertEquals(1, container.getAtomCount());
+    }
 
 	@Test
 	public void testFixedHydrogens() throws CDKException {
@@ -65,7 +83,7 @@ public class InChIToStructureTest extends CDKTestCase {
 			DefaultChemObjectBuilder.getInstance()
 		);
 		IAtomContainer container = parser.getAtomContainer();
-		Assert.assertNotNull(container);
+		assertNotNull(container);
 		Assert.assertEquals(3, container.getAtomCount());
 		Assert.assertEquals(2, container.getBondCount());
 		Assert.assertTrue(
@@ -82,7 +100,7 @@ public class InChIToStructureTest extends CDKTestCase {
 		);
 		parser.getAtomContainer();
 		INCHI_RET returnStatus = parser.getReturnStatus();
-		Assert.assertNotNull(returnStatus);
+		assertNotNull(returnStatus);
 		Assert.assertEquals(INCHI_RET.EOF, returnStatus);
 	}
 
@@ -93,7 +111,7 @@ public class InChIToStructureTest extends CDKTestCase {
 		);
 		parser.getAtomContainer();
 		String message = parser.getMessage();
-		Assert.assertNotNull(message);
+		assertNotNull(message);
 	}
 
 	@Test
@@ -113,7 +131,7 @@ public class InChIToStructureTest extends CDKTestCase {
 		);
 		parser.getAtomContainer();
 		String message = parser.getMessage();
-		Assert.assertNotNull(message);
+		assertNotNull(message);
 	}
 
 	@Test
@@ -123,7 +141,7 @@ public class InChIToStructureTest extends CDKTestCase {
 		);
 		parser.getAtomContainer();
 		long[][] flags = parser.getWarningFlags();
-		Assert.assertNotNull(flags);
+		assertNotNull(flags);
 		Assert.assertEquals(2, flags.length);
 		Assert.assertEquals(2, flags[0].length);
 		Assert.assertEquals(2, flags[1].length);
