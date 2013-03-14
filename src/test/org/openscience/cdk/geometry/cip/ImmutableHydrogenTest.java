@@ -105,6 +105,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         Assert.assertNull(hydrogen.getExactMass());
         Assert.assertNull(hydrogen.getNaturalAbundance());
         Assert.assertNull(hydrogen.getFlags());
+        Assert.assertNull(hydrogen.getFlagValue());
         Assert.assertFalse(hydrogen.getFlag(CDKConstants.ISPLACED));
         Assert.assertNull(hydrogen.getID());
         Assert.assertNull(hydrogen.getProperties());

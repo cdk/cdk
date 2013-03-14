@@ -444,6 +444,7 @@ class ImmutableHydrogen implements IAtom {
      * @return null.
      */
     @Override
+    @TestMethod("testReturnsNull")
     public Number getFlagValue() {
         return null;
     }
