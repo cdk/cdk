@@ -94,10 +94,10 @@ public class CDKMCSTest extends CDKTestCase {
     @Test
     public void testSFBug1708336() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IAtomContainer atomContainer = builder.newInstance(AtomContainer.class);
-        atomContainer.addAtom(builder.newInstance(Atom.class, "C"));
-        atomContainer.addAtom(builder.newInstance(Atom.class, "C"));
-        atomContainer.addAtom(builder.newInstance(Atom.class, "N"));
+        IAtomContainer atomContainer = builder.newInstance(IAtomContainer.class);
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "N"));
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(1, 2, IBond.Order.SINGLE);
         IQueryAtomContainer query = new QueryAtomContainer(DefaultChemObjectBuilder.getInstance());
