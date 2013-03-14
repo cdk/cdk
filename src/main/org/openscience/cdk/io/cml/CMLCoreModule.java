@@ -1503,6 +1503,31 @@ public class CMLCoreModule implements ICMLModule {
             // assume this is the current working list
             bondElid = elid;
         }
+
+        // clean up
+        atomCounter = 0;
+        elsym.clear();
+        eltitles.clear();
+        elid.clear();
+        formalCharges.clear();
+        partialCharges.clear();
+        isotope.clear();
+        atomicNumbers.clear();
+        exactMasses.clear();
+        x3.clear();
+        y3.clear();
+        z3.clear();
+        x2.clear();
+        y2.clear();
+        xfract.clear();
+        yfract.clear();
+        hCounts.clear();
+        atomParities.clear();
+        atomDictRefs.clear();
+        atomAromaticities.clear();
+        spinMultiplicities.clear();
+        occupancies.clear();
+        atomCustomProperty.clear();
     }
     
     protected void storeBondData() {
@@ -1600,6 +1625,19 @@ public class CMLCoreModule implements ICMLModule {
                 currentMolecule.addBond(currentBond);
             }
         }
+
+        // clean up
+        bondCounter = 0;
+        bondid.clear();
+        bondARef1.clear();
+        bondARef2.clear();
+        order.clear();
+        bondStereo.clear();
+        bondDictRefs.clear();
+        bondElid.clear();
+        bondAromaticity.clear();
+        bondCustomProperty.clear();
+        atomEnumeration.clear();
     }
 
     protected int addArrayElementsTo(List<String> toAddto, String array) {
