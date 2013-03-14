@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.CMLReader;
 
 /**
@@ -456,8 +457,20 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertNotNull(model);
         
         org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
-        Assert.assertNotNull(crystal);
-        
+        if(crystal != null)
+            return crystal;
+
+        // null crystal, try and find it in the set
+        IAtomContainerSet set = model.getMoleculeSet();
+        Assert.assertNotNull(set);
+        for (IAtomContainer container : set.atomContainers()) {
+            if (container instanceof ICrystal) {
+                crystal = (ICrystal) container;
+                return crystal;
+            }
+        }
+
+        Assert.fail("no crystal could be found in the ChemModel");
         return crystal;
     }
 
