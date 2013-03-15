@@ -52,6 +52,11 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 		IBond bond3=new Bond(atom1,atom4);
 		IBond bond4=new Bond(atom1,atom5);
 		IAtomContainer ac=atom1.getBuilder().newInstance(IAtomContainer.class);
+        atom1.setFormalNeighbourCount(4);
+        atom2.setFormalNeighbourCount(1);
+        atom3.setFormalNeighbourCount(1);
+        atom4.setFormalNeighbourCount(1);
+        atom5.setFormalNeighbourCount(1);
 		ac.addAtom(atom1);
 		ac.addAtom(atom2);
 		ac.addAtom(atom3);
@@ -95,6 +100,11 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 		ac.addAtom(atom3);
 		ac.addAtom(atom4);
 		ac.addAtom(atom5);
+        atom1.setFormalNeighbourCount(4);
+        atom2.setFormalNeighbourCount(1);
+        atom3.setFormalNeighbourCount(1);
+        atom4.setFormalNeighbourCount(1);
+        atom5.setFormalNeighbourCount(1);
 		ac.addBond(bond1);
 		ac.addBond(bond2);
 		ac.addBond(bond3);
