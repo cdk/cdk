@@ -28,6 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -50,7 +51,8 @@ public class DescriptorNamesTest extends CDKTestCase {
 
     @Test
     public void checkUniqueMolecularDescriptorNames() throws Exception {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+                                                       DefaultChemObjectBuilder.getInstance());
         List<IImplementationSpecification> specs = engine.getDescriptorSpecifications();
 
         // we work with a simple molecule with 3D coordinates

@@ -23,24 +23,35 @@ package org.openscience.cdk.qsar.descriptors;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.IImplementationSpecification;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Tests for molecular descriptors.
  *
  * @cdk.module test-qsar
  */
-public abstract class DescriptorTest extends CDKTestCase {
+public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase {
 	
-	protected IDescriptor descriptor;
+	protected T descriptor;
 
 	public DescriptorTest() {}
 	
-    public void setDescriptor(Class<? extends IDescriptor> descriptorClass) throws Exception {
+    public void setDescriptor(Class<? extends T> descriptorClass) throws Exception {
 		if (descriptor == null) {
-			this.descriptor = descriptorClass.newInstance();
+            try {
+                Constructor<? extends T> defaultConstructor = descriptorClass.getConstructor();
+                this.descriptor = defaultConstructor.newInstance();
+            } catch (NoSuchMethodException ex) {
+                // no default constructor, try with an IChemObjectBuilder...
+                Constructor<? extends T> builderConstructor = descriptorClass.getConstructor(IChemObjectBuilder.class);
+                this.descriptor = builderConstructor.newInstance(DefaultChemObjectBuilder.getInstance());
+            }
 		}
 	}
 	

@@ -37,20 +37,22 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-public class    DescriptorEngineTest extends CDKTestCase {
+public class DescriptorEngineTest extends CDKTestCase {
 
     public DescriptorEngineTest() {
     }
 
     @Test
     public void testConstructor() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+                                                       DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
     }
 
     @Test
     public void testLoadingOfMolecularDescriptors() {
-    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+                                                       DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
         Assert.assertTrue("Could not load any descriptors", 0 != loadedDescriptors);
@@ -60,7 +62,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testLoadingOfAtomicDescriptors() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMIC,
+                                                       DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
         Assert.assertNotSame(0, loadedDescriptors);
@@ -70,7 +73,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testLoadingOfBondDescriptors() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.BOND);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.BOND,
+                                                       DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
         Assert.assertNotSame(0, loadedDescriptors);
@@ -80,7 +84,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testDictionaryType() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+                                                       DefaultChemObjectBuilder.getInstance());
 
         String className = "org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptor";
         DescriptorSpecification specRef = new DescriptorSpecification(
@@ -95,7 +100,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testDictionaryClass() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+                                                       DefaultChemObjectBuilder.getInstance());
 
         String className = "org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor";
         DescriptorSpecification specRef = new DescriptorSpecification(
@@ -117,7 +123,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testAvailableClass() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+                                                       DefaultChemObjectBuilder.getInstance());
         String[] availClasses = engine.getAvailableDictionaryClasses();
         Assert.assertEquals(5, availClasses.length);
     }
@@ -136,7 +143,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
         TemplateHandler3D template = TemplateHandler3D.getInstance();
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template, "mm2");
         molecule = mb3d.generate3DCoordinates(molecule, true);
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+                                                       DefaultChemObjectBuilder.getInstance());
 
         engine.process(molecule);
 
@@ -144,7 +152,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testLoadingOfAtomPairDescriptors() {
-    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMPAIR);
+    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMPAIR,
+                                                       DefaultChemObjectBuilder.getInstance());
     	Assert.assertNotNull(engine);
     	int loadedDescriptors = engine.getDescriptorInstances().size(); 
     	Assert.assertNotSame(0, loadedDescriptors);

@@ -33,11 +33,14 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +97,7 @@ public class DescriptorEngine {
     private List<IImplementationSpecification> speclist = null;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DescriptorEngine.class);
+    private final IChemObjectBuilder builder;
 
     /**
      * Instantiates the DescriptorEngine.
@@ -118,8 +122,9 @@ public class DescriptorEngine {
      * This approach allows one to use find classes using the interface based approach ({@link #getDescriptorClassNameByInterface(String, String[])}.
      * If you use this method it is preferable to specify the jar files to examine
      */
-    public DescriptorEngine(List<String> classNames) {
+    public DescriptorEngine(List<String> classNames, IChemObjectBuilder builder) {
         this.classNames = classNames;
+        this.builder = builder;
         descriptors = instantiateDescriptors(classNames);
         speclist = initializeSpecifications(descriptors);
 
@@ -139,8 +144,8 @@ public class DescriptorEngine {
      *             are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
      */
     @TestMethod(value="testConstructor")
-    public DescriptorEngine(int type) {
-        this(type, null);
+    public DescriptorEngine(int type, IChemObjectBuilder builder) {
+        this(type, null, builder);
     }
 
     /**
@@ -157,7 +162,7 @@ public class DescriptorEngine {
      *                     situations where the system classpath is not available or is modified such as in an application
      *                     container.
      */
-    public DescriptorEngine(int type, String[] jarFileNames) {
+    public DescriptorEngine(int type, String[] jarFileNames, IChemObjectBuilder builder) {
         switch (type) {
             case ATOMIC:
                 classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic", jarFileNames);
@@ -172,6 +177,7 @@ public class DescriptorEngine {
                 classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atompair", jarFileNames);
                 break;
         }
+        this.builder = builder;
         descriptors = instantiateDescriptors(classNames);
         speclist = initializeSpecifications(descriptors);
         logger.debug("Found #descriptors: ", classNames.size());
@@ -692,12 +698,13 @@ public class DescriptorEngine {
     }
 
     public List<IDescriptor> instantiateDescriptors(List<String> descriptorClassNames) {
-        List<IDescriptor> descriptors;
-        descriptors = new ArrayList<IDescriptor>();
+        List<IDescriptor> descriptors = new ArrayList<IDescriptor>();
+        ClassLoader classLoader = getClass().getClassLoader();
         for (String descriptorName : descriptorClassNames) {
             try {
-                IDescriptor descriptor = (IDescriptor) this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
-                descriptors.add(descriptor);
+                @SuppressWarnings("unchecked")
+                Class<? extends IDescriptor> c = (Class<? extends IDescriptor>) classLoader.loadClass(descriptorName);
+                descriptors.add(instantiate(c));
                 logger.info("Loaded descriptor: ", descriptorName);
             } catch (NoClassDefFoundError error) {
                 logger.error("Could not find this Descriptor: ", descriptorName);
@@ -711,6 +718,23 @@ public class DescriptorEngine {
             }
         }
         return descriptors;
+    }
+
+    private IDescriptor instantiate(Class<? extends IDescriptor> c) throws
+                                                                    IllegalAccessException,
+                                                                    InvocationTargetException,
+                                                                    InstantiationException {
+        for(Constructor constructor : c.getConstructors()){
+            Class<?>[] params = constructor.getParameterTypes();
+            System.out.println(c.getSimpleName() + Arrays.toString(params));
+            if(params.length == 0){
+                return (IDescriptor) constructor.newInstance();
+            } else if(params.length == 1
+                     && params[0].equals(IChemObjectBuilder.class)){
+                return (IDescriptor) constructor.newInstance(builder);
+            }
+        }
+        throw new IllegalStateException("descriptor " + c.getSimpleName() + " has no usable constructors");
     }
 
     public List<IImplementationSpecification> initializeSpecifications(List<IDescriptor> descriptors) {
