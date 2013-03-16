@@ -1413,21 +1413,21 @@ public class SMARTSSearchTest extends CDKTestCase {
         try {
             int[] results = match("[G19]", "CCN");
             Assert.fail();
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
 
         try {
             int[] results = match("[G0]", "CCN");
             Assert.fail();
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
 
         try {
             int[] results = match("[G345]", "CCN");
             Assert.fail();
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
 
@@ -1437,14 +1437,14 @@ public class SMARTSSearchTest extends CDKTestCase {
         try {
             int[] results = match("[G]", "CCN");
             Assert.fail("Should throw an exception if G is not followed by a number");
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
 
         try {
             int[] results = match("[GA]", "CCN");
             Assert.fail("Should throw an exception if G is not followed by a number");
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
     }
@@ -1497,28 +1497,28 @@ public class SMARTSSearchTest extends CDKTestCase {
         try {
             int[] results = match("[^]", "CCN");
             Assert.fail("Should throw an exception if ^ is not followed by a number");
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
 
         try {
             int[] results = match("[^X]", "CCN");
             Assert.fail("Should throw an exception if ^ is not followed by a number");
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
 
         try {
             int[] results = match("[^0]", "CCN");
             Assert.fail("Should throw an exception if ^ is not between 1 & 8");
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
 
         try {
             int[] results = match("[^9]", "CCN");
             Assert.fail("Should throw an exception if ^ is not between 1 & 8");
-        } catch (CDKException pe) {
+        } catch (IllegalArgumentException pe) {
             Assert.assertTrue(true);
         }
     }
