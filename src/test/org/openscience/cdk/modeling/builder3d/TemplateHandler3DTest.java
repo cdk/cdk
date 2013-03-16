@@ -82,7 +82,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         obj.getBuilder();
         for(int i=0; i<data.size(); i++){
         	IBitFingerprint bs = data.get(i);
-        	Assert.assertEquals(bsmb[i], bs);
+        	Assert.assertEquals(bsmb[i], bs.asBitSet());
         }		
 	}
 	
