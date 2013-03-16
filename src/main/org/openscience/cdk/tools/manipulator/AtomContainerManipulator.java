@@ -879,18 +879,23 @@ public class AtomContainerManipulator {
 	}
 
 
-	/**
-	 * Generates a cloned atomcontainer with all atoms being carbon, all bonds being single non-aromatic
-	 * @param atomContainer The input atomcontainer
-	 * @return The new atomcontainer
-	 * @throws CloneNotSupportedException The atomcontainer cannot be cloned
-	 */
-	public static IAtomContainer createAllCarbonAllSingleNonAromaticBondAtomContainer(
+    /**
+     * Generates a cloned atomcontainer with all atoms being carbon, all bonds
+     * being single non-aromatic
+     *
+     * @param atomContainer The input atomcontainer
+     * @return The new atomcontainer
+     * @throws CloneNotSupportedException The atomcontainer cannot be cloned
+     * @deprecated not all attributes are removed producing unexpected results, use
+     *             {@link #anonymise}
+     */
+    public static IAtomContainer createAllCarbonAllSingleNonAromaticBondAtomContainer(
 			IAtomContainer atomContainer) throws CloneNotSupportedException{
 			IAtomContainer query = (IAtomContainer) atomContainer.clone();
 			for (int i = 0; i < query.getBondCount(); i++) {
 				query.getBond(i).setOrder(IBond.Order.SINGLE);
 				query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
+				query.getBond(i).setFlag(CDKConstants.SINGLE_OR_DOUBLE, false);
 				query.getBond(i).getAtom(0).setSymbol("C");
 				query.getBond(i).getAtom(0).setHybridization(null);
 				query.getBond(i).getAtom(1).setSymbol("C");
