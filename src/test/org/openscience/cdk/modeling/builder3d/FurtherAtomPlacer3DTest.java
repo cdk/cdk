@@ -347,7 +347,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		String id1 = molecule.getAtom(2).getAtomTypeName();
 		String id2 = molecule.getAtom(3).getAtomTypeName();
 		double bondlength = atomPlacer3d.getBondLengthValue(id1, id2);
-		Assert.assertEquals(1.482, bondlength, 0.001);
+		Assert.assertEquals(1.451, bondlength, 0.001);
 		
 	}
 	
