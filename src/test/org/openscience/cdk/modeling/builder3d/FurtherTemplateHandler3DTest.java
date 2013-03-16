@@ -33,6 +33,8 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -44,11 +46,22 @@ import java.util.List;
  */
 public class FurtherTemplateHandler3DTest {
 	
-	@Test public void testLoadTemplates() throws CDKException {
-		TemplateHandler3D tmphandler3d = TemplateHandler3D.getInstance();
-		int tmpCounter = tmphandler3d.getTemplateCount();
-		assertEquals(0, tmpCounter);
-		//cannot test TemplateHandler3D#loadTemplates as it is a private method
+	@Test public void testLoadTemplates() throws Exception {
+        // test order is not guaranteed so the templates may have already been loaded,
+        // to avoid this we create a new instance using reflection. This is a hack and
+        // requires changing if the underlying class is modified
+        Constructor<TemplateHandler3D> constructor = TemplateHandler3D.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+
+        TemplateHandler3D tmphandler3d = constructor.newInstance();
+        assertEquals(0, tmphandler3d.getTemplateCount());
+        //cannot test TemplateHandler3D#loadTemplates as it is a private method
+
+        // but we can using reflection ...
+        Method loadTemplates = TemplateHandler3D.class.getDeclaredMethod("loadTemplates");
+        loadTemplates.setAccessible(true); // private -> public
+        loadTemplates.invoke(tmphandler3d);
+        assertEquals(10751, tmphandler3d.getTemplateCount());
 	}
 	
 	@Test public void testMapTemplates_cyclicMol1() throws Exception {
