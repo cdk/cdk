@@ -149,10 +149,10 @@ public class PDBWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IAtomContainer){
-            writeMolecule((IAtomContainer)object);
-        } else if (object instanceof ICrystal){
+        if (object instanceof ICrystal){
             writeCrystal((ICrystal)object);
+        } else if (object instanceof IAtomContainer){
+            writeMolecule((IAtomContainer)object);
         } else if (object instanceof IChemFile){
             IChemFile chemFile = (IChemFile)object;
             IChemSequence sequence = chemFile.getChemSequence(0);
