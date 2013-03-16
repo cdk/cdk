@@ -200,7 +200,7 @@ public class TemplateHandler3D {
 		if (!templatesLoaded) self.loadTemplates();
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
-        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(ringSystems);
+        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.anonymise(ringSystems);
         BitSet ringSystemFingerprint = new HybridizationFingerprinter().getBitFingerprint(ringSystemAnyBondAnyAtom).asBitSet();
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
@@ -212,7 +212,7 @@ public class TemplateHandler3D {
             }
             //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
-                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(template);
+                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.anonymise(template);
                 //we do the exact match with any atom and any bond
                 if (universalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better

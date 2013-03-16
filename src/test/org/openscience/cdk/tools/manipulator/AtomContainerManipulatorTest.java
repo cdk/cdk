@@ -56,6 +56,11 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
 /**
  * @cdk.module test-standard
  */
@@ -791,6 +796,33 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         String smiles2 = "C1CCCCC1";
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(mol, mol2));
+    }
+
+    @Test public void testAnonymise() throws Exception {
+
+        IAtomContainer cyclohexane = MoleculeFactory.makeCyclohexane();
+
+        cyclohexane.getAtom(0).setSymbol("O");
+        cyclohexane.getAtom(2).setSymbol("O");
+        cyclohexane.getAtom(1).setAtomTypeName("remove me");
+        cyclohexane.getAtom(3).setFlag(CDKConstants.ISAROMATIC, true);
+        cyclohexane.getAtom(4).setImplicitHydrogenCount(2);
+        cyclohexane.getBond(0).setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        cyclohexane.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
+
+        IAtomContainer anonymous = AtomContainerManipulator.anonymise(cyclohexane);
+
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(anonymous,
+                                                                      MoleculeFactory.makeCyclohexane()));
+
+        assertThat(anonymous.getAtom(0).getSymbol(), is("C"));
+        assertThat(anonymous.getAtom(2).getSymbol(), is("C"));
+        assertNull(anonymous.getAtom(1).getAtomTypeName());
+        assertNull(anonymous.getAtom(4).getImplicitHydrogenCount());
+        assertFalse(anonymous.getAtom(3).getFlag(CDKConstants.ISAROMATIC));
+
+        assertFalse(anonymous.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        assertFalse(anonymous.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     }
 
     /**

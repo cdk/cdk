@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ILonePair;
@@ -889,6 +890,7 @@ public class AtomContainerManipulator {
      * @deprecated not all attributes are removed producing unexpected results, use
      *             {@link #anonymise}
      */
+    @TestMethod("testCreateAnyAtomAnyBondAtomContainer_IAtomContainer")
     public static IAtomContainer createAllCarbonAllSingleNonAromaticBondAtomContainer(
 			IAtomContainer atomContainer) throws CloneNotSupportedException{
 			IAtomContainer query = (IAtomContainer) atomContainer.clone();
@@ -905,6 +907,39 @@ public class AtomContainerManipulator {
 			}
 			return query;
 	}
+
+    /**
+     * Anonymise the provided container to single-bonded carbon atoms. No
+     * information other then the connectivity from the original container is
+     * retrained.
+     *
+     * @param src an atom container
+     * @return anonymised container
+     */
+    @TestMethod("testAnonymise")
+    public static IAtomContainer anonymise(IAtomContainer src) {
+
+        IChemObjectBuilder builder = src.getBuilder();
+
+        IAtom[] atoms = new IAtom[src.getAtomCount()];
+        IBond[] bonds = new IBond[src.getBondCount()];
+
+        for (int i = 0; i < atoms.length; i++) {
+            atoms[i] = builder.newInstance(IAtom.class, "C");
+        }
+        for (int i = 0; i < bonds.length; i++) {
+            IBond bond = src.getBond(i);
+            int u = src.getAtomNumber(bond.getAtom(0));
+            int v = src.getAtomNumber(bond.getAtom(1));
+            bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
+        }
+
+        IAtomContainer dest = builder
+                .newInstance(IAtomContainer.class, 0, 0, 0, 0);
+        dest.setAtoms(atoms);
+        dest.setBonds(bonds);
+        return dest;
+    }
 
 	/**
 	 * Returns the sum of the bond order equivalents for a given IAtom. It

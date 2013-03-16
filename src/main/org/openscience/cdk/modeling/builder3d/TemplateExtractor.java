@@ -403,7 +403,7 @@ public class TemplateExtractor {
             if (anyAtom && !anyAtomAnyBond) {
                 query = QueryAtomContainerCreator.createAnyAtomContainer(m, false);
             } else {
-                query = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(m);
+                query = AtomContainerManipulator.anonymise(m);
 
             }
 			try {
