@@ -55,7 +55,10 @@ import org.openscience.cdk.interfaces.IAtomType;
  */
 public class MMFF94BasedParameterSetReader {
 
-	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
+	private static final String configFile = "/org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
+    private static final String configFilevdW = "/org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
+    private static final String configFileDFSB = "/org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
+
 	private InputStream ins = null;
 	private Map<String,Object> parameterSet;
 	private List<IAtomType> atomTypes;
@@ -63,12 +66,11 @@ public class MMFF94BasedParameterSetReader {
 	private String key = "";
 	private String sid;
 
-	private String configFilevdW = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
+
 	private InputStream insvdW = null;
 	private StringTokenizer stvdW;
 	private String sidvdW;
 
-	private String configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
 	private InputStream insDFSB;
 	private StringTokenizer stDFSB;
 
