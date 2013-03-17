@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -136,18 +137,7 @@ public class ForceFieldConfigurator {
 			check=this.checkForceFieldType(ffname);
 			ffName=ffname;
 			if (ffName.equals("mm2")) {
-				//logger.debug("ForceFieldConfigurator: open Force Field mm2");
-				//f = new File(mm2File);
-				//readFile(f);
-				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mm2.prm");
-				//logger.debug("ForceFieldConfigurator: open Force Field mm2 ... READY");
-				mm2 = new MM2BasedParameterSetReader();
-				//logger.debug("ForceFieldConfigurator: mm2 set input stream ... READY");
-				try{
-					this.setMM2Parameters();
-				}catch (Exception ex1){
-					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString(), ex1);	
-				}
+		        setMM2Parameters();
 			}else if (ffName.equals("mmff94") || !check) {
 				//logger.debug("ForceFieldConfigurator: open Force Field mmff94");
 				//f = new File(mmff94File);
@@ -186,18 +176,23 @@ public class ForceFieldConfigurator {
 	}
 
 	/**
-	 *  Sets the parameters attribute of the ForceFieldConfigurator object, default is mm2 force field
+	 * Configure with MM2 parameters.
+     *
+     * @see MM2BasedParameterSetReader
+     * @throws CDKException unable to load MM2 parameters
 	 */
 	@TestMethod("testSetMM2Parameters")
 	public void setMM2Parameters() throws CDKException{
-		try{
-			mm2.readParameterSets();
-		}catch(Exception ex1){
-			throw new CDKException("Problem within readParameterSets due to:"+ex1.toString(), ex1);
-		}
-		parameterSet = mm2.getParamterSet();
-		atomTypes = mm2.getAtomTypes();
-  }
+        try {
+            MM2BasedParameterSetReader mm2 = new MM2BasedParameterSetReader();
+            mm2.readParameterSets();
+            parameterSet = mm2.getParamterSet();
+            atomTypes = mm2.getAtomTypes();
+        } catch (Exception e) {
+            throw new CDKException("unable to read MM2 parameters", e);
+        }
+    }
+
 	@TestMethod("testSetMMFF94Parameters")
 	public void setMMFF94Parameters() throws Exception{
 		mmff94.readParameterSets();
