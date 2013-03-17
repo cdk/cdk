@@ -139,18 +139,8 @@ public class ForceFieldConfigurator {
 			if (ffName.equals("mm2")) {
 		        setMM2Parameters();
 			}else if (ffName.equals("mmff94") || !check) {
-				//logger.debug("ForceFieldConfigurator: open Force Field mmff94");
-				//f = new File(mmff94File);
-				//readFile(f);
-				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mmff94.prm");
-				mmff94= new MMFF94BasedParameterSetReader();
-				
+				setMMFF94Parameters();
 				mmff94.setInputStream(ins);
-				try{
-					this.setMMFF94Parameters();
-				}catch (Exception ex2){
-					throw new CDKException("Problems with set MM2Parameters due to"+ex2.toString(), ex2);	
-				}
 			}
 		}
 		//throw new CDKException("Data file for "+ffName+" force field could not be found");
@@ -194,10 +184,15 @@ public class ForceFieldConfigurator {
     }
 
 	@TestMethod("testSetMMFF94Parameters")
-	public void setMMFF94Parameters() throws Exception{
-		mmff94.readParameterSets();
-		parameterSet = mmff94.getParamterSet();
-		atomTypes = mmff94.getAtomTypes();
+	public void setMMFF94Parameters() throws CDKException{
+        try {
+            MMFF94BasedParameterSetReader mmff94 = new MMFF94BasedParameterSetReader();
+		    mmff94.readParameterSets();
+		    parameterSet = mmff94.getParamterSet();
+		    atomTypes = mmff94.getAtomTypes();
+        } catch (Exception e) {
+            throw new CDKException("unable to read MM2 parameters", e);
+        }
 	}
 	
 	/**
