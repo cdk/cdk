@@ -56,8 +56,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  */
 public class MM2BasedParameterSetReader {
 
-	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
-	private InputStream ins = null;
+	private static final String PARAMETER_PATH = "/org/openscience/cdk/modeling/forcefield/data/mm2.prm";
 	private Map<String, Object> parameterSet;
 	private List<IAtomType> atomTypes;
 	private StringTokenizer st;
@@ -77,14 +76,6 @@ public class MM2BasedParameterSetReader {
 	
 	public List<IAtomType> getAtomTypes(){
 		return atomTypes;
-	}
-	/**
-	 * Sets the file containing the config data.
-	 *
-	 * @param  ins  The new inputStream type InputStream
-	 */
-	public void setInputStream(InputStream ins) {
-		this.ins = ins;
 	}
 
 	/**
@@ -810,23 +801,17 @@ public class MM2BasedParameterSetReader {
 		//dipole3,piatom,pibond,dipole3
 		//logger.debug("------ ReadParameterSets ------");
 
-		if (ins == null) {
-			ins = getClass().getResourceAsStream(configFile);
-		}
-		if (ins == null) {
-			throw new IOException("There was a problem getting the default stream: " + configFile);
-		}
+        InputStream in = getClass().getResourceAsStream(PARAMETER_PATH);
+
+		if (in == null)
+			throw new IOException("unable to access the default parameter location: " + PARAMETER_PATH);
 
 		// read the contents from file
-		BufferedReader r = new BufferedReader(new InputStreamReader(ins), 1024);
+		BufferedReader r = new BufferedReader(new InputStreamReader(in));
 		String s;
 		int[] a = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		try {
-			while (true) {
-				s = r.readLine();
-				if (s == null) {
-					break;
-				}
+			while ((s = r.readLine()) != null) {
 				st = new StringTokenizer(s, "\t ;");
 				int nt = st.countTokens();
 				if (s.startsWith(">") & nt > 1) {
@@ -888,10 +873,11 @@ public class MM2BasedParameterSetReader {
 					a[16]++;
 				} 
 			}// end while
-			ins.close();
 		} catch (IOException e) {
 			throw new IOException("There was a problem parsing the mm2 forcefield due to:"+e.toString());
-		}
+		} finally {
+            in.close();
+        }
 	}
 }
 
