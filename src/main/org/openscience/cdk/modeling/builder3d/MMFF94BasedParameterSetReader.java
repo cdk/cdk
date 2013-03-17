@@ -166,7 +166,7 @@ public class MMFF94BasedParameterSetReader {
 			double q0 = new Double(sq0).doubleValue();
 			data.add(new Double(q0));
 		}catch (NumberFormatException nfe3) {
-			System.out.println("Charge: Malformed Number due to:"+nfe3);
+			System.err.println("Charge: Malformed Number due to:"+nfe3);
 		}
 		parameterSet.put(key, data);
 	}
@@ -541,7 +541,6 @@ public class MMFF94BasedParameterSetReader {
 			ins.close();
 			insvdW.close();
 		} catch (IOException e) {
-			System.err.println(e.toString());
 			throw new IOException("There was a problem parsing the mmff94 forcefield");
 		}
 
@@ -564,7 +563,6 @@ public class MMFF94BasedParameterSetReader {
 			insDFSB.close();
 			//logger.debug("insDFSB closed");
 		} catch (IOException e) {
-			System.err.println(e.toString());
 			throw new IOException("There was a problem parsing the Default Stretch-Bend Parameters (mmffdfsb.par)");
 		}
 	}
