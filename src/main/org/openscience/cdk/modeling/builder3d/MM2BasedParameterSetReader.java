@@ -33,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class MM2BasedParameterSetReader {
 	 */
 	public MM2BasedParameterSetReader() {
 		parameterSet = new Hashtable<String,Object>();
-		atomTypes = new Vector<IAtomType>();
+		atomTypes = new ArrayList<IAtomType>();
 	}
 
 	public Map<String,Object> getParamterSet(){
