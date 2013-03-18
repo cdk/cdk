@@ -267,7 +267,7 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
     }
 
     @Override
-    @TestMethod("testSize")
+    @TestMethod("testGetSize")
     public int getSize() {
         return fingerprintLength;
     }
