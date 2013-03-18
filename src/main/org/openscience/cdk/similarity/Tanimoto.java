@@ -226,6 +226,7 @@ public class Tanimoto
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance
      */
+    @TestMethod("testCountMethod1and2")
     public static double method1( ICountFingerprint fp1, 
                                   ICountFingerprint fp2) {
     	return calculate(fp1, fp2);
@@ -238,6 +239,7 @@ public class Tanimoto
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance
      */
+    @TestMethod("testCountMethod1and2")
     public static double method2( ICountFingerprint fp1,
                                   ICountFingerprint fp2) {
     	
