@@ -27,6 +27,8 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.*;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,6 +45,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * @cdk.githash
  *
  */
+@TestClass("org.openscience.cdk.fingerprint.ShortestPathWalkerTest")
 public final class ShortestPathWalker {
 
     /* container which is being traversed */
@@ -71,6 +74,7 @@ public final class ShortestPathWalker {
      * Access a set of all shortest paths.
      * @return the paths
      */
+    @TestMethod("testPaths")
     public Set<String> paths() {
         return Collections.unmodifiableSet(paths);
     }
@@ -214,6 +218,7 @@ public final class ShortestPathWalker {
      * @inheritDoc
      */
     @Override
+    @TestMethod("testToString")
     public String toString() {
         int      n       = this.paths.size();
         String[] paths   = this.paths.toArray(new String[n]);
