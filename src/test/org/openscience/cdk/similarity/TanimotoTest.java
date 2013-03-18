@@ -84,6 +84,17 @@ public class TanimotoTest extends CDKTestCase
 		if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
 	}
 
+    @Test
+    public void testCalculate_BitFingerprint() throws java.lang.Exception
+    {
+        IAtomContainer mol1 = MoleculeFactory.makeIndole();
+        IAtomContainer mol2 = MoleculeFactory.makePyrrole();
+        Fingerprinter fp = new Fingerprinter();
+        double similarity = Tanimoto.calculate(fp.getBitFingerprint(mol1),
+                                               fp.getBitFingerprint(mol2));
+        Assert.assertEquals(0.3939, similarity, 0.01);
+    }
+
     @Test public void testExactMatch() throws Exception {
         IAtomContainer mol1 = MoleculeFactory.makeIndole();
         IAtomContainer mol2 = MoleculeFactory.makeIndole();
