@@ -215,10 +215,16 @@ public final class ShortestPathWalker {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (String path : paths) {
-            sb.append(path).append("->");
+        int      n       = this.paths.size();
+        String[] paths   = this.paths.toArray(new String[n]);
+        StringBuilder sb = new StringBuilder(n * 5);
+
+        for(int i = 0, last = n - 1; i < n; i++){
+            sb.append(paths[i]);
+            if(i != last)
+                sb.append("->");
         }
+
         return sb.toString();
     }
 }
