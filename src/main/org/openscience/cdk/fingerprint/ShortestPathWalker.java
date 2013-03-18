@@ -76,14 +76,6 @@ public final class ShortestPathWalker {
     }
 
     /**
-     * Access the number of unique encode paths traversed.
-     * @return the number paths
-     */
-    public int getPathCount() {
-        return paths.size();
-    }
-
-    /**
      * Traverse all-pairs of shortest-paths within a chemical graph.
      */
     private Set<String> traverse() {
