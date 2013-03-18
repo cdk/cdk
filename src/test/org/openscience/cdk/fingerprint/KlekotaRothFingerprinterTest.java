@@ -35,20 +35,20 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
 
-	public IFingerprinter getFingerprinter() {
+	@Override public IFingerprinter getBitFingerprinter() {
 		return new KlekotaRothFingerprinter();
 	}
 	
     @Test
     public void testGetSize() throws Exception {
-        IFingerprinter printer = getFingerprinter();
+        IFingerprinter printer = getBitFingerprinter();
         Assert.assertEquals(4860, printer.getSize());
     }
 
     @Test
     public void testFingerprint() throws Exception {
 		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-		IFingerprinter printer = getFingerprinter();
+		IFingerprinter printer = getBitFingerprinter();
 
 		BitSet bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N")).asBitSet();
 		BitSet bs2 = printer.getBitFingerprint(parser.parseSmiles("C=CCC(O)CC#N")).asBitSet();
