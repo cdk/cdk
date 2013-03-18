@@ -145,27 +145,11 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
      *
      * @param ac The AtomContainer for which a fingerprint is generated
      * @return Map of raw fingerprint paths/features
-     * @exception CDKException if there error in aromaticity perception or other CDK functions
+     * @throws UnsupportedOperationException method is not supported
      */
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer ac) throws CDKException {
-        IAtomContainer atomContainer = null;
-        try {
-            atomContainer = (IAtomContainer) ac.clone();
-        } catch (CloneNotSupportedException ex) {
-            logger.error("Failed to clone the molecule:", ex);
-        }
-        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
-        Map<String, Integer> uniquePaths = new TreeMap<String, Integer>();
-        if (!ConnectivityChecker.isConnected(atomContainer)) {
-            IAtomContainerSet partitionedMolecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
-            for (IAtomContainer container : partitionedMolecules.atomContainers()) {
-                addUniquePath(container, uniquePaths);
-            }
-        } else {
-            addUniquePath(atomContainer, uniquePaths);
-        }
-        return uniquePaths;
+        throw new UnsupportedOperationException();
     }
 
     private void addUniquePath(IAtomContainer container, BitSet bitSet) {
