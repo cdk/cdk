@@ -22,7 +22,12 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * @cdk.module test-standard
@@ -34,5 +39,14 @@ public class AbstractFingerprinterTest extends CDKTestCase {
         "by subclasses unit tests");
     };
 
+    /* override if method is implemented */
+    @Test(expected=UnsupportedOperationException.class) public void testGetCountFingerprint() throws Exception {
+        getBitFingerprinter().getCountFingerprint(mock(IAtomContainer.class));
+    }
+
+    /* override if method is implemented */
+    @Test(expected=UnsupportedOperationException.class) public void testGetRawFingerprint() throws Exception {
+        getBitFingerprinter().getRawFingerprint(mock(IAtomContainer.class));
+    }
 }
 

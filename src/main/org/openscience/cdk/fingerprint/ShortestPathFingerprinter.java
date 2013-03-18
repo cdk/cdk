@@ -148,6 +148,7 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
      * @throws UnsupportedOperationException method is not supported
      */
     @Override
+    @TestMethod("testGetRawFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer ac) throws CDKException {
         throw new UnsupportedOperationException();
     }
@@ -257,6 +258,7 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
     }
 
     @Override
+    @TestMethod("testGetCountFingerprint")
     public ICountFingerprint getCountFingerprint(IAtomContainer iac) throws CDKException {
         throw new UnsupportedOperationException("Not supported yet.");
     }

@@ -47,7 +47,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testFingerprint() throws Exception {
+    public void testGetRawFingerprint() throws Exception {
     	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
@@ -70,7 +70,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
-    public void testCountFingerprint() throws Exception {
+    public void testGetCountFingerprint() throws Exception {
     	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");

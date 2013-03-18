@@ -101,6 +101,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
+    @TestMethod("testGetRawFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
@@ -175,6 +176,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
 	@Override
+    @TestMethod("testGetCountFingerprint")
 	public ICountFingerprint getCountFingerprint(IAtomContainer container)
 			throws CDKException {
 		throw new UnsupportedOperationException();
