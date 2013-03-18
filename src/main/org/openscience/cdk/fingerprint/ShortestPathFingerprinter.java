@@ -94,7 +94,6 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
      * Creates a fingerprint generator of length
      * <code>DEFAULT_SIZE</code>
      */
-    @TestMethod("testFingerprint")
     public ShortestPathFingerprinter() {
         this(DEFAULT_SIZE);
     }
