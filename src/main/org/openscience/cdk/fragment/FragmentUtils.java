@@ -99,6 +99,7 @@ public class FragmentUtils {
     // at a bond, we need to create an IAtomContainer from it, containing *one* of the atoms
     // of the splitting bond. In addition, the new IAtomContainer should not contain the
     // splitting bond itself
+    @TestMethod("testMakeAtomContainer")
     protected static IAtomContainer makeAtomContainer(IAtom atom, List<IBond> parts, IAtom excludedAtom) {
         IAtomContainer partContainer = atom.getBuilder().newInstance(IAtomContainer.class);
         partContainer.addAtom(atom);
