@@ -27,6 +27,8 @@ package org.openscience.cdk.fingerprint;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -81,11 +83,14 @@ public class FingerprinterTool {
 	}
 
 	/**
-	 * This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger
+	 * This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger.
+     * See. {@link #differences(java.util.BitSet, java.util.BitSet)} for a method to list all differences,
+     * including those missing present in bs2 but not bs1.
 	 * 
 	 * @param bs1 First bitset
 	 * @param bs2 Second bitset
 	 * @return An arrayList of Integers
+     * @see #differences(java.util.BitSet, java.util.BitSet)
 	 */
     @TestMethod("testListDifferences_BitSet_BitSet")
     public static List<Integer> listDifferences(BitSet bs1, BitSet bs2)
@@ -100,6 +105,29 @@ public class FingerprinterTool {
 		}
 		return l;
 	}
+
+    /**
+     * List all differences between the two bit vectors. Unlike {@link
+     * #listDifferences(java.util.BitSet, java.util.BitSet)} which only list
+     * those which are set in <i>s</i> but not in <i>t</i>.
+     *
+     * @param s a bit vector
+     * @param t another bit vector
+     * @return all differences between <i>s</i> and <i>t</i>
+     */
+    @TestMethod("testDifferences,testDifferences_Scenario")
+    public static Set<Integer> differences(BitSet s, BitSet t) {
+        BitSet u = (BitSet) s.clone();
+        u.xor(t);
+
+        Set<Integer> differences = new TreeSet<Integer>();
+
+        for (int i = u.nextSetBit(0); i >= 0; i = u.nextSetBit(i + 1)) {
+            differences.add(i);
+        }
+
+        return differences;
+    }
 
 }
 
