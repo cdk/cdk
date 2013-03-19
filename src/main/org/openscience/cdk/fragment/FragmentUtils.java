@@ -113,6 +113,7 @@ public class FragmentUtils {
         return partContainer;
     }
 
+    @TestMethod("testTraversal_Chain")
     protected static List<IBond> traverse(IAtomContainer atomContainer, IAtom atom,
                                           List<IBond> bondList) {
         List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);

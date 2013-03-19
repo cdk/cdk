@@ -35,6 +35,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -112,5 +113,55 @@ public class FragmentUtilsTest extends CDKTestCase {
 
         Assert.assertTrue(part.contains(bonds[1]));
         Assert.assertTrue(part.contains(bonds[2]));
+    }
+
+    @Test public void testTraversal_Chain() {
+
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+
+        IAtom[] atoms = new IAtom[]{
+                builder.newInstance(IAtom.class, "C"),
+                builder.newInstance(IAtom.class, "C"),
+                builder.newInstance(IAtom.class, "C"),
+                builder.newInstance(IAtom.class, "C"),
+                builder.newInstance(IAtom.class, "C"),
+                builder.newInstance(IAtom.class, "C")
+        };
+        IBond[] bonds = new IBond[]{
+                builder.newInstance(IBond.class, atoms[0], atoms[1]),
+                builder.newInstance(IBond.class, atoms[1], atoms[2]),
+                builder.newInstance(IBond.class, atoms[2], atoms[3]),
+                builder.newInstance(IBond.class, atoms[3], atoms[4]),
+                builder.newInstance(IBond.class, atoms[4], atoms[5])
+        };
+
+        IAtomContainer m = builder.newInstance(IAtomContainer.class,
+                                               0, 0, 0, 0);
+        m.setAtoms(atoms);
+        m.setBonds(bonds);
+
+        List<IBond> accumulator = new ArrayList<IBond>();
+
+        // traverse from one end
+        FragmentUtils.traverse(m, atoms[0], accumulator);
+
+        assertThat(accumulator.size(), is(5));
+        assertThat(accumulator.get(0), is(bonds[0]));
+        assertThat(accumulator.get(1), is(bonds[1]));
+        assertThat(accumulator.get(2), is(bonds[2]));
+        assertThat(accumulator.get(3), is(bonds[3]));
+        assertThat(accumulator.get(4), is(bonds[4]));
+
+        // traverse from the middle
+        accumulator.clear();
+        FragmentUtils.traverse(m, atoms[3], accumulator);
+
+        assertThat(accumulator.size(), is(5));
+
+        assertThat(accumulator.get(0), is(bonds[2]));
+        assertThat(accumulator.get(1), is(bonds[1]));
+        assertThat(accumulator.get(2), is(bonds[0]));
+        assertThat(accumulator.get(3), is(bonds[3]));
+        assertThat(accumulator.get(4), is(bonds[4]));
     }
 }
