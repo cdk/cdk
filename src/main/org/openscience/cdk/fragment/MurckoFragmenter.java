@@ -351,6 +351,7 @@ public class MurckoFragmenter implements IFragmenter {
      *
      * @return an array of frameworks.
      */
+    @TestMethod("testMF1_Container,testMF3_Container")
     public IAtomContainer[] getFrameworksAsContainers() {
         return frameMap.values().toArray(new IAtomContainer[0]);
     }
