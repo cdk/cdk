@@ -31,13 +31,13 @@ package org.openscience.cdk.libio.cml;
 import nu.xom.Attribute;
 import nu.xom.Element;
 
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.xmlcml.cml.element.CMLScalar;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.protein.data.PDBAtom;
 
 /**
  * Customizer for the libio-cml Convertor to be able to export details for
@@ -57,8 +57,8 @@ public class PDBAtomCustomizer implements ICMLCustomizer {
     		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
     	
     	Element element = (Element)nodeToAdd;
-        if (atom instanceof PDBAtom) {
-            PDBAtom pdbAtom = (PDBAtom)atom;
+        if (atom instanceof IPDBAtom) {
+            IPDBAtom pdbAtom = (IPDBAtom)atom;
             if (pdbAtom.getAltLoc() != null) {
             	CMLScalar scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:altLoc"));
