@@ -46,7 +46,6 @@ public class SignatureFingerprinter implements IFingerprinter {
     /**
      * Initialize the fingerprinter with a defult signature depth of 1.
      */
-    @TestMethod("testFingerprint")
     public SignatureFingerprinter() {
     	this(1);
     }
@@ -56,7 +55,6 @@ public class SignatureFingerprinter implements IFingerprinter {
      *
      * @param depth The depth of the signatures to calculate.
      */
-    @TestMethod("testFingerprint")
     public SignatureFingerprinter(int depth) {
         this.signatureDepth = depth;
     }
