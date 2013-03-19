@@ -29,9 +29,13 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Test Murcko fragmenter.
@@ -281,6 +285,20 @@ public class MurckoFragmenterTest extends CDKTestCase {
             String newsmiles = sg.createSMILES(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }
+    }
+
+    @Test public void testGetFragmentsAsContainers() throws Exception {
+
+        IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl();
+        CDKHueckelAromaticityDetector.detectAromaticity(biphenyl);
+
+        MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+        fragmenter.generateFragments(biphenyl);
+        IAtomContainer[] fragments = fragmenter.getFragmentsAsContainers();
+
+        assertThat(fragments.length, is(2));
+        assertThat(fragments[0].getAtomCount(), is(12));
+        assertThat(fragments[1].getAtomCount(), is(6));
     }
 
 }
