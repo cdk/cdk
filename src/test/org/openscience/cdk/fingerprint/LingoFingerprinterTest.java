@@ -24,6 +24,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,6 +48,10 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
         IFingerprinter fingerprinter = new LingoFingerprinter();
         Assert.assertNotNull(fingerprinter);
         Assert.assertEquals(-1, fingerprinter.getSize());
+    }
+
+    @Ignore("tested by testFingerprint")
+    @Test public void testGetRawFingerprint() {
     }
 
     @Test
