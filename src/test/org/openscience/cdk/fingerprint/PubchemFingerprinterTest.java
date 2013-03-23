@@ -198,7 +198,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
-        PubchemFingerprinter printer = new PubchemFingerprinter();
+        PubchemFingerprinter printer = new PubchemFingerprinter(mol.getBuilder());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
 
         byte[] actual   = printer.getFingerprintAsBytes();
