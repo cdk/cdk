@@ -367,7 +367,8 @@ public class PDBReader extends DefaultChemObjectReader {
 							    }
 							}
 						} else {
-						    createBondsWithRebondTool(molecularStructure);
+                            if(useRebondTool.isSet())
+						        createBondsWithRebondTool(molecularStructure);
 							oSet.addAtomContainer(molecularStructure);
 						}
 						
