@@ -55,7 +55,7 @@ import static org.openscience.cdk.DynamicFactory.key;
 public class DynamicFactoryTest {
 
     /**
-     * ensure a negative size throws an exception
+     * Ensure a negative size throws an exception.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor() {
@@ -63,7 +63,7 @@ public class DynamicFactoryTest {
     }
 
     /**
-     * Check we can't register an interface
+     * Check we can't register an interface.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testRegister_Interface() throws Exception {
@@ -253,7 +253,7 @@ public class DynamicFactoryTest {
     }
 
     /**
-     * Check we get an exception when we try to build from a non-interface
+     * Check we get an exception when we try to build from a non-interface.
      * @throws Exception
      */
     @Test(expected = IllegalArgumentException.class)
@@ -310,7 +310,7 @@ public class DynamicFactoryTest {
     }
 
     /**
-     * Kind of already tested in other methods
+     * Kind of already tested in other methods.
      */
     @Test
     public void testSuggest() throws Exception {
@@ -390,7 +390,7 @@ public class DynamicFactoryTest {
     }
 
     /**
-     * Ensures primitive types are converted
+     * Ensures primitive types are converted.
      */
     @Test
     public void testKey_Primitives() {
@@ -462,7 +462,7 @@ public class DynamicFactoryTest {
 
     /**
      * Test mocks {@link org.openscience.cdk.DynamicFactory.CreationModifier}
-     * and ensures the modify is called once when a registed implemention is
+     * and ensures the modify is called once when a registered implementation is
      * created.
      */
     @Test
