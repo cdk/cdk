@@ -25,10 +25,8 @@ package org.openscience.cdk.graph;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This class iterates through all possible permutations of the atom order in a
