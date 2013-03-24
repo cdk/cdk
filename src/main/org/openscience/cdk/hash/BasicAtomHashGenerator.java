@@ -31,10 +31,11 @@ import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * A generator for basic atom hash codes {@cdk.cite Ihlenfeldt93}. These hash
- * codes use an initial generator to seed the values of each atom. The initial
- * values are then combined over a series of cycles up to a specified depth. At
- * each cycle the hash values of adjacent invariants are incorporated.
+ * A generator for basic atom hash codes. This implementation is based on the
+ * description by {@cdk.cite Ihlenfeldt93}. The hash codes use an initial
+ * generator to seed the values of each atom. The initial values are then
+ * combined over a series of cycles up to a specified depth. At each cycle the
+ * hash values of adjacent invariants are incorporated.
  *
  * <h4>Which depth should I use?</h4> The <i>depth</i> determines the number of
  * cycles and thus how <i>deep</i> the hashing is, larger values discriminate
