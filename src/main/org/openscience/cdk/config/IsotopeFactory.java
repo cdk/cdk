@@ -196,26 +196,29 @@ public class IsotopeFactory
     /**
      * Get an isotope based on the element symbol and exact mass.
      *
-     * @param symbol the element symbol
-     * @param massNumber the mass number
+     * @param symbol    the element symbol
+     * @param exactMass the mass number
+     * @param tolerance allowed difference from provided exact mass
      * @return the corresponding isotope
      */
     @TestMethod("testGetIsotopeFromExactMass")
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
-        IIsotope ret = null;
+        IIsotope ret     = null;
+        double   minDiff = Double.MAX_VALUE;
         for (IIsotope isotope : isotopes) {
+            double diff = Math.abs(isotope.getExactMass() - exactMass);
             if (isotope.getSymbol().equals(symbol) &&
-            	Math.abs(isotope.getExactMass() - exactMass) <= tolerance) {
+            	diff <= tolerance && diff < minDiff) {
                 try {
                     ret = (IIsotope) isotope.clone();
+                    minDiff = diff;
                 } catch (CloneNotSupportedException e) {
                     logger.error("Could not clone IIsotope: ", e.getMessage());
                     logger.debug(e);
                 }
-                return ret;
             }
         }
-        return null;
+        return ret;
     }
 
     /**

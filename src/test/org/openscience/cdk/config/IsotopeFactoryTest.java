@@ -318,6 +318,14 @@ public class IsotopeFactoryTest extends CDKTestCase
         Assert.assertNull(match);
     }
 
+    @Test public void testGetIsotopeFromExactMass_LargeTolerance() throws Exception {
+        IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IIsotope carbon13 = isofac.getIsotope("C", 13);
+        IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 2.0);
+        Assert.assertNotNull(match);
+        Assert.assertEquals(13, match.getMassNumber().intValue());
+    }
+
     /**
      * @cdk.bug 3534288
      */
