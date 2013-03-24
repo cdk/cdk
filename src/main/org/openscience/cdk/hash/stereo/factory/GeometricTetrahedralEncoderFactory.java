@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013. John May <jwmay@users.sf.net>
+ * Copyright (c) 2013 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
