@@ -304,6 +304,20 @@ public class IsotopeFactoryTest extends CDKTestCase
         Assert.assertEquals(13.00335484, isofac.getIsotope("C", 13).getExactMass(), 0.0000001);
     }
 
+    @Test public void testGetIsotopeFromExactMass() throws Exception {
+        IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IIsotope carbon13 = isofac.getIsotope("C", 13);
+        IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 0.0001);
+        Assert.assertNotNull(match);
+        Assert.assertEquals(13, match.getMassNumber().intValue());
+    }
+
+    @Test public void testYeahSure() throws Exception {
+        IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IIsotope match = isofac.getIsotope("H", 13.00001, 0.0001);
+        Assert.assertNull(match);
+    }
+
     /**
      * @cdk.bug 3534288
      */

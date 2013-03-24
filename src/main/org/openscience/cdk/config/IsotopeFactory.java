@@ -194,6 +194,31 @@ public class IsotopeFactory
     }
 
     /**
+     * Get an isotope based on the element symbol and exact mass.
+     *
+     * @param symbol the element symbol
+     * @param massNumber the mass number
+     * @return the corresponding isotope
+     */
+    @TestMethod("testGetIsotopeFromExactMass")
+    public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
+        IIsotope ret = null;
+        for (IIsotope isotope : isotopes) {
+            if (isotope.getSymbol().equals(symbol) &&
+            	Math.abs(isotope.getExactMass() - exactMass) <= tolerance) {
+                try {
+                    ret = (IIsotope) isotope.clone();
+                } catch (CloneNotSupportedException e) {
+                    logger.error("Could not clone IIsotope: ", e.getMessage());
+                    logger.debug(e);
+                }
+                return ret;
+            }
+        }
+        return null;
+    }
+
+    /**
 	 * Returns the most abundant (major) isotope with a given atomic number.
      *
      * <p>The isotope's abundancy is for atoms with atomic number 60 and smaller
