@@ -40,7 +40,12 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.openscience.cdk.AtomType;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * AtomType list configurator that uses the ParameterSet originally
@@ -209,6 +214,7 @@ public class MMFF94BasedParameterSetReader {
 		AtomType atomType = new AtomType(name, rootType);
 		atomType.setAtomicNumber(atomNr);
 		atomType.setExactMass(mass);
+		atomType.setMassNumber(massNumber(atomNr, mass));
 		atomType.setFormalNeighbourCount(maxbond);
 		atomType.setSymbol(rootType);
 		Color co = new Color(rl, gl, bl);
@@ -566,6 +572,23 @@ public class MMFF94BasedParameterSetReader {
 			throw new IOException("There was a problem parsing the Default Stretch-Bend Parameters (mmffdfsb.par)");
 		}
 	}
+
+    /**
+     * Mass number for a atom with a given atomic number and exact mass.
+     * @param atomicNumber atomic number
+     * @param exactMass exact mass
+     * @return the mass number (or null) if no mass number was found
+     * @throws IOException isotope configuration could not be loaded
+     */
+    private Integer massNumber(int atomicNumber, double exactMass) throws IOException {
+        String symbol = PeriodicTable.getSymbol(atomicNumber);
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IIsotope isotope = IsotopeFactory.getInstance(builder)
+                                         .getIsotope(symbol,
+                                                     exactMass,
+                                                     0.001);
+        return isotope != null ? isotope.getMassNumber() : null;
+    }
 
 }
 
