@@ -31,6 +31,7 @@ package org.openscience.cdk.hash.stereo.parity;
  * @cdk.module hash
  * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of
  *      a Permutation, Wikipedia</a>
+ * @git.hash
  */
 public interface PermutationParity {
 

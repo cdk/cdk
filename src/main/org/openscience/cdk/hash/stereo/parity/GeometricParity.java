@@ -29,6 +29,7 @@ package org.openscience.cdk.hash.stereo.parity;
  *
  * @author John May
  * @cdk.module hash
+ * @git.hash
  */
 public interface GeometricParity {
 

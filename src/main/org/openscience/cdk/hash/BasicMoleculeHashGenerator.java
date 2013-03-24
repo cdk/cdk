@@ -48,6 +48,7 @@ import java.util.Arrays;
  * @cdk.module hash
  * @see AtomHashGenerator
  * @see BasicAtomHashGenerator
+ * @git.hash
  */
 @TestClass("org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest")
 public class BasicMoleculeHashGenerator implements MoleculeHashGenerator {

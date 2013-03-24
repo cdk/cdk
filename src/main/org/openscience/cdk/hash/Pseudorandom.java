@@ -29,6 +29,7 @@ package org.openscience.cdk.hash;
  *
  * @author John May
  * @cdk.module interfaces
+ * @git.hash
  */
 public interface Pseudorandom {
 

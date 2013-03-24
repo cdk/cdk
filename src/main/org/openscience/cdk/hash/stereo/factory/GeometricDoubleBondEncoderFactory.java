@@ -62,6 +62,7 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
  * @author John May
  * @cdk.module hash
  * @see org.openscience.cdk.hash.HashGeneratorMaker
+ * @git.hash
  */
 @TestClass("org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactoryTest")
 public final class GeometricDoubleBondEncoderFactory

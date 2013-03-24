@@ -83,6 +83,7 @@ import static org.openscience.cdk.hash.seed.BasicAtomEncoder.ORBITAL_HYBRIDIZATI
  *
  * @author John May
  * @cdk.module hash
+ * @git.hash
  */
 @TestClass("org.openscience.cdk.hash.HashGeneratorMakerTest")
 public class HashGeneratorMaker {

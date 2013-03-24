@@ -39,6 +39,7 @@ import java.util.Set;
  *
  * @author John May
  * @cdk.module hash
+ * @git.hash
  */
 public interface EquivalentSetFinder {
 

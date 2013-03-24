@@ -33,6 +33,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @see <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
  * @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift
  *      random number generators</a>
+ * @git.hash
  * @cdk.module hash
  */
 @TestClass("org.openscience.cdk.hash.XorshiftTest")

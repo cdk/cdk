@@ -67,6 +67,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *      Diameter</a>
  * @see <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Original
  *      Publication</a>
+ * @git.hash
  */
 @TestClass("org.openscience.cdk.hash.BasicAtomHashGeneratorTest")
 public final class BasicAtomHashGenerator extends AbstractHashGenerator

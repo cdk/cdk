@@ -37,6 +37,7 @@ import javax.vecmath.Point3d;
  *
  * @author John May
  * @cdk.module hash
+ * @git.hash
  */
 @TestClass("org.openscience.cdk.hash.stereo.parity.DoubleBond3DParityTest")
 public final class DoubleBond3DParity implements GeometricParity {

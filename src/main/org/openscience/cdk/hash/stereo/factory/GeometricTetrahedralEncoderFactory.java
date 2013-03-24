@@ -56,6 +56,7 @@ import java.util.Map;
  *
  * @author John May
  * @cdk.module hash
+ * @git.hash
  */
 @TestClass("org.openscience.cdk.hash.stereo.factory.GeometricTetrahedralEncoderFactoryTest")
 public class GeometricTetrahedralEncoderFactory
