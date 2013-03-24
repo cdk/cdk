@@ -60,9 +60,9 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class MMFF94BasedParameterSetReader {
 
-	private static final String configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
-    private static final String configFilevdW = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
-    private static final String configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
+	private static final String configFile = "/org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
+    private static final String configFilevdW = "/org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
+    private static final String configFileDFSB = "/org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
 
 	private InputStream ins = null;
 	private Map<String,Object> parameterSet;
