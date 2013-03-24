@@ -55,9 +55,10 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
  * the following conditions. Are not {@literal -N=N-} bonds, non-cumulated,
  * non-query and have each double bonded atom has at least one substituent. In
  * future the encoding rules may be more strict or even configurable but
- * currently they may my over zealous when encoding configurations with 3D
+ * currently they may be over zealous when encoding configurations with 3D
  * coordinates. <br/><p/> This class is intended to be used with a the hash
- * encoding classes and is easier used via the {@link org.openscience.cdk.hash.HashGeneratorMaker}.
+ * encoding classes and is easier used via the
+ * {@link org.openscience.cdk.hash.HashGeneratorMaker}.
  *
  * @author John May
  * @cdk.module hash
