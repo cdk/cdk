@@ -185,7 +185,8 @@ public class PubchemFingerprinter implements IFingerprinter {
         private boolean isRingSaturated(IAtomContainer ring) {
             for (IBond ringBond : ring.bonds()) {
                 if (ringBond.getOrder() != IBond.Order.SINGLE
-                        || ringBond.getFlag(CDKConstants.ISAROMATIC)) return false;
+                        || ringBond.getFlag(CDKConstants.ISAROMATIC)
+                        || ringBond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) return false;
             }
             return true;
         }
