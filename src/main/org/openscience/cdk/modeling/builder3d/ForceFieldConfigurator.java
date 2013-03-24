@@ -142,6 +142,7 @@ public class ForceFieldConfigurator {
 				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mm2.prm");
 				//logger.debug("ForceFieldConfigurator: open Force Field mm2 ... READY");
 				mm2 = new MM2BasedParameterSetReader();
+				mm2.setInputStream(ins);
 				//logger.debug("ForceFieldConfigurator: mm2 set input stream ... READY");
 				try{
 					this.setMM2Parameters();
