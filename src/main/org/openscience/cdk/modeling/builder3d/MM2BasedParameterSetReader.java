@@ -807,7 +807,7 @@ public class MM2BasedParameterSetReader {
 		//dipole3,piatom,pibond,dipole3
 		//logger.debug("------ ReadParameterSets ------");
 
-        InputStream in = getClass().getResourceAsStream(PARAMETER_PATH);
+        InputStream in = getClass().getClassLoader().getResourceAsStream(PARAMETER_PATH);
 
 		if (in == null)
 			throw new IOException("unable to access the default parameter location: " + PARAMETER_PATH);
