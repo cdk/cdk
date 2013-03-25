@@ -196,6 +196,28 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     /**
+     * @cdk.bug 1294
+     */
+    @Test public void testBug1294() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+
+        IAtomContainer mol = sp.parseSmiles("C2=C1C=CC=CC1=CN2");
+        Assert.assertTrue("Molecule is not detected aromatic", CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms()) Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+    }
+
+    /**
+     * @cdk.bug 1294
+     */
+    @Test public void testBug1294_2() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+
+        IAtomContainer mol = sp.parseSmiles("c2c1ccccc1c[nH]2");
+        Assert.assertTrue("Molecule is not detected aromatic", CDKHueckelAromaticityDetector.detectAromaticity(mol));
+        for (IAtom atom : mol.atoms()) Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+    }
+
+    /**
      * A unit test for JUnit The special difficulty with Azulene is that only the
      * outermost larger 10-ring is aromatic according to Hueckel rule.
      */
