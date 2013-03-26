@@ -104,7 +104,7 @@ public class ForceFieldConfiguratorTest  {
 		IAtomType atomtype4 = atomtypeList.get(4);
 		assertEquals("CO2M", atomtype4.getAtomTypeName());
 		assertEquals(6, (int) atomtype4.getAtomicNumber());
-		assertEquals(4, (int) atomtype4.getFormalNeighbourCount());
+		assertEquals(3, (int) atomtype4.getFormalNeighbourCount());
 		assertEquals(12, (int) atomtype4.getMassNumber());
 		
 	}
