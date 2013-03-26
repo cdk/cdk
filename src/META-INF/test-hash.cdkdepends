@@ -4,4 +4,7 @@ cdk-hash.jar
 cdk-test.jar
 cdk-data.jar
 cdk-core.jar
-
+cdk-io.jar
+cdk-testdata.jar
+cdk-standard.jar
+cdk-atomtype.jar
