@@ -166,7 +166,7 @@ public final class PerturbedAtomHashGenerator extends AbstractHashGenerator
             encoder.reset();
 
             // compute new hash codes and copy the values a column in the matrix
-            long[] tmp = basic.generate(original, encoder, graph);
+            long[] tmp = basic.generate(copy(original), encoder, graph);
             for (int j = 0; j < n; j++) {
                 perturbed[j][i + 1] = tmp[j];
             }
