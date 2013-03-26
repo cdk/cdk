@@ -817,7 +817,7 @@ public class MM2BasedParameterSetReader {
 		//logger.debug("------ ReadParameterSets ------");
 
 		if (ins == null) {
-			ins = getClass().getResourceAsStream(configFile);
+			ins = getClass().getClassLoader().getResourceAsStream(configFile);
 		}
 		if (ins == null) {
 			throw new IOException("There was a problem getting the default stream: " + configFile);

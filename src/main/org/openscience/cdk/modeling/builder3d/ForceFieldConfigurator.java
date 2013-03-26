@@ -192,6 +192,8 @@ public class ForceFieldConfigurator {
 	@TestMethod("testSetMM2Parameters")
 	public void setMM2Parameters() throws CDKException{
 		try{
+            if(mm2 == null)
+                mm2 = new MM2BasedParameterSetReader();
 			mm2.readParameterSets();
 		}catch(Exception ex1){
 			throw new CDKException("Problem within readParameterSets due to:"+ex1.toString(), ex1);
@@ -201,6 +203,8 @@ public class ForceFieldConfigurator {
   }
 	@TestMethod("testSetMMFF94Parameters")
 	public void setMMFF94Parameters() throws Exception{
+        if(mmff94 == null)
+            mmff94 = new MMFF94BasedParameterSetReader();
 		mmff94.readParameterSets();
 		parameterSet = mmff94.getParamterSet();
 		atomTypes = mmff94.getAtomTypes();
