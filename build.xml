@@ -252,6 +252,7 @@
                     </fileset>
                     <fileset dir="${src}/main/">
                         <include name="net/sf/cdk/tools/*.class" />
+                        <include name="net/sf/cdk/tools/**/*.class" />
                     </fileset>
                 </delete>
 
