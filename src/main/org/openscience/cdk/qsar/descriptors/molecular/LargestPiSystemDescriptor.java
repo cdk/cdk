@@ -149,7 +149,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
 
 
     /**
-     * Calculate the count of atoms of the largest pi system in the supplied {@link AtomContainer}.
+     * Calculate the count of atoms of the largest pi system in the supplied {@link IAtomContainer}.
      * <p/>
      * <p>The method require one parameter:
      * <ol>

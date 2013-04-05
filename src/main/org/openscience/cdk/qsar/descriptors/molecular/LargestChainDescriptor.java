@@ -169,7 +169,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * <p/>
      * <p>Same for checkRingSystem, if true the CDKConstant.ISINRING will be set
      *
-     * @param atomContainer The {@link AtomContainer} for which this descriptor is to be calculated
+     * @param atomContainer The {@link IAtomContainer} for which this descriptor is to be calculated
      * @return the number of atoms in the largest chain of this AtomContainer
      * @see #setParameters
      */

@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <br>
  * <B>Provide your input molecules in Kekule form, and make sure atom type are perceived.</B></br>
  * When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See the
- * {@link InChITautomerGeneratorTest test case}.
+ * InChITautomerGeneratorTest test case.
  * @author Mark Rijnbeek
  * @cdk.module tautomer
  */

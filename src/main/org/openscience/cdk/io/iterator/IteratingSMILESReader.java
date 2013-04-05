@@ -79,7 +79,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
      * @param  in  The Reader to read from
      * @param builder The builder to use
      * @see org.openscience.cdk.DefaultChemObjectBuilder
-     * @see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder
+     * @see org.openscience.cdk.silent.SilentChemObjectBuilder
      */
     @TestMethod("testSMILESFileWithNames")
     public IteratingSMILESReader(Reader in, IChemObjectBuilder builder) {

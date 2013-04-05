@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * including a root plus a bunch of substituents, which are all atom containers.
  * So that would be a lot of sample code here. <br>
  * The best way to get a feel for the way the RGroup objects are populated is to
- * run the {@link org.openscience.cdk.io.RGroupQueryReaderTest} and look at the sample
+ * run the RGroupQueryReaderTest and look at the sample
  * input RGroup query files contained in the CDK and how they translate into
  * RGroupXX objects. The JChempaint application can visualize the input files for you. 
  *

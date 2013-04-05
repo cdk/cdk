@@ -69,10 +69,10 @@ public class VABCVolume {
     private static AtomTypeFactory atomTypeList = null;
 
     /**
-     * Calculates the volume for the given {@link IMolecule}. This methods assumes
+     * Calculates the volume for the given {@link IAtomContainer}. This methods assumes
      * that atom types have been perceived.
      *
-     * @param  molecule {@link IMolecule} to calculate the volume of.
+     * @param  molecule {@link IAtomContainer} to calculate the volume of.
      * @return          the volume in cubic &Aring;ngstr&ouml;m.
      */
     public static double calculate(IAtomContainer molecule) throws CDKException {

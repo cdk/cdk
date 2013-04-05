@@ -25,7 +25,7 @@ package org.openscience.cdk.interfaces;
 
 /**
  * A simple setting that can be managed by the SettingManager. Currently the only
- * required method is {@see getName()} and provides the key with which setting are
+ * required method is {@link #getName()} and provides the key with which setting are
  * added and retrieved with.
  *
  * @author      johnmay

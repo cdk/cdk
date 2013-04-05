@@ -45,7 +45,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
  * A general renderer for {@link IChemModel}s, {@link IReaction}s, and
- * {@link IMolecule}s. The chem object
+ * {@link IAtomContainer}s. The chem object
  * is converted into a 'diagram' made up of {@link IRenderingElement}s. It takes
  * an {@link IDrawVisitor} to do the drawing of the generated diagram. Various
  * display properties can be set using the {@link RendererModel}.<p>
@@ -136,9 +136,9 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
     }
 	
 	/**
-	 * Setup the transformations necessary to draw this {@link IMoleculeSet}.
+	 * Setup the transformations necessary to draw this {@link IAtomContainerSet}.
 	 *
-	 * @param moleculeSet the {@link IMoleculeSet} for what to set the scale
+	 * @param moleculeSet the {@link IAtomContainerSet} for what to set the scale
 	 * @param screen      the {@link Rectangle} for which to calculate the scale
 	 */
 	public void setup(IAtomContainerSet moleculeSet, Rectangle screen) {
@@ -206,7 +206,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
      * of the model and calculates the multiplication factor to transform this
      * to the bond length that is set in the RendererModel.
      * 
-     * @param moleculeSet the {@link IMoleculeSet} for what to set the scale
+     * @param moleculeSet the {@link IAtomContainerSet} for what to set the scale
      */
     public void setScale(IAtomContainerSet moleculeSet) {
         double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(moleculeSet);
@@ -233,7 +233,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
 	/**
      * Paint a set of molecules.
      *
-     * @param molecules   the {@link IMoleculeSet} to paint
+     * @param molecules   the {@link IAtomContainerSet} to paint
      * @param drawVisitor the visitor that does the drawing
      * @param bounds      the bounds on the screen
      * @param resetCenter

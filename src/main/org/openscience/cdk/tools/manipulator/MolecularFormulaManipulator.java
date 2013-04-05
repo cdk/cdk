@@ -267,7 +267,7 @@ public class MolecularFormulaManipulator {
 	}
 
 	/**
-	 * @deprecated  Use {@link #getString()}
+	 * @deprecated  Use {@link #getString(org.openscience.cdk.interfaces.IMolecularFormula)}
 	 */
 	@TestMethod("testGetHillString_IMolecularFormula")
 	@Deprecated 

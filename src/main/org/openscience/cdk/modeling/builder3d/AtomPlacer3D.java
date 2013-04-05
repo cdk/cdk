@@ -82,7 +82,6 @@ public class AtomPlacer3D {
 	 *
 	 * @param  molecule the reference molecule for searching the chain 
 	 * @param  chain  chain to be searched
-	 * @param  molecule  the chain container (reference) molecule
 	 * @return        the atom number of the first heavy atom the number of heavy atoms in the chain
 	 */
 	public int[] findHeavyAtomsInChain(IAtomContainer molecule, IAtomContainer chain) {

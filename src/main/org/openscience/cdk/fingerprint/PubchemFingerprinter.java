@@ -111,7 +111,7 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @return the fingerprint
      * @throws CDKException if there is an error during substructure 
      * searching or atom typing
-     * @see #getBitFingerprintAsBytes()
+     * @see #getFingerprintAsBytes()
      */
     @TestMethod("testFingerprint")
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) 

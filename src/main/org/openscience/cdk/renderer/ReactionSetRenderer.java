@@ -43,7 +43,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
  * A general renderer for {@link IChemModel}s, {@link IReaction}s, and
- * {@link IMolecule}s. The chem object
+ * {@link IAtomContainer}s. The chem object
  * is converted into a 'diagram' made up of {@link IRenderingElement}s. It takes
  * an {@link IDrawVisitor} to do the drawing of the generated diagram. Various
  * display properties can be set using the {@link RendererModel}.<p>

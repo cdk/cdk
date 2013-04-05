@@ -139,8 +139,8 @@ public class FixBondOrdersTool {
 
 /**
  * kekuliseAromaticRings - function to add double/single bond order information for molecules having rings containing all atoms marked SP2 or Planar3 hybridisation.
- * @param molecule The {@link IMolecule} to kekulise
- * @return The {@link IMolecule} with kekule structure
+ * @param molecule The {@link IAtomContainer} to kekulise
+ * @return The {@link IAtomContainer} with kekule structure
  * @throws CDKException 
  */
     @TestMethod("testLargeRingSystem")
@@ -234,7 +234,7 @@ public class FixBondOrdersTool {
      * Removes rings which do not have all sp2/planar3 aromatic atoms.
      * and also gets rid of rings that have more than 8 atoms in them.
      *
-     * @param m The {@link IMolecule} from which we want to remove rings
+     * @param m The {@link IAtomContainer} from which we want to remove rings
      * @return The set of reduced rings
      */
     private IRingSet removeExtraRings(IAtomContainer m) throws Exception {
@@ -289,7 +289,6 @@ public class FixBondOrdersTool {
      * Assigns a set of rings to groups each sharing a bond.
      *
      * @param rBondsArray
-     * @param ringGroups
      * @return A List of Lists each containing the ring indices of a set of fused rings
      */
     private List<List<Integer>> assignRingGroups(List<Integer[]> rBondsArray) {

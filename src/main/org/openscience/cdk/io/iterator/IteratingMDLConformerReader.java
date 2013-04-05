@@ -16,7 +16,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * Iterate over conformers of a collection of molecules stored in SDF format.
  * <p/>
  * This class is analogous to the {@link org.openscience.cdk.io.iterator.IteratingSDFReader} except that
- * rather than return a single {@link org.openscience.cdk.interfaces.IMolecule} at each iteration this
+ * rather than return a single {@link org.openscience.cdk.interfaces.IAtomContainer} at each iteration this
  * class will return all the conformers for a given molecule at each iteration.
  * <p/>
  * The class assumes that the molecules are stored in SDF format and that all conformers for a given

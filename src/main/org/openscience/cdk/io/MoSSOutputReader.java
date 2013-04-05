@@ -132,10 +132,10 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Read a {@link IMoleculeSet} from the input source.
+     * Read a {@link IAtomContainerSet} from the input source.
      *
-     * @param  object an {@link IMoleculeSet} into which the data is stored.
-     * @return        the content in a {@link IMoleculeSet} object
+     * @param  object an {@link IAtomContainerSet} into which the data is stored.
+     * @return        the content in a {@link IAtomContainerSet} object
      */
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IAtomContainerSet) {
@@ -166,7 +166,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Read the file content into a {@link IMoleculeSet}.
+     * Read the file content into a {@link IAtomContainerSet}.
      * @param molSet an {@link IAtomContainerSet} to store the structures
      * @return the {@link IAtomContainerSet} containing the molecules read in
      * @throws java.io.IOException if there is an error during reading

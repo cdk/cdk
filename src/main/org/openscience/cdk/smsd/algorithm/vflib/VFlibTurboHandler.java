@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * then it returns only one mapping.
  *
  * This is much faster than {@link
- * org.openscience.cdk.smsd.algorithm.vflib.VFlibHandler} class
+ * org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler} class
  * as it only reports first match and backtracks.
  *
  * This class should only be used to report if a query

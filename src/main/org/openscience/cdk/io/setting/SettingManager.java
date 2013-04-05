@@ -35,9 +35,9 @@ import java.util.regex.Pattern;
 
 /**
  * Provides dynamic management of settings. This
- * was created with the intention of managing {@see IOSetting}'s for {@see IChemObjectIO}
+ * was created with the intention of managing {@link IOSetting}'s for {@link org.openscience.cdk.io.IChemObjectIO}
  * however it could be recycled for other purposes where dynamic settings are required.
- * Settings are stored in a {@see Map} using the name of the setting as the key. The name is
+ * Settings are stored in a {@link Map} using the name of the setting as the key. The name is
  * normalised (lowercase and whitespace removal) to allow 'fuzzy' setting access. This means
  * that character case differences do not affect the retrieval of objects.
  * <p/>
@@ -98,7 +98,7 @@ public class SettingManager<T extends ISetting> {
 
     /**
      * Generate a simple key for the given setting. This method is a convenience
-     * method for {@see key(String)}
+     * method for {@link #key(String)}
      *
      * @param setting the setting to which a key will be generated for
      *
@@ -152,9 +152,9 @@ public class SettingManager<T extends ISetting> {
 
     /**
      * Access the setting stored for given name. If not setting is found the provided
-     * name an {@see InvalidParameterException} will be thrown. The method is generic
+     * name an {@link InvalidParameterException} will be thrown. The method is generic
      * to allow simplified access to settings. This however means that if the incorrect
-     * type is provided a {@see ClassCastException} may be thrown.
+     * type is provided a {@link ClassCastException} may be thrown.
      * <p/>
      * <pre>{@code
      * SettingManager manager = ...;
@@ -233,8 +233,8 @@ public class SettingManager<T extends ISetting> {
 
     /**
      * Compatibility method generates an array of ISetting objects. This method
-     * wraps a call to {@see Collection#toArray(T[])} and so is used the same way.
-     * Note: it is preferable to use the collection's accessor {@see getSettings()}
+     * wraps a call to {@link Collection#toArray(Object[])}} and so is used the same way.
+     * Note: it is preferable to use the collection's accessor {@link #getSettings()}
      * <p/>
      * Usage: <pre>{@code
      * IOSetting[] settings = manager.toArray(new IOSetting[0]);

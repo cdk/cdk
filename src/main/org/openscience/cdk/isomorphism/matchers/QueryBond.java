@@ -411,7 +411,7 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
      * Checks whether a query bond is connected to another one.
      * This can only be true if the query bonds have an Atom in common.
      *
-     * @param query bond The query bond which is checked to be connect with this one
+     * @param bond bond The query bond which is checked to be connect with this one
      * @return true if the query bonds share an atom, otherwise false
      */
     public boolean isConnectedTo(IBond bond) {

@@ -114,9 +114,9 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
     }    
 
     /**
-     * Calculate the complexity in the supplied {@link AtomContainer}.
+     * Calculate the complexity in the supplied {@link IAtomContainer}.
      * 
-     *@param  container  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  container  The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   the complexity
      *@see #setParameters
      */

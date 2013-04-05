@@ -182,7 +182,7 @@ public abstract class AbstractDiscretePartitionRefiner {
     /**
      * Get the upper-half of the adjacency matrix under the permutation.
      * 
-     * @param p a permutation of the adjacency matrix
+     * @param permutation a permutation of the adjacency matrix
      * @return a string containing the permuted values of half the matrix
      */
     @TestMethod("getHalfMatrixStringTest")

@@ -35,10 +35,10 @@ import java.util.List;
 
 /**
  * Provides some basic functionality for readers and writers. This includes
- * managing the {@see IChemObjectIOListener}'s and managing of {@see IOSetting}'s.
- * The IOSettings are managed via the {@see SettingManager} class with most
+ * managing the {@link IChemObjectIOListener}'s and managing of {@link IOSetting}'s.
+ * The IOSettings are managed via the {@link SettingManager} class with most
  * method's wrapped to more descriptive method names (e.g.
- * {@see SettingManger#get(String)} is invoked by {@see getSetting(String)}).
+ * {@link SettingManager#get(String)} is invoked by {@link #getSetting(String)}).
  *
  * @author johnmay
  * @cdk.module io
@@ -149,8 +149,8 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * Fires {@see IChemObjectIOListener#processIOSettingQuestion()} for all
-     * managed listeners.
+     * Fires {@link IChemObjectIOListener#processIOSettingQuestion(org.openscience.cdk.io.setting.IOSetting)}
+     * for all managed listeners.
      *
      * @param setting the setting to process
      */

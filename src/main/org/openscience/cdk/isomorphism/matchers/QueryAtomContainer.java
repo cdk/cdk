@@ -1450,7 +1450,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      * Clones this AtomContainer object and its content.
      *
      * @return    The cloned object
-     * @see       #shallowCopy
+     * @see       #QueryAtomContainer(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IChemObjectBuilder)
      */
     public IQueryAtomContainer clone() throws CloneNotSupportedException {
         IAtom[] newAtoms;

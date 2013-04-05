@@ -34,7 +34,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * 
  * @author maclean
  * @cdk.module group
- * @cdk.keywords union-find
+ * @cdk.keyword union-find
  */
 @TestClass("DisjointSetForestTest")
 public class DisjointSetForest {

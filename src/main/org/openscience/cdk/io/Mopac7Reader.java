@@ -96,7 +96,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     /**
      * Constructs a new Mopac7reader that can read a molecule from a given {@link InputStream}.
      *
-     * @param  in  The {@link InputStream} to read from
+     * @param  input  The {@link InputStream} to read from
      */
     public Mopac7Reader(InputStream input) {
         this(new InputStreamReader(input));

@@ -62,10 +62,10 @@ import com.hp.hpl.jena.vocabulary.RDF;
 public class Convertor {
 
     /**
-     * Converts a {@link IMolecule} into a {@link Model} representation using the CDK OWL.
+     * Converts a {@link IAtomContainer} into a {@link Model} representation using the CDK OWL.
      *
-     * @param molecule {@link IMolecule} to serialize into a RDF graph.
-     * @return the RDF graph representing the {@link IMolecule}.
+     * @param molecule {@link IAtomContainer} to serialize into a RDF graph.
+     * @return the RDF graph representing the {@link IAtomContainer}.
      */
     public static Model molecule2Model(IAtomContainer molecule) {
         Model model = createCDKModel();
@@ -338,11 +338,11 @@ public class Convertor {
     }
 
     /**
-     * Converts a {@link Model} into an {@link IMolecule} using the given {@link IChemObjectBuilder}.
+     * Converts a {@link Model} into an {@link IAtomContainer} using the given {@link IChemObjectBuilder}.
      *
-     * @param model RDF graph to deserialize into an {@link IMolecule}.
+     * @param model RDF graph to deserialize into an {@link IAtomContainer}.
      * @param builder {@link IChemObjectBuilder} used to create new {@link IChemObject}s.
-     * @return a {@link IMolecule} deserialized from the RDF graph.
+     * @return a {@link IAtomContainer} deserialized from the RDF graph.
      */
     public static IAtomContainer model2Molecule(Model model,
         IChemObjectBuilder builder) {

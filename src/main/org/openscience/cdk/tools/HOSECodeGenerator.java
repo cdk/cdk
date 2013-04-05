@@ -188,7 +188,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  This method is intended to be used to get the atoms around an atom in spheres. It is not used in this class, but is provided for other classes to use.
 	 *  It also creates the HOSE code in HOSECode as a side-effect.
 	 *  
-	 *@param  ac  The {@link IMolecule} with the molecular skeleton in which the root atom resides.
+	 *@param  ac  The {@link IAtomContainer} with the molecular skeleton in which the root atom resides.
 	 *@param  root The root atom for which to produce the spheres.
 	 *@param  noOfSpheres  The number of spheres to look at.
 	 *@param  ringsize  Shall the center code have the ring size in it? Only use if you want to have the hose code later, else say false.

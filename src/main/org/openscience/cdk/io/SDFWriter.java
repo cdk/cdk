@@ -147,7 +147,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     /**
      * Writes a IChemObject to the MDL SD file formated output. It can only
      * output IChemObjects of type {@link IChemFile}, {@link IAtomContainerSet}
-     * and {@link IMoleculeSet}.
+     * and {@link IAtomContainerSet}.
      *
      * @param object an acceptable {@link IChemObject} 
      *

@@ -55,7 +55,7 @@ public class LingoSimilarity {
      * 
      * @param features1
      * @param features2
-     * @return
+     * @return similarity
      */
     @TestMethod("testLingoSim")
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {

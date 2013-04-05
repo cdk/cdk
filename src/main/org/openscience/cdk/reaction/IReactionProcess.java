@@ -85,8 +85,8 @@ public interface IReactionProcess {
      * Optionally, parameters may be set which can affect the course of the process.
      *
      *
-     * @param reactants   An {@link org.openscience.cdk.interfaces.IMoleculeSet} for which this process should be initiate.
-     * @param agents      An {@link org.openscience.cdk.interfaces.IMoleculeSet} for which this process should be initiate.
+     * @param reactants   An {@link IAtomContainerSet} for which this process should be initiate.
+     * @param agents      An {@link IAtomContainerSet} for which this process should be initiate.
      * @return the set of reactions.
      * @throws CDKException if an error occurs during the reaction process. See documentation for individual reaction processes
      */

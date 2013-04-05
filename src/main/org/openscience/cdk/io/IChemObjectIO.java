@@ -96,8 +96,8 @@ public interface IChemObjectIO extends Closeable {
     /**
      * Access all the listeners for this ChemObject Reader or Writer. This will
      * returned an unmodifiable list of listeners. Listeners should be added to and
-     * removed from the reader/writer using {@see addListener(IChemObjectIOListener)} and
-     * {@see removeListener(IChemObjectIOListener)}
+     * removed from the reader/writer using {@link #addChemObjectIOListener(org.openscience.cdk.io.listener.IChemObjectIOListener)} and
+     * {@link #removeChemObjectIOListener(org.openscience.cdk.io.listener.IChemObjectIOListener)}
      *
      * @return all listeners managed by this IO object
      */
@@ -127,7 +127,7 @@ public interface IChemObjectIO extends Closeable {
     public <S extends IOSetting> S addSetting(IOSetting setting);
 
     /**
-     * Adds a collection of {@see IOSetting}s to the reader/writer. This
+     * Adds a collection of {@link IOSetting}s to the reader/writer. This
      * is useful for transferring/propagating settings between different
      * reader/writer.
      *
@@ -194,7 +194,7 @@ public interface IChemObjectIO extends Closeable {
     public <S extends IOSetting> S getSetting(String name, Class<S> c);
 
     /**
-     * Access a collection of {@see IOSetting}s for this reader/writer.
+     * Access a collection of {@link IOSetting}s for this reader/writer.
      * @return collection of IOSetting's
      * @see #addSettings(java.util.Collection)
      */

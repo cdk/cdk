@@ -27,8 +27,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 import java.util.Map;
 
@@ -87,7 +87,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     /**
      * Defines the stereochemistry around the chiral atom. The value depends on the order of ligand atoms.
      *
-     * @return the {@link ITetrahedralChirality.Stereo} for this stereo element.
+     * @return the {@link Stereo} for this stereo element.
      */
     @TestMethod("testGetStereo")
     public Stereo getStereo() {
