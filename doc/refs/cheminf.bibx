@@ -467,6 +467,15 @@ obtained by accurate mass spectrometry</bibtex:title>
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Kreher98">
+      <bibtex:book>
+          <bibtex:title>Combinatorial Algorithms Generation Enumeration and Search</bibtex:title>
+          <bibtex:author>Kreher, Donald and Stinson, Douglas</bibtex:author>
+          <bibtex:publisher>CRC Press</bibtex:publisher>
+          <bibtex:year>1998</bibtex:year>
+      </bibtex:book>
+  </bibtex:entry>
+
   <bibtex:entry id="MAR89">
     <bibtex:article>
       <bibtex:author>Marston, C.C.</bibtex:author>
@@ -1206,7 +1215,7 @@ Method </bibtex:title>
       <bibtex:title>Union of all the minimum cycle bases of a graph</bibtex:title>
       <bibtex:year>1997</bibtex:year> 
       <bibtex:doi>10.1.1.47.3674</bibtex:doi>
-      <bibtex:URL>http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.3674</bibtex:URL> 
+      <bibtex:url>http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.3674</bibtex:url>
       <bibtex:journal>Combinatorics</bibtex:journal>
     </bibtex:article>
   </bibtex:entry>

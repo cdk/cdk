@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * A permutation with some associated methods to multiply, invert, and convert
  * to cycle strings. Much of the code in this was implemented from the 
- * C.A.G.E.S. book.
+ * C.A.G.E.S. book {@cdk.cite Kreher98}.
  * 
  * @author maclean
  * @cdk.module group

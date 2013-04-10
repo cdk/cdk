@@ -38,7 +38,7 @@ import java.util.TreeSet;
  * Refines a 'coarse' partition (with more blocks) to a 'finer' partition that
  * is equitable.
  * 
- * Closely follows algorithm 7.5 in CAGES. The basic idea is that the refiner
+ * Closely follows algorithm 7.5 in CAGES {@cdk.cite Kreher98}. The basic idea is that the refiner
  * maintains a queue of blocks to refine, starting with all the initial blocks
  * in the partition to refine. These blocks are popped off the queue, and
  * 

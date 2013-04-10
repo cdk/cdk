@@ -68,7 +68,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * </p>
  * 
  * <p>
- * This is port of the code from the C.A.G.E.S. book by Kreher and Stinson. The
+ * This is port of the code from the C.A.G.E.S. book {@cdk.cite Kreher98}. The
  * mathematics in the description above is also from that book (pp. 203).
  * </p>
  * 
