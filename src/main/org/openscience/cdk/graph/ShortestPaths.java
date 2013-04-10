@@ -166,15 +166,16 @@ public final class ShortestPaths {
      * but we are working with vertices and thus our edges are unweighted and is
      * more similar to a simple BFS.
      */
-    private void compute(int[][] adjacent) {
+    private void compute(final int[][] adjacent) {
 
-        // compute from our start vertex
-        Queue<Integer> queue = new LinkedList<Integer>();
-        queue.add(start);
+        // queue is filled as we process each vertex
+        int[] queue = new int[adjacent.length];
+        queue[0] = start;
+        int n = 1;
 
-        while (!queue.isEmpty()) {
+        for (int i = 0; i < n; i++) {
 
-            Integer v = queue.poll();
+            int v = queue[i];
             int dist = distTo[v] + 1;
 
             for (int w : adjacent[v]) {
@@ -185,7 +186,7 @@ public final class ShortestPaths {
                     routeTo[w] = new SequentialRoute(routeTo[v], w); // append w to the route to v
                     nPathsTo[w] = nPathsTo[v];
                     precedes[w] = precedes[v] && w < start;
-                    queue.add(w);
+                    queue[n++] = w;
                 } else if (distTo[w] == dist) {
                     // found path of equal distance, mark as a branch with a new sequential route
                     routeTo[w] = new Branch(routeTo[w],
