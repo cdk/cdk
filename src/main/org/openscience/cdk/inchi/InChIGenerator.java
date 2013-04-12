@@ -334,7 +334,16 @@ public class InChIGenerator {
             // Bond starting (pointy end of wedge) above the plane
             else if (stereo == IBond.Stereo.UP_INVERTED) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_2UP);
-            } 
+            }
+            else if (stereo == IBond.Stereo.E_OR_Z) {
+                ibond.setStereoDefinition(INCHI_BOND_STEREO.DOUBLE_EITHER);
+            }
+            else if (stereo == IBond.Stereo.UP_OR_DOWN) {
+                ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_1EITHER);
+            }
+            else if (stereo == IBond.Stereo.UP_OR_DOWN_INVERTED) {
+                ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_2EITHER);
+            }
             // Bond with undefined stereochemistry
             else if (stereo == CDKConstants.UNSET) {
                 if (order == INCHI_BOND_TYPE.SINGLE) {
