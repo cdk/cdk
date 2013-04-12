@@ -23,6 +23,7 @@ import net.sf.jniinchi.INCHI_RET;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -30,11 +31,16 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+
+import java.io.IOException;
+
+import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
 
 /**
  * TestCase for the InChIGenerator.
@@ -716,5 +722,20 @@ public class InChIGeneratorTest extends CDKTestCase {
             "InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+",
             genE.getInchi()
         );
+    }
+
+    /**
+     * @cdk.bug 1295
+     */
+    @Test public void bug1295() throws Exception {
+        MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/bug1295.mol"));
+        try {
+            IAtomContainer container = reader.read(new AtomContainer());
+            InChIGenerator generator = getFactory().getInChIGenerator(container);
+            Assert.assertEquals("InChI=1S/C7H15NO/c1-4-7(3)6-8-9-5-2/h6-7H,4-5H2,1-3H3",
+                                generator.getInchi());
+        } finally {
+            reader.close();
+        }
     }
 }
