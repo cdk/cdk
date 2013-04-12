@@ -1098,4 +1098,15 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals("C6H6", MolecularFormulaManipulator.getString(f));
 
     }
+
+    /**
+     * @cdk.bug 1296
+     */
+    @Test public void bug1296() {
+        IAtomContainer container = MolecularFormulaManipulator.getAtomContainer("C8H10N4O2",
+                                                                                DefaultChemObjectBuilder.getInstance());
+        for(IAtom a : container.atoms()){
+            Assert.assertNotNull(a.getAtomicNumber());
+        }
+    }
 }
