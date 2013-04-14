@@ -84,11 +84,8 @@ public class HydrogenPlacer {
 		ILoggingTool logger =
 		    LoggingToolFactory.createLoggingTool(HydrogenPlacer.class);
 		
-		//double startAngle = 0.0;
-		//double addAngle = 0.0; 
 		AtomPlacer atomPlacer = new AtomPlacer();
 		atomPlacer.setMolecule(atomContainer);
-		//Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
 		List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
 		IAtomContainer placedAtoms = atomContainer.getBuilder().newInstance(IAtomContainer.class);
