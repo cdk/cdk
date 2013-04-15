@@ -22,6 +22,11 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,12 +39,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
 
 /**
  * TestCase for reading CML files.
@@ -238,6 +237,44 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
     }
 
+    @Test
+    public void testWedgeBondParsing() throws CDKException, IOException {
+        InputStream in = getClass().getResourceAsStream("/data/cml/AZD5423.xml");
+        CMLReader reader = new CMLReader(in);
+        try {
+            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            Assert.assertNotNull("ChemFile was null", cfile);
+            List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
+            Assert.assertEquals("expected a single atom container", 1, containers.size());
+            IAtomContainer container = containers.get(0);
+            Assert.assertNotNull("null atom container read", container);
 
+            // we check here that the malformed dictRef doesn't throw an exception
+            for (int i=0; i<19; i++) {
+            	Assert.assertEquals(
+            		"found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
+            		IBond.Stereo.NONE, container.getBond(i).getStereo()
+            	);
+            }
+            Assert.assertEquals("expected a wedge bond",
+                                IBond.Stereo.DOWN, container.getBond(19).getStereo());
+            for (int i=20; i<30; i++) {
+            	Assert.assertEquals(
+            		"found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
+            		IBond.Stereo.NONE, container.getBond(i).getStereo()
+            	);
+            }
+            Assert.assertEquals("expected a wedge bond",
+                    IBond.Stereo.UP, container.getBond(30).getStereo());
+            for (int i=31; i<=37; i++) {
+            	Assert.assertEquals(
+            		"found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
+            		IBond.Stereo.NONE, container.getBond(i).getStereo()
+            	);
+            }
+        } finally {
+            reader.close();
+        }
+    }
 
 }

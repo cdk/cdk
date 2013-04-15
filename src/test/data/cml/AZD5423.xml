@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<list convention="cdk:model" id="model1" xmlns="http://www.xml-cml.org/schema">
+  <moleculeList convention="cdk:moleculeSet" id="molSet1">
+    <molecule id="m1">
+      <atomArray>
+        <atom id="a1" elementType="C" x2="-4.589285714285712" y2="3.1500000000000004" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a2" elementType="C" x2="-3.376850148987499" y2="2.4499999999999984" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a3" elementType="C" x2="-3.376850148987501" y2="1.0499999999999983" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a4" elementType="C" x2="-4.589285714285716" y2="0.34999999999999987" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a5" elementType="C" x2="-5.801721279583929" y2="1.0500000000000007" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a6" elementType="C" x2="-5.801721279583928" y2="2.4500000000000006" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a7" elementType="C" x2="-1.9768501489874986" y2="2.4499999999999984" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a8" elementType="N" x2="-1.544226356862572" y2="1.1185208771867827" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">N.sp2</atomType>
+        </atom>
+        <atom id="a9" elementType="N" x2="-2.6768501489874987" y2="0.29562152397732033" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">N.planar3</atomType>
+        </atom>
+        <atom id="a10" elementType="C" x2="-2.6768501489874987" y2="-1.0672904230981437" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a11" elementType="C" x2="-1.4965337796988356" y2="-1.7487463966358776" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a12" elementType="C" x2="-1.4965337796988376" y2="-3.1116583437113414" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a13" elementType="C" x2="-2.6768501489875023" y2="-3.7931143172490724" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a14" elementType="C" x2="-3.857166518276166" y2="-3.1116583437113396" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a15" elementType="C" x2="-3.8571665182761654" y2="-1.7487463966358754" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a16" elementType="O" x2="-6.982037648872593" y2="3.1314559735377325" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">O.sp3</atomType>
+        </atom>
+        <atom id="a17" elementType="C" x2="-8.162354018161258" y2="2.4500000000000006" formalCharge="0" hydrogenCount="1">
+          <atomType convention="bioclipse:atomType">C.sp3</atomType>
+        </atom>
+        <atom id="a18" elementType="C" x2="-8.162354018161258" y2="1.0870880529245364" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a19" elementType="C" x2="-6.982037648872594" y2="0.40563207938680235" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a20" elementType="C" x2="-6.982037648872597" y2="-0.957279867688662" formalCharge="0" hydrogenCount="0">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a21" elementType="C" x2="-8.162354018161261" y2="-1.6387358412263926" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a22" elementType="C" x2="-9.342670387449925" y2="-0.9572798676886596" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a23" elementType="C" x2="-9.342670387449925" y2="0.40563207938680457" formalCharge="0" hydrogenCount="1">
+          <scalar dictRef="cdk:aromaticAtom"/>
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a24" elementType="O" x2="-5.8017212795839335" y2="-1.6387358412263957" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">O.sp3</atomType>
+        </atom>
+        <atom id="a25" elementType="C" x2="-5.8017212795839335" y2="-3.0016477883018604" formalCharge="0" hydrogenCount="3">
+          <atomType convention="bioclipse:atomType">C.sp3</atomType>
+        </atom>
+        <atom id="a26" elementType="C" x2="-9.342670387449923" y2="3.1314559735377334" formalCharge="0" hydrogenCount="1">
+          <atomType convention="bioclipse:atomType">C.sp3</atomType>
+        </atom>
+        <atom id="a27" elementType="N" x2="-10.522986756738588" y2="2.450000000000002" formalCharge="0" hydrogenCount="1">
+          <atomType convention="bioclipse:atomType">N.amide</atomType>
+        </atom>
+        <atom id="a28" elementType="C" x2="-9.342670387449923" y2="4.494367920613199" formalCharge="0" hydrogenCount="3">
+          <atomType convention="bioclipse:atomType">C.sp3</atomType>
+        </atom>
+        <atom id="a29" elementType="C" x2="-11.703303126027253" y2="3.1314559735377343" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">C.sp2</atomType>
+        </atom>
+        <atom id="a30" elementType="C" x2="-12.883619495315918" y2="2.450000000000003" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">C.sp3</atomType>
+        </atom>
+        <atom id="a31" elementType="O" x2="-11.70330312602725" y2="4.4943679206131995" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">O.sp2</atomType>
+        </atom>
+        <atom id="a32" elementType="F" x2="-2.6768501489875036" y2="-5.156026264324538" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">F</atomType>
+        </atom>
+        <atom id="a33" elementType="F" x2="-14.063935864604582" y2="3.1314559735377365" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">F</atomType>
+        </atom>
+        <atom id="a34" elementType="F" x2="-12.883619495315918" y2="1.0870880529245377" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">F</atomType>
+        </atom>
+        <atom id="a35" elementType="F" x2="-14.063935864604582" y2="1.7685440264622705" formalCharge="0" hydrogenCount="0">
+          <atomType convention="bioclipse:atomType">F</atomType>
+        </atom>
+      </atomArray>
+      <bondArray>
+        <bond id="b1" atomRefs2="a1 a2" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b2" atomRefs2="a2 a3" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b3" atomRefs2="a3 a4" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b4" atomRefs2="a4 a5" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b5" atomRefs2="a5 a6" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b6" atomRefs2="a6 a1" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b7" atomRefs2="a7 a8" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b8" atomRefs2="a8 a9" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b9" atomRefs2="a9 a3" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b10" atomRefs2="a2 a7" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b11" atomRefs2="a9 a10" order="S"/>
+        <bond id="b12" atomRefs2="a10 a11" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b13" atomRefs2="a11 a12" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b14" atomRefs2="a12 a13" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b15" atomRefs2="a13 a14" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b16" atomRefs2="a14 a15" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b17" atomRefs2="a15 a10" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b18" atomRefs2="a6 a16" order="S"/>
+        <bond id="b19" atomRefs2="a16 a17" order="S"/>
+        <bond id="b20" atomRefs2="a17 a18" order="S">
+          <bondStereo dictRef="cml:H">H</bondStereo>
+        </bond>
+        <bond id="b21" atomRefs2="a18 a19" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b22" atomRefs2="a19 a20" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b23" atomRefs2="a20 a21" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b24" atomRefs2="a21 a22" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b25" atomRefs2="a22 a23" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b26" atomRefs2="a23 a18" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b27" atomRefs2="a20 a24" order="S"/>
+        <bond id="b28" atomRefs2="a24 a25" order="S"/>
+        <bond id="b29" atomRefs2="a17 a26" order="S"/>
+        <bond id="b30" atomRefs2="a26 a27" order="S"/>
+        <bond id="b31" atomRefs2="a26 a28" order="S">
+          <bondStereo dictRef="cml:W">W</bondStereo>
+        </bond>
+        <bond id="b32" atomRefs2="a27 a29" order="S"/>
+        <bond id="b33" atomRefs2="a29 a30" order="S"/>
+        <bond id="b34" atomRefs2="a29 a31" order="D"/>
+        <bond id="b35" atomRefs2="a13 a32" order="S"/>
+        <bond id="b36" atomRefs2="a30 a33" order="S"/>
+        <bond id="b37" atomRefs2="a30 a34" order="S"/>
+        <bond id="b38" atomRefs2="a30 a35" order="S"/>
+      </bondArray>
+      <scalar dictRef="cdk:molecularProperty" title="net.bioclipse.cdk.domain.property.SMILES" dataType="xsd:string">O=C(NC(C)C(Oc3ccc2c(cnn2(c1ccc(F)cc1))c3)c4cccc(OC)c4)C(F)(F)F</scalar>
+    </molecule>
+  </moleculeList>
+</list>
