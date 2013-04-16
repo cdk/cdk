@@ -103,5 +103,12 @@ public class SignatureQuotientGraphTest extends AbstractSignatureTest {
         checkParameters(qGraphB, 4, 5, 0);
         checkParameters(qGraphC, 4, 7, 1);
     }
+    
+    @Test
+    public void testAromatic() {
+        IAtomContainer benzene = AbstractSignatureTest.makeBenzene();
+        SignatureQuotientGraph qGraph = new SignatureQuotientGraph(benzene);
+        checkParameters(qGraph, 1, 1, 1);
+    }
 
 }

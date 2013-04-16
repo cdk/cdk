@@ -184,4 +184,18 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         }
         Assert.assertEquals(1, sigfreq.keySet().size());
     }
+    
+    @Test
+    public void convertEdgeLabelToColorTest() {
+        IAtomContainer ac = makeBenzene();  // doesn't really matter
+        AtomSignature atomSignature = new AtomSignature(0, ac);
+        int aromaticColor = atomSignature.convertEdgeLabelToColor("p");
+        Assert.assertTrue(aromaticColor > 0);
+        int singleColor = atomSignature.convertEdgeLabelToColor("");
+        int doubleColor = atomSignature.convertEdgeLabelToColor("=");
+        int tripleColor = atomSignature.convertEdgeLabelToColor("#");
+        Assert.assertTrue(singleColor < doubleColor);
+        Assert.assertTrue(doubleColor < tripleColor);
+    }
+    
 }
