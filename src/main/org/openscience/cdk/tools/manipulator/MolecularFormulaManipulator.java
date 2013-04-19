@@ -858,7 +858,7 @@ public class MolecularFormulaManipulator {
 	 * with the tail-end of the periodic table in atom-number order and finally
 	 * the generic R-group.
 	 * 
-	 * @return  fixed-order array, namely {@value}
+	 * @return  fixed-order array
 	 * 
 	 */
 	public static String[] generateOrderEle(){
