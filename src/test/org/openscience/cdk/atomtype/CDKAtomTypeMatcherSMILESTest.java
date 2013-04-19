@@ -117,8 +117,8 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         String smiles1 = "c2c1ccccc1c[nH]2";
         String smiles2 = "C2=C1C=CC=CC1=CN2";
         
-        IMolecule mol1 = smilesParser.parseSmiles(smiles1);
-        IMolecule mol2 = smilesParser.parseSmiles(smiles2);
+        IAtomContainer mol1 = smilesParser.parseSmiles(smiles1);
+        IAtomContainer mol2 = smilesParser.parseSmiles(smiles2);
         
         Assert.assertEquals(mol1.getAtomCount(), mol2.getAtomCount());
         Assert.assertEquals(mol1.getBondCount(), mol2.getBondCount());
