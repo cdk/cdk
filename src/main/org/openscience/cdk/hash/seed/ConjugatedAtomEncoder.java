@@ -61,7 +61,7 @@ import java.util.List;
  *
  * @author John May
  * @cdk.module hash
- * @git.hash
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest")
 public final class ConjugatedAtomEncoder implements AtomEncoder {

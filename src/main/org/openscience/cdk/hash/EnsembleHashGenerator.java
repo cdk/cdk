@@ -33,7 +33,7 @@ import java.util.Set;
  *
  * @author John May
  * @cdk.module interfaces
- * @git.hash
+ * @cdk.githash
  */
 public interface EnsembleHashGenerator {
 

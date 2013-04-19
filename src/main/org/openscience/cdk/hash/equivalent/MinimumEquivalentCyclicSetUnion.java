@@ -78,7 +78,7 @@ import java.util.TreeMap;
  * @see AllEquivalentCyclicSet
  * @deprecated provided for to demonstrate a relatively robust but ultimately
  *             incomplete approach
- * @git.hash
+ * @cdk.githash
  */
 @Deprecated
 @TestClass("org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSetUnionTest")

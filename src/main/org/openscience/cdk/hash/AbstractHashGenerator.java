@@ -37,7 +37,7 @@ import java.util.Arrays;
  *
  * @author John May
  * @cdk.module hash
- * @git.hash
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.AbstractHashGeneratorTest")
 class AbstractHashGenerator {

@@ -33,7 +33,7 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @author John May
  * @cdk.module hash
- * @git.hash
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.stereo.BasicPermutationParityTest")
 public final class BasicPermutationParity implements PermutationParity {
