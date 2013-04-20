@@ -29,8 +29,9 @@
 	<classpathentry kind="lib" path="jar/jena/slf4j-api-1.5.6.jar"/>
 	<classpathentry kind="lib" path="jar/jena/iri.jar"/>
 	<classpathentry kind="lib" path="jar/jena/icu4j_3_4.jar"/>
-	<classpathentry kind="lib" path="develjar/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="develjar/asm-3.2.jar"/>
 	<classpathentry kind="lib" path="develjar/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="develjar/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="develjar/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
