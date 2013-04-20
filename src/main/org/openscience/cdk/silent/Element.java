@@ -23,7 +23,6 @@ import java.io.Serializable;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * Implements the idea of an element in the periodic table.
@@ -90,7 +89,8 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   symbol The element symbol that this element should have.  
      */
     public Element(String symbol) {
-        this(symbol, PeriodicTable.getAtomicNumber(symbol));
+        this();
+        this.symbol = symbol;
     }
 
     /**
@@ -101,7 +101,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   atomicNumber  The atomicNumber of this element.
      */
     public Element(String symbol, Integer atomicNumber) {
-        this.symbol       = symbol;
+        this(symbol);
         this.atomicNumber = atomicNumber;
     }
 
