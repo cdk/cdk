@@ -213,14 +213,18 @@ public class MDMoleculeConvention extends CMLCoreModule {
 		} else if ("atomArray".equals(name)) {
 			if (xpath.length() == 2 && xpath.endsWith("molecule", "atomArray")) {
 				storeAtomData();
+                newAtomData();
 			} else if (xpath.length() > 2 && xpath.endsWith("cml", "molecule", "atomArray")) {
 				storeAtomData();
+                newAtomData();
 			}
 		} else if ("bondArray".equals(name)) {
 			if (xpath.length() == 2 && xpath.endsWith("molecule", "bondArray")) {
 				storeBondData();
+                newBondData();
 			} else if (xpath.length() > 2 && xpath.endsWith("cml", "molecule", "bondArray")) {
 				storeBondData();
+                newBondData();
 			}
 		} else if ("scalar".equals(name)) {
 			//Residue number
