@@ -46,7 +46,7 @@
         <property name="vecmathjar" value="vecmath1.2-1.14.jar" />
         <property name="log4jjar" value="log4j.jar" />
         <property name="jgraphtjar" value="jgrapht-0.6.0.jar" />
-        <property name="junitjar" value="junit-4.10.jar" />
+        <property name="junitjar" value="junit-4.11.jar" />
 
         <property environment="env" />
 
