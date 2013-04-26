@@ -57,13 +57,12 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
  * future the encoding rules may be more strict or even configurable but
  * currently they may be over zealous when encoding configurations with 3D
  * coordinates. <br/><p/> This class is intended to be used with a the hash
- * encoding classes and is easier used via the
- * {@link org.openscience.cdk.hash.HashGeneratorMaker}.
+ * encoding classes and is easier used via the {@link org.openscience.cdk.hash.HashGeneratorMaker}.
  *
  * @author John May
  * @cdk.module hash
- * @see org.openscience.cdk.hash.HashGeneratorMaker
  * @cdk.githash
+ * @see org.openscience.cdk.hash.HashGeneratorMaker
  */
 @TestClass("org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactoryTest")
 public final class GeometricDoubleBondEncoderFactory
@@ -97,40 +96,10 @@ public final class GeometricDoubleBondEncoderFactory
                         Integer.valueOf(7).equals(right.getAtomicNumber()))
                     continue;
 
-                List<IBond> leftBonds = container.getConnectedBondsList(left);
-                List<IBond> rightBonds = container.getConnectedBondsList(right);
+                StereoEncoder encoder = newEncoder(container, left, right, right, left, graph);
 
-                // check the left and right bonds are acceptable
-                if (accept(left, leftBonds) && accept(right, rightBonds)) {
-
-                    int leftIndex = container.getAtomNumber(left);
-                    int rightIndex = container.getAtomNumber(right);
-
-                    // neighbors of u/v with the bonded atoms (left,right) moved
-                    // to the back of each array. this is important as we can
-                    // drop it when we build the permutation parity
-                    int[] leftNeighbors = moveToBack(graph[leftIndex], rightIndex);
-                    int[] rightNeighbors = moveToBack(graph[rightIndex], leftIndex);
-
-                    int l1 = leftNeighbors[0];
-                    int l2 = leftNeighbors[1] == rightIndex ? leftIndex
-                                                            : leftNeighbors[1];
-                    int r1 = rightNeighbors[0];
-                    int r2 = rightNeighbors[1] == leftIndex ? rightIndex
-                                                            : rightNeighbors[1];
-
-                    // make 2D/3D geometry
-                    GeometricParity geometric = geometric(container, leftIndex, rightIndex, l1, l2, r1, r2);
-
-                    // geometric is null if there were no coordinates
-                    if (geometric != null) {
-                        encoders.add(new GeometryEncoder(new int[]{leftIndex, rightIndex},
-                                                         new CombinedPermutationParity(permutation(leftNeighbors),
-                                                                                       permutation(rightNeighbors)),
-                                                         geometric));
-                    }
-
-
+                if (encoder != null) {
+                    encoders.add(encoder);
                 }
             }
         }
@@ -139,6 +108,67 @@ public final class GeometricDoubleBondEncoderFactory
                                   : new MultiStereoEncoder(encoders);
     }
 
+    /**
+     * Create a new encoder for the specified left and right atoms. The parent
+     * is the atom which is connected by a double bond to the left and right
+     * atom. For simple double bonds the parent of each is the other atom, in
+     * cumulenes the parents are not the same.
+     *
+     * @param container   the molecule
+     * @param left        the left atom
+     * @param leftParent  the left atoms parent (usually {@literal right})
+     * @param right       the right atom
+     * @param rightParent the right atoms parent (usually {@literal left})
+     * @param graph       adjacency list representation of the molecule
+     * @return a stereo encoder (or null)
+     */
+    @TestMethod("testCreate,testCreate_NoCoordinates")
+    static StereoEncoder newEncoder(IAtomContainer container,
+                                    IAtom left, IAtom leftParent,
+                                    IAtom right, IAtom rightParent,
+                                    int[][] graph) {
+
+        List<IBond> leftBonds = container.getConnectedBondsList(left);
+        List<IBond> rightBonds = container.getConnectedBondsList(right);
+
+        // check the left and right bonds are acceptable
+        if (accept(left, leftBonds) && accept(right, rightBonds)) {
+
+            int leftIndex = container.getAtomNumber(left);
+            int rightIndex = container.getAtomNumber(right);
+
+            int leftParentIndex = container.getAtomNumber(leftParent);
+            int rightParentIndex = container.getAtomNumber(rightParent);
+
+            // neighbors of u/v with the bonded atoms (left,right) moved
+            // to the back of each array. this is important as we can
+            // drop it when we build the permutation parity
+            int[] leftNeighbors = moveToBack(graph[leftIndex], leftParentIndex);
+            int[] rightNeighbors = moveToBack(graph[rightIndex], rightParentIndex);
+
+            int l1 = leftNeighbors[0];
+            int l2 = leftNeighbors[1] == leftParentIndex ? leftIndex
+                                                         : leftNeighbors[1];
+            int r1 = rightNeighbors[0];
+            int r2 = rightNeighbors[1] == rightParentIndex ? rightIndex
+                                                           : rightNeighbors[1];
+
+            // make 2D/3D geometry
+            GeometricParity geometric = geometric(container, leftIndex, rightIndex, l1, l2, r1, r2);
+
+            // geometric is null if there were no coordinates
+            if (geometric != null) {
+                return new GeometryEncoder(new int[]{leftIndex, rightIndex},
+                                           new CombinedPermutationParity(permutation(leftNeighbors),
+                                                                         permutation(rightNeighbors)),
+                                           geometric);
+            }
+
+
+        }
+
+        return null;
+    }
 
     /**
      * Generate a new geometric parity (2D or 3D) for the given molecule and

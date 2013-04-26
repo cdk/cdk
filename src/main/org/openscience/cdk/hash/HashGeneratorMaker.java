@@ -33,6 +33,7 @@ import org.openscience.cdk.hash.seed.AtomEncoder;
 import org.openscience.cdk.hash.seed.BasicAtomEncoder;
 import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
+import org.openscience.cdk.hash.stereo.factory.GeometricCumulativeDoubleBondFactory;
 import org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory;
 import org.openscience.cdk.hash.stereo.factory.GeometricTetrahedralEncoderFactory;
 import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
@@ -181,15 +182,22 @@ public class HashGeneratorMaker {
     }
 
     /**
-     * Discriminate chiral centers.
+     * Generate different hash codes for stereoisomers. The currently supported
+     * geometries are:
+     *
+     * <ul>
+     *     <li>Tetrahedral</li>
+     *     <li>Double Bond</li>
+     *     <li>Cumulative Double Bonds</li>
+     * </ul>
      *
      * @return fluent API reference (self)
-     * @throws UnsupportedOperationException not yet implemented
      */
     @TestMethod("testChiral")
     public HashGeneratorMaker chiral() {
         this.stereoEncoders.add(new GeometricTetrahedralEncoderFactory());
         this.stereoEncoders.add(new GeometricDoubleBondEncoderFactory());
+        this.stereoEncoders.add(new GeometricCumulativeDoubleBondFactory());
         return this;
     }
 

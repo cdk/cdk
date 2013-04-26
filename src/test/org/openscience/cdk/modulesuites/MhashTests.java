@@ -36,6 +36,7 @@ import org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest;
 import org.openscience.cdk.hash.stereo.BasicPermutationParityTest;
 import org.openscience.cdk.hash.stereo.GeometryEncoderTest;
 import org.openscience.cdk.hash.stereo.MultiStereoEncoderTest;
+import org.openscience.cdk.hash.stereo.factory.GeometricCumulativeDoubleBondFactoryTest;
 import org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactoryTest;
 import org.openscience.cdk.hash.stereo.factory.GeometricTetrahedralEncoderFactoryTest;
 import org.openscience.cdk.hash.stereo.parity.CombinedPermutationParityTest;
@@ -69,6 +70,7 @@ import org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest;
         MultiStereoEncoderTest.class,
         GeometricTetrahedralEncoderFactoryTest.class,
         GeometricDoubleBondEncoderFactoryTest.class,
+        GeometricCumulativeDoubleBondFactoryTest.class,
         PerturbedAtomHashGeneratorTest.class,
         MinimumEquivalentCyclicSetTest.class,
         HashCodeScenarios.class

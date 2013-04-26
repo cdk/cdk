@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.graph.AtomContainerPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
@@ -39,7 +39,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -254,7 +253,10 @@ public class HashCodeScenarios {
     }
 
     /**
-     * This molecule has a tetrahedral stereo-centre depends on the configuration of two double bonds. Swapping the double bond configuration inverts the tetrahedral stereo-centre (R/S) and produces different hash codes.
+     * This molecule has a tetrahedral stereo-centre depends on the
+     * configuration of two double bonds. Swapping the double bond configuration
+     * inverts the tetrahedral stereo-centre (R/S) and produces different hash
+     * codes.
      */
     @Test public void figure13a() {
 
@@ -275,8 +277,10 @@ public class HashCodeScenarios {
     }
 
     /**
-     * This molecule has double bond stereo chemistry defined only by differences in the configurations of it's substituents. The
-     * two configurations the bond can take (Z/E) and should produce different hash codes.
+     * This molecule has double bond stereo chemistry defined only by
+     * differences in the configurations of it's substituents. The two
+     * configurations the bond can take (Z/E) and should produce different hash
+     * codes.
      */
     @Test public void figure13b() {
         List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-13b.sdf", 2);
@@ -294,7 +298,10 @@ public class HashCodeScenarios {
     }
 
     /**
-     * These two structures were found in the original publication as duplicates in the catalogue of the CHIRON program. The article notes the second name is likely incorrect but that this is how it appears in the catalogue. The two molecules are in fact the same and generate the same hash code.
+     * These two structures were found in the original publication as duplicates
+     * in the catalogue of the CHIRON program. The article notes the second name
+     * is likely incorrect but that this is how it appears in the catalogue. The
+     * two molecules are in fact the same and generate the same hash code.
      */
     @Test public void figure14() {
 
@@ -310,12 +317,14 @@ public class HashCodeScenarios {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(eqMesg(a,b),
+        Assert.assertThat(eqMesg(a, b),
                           aHash, is(bHash));
     }
 
     /**
-     * These two compounds are connected differently but produce the same basic hash code. In order to discriminate them we must use the perturbed hash code.
+     * These two compounds are connected differently but produce the same basic
+     * hash code. In order to discriminate them we must use the perturbed hash
+     * code.
      */
     @Test public void figure15() {
 
@@ -330,7 +339,7 @@ public class HashCodeScenarios {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(eqMesg(a,b),
+        Assert.assertThat(eqMesg(a, b),
                           aHash, is(bHash));
 
 
@@ -340,12 +349,15 @@ public class HashCodeScenarios {
                                                                   .molecular();
         aHash = perturbed.generate(a);
         bHash = perturbed.generate(b);
-        Assert.assertThat(nonEqMesg(a,b),
+        Assert.assertThat(nonEqMesg(a, b),
                           aHash, is(not(bHash)));
     }
 
     /**
-     * The molecules cubane and cuneane have the same number of atoms all of which experience the same environment in the first sphere. Using a non-perturbed hash code, these will hash to the same value. The perturbed hash code, allows us to discriminate them.
+     * The molecules cubane and cuneane have the same number of atoms all of
+     * which experience the same environment in the first sphere. Using a
+     * non-perturbed hash code, these will hash to the same value. The perturbed
+     * hash code, allows us to discriminate them.
      */
     @Test public void figure16a() {
 
@@ -365,12 +377,12 @@ public class HashCodeScenarios {
 
         long aHash = nonperturbed.generate(a);
         long bHash = nonperturbed.generate(b);
-        Assert.assertThat(eqMesg(a,b),
+        Assert.assertThat(eqMesg(a, b),
                           aHash, is(bHash));
 
         aHash = perturbed.generate(a);
         bHash = perturbed.generate(b);
-        Assert.assertThat(nonEqMesg(a,b),
+        Assert.assertThat(nonEqMesg(a, b),
                           aHash, is(not(bHash)));
 
 
@@ -384,7 +396,7 @@ public class HashCodeScenarios {
         assertThat("cubane has 1 equiavelnt class",
                    toSet(aHashes).size(), is(1));
         assertThat("cubane has 3 equiavelnt classes",
-                    toSet(bHashes).size(), is(3));
+                   toSet(bHashes).size(), is(3));
     }
 
     private Set<Long> toSet(long[] xs) {
@@ -396,8 +408,9 @@ public class HashCodeScenarios {
     }
 
     /**
-     * A chlorinated cubane and cuneane can not be told apart by the basic hash code. However using perturbed hash codes
-     * is is possible to tell them apart as well as the 3 different chlorination locations on the cuneane
+     * A chlorinated cubane and cuneane can not be told apart by the basic hash
+     * code. However using perturbed hash codes is is possible to tell them
+     * apart as well as the 3 different chlorination locations on the cuneane
      */
     @Test public void figure16b() {
 
@@ -430,7 +443,10 @@ public class HashCodeScenarios {
 
     /**
      * This scenario demonstrates how the depth influences the hash code. These
-     * two molecules differ only by length of their aliphatic chains. One  has chains of length 10 and 11 and other of length 11 and 10 (connected the other way). To tell these apart the depth must be large enough to propagate  the environments from the ends of both chains.
+     * two molecules differ only by length of their aliphatic chains. One  has
+     * chains of length 10 and 11 and other of length 11 and 10 (connected the
+     * other way). To tell these apart the depth must be large enough to
+     * propagate  the environments from the ends of both chains.
      */
     @Test public void aminotetracosanone() {
 
@@ -447,9 +463,9 @@ public class HashCodeScenarios {
             long bHash = basic.generate(b);
 
             if (depth < 7) {
-                assertThat(eqMesg(a,b) + " at depth " + depth, aHash, is(bHash));
+                assertThat(eqMesg(a, b) + " at depth " + depth, aHash, is(bHash));
             } else {
-                assertThat(nonEqMesg(a,b) + " at depth " + depth,
+                assertThat(nonEqMesg(a, b) + " at depth " + depth,
                            aHash, is(not(bHash)));
             }
         }
@@ -513,6 +529,186 @@ public class HashCodeScenarios {
         assertThat("all inositol isomers should hash to different values",
                    hashes.size(), is(9));
 
+    }
+
+    @Test public void allenesWithImplicitHydrogens() {
+
+        List<IAtomContainer> allenes = sdf("/data/hash/allene-implicit-h.sdf", 2);
+
+        IAtomContainer mAllene = allenes.get(0);
+        IAtomContainer pAllene = allenes.get(1);
+
+        // non-stereo hash code
+        MoleculeHashGenerator basic = new HashGeneratorMaker().elemental()
+                                                              .depth(2)
+                                                              .molecular();
+        assertThat("(M) and (P) allene should hash the same when non-stereo",
+                   basic.generate(mAllene), is(basic.generate(pAllene)));
+
+        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental()
+                                                               .depth(2)
+                                                               .chiral()
+                                                               .molecular();
+
+        assertThat("(M) and (P) allene should not hash the same when stereo",
+                   stereo.generate(mAllene), is(not(stereo.generate(pAllene))));
+
+        // check the hashes are invariant under permutation
+        long mAlleneReference = stereo.generate(mAllene);
+        long pAlleneReference = stereo.generate(pAllene);
+
+        AtomContainerPermutor mAllenePermutor = new AtomContainerAtomPermutor(mAllene);
+        while (mAllenePermutor.hasNext()) {
+            assertThat("(M)-allene was not invariant under permutation",
+                       stereo.generate(mAllenePermutor
+                                               .next()), is(mAlleneReference));
+        }
+
+        AtomContainerPermutor pAllenePermutor = new AtomContainerAtomPermutor(pAllene);
+        while (pAllenePermutor.hasNext()) {
+            assertThat("(P)-allene was not invariant under permutation",
+                       stereo.generate(pAllenePermutor
+                                               .next()), is(pAlleneReference));
+        }
+    }
+
+    @Test public void allenesWithExplicitHydrogens() {
+
+        List<IAtomContainer> allenes = sdf("/data/hash/allene-explicit-h.sdf", 2);
+
+        IAtomContainer mAllene = allenes.get(0);
+        IAtomContainer pAllene = allenes.get(1);
+
+        // non-stereo hash code
+        MoleculeHashGenerator basic = new HashGeneratorMaker().elemental()
+                                                              .depth(2)
+                                                              .molecular();
+        assertThat("(M) and (P) allene should hash the same when non-stereo",
+                   basic.generate(mAllene), is(basic.generate(pAllene)));
+
+        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental()
+                                                               .depth(2)
+                                                               .chiral()
+                                                               .molecular();
+
+        assertThat("(M) and (P) allene should not hash the same when stereo",
+                   stereo.generate(mAllene), is(not(stereo.generate(pAllene))));
+
+        // check the hashes are invariant under permutation
+        long mAlleneReference = stereo.generate(mAllene);
+        long pAlleneReference = stereo.generate(pAllene);
+
+        AtomContainerPermutor mAllenePermutor = new AtomContainerAtomPermutor(mAllene);
+        while (mAllenePermutor.hasNext()) {
+            assertThat("(M)-allene was not invariant under permutation",
+                       stereo.generate(mAllenePermutor
+                                               .next()), is(mAlleneReference));
+        }
+
+        AtomContainerPermutor pAllenePermutor = new AtomContainerAtomPermutor(pAllene);
+        while (pAllenePermutor.hasNext()) {
+            assertThat("(P)-allene was not invariant under permutation",
+                       stereo.generate(pAllenePermutor
+                                               .next()), is(pAlleneReference));
+        }
+    }
+
+    @Test public void allenes2Dand3D() {
+
+        List<IAtomContainer> allenes2D = sdf("/data/hash/allene-explicit-h.sdf", 2);
+        List<IAtomContainer> allenes3D = sdf("/data/hash/allene-explicit-3d-h.sdf", 2);
+
+        IAtomContainer mAllene2D = allenes2D.get(0);
+        IAtomContainer mAllene3D = allenes3D.get(0);
+        IAtomContainer pAllene2D = allenes2D.get(1);
+        IAtomContainer pAllene3D = allenes3D.get(1);
+
+        // non-stereo hash code
+        MoleculeHashGenerator basic = new HashGeneratorMaker().elemental()
+                                                              .depth(2)
+                                                              .molecular();
+        assertThat("(M) and (P) allene (2D) should hash the same when non-stereo",
+                   basic.generate(mAllene2D), is(basic.generate(pAllene2D)));
+        assertThat("(M) and (P) allene (3D) should hash the same when non-stereo",
+                   basic.generate(mAllene3D), is(basic.generate(pAllene3D)));
+        assertThat("(M) allene should hash the same in 2D and 3D",
+                   basic.generate(mAllene2D), is(basic.generate(mAllene3D)));
+        assertThat("(P) allene should hash the same in 2D and 3D",
+                   basic.generate(mAllene2D), is(basic.generate(mAllene3D)));
+
+        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental()
+                                                               .depth(2)
+                                                               .chiral()
+                                                               .molecular();
+
+        assertThat("(M) and (P) allene should not hash the same when stereo",
+                   stereo.generate(mAllene2D), is(not(stereo.generate(pAllene2D))));
+        assertThat("(M) and (P) allene (3D) should not hash the same when stereo",
+                   stereo.generate(mAllene3D), is(not(stereo.generate(pAllene3D))));
+
+        assertThat("(M) allene should hash the same in 2D and 3D (stereo)",
+                   basic.generate(mAllene2D), is(basic.generate(mAllene3D)));
+        assertThat("(P) allene should hash the same in 2D and 3D (stereo)",
+                   basic.generate(pAllene2D), is(basic.generate(pAllene3D)));
+    }
+
+    @Test public void allenesWithUnspecifiedConfiguration() {
+        List<IAtomContainer> allenes = sdf("/data/hash/allene-implicit-h.sdf", 2);
+        List<IAtomContainer> unspecified = sdf("/data/hash/allene-unspecified.sdf", 2);
+
+        IAtomContainer mAllene = allenes.get(0);
+        IAtomContainer pAllene = allenes.get(1);
+        IAtomContainer unspecAllene1 = unspecified.get(0);
+        IAtomContainer unspecAllene2 = unspecified.get(1);
+
+        // non-stereo hash code
+        MoleculeHashGenerator basic = new HashGeneratorMaker().elemental()
+                                                              .depth(2)
+                                                              .molecular();
+
+        assertThat("(M) and (P) allene should hash the same when non-stereo",
+                   basic.generate(mAllene), is(basic.generate(pAllene)));
+        assertThat("Unspecifed allene should be the same",
+                   basic.generate(mAllene), is(basic.generate(unspecAllene1)));
+        assertThat("Unspecifed allene should be the same",
+                   basic.generate(mAllene), is(basic.generate(unspecAllene2)));
+
+        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental()
+                                                              .depth(2)
+                                                              .chiral()
+                                                              .molecular();
+        assertThat("(M) and (P) allene should not hash the same when using stereo",
+                   stereo.generate(mAllene), is(not(stereo.generate(pAllene))));
+        assertThat("Unspecifed allene should be the different",
+                   stereo.generate(mAllene), is(not(stereo.generate(unspecAllene1))));
+        assertThat("Unspecifed allene should be the different",
+                   stereo.generate(mAllene), is(not(stereo.generate(unspecAllene2))));
+        assertThat("Unspecifed allenes should be the same",
+                   stereo.generate(unspecAllene1), is(stereo.generate(unspecAllene2)));
+    }
+
+
+    @Test public void cumulenes() {
+
+        List<IAtomContainer> cumulenes = sdf("/data/hash/cumulenes.sdf", 2);
+
+        IAtomContainer eCumulene = cumulenes.get(0);
+        IAtomContainer zCumulene = cumulenes.get(1);
+
+        // non-stereo hash code
+        MoleculeHashGenerator basic = new HashGeneratorMaker().elemental()
+                                                              .depth(2)
+                                                              .molecular();
+        assertThat("(E) and (Z) cumulene should hash the same when non-stereo",
+                   basic.generate(eCumulene), is(basic.generate(zCumulene)));
+
+        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental()
+                                                               .depth(2)
+                                                               .chiral()
+                                                               .molecular();
+
+        assertThat("(E) and (Z) cumulene should not hash the same when stereo",
+                   stereo.generate(eCumulene), is(not(stereo.generate(zCumulene))));
     }
 
     private static String title(IAtomContainer mol) {
