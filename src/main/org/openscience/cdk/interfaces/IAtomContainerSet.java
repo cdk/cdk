@@ -175,6 +175,8 @@ public interface IAtomContainerSet extends IChemObject {
 
     /**
      * Returns true if this IAtomContainerSet is empty.
+     *
+     * @return a boolean indicating if this ring set no atom containers
      */
     public boolean isEmpty();
 }

@@ -95,6 +95,7 @@ public interface IChemModel extends IChemObject {
     /**
      * Returns true if this ChemModel is empty.
      * 
+     * @return a boolean indicating if this model has no content
      */
     public boolean isEmpty();
 

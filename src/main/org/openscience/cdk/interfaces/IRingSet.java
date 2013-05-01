@@ -88,6 +88,8 @@ public interface IRingSet extends IAtomContainerSet {
 	
     /**
      * Returns true if this IRingSet has no atoms.
+     *
+     * @return a boolean indicating if this ring set no atoms
      */
     public boolean isEmpty();
 }

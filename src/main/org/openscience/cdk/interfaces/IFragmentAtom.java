@@ -43,6 +43,11 @@ public interface IFragmentAtom extends IPseudoAtom {
 	 */
 	public boolean isExpanded();
 
+	/**
+	 * Sets whether this atom is to be fully drawn and not just in the abbreviated form.
+	 *
+	 * @param bool true if the full structure should be drawn
+	 */
 	public void setExpanded(boolean bool);
 
 	/**

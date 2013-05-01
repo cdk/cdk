@@ -86,6 +86,8 @@ public interface IReactionSet extends IChemObject {
     
     /**
      * Returns true if this IReactionSet is empty.
+     *
+     * @return a boolean indicating if this ring set no reactions
      */
     public boolean isEmpty();
 }

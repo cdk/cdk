@@ -167,8 +167,18 @@ public interface IPDBAtom extends IAtom {
      */
     public void setResSeq(String newResSeq);
     
-    
+    /**
+     * Returns true of this atom is a PDB OXT atom.
+     *
+     * @return true if this atom is a PDB OXT atom.
+     */
     public Boolean getOxt();
+
+    /**
+     * Change the state of this atom in being the PDB OXT atom.
+     * 
+     * @param newOxt new boolean indicating whether this atom is a PDB OXT atom.
+     */
     public void setOxt(Boolean newOxt);
 
     /**
