@@ -41,11 +41,11 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 
     private static final long serialVersionUID = 4382025930031432321L;
     
-    Hashtable ht;
+    Hashtable<String,HOSECodeShiftRange> ht;
 	
 	public BremserOneSphereHOSECodePredictor()
 	{
-		ht = new Hashtable(700);
+		ht = new Hashtable<String,HOSECodeShiftRange>(700);
 		prepareHashTable();
 	}
 	
@@ -53,7 +53,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 	{
 		if (!(hoseCode == null) && ht.containsKey(hoseCode))
 		{
-			return ((HOSECodeShiftRange)ht.get(hoseCode)).shift;
+			return ht.get(hoseCode).shift;
 		}
 		throw new CDKException("No prediction available for HOSE code " +  hoseCode);
 	}
@@ -62,7 +62,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 	{
 		if (!(hoseCode == null) && ht.containsKey(hoseCode))
 		{
-			return ((HOSECodeShiftRange)ht.get(hoseCode)).toString();
+			return ht.get(hoseCode).toString();
 		}
 		throw new CDKException("No prediction available for HOSE code " +  hoseCode);
 	}
@@ -72,7 +72,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 	{
 		if (!(hoseCode == null) && ht.containsKey(hoseCode))
 		{
-			return ((HOSECodeShiftRange)ht.get(hoseCode)).confidenceLimit;
+			return ht.get(hoseCode).confidenceLimit;
 		}
 		throw new CDKException("No confidence limit available for HOSE code " +  hoseCode);
 	}

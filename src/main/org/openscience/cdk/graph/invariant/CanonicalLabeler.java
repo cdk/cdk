@@ -83,14 +83,14 @@ public class CanonicalLabeler {
     	atomContainer.getAtom(0).setProperty(InvPair.CANONICAL_LABEL, 1);
     }
       
-    ArrayList vect = createInvarLabel(atomContainer);
+    List<InvPair> vect = createInvarLabel(atomContainer);
     step3(vect, atomContainer);
   }
 
   /**
    * @param v the invariance pair vector
    */
-  private void step2(ArrayList v, IAtomContainer atoms) {
+  private void step2(List<InvPair> v, IAtomContainer atoms) {
     primeProduct(v, atoms);
     step3(v, atoms);
   }
@@ -98,7 +98,7 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step3(ArrayList v, IAtomContainer atoms) {
+  private void step3(List<InvPair> v, IAtomContainer atoms) {
     sortArrayList(v);
     rankArrayList(v);
     if (!isInvPart(v)) {
@@ -121,11 +121,11 @@ public class CanonicalLabeler {
    *
    * @return ArrayList containting the
    */
-  private ArrayList createInvarLabel(IAtomContainer atomContainer) {
-    java.util.Iterator atoms = atomContainer.atoms().iterator();
+  private List<InvPair> createInvarLabel(IAtomContainer atomContainer) {
+    Iterator<IAtom> atoms = atomContainer.atoms().iterator();
     IAtom a;
     StringBuffer inv;
-    ArrayList vect = new ArrayList();
+    List<InvPair> vect = new ArrayList<InvPair>();
     while(atoms.hasNext()) {
       a = (IAtom)atoms.next();
       inv = new StringBuffer();
@@ -152,19 +152,19 @@ public class CanonicalLabeler {
    *
    * @param v the invariance pair vector
    */
-  private void primeProduct(ArrayList v, IAtomContainer atomContainer) {
-    Iterator it = v.iterator();
-    Iterator n;
+  private void primeProduct(List<InvPair> v, IAtomContainer atomContainer) {
+    Iterator<InvPair> it = v.iterator();
+    Iterator<IAtom> n;
     InvPair inv;
     IAtom a;
     long summ;
     while (it.hasNext()) {
       inv = (InvPair) it.next();
-      List neighbour = atomContainer.getConnectedAtomsList(inv.getAtom());
+      List<IAtom> neighbour = atomContainer.getConnectedAtomsList(inv.getAtom());
       n = neighbour.iterator();
       summ = 1;
       while (n.hasNext()) {
-        a = (IAtom) n.next();
+        a = n.next();
         int next = ((InvPair)a.getProperty(InvPair.INVARIANCE_PAIR)).getPrime();
         summ = summ * next;
       }
@@ -206,11 +206,11 @@ public class CanonicalLabeler {
    *
    *  @param v the invariance pair vector
    */
-  private void rankArrayList(ArrayList v) {
+  private void rankArrayList(List<InvPair> v) {
     int num = 1;
     int[] temp = new int[v.size()];
     InvPair last = (InvPair) v.get(0);
-    Iterator it = v.iterator();
+    Iterator<InvPair> it = v.iterator();
     InvPair curr;
     for (int x = 0; it.hasNext(); x++) {
       curr = (InvPair) it.next();
@@ -234,10 +234,10 @@ public class CanonicalLabeler {
    * @param v the invariance pair vector
    * @return true if the vector is invariantely partitioned, false otherwise
    */
-  private boolean isInvPart(ArrayList v) {
+  private boolean isInvPart(List<InvPair> v) {
     if (((InvPair) v.get(v.size()-1)).getCurr() == v.size())
       return true;
-    Iterator it = v.iterator();
+    Iterator<InvPair> it = v.iterator();
     InvPair curr;
     while (it.hasNext()) {
       curr = (InvPair) it.next();
@@ -252,14 +252,14 @@ public class CanonicalLabeler {
    *
    * @param v the invariance pair vector
    */
-  private void breakTies(ArrayList v) {
-    Iterator it = v.iterator();
+  private void breakTies(List<InvPair> v) {
+    Iterator<InvPair> it = v.iterator();
     InvPair curr;
     InvPair last = null;
     int tie = 0;
     boolean found = false;
     for (int x = 0; it.hasNext(); x++) {
-      curr = (InvPair) it.next();
+      curr = it.next();
       curr.setCurr(curr.getCurr() * 2);
       curr.setPrime();
       if (x != 0 && !found && curr.getCurr() == last.getCurr()) {

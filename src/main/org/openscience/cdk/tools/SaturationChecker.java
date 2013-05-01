@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
@@ -302,9 +303,9 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                 int atomtohandle=0;
                 if(bonds[i].getAtom(0).getSymbol().equals("N"))
                   atomtohandle=1;
-                java.util.List bondstohandle=atomContainer.getConnectedBondsList(bonds[i].getAtom(atomtohandle));
+                List<IBond> bondstohandle=atomContainer.getConnectedBondsList(bonds[i].getAtom(atomtohandle));
                 for(int k=0;k<bondstohandle.size();k++){
-                	IBond bond = (IBond)bondstohandle.get(k);
+                	IBond bond = bondstohandle.get(k);
                   if(bond.getOrder() == IBond.Order.SINGLE && bond.getFlag(CDKConstants.ISAROMATIC)){
                     bond.setOrder(IBond.Order.DOUBLE);
                     bonds[i].setOrder(IBond.Order.SINGLE);
@@ -460,7 +461,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     public void oldSaturate(AtomContainer atomContainer) throws CDKException { */
     	IAtom partner = null;
 		IAtom atom = null;
-		java.util.List partners = null;
+		List<IAtom> partners = null;
 		IAtomType[] atomTypes1 = null;
 		IAtomType[] atomTypes2 = null;
 		IBond bond = null;
@@ -481,7 +482,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
               partners = atomContainer.getConnectedAtomsList(atom);
               for (int g = 0; g < partners.size(); g++)
               {
-                partner = (IAtom)partners.get(g);
+                partner = partners.get(g);
                 logger.debug("Atom has " + partners.size() + " partners");
                 atomTypes2 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(partner.getSymbol());
                 if(atomTypes2.length==0)
@@ -543,16 +544,16 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	public void saturateRingSystems(IAtomContainer atomContainer) throws CDKException
 	{
 		IRingSet rs = new SSSRFinder(atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer)).findSSSR();
-		List ringSets = RingPartitioner.partitionRings(rs);
+		List<IRingSet> ringSets = RingPartitioner.partitionRings(rs);
 		IAtomContainer ac = null;
 		IAtom atom = null;
 		int temp[];
 		for (int f = 0; f < ringSets.size(); f++)
 		{
-			rs = (IRingSet)ringSets.get(f);
-			List containers = RingSetManipulator.getAllAtomContainers(rs);
+			rs = ringSets.get(f);
+			List<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(rs);
 			for (int counter=0; counter<containers.size(); counter++) {
-				ac = (IAtomContainer)containers.get(counter);
+				ac = containers.get(counter);
 				temp = new int[ac.getAtomCount()];
 				for (int g = 0; g < ac.getAtomCount(); g++)
 				{
@@ -635,7 +636,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     }
     
 	public int calculateNumberOfImplicitHydrogens(IAtom atom) throws CDKException {
-        java.util.List bonds = new java.util.ArrayList();
+        List<IBond> bonds = new ArrayList<IBond>();
         return this.calculateNumberOfImplicitHydrogens(atom, 0, 0, bonds, false);
     }
 
@@ -659,7 +660,8 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double singleElectronSum, java.util.List connectedBonds, boolean throwExceptionForUnknowAtom) 
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double singleElectronSum,
+			List<IBond> connectedBonds, boolean throwExceptionForUnknowAtom) 
         throws CDKException {
         int missingHydrogen = 0;
         if (atom instanceof IPseudoAtom) {

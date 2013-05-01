@@ -57,7 +57,7 @@ public class Projector  {
       }
     }
   }
-  public static void project2D(IAtomContainer container, HashMap renderingCoordinates) {
+  public static void project2D(IAtomContainer container, HashMap<IAtom,Point2d> renderingCoordinates) {
     for (int i = 0; i < container.getAtomCount(); i++) {
       IAtom atom = container.getAtom(i);
       if (atom.getPoint3d() != null) {

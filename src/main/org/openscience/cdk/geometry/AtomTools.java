@@ -72,7 +72,7 @@ public class AtomTools {
         	IAtom atom = atomContainer.getAtom(i);
             // is this atom without 3D coords, and has only one ligand?
             if (atom.getPoint3d() == null) {
-            	java.util.List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+            	List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
                 if (connectedAtoms.size() == 1) {
                 	IAtom refAtom = (IAtom)connectedAtoms.get(0);;
                     if (refAtom.getPoint3d() != null) {
@@ -93,7 +93,7 @@ public class AtomTools {
         double angle = TETRAHEDRAL_ANGLE;
         for (int i = 0; i < refAtoms.getAtomCount(); i++) {
         	IAtom refAtom = refAtoms.getAtom(i);
-        	java.util.List noCoordLigands = noCoords.getConnectedAtomsList(refAtom);
+        	List<IAtom> noCoordLigands = noCoords.getConnectedAtomsList(refAtom);
             int nLigands = noCoordLigands.size();
             int nwanted = nLigands;
             String elementType = refAtom.getSymbol();
@@ -191,7 +191,7 @@ public class AtomTools {
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         // get ligands
-	    List connectedAtoms = atomContainer.getConnectedAtomsList(refAtom);
+	    List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(refAtom);
         if (connectedAtoms == null) {
             return newPoints;
         }

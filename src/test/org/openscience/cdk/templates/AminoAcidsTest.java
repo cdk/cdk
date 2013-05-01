@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.CDKTestCase;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -74,7 +73,7 @@ public class AminoAcidsTest extends CDKTestCase {
 
     @Test
     public void testGetHashMapByThreeLetterCode() {
-        HashMap map = AminoAcids.getHashMapByThreeLetterCode();
+        Map<String,IAminoAcid> map = AminoAcids.getHashMapByThreeLetterCode();
         Assert.assertNotNull(map);
         Assert.assertEquals(20, map.size());
 

@@ -44,8 +44,8 @@ import java.util.List;
  */
 public class HOSECodeAnalyser {
 
-	public static List getElements(String code) {
-		List elementList = new ArrayList();
+	public static List<String> getElements(String code) {
+		List<String> elementList = new ArrayList<String>();
 		
 		if (code.length() == 0) {
 			return elementList;

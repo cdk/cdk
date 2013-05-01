@@ -35,8 +35,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.AminoAcids;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**

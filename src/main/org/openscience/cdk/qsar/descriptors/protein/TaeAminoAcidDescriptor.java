@@ -35,13 +35,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -130,18 +131,18 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
 
     private Map<String,String> nametrans = new HashMap<String,String>();
 
-    private List getMonomers(IBioPolymer iBioPolymer) {
-        List monomList = new ArrayList();
+    private List<IMonomer> getMonomers(IBioPolymer iBioPolymer) {
+        List<IMonomer> monomList = new ArrayList<IMonomer>();
 
-        Map strands = iBioPolymer.getStrands();
-        Set strandKeys = strands.keySet();
-        for (Iterator iterator = strandKeys.iterator(); iterator.hasNext();) {
-            Object key = iterator.next();
+        Map<String,IStrand> strands = iBioPolymer.getStrands();
+        Set<String> strandKeys = strands.keySet();
+        for (Iterator<String> iterator = strandKeys.iterator(); iterator.hasNext();) {
+            String key = iterator.next();
             Strand aStrand = (Strand) strands.get(key);
-            Map tmp = aStrand.getMonomers();
-            Set keys = tmp.keySet();
-            for (Iterator iterator1 = keys.iterator(); iterator1.hasNext();) {
-                Object o1 = iterator1.next();
+            Map<String,IMonomer> tmp = aStrand.getMonomers();
+            Set<String> keys = tmp.keySet();
+            for (Iterator<String> iterator1 = keys.iterator(); iterator1.hasNext();) {
+                String o1 = iterator1.next();
                 monomList.add(tmp.get(o1));
             }
         }
@@ -300,10 +301,10 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         double[] desc = new double[ndesc];
         for (int i = 0; i < ndesc; i++) desc[i] = 0.0;
 
-        List monomers = getMonomers(peptide);
+        List<IMonomer> monomers = getMonomers(peptide);
 
-        for (Iterator iterator = monomers.iterator(); iterator.hasNext();) {
-            Monomer monomer = (Monomer) iterator.next();
+        for (Iterator<IMonomer> iterator = monomers.iterator(); iterator.hasNext();) {
+            IMonomer monomer = iterator.next();
 
             String o = monomer.getMonomerName();
 

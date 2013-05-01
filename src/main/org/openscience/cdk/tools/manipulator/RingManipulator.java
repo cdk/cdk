@@ -31,8 +31,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 
-import java.util.Iterator;
-
 /**
  * @cdk.module standard
  * @cdk.githash

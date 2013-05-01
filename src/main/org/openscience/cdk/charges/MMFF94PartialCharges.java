@@ -21,6 +21,7 @@
  */
 package org.openscience.cdk.charges;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 		Object data = null;
 		Object bondData = null;
 		Object dataNeigh = null;
-		java.util.Iterator<IAtom> atoms = ac.atoms().iterator();
+		Iterator<IAtom> atoms = ac.atoms().iterator();
 		while(atoms.hasNext()) {
 			//logger.debug("ATOM "+i+ " " +atoms[i].getSymbol());
 			thisAtom = atoms.next();

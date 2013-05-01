@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
@@ -37,8 +39,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-
-import java.util.Iterator;
 
 /**
  * Methods that takes a ring of which all bonds are aromatic, and assigns single
@@ -127,9 +127,9 @@ public class DeAromatizationTool {
 	}
 	
 	private static IBond getNextBond(IAtom atom, IBond bond, IRing ring){
-		java.util.List bonds=ring.getConnectedBondsList(atom);
+		List<IBond> bonds=ring.getConnectedBondsList(atom);
 		for(int i=0;i<bonds.size();i++)
-			if((IBond)bonds.get(i)!=bond)
+			if(bonds.get(i)!=bond)
 				return (IBond)bonds.get(i);
 		return null;
 	}

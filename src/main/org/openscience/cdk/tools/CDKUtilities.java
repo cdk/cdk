@@ -133,7 +133,7 @@ public class CDKUtilities {
 			boolean nitro=false;
 			
 			if (a.getSymbol().equals("N")) {
-				List ca=m.getConnectedAtomsList(a);
+				List<IAtom> ca=m.getConnectedAtomsList(a);
 				
 				if (ca.size()==3) {					
 					
@@ -142,7 +142,7 @@ public class CDKUtilities {
 					int count=0;
 					
 					for (int j=0;j<=2;j++) {
-						IAtom caj = (IAtom)ca.get(j);
+						IAtom caj = ca.get(j);
 						if (caj.getSymbol().equals("O")) {
 							count++;
 						}						
@@ -263,7 +263,7 @@ public class CDKUtilities {
 			IAtom a=m.getAtom(i);
 			
 			if (a.getSymbol().equals("S")) {
-				List connectedAtoms=m.getConnectedAtomsList(a);
+				List<IAtom> connectedAtoms=m.getConnectedAtomsList(a);
 				
 				
 				int bondOrderSum=0;
@@ -271,7 +271,7 @@ public class CDKUtilities {
 				double oldBondOrderSum = m.getBondOrderSum(a); // includes H's
 												
 				for (int j=0;j<connectedAtoms.size();j++) {
-					IAtom conAtom = (IAtom)connectedAtoms.get(j);
+					IAtom conAtom = connectedAtoms.get(j);
 					if (!conAtom.getSymbol().equals("H")) {
 						IBond bond = m.getBond(a,conAtom);
 						if (bond.getOrder() == IBond.Order.SINGLE) {

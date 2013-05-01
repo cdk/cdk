@@ -59,9 +59,9 @@ public class VicinitySampler {
 	 * in ac and establish all of the possible bonding schemes according to 
 	 * Faulon's equations.
 	 */
-	public static List sample(IAtomContainer ac) {
+	public static List<IAtomContainer> sample(IAtomContainer ac) {
 		logger.debug("RandomGenerator->mutate() Start");
-		List structures = new ArrayList();
+		List<IAtomContainer> structures = new ArrayList<IAtomContainer>();
 		
 		int nrOfAtoms = ac.getAtomCount();
 		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;

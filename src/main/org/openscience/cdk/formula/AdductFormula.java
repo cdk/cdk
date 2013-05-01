@@ -188,8 +188,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 	 */
     @TestMethod("testIsotopes")
 	public Iterable<IIsotope> isotopes() {
-		return new Iterable() {
-            public Iterator iterator() {
+		return new Iterable<IIsotope>() {
+            public Iterator<IIsotope> iterator() {
                 return isotopesList().iterator();
             }
         };

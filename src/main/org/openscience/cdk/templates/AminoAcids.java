@@ -195,9 +195,9 @@ public class AminoAcids {
      */
     public static Map<String,IAminoAcid> getHashMapBySingleCharCode() {
         IAminoAcid[] monomers = createAAs();
-        HashMap map = new HashMap();
+        HashMap<String,IAminoAcid> map = new HashMap<String,IAminoAcid>();
         for (int i=0; i<monomers.length; i++) {
-            map.put(monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
+            map.put((String)monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
         }
         return map;
     }
@@ -206,11 +206,11 @@ public class AminoAcids {
      * Returns a HashMap where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
      * THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
      */
-    public static HashMap getHashMapByThreeLetterCode() {
+    public static Map<String,IAminoAcid> getHashMapByThreeLetterCode() {
         AminoAcid[] monomers = createAAs();
-        HashMap map = new HashMap();
+        Map<String,IAminoAcid> map = new HashMap<String,IAminoAcid>();
         for (int i=0; i<monomers.length; i++) {
-            map.put(monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
+            map.put((String)monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
         }
         return map;
     }

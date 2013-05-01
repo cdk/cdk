@@ -143,7 +143,7 @@ public class DeduceBondSystemTool {
         
         if (ringSet==null) throw new CDKException("failure in AllRingsFinder.findAllRings");
         
-        List MasterList = new ArrayList();
+        List<List<List<String>>> MasterList = new ArrayList<List<List<String>>>();
 
         //this.counter=0;// counter which keeps track of all current possibilities for placing double bonds
         
@@ -248,13 +248,13 @@ public class DeduceBondSystemTool {
 	
 	
     }
-    private void applyBonds(IAtomContainer m, ArrayList al) {
+    private void applyBonds(IAtomContainer m, List<String> al) {
 
         //logger.debug("");
 
         for (int i = 0; i <= al.size() - 1; i++) {
 
-            String s = (String) al.get(i);
+            String s = al.get(i);
             String s1 = s.substring(0, s.indexOf("-"));
             String s2 = s.substring(s.indexOf("-") + 1, s.length());
 
@@ -271,7 +271,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    private void fiveMemberedRingPossibilities(IAtomContainer m, IRing r, List MasterList) {
+    private void fiveMemberedRingPossibilities(IAtomContainer m, IRing r, List<List<List<String>>> MasterList) {
         // 5 possibilities for placing 2 double bonds
         // 5 possibilities for placing 1 double bond
 
@@ -335,7 +335,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    private void sixMemberedRingPossibilities(IAtomContainer m, IRing r, List MasterList) {
+    private void sixMemberedRingPossibilities(IAtomContainer m, IRing r, List<List<List<String>>> MasterList) {
         // 2 possibilities for placing 3 double bonds
         // 6 possibilities for placing 2 double bonds
         // 6 possibilities for placing 1 double bonds
@@ -443,7 +443,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    private void sevenMemberedRingPossibilities(IAtomContainer m, IRing r, List MasterList) {
+    private void sevenMemberedRingPossibilities(IAtomContainer m, IRing r, List<List<List<String>>> MasterList) {
         // for now only consider case where have 3 double bonds
 
         IAtom[] ringatoms = new IAtom[7];
@@ -522,11 +522,11 @@ public class DeduceBondSystemTool {
                         } else if (atomContainer.getBondOrderSum(atom) == 5) {
                             // check if have 2 double bonds to atom in ring
                             int doublebondcount = 0;
-                            java.util.List ca = atomContainer.getConnectedAtomsList(atom);
+                            List<IAtom> ca = atomContainer.getConnectedAtomsList(atom);
 
                             for (int k = 0; k <= ca.size() - 1; k++) {
-                                if (atomContainer.getBond(atom, (IAtom)ca.get(k)).getOrder() == IBond.Order.DOUBLE) {
-                                    if (inRingSet((IAtom)ca.get(k), ringSet)) {
+                                if (atomContainer.getBond(atom, ca.get(k)).getOrder() == IBond.Order.DOUBLE) {
+                                    if (inRingSet(ca.get(k), ringSet)) {
                                         doublebondcount++;
                                     }
                                 }
@@ -565,7 +565,7 @@ public class DeduceBondSystemTool {
     }
 
     private IAtomContainer loop(long starttime, IAtomContainer atomContainer, int index,
-    		               List MasterList, int [] choices, IAtomContainerSet som) throws CDKException {
+    		               List<List<List<String>>> MasterList, int [] choices, IAtomContainerSet som) throws CDKException {
 
         //logger.debug(System.currentTimeMillis());
 
@@ -582,7 +582,7 @@ public class DeduceBondSystemTool {
         	throw new CDKException("Process was interrupted.");
         }
 
-        ArrayList ringlist = (ArrayList) MasterList.get(index);
+        List<List<String>> ringlist = MasterList.get(index);
 
         IAtomContainer mnew2 = null;
 
@@ -602,8 +602,8 @@ public class DeduceBondSystemTool {
                 }
 
                 for (int j = 0; j <= MasterList.size() - 1; j++) {
-                    ArrayList ringlist2 = (ArrayList) MasterList.get(j);
-                    ArrayList bondlist = (ArrayList) ringlist2.get(choices[j]);
+                    List<List<String>> ringlist2 = MasterList.get(j);
+                    List<String> bondlist = ringlist2.get(choices[j]);
 //					logger.debug(j+"\t"+choices[j]);
                     applyBonds(mnew, bondlist);
                 }

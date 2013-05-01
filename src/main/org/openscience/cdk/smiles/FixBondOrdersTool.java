@@ -378,8 +378,8 @@ public class FixBondOrdersTool {
      * @param {@link IRingSet} ringSet
      * @return List of atom numbers for each set
      */
-    private List getAtomNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
-        List atc = new ArrayList<Integer>();
+    private List<Integer> getAtomNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
+        List<Integer> atc = new ArrayList<Integer>();
         for (Integer i : ringGroup) {
             for (IAtom atom : ringSet.getAtomContainer(i).atoms()) {
                 if (atc.size() > 0) {
@@ -402,8 +402,8 @@ public class FixBondOrdersTool {
      * @param {@link IRingSet} ringSet
      * @return List of bond numbers for each set
      */
-    private List getBondNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
-        List btc = new ArrayList<Integer>();
+    private List<Integer> getBondNosForRingGroup(IAtomContainer molecule, List<Integer> ringGroup, IRingSet ringSet) {
+        List<Integer> btc = new ArrayList<Integer>();
         for (Integer i : ringGroup) {
             for (IBond bond : ringSet.getAtomContainer(i).bonds()) {
                 if (btc.size() > 0) {
@@ -425,8 +425,8 @@ public class FixBondOrdersTool {
      * @param bondsToCheck
      * @return List of atom pairs
      */
-    private List getAtomNoPairsForRingGroup(IAtomContainer molecule, List<Integer> bondsToCheck) {
-        List aptc = new ArrayList<Integer[]>();
+    private List<Integer[]> getAtomNoPairsForRingGroup(IAtomContainer molecule, List<Integer> bondsToCheck) {
+        List<Integer[]> aptc = new ArrayList<Integer[]>();
         for (Integer i : bondsToCheck) {
             Integer[] aps = new Integer[2];
             aps[0] = molecule.getAtomNumber(molecule.getBond(i).getAtom(0));
@@ -444,8 +444,8 @@ public class FixBondOrdersTool {
      * @param M
      * @return The List of free valencies available for extra ring bonding
      */
-    private List getFreeValenciesForRingGroup(IAtomContainer molecule, List<Integer> atomsToCheck, Matrix M, IRingSet rs) {
-        List fvtc = new ArrayList<Integer>();
+    private List<Integer> getFreeValenciesForRingGroup(IAtomContainer molecule, List<Integer> atomsToCheck, Matrix M, IRingSet rs) {
+        List<Integer> fvtc = new ArrayList<Integer>();
         for (int i = 0; i < atomsToCheck.size(); i++) {
             int j = atomsToCheck.get(i);
 
