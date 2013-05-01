@@ -231,11 +231,17 @@ public class GeometricTetrahedralEncoderFactoryTest {
         when(container.getAtom(3)).thenReturn(c4);
         when(container.getAtom(4)).thenReturn(h5);
 
-        when(c1.getPoint3d()).thenReturn(new Point3d(1.23, -0.29, 0));
-        when(o2.getPoint3d()).thenReturn(new Point3d(-0.30, -0.29, 0));
-        when(n3.getPoint3d()).thenReturn(new Point3d(2.00, -1.63, 0));
-        when(c4.getPoint3d()).thenReturn(new Point3d(2.00, 1.03, 0));
-        when(h5.getPoint3d()).thenReturn(new Point3d(2.32, -0.29, 0));
+        Point3d p1 = new Point3d(1.23, -0.29, 0);
+        Point3d p2 = new Point3d(-0.30, -0.29, 0);
+        Point3d p3 = new Point3d(2.00, -1.63, 0);
+        Point3d p4 = new Point3d(2.00, 1.03, 0);
+        Point3d p5 = new Point3d(2.32, -0.29, 0);
+
+        when(c1.getPoint3d()).thenReturn(p1);
+        when(o2.getPoint3d()).thenReturn(p2);
+        when(n3.getPoint3d()).thenReturn(p3);
+        when(c4.getPoint3d()).thenReturn(p4);
+        when(h5.getPoint3d()).thenReturn(p5);
 
         IBond c1c4 = mock(IBond.class);
         IBond c1o2 = mock(IBond.class);
@@ -284,10 +290,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
         assertTrue(geometricParity instanceof Tetrahedral3DParity);
 
         assertThat(coords3D(geometricParity), CoreMatchers.is(new Point3d[]{
-                new Point3d(-0.30, -0.29, 0),
-                new Point3d(2.00, -1.63, 0),
-                new Point3d(2.00, 1.03, 0),
-                new Point3d(2.32, -0.29, 0),
+                p2, p3, p4, p5
         }));
 
     }
@@ -309,10 +312,15 @@ public class GeometricTetrahedralEncoderFactoryTest {
         when(container.getAtom(2)).thenReturn(n3);
         when(container.getAtom(3)).thenReturn(c4);
 
-        when(c1.getPoint3d()).thenReturn(new Point3d(1.23, -0.29, 0));
-        when(o2.getPoint3d()).thenReturn(new Point3d(-0.30, -0.29, 0));
-        when(n3.getPoint3d()).thenReturn(new Point3d(2.00, -1.63, 0));
-        when(c4.getPoint3d()).thenReturn(new Point3d(2.00, 1.03, 0));
+        Point3d p1 = new Point3d(1.23, -0.29, 0);
+        Point3d p2 = new Point3d(-0.30, -0.29, 0);
+        Point3d p3 = new Point3d(2.00, -1.63, 0);
+        Point3d p4 = new Point3d(2.00, 1.03, 0);
+
+        when(c1.getPoint3d()).thenReturn(p1);
+        when(o2.getPoint3d()).thenReturn(p2);
+        when(n3.getPoint3d()).thenReturn(p3);
+        when(c4.getPoint3d()).thenReturn(p4);
 
         IBond c1c4 = mock(IBond.class);
         IBond c1o2 = mock(IBond.class);
@@ -354,10 +362,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
         assertTrue(geometricParity instanceof Tetrahedral3DParity);
 
         assertThat(coords3D(geometricParity), CoreMatchers.is(new Point3d[]{
-                new Point3d(-0.30, -0.29, 0),
-                new Point3d(2.00, -1.63, 0),
-                new Point3d(2.00, 1.03, 0),
-                new Point3d(1.23, -0.29, 0),  // from central atom
+                p2, p3, p4, p1 // p1 = central atom
         }));
 
     }
