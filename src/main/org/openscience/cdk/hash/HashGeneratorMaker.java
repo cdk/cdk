@@ -262,8 +262,8 @@ public class HashGeneratorMaker {
 
     /**
      * Add a custom encoder to the hash generator which will be built. Although
-     * not enforced, the encoder should be stateless. A message to standard
-     * error is printed if the encoder has any fields.
+     * not enforced, the encoder should be stateless and should not modify any
+     * passed inputs.
      *
      * @param encoder an atom encoder
      * @return fluent API reference (self)
@@ -273,9 +273,6 @@ public class HashGeneratorMaker {
     public HashGeneratorMaker encode(AtomEncoder encoder) {
         if (encoder == null)
             throw new NullPointerException("no encoder provided");
-        if (encoder.getClass().getDeclaredFields().length > 0)
-            System.err
-                  .println("AtomEncoder had fields but should be stateless");
         customEncoders.add(encoder);
         return this;
     }
