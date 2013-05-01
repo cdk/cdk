@@ -107,6 +107,7 @@ import java.util.Set;
  * @see SSSRFinder
  * @see AllRingsFinder
  * @see CyclicVertexSearch
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.ringsearch.RingSearchTest")
 public final class RingSearch {

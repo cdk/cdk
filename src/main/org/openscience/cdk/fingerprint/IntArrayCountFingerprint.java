@@ -35,7 +35,7 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * @author jonalv
  * @cdk.module     standard
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.IntArrayCountFingerprintTest")
 public class IntArrayCountFingerprint implements ICountFingerprint {

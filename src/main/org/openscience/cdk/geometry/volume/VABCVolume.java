@@ -40,6 +40,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  *
  * @cdk.module   standard
  * @cdk.keyword  volume, molecular
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.volume.VABCVolumeTest")
 public class VABCVolume {

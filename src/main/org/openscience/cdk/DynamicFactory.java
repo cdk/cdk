@@ -124,6 +124,7 @@ import java.util.TreeSet;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.DynamicFactoryTest")
 public class DynamicFactory {

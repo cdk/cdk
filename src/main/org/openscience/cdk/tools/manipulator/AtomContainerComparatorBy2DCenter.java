@@ -35,8 +35,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author Mark Rijnbeek
  * @cdk.created  2009-10-14
  * @cdk.module   standard
+ * @cdk.githash
  */
-
 public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContainer> {
 
 

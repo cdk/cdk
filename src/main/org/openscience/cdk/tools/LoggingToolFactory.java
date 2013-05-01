@@ -37,6 +37,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * </pre>
  * 
  * @cdk.module core
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.LoggingToolFactoryTest")
 public class LoggingToolFactory {

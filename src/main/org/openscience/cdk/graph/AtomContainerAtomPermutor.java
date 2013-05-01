@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.created 2009-09-09
  * @cdk.keyword permutation
  * @cdk.module standard
+ * @cdk.githash
  */
 @TestClass("AtomContainerAtomPermutorTest")
 public class AtomContainerAtomPermutor extends AtomContainerPermutor { 

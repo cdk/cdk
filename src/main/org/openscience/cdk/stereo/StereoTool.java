@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * 
  * @author maclean
  * @cdk.module standard
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.stereo.StereoToolTest")
 public class StereoTool {

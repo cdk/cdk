@@ -43,6 +43,7 @@ package org.openscience.cdk.config.fragments;
  * @cdk.created 2008-07-22
  * @cdk.keyword estate
  * @cdk.keyword fragment
+ * @cdk.githash
  */
 public class EStateFragments {
 

@@ -31,6 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * the {@link System}.out channel.
  * 
  * @cdk.module core
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.SystemOutLoggingToolTest")
 public class SystemOutLoggingTool implements ILoggingTool {

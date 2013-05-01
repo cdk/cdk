@@ -36,6 +36,7 @@ import java.util.Map;
  * further details.
  *
  * @cdk.module core
+ * @cdk.githash
  *
  * @see org.openscience.cdk.interfaces.IDoubleBondStereochemistry
  */

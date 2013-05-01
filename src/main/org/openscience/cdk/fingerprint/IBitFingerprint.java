@@ -30,6 +30,7 @@ import java.util.BitSet;
  * 
  * @author jonalv
  * @cdk.module     core
+ * @cdk.githash
  */
 public interface IBitFingerprint extends Serializable {
 

@@ -50,7 +50,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.created    2009-09-09
  * @cdk.keyword    permutation
  * @cdk.module     standard
- * 
+ * @cdk.githash
  */
 @TestClass("PermutorTest")
 public class Permutor {

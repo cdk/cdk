@@ -29,7 +29,7 @@ import java.io.Serializable;
  * 
  * @author jonalv
  * @cdk.module     core
- *
+ * @cdk.githash
  */
 public interface ICountFingerprint extends Serializable {
 
