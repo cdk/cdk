@@ -261,7 +261,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
                     System.out.println("Found: " + atom.getHybridization() +
                             ", expected: " + matched.getHybridization() +
                             " (" + matched.getAtomTypeName() + ")");
-                } else if (atom.getFormalCharge() != matched.getFormalCharge()) {
+                } else if (atom.getFormalCharge().intValue() != matched.getFormalCharge().intValue()) {
                     results.failed++;
                     System.out.println("Formal charge does not match: " + results.tested + " in file " + filename);
                     System.out.println("Found: " + atom.getFormalCharge() +
