@@ -199,7 +199,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 					//Amid
 					p1 = Pattern.compile(getSphericalMatcher(atomTypeIds[48]));//NC=0
 					mat1 = p1.matcher(atomSphericalMatcher);
-					if (mat1.matches() & atomChemGroupConstant==-1) {
+					if (mat1.matches() && atomChemGroupConstant==-1) {
 						ID = atomTypeIds[48];//NC=O
 					}
 					//nsp3 oxide

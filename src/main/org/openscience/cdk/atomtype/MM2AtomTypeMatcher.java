@@ -194,7 +194,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 					}
 					p1 = Pattern.compile(getSphericalMatcher("OX"));
 					mat1 = p1.matcher(atomSphericalMatcher);
-					if (mat1.matches() & atomChemicalGroupConstant==-1) {
+					if (mat1.matches() && atomChemicalGroupConstant==-1) {
 						ID="OX";
 					}
 					
@@ -216,12 +216,12 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 						//Amid
 						p1 = Pattern.compile(getSphericalMatcher("Namid"));
 						mat1 = p1.matcher(atomSphericalMatcher);
-						if (mat1.matches() & atomChemicalGroupConstant==-1) {
+						if (mat1.matches() && atomChemicalGroupConstant==-1) {
 							ID="Nsp2";
 						}else{
 							p1 = Pattern.compile(getSphericalMatcher("N2OX"));
 							mat1 = p1.matcher(atomSphericalMatcher);	
-							if (mat1.matches() & atomChemicalGroupConstant==-1) {
+							if (mat1.matches() && atomChemicalGroupConstant==-1) {
 								ID="N2OX";
 							}
 						}
@@ -235,7 +235,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 					//Azo
 					p1 = Pattern.compile(getSphericalMatcher("-N="));
 					mat1 = p1.matcher(atomSphericalMatcher);
-					if (mat1.matches() & atomChemicalGroupConstant==-1) {
+					if (mat1.matches() && atomChemicalGroupConstant==-1) {
 						ID="-N=";
 					}else{
 						p1 = Pattern.compile(getSphericalMatcher("N=C"));
@@ -273,13 +273,13 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 					//Enol,amid
 					p1 = Pattern.compile(getSphericalMatcher("HOC"));
 					mat1 = p1.matcher(atomSphericalMatcher);
-					if (mat1.matches() & atomChemicalGroupConstant==-1) {
+					if (mat1.matches() && atomChemicalGroupConstant==-1) {
 						ID="HN2";
 					}
 					//COOH
 					p1 = Pattern.compile(getSphericalMatcher("HOCO"));
 					mat1 = p1.matcher(atomSphericalMatcher);
-					if (mat1.matches() & atomChemicalGroupConstant==-1) {
+					if (mat1.matches() && atomChemicalGroupConstant==-1) {
 						ID="HOCO";
 					}
 				} else if (atomTypeIds[j].equals("HN")) {
