@@ -40,7 +40,7 @@ import static org.junit.Assert.assertThat;
  */
 public class AllPairsShortestPathsTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testConstruction_Null() {
         new AllPairsShortestPaths(null);
     }

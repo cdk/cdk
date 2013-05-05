@@ -112,7 +112,7 @@ public final class ShortestPaths {
      */
     @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
     public ShortestPaths(IAtomContainer container, IAtom start) {
-        this(toAdjList(container), container, container.getAtomNumber(start));
+        this(GraphUtil.toAdjList(container), container, container.getAtomNumber(start));
     }
 
 
@@ -122,7 +122,7 @@ public final class ShortestPaths {
      * representation does not need to be rebuilt for a different start atom.
      *
      * @param adjacent  adjacency list representation - built from {@link
-     *                  #toAdjList(IAtomContainer)}
+     *                  GraphUtil#toAdjList(IAtomContainer)}
      * @param container container used to access atoms and their indices
      * @param start     the start atom index of the shortest paths
      */
@@ -769,55 +769,4 @@ public final class ShortestPaths {
         }
 
     }
-
-
-    /**
-     * Create an adjacency list representation of the atom container.
-     *
-     * Temporary method - until the adjacency list can be added as an actual
-     * graph type.
-     *
-     * @param container container to convert
-     * @return adjacency list representation
-     */
-    @TestMethod("testToAdjList,testToAdjList_resize,testToAdjList_missingAtom," +
-                        "testToAdjList_Empty,testToAdjList_Null")
-    static int[][] toAdjList(IAtomContainer container) {
-
-        if (container == null)
-            throw new IllegalArgumentException("atom container was null");
-
-        int n = container.getAtomCount();
-
-        int[][] graph = new int[n][16];
-        int[] degree = new int[n];
-
-        for (IBond bond : container.bonds()) {
-
-            int v = container.getAtomNumber(bond.getAtom(0));
-            int w = container.getAtomNumber(bond.getAtom(1));
-
-            if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container.getBondNumber(bond)
-                                                           + " contained an atom not pressent in molecule");
-
-            graph[v][degree[v]++] = w;
-            graph[w][degree[w]++] = v;
-
-            // if the vertex degree of v or w reaches capacity, double the size
-            if (degree[v] == graph[v].length)
-                graph[v] = Arrays.copyOf(graph[v], degree[v] * 2);
-            if (degree[w] == graph[w].length)
-                graph[w] = Arrays.copyOf(graph[w], degree[w] * 2);
-        }
-
-        for (int v = 0; v < n; v++) {
-            graph[v] = Arrays.copyOf(graph[v], degree[v]);
-        }
-
-        return graph;
-
-    }
-
-
 }

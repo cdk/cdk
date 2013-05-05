@@ -92,7 +92,7 @@ public final class AllPairsShortestPaths {
     public AllPairsShortestPaths(IAtomContainer container) {
 
         // toAdjList performs null check
-        int[][] adjacent = ShortestPaths.toAdjList(container);
+        int[][] adjacent = GraphUtil.toAdjList(container);
 
         int n = container.getAtomCount();
 

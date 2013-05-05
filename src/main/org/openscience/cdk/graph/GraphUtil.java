@@ -28,8 +28,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.Arrays;
-
 import static java.util.Arrays.copyOf;
 
 /**
@@ -55,16 +53,16 @@ public class GraphUtil {
      *
      * @param container the molecule
      * @return adjacency list representation stored as an {@literal int[][]}.
+     * @throws NullPointerException     the container was null
      * @throws IllegalArgumentException a bond was found which contained atoms
-     *                                  not in the molecule or the container was
-     *                                  null
+     *                                  not in the molecule
      */
     @TestMethod("testToAdjList,testToAdjList_resize,testToAdjList_missingAtom," +
                         "testToAdjList_Empty,testToAdjList_Null")
     public static int[][] toAdjList(IAtomContainer container) {
 
         if (container == null)
-            throw new IllegalArgumentException("atom container was null");
+            throw new NullPointerException("atom container was null");
 
         int n = container.getAtomCount();
 

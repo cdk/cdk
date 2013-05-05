@@ -24,6 +24,7 @@ package org.openscience.cdk.ringsearch;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -129,7 +130,7 @@ public final class RingSearch {
      */
     @TestMethod("testNull")
     public RingSearch(IAtomContainer container) {
-        this(container, toAdjList(container));
+        this(container, GraphUtil.toAdjList(container));
     }
 
     /**
@@ -466,56 +467,4 @@ public final class RingSearch {
 
         return fragment;
     }
-
-    /**
-     * Temporary utility method, copied from ShortestPaths.toAdjList.
-     *
-     * <p/>
-     *
-     * TODO: util class to convert an IAtomContainer to an adjacency list.
-     *
-     * @param container container to convert
-     * @return adjacency list representation the atom container
-     * @throws NoSuchElementException thrown if a bond references an not found
-     *                                in the molecule
-     */
-    private static int[][] toAdjList(IAtomContainer container) {
-
-        if (container == null)
-            throw new NullPointerException("atom container was null");
-
-        int n = container.getAtomCount();
-
-        int[][] graph = new int[n][16];
-        int[] degree = new int[n];
-
-        for (IBond bond : container.bonds()) {
-
-            int v = container.getAtomNumber(bond.getAtom(0));
-            int w = container.getAtomNumber(bond.getAtom(1));
-
-            if (v < 0 || w < 0)
-                throw new NoSuchElementException("bond at index "
-                                                         + container
-                        .getBondNumber(bond)
-                                                         + " contained an atom not pressent in molecule");
-
-            graph[v][degree[v]++] = w;
-            graph[w][degree[w]++] = v;
-
-            // if the vertex degree of v or w reaches capacity, double the size
-            if (degree[v] == graph[v].length)
-                graph[v] = Arrays.copyOf(graph[v], degree[v] * 2);
-            if (degree[w] == graph[w].length)
-                graph[w] = Arrays.copyOf(graph[w], degree[w] * 2);
-        }
-
-        for (int v = 0; v < n; v++) {
-            graph[v] = Arrays.copyOf(graph[v], degree[v]);
-        }
-
-        return graph;
-
-    }
-
 }

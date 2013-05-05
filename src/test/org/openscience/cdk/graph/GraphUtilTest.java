@@ -117,7 +117,7 @@ public class GraphUtilTest {
 
         IAtomContainer container = simple();
 
-        int[][] adjacent = ShortestPaths.toAdjList(container);
+        int[][] adjacent = GraphUtil.toAdjList(container);
 
         assertThat("adjacency list should have 5 vertices",
                    adjacent.length, is(5));
@@ -160,7 +160,7 @@ public class GraphUtilTest {
             container.addBond(bond);
         }
 
-        int[][] adjacent = ShortestPaths.toAdjList(container);
+        int[][] adjacent = GraphUtil.toAdjList(container);
 
         assertThat("vertex 'a' should have degree 50",
                    adjacent[0].length, is(50));
@@ -185,19 +185,19 @@ public class GraphUtilTest {
 
         container.removeAtom(4); // remove 'e'
 
-        int[][] adjacent = ShortestPaths.toAdjList(container);
+        int[][] adjacent = GraphUtil.toAdjList(container);
 
     }
 
     @Test
     public void testToAdjList_Empty() throws Exception {
-        int[][] adjacent = ShortestPaths.toAdjList(new AtomContainer());
+        int[][] adjacent = GraphUtil.toAdjList(new AtomContainer());
         assertThat(adjacent.length, is(0));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testToAdjList_Null() throws Exception {
-        int[][] adjacent = ShortestPaths.toAdjList(null);
+        int[][] adjacent = GraphUtil.toAdjList(null);
     }
 
     /**

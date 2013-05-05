@@ -61,7 +61,7 @@ public class ShortestPathsTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testConstructor_Container_Null() {
         ShortestPaths sp = new ShortestPaths(null, new Atom());
     }
@@ -1748,93 +1748,5 @@ public class ShortestPathsTest {
         mol.addBond(b12);
         return mol;
 
-    }
-
-    @Test
-    public void testToAdjList() throws Exception {
-
-        IAtomContainer container = simple();
-
-        int[][] adjacent = ShortestPaths.toAdjList(container);
-
-        assertThat("adjacency list should have 5 vertices",
-                   adjacent.length, is(5));
-
-        assertThat("vertex 'a' should have degree 1",
-                   adjacent[0].length, is(1));
-        assertThat("vertex 'b' should have degree 3",
-                   adjacent[1].length, is(3));
-        assertThat("vertex 'c' should have degree 2",
-                   adjacent[2].length, is(2));
-        assertThat("vertex 'd' should have degree 1",
-                   adjacent[3].length, is(1));
-        assertThat("vertex 'e' should have degree 1",
-                   adjacent[4].length, is(1));
-
-        assertArrayEquals(new int[]{1}, adjacent[0]);
-        assertArrayEquals(new int[]{0, 2, 4}, adjacent[1]);
-        assertArrayEquals(new int[]{1, 3}, adjacent[2]);
-        assertArrayEquals(new int[]{2}, adjacent[3]);
-        assertArrayEquals(new int[]{1}, adjacent[4]);
-
-
-    }
-
-    @Test
-    public void testToAdjList_resize() throws Exception {
-
-
-        IAtomContainer container = new AtomContainer();
-
-        IAtom a = new Atom("C");
-        container.addAtom(a);
-
-        // add 50 neighbour to 'a'
-        for (int i = 0; i < 50; i++) {
-            IAtom neighbour = new Atom("C");
-            IBond bond = new Bond(a, neighbour);
-
-            container.addAtom(neighbour);
-            container.addBond(bond);
-        }
-
-        int[][] adjacent = ShortestPaths.toAdjList(container);
-
-        assertThat("vertex 'a' should have degree 50",
-                   adjacent[0].length, is(50));
-
-        for (int i = 1; i < 51; i++) {
-            assertThat("connected vertex should have degree of 1",
-                       adjacent[i].length, is(1));
-        }
-
-        // check adjacent neighbours are not empty
-        for (int i = 0; i < adjacent[0].length; i++) {
-            assertThat(adjacent[0][i], is(i + 1));
-        }
-
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testToAdjList_missingAtom() throws Exception {
-
-        IAtomContainer container = simple();
-
-        container.removeAtom(4); // remove 'e'
-
-        int[][] adjacent = ShortestPaths.toAdjList(container);
-
-    }
-
-    @Test
-    public void testToAdjList_Empty() throws Exception {
-        int[][] adjacent = ShortestPaths.toAdjList(new AtomContainer());
-        assertThat(adjacent.length, is(0));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testToAdjList_Null() throws Exception {
-        int[][] adjacent = ShortestPaths.toAdjList(null);
     }
 }
