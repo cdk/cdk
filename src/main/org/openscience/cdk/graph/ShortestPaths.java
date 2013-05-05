@@ -139,7 +139,7 @@ public final class ShortestPaths {
         this.precedes = new boolean[n];
 
         // skip computation for empty molecules
-        if (container.isEmpty())
+        if (n == 0)
             return;
         if (start == -1)
             throw new IllegalArgumentException("invalid vertex start - atom not found container");
