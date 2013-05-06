@@ -118,7 +118,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
         	}
         }
 
-		org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atomInterface;
+		IAtom atom = atomInterface;
 		logger.debug("****** Configure MM2 AtomType via findMatching ******");
 		String atomSphericalMatcher = (String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
 		int atomChemicalGroupConstant = (Integer) atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);

@@ -27,6 +27,7 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -99,10 +100,10 @@ public class AtomTypeTools {
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			// FIXME: remove casting
-			org.openscience.cdk.Atom atom2 = (org.openscience.cdk.Atom)molecule.getAtom(i);
+			IAtom atom2 = molecule.getAtom(i);
 			//Atom aromatic is set by HueckelAromaticityDetector
 			//Atom in ring?
-			if (ringSetMolecule.contains((org.openscience.cdk.interfaces.IAtom)atom2)) {
+			if (ringSetMolecule.contains(atom2)) {
 				ringSetA = ringSetMolecule.getRings(atom2);
 				RingSetManipulator.sort(ringSetA);
 				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);

@@ -119,7 +119,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 		}
         }
 
-		org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atomInterface;
+		IAtom atom = atomInterface;
 		//logger.debug("****** Configure MMFF94 AtomType via findMatching ******");
 		//logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getProperty(CDKConstants.SPHERICAL_MATCHER) + " ");
