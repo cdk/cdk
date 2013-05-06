@@ -236,10 +236,10 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         } else { // testedAtomTypes.size() > definedTypes.size()
         	// more atom types tested than defined
         	int testedTypeCount = testedAtomTypes.size();
-            definedTypes.removeAll(testedAtomTypes);
+            testedAtomTypes.removeAll(definedTypes);
         	String errorMessage = "Atom types tested but not defined:";
-        	for (String notTestedType : definedTypes) {
-        		errorMessage += " " + notTestedType;
+        	for (String notDefined : testedAtomTypes) {
+        		errorMessage += " " + notDefined;
         	}
         	if (testedTypeCount != testedAtomTypes.size()) {
         		throw new Exception(errorMessage);
