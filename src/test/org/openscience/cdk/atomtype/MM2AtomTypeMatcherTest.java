@@ -32,6 +32,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.AtomContainer;
@@ -154,4 +155,20 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     	}
     }
 
+	@Override
+	public String getAtomTypeListName() {
+		return "mm2";
+	}
+
+	@Override
+	public AtomTypeFactory getFactory() {
+		return AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
+			SilentChemObjectBuilder.getInstance()
+	    );
+	}
+
+	@Override
+	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
+		return new MM2AtomTypeMatcher();
+	}
 }

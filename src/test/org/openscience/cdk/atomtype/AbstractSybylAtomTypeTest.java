@@ -42,7 +42,7 @@ abstract public class AbstractSybylAtomTypeTest extends AbstractAtomTypeTest {
 
 	private final static String ATOMTYPE_LIST = "sybyl-atom-types.owl"; 
 	
-	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
+	protected final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
 		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
 		SilentChemObjectBuilder.getInstance()
     );

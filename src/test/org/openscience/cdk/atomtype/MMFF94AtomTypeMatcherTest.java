@@ -402,4 +402,20 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     	}
     }
 
+	@Override
+	public String getAtomTypeListName() {
+		return "mmff94";
+	}
+
+	@Override
+	public AtomTypeFactory getFactory() {
+		return AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mmff94_atomtypes.xml",
+			builder
+        );
+	}
+
+	@Override
+	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
+		return new MMFF94AtomTypeMatcher();
+	}
 }

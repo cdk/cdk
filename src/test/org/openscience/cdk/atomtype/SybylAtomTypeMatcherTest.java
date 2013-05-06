@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -738,8 +739,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
       }
 
-    @Test public void countTestedAtomTypes() {
-        super.countTestedAtomTypes(testedAtomTypes);
+    @AfterClass
+    public static void testTestedAtomTypes() throws Exception {
+        countTestedAtomTypes(testedAtomTypes, factory);
     }
-
 }

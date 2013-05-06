@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
@@ -48,20 +47,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module test-core
  * @cdk.bug    1890702
  */
-abstract public class AbstractAtomTypeTest extends CDKTestCase {
+abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomTypeTest {
 
-	public String getAtomTypeListName() {
-		return "";
-	};
-	
-	public AtomTypeFactory getFactory() {
-		return null;
-	}
-	
-	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
-		return null;
-	}
-	
 	/**
 	 * Helper method to test if atom types are correctly perceived. Meanwhile, it maintains a list
 	 * of atom types that have been tested so far, which allows testing afterwards that all atom
@@ -221,12 +208,13 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase {
         }
 	}
 	
-    public void countTestedAtomTypes(Map<String, Integer> testedAtomTypesMap) {
+    public static void countTestedAtomTypes(Map<String, Integer> testedAtomTypesMap, AtomTypeFactory factory)
+    throws Exception {
         Set<String> testedAtomTypes = new HashSet<String>();
         testedAtomTypes.addAll(testedAtomTypesMap.keySet());
         
         Set<String> definedTypes = new HashSet<String>();
-        IAtomType[] expectedTypesArray = getFactory().getAllAtomTypes();
+        IAtomType[] expectedTypesArray = factory.getAllAtomTypes();
         for (int i=0; i<expectedTypesArray.length; i++) {
         	definedTypes.add(expectedTypesArray[i].getAtomTypeName());
         }
@@ -242,9 +230,9 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase {
         	for (String notTestedType : definedTypes) {
         		errorMessage += " " + notTestedType;
         	}
-        	Assert.assertEquals(errorMessage,
-        		expectedTypeCount, testedAtomTypes.size()
-            );
+        	if (expectedTypeCount != testedAtomTypes.size()) {
+        		throw new Exception(errorMessage);
+        	}
         } else { // testedAtomTypes.size() > definedTypes.size()
         	// more atom types tested than defined
         	int testedTypeCount = testedAtomTypes.size();
@@ -253,9 +241,9 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase {
         	for (String notTestedType : definedTypes) {
         		errorMessage += " " + notTestedType;
         	}
-        	Assert.assertEquals(errorMessage,
-        		testedTypeCount, testedAtomTypes.size()
-            );
+        	if (testedTypeCount != testedAtomTypes.size()) {
+        		throw new Exception(errorMessage);
+        	}
         }
     }
 
