@@ -31,6 +31,7 @@ import java.util.Iterator;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.diff.tree.ChemObjectDifferenceTest")
 public class ChemObjectDifference extends AbstractDifferenceList implements IDifferenceList {
@@ -41,7 +42,12 @@ public class ChemObjectDifference extends AbstractDifferenceList implements IDif
     public ChemObjectDifference(String name) {
         this.name = name;
     }
-    
+
+    /**
+     * Returns a {@link String} representation for this {@link IDifference}.
+     * 
+     * @return a {@link String}
+     */
     @TestMethod("testToString")
     public String toString() {
         if (differences.size() == 0) return "";

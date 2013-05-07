@@ -32,6 +32,7 @@ import java.util.List;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.diff.tree.AbstractDifferenceListTest")
 public abstract class AbstractDifferenceList implements IDifferenceList {
@@ -43,6 +44,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
         differences = new ArrayList<IDifference>();
     }
     
+    /** {@inheritDoc} */
     @TestMethod("testAddChild")
     public void addChild(IDifference childDiff) {
         if (childDiff != null) {
@@ -50,6 +52,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
         }
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testChildDiffs")
     public void addChildren(List<IDifference> children) {
         if (children != null) {
@@ -57,6 +60,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
         }
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testChildDiffs")
     public Iterable<IDifference> getChildren() {
         return new Iterable<IDifference>(){
@@ -66,6 +70,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
         };        
     }
 
+    /** {@inheritDoc} */
     @TestMethod("testAddChild")
     public int childCount() {
         return differences.size();

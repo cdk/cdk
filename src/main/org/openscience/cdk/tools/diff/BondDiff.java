@@ -35,6 +35,7 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.diff.BondDiffTest")
 public class BondDiff {
@@ -45,6 +46,13 @@ public class BondDiff {
      */
     private BondDiff() {}
 
+	/**
+	 * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
+	 * 
+	 * @param first  the first of the two classes to compare
+	 * @param second the second of the two classes to compare
+	 * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+	 */
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
     	IDifference diff = difference(first, second);
@@ -54,6 +62,14 @@ public class BondDiff {
     		return diff.toString();
     	}
     }
+
+	/**
+	 * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
+	 * 
+	 * @param first  the first of the two classes to compare
+	 * @param second the second of the two classes to compare
+	 * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+	 */
     @TestMethod("testDifference")
     public static IDifference difference( IChemObject first, IChemObject second ) {
         if (!(first instanceof IBond && second instanceof IBond)) {

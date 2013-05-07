@@ -25,6 +25,7 @@ package org.openscience.cdk.tools.diff.tree;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 public interface IDifference {
     

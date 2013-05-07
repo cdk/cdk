@@ -31,6 +31,7 @@ import java.util.Iterator;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.diff.tree.Point3dDifferenceTest")
 public class Point3dDifference extends AbstractDifferenceList implements IDifferenceList {
@@ -41,6 +42,14 @@ public class Point3dDifference extends AbstractDifferenceList implements IDiffer
         this.name = name;
     }
     
+    /**
+     * Constructs a new {@link IDifference} object.
+     *
+     * @param name   a name reflecting the nature of the created {@link IDifference}
+     * @param first  the first object to compare
+     * @param second the second object to compare
+     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     */
     @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, Point3d first, Point3d second) {
         if (first == null && second == null) return null;
@@ -67,6 +76,11 @@ public class Point3dDifference extends AbstractDifferenceList implements IDiffer
         return totalDiff;
     }
 
+    /**
+     * Returns a {@link String} representation for this {@link IDifference}.
+     * 
+     * @return a {@link String}
+     */
     @TestMethod("testToString")
     public String toString() {
         if (differences.size() == 0) return "";

@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.diff.tree.StringDifferenceTest")
 public class StringDifference implements IDifference {
@@ -41,7 +42,15 @@ public class StringDifference implements IDifference {
         this.first = first;
         this.second = second;
     }
-    
+
+    /**
+     * Constructs a new {@link IDifference} object.
+     *
+     * @param name   a name reflecting the nature of the created {@link IDifference}
+     * @param first  the first object to compare
+     * @param second the second object to compare
+     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     */
     @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, String first, String second) {
         if (first == null && second == null) {
@@ -56,6 +65,11 @@ public class StringDifference implements IDifference {
         return new StringDifference(name, first, second);
     }
 
+    /**
+     * Returns a {@link String} representation for this {@link IDifference}.
+     * 
+     * @return a {@link String}
+     */
     @TestMethod("testToString")
     public String toString() {
         return name + ":" + 

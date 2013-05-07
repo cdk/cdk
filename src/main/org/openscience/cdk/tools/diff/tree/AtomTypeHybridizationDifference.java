@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.diff.tree.AtomTypeHybridizationDifferenceTest")
 public class AtomTypeHybridizationDifference implements IDifference {
@@ -43,6 +44,14 @@ public class AtomTypeHybridizationDifference implements IDifference {
         this.second = second;
     }
     
+    /**
+     * Constructs a new {@link IDifference} object.
+     *
+     * @param name   a name reflecting the nature of the created {@link IDifference}
+     * @param first  the first object to compare
+     * @param second the second object to compare
+     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     */
     @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, IAtomType.Hybridization first, IAtomType.Hybridization second) {
         if (first == second) {
@@ -51,6 +60,11 @@ public class AtomTypeHybridizationDifference implements IDifference {
         return new AtomTypeHybridizationDifference(name, first, second);
     }
 
+    /**
+     * Returns a {@link String} representation for this {@link IDifference}.
+     * 
+     * @return a {@link String}
+     */
     @TestMethod("testToString")
     public String toString() {
         return name + ":" + 

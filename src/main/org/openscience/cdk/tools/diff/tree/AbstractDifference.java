@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * 
  * @author     egonw
  * @cdk.module diff
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.diff.tree.AbstractDifferenceTest")
 public abstract class AbstractDifference implements IDifference {
