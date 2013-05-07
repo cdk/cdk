@@ -65,6 +65,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2008-06-11
+ * @cdk.githash
  */
 public class RDBERule implements IRule{
 

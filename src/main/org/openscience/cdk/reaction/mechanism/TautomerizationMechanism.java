@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
- *
+ * @cdk.githash
  */
 @TestClass(value="org.openscience.cdk.reaction.mechanism.TautomerizationMechanismTest")
 public class TautomerizationMechanism implements IReactionMechanism{

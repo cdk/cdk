@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.graph.invariant.exception;
 
-
+/**
+ * @cdk.githash
+ */
 public class BadMatrixFormatException extends Exception {
 
     private static final long serialVersionUID = -4592379323522144603L;

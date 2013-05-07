@@ -35,6 +35,7 @@ import java.util.Map;
  * algorithm and write the resulting atom types using the Sybyl atom type scheme.
  * 
  * @cdk.module atomtype
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.atomtype.mapper.AtomTypeMapperTest")
 public class AtomTypeMapper {

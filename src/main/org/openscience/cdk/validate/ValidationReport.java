@@ -26,6 +26,8 @@ import java.util.List;
 
 /**
  * A report on validation of chemical semantics.
+ * 
+ * @cdk.githash
  */
 public class ValidationReport {
 

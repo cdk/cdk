@@ -78,6 +78,7 @@ import java.util.Iterator;
  * @cdk.created    2008-02-11
  * @cdk.module     reaction
  * @cdk.set        reaction-types
+ * @cdk.githash
  * 
  * @see TautomerizationMechanism
  **/

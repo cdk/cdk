@@ -34,6 +34,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * AWT, like the Java reference graphics platform Swing.
  *
  * @cdk.module renderawt
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.visitor.AbstractAWTDrawVisitorTest")
 public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {

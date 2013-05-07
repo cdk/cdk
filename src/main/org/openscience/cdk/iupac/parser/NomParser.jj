@@ -38,6 +38,7 @@ import java.util.*;
  * @author Stephen Tomkinson
  *
  * @cdk.keyword IUPAC name
+ * @cdk.githash
  */
 public class NomParser {
     //private variables needed throughout the program

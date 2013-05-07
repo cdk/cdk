@@ -47,7 +47,7 @@ import java.util.List;
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
- *
+ * @cdk.githash
  */
 @TestClass(value="org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest")
 public class AdductionLPMechanism implements IReactionMechanism{

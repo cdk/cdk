@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.created    2008-104-31
  * @cdk.module  charges
  * @cdk.keyword electronegativity
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.charges.ElectronegativityTest")
 public class Electronegativity {

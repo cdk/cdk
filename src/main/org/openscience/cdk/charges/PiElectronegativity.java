@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.created  2008-104-31
  * @cdk.module   charges
  * @cdk.keyword  electronegativity
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.charges.PiElectronegativityTest")
 public class PiElectronegativity {

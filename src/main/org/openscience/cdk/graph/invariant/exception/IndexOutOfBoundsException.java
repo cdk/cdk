@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.graph.invariant.exception;
 
-
+/**
+ * @cdk.githash
+ */
 public class IndexOutOfBoundsException extends Exception {
 
     private static final long serialVersionUID = -1781128244202287777L;

@@ -57,6 +57,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module  formula
  * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
+ * @cdk.githash
  */
 public class IsotopePatternRule implements IRule{
 

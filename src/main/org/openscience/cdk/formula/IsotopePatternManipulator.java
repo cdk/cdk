@@ -11,6 +11,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author Miguel Rojas Cherto
  *
  * @cdk.module  formula
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.formula.IsotopePatternManipulatorTest")
 public class IsotopePatternManipulator {

@@ -61,6 +61,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    2008-104-31
  * @cdk.module     qsaratomic
  * @cdk.set        qsar-descriptors
+ * @cdk.githash
  * @see StabilizationCharges
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptorTest")

@@ -66,6 +66,7 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
  * @author Kevin Lawson
  * @author Lucy Entwistle
  * @cdk.module smiles
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.smiles.FixBondOrdersToolTest")
 public class FixBondOrdersTool {

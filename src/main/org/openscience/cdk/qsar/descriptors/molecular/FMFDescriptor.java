@@ -50,6 +50,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.module qsarmolecular
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:FMF
+ * @cdk.githash
  * @see org.openscience.cdk.fragment.MurckoFragmenter
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FMFDescriptorTest")

@@ -34,6 +34,7 @@ import nu.xom.Serializer;
  * 
  * @author     egonw
  * @cdk.module libiocml
+ * @cdk.githash
  */
 public class CustomSerializer extends Serializer {
 

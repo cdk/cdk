@@ -13,6 +13,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @author Miguel Rojas Cherto
  * 
  * @cdk.module  formula
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.formula.IsotopeContainerTest")
 public class IsotopeContainer{

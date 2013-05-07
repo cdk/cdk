@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * {@link IRenderingElement} for linear arrows. 
  *
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.elements.ArrowElementTest")
 public class ArrowElement implements IRenderingElement {

@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
+ * @cdk.githash
  */
 public interface IRule {
 	    

@@ -37,6 +37,7 @@ import java.util.ArrayList;
  *
  * @author      Miguel Rojas
  * @cdk.module  reaction
+ * @cdk.githash
  */
 public interface IReactionMechanism {
 	

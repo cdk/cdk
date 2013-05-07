@@ -46,6 +46,7 @@ import java.util.regex.Pattern;
  * @cdk.module smiles
  * @cdk.keyword fingerprint
  * @cdk.keyword hologram
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.LingoFingerprinterTest")
 public class LingoFingerprinter implements IFingerprinter {

@@ -34,6 +34,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Helper class to provide general information about this CDK library.
  *
  * @cdk.module core
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.CDKTest")
 public class CDK {

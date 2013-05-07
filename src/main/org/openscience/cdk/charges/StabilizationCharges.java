@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.StructureResonanceGenerator;
  * @cdk.created  2008-104-31
  * @cdk.module   charges
  * @cdk.keyword  stabilization charge
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.charges.StabilizationChargesTest")
 public class StabilizationCharges {

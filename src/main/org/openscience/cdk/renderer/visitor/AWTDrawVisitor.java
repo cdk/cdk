@@ -67,6 +67,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasi
  * AWT, like the Java reference graphics platform Swing.
  *
  * @cdk.module renderawt
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.visitor.AWTDrawVisitorTest")
 public class AWTDrawVisitor extends AbstractAWTDrawVisitor {

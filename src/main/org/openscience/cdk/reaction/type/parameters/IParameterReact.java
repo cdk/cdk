@@ -27,6 +27,7 @@ import org.openscience.cdk.annotations.TestClass;
  * 
  * @author      miguelrojasch
  * @cdk.module  reaction
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.reaction.type.parameters.IParameterReactTest")
 public interface IParameterReact {
