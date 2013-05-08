@@ -44,24 +44,31 @@ public class SVGFormat implements IResourceFormat {
     	return myself;
     }
     
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Scalable Vector Graphics";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"svg"};
     }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return true;

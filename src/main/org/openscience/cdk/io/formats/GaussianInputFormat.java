@@ -72,16 +72,19 @@ public class GaussianInputFormat implements IChemFormat {
       return "org.openscience.cdk.io.program.GaussianInputWriter";
     }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return false;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;

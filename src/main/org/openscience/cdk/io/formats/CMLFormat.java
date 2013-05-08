@@ -47,33 +47,43 @@ public class CMLFormat implements IChemFormatMatcher {
     	return myself;
     }
     
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Chemical Markup Language";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-cml";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"cml", "xml"};
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CMLReader";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.CMLWriter";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if ((line.indexOf("http://www.xml-cml.org/schema") != -1) ||
@@ -87,11 +97,13 @@ public class CMLFormat implements IChemFormatMatcher {
         return false;
     }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return true;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.HAS_2D_COORDINATES |
@@ -104,6 +116,7 @@ public class CMLFormat implements IChemFormatMatcher {
                DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;

@@ -45,34 +45,45 @@ public class CMLRSSFormat implements IChemFormat {
     	return myself;
     }
     
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "CML enriched RSS";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return null;
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[0];
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { return null; }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return "org.openscience.cdk.io.RssWriter"; }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return true;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.HAS_3D_COORDINATES |
@@ -80,6 +91,7 @@ public class CMLRSSFormat implements IChemFormat {
 		       DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;

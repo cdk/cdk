@@ -49,24 +49,31 @@ public class POVRayFormat implements IResourceFormat {
     	return myself;
     }
     
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "POV Ray";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"pov"};
     }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return false;

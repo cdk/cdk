@@ -47,31 +47,41 @@ public class MDLRXNFormat implements IChemFormatMatcher {
     	return myself;
     }
     
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "MDL Reaction format";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-mdl-rxnfile";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"rxn"};
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLRXNReader";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("$RXN")) {
@@ -80,16 +90,19 @@ public class MDLRXNFormat implements IChemFormatMatcher {
         return false;
     }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return false;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;

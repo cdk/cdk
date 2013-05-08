@@ -43,33 +43,43 @@ public class CDKOWLFormat implements IChemFormatMatcher {
     	return myself;
     }
     
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "CDK OWL (N3)";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "text/n3";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"n3"};
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.rdf.CDKOWLReader";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.rdf.CDKOWLWriter";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("PREFIX") &&
@@ -79,11 +89,13 @@ public class CDKOWLFormat implements IChemFormatMatcher {
         return false;
     }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return false;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.HAS_2D_COORDINATES |
@@ -96,6 +108,7 @@ public class CDKOWLFormat implements IChemFormatMatcher {
                DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;

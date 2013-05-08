@@ -47,33 +47,43 @@ public class MDLFormat implements IChemFormatMatcher {
     	return myself;
     }
     
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "MDL Molfile";
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-mdl-molfile";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"mol"};
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLReader";
     }
+
+    /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return null;
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 4 && line.length()>7 && 
@@ -104,11 +114,13 @@ public class MDLFormat implements IChemFormatMatcher {
         return false;
     }
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
 		return false;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return getRequiredDataFeatures() |
@@ -117,6 +129,7 @@ public class MDLFormat implements IChemFormatMatcher {
 		       DataFeatures.HAS_GRAPH_REPRESENTATION;
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
 		return DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
