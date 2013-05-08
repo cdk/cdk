@@ -27,11 +27,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Find and reconstruct the shortest paths from a given start atom to any other
@@ -65,9 +62,9 @@ import java.util.Queue;
  * </pre></blockquote>
  *
  * <p/> If shortest paths from multiple start atoms are required {@link
- * AllPairsShortestPaths} will have a small performance advantage. Please use {@link
- * org.openscience.cdk.graph.matrix.TopologicalMatrix} if only the shortest
- * distances between atoms is required.
+ * AllPairsShortestPaths} will have a small performance advantage. Please use
+ * {@link org.openscience.cdk.graph.matrix.TopologicalMatrix} if only the
+ * shortest distances between atoms is required.
  *
  * @author John May
  * @cdk.module core
@@ -102,8 +99,8 @@ public final class ShortestPaths {
 
     /**
      * Create a new shortest paths tool for a single start atom. If shortest
-     * paths from multiple start atoms are required {@link AllPairsShortestPaths}
-     * will have a small performance advantage.
+     * paths from multiple start atoms are required {@link
+     * AllPairsShortestPaths} will have a small performance advantage.
      *
      * @param container an atom container to find the paths of
      * @param start     the start atom to which all shortest paths will be
@@ -112,7 +109,8 @@ public final class ShortestPaths {
      */
     @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
     public ShortestPaths(IAtomContainer container, IAtom start) {
-        this(GraphUtil.toAdjList(container), container, container.getAtomNumber(start));
+        this(GraphUtil.toAdjList(container), container, container
+                .getAtomNumber(start));
     }
 
 
@@ -127,6 +125,22 @@ public final class ShortestPaths {
      * @param start     the start atom index of the shortest paths
      */
     ShortestPaths(int[][] adjacent, IAtomContainer container, int start) {
+        this(adjacent, container, start, null);
+    }
+
+    /**
+     * Create a new shortest paths search for the given graph from the {@literal
+     * start} vertex. The ordering for use by {@link #isPrecedingPathTo(int)}
+     * can also be specified.
+     *
+     * @param adjacent  adjacency list representation - built from {@link
+     *                  GraphUtil#toAdjList(IAtomContainer)}
+     * @param container container used to access atoms and their indices
+     * @param start     the start atom index of the shortest paths
+     * @param ordering  vertex ordering for preceding path (null = don't use)
+     */
+    ShortestPaths(int[][] adjacent, IAtomContainer container, int start,
+                  int[] ordering) {
 
         int n = adjacent.length;
 
@@ -154,10 +168,12 @@ public final class ShortestPaths {
         nPathsTo[start] = 1;
         precedes[start] = true;
 
-        compute(adjacent);
-
+        if(ordering != null) {
+            compute(adjacent, ordering);
+        } else {
+            compute(adjacent);
+        }
     }
-
 
     /**
      * Perform a breath-first-search (BFS) from the start atom. The distanceTo[]
@@ -167,6 +183,42 @@ public final class ShortestPaths {
      * more similar to a simple BFS.
      */
     private void compute(final int[][] adjacent) {
+        // queue is filled as we process each vertex
+        int[] queue = new int[adjacent.length];
+        queue[0] = start;
+        int n = 1;
+
+        for (int i = 0; i < n; i++) {
+
+            int v = queue[i];
+            int dist = distTo[v] + 1;
+            for (int w : adjacent[v]) {
+
+                // distance is less then the current closest distance
+                if (dist < distTo[w]) {
+                    distTo[w]   = dist;
+                    routeTo[w]  = new SequentialRoute(routeTo[v], w);
+                    nPathsTo[w] = nPathsTo[v];
+                    queue[n++] = w;
+                } else if (distTo[w] == dist) {
+                    routeTo[w] = new Branch(routeTo[w],
+                                            new SequentialRoute(routeTo[v], w));
+                    nPathsTo[w] += nPathsTo[v];
+                }
+            }
+        }
+    }
+
+    /**
+     * Perform a breath-first-search (BFS) from the start atom. The distanceTo[]
+     * is updated on each iteration. The routeTo[] keeps track of our route back
+     * to the source. The method has aspects similar to Dijkstra's shortest path
+     * but we are working with vertices and thus our edges are unweighted and is
+     * more similar to a simple BFS. The ordering limits the paths found to only
+     * those in which all vertices precede the 'start' in the given ordering.
+     * This ordering limits ensure we only generate paths in one direction.
+     */
+    private void compute(final int[][] adjacent, final int[] ordering) {
 
         // queue is filled as we process each vertex
         int[] queue = new int[adjacent.length];
@@ -177,7 +229,6 @@ public final class ShortestPaths {
 
             int v = queue[i];
             int dist = distTo[v] + 1;
-
             for (int w : adjacent[v]) {
 
                 // distance is less then the current closest distance
@@ -185,21 +236,24 @@ public final class ShortestPaths {
                     distTo[w] = dist;
                     routeTo[w] = new SequentialRoute(routeTo[v], w); // append w to the route to v
                     nPathsTo[w] = nPathsTo[v];
-                    precedes[w] = precedes[v] && w < start;
+                    precedes[w] = precedes[v] && ordering[w] < ordering[start];
                     queue[n++] = w;
                 } else if (distTo[w] == dist) {
-                    // found path of equal distance, mark as a branch with a new sequential route
-                    routeTo[w] = new Branch(routeTo[w],
-                                            new SequentialRoute(routeTo[v], w));
-                    nPathsTo[w] += nPathsTo[v];
-                    // possible counter intuitive but we don't adjust precedes[]
-                    // as the heuristics still work, this makes sense as we are
-                    // only indicating the first path
+                    // shuffle paths around depending on whether there is
+                    // already a preceding path
+                    if (precedes[v] && ordering[w] < ordering[start]) {
+                        if (precedes[w]) {
+                            routeTo[w] = new Branch(routeTo[w],
+                                                    new SequentialRoute(routeTo[v], w));
+                            nPathsTo[w] += nPathsTo[v];
+                        } else {
+                            precedes[w] = true;
+                            routeTo[w] = new SequentialRoute(routeTo[v], w);
+                        }
+                    }
                 }
             }
-
         }
-
 
     }
 
@@ -605,15 +659,13 @@ public final class ShortestPaths {
     }
 
 
-    /**
-     * Helper class for building a route to the shortest path
-     */
+    /** Helper class for building a route to the shortest path */
     private static interface Route {
 
         /**
-         * Recursively convert this route to all possible shortest paths. The
-         * length is passed down the methods until the source is reached and the
-         * first path created
+         * Recursively convert this route to all possible shortest paths. The length
+         * is passed down the methods until the source is reached and the first path
+         * created
          *
          * @param n length of the path
          * @return 2D array of all shortest paths
@@ -621,9 +673,9 @@ public final class ShortestPaths {
         int[][] toPaths(int n);
 
         /**
-         * Recursively convert this route to the first shortest path. The length
-         * is passed down the methods until the source is reached and the first
-         * path created
+         * Recursively convert this route to the first shortest path. The length is
+         * passed down the methods until the source is reached and the first path
+         * created
          *
          * @param n length of the path
          * @return first shortest path
@@ -631,9 +683,7 @@ public final class ShortestPaths {
         int[] toPath(int n);
     }
 
-    /**
-     * The source of a route, the source is always the start atom.
-     */
+    /** The source of a route, the source is always the start atom. */
     private static class Source implements Route {
 
         private final int v;
@@ -647,18 +697,14 @@ public final class ShortestPaths {
             this.v = v;
         }
 
-        /**
-         * @inheritDoc
-         */
+        /** @inheritDoc */
         @Override
         public int[][] toPaths(int n) {
             // only every one shortest path at source
             return new int[][]{toPath(n)};
         }
 
-        /**
-         * @inheritDoc
-         */
+        /** @inheritDoc */
         @Override
         public int[] toPath(int n) {
             // create the path of the given length
@@ -670,17 +716,15 @@ public final class ShortestPaths {
 
     }
 
-    /**
-     * A sequential route is vertex appended to a parent route.
-     */
+    /** A sequential route is vertex appended to a parent route. */
     private class SequentialRoute implements Route {
 
         private final int v;
         private final Route parent;
 
         /**
-         * Create a new sequential route from the parent and include the new
-         * vertex <i>v</i>.
+         * Create a new sequential route from the parent and include the new vertex
+         * <i>v</i>.
          *
          * @param parent parent route
          * @param v      additional vertex
@@ -690,9 +734,7 @@ public final class ShortestPaths {
             this.parent = parent;
         }
 
-        /**
-         * @inheritDoc
-         */
+        /** @inheritDoc */
         @Override
         public int[][] toPaths(int n) {
 
@@ -707,9 +749,7 @@ public final class ShortestPaths {
 
         }
 
-        /**
-         * @inheritDoc
-         */
+        /** @inheritDoc */
         @Override
         public int[] toPath(int n) {
             int[] path = parent.toPath(n);
@@ -722,8 +762,8 @@ public final class ShortestPaths {
 
     /**
      * A more complex route which represents a branch in our path. A branch is
-     * composed of a left and a right route. A n-way branches can be constructed
-     * by simply nesting a branch within a branch.
+     * composed of a left and a right route. A n-way branches can be constructed by
+     * simply nesting a branch within a branch.
      */
     private class Branch implements Route {
 
@@ -740,9 +780,7 @@ public final class ShortestPaths {
             this.right = right;
         }
 
-        /**
-         * @inheritDoc
-         */
+        /** @inheritDoc */
         @Override
         public int[][] toPaths(int n) {
 
@@ -751,7 +789,8 @@ public final class ShortestPaths {
             int[][] rightPaths = right.toPaths(n);
 
             // expand the left paths to a capacity which can also accommodate the right paths
-            int[][] paths = Arrays.copyOf(leftPaths, leftPaths.length + rightPaths.length);
+            int[][] paths = Arrays
+                    .copyOf(leftPaths, leftPaths.length + rightPaths.length);
 
             // copy the right paths in to the expanded left paths
             System.arraycopy(rightPaths, 0, paths, leftPaths.length, rightPaths.length);
@@ -759,9 +798,7 @@ public final class ShortestPaths {
             return paths;
         }
 
-        /**
-         * @inheritDoc
-         */
+        /** @inheritDoc */
         @Override
         public int[] toPath(int n) {
             // use the left as the first path

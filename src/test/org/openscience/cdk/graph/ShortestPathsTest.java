@@ -132,21 +132,23 @@ public class ShortestPathsTest {
     @Test
     public void testIsPrecedingPathTo() {
         IAtomContainer benzene = MoleculeFactory.makeBenzene();
-        ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
+        int[][] graph = GraphUtil.toAdjList(benzene);
+        int[]   order = new int[]{0,1,2,3,4,5};
+        ShortestPaths paths = new ShortestPaths(graph, benzene, 0, order);
         assertFalse(paths.isPrecedingPathTo(1));
         assertFalse(paths.isPrecedingPathTo(2));
         assertFalse(paths.isPrecedingPathTo(3));
         assertFalse(paths.isPrecedingPathTo(4));
         assertFalse(paths.isPrecedingPathTo(5));
 
-        paths = new ShortestPaths(benzene, benzene.getAtom(5));
+        paths = new ShortestPaths(graph, benzene, 5, order);
         assertTrue(paths.isPrecedingPathTo(4));
         assertTrue(paths.isPrecedingPathTo(3));
         assertTrue(paths.isPrecedingPathTo(2));
         assertTrue(paths.isPrecedingPathTo(1));
         assertTrue(paths.isPrecedingPathTo(0));
 
-        paths = new ShortestPaths(benzene, benzene.getAtom(4));
+        paths = new ShortestPaths(graph, benzene, 4, order);
         assertFalse(paths.isPrecedingPathTo(5));
         assertTrue(paths.isPrecedingPathTo(3));
         assertTrue(paths.isPrecedingPathTo(2));
