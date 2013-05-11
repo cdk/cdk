@@ -80,6 +80,18 @@
     </bibtex:techreport>
   </bibtex:entry>
 
+  <bibtex:entry id="Berger04">
+    <bibtex:article>
+      <bibtex:author>Berger, F. and Flamm, C and Gleiss, P and Leydold, J and Stadler, P</bibtex:author>
+      <bibtex:title>Counterexamples in Chemical Ring Perception</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>44</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>323-331</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="BLE91">
     <bibtex:article>
       <bibtex:author>Bley, K. and Brandt, J. and Dengler, A. and
@@ -1239,6 +1251,8 @@ Method </bibtex:title>
       <bibtex:doi>10.1.1.47.3674</bibtex:doi>
       <bibtex:url>http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.3674</bibtex:url>
       <bibtex:journal>Combinatorics</bibtex:journal>
+      <bibtex:volume>4</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
     </bibtex:article>
   </bibtex:entry>
 </bibtex:file>
