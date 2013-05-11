@@ -49,6 +49,7 @@ import org.openscience.cdk.graph.AllPairsShortestPathsTest;
 import org.openscience.cdk.graph.BitMatrixTest;
 import org.openscience.cdk.graph.GreedyBasisTest;
 import org.openscience.cdk.graph.InitialCyclesTest;
+import org.openscience.cdk.graph.MinimumCycleBasisTest;
 import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.RelevantCyclesTest;
 import org.openscience.cdk.graph.ShortestPathsTest;
@@ -128,6 +129,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     BitMatrixTest.class,
     InitialCyclesTest.class,
     GreedyBasisTest.class,
-    RelevantCyclesTest.class
+    RelevantCyclesTest.class,
+    MinimumCycleBasisTest.class
 })
 public class McoreTests {}
