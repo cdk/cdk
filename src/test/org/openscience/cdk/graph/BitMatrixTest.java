@@ -25,6 +25,7 @@ package org.openscience.cdk.graph;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
@@ -35,6 +36,9 @@ import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
  * @author John May
@@ -138,7 +142,7 @@ public class BitMatrixTest {
         m.add(toBitSet("110000000"));
         m.add(toBitSet("110011000"));
         m.add(toBitSet("000011000"));
-        assertTrue(m.eliminate());
+        assertThat(m.eliminate(), is(2));
         assertFalse(m.eliminated(0));
         assertFalse(m.eliminated(1));
         assertTrue(m.eliminated(2));
@@ -151,7 +155,7 @@ public class BitMatrixTest {
         m.add(toBitSet("110011000"));
         m.add(toBitSet("001000110"));
         m.add(toBitSet("111011110"));
-        assertTrue(m.eliminate());
+        assertThat(m.eliminate(), is(2));
         assertFalse(m.eliminated(0));
         assertFalse(m.eliminated(1));
         assertTrue(m.eliminated(2));
@@ -172,7 +176,7 @@ public class BitMatrixTest {
         m.add(toBitSet("111000000111100"));
 
         // 1,2 or 3 was eliminated
-        assertTrue(m.eliminate());
+        assertThat(m.eliminate(), is(3));
 
         // 4 was not
         assertFalse(m.eliminated(3));
@@ -184,7 +188,7 @@ public class BitMatrixTest {
         m.add(toBitSet("010011000"));
         m.add(toBitSet("001000110"));
         m.add(toBitSet("111011110"));
-        assertFalse(m.eliminate());
+        assertThat(m.eliminate(), is(3));
         assertFalse(m.eliminated(0));
         assertFalse(m.eliminated(1));
         assertFalse(m.eliminated(2));
@@ -197,7 +201,7 @@ public class BitMatrixTest {
         m.add(toBitSet("110011000"));
         m.add(toBitSet("110011011"));
         m.add(toBitSet("110011010"));
-        assertFalse(m.eliminate());
+        assertThat(m.eliminate(), is(3));
         assertFalse(m.eliminated(0));
         assertFalse(m.eliminated(1));
         assertFalse(m.eliminated(2));
@@ -211,7 +215,7 @@ public class BitMatrixTest {
         m.add(toBitSet("110000000"));
         m.add(toBitSet("110000000"));
         m.add(toBitSet("001100000"));
-        assertTrue(m.eliminate());
+        assertThat(m.eliminate(), is(2));
     }
 
     /**
@@ -238,6 +242,38 @@ public class BitMatrixTest {
         assertThat(s, is(not(sameInstance(u))));
         assertThat(t, is(not(sameInstance(u))));
         assertThat(u, is(toBitSet("10001")));
+    }
+
+    @Test public void from_cycles() {
+        Cycle c1 = mock(Cycle.class);
+        Cycle c2 = mock(Cycle.class);
+        Cycle c3 = mock(Cycle.class);
+        BitSet s1 = toBitSet("010011000");
+        BitSet s2 = toBitSet("110011011");
+        BitSet s3 = toBitSet("110011010");
+        when(c1.edgeVector()).thenReturn(s1);
+        when(c2.edgeVector()).thenReturn(s2);
+        when(c3.edgeVector()).thenReturn(s3);
+        BitMatrix m = BitMatrix.from(Arrays.asList(c1, c2, c3));
+        assertThat(m.row(0), is(sameInstance(s1)));
+        assertThat(m.row(1), is(sameInstance(s2)));
+        assertThat(m.row(2), is(sameInstance(s3)));
+    }
+
+    @Test public void from_cycles_cycle() {
+        Cycle c1 = mock(Cycle.class);
+        Cycle c2 = mock(Cycle.class);
+        Cycle last = mock(Cycle.class);
+        BitSet s1 = toBitSet("010011000");
+        BitSet s2 = toBitSet("110011011");
+        BitSet s3 = toBitSet("110011010");
+        when(c1.edgeVector()).thenReturn(s1);
+        when(c2.edgeVector()).thenReturn(s2);
+        when(last.edgeVector()).thenReturn(s3);
+        BitMatrix m = BitMatrix.from(Arrays.asList(c1, c2), last);
+        assertThat(m.row(0), is(sameInstance(s1)));
+        assertThat(m.row(1), is(sameInstance(s2)));
+        assertThat(m.row(2), is(sameInstance(s3)));
     }
 
 

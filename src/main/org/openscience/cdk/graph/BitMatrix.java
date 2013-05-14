@@ -5,6 +5,8 @@ import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.BitSet;
 
+import static org.openscience.cdk.graph.InitialCycles.Cycle;
+
 /**
  * Mutable bit matrix which can eliminate linearly dependent rows and check
  * which rows were eliminated. These operations are useful when constructing a
@@ -226,5 +228,53 @@ final class BitMatrix {
         BitSet w = (BitSet) u.clone();
         w.xor(v);
         return w;
+    }
+
+    /**
+     * Simple creation of a BitMatrix from a collection of cycles.
+     *
+     * @param cycles cycles to create the matrix from
+     * @return instance of a BitMatrix for the cycles
+     */
+    @TestMethod("from_cycles")
+    static BitMatrix from(final Iterable<Cycle> cycles) {
+
+        int rows = 0, cols = 0;
+        for (final Cycle c : cycles) {
+            if (c.edgeVector().length() > cols)
+                cols = c.edgeVector().length();
+            rows++;
+        }
+
+        final BitMatrix matrix = new BitMatrix(cols, rows);
+        for (final Cycle c : cycles)
+            matrix.add(c.edgeVector());
+        return matrix;
+    }
+
+    /**
+     * Simple creation of a BitMatrix from a collection of cycles. The final
+     * cycle will be added as the last row of the matrix. The <i>cycle</i>
+     * should no be found in <i>cycles</i>.
+     *
+     * @param cycles cycles to create
+     * @param cycle  final cycle to add
+     * @return instance of a BitMatrix for the cycles
+     */
+    @TestMethod("from_cycles_cycle")
+    static BitMatrix from(final Iterable<Cycle> cycles, Cycle cycle) {
+
+        int rows = 1, cols = cycle.edgeVector().length();
+        for (final Cycle c : cycles) {
+            if (c.edgeVector().length() > cols)
+                cols = c.edgeVector().length();
+            rows++;
+        }
+
+        final BitMatrix matrix = new BitMatrix(cols, rows);
+        for (final Cycle c : cycles)
+            matrix.add(c.edgeVector());
+        matrix.add(cycle.edgeVector());
+        return matrix;
     }
 }
