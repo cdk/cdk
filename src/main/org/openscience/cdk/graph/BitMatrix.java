@@ -24,7 +24,7 @@ import java.util.BitSet;
  * m.add(toBitSet("111000111"));
  * m.add(toBitSet("111000000"));
  * m.add(toBitSet("111000000"));
- * if (m.eliminate()){
+ * if (m.eliminate() < 3){
  *   // rows are not independent
  * }
  * </pre></blockquote>
@@ -64,17 +64,6 @@ final class BitMatrix {
         this.max = rows;
         this.rows = new BitSet[rows];
         this.indices = new int[rows];
-    }
-
-    /**
-     * Access the value at {@literal i}, {@literal j}.
-     *
-     * @param i the column index
-     * @param j the row index
-     * @return whether the value is set
-     */
-    private boolean get(int i, int j) {
-        return rows[j].get(i);
     }
 
     /**
@@ -153,15 +142,15 @@ final class BitMatrix {
     }
 
     /**
-     * Eliminate rows from the matrix which cannot be made by linearly combining
-     * other rows.
+     * Eliminate rows from the matrix which can be made by linearly combinations
+     * of other rows.
      *
-     * @return whether rows were eliminated
+     * @return rank of the matrix
      * @see #eliminated(int)
      */
     @TestMethod("eliminate1,eliminate2,eliminate3")
-    public boolean eliminate() {
-        return eliminate(0, 0) != m;
+    public int eliminate() {
+        return eliminate(0, 0);
     }
 
     /**
@@ -173,11 +162,10 @@ final class BitMatrix {
      */
     private int eliminate(int x, int y) {
 
-        if (x < n && y < m) {
+        while (x < n && y < m) {
 
             int i = indexOf(x, y);
 
-            // no row has x set, move to next column
             if (i < 0)
                 return eliminate(x + 1, y);
 
@@ -186,16 +174,13 @@ final class BitMatrix {
                 swap(i, y);
 
             // xor row with all vectors that have x set
-            for (int j = 0; j < m; j++) {
-                if (get(x, j) && j != y) {
+            for (int j = y + 1; j < m; j++)
+                if (rows[j].get(x))
                     rows[j] = xor(rows[j], rows[y]);
-                }
-            }
 
-            return eliminate(x, y + 1);
-        } else {
-            return y;
+            y++;
         }
+        return y;
     }
 
 
@@ -221,7 +206,7 @@ final class BitMatrix {
         for (int j = 0; j < m; j++) {
             sb.append(indices[j]).append(": ");
             for (int i = 0; i < n; i++) {
-                sb.append(get(i, j) ? '1' : '-');
+                sb.append(rows[j].get(i) ? '1' : '-');
             }
             sb.append("\n");
         }
