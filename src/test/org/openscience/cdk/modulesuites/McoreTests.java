@@ -47,6 +47,7 @@ import org.openscience.cdk.exception.NoSuchAtomExceptionTest;
 import org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest;
 import org.openscience.cdk.graph.AllPairsShortestPathsTest;
 import org.openscience.cdk.graph.BitMatrixTest;
+import org.openscience.cdk.graph.EssentialCyclesTest;
 import org.openscience.cdk.graph.GreedyBasisTest;
 import org.openscience.cdk.graph.InitialCyclesTest;
 import org.openscience.cdk.graph.MinimumCycleBasisTest;
@@ -130,6 +131,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     InitialCyclesTest.class,
     GreedyBasisTest.class,
     RelevantCyclesTest.class,
-    MinimumCycleBasisTest.class
+    MinimumCycleBasisTest.class,
+    EssentialCyclesTest.class
 })
 public class McoreTests {}
