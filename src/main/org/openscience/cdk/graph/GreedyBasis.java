@@ -80,6 +80,16 @@ final class GreedyBasis {
     }
 
     /**
+     * The size of the basis.
+     *
+     * @return number of cycles in the basis
+     */
+    @TestMethod("size")
+    final int size() {
+        return members().size();
+    }
+
+    /**
      * Add a cycle to the basis.
      *
      * @param cycle new basis member
@@ -129,10 +139,7 @@ final class GreedyBasis {
         if (basis.isEmpty() || !isSubsetOfBasis(candidate))
             return true;
 
-        final BitMatrix matrix = new BitMatrix(m, basis.size() + 1);
-        for (Cycle cycle : basis)
-            matrix.add(cycle.edgeVector());
-        matrix.add(candidate.edgeVector());
+        final BitMatrix matrix = BitMatrix.from(basis, candidate);
 
         // perform gaussian elimination
         matrix.eliminate();

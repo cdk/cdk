@@ -29,6 +29,7 @@ import java.util.BitSet;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.openscience.cdk.graph.BitMatrixTest.toBitSet;
@@ -110,6 +111,23 @@ public class GreedyBasisTest {
         assertTrue(basis.isIndependent(c2));
         basis.add(c2);
         assertFalse(basis.isIndependent(c3));
+    }
+
+    @Test public void size() {
+        GreedyBasis basis = new GreedyBasis(3, 12);
+        assertThat(basis.size(), is(0));
+        Cycle c1 = mock(Cycle.class);
+        Cycle c2 = mock(Cycle.class);
+        Cycle c3 = mock(Cycle.class);
+        when(c1.edgeVector()).thenReturn(toBitSet("111000000000"));
+        when(c2.edgeVector()).thenReturn(toBitSet("000111000000"));
+        when(c3.edgeVector()).thenReturn(toBitSet("111111000000"));
+        basis.add(c1);
+        assertThat(basis.size(), is(1));
+        basis.add(c2);
+        assertThat(basis.size(), is(2));
+        basis.add(c3);
+        assertThat(basis.size(), is(3));
     }
 
 }

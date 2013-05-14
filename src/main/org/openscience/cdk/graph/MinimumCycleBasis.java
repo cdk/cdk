@@ -103,7 +103,7 @@ public final class MinimumCycleBasis {
     @TestMethod("size_bicyclo,size_napthalene,size_anthracene," +
                         "size_cyclophane_odd,size_cyclophane_even")
     public int size() {
-        return basis.members().size();
+        return basis.size();
     }
 
 }
