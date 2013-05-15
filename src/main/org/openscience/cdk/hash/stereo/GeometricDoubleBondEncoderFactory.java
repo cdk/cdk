@@ -22,13 +22,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.factory;
+package org.openscience.cdk.hash.stereo;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.hash.stereo.GeometryEncoder;
-import org.openscience.cdk.hash.stereo.MultiStereoEncoder;
-import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.parity.BasicPermutationParity;
 import org.openscience.cdk.hash.stereo.parity.CombinedPermutationParity;
 import org.openscience.cdk.hash.stereo.parity.DoubleBond2DParity;
@@ -64,7 +61,7 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
  * @cdk.githash
  * @see org.openscience.cdk.hash.HashGeneratorMaker
  */
-@TestClass("org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactoryTest")
+@TestClass("org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactoryTest")
 public final class GeometricDoubleBondEncoderFactory
         implements StereoEncoderFactory {
 

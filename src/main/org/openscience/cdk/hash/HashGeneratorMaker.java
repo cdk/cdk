@@ -27,10 +27,10 @@ package org.openscience.cdk.hash;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
-import org.openscience.cdk.hash.stereo.factory.GeometricCumulativeDoubleBondFactory;
-import org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory;
-import org.openscience.cdk.hash.stereo.factory.GeometricTetrahedralEncoderFactory;
-import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
+import org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactory;
+import org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory;
+import org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactory;
+import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.ArrayList;

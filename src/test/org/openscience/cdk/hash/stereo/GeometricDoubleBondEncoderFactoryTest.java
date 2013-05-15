@@ -22,11 +22,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.factory;
+package org.openscience.cdk.hash.stereo;
 
 import org.junit.Test;
+import org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory;
 import org.openscience.cdk.hash.stereo.MultiStereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
+import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.hash.stereo.parity.BasicPermutationParity;
 import org.openscience.cdk.hash.stereo.parity.DoubleBond2DParity;
 import org.openscience.cdk.hash.stereo.parity.DoubleBond3DParity;
@@ -50,9 +52,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory.geometric;
-import static org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory.moveToBack;
-import static org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory.permutation;
+import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.geometric;
+import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.moveToBack;
+import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.permutation;
 
 /**
  * @author John May

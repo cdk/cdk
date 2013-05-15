@@ -22,10 +22,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.factory;
+package org.openscience.cdk.hash.stereo;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactory;
 import org.openscience.cdk.hash.stereo.GeometryEncoder;
 import org.openscience.cdk.hash.stereo.MultiStereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoder;

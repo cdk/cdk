@@ -26,7 +26,7 @@ package org.openscience.cdk.hash;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
+import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
