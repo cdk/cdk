@@ -25,8 +25,6 @@
 package org.openscience.cdk.hash;
 
 import org.junit.Test;
-import org.openscience.cdk.hash.EquivalentSetFinder;
-import org.openscience.cdk.hash.MinimumEquivalentCyclicSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Set;

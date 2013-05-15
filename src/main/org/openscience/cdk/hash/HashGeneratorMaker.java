@@ -26,9 +26,6 @@ package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.hash.equivalent.EquivalentSetFinder;
-import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
-import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSetUnion;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.factory.GeometricCumulativeDoubleBondFactory;
 import org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory;
@@ -216,7 +213,7 @@ public final class HashGeneratorMaker {
      * collisions may be due to an insufficiency in the algorithm opposed to a
      * random chance of collision. Currently there are three strategies but one
      * should choose either to use the fast, but good, heuristic {@link
-     * MinimumEquivalentCyclicSet} or the exact {@link org.openscience.cdk.hash.equivalent.AllEquivalentCyclicSet}.
+     * MinimumEquivalentCyclicSet} or the exact {@link AllEquivalentCyclicSet}.
      * In practice {@link MinimumEquivalentCyclicSet} is good enough for most
      * applications but it is important to understand the potential trade off.
      * The {@link MinimumEquivalentCyclicSetUnion} is provided for demonstration
@@ -241,12 +238,12 @@ public final class HashGeneratorMaker {
      * @param equivSetFinder equivalent set finder, used to determine which
      *                       atoms will be perturbed to try and break symmetry.
      * @return fluent API reference (self)
-     * @see org.openscience.cdk.hash.equivalent.AllEquivalentCyclicSet
+     * @see AllEquivalentCyclicSet
      * @see MinimumEquivalentCyclicSet
      * @see MinimumEquivalentCyclicSetUnion
      */
     @TestMethod("testPerturbedWith")
-    public HashGeneratorMaker perturbWith(EquivalentSetFinder equivSetFinder) {
+    HashGeneratorMaker perturbWith(EquivalentSetFinder equivSetFinder) {
         this.equivSetFinder = equivSetFinder;
         return this;
     }

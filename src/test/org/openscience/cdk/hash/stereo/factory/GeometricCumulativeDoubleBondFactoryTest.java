@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
 import javax.vecmath.Point2d;
 import java.util.Collections;
 
-import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertNull;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

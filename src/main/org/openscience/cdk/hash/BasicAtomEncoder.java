@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.BasicAtomEncoderTest")
-enum BasicAtomEncoder implements AtomEncoder {
+public enum BasicAtomEncoder implements AtomEncoder {
 
     /**
      * Encode the atomic number of an atom.

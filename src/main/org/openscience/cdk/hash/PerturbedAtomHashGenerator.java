@@ -26,8 +26,6 @@ package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.hash.equivalent.EquivalentSetFinder;
-import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
