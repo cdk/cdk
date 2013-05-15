@@ -40,12 +40,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import static org.openscience.cdk.hash.BasicAtomEncoder.ATOMIC_NUMBER;
-import static org.openscience.cdk.hash.BasicAtomEncoder.FORMAL_CHARGE;
-import static org.openscience.cdk.hash.BasicAtomEncoder.FREE_RADICALS;
-import static org.openscience.cdk.hash.BasicAtomEncoder.MASS_NUMBER;
-import static org.openscience.cdk.hash.BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
-
 /**
  * Fluent API for creating hash generators. The maker is first configured with
  * one or more attributes. Once fully configured the generator is made by
@@ -126,7 +120,7 @@ public final class HashGeneratorMaker {
      */
     @TestMethod("testElemental")
     public HashGeneratorMaker elemental() {
-        encoderSet.add(ATOMIC_NUMBER);
+        encoderSet.add(BasicAtomEncoder.ATOMIC_NUMBER);
         return this;
     }
 
@@ -138,7 +132,7 @@ public final class HashGeneratorMaker {
      */
     @TestMethod("testIsotopic")
     public HashGeneratorMaker isotopic() {
-        encoderSet.add(MASS_NUMBER);
+        encoderSet.add(BasicAtomEncoder.MASS_NUMBER);
         return this;
     }
 
@@ -150,7 +144,7 @@ public final class HashGeneratorMaker {
      */
     @TestMethod("testCharged")
     public HashGeneratorMaker charged() {
-        encoderSet.add(FORMAL_CHARGE);
+        encoderSet.add(BasicAtomEncoder.FORMAL_CHARGE);
         return this;
     }
 
@@ -162,7 +156,7 @@ public final class HashGeneratorMaker {
      */
     @TestMethod("testOrbital")
     public HashGeneratorMaker orbital() {
-        encoderSet.add(ORBITAL_HYBRIDIZATION);
+        encoderSet.add(BasicAtomEncoder.ORBITAL_HYBRIDIZATION);
         return this;
     }
 
@@ -174,7 +168,7 @@ public final class HashGeneratorMaker {
      */
     @TestMethod("testRadical")
     public HashGeneratorMaker radical() {
-        encoderSet.add(FREE_RADICALS);
+        encoderSet.add(BasicAtomEncoder.FREE_RADICALS);
         return this;
     }
 
