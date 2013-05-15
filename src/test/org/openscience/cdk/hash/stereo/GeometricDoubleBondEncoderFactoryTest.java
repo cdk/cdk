@@ -25,15 +25,6 @@
 package org.openscience.cdk.hash.stereo;
 
 import org.junit.Test;
-import org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory;
-import org.openscience.cdk.hash.stereo.MultiStereoEncoder;
-import org.openscience.cdk.hash.stereo.StereoEncoder;
-import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
-import org.openscience.cdk.hash.stereo.parity.BasicPermutationParity;
-import org.openscience.cdk.hash.stereo.parity.DoubleBond2DParity;
-import org.openscience.cdk.hash.stereo.parity.DoubleBond3DParity;
-import org.openscience.cdk.hash.stereo.parity.GeometricParity;
-import org.openscience.cdk.hash.stereo.parity.PermutationParity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;

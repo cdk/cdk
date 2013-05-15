@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.parity;
+package org.openscience.cdk.hash.stereo;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -39,8 +39,8 @@ import javax.vecmath.Point3d;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.parity.DoubleBond3DParityTest")
-public final class DoubleBond3DParity implements GeometricParity {
+@TestClass("org.openscience.cdk.hash.stereo.DoubleBond3DParityTest")
+final class DoubleBond3DParity implements GeometricParity {
 
 
     // coordinates of the double bond atoms:

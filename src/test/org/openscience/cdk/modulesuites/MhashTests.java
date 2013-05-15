@@ -38,11 +38,11 @@ import org.openscience.cdk.hash.stereo.MultiStereoEncoderTest;
 import org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactoryTest;
 import org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactoryTest;
 import org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactoryTest;
-import org.openscience.cdk.hash.stereo.parity.CombinedPermutationParityTest;
-import org.openscience.cdk.hash.stereo.parity.DoubleBond2DParityTest;
-import org.openscience.cdk.hash.stereo.parity.DoubleBond3DParityTest;
-import org.openscience.cdk.hash.stereo.parity.Tetrahedral2DParityTest;
-import org.openscience.cdk.hash.stereo.parity.Tetrahedral3DParityTest;
+import org.openscience.cdk.hash.stereo.CombinedPermutationParityTest;
+import org.openscience.cdk.hash.stereo.DoubleBond2DParityTest;
+import org.openscience.cdk.hash.stereo.DoubleBond3DParityTest;
+import org.openscience.cdk.hash.stereo.Tetrahedral2DParityTest;
+import org.openscience.cdk.hash.stereo.Tetrahedral3DParityTest;
 
 /**
  * TestSuite for the CDK <code>hash</code> module.

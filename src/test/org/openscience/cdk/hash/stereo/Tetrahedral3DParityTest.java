@@ -22,9 +22,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.parity;
+package org.openscience.cdk.hash.stereo;
 
 import org.junit.Test;
+import org.openscience.cdk.hash.stereo.Tetrahedral3DParity;
 
 import javax.vecmath.Point3d;
 

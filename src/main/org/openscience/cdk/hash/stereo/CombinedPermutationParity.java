@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.parity;
+package org.openscience.cdk.hash.stereo;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -34,8 +34,8 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.parity.CombinedPermutationParityTest")
-public final class CombinedPermutationParity implements PermutationParity {
+@TestClass("org.openscience.cdk.hash.stereo.CombinedPermutationParityTest")
+final class CombinedPermutationParity implements PermutationParity {
 
     private final PermutationParity left;
     private final PermutationParity right;

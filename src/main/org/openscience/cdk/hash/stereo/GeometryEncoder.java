@@ -26,8 +26,6 @@ package org.openscience.cdk.hash.stereo;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.hash.stereo.parity.GeometricParity;
-import org.openscience.cdk.hash.stereo.parity.PermutationParity;
 
 import java.util.Arrays;
 
@@ -39,7 +37,7 @@ import java.util.Arrays;
  * @cdk.module hash
  */
 @TestClass("org.openscience.cdk.hash.stereo.GeometryEncoderTest")
-public final class GeometryEncoder implements StereoEncoder {
+final class GeometryEncoder implements StereoEncoder {
 
     /* value for a clockwise configuration */
     private static final long CLOCKWISE     = 15543053;

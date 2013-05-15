@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.parity;
+package org.openscience.cdk.hash.stereo;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -45,8 +45,8 @@ import javax.vecmath.Point2d;
  *      T and Wisniewski, J.L. 2001</a>
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.parity.Tetrahedral2DParityTest")
-public final class Tetrahedral2DParity implements GeometricParity {
+@TestClass("org.openscience.cdk.hash.stereo.Tetrahedral2DParityTest")
+final class Tetrahedral2DParity implements GeometricParity {
 
     /* four coordinates */
     private final Point2d[] coordinates;

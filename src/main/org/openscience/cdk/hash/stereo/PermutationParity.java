@@ -22,22 +22,40 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.stereo.parity;
+package org.openscience.cdk.hash.stereo;
 
 /**
- * Describes the geometric parity of a stereo configuration.
+ * Calculate the permutation parity on a given array of current values.
  *
  * @author John May
  * @cdk.module hash
+ * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of
+ *      a Permutation, Wikipedia</a>
  * @cdk.githash
  */
-public interface GeometricParity {
+public interface PermutationParity {
 
     /**
-     * Calculate the geometric parity.
-     *
-     * @return -1 odd, +1 even and 0 none
+     * Identity parity which always returns 1 (even). This is useful for
+     * configurations which do not require ordering, such as, double bonds with
+     * implicit hydrogens.
      */
-    public int parity();
+    public static final PermutationParity IDENTITY = new PermutationParity() {
+        @Override public int parity(long[] current) {
+            return 1;
+        }
+    };
+
+    /**
+     * Calculate the permutation parity of a permutation on the current values.
+     * The inversion parity counts whether we need to do an odd or even number
+     * of swaps to put the values in sorted order. If the values contain
+     * duplicates then the parity is returned as 0.
+     *
+     * @param current current values of invariants
+     * @return -1, odd number of swaps, +1, even number of swaps, 0, contains
+     *         duplicates
+     */
+    public int parity(long[] current);
 
 }

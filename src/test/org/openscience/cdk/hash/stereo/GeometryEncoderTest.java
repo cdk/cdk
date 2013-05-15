@@ -25,8 +25,6 @@
 package org.openscience.cdk.hash.stereo;
 
 import org.junit.Test;
-import org.openscience.cdk.hash.stereo.parity.GeometricParity;
-import org.openscience.cdk.hash.stereo.parity.PermutationParity;
 
 import java.util.Arrays;
 

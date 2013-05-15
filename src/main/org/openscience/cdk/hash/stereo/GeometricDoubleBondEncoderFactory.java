@@ -26,12 +26,6 @@ package org.openscience.cdk.hash.stereo;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.hash.stereo.parity.BasicPermutationParity;
-import org.openscience.cdk.hash.stereo.parity.CombinedPermutationParity;
-import org.openscience.cdk.hash.stereo.parity.DoubleBond2DParity;
-import org.openscience.cdk.hash.stereo.parity.DoubleBond3DParity;
-import org.openscience.cdk.hash.stereo.parity.GeometricParity;
-import org.openscience.cdk.hash.stereo.parity.PermutationParity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;

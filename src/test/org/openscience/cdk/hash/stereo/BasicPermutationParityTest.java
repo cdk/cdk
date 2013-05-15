@@ -25,7 +25,6 @@
 package org.openscience.cdk.hash.stereo;
 
 import org.junit.Test;
-import org.openscience.cdk.hash.stereo.parity.BasicPermutationParity;
 
 import static org.junit.Assert.assertEquals;
 
