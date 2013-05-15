@@ -218,10 +218,10 @@ public class FiguerasSSSRFinder {
 		List<List<IAtom>> path = new ArrayList<List<IAtom>>(OKatoms);
 		List<IAtom> intersection = new ArrayList<IAtom>();
 		List<IAtom> ring = new ArrayList<IAtom>();
-		for (int f = 0; f < OKatoms; f++)
+		for (final IAtom atom : molecule.atoms())
 		{
-			path.set(f, new ArrayList<IAtom>());
-			((List<IAtom>)molecule.getAtom(f).getProperty(PATH)).clear();
+			path.add(new ArrayList<IAtom>());
+            atom.getProperty(PATH, List.class).clear();
 		}
 		// Initialize the queue with nodes attached to rootNode
 		neighbors = molecule.getConnectedAtomsList(rootNode);
