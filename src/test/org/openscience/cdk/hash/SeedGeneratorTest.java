@@ -1,7 +1,6 @@
 package org.openscience.cdk.hash;
 
 import org.junit.Test;
-import org.openscience.cdk.hash.seed.AtomEncoder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 

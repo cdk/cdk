@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.seed;
+package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -63,8 +63,8 @@ import java.util.List;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.seed.ConjugatedAtomEncoderTest")
-public final class ConjugatedAtomEncoder implements AtomEncoder {
+@TestClass("org.openscience.cdk.hash.ConjugatedAtomEncoderTest")
+final class ConjugatedAtomEncoder implements AtomEncoder {
 
     /* ordered list of encoders */
     private final List<AtomEncoder> encoders;

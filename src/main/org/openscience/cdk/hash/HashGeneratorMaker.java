@@ -29,9 +29,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.equivalent.EquivalentSetFinder;
 import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
 import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSetUnion;
-import org.openscience.cdk.hash.seed.AtomEncoder;
-import org.openscience.cdk.hash.seed.BasicAtomEncoder;
-import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.factory.GeometricCumulativeDoubleBondFactory;
 import org.openscience.cdk.hash.stereo.factory.GeometricDoubleBondEncoderFactory;
@@ -43,11 +40,11 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.ATOMIC_NUMBER;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.FORMAL_CHARGE;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.FREE_RADICALS;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.MASS_NUMBER;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
+import static org.openscience.cdk.hash.BasicAtomEncoder.ATOMIC_NUMBER;
+import static org.openscience.cdk.hash.BasicAtomEncoder.FORMAL_CHARGE;
+import static org.openscience.cdk.hash.BasicAtomEncoder.FREE_RADICALS;
+import static org.openscience.cdk.hash.BasicAtomEncoder.MASS_NUMBER;
+import static org.openscience.cdk.hash.BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
 
 /**
  * Fluent API for creating hash generators. The maker is first configured with

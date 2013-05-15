@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.seed;
+package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -46,8 +46,8 @@ import org.openscience.cdk.interfaces.IAtomType;
  *      archive</a>
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.seed.BasicAtomEncoderTest")
-public enum BasicAtomEncoder implements AtomEncoder {
+@TestClass("org.openscience.cdk.hash.BasicAtomEncoderTest")
+enum BasicAtomEncoder implements AtomEncoder {
 
     /**
      * Encode the atomic number of an atom.

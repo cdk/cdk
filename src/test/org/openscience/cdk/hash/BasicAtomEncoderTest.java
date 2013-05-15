@@ -22,9 +22,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.seed;
+package org.openscience.cdk.hash;
 
 import org.junit.Test;
+import org.openscience.cdk.hash.AtomEncoder;
+import org.openscience.cdk.hash.BasicAtomEncoder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;

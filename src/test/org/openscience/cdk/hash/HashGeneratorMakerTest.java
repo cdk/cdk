@@ -27,8 +27,6 @@ package org.openscience.cdk.hash;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.hash.equivalent.EquivalentSetFinder;
-import org.openscience.cdk.hash.seed.AtomEncoder;
-import org.openscience.cdk.hash.seed.ConjugatedAtomEncoder;
 import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
 
 import java.lang.reflect.Field;
@@ -42,11 +40,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.ATOMIC_NUMBER;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.FORMAL_CHARGE;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.FREE_RADICALS;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.MASS_NUMBER;
-import static org.openscience.cdk.hash.seed.BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
+import static org.openscience.cdk.hash.BasicAtomEncoder.ATOMIC_NUMBER;
+import static org.openscience.cdk.hash.BasicAtomEncoder.FORMAL_CHARGE;
+import static org.openscience.cdk.hash.BasicAtomEncoder.FREE_RADICALS;
+import static org.openscience.cdk.hash.BasicAtomEncoder.MASS_NUMBER;
+import static org.openscience.cdk.hash.BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
 
 /**
  * @author John May

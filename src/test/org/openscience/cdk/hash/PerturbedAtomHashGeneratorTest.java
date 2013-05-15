@@ -30,7 +30,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSet;
-import org.openscience.cdk.hash.seed.BasicAtomEncoder;
 import org.openscience.cdk.hash.stereo.factory.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
