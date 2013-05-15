@@ -22,13 +22,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.equivalent;
+package org.openscience.cdk.hash;
 
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.hash.AllEquivalentCyclicSet;
+import org.openscience.cdk.hash.EquivalentSetFinder;
 import org.openscience.cdk.hash.HashGeneratorMaker;
+import org.openscience.cdk.hash.MinimumEquivalentCyclicSetUnion;
 import org.openscience.cdk.hash.MoleculeHashGenerator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -41,12 +44,13 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 
 /**
  * @author John May
  * @cdk.module test-hash
  */
-public class AllEquivalentCyclicSetTest {
+public class MinimumEquivalentCyclicSetUnionTest {
 
     @Test
     public void testFind() throws Exception {
@@ -60,30 +64,27 @@ public class AllEquivalentCyclicSetTest {
                                 {0},
                                 {3}};
 
-        // this mock the invariants
+        // mock the invariants
         long[] values = new long[]{
                 1,
-                0,
-                0,
+                4,
+                3,
                 1,
-                0,
-                0,
-                2,
-                2
+                3,
+                5,
+                7,
+                8
         };
 
         EquivalentSetFinder finder = new AllEquivalentCyclicSet();
         Set<Integer> set = finder.find(values, dummy, g);
 
-        assertThat(set.size(), is(6));
+        assertThat(set.size(), is(4));
         // the first size vertex are all in a cycle
         assertTrue(set.contains(0));
-        assertTrue(set.contains(1));
         assertTrue(set.contains(2));
         assertTrue(set.contains(3));
         assertTrue(set.contains(4));
-        assertTrue(set.contains(5));
-
     }
 
     @Test
@@ -98,16 +99,16 @@ public class AllEquivalentCyclicSetTest {
                                 {0},
                                 {3}};
 
-        // all values distinct
+        // mock the invariants
         long[] values = new long[]{
-                10,
-                11,
-                12,
-                13,
-                14,
-                15,
-                16,
-                17
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
         };
 
         EquivalentSetFinder finder = new AllEquivalentCyclicSet();
@@ -117,125 +118,123 @@ public class AllEquivalentCyclicSetTest {
     }
 
     /**
-     * Test the method at perturbing the 2D representations of CID 138898 and
-     * CID 241107. These molecules are very similar but distinct. To tell these
-     * apart we must use {@link AllEquivalentCyclicSet} opposed to the faster
-     * methods. This test also serves to demonstrates the basic equivalent set
-     * finder does not tell them apart but that this more complex finder does.
+     * Test the method at perturbing the 2D representations of CID 44333798 and
+     * CID 57170558. These molecules are similar but distinct. To tell these
+     * apart we must use {@link org.openscience.cdk.hash.MinimumEquivalentCyclicSetUnion} opposed to the
+     * faster method. This test serves to demonstrates the basic equivalent set
+     * finder does not tell them apart but that a more comprehensive set finder
+     * does.
      */
-    @Test
-    public void testScenario() throws Exception {
+    @Test public void testScenario() {
 
-        IAtomContainer cid138898 = cid138898();
-        IAtomContainer cid241107 = cid241107();
+        IAtomContainer cid4433798 = cid44333798();
+        IAtomContainer cid57170558 = cid57170558();
 
         MoleculeHashGenerator basic = new HashGeneratorMaker().depth(12)
                                                               .elemental()
                                                               .perturbed()
                                                               .molecular();
         // basic equivalence method can't tell these apart
-        assertThat(basic.generate(cid138898), is(basic.generate(cid241107)));
+        assertThat(basic.generate(cid4433798), is(basic.generate(cid57170558)));
 
         MoleculeHashGenerator cmplx = new HashGeneratorMaker().depth(12)
                                                               .elemental()
-                                                              .perturbWith(new AllEquivalentCyclicSet())
+                                                              .perturbWith(new MinimumEquivalentCyclicSetUnion())
                                                               .molecular();
 
         // complex equivalence method can tell these apart
-        assertThat(cmplx.generate(cid138898), is(not(cmplx.generate(cid241107))));
-
+        assertThat(cmplx.generate(cid4433798), is(not(cmplx.generate(cid57170558))));
     }
 
     /**
-     * PubChem-Compound CID 241107 CC12CC3(SC(S3)(CC(S1)(S2)C)C)C
+     * CC1=CC=C(C=C1)N2C3CCC2CC3
      *
-     * @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-10(4,14-8)6-9(3,11-7)12-7/h5-6H2,1-4H3
+     * @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14-12-6-7-13(14)9-8-12/h2-5,12-13H,6-9H2,1H3
      */
-    private IAtomContainer cid241107() {
+    private IAtomContainer cid44333798() {
         IAtomContainer m = new AtomContainer(14, 16, 0, 0);
         IAtom[] as = new IAtom[]{
                 new Atom("C"),
                 new Atom("C"),
                 new Atom("C"),
                 new Atom("C"),
-                new Atom("S"),
-                new Atom("C"),
-                new Atom("S"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("S"),
-                new Atom("S"),
                 new Atom("C"),
                 new Atom("C"),
                 new Atom("C"),
-        };
-        IBond[] bs = new IBond[]{
-                new Bond(as[1], as[0]),
-                new Bond(as[2], as[1]),
-                new Bond(as[3], as[2]),
-                new Bond(as[4], as[3]),
-                new Bond(as[5], as[4]),
-                new Bond(as[6], as[5]),
-                new Bond(as[6], as[3]),
-                new Bond(as[7], as[5]),
-                new Bond(as[8], as[7]),
-                new Bond(as[9], as[8]),
-                new Bond(as[9], as[1]),
-                new Bond(as[10], as[8]),
-                new Bond(as[10], as[1]),
-                new Bond(as[11], as[8]),
-                new Bond(as[12], as[5]),
-                new Bond(as[13], as[3]),
-        };
-        m.setAtoms(as);
-        m.setBonds(bs);
-        return m;
-    }
-
-    /**
-     * PubChem-Compound CID 138898 CC12CC3(SC(S1)(CC(S2)(S3)C)C)C
-     *
-     * @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-9(3,11-7)6-10(4,12-7)14-8/h5-6H2,1-4H3
-     */
-    private IAtomContainer cid138898() {
-        IAtomContainer m = new AtomContainer(14, 16, 0, 0);
-        IAtom[] as = new IAtom[]{
+                new Atom("N"),
                 new Atom("C"),
                 new Atom("C"),
                 new Atom("C"),
-                new Atom("C"),
-                new Atom("S"),
-                new Atom("C"),
-                new Atom("S"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("S"),
-                new Atom("S"),
                 new Atom("C"),
                 new Atom("C"),
                 new Atom("C"),
         };
         IBond[] bs = new IBond[]{
                 new Bond(as[1], as[0]),
-                new Bond(as[2], as[1]),
+                new Bond(as[2], as[1], DOUBLE),
                 new Bond(as[3], as[2]),
-                new Bond(as[4], as[3]),
+                new Bond(as[4], as[3], DOUBLE),
                 new Bond(as[5], as[4]),
-                new Bond(as[6], as[5]),
+                new Bond(as[6], as[5], DOUBLE),
                 new Bond(as[6], as[1]),
-                new Bond(as[7], as[5]),
+                new Bond(as[7], as[4]),
                 new Bond(as[8], as[7]),
                 new Bond(as[9], as[8]),
-                new Bond(as[9], as[1]),
-                new Bond(as[10], as[8]),
-                new Bond(as[10], as[3]),
-                new Bond(as[11], as[8]),
-                new Bond(as[12], as[5]),
-                new Bond(as[13], as[3]),
+                new Bond(as[10], as[9]),
+                new Bond(as[11], as[10]),
+                new Bond(as[11], as[7]),
+                new Bond(as[12], as[11]),
+                new Bond(as[13], as[12]),
+                new Bond(as[13], as[8]),
         };
         m.setAtoms(as);
         m.setBonds(bs);
         return m;
     }
 
+    /**
+     * CC1=CC=C(C=C1)N(C2CC2)C3CC3
+     *
+     * @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14(12-6-7-12)13-8-9-13/h2-5,12-13H,6-9H2,1H3
+     */
+    private IAtomContainer cid57170558() {
+        IAtomContainer m = new AtomContainer(14, 16, 0, 0);
+        IAtom[] as = new IAtom[]{
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("N"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C"),
+        };
+        IBond[] bs = new IBond[]{
+                new Bond(as[1], as[0]),
+                new Bond(as[2], as[1], DOUBLE),
+                new Bond(as[3], as[2]),
+                new Bond(as[4], as[3], DOUBLE),
+                new Bond(as[5], as[4]),
+                new Bond(as[6], as[5], DOUBLE),
+                new Bond(as[6], as[1]),
+                new Bond(as[7], as[4]),
+                new Bond(as[8], as[7]),
+                new Bond(as[9], as[8]),
+                new Bond(as[10], as[9]),
+                new Bond(as[10], as[8]),
+                new Bond(as[11], as[7]),
+                new Bond(as[12], as[11]),
+                new Bond(as[13], as[12]),
+                new Bond(as[13], as[11]),
+        };
+        m.setAtoms(as);
+        m.setBonds(bs);
+        return m;
+    }
 }

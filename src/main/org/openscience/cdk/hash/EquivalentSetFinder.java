@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.equivalent;
+package org.openscience.cdk.hash;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -41,7 +41,7 @@ import java.util.Set;
  * @cdk.module hash
  * @cdk.githash
  */
-public interface EquivalentSetFinder {
+abstract class EquivalentSetFinder {
 
     /**
      * Find a set of equivalent vertices (atoms) and return this set as an array
@@ -52,6 +52,6 @@ public interface EquivalentSetFinder {
      * @param graph      adjacency list representation of the graph
      * @return set of equivalent vertices
      */
-    public Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph);
+    abstract Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph);
 
 }

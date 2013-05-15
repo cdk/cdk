@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.equivalent;
+package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -60,15 +60,15 @@ import java.util.TreeSet;
  * @see MinimumEquivalentCyclicSetUnion
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.equivalent.AllEquivalentCyclicSetTest")
-public final class AllEquivalentCyclicSet implements EquivalentSetFinder {
+@TestClass("org.openscience.cdk.hash.AllEquivalentCyclicSetTest")
+final class AllEquivalentCyclicSet extends EquivalentSetFinder {
 
     /**
      * @inheritDoc
      */
     @Override
     @TestMethod("testFind,testFind_Distinct,testScenario")
-    public Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {
+    Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {
 
         int n = invariants.length;
 

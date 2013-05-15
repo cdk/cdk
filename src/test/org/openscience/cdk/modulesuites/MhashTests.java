@@ -29,7 +29,7 @@ import org.openscience.cdk.hash.HashCodeScenarios;
 import org.openscience.cdk.hash.HashGeneratorMakerTest;
 import org.openscience.cdk.hash.PerturbedAtomHashGeneratorTest;
 import org.openscience.cdk.hash.XorshiftTest;
-import org.openscience.cdk.hash.equivalent.MinimumEquivalentCyclicSetTest;
+import org.openscience.cdk.hash.MinimumEquivalentCyclicSetTest;
 import org.openscience.cdk.hash.BasicAtomEncoderTest;
 import org.openscience.cdk.hash.ConjugatedAtomEncoderTest;
 import org.openscience.cdk.hash.stereo.BasicPermutationParityTest;

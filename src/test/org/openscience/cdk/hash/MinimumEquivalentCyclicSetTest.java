@@ -22,9 +22,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.hash.equivalent;
+package org.openscience.cdk.hash;
 
 import org.junit.Test;
+import org.openscience.cdk.hash.EquivalentSetFinder;
+import org.openscience.cdk.hash.MinimumEquivalentCyclicSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Set;
