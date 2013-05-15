@@ -51,7 +51,7 @@ import java.util.Arrays;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest")
-public class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
+final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
 
     /* generator for atom hashes */
     private final AtomHashGenerator generator;

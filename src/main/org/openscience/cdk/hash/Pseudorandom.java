@@ -28,10 +28,10 @@ package org.openscience.cdk.hash;
  * A pseudorandom number generator.
  *
  * @author John May
- * @cdk.module interfaces
+ * @cdk.module hash
  * @cdk.githash
  */
-public interface Pseudorandom {
+abstract class Pseudorandom {
 
     /**
      * Generate a pseudorandom number for the given seed.
@@ -39,5 +39,5 @@ public interface Pseudorandom {
      * @param seed seeding value for the random number generator
      * @return next pseudorandom number
      */
-    public long next(long seed);
+    abstract long next(long seed);
 }

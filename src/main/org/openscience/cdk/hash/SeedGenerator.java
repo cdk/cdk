@@ -56,7 +56,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @see org.openscience.cdk.hash.seed.ConjugatedAtomEncoder
  */
 @TestClass("org.openscience.cdk.hash.SeedGeneratorTest")
-public final class SeedGenerator extends AbstractHashGenerator
+final class SeedGenerator extends AbstractHashGenerator
         implements AtomHashGenerator {
 
     /* used to encode atom attributes */

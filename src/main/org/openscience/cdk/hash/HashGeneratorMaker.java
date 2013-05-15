@@ -87,7 +87,7 @@ import static org.openscience.cdk.hash.seed.BasicAtomEncoder.ORBITAL_HYBRIDIZATI
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.HashGeneratorMakerTest")
-public class HashGeneratorMaker {
+public final class HashGeneratorMaker {
 
     /* no default depth */
     private int depth = -1;

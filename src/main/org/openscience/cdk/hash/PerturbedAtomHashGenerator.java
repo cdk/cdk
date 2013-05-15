@@ -66,7 +66,7 @@ import java.util.Set;
  * @see HashGeneratorMaker
  */
 @TestClass("org.openscience.cdk.hash.PerturbedAtomHashGeneratorTest")
-public final class PerturbedAtomHashGenerator extends AbstractHashGenerator
+final class PerturbedAtomHashGenerator extends AbstractHashGenerator
         implements AtomHashGenerator {
 
     /* creates stereo encoders for IAtomContainers */

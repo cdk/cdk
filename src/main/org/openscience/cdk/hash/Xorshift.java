@@ -37,7 +37,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module hash
  */
 @TestClass("org.openscience.cdk.hash.XorshiftTest")
-public final class Xorshift implements Pseudorandom {
+final class Xorshift extends Pseudorandom {
 
     /**
      * Generate the next pseudorandom number for the provided <i>seed</i>.
@@ -46,7 +46,7 @@ public final class Xorshift implements Pseudorandom {
      * @return the next pseudorandom number
      */
     @TestMethod("testNext,testDistribution,demonstrateZeroLimitation")
-    @Override public long next(long seed) {
+    @Override long next(long seed) {
         seed = seed ^ seed << 21;
         seed = seed ^ seed >>> 35;
         return seed ^ seed << 4;
