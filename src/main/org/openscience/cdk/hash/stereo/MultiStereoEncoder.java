@@ -42,7 +42,7 @@ import java.util.List;
  * @cdk.module hash
  */
 @TestClass("org.openscience.cdk.hash.stereo.MultiStereoEncoderTest")
-public final class MultiStereoEncoder implements StereoEncoder {
+final class MultiStereoEncoder implements StereoEncoder {
 
     /* indices of unconfigured encoders */
     private final BitSet              unconfigured;

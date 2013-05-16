@@ -46,7 +46,7 @@ import javax.vecmath.Point2d;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.stereo.Tetrahedral2DParityTest")
-final class Tetrahedral2DParity implements GeometricParity {
+final class Tetrahedral2DParity extends GeometricParity {
 
     /* four coordinates */
     private final Point2d[] coordinates;

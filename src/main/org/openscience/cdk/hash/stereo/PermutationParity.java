@@ -33,7 +33,7 @@ package org.openscience.cdk.hash.stereo;
  *      a Permutation, Wikipedia</a>
  * @cdk.githash
  */
-public interface PermutationParity {
+abstract class PermutationParity {
 
     /**
      * Identity parity which always returns 1 (even). This is useful for
@@ -56,6 +56,6 @@ public interface PermutationParity {
      * @return -1, odd number of swaps, +1, even number of swaps, 0, contains
      *         duplicates
      */
-    public int parity(long[] current);
+    abstract int parity(long[] current);
 
 }

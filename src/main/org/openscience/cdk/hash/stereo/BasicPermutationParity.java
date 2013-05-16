@@ -36,7 +36,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.stereo.BasicPermutationParityTest")
-final class BasicPermutationParity implements PermutationParity {
+final class BasicPermutationParity extends PermutationParity {
 
     private final int[] indices;
 

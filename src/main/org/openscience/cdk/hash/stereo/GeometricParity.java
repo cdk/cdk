@@ -31,13 +31,13 @@ package org.openscience.cdk.hash.stereo;
  * @cdk.module hash
  * @cdk.githash
  */
-public interface GeometricParity {
+abstract class GeometricParity {
 
     /**
      * Calculate the geometric parity.
      *
      * @return -1 odd, +1 even and 0 none
      */
-    public int parity();
+    abstract int parity();
 
 }

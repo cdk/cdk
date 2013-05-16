@@ -40,7 +40,7 @@ import javax.vecmath.Point3d;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.stereo.DoubleBond3DParityTest")
-final class DoubleBond3DParity implements GeometricParity {
+final class DoubleBond3DParity extends GeometricParity {
 
 
     // coordinates of the double bond atoms:
