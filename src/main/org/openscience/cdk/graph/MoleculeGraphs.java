@@ -45,7 +45,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module standard
  * @cdk.githash
  *
- * @cdk.builddepends jgrapht-0.5.3.jar
  */
 @TestClass("org.openscience.cdk.graph.MoleculeGraphsTest")
 public class MoleculeGraphs {
