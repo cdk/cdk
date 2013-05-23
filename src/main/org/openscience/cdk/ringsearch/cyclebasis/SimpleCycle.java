@@ -43,7 +43,6 @@ import java.util.*;
  * @cdk.keyword ring search
  * 
  * @cdk.builddepends jgrapht-0.5.3.jar
- * @cdk.depends jgrapht-0.5.3.jar
  */
 @TestClass("org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleTest")
 public class SimpleCycle extends UndirectedSubgraph {

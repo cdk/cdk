@@ -47,7 +47,6 @@ import java.util.List;
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @cdk.builddepends xom-1.1.jar
- * @cdk.depends xom-1.1.jar
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreUtilityTest")
 public class PharmacophoreUtils {

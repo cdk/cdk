@@ -31,8 +31,6 @@ import org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest;
  * TestSuite that runs all the sample tests.
  *
  * @cdk.module  test-qsarprotein
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

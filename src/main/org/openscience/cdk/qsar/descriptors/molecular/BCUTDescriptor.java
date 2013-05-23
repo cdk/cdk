@@ -117,7 +117,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2004-11-30
  * @cdk.builddepends Jama-1.0.1.jar
- * @cdk.depends Jama-1.0.1.jar
  * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.set qsar-descriptors

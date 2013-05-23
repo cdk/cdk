@@ -33,8 +33,6 @@ import org.openscience.cdk.tools.SaturationCheckerTest;
  * TestSuite that runs all the tests for the valency module.
  *
  * @cdk.module  test-valencycheck
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

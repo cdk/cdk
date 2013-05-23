@@ -67,8 +67,6 @@ import org.openscience.cdk.silent.StrandTest;
  * TestSuite that runs the tests from the silent module.
  *
  * @cdk.module  test-silent
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

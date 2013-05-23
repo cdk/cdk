@@ -60,8 +60,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
  * TestSuite that runs all the sample tests.
  *
  * @cdk.module test-qsaratomic
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

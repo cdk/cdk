@@ -83,8 +83,6 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
  * TestSuite that runs all the tests for the CDK reaction module.
  *
  * @cdk.module  test-reaction
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

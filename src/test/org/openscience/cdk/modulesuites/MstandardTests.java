@@ -118,8 +118,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
  * TestSuite that runs all the tests for the CDK standard module.
  *
  * @cdk.module  test-standard
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

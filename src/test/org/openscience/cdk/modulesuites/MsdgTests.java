@@ -34,8 +34,6 @@ import org.openscience.cdk.layout.TemplateHandlerTest;
  * TestSuite that runs all the tests for the sdg module.
  *
  * @cdk.module  test-sdg
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

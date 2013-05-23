@@ -33,8 +33,6 @@ import org.openscience.cdk.coverage.ChargesCoverageTest;
  * TestSuite that runs all the sample tests for the charges module.
  *
  * @cdk.module test-charges
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

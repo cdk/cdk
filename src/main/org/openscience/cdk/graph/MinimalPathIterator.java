@@ -50,7 +50,6 @@ import java.util.*;
  * @cdk.githash
  *
  * @cdk.builddepends jgrapht-0.5.3.jar
- * @cdk.depends jgrapht-0.5.3.jar
  */
 @TestClass("org.openscience.cdk.graph.MinimalPathIteratorTest")
 public class MinimalPathIterator implements Iterator {

@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @cdk.created    2003-04-06
  * @cdk.keyword    dictionary
- * @cdk.depends    xom.jar
  * @cdk.module     dict
  */
 @TestClass("org.openscience.cdk.dict.DictDBTest")
