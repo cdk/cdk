@@ -36,7 +36,6 @@ import org.openscience.cdk.similarity.TanimotoTest;
  * TestSuite that runs all the sample tests.
  *
  * @cdk.module  test-fingerprint
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

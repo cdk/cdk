@@ -51,7 +51,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword  dictionary
  * @cdk.module   dict
  *
- * @cdk.depends  xom-1.0.jar
  */
 public class OWLReact extends Dictionary {
 

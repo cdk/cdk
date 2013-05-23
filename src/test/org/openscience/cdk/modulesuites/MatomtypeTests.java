@@ -32,8 +32,6 @@ import org.openscience.cdk.coverage.AtomtypeCoverageTest;
  * TestSuite that runs all the tests for the CDK core module.
  *
  * @cdk.module  test-atomtype
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

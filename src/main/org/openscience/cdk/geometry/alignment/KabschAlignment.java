@@ -90,7 +90,6 @@ import Jama.Matrix;
  * @author           Rajarshi Guha
  * @cdk.created      2004-12-11
  * @cdk.builddepends Jama-1.0.1.jar
- * @cdk.depends      Jama-1.0.1.jar
  * @cdk.dictref      blue-obelisk:alignmentKabsch
  * @cdk.githash
  */

@@ -34,8 +34,6 @@ import org.openscience.cdk.tools.IonizationPotentialToolTest;
  * TestSuite that runs all the tests for the CDK reaction module.
  *
  * @cdk.module  test-ionpot
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

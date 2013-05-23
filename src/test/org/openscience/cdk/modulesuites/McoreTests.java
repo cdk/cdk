@@ -62,8 +62,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
  * TestSuite that runs all the tests for the CDK core module.
  *
  * @cdk.module  test-core
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

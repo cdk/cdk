@@ -34,8 +34,6 @@ import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescr
  * TestSuite that runs all the sample tests.
  *
  * @cdk.module  test-qsarbond
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={

@@ -51,7 +51,6 @@ import java.util.*;
  * @cdk.githash
  *
  * @cdk.builddepends jgrapht-0.5.3.jar
- * @cdk.depends jgrapht-0.5.3.jar
  */
 
 public class SimpleCycleBasis {

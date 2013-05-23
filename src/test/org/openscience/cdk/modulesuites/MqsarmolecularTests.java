@@ -31,8 +31,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.*;
  * TestSuite that runs all the sample tests.
  *
  * @cdk.module  test-qsarmolecular
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  * 
  * @cdk.bug     1860497
  */

@@ -118,7 +118,6 @@ import Jama.Matrix;
  * @author Rajarshi Guha
  * @cdk.created 2004-12-1
  * @cdk.builddepends Jama-1.0.1.jar
- * @cdk.depends Jama-1.0.1.jar
  * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.set qsar-descriptors

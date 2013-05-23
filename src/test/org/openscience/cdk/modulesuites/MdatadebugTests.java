@@ -72,8 +72,6 @@ import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
  * TestSuite that runs the datadebug tests.
  *
  * @cdk.module  test-datadebug
- * @cdk.depends log4j.jar
- * @cdk.depends junit.jar
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
