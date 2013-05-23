@@ -58,7 +58,6 @@ import java.util.List;
  * @cdk.keyword ring search
  * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Berger
  * 
- * @cdk.builddepends jgrapht-0.5.3.jar
  */
 @TestClass("org.openscience.cdk.ringsearch.SSSRFinderTest")
 public class SSSRFinder {

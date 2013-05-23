@@ -84,7 +84,6 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @cdk.module log4j
  * @cdk.githash
- * @cdk.builddepends log4j.jar
  */
 @TestClass("org.openscience.cdk.tools.LoggingToolTest")
 public class LoggingTool implements ILoggingTool {
