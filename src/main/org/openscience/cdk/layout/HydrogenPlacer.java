@@ -61,12 +61,13 @@ public class HydrogenPlacer {
 	    for (int f = 0; f < atomContainer.getAtomCount();f++)
 	    {
 	        atom = atomContainer.getAtom(f);
-//	        if (!atom.getSymbol().equals("H"))
-//	        {
+            // only place hydrogens when for atoms which have coordinates
+	        if (atom.getPoint2d() != null)
+	        {
 	            if (debug1) System.out.println("Now placing hydrogens at atom " + f);
 	            logger.debug("Now placing hydrogens at atom " + f);
 	            placeHydrogens2D(atomContainer, atom, bondLength);
-//	        }
+	        }
 	    }
 	    logger.debug("Hydrogen Placement finished");
 	}
