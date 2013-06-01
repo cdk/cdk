@@ -942,25 +942,23 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
     }
 
-  /**
-   * Tests case where calling generateExperimentalCoordinates
-   * threw an NPE.
-   * 
-   * @throws Exception if the test failed
-   * @cdk.bug 1269
-  */
-@Test (timeout=5000, expected=CDKException.class)
-public void testBug1269() throws Exception {
-     
-     SmilesParser sp = 
-         new SmilesParser(SilentChemObjectBuilder.getInstance());
-     String smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
-     IAtomContainer mol = sp.parseSmiles(smiles);
+    /**
+     * Tests case where calling generateExperimentalCoordinates threw an NPE.
+     *
+     * @cdk.bug 1269
+     */
+    @Test(timeout = 5000)
+    public void testBug1269() throws Exception {
 
-     StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-     sdg.setMolecule(mol);
-     sdg.generateExperimentalCoordinates(new Vector2d(0, 1));
-}
+        SmilesParser sp =
+                new SmilesParser(SilentChemObjectBuilder.getInstance());
+        String smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
+        IAtomContainer mol = sp.parseSmiles(smiles);
+
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setMolecule(mol);
+        sdg.generateExperimentalCoordinates(new Vector2d(0, 1));
+    }
 
   /**
    * Does the SDG handle non-connected molecules?
