@@ -33,11 +33,19 @@ import org.openscience.cdk.interfaces.IRingSet;
  */
 public class RingMembershipAtom extends SMARTSAtom {
 	private static final long serialVersionUID = -7963168231557641862L;
-	/**
-	 * Number of SSSR
-	 */
+
+    /** Number of rings to which this atom belongs, if < 0 check any ring membership. */
 	private int numSSSR;
 
+    /**
+     * Ring membership query atom. Check if the an atom belongs to <i>num</i> of
+     * rings. To specify any ring membership, <i>num</i> should be specified as
+     * < 0. Generally in SMARTS it's better negate ring membership with {@code
+     * [!R]} however for legacy reasons {@code [R0]} was accepted and checks
+     * this atoms belongs to 0 rings.
+     *
+     * @param num number of rings which this atom belongs to, < 0 any ring.
+     */
 	public RingMembershipAtom(int num, IChemObjectBuilder builder) {
         super(builder);
 		this.numSSSR = num;
@@ -49,7 +57,8 @@ public class RingMembershipAtom extends SMARTSAtom {
 	public boolean matches(IAtom atom) {
 		if (atom.getFlag(CDKConstants.ISINRING)) {
 			IRingSet ringSet = (IRingSet)atom.getProperty(CDKConstants.SMALLEST_RINGS);
-			return ringSet.getAtomContainerCount() == numSSSR;
+            // < 0 means any ring, as you can see below R0 is valid
+			return numSSSR < 0 || ringSet.getAtomContainerCount() == numSSSR;
 		} else {
             if (numSSSR == 0) return true;
         }

@@ -687,7 +687,7 @@ void Valence() #Valence :
 void RingMembership() #RingMembership : 
 { StringBuffer digits = new StringBuffer(); }
 {
-    <R> { jjtThis.setNumOfMembership(1); } 
+    <R> { jjtThis.setNumOfMembership(-1); }
     [ ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setNumOfMembership( Integer.parseInt(digits.toString()) ); } ]
 }
