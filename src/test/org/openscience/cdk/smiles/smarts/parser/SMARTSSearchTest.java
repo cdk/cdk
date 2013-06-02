@@ -44,6 +44,9 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import java.io.InputStream;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 /**
  * JUnit test routines for the SMARTS substructure search.
  *
@@ -1658,6 +1661,17 @@ public class SMARTSSearchTest extends CDKTestCase {
         results = match("[#6]=[#6]", "C1=C(C=CC=C1)C2=CC=CC=C2");
         Assert.assertEquals(0, results[0]);
         Assert.assertEquals(0, results[1]);
+    }
+
+    /**
+     * Checks that when no number is specified for ring member ship any ring
+     * atom is matched.
+     *
+     * @cdk.bug 1168
+     */
+    @Test public void unspecifiedRingMembership() throws Exception {
+        assertThat(match("[#6+0&R]=[#6+0&!R]", "C1=C2CCCC2CCC1"),
+                   is(new int[]{0, 0}));
     }
 }
 
