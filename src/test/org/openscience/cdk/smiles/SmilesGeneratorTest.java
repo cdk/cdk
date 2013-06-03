@@ -854,6 +854,21 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
     
     /**
+     * @cdk.bug 1300
+     */
+    @Test public void testHydrogenOnChargedNitrogen() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makePyrrole();
+        mol.getAtom(1).setFormalCharge(-1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        SmilesGenerator smilesGenerator = new SmilesGenerator();
+        smilesGenerator.setUseAromaticityFlag(true);
+        String smiles = smilesGenerator.createSMILES(mol);
+        Assert.assertTrue(smiles.contains("[n-]"));
+    }
+
+    /**
      * @cdk.bug 2051597
      */
     @Test public void testSFBug2051597() throws Exception {
