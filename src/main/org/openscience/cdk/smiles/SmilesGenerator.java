@@ -1652,7 +1652,8 @@ public class SmilesGenerator
 			boolean isSpecialNitrogen =
 				a.getSymbol().equals("N") &&
 				a.getHybridization() == IAtomType.Hybridization.PLANAR3 &&
-				container.getConnectedAtomsList(a).size() != 3;
+				container.getConnectedAtomsList(a).size() != 3 &&
+				(a.getFormalCharge() == null || a.getFormalCharge() == 0);
 			brackets = brackets | isSpecialNitrogen;
 			
 			if (chiral && stereo && (BondTools.isTrigonalBipyramidalOrOctahedral(container, a)!=0 || BondTools.isSquarePlanar(container, a) || BondTools.isTetrahedral(container, a,false) != 0 || BondTools.isSquarePlanar(container, a)))
