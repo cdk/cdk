@@ -1645,7 +1645,18 @@ public class SmilesGenerator
 
 			String charge = generateChargeString(a);
 			brackets = brackets | !charge.equals("");
-
+			
+			// we put in a special check for N.planar3 cases such
+            // as for indole and pyrrole, which require an explicit
+            // H on the nitrogen. However this only makes sense when
+            // the connectivity is not 3 - so for a case such as n1ncn(c1)CC
+            // the PLANAR3 N already has 3 bonds, so don't add a H for this case
+			boolean isSpecialNitrogen =
+				a.getSymbol().equals("N") &&
+				a.getHybridization() == IAtomType.Hybridization.PLANAR3 &&
+				container.getConnectedAtomsList(a).size() != 3;
+			brackets = brackets | isSpecialNitrogen;
+			
 			if (chiral && stereo && (BondTools.isTrigonalBipyramidalOrOctahedral(container, a)!=0 || BondTools.isSquarePlanar(container, a) || BondTools.isTetrahedral(container, a,false) != 0 || BondTools.isSquarePlanar(container, a)))
 			{
 				brackets = true;
@@ -1662,8 +1673,8 @@ public class SmilesGenerator
                 // H on the nitrogen. However this only makes sense when
                 // the connectivity is not 3 - so for a case such as n1ncn(c1)CC
                 // the PLANAR3 N already has 3 bonds, so don't add a H for this case
-                if (a.getSymbol().equals("N") && a.getHybridization() == IAtomType.Hybridization.PLANAR3 && container.getConnectedAtomsList(a).size() != 3) {
-                    buffer.append("[").append(a.getSymbol().toLowerCase()).append("H]");
+                if (isSpecialNitrogen) {
+                    buffer.append(a.getSymbol().toLowerCase()).append("H");
                 } else buffer.append(a.getSymbol().toLowerCase());
 			} else
 			{
