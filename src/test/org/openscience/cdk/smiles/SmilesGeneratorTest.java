@@ -837,6 +837,21 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String smiles = smilesGenerator.createSMILES(mol);
         Assert.assertTrue(smiles.indexOf("[nH]") >= 0);
     }
+
+    /**
+     * @cdk.bug 1300
+     */
+    @Test public void testDoubleBracketProblem() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makePyrrole();
+        mol.getAtom(1).setFormalCharge(-1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        SmilesGenerator smilesGenerator = new SmilesGenerator();
+        smilesGenerator.setUseAromaticityFlag(true);
+        String smiles = smilesGenerator.createSMILES(mol);
+        Assert.assertFalse(smiles.contains("[[nH]-]"));
+    }
     
     /**
      * @cdk.bug 2051597
