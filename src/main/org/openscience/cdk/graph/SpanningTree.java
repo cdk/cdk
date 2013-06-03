@@ -67,11 +67,21 @@ public class SpanningTree {
 	private boolean disconnected;
 	private boolean identifiedBonds;
 
+    /**
+     * Is the molecule disconnected and has more then one component.
+     *
+     * @return the molecule is disconnected
+     */
     @TestMethod("testIsDisconnected")
     public boolean isDisconnected() {
 		return disconnected;
 	}
 
+    /**
+     * Create a new spanning tree for the provided molecule.
+     *
+     * @param atomContainer molecule to make a spanning tree for.
+     */
     @TestMethod("testSpanningTree_IAtomContainer")
     public SpanningTree(IAtomContainer atomContainer) {
 		identifiedBonds = false;
@@ -159,6 +169,11 @@ public class SpanningTree {
 		for (IAtom atom : atomContainer.atoms()) atom.removeProperty(ATOM_NUMBER);
 	}
 
+    /**
+     * Access the computed spanning tree of the input molecule.
+     *
+     * @return acyclic tree of the input molecule
+     */
     @TestMethod("testGetSpanningTree")
     public IAtomContainer getSpanningTree() {
 		IAtomContainer ac = molecule.getBuilder().newInstance(IAtomContainer.class);
@@ -168,6 +183,17 @@ public class SpanningTree {
 		return ac;
 	}
 
+    /**
+     * Find a path connected <i>a1</i> and <i>a2</i> in the tree. If there was
+     * an edge between <i>a1</i> and <i>a2</i> this path is a cycle.
+     *
+     * @param spt spanning tree
+     * @param a1  start of path (source)
+     * @param a2  end of path (target)
+     * @return a path through the spanning tree from the source to the target
+     * @throws NoSuchAtomException thrown if the atom is not in the spanning
+     *                             tree
+     */
     @TestMethod("testGetPath_IAtomContainer_IAtom_IAtom")
     public IAtomContainer getPath(IAtomContainer spt,IAtom a1, IAtom a2) throws NoSuchAtomException {
 		IAtomContainer path = spt.getBuilder().newInstance(IAtomContainer.class);
@@ -194,6 +220,14 @@ public class SpanningTree {
 		}
 	}
 
+    /**
+     * The basic rings of the spanning tree. Using the pruned edges, return any path
+     * which connects the end points of the pruned edge in the tree. These paths form
+     * cycles.
+     *
+     * @return basic rings
+     * @throws NoSuchAtomException atoms not found in the molecule
+     */
     @TestMethod("testGetBasicRings")
     public IRingSet getBasicRings() throws NoSuchAtomException {
 		IRingSet ringset = molecule.getBuilder().newInstance(IRingSet.class);
@@ -268,28 +302,40 @@ public class SpanningTree {
 		identifiedBonds = true;
 	}
 
-
+    /**
+     * All basic rings and the all pairs of basic rings share at least one edge
+     * combined.
+     *
+     * @return subset of all rings
+     * @throws NoSuchAtomException atom was not found in the molecule
+     * @see #getBasicRings()
+     */
     @TestMethod("testGetAllRings")
     public IRingSet getAllRings() throws NoSuchAtomException {
 		IRingSet ringset = getBasicRings();
 		IRing newring;
-		
+
 		int nBasicRings = ringset.getAtomContainerCount();
-		for (int i = 0; i < nBasicRings; i++) 
+		for (int i = 0; i < nBasicRings; i++)
 			getBondsInRing(molecule,(IRing) ringset.getAtomContainer(i), cb[i]);
-		
+
 		for (int i= 0; i < nBasicRings; i++) {
 			for (int j= i+1; j < nBasicRings; j++) {
 				//logger.debug("combining rings "+(i+1)+","+(j+1));
-				newring = combineRings(ringset, i, j);				
+				newring = combineRings(ringset, i, j);
 				//newring = combineRings((Ring)ringset.get(i),(Ring)ringset.get(j));
 				if (newring != null) ringset.addAtomContainer(newring);
 			}
 		}
-			
-		return ringset;
-	}	
 
+		return ringset;
+	}
+
+    /**
+     * Size of the spanning tree specified as the number of edges in the tree.
+     *
+     * @return number of edges in the spanning tree
+     */
     @TestMethod("testGetSpanningTreeSize")
     public int getSpanningTreeSize() {
 		return sptSize;
@@ -320,6 +366,8 @@ public class SpanningTree {
 	}
 
 	/**
+     * Number of acyclic bonds.
+     *
 	 * @return Returns the bondsAcyclicCount.
 	 */
     @TestMethod("testGetBondsAcyclicCount")
@@ -329,6 +377,8 @@ public class SpanningTree {
 	}
 
 	/**
+     * Number of cyclic bonds.
+     *
 	 * @return Returns the bondsCyclicCount.
 	 */
     @TestMethod("testGetBondsCyclicCount")
