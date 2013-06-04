@@ -29,7 +29,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -39,7 +38,6 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 
@@ -897,13 +895,19 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
     /**
+     * Tests that an atom which has not be configured with isotope information,
+     * provides the correct exact mass.
      * @cdk.bug 1944604
-     * @throws InvalidSmilesException
      */
     @Test
-    public void testSingleAtomFromSmiles() throws InvalidSmilesException {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("C");
+    public void testSingleAtomFromSmiles() throws CDKException {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(new Atom("C"));
+
+        // previously performed inside SmilesParser
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance()).addImplicitHydrogens(mol);
+
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(mol);
         double exactMass = MolecularFormulaManipulator.getTotalExactMass(mf);
         Assert.assertEquals(16.0313, exactMass, 0.0001);
