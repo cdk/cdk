@@ -35,7 +35,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -88,7 +88,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     @Test public void testOtherElements() throws Exception {
         boolean itIsInThere = false;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = MoleculeFactory.makeSteran();
+        IAtomContainer mol = TestMoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
         Assert.assertTrue(itIsInThere);
         mol.getAtom(0).setSymbol("N");
@@ -102,7 +102,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     @Test public void testOtherBondOrder() throws Exception {
         boolean itIsInThere = false;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = MoleculeFactory.makeSteran();
+        IAtomContainer mol = TestMoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
         Assert.assertTrue(itIsInThere);
         mol.getBond(0).setOrder(IBond.Order.DOUBLE);
@@ -115,7 +115,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 		logger.debug("***TestAddMolecule***");
 		boolean itIsInThere = false;
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+		IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
 		sdg.setMolecule(mol); sdg.generateCoordinates(); mol = sdg.getMolecule();
 
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
@@ -135,7 +135,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 		logger.debug("***TestRemoveMolecule***");
 		boolean itIsInThere = false;
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+		IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
 		sdg.setMolecule(mol); sdg.generateCoordinates(); mol = sdg.getMolecule();
 		
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";

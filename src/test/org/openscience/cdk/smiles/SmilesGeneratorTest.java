@@ -842,7 +842,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1300
      */
     @Test public void testDoubleBracketProblem() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -857,7 +857,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 1300
      */
     @Test public void testHydrogenOnChargedNitrogen() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
