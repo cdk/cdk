@@ -280,65 +280,78 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         IAtomContainer mol1 = new AtomContainer();
 		SmilesGenerator sg = new SmilesGenerator();
-		mol1.addAtom(new Atom("H", new Point2d(1, 0)));
-		// 1
-		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
-		// 2
-		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
-		// 3
-		mol1.addAtom(new Atom("C", new Point2d(0, 0)));
-		// 4
-		mol1.addAtom(new Atom("C", new Point2d(1, 4)));
-		// 5
-		mol1.addAtom(new Atom("C", new Point2d(1, 5)));
-		// 6
-		mol1.addAtom(new Atom("C", new Point2d(1, 6)));
-		// 7
-		mol1.addAtom(new Atom("H", new Point2d(1, 0)));
-		// 1
-		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
-		// 2
-		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
-		// 3
-		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
-		// 2
-		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
-		// 3
-		mol1.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-		// 1
-		mol1.addBond(1, 2, IBond.Order.SINGLE);
-		// 2
-		mol1.addBond(2, 3, IBond.Order.SINGLE);
-		// 3
-		mol1.addBond(3, 4, IBond.Order.SINGLE);
-		// 4
-		mol1.addBond(4, 5, IBond.Order.SINGLE);
-		// 5
-		mol1.addBond(5, 6, IBond.Order.SINGLE);
-		// 6
-		mol1.addBond(6, 7, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-		// 3
-		mol1.addBond(6, 8, IBond.Order.SINGLE);
-		// 4
-		mol1.addBond(8, 9, IBond.Order.SINGLE);
-		// 5
-		mol1.addBond(9, 10, IBond.Order.SINGLE);
-		// 6
-		mol1.addBond(10, 11, IBond.Order.SINGLE);
-		// 6
-		mol1.addBond(11, 1, IBond.Order.SINGLE);
-		// 6
-		mol1.addBond(1, 6, IBond.Order.SINGLE);
-		// 6
 
-		addExplicitHydrogens(mol1);
-		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
+        mol1.addAtom(new Atom("H", new Point2d(0,  3)));    // 0
+        mol1.addAtom(new Atom("C", new Point2d(0,  1)));    // 1
+        mol1.addAtom(new Atom("C", new Point2d(0, -1)));    // 2
+        mol1.addAtom(new Atom("H", new Point2d(0, -3)));    // 3
+
+        mol1.addAtom(new Atom("C", new Point2d(1.5,  2)));  // 4
+        mol1.addAtom(new Atom("C", new Point2d(3,    1)));  // 5
+        mol1.addAtom(new Atom("C", new Point2d(3,   -1)));  // 6
+        mol1.addAtom(new Atom("C", new Point2d(1.5, -2)));  // 7
+
+        mol1.addAtom(new Atom("C", new Point2d(-1.5,  2))); // 8
+        mol1.addAtom(new Atom("C", new Point2d(-3,    1))); // 9
+        mol1.addAtom(new Atom("C", new Point2d(-3,   -1))); // 10
+        mol1.addAtom(new Atom("C", new Point2d(-1.5, -2))); // 11
+
+        mol1.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+		mol1.addBond(1, 2, IBond.Order.SINGLE);
+        mol1.addBond(2, 3, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+
+        mol1.addBond(1, 4, IBond.Order.SINGLE);
+		mol1.addBond(4, 5, IBond.Order.SINGLE);
+		mol1.addBond(5, 6, IBond.Order.SINGLE);
+        mol1.addBond(6, 7, IBond.Order.SINGLE);
+        mol1.addBond(7, 2, IBond.Order.SINGLE);
+
+        mol1.addBond(1, 8, IBond.Order.SINGLE);
+		mol1.addBond(8, 9, IBond.Order.SINGLE);
+		mol1.addBond(9, 10, IBond.Order.SINGLE);
+		mol1.addBond(10, 11, IBond.Order.SINGLE);
+        mol1.addBond(11, 2, IBond.Order.SINGLE);
+
+        // hydrogens in-lined from hydrogen adder/placer
+        mol1.addAtom(new Atom("H", new Point2d(2.16, 2.75)));
+        mol1.addBond(4, 12, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(0.84, 2.75)));
+        mol1.addBond(4, 13, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(3.98, 0.81)));
+        mol1.addBond(5, 14, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(3.38, 1.92)));
+        mol1.addBond(5, 15, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(3.38, -1.92)));
+        mol1.addBond(6, 16, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(3.98, -0.81)));
+        mol1.addBond(6, 17, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(0.84, -2.75)));
+        mol1.addBond(7, 18, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(2.16, -2.75)));
+        mol1.addBond(7, 19, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-0.84, 2.75)));
+        mol1.addBond(8, 20, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-2.16, 2.75)));
+        mol1.addBond(8, 21, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-3.38, 1.92)));
+        mol1.addBond(9, 22, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-3.98, 0.81)));
+        mol1.addBond(9, 23, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-3.98, -0.81)));
+        mol1.addBond(10, 24, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-3.38, -1.92)));
+        mol1.addBond(10, 25, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-2.16, -2.75)));
+        mol1.addBond(11, 26, IBond.Order.SINGLE);
+        mol1.addAtom(new Atom("H", new Point2d(-0.84, -2.75)));
+        mol1.addBond(11, 27, IBond.Order.SINGLE);
+
 		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
 		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
-		mol1.getBond(6).setStereo(IBond.Stereo.UP);
+		mol1.getBond(2).setStereo(IBond.Stereo.UP);
 		String smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
         Assert.assertThat(smiles1, is(not(smiles3)));
 	}
