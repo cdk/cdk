@@ -727,21 +727,15 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 * @cdk.bug 1014344
 	 */
 	@Test public void testTest() throws Exception {
-		String filename_cml = "data/mdl/9554.mol";
-		String filename_mol = "data/mdl/9553.mol";
+		String filename_cml = "data/mdl/9554-with-exp-hyd.mol";
+		String filename_mol = "data/mdl/9553-with-exp-hyd.mol";
 		InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_mol);
 		MDLV2000Reader reader1 = new MDLV2000Reader(ins1, Mode.STRICT);
         IAtomContainer mol1 = reader1.read(new AtomContainer());
-        addExplicitHydrogens(mol1);
-        StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol1);
-        sdg.generateCoordinates();
 		
         MDLV2000Reader reader2 = new MDLV2000Reader(ins2, Mode.STRICT);		
 		IAtomContainer mol2 = reader2.read(new AtomContainer());
-		addExplicitHydrogens(mol2);
-        sdg=new StructureDiagramGenerator(mol2);
-        sdg.generateCoordinates();
 		
 		SmilesGenerator sg = new SmilesGenerator();
 		
