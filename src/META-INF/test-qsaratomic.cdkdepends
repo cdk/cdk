@@ -17,7 +17,6 @@ cdk-smiles.jar
 cdk-test.jar
 cdk-builder3d.jar
 cdk-forcefield.jar
-cdk-sdg.jar
 cdk-test-qsar.jar
 cdk-dict.jar
 cdk-ionpot.jar
