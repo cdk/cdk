@@ -650,14 +650,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
-		addExplicitHydrogens(mol1);
-		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 		filename = "data/mdl/d-ala.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		IAtomContainer mol2 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
-		addExplicitHydrogens(mol2);
-		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
@@ -673,12 +669,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		IAtomContainer mol1 = reader.read(new AtomContainer());
-		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 		filename = "data/mdl/D+-glucose.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		IAtomContainer mol2 = reader.read(new AtomContainer());
-		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
