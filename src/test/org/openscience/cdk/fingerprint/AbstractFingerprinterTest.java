@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import static org.mockito.Mockito.mock;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test
  */
 public class AbstractFingerprinterTest extends CDKTestCase {
 
