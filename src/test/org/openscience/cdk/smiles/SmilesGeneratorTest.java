@@ -59,8 +59,6 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.layout.HydrogenPlacer;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -118,7 +116,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Assert.assertEquals("CCCC1CC1", smiles1);
 	}
 	
-	
+
 
 	/**
 	 *  A unit test for JUnit
@@ -126,7 +124,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testAlanin() throws Exception
 	{
-		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         IAtomContainer mol1 = new AtomContainer();
 		SmilesGenerator sg = new SmilesGenerator();
 		mol1.addAtom(new Atom("N", new Point2d(1, 0)));
@@ -192,7 +189,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testCisResorcinol() throws Exception
 	{
-		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         IAtomContainer mol1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 		SmilesGenerator sg = new SmilesGenerator();
 		mol1.addAtom(new Atom("O", new Point2d(3, 1)));
@@ -258,7 +254,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.addAtom(new Atom("H", new Point2d(4.00, 2.00)));
         mol1.addBond(8, 19, IBond.Order.SINGLE);
 
-		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
+        IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
 		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		Assert.assertNotNull(smiles1);
@@ -277,7 +273,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testCisTransDecalin() throws Exception
 	{
-		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         IAtomContainer mol1 = new AtomContainer();
 		SmilesGenerator sg = new SmilesGenerator();
 
@@ -297,19 +292,19 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.addAtom(new Atom("C", new Point2d(-1.5, -2))); // 11
 
         mol1.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-		mol1.addBond(1, 2, IBond.Order.SINGLE);
+        mol1.addBond(1, 2, IBond.Order.SINGLE);
         mol1.addBond(2, 3, IBond.Order.SINGLE, IBond.Stereo.DOWN);
 
         mol1.addBond(1, 4, IBond.Order.SINGLE);
-		mol1.addBond(4, 5, IBond.Order.SINGLE);
-		mol1.addBond(5, 6, IBond.Order.SINGLE);
+        mol1.addBond(4, 5, IBond.Order.SINGLE);
+        mol1.addBond(5, 6, IBond.Order.SINGLE);
         mol1.addBond(6, 7, IBond.Order.SINGLE);
         mol1.addBond(7, 2, IBond.Order.SINGLE);
 
         mol1.addBond(1, 8, IBond.Order.SINGLE);
-		mol1.addBond(8, 9, IBond.Order.SINGLE);
-		mol1.addBond(9, 10, IBond.Order.SINGLE);
-		mol1.addBond(10, 11, IBond.Order.SINGLE);
+        mol1.addBond(8, 9, IBond.Order.SINGLE);
+        mol1.addBond(9, 10, IBond.Order.SINGLE);
+        mol1.addBond(10, 11, IBond.Order.SINGLE);
         mol1.addBond(11, 2, IBond.Order.SINGLE);
 
         // hydrogens in-lined from hydrogen adder/placer
@@ -364,7 +359,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testDoubleBondConfiguration() throws Exception
 	{
-		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
 		IAtomContainer mol1 = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
 		mol1.addAtom(new Atom("S", new Point2d(0, 0)));

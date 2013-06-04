@@ -12,7 +12,6 @@ cdk-ioformats.jar
 cdk-valencycheck.jar
 cdk-smiles.jar
 cdk-test.jar
-cdk-sdg.jar
 cdk-libiocml.jar
 cdk-test-io.jar
 cdk-testdata.jar
