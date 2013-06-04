@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -48,7 +47,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -809,17 +807,6 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testPyrole() throws Exception {
 		String smiles = "c1ccc[NH]1";
 		IAtomContainer mol = sp.parseSmiles(smiles);
-
-		StructureDiagramGenerator sdg=new StructureDiagramGenerator(
-		    mol.getBuilder().newInstance(IAtomContainer.class, mol)
-		);
-		sdg.generateCoordinates();
-
-		/*MoleculeViewer2D v2d=new MoleculeViewer2D(mol);
-		    v2d.display();
-
-		    Thread.sleep(100000);*/
-
 		for(int i=0;i<mol.getAtomCount();i++){
 			if(mol.getAtom(i).getSymbol().equals("N")){
 				Assert.assertEquals(IBond.Order.SINGLE,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(0)).getOrder());
@@ -869,11 +856,6 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testSFBug956929() throws Exception {
 		String smiles = "Cn1cccc1";
 		IAtomContainer mol = sp.parseSmiles(smiles);
-
-		StructureDiagramGenerator sdg=new StructureDiagramGenerator(
-		    mol.getBuilder().newInstance(IAtomContainer.class, mol)
-		);
-		sdg.generateCoordinates();
 		Assert.assertEquals(6, mol.getAtomCount());
 		// I can also check whether the total neighbor count around the
 		// nitrogen is 3, all single bonded
