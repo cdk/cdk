@@ -64,6 +64,9 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+
 /**
  * @author         steinbeck
  * @cdk.created    2004-02-09
@@ -304,7 +307,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Assert.assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
 		mol1.getBond(6).setStereo(IBond.Stereo.UP);
 		String smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
-		Assert.assertNotSame(smiles1, smiles3);
+        Assert.assertThat(smiles1, is(not(smiles3)));
 	}
 
 
@@ -608,7 +611,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-		Assert.assertNotSame(smiles1, smiles2);
+		Assert.assertThat(smiles1, is(not(smiles2)));
 	}
 
 
@@ -629,7 +632,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-		Assert.assertNotSame(smiles1, smiles2);
+        Assert.assertThat(smiles1, is(not(smiles2)));
 	}
 
 	/**
@@ -741,7 +744,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		
 		String moleculeSmile1 = sg.createChiralSMILES(mol1, new boolean[mol1.getBondCount()]);
 		String moleculeSmile2 = sg.createChiralSMILES(mol2, new boolean[mol2.getBondCount()]);
-		Assert.assertNotSame(moleculeSmile2, moleculeSmile1);
+        Assert.assertThat(moleculeSmile1, is(not(moleculeSmile2)));
 	}
 	
   /**
