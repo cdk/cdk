@@ -41,7 +41,7 @@ import static org.junit.Assert.*;
  *
  * @cdk.module test-smsd
  */
-public class AbstractSubGraphTest {
+public abstract class AbstractSubGraphTest {
 
     private static AbstractSubGraphTest algorithm = null;
 

@@ -37,9 +37,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({org.openscience.cdk.smsd.interfaces.AbstractSubGraphTest.class,
-    org.openscience.cdk.smsd.interfaces.IFinalMappingTest.class,
-    org.openscience.cdk.smsd.interfaces.AlgorithmTest.class,
-    org.openscience.cdk.smsd.interfaces.IMCSBaseTest.class,
     org.openscience.cdk.smsd.interfaces.AbstractMCSTest.class,
     org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest.class})
 public class InterfacesSuite {

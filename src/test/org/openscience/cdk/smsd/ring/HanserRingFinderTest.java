@@ -44,21 +44,6 @@ import org.openscience.cdk.smsd.algorithm.vflib.Molecules;
  */
 public class HanserRingFinderTest {
 
-    public HanserRingFinderTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of findRings method, of class HanserRingFinder.
      */
@@ -74,7 +59,7 @@ public class HanserRingFinderTest {
     private HanserRingFinder finder;
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         finder = new HanserRingFinder();
     }
 
