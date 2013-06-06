@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-standard
  */
-public class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterTest {
+public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterTest {
 
     /**
      * @cdk.bug 706786
