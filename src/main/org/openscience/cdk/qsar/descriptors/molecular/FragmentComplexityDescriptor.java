@@ -104,7 +104,7 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
      */
     @TestMethod("testGetParameters")
     public Object[] getParameters() {
-        return null;
+        return new Object[0];
         // return the parameters as used for the descriptor calculation
     }
 
