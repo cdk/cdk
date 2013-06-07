@@ -24,51 +24,80 @@
  */
 package org.openscience.cdk.io.random;
 
-import java.io.File;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 /**
  * Test for {@link RandomAccessSDFReader}.
  *
- * @author     Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova <nina@acad.bg>
  * @cdk.module test-extra
  */
 public class RandomAccessTest extends CDKTestCase {
 
     private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
+            LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
+
 
     @Test public void test() throws Exception {
-        String filename = "src/test/data/mdl/test2.sdf";
-        logger.info("Testing: " + filename);
-        File f = new File(filename);
-        //System.out.println(System.getProperty("user.dir"));
-        RandomAccessReader rf = new RandomAccessSDFReader(
-            f,DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(6,rf.size());
-        String[] mdlnumbers = {
-        		"MFCD00000387",
-        		"MFCD00000661",
-        		"MFCD00000662",
-        		"MFCD00000663",
-        		"MFCD00000664",
-        		"MFCD03453215"
-        };
-        //reading backwards - just for the test
-        for (int i=rf.size()-1; i >=0;i--) {
-            IChemObject m = rf.readRecord(i);
-            Assert.assertEquals(m.getProperty("MDLNUMBER"),mdlnumbers[i]);
-            Assert.assertTrue(m instanceof IAtomContainer);
-            Assert.assertTrue(((IAtomContainer)m).getAtomCount()>0);
+        String path = "/data/mdl/test2.sdf";
+        logger.info("Testing: " + path);
+        InputStream in = getClass().getResourceAsStream(path);
+        File f = File.createTempFile("tmp", "sdf");
+
+        try {
+            // copy data to tmp file
+            FileOutputStream out = new FileOutputStream(f);
+            try {
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } finally {
+                if (out != null)
+                    out.close();
+            }
+
+            //System.out.println(System.getProperty("user.dir"));
+            RandomAccessReader rf = new RandomAccessSDFReader(
+                    f, DefaultChemObjectBuilder.getInstance());
+            try {
+                Assert.assertEquals(6, rf.size());
+
+                String[] mdlnumbers = {
+                        "MFCD00000387",
+                        "MFCD00000661",
+                        "MFCD00000662",
+                        "MFCD00000663",
+                        "MFCD00000664",
+                        "MFCD03453215"
+                };
+                //reading backwards - just for the test
+                for (int i = rf.size() - 1; i >= 0; i--) {
+                    IChemObject m = rf.readRecord(i);
+                    Assert.assertEquals(m.getProperty("MDLNUMBER"), mdlnumbers[i]);
+                    Assert.assertTrue(m instanceof IAtomContainer);
+                    Assert.assertTrue(((IAtomContainer) m).getAtomCount() > 0);
+                }
+            } finally {
+                if (rf != null)
+                    rf.close();
+            }
+        } finally {
+            f.delete();
+            if (in != null)
+                in.close();
         }
-        rf.close();
     }
 }
