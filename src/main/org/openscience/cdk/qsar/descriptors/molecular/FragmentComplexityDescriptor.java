@@ -27,6 +27,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  Class that returns the complexity of a system. The complexity is defined as {@cdk.cite Nilakantan06}:
@@ -133,7 +134,7 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
                 H++;
             }
         }
-        int B = container.getBondCount();
+        int B = container.getBondCount() + AtomContainerManipulator.getImplicitHydrogenCount(container);
         double C = Math.abs(B * B - A * A + A) + (H / 100);
         return new DescriptorValue(getSpecification(), getParameterNames(),
                 getParameters(), new DoubleResult(C),
