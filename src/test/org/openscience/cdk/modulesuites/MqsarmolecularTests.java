@@ -48,6 +48,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptorTe
 import org.openscience.cdk.qsar.descriptors.molecular.ChiPathDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.FMFDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest;
@@ -135,6 +136,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
     CarbonTypesDescriptorTest.class,
     HybridizationRatioDescriptorTest.class,
     FMFDescriptorTest.class,
+    FragmentComplexityDescriptorTest.class,
     TopologicalMatrixTest.class
 })
 public class MqsarmolecularTests {}
