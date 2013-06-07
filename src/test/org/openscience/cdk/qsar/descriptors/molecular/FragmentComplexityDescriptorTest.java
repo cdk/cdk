@@ -3,6 +3,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -21,6 +22,9 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 	
 	public  FragmentComplexityDescriptorTest() {}
 
+    @Before public void setup() throws Exception {
+        setDescriptor(FragmentComplexityDescriptor.class);
+    }
 	   
 	@Test public void test1FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
