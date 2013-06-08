@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2013 John May <jwmay@users.sf.net>
+ * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
+ *                    John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 package org.openscience.cdk.graph;
 
 import org.junit.Test;

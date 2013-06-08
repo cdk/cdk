@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2013 John May <jwmay@users.sf.net>
+ * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
+ *                    John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 package org.openscience.cdk.graph;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -66,7 +66,15 @@ final class InitialCycles {
     private final Map<Edge, Integer> edgeToIndex;
     private final List<Edge> edges;
 
-    /** The degree indicates the start count for the key-value counting. */
+    /**
+     * Initial array size for 'ordering()'. This method sorts vertices by degree
+     * by counting how many of each degree there is then putting values in place
+     * directly. This is known as key-value counting and is used in radix
+     * sorts.
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix
+     *      Sort</a>
+     */
     private final static int DEFAULT_DEGREE = 4;
 
     /**
@@ -499,6 +507,12 @@ final class InitialCycles {
         }
     }
 
+    /**
+     * An even cycle is formed from two shortest paths of the same length
+     * and 'two' edges to a common vertex. The cycle formed by these is
+     * even, 2n + 2 = even.
+     * @see #compute()
+     */
     class EvenCycle extends Cycle {
         int p, q, y;
 
@@ -537,6 +551,12 @@ final class InitialCycles {
         }
     }
 
+    /**
+     * An odd cycle is formed from two shortest paths of the same length
+     * and 'one' edge to a common vertex. The cycle formed by these is odd,
+     * 2n + 1 = odd.
+     * @see #compute()
+     */
     class OddCycle extends Cycle {
         int y, z;
 

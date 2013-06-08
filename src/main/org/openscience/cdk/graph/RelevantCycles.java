@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2013 John May <jwmay@users.sf.net>
+ * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
+ *                    John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -74,13 +75,13 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  *
  * @author John May
  * @cdk.module core
- * @cdk.keyword Relevant Cycles
- * @cdk.keyword Relevant Rings
+ * @cdk.keyword relevant cycles
+ * @cdk.keyword relevant rings
  * @cdk.keyword R(G)
- * @cdk.keyword Union of all Minimum Cycles Bases
- * @cdk.keyword Cycle
- * @cdk.keyword Ring
- * @cdk.keyword Ring Perception
+ * @cdk.keyword union of all minimum cycles bases
+ * @cdk.keyword cycle
+ * @cdk.keyword ring
+ * @cdk.keyword ring perception
  * @cdk.githash
  * @see org.openscience.cdk.ringsearch.RingSearch
  * @see org.openscience.cdk.ringsearch.SSSRFinder#findRelevantRings()

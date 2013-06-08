@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2013 John May <jwmay@users.sf.net>
+ * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
+ *                    John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 package org.openscience.cdk.graph;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -123,10 +123,10 @@ public class GraphUtil {
         int n = graph.length;
         int m = include.length;
 
-        // lookup from graph to subgraph
-        int[] lookup = new int[n];
+        // mapping from vertex in 'graph' to 'subgraph'
+        int[] mapping = new int[n];
         for (int i = 0; i < m; i++) {
-            lookup[include[i]] = i + 1;
+            mapping[include[i]] = i + 1;
         }
 
         // initialise the subgraph
@@ -137,12 +137,12 @@ public class GraphUtil {
         // vertices p and q. If p or q is less then 0 then it is not
         // in the subgraph
         for (int v = 0; v < n; v++) {
-            int p = lookup[v] - 1;
+            int p = mapping[v] - 1;
             if (p < 0)
                 continue;
 
             for (int w : graph[v]) {
-                int q = lookup[w] - 1;
+                int q = mapping[w] - 1;
                 if (q < 0)
                     continue;
                 if (degree[p] == subgraph[p].length)
