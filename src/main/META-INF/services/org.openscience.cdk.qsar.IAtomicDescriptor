@@ -1,3 +1,4 @@
+# Atomic QSAR descriptors
 org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptor
@@ -16,7 +17,6 @@ org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptor
-org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptor
@@ -28,3 +28,8 @@ org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor
 org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptor
+
+# Ionization potential atomic QSAR descriptor cannot be loaded with qsaratomic
+# as it is in qsarionpot and the build system cannot handle multiple datafiles
+# of the same name
+#org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptor

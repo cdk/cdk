@@ -1,6 +1,11 @@
-org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptor
+# Bond QSAR descriptors
 org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptor
 org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptor
 org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor
 org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptor
 org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptor
+
+# Ionization potential bond QSAR descriptor cannot be loaded with qsarbond
+# as it is in qsarionpot and the build system cannot handle multiple datafiles
+# of the same name
+#org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptor
