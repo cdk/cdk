@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -94,7 +95,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest")
-public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
+public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
 	/**
 	 *  Constructor for the AtomHybridizationVSEPRDescriptor object

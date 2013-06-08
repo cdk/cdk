@@ -27,6 +27,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -61,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest")
-public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
+public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] names = {"protonInArmaticSystem"};
 

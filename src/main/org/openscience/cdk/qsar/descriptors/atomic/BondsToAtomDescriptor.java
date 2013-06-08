@@ -31,6 +31,7 @@ import static org.openscience.cdk.graph.BFSShortestPath.findPathBetween;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -61,7 +62,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.dictref    qsar-descriptors:bondsToAtom
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptorTest")
-public class BondsToAtomDescriptor implements IAtomicDescriptor {
+public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
     java.util.List<Edge> mylist = null;

@@ -26,6 +26,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.AtomValenceTool;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -46,7 +47,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @see         org.openscience.cdk.qsar.AtomValenceTool
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptorTest")
-public class AtomValenceDescriptor implements IAtomicDescriptor {
+public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     /**
      * Constructor for the AtomValenceDescriptor object

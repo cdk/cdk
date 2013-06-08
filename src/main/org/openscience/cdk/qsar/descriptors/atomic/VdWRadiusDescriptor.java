@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -62,7 +63,7 @@ import java.io.IOException;
  * @cdk.dictref qsar-descriptors:vdwradius
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest")
-public class VdWRadiusDescriptor implements IAtomicDescriptor {
+public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] names = {"vdwRadius"};
 

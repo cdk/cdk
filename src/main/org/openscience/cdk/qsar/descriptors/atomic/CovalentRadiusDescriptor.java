@@ -33,6 +33,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -65,7 +66,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.dictref qsar-descriptors:covalentradius
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptorTest")
-public class CovalentRadiusDescriptor implements IAtomicDescriptor {
+public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private AtomTypeFactory factory = null;
     private static ILoggingTool logger =

@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -61,7 +62,7 @@ import javax.vecmath.Point3d;
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptorTest")
-public class DistanceToAtomDescriptor implements IAtomicDescriptor {
+public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
 

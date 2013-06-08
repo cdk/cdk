@@ -24,6 +24,7 @@ import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -59,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @see Electronegativity
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest")
-public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
+public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 	/**Number of maximum iterations*/
     private int maxIterations = 0;
 
