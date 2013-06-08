@@ -25,6 +25,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fragment.MurckoFragmenter;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -54,7 +55,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @see org.openscience.cdk.fragment.MurckoFragmenter
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FMFDescriptorTest")
-public class FMFDescriptor implements IMolecularDescriptor {
+public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     public FMFDescriptor() {
     }

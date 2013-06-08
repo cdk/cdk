@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -66,7 +67,7 @@ import java.util.ArrayList;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest")
-public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {   
+public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"Kier1", "Kier2", "Kier3"};
 

@@ -27,6 +27,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -49,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AcidicGroupCountDescriptorTest")
-public class AcidicGroupCountDescriptor implements IMolecularDescriptor {
+public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private final static String[] SMARTS_STRINGS = {
         "[$([O;H1]-[C,S,P]=O)]",

@@ -26,6 +26,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -68,7 +69,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.dictref qsar-descriptors:bondCount
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptorTest")
-public class BondCountDescriptor implements IMolecularDescriptor {
+public class BondCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
 	/** defaults to UNSET, which means: count all bonds **/
     private String order = "";

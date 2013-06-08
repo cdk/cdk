@@ -29,6 +29,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -50,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest")
-public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
+public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor implements IMolecularDescriptor{
 
     private static final String[] names = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
     private static double[] listcharges (IAtomContainer container)throws CDKException{

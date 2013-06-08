@@ -19,7 +19,6 @@
 */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -27,6 +26,7 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -85,7 +85,7 @@ import java.util.List;
  * @cdk.dictref qsar-descriptors:mde
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptorTest")
-public class MDEDescriptor implements IMolecularDescriptor {
+public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {
             "MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14",

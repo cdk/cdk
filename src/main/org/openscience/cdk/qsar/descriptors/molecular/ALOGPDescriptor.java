@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -93,7 +94,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @see org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest")
-public class ALOGPDescriptor implements IMolecularDescriptor {
+public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ALOGPDescriptor.class);
 

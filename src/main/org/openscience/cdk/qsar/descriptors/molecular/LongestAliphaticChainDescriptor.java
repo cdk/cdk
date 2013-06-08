@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -66,7 +67,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:largestAliphaticChain
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.LongestAliphaticChainDescriptorTest")
-public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
+public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 	private boolean checkRingSystem = false;
 
     private static final String[] names = {"nAtomLAC"};

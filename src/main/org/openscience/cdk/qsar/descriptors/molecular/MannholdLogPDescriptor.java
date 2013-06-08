@@ -24,6 +24,7 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -47,7 +48,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 @TestClass(
     "org.openscience.cdk.qsar.descriptors.molecular.MannholdLogPDescriptorTest"
 )
-public class MannholdLogPDescriptor implements IMolecularDescriptor {
+public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"MLogP"};
 

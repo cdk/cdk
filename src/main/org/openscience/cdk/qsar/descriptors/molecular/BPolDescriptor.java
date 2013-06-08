@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -72,7 +73,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.dictref qsar-descriptors:bpol
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptorTest")
-public class BPolDescriptor implements IMolecularDescriptor {
+public class BPolDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(BPolDescriptor.class);
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */

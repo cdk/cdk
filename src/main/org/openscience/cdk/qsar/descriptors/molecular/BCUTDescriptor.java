@@ -38,6 +38,7 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -124,7 +125,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptorTest")
-public class BCUTDescriptor implements IMolecularDescriptor {
+public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
 

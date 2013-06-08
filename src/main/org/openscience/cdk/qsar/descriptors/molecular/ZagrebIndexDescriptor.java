@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -51,7 +52,7 @@ import java.util.List;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest")
-public class ZagrebIndexDescriptor implements IMolecularDescriptor {
+public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static final String[] names = {"Zagreb"};
 
     /**

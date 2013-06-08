@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -78,7 +79,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptorTest")
-public class ChiPathClusterDescriptor implements IMolecularDescriptor {
+public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ChiPathClusterDescriptor.class);
     private SmilesParser sp;

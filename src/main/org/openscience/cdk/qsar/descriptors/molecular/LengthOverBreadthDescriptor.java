@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -65,7 +66,7 @@ import javax.vecmath.Point3d;
  * @cdk.dictref qsar-descriptors:lengthOverBreadth
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest")
-public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
+public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
 

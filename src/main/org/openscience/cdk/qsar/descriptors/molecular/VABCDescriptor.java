@@ -23,6 +23,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.volume.VABCVolume;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -42,7 +43,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.VABCDescriptorTest")
-public class VABCDescriptor implements IMolecularDescriptor {
+public class VABCDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     /**
      * {@inheritDoc}

@@ -31,6 +31,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -67,7 +68,7 @@ import java.util.Iterator;
  * @cdk.dictref qsar-descriptors:aromaticBondsCount
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescriptorTest")
-public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
+public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private static final String[] names = {"nAromBond"};
 

@@ -36,6 +36,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -116,7 +117,7 @@ import java.util.List;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptorTest")
-public class XLogPDescriptor implements IMolecularDescriptor {
+public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean checkAromaticity = false;
     private boolean salicylFlag=false;

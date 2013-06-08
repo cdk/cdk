@@ -33,6 +33,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -125,7 +126,7 @@ import Jama.Matrix;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest")
-public class WHIMDescriptor implements IMolecularDescriptor {
+public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);

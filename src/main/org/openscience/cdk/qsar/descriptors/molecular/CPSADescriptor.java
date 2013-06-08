@@ -26,6 +26,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.surface.NumericalSurface;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -138,7 +139,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.dictref qsar-descriptors:CPSA
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptorTest")
-public class CPSADescriptor implements IMolecularDescriptor {
+public class CPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {
             "PPSA-1", "PPSA-2", "PPSA-3",

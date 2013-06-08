@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -76,7 +77,7 @@ import java.util.List;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptorTest")
-public class TPSADescriptor implements IMolecularDescriptor {
+public class TPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private static HashMap map;
     private static final String[] names = {"TopoPSA"};

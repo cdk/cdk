@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -123,7 +124,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @see         IBioPolymer
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest")
-public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
+public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
     private Map<String, Double[]> TAEParams = new HashMap<String, Double[]>();

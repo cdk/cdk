@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -68,7 +69,7 @@ import java.util.List;
  * @cdk.dictref qsar-descriptors:aminoAcidsCount
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptorTest")
-public class AminoAcidCountDescriptor implements IMolecularDescriptor {
+public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private IAtomContainerSet substructureSet;
 

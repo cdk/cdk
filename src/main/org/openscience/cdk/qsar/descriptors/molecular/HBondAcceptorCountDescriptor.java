@@ -31,6 +31,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -81,7 +82,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:hBondacceptors
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest")
-public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
+public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
     private boolean checkAromaticity = false;
     private static final String[] names = {"nHBAcc"};

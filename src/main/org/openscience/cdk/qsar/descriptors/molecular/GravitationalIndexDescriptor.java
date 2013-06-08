@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -89,7 +90,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest")
-public class GravitationalIndexDescriptor implements IMolecularDescriptor {
+public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);

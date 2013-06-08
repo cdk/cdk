@@ -32,6 +32,7 @@ import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -56,7 +57,7 @@ import java.util.Iterator;
  */
 
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizabilityTest")
-public class AutocorrelationDescriptorPolarizability implements IMolecularDescriptor {
+public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"};
     private static double[] listpolarizability(IAtomContainer container, int[][] dmat) throws CDKException {

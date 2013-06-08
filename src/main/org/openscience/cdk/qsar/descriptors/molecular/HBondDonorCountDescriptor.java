@@ -30,6 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -74,7 +75,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest")
-public class HBondDonorCountDescriptor implements IMolecularDescriptor {
+public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     private static final String[] names = {"nHBDon"};
 
     /**
