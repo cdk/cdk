@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
@@ -47,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptorTest")
-public class AtomicNumberDifferenceDescriptor implements IBondDescriptor {
+public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
 	private static IsotopeFactory factory = null;
 	

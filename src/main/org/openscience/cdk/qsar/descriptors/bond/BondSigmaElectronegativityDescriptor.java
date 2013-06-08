@@ -30,6 +30,7 @@ import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
@@ -64,7 +65,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @see Electronegativity
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest")
-public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
+public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
 	/**Number of maximum iterations*/
     private int maxIterations = 6;
