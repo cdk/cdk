@@ -39,12 +39,12 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.module qsar
  * @cdk.githash
  */
-public abstract class AbstractAtomicDescriptor implements IAtomicDescriptor {
+public abstract class AbstractAtomicDescriptor extends AbstractDescriptor implements IAtomicDescriptor {
     
 	private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
 	
 	private Map cachedDescriptorValues = null;
-	
+
 	/**
 	 * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
 	 * 

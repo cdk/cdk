@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
@@ -85,6 +86,16 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @see        IDescriptorResult
  */
 public interface IDescriptor {
+
+    /**
+     * Initialise the descriptor with the specified chem object builder. This
+     * allows descriptors that required domain objects, such as for SMARTS queries
+     * to initialise correctly. If you do not need domain objects then this method
+     * does not need to be implemented.
+     *
+     * @param builder chem object builder to use with this descriptor
+     */
+    void initialise(IChemObjectBuilder builder);
 
    /**
    * Returns a <code>IImplementationSpecification</code> which specifies which descriptor

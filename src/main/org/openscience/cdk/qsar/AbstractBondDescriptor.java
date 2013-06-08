@@ -28,7 +28,6 @@ import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
@@ -40,7 +39,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.module qsar
  * @cdk.githash
  */
-public abstract class AbstractBondDescriptor implements IBondDescriptor {
+public abstract class AbstractBondDescriptor extends AbstractDescriptor implements IBondDescriptor {
     
 	private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
 	
