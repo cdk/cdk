@@ -44,14 +44,14 @@ public class DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testConstructor() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
     }
 
     @Test
     public void testLoadingOfMolecularDescriptors() {
-    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+    	DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
@@ -62,7 +62,7 @@ public class DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testLoadingOfAtomicDescriptors() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMIC,
+        DescriptorEngine engine = new DescriptorEngine(IAtomicDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
@@ -73,7 +73,7 @@ public class DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testLoadingOfBondDescriptors() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.BOND,
+        DescriptorEngine engine = new DescriptorEngine(IBondDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
@@ -84,7 +84,7 @@ public class DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testDictionaryType() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
 
         String className = "org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptor";
@@ -100,7 +100,7 @@ public class DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testDictionaryClass() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
 
         String className = "org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor";
@@ -123,7 +123,7 @@ public class DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testAvailableClass() {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
         String[] availClasses = engine.getAvailableDictionaryClasses();
         Assert.assertEquals(5, availClasses.length);
@@ -143,7 +143,7 @@ public class DescriptorEngineTest extends CDKTestCase {
         TemplateHandler3D template = TemplateHandler3D.getInstance();
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template, "mm2");
         molecule = mb3d.generate3DCoordinates(molecule, true);
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
 
         engine.process(molecule);
@@ -152,7 +152,7 @@ public class DescriptorEngineTest extends CDKTestCase {
 
     @Test
     public void testLoadingOfAtomPairDescriptors() {
-    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMPAIR,
+    	DescriptorEngine engine = new DescriptorEngine(IAtomicDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
     	Assert.assertNotNull(engine);
     	int loadedDescriptors = engine.getDescriptorInstances().size(); 

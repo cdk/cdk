@@ -48,6 +48,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -85,14 +86,9 @@ import java.util.jar.JarFile;
 public class DescriptorEngine {
     private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-    public static final int ATOMIC = 1;
-    public static final int BOND = 2;
-    public static final int MOLECULAR = 3;
-    public static final int ATOMPAIR = 4;
-
     private Dictionary dict = null;
-    private List<String> classNames = null;
-    private List<IDescriptor> descriptors = null;
+    private List<String> classNames = new ArrayList<String>(200);
+    private List<IDescriptor> descriptors = new ArrayList<IDescriptor>(200);
     private List<IImplementationSpecification> speclist = null;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DescriptorEngine.class);
@@ -133,51 +129,26 @@ public class DescriptorEngine {
     }
 
     /**
-     * Constructor that generates a list of descriptors to calculate.
-     * <p/>
-     * All available descriptors are included in the list of descriptors to
-     * calculate This constructor assumes that system classpath is the one to look at
-     * to find valid jar files.
+     * Create a descriptor engine for all descriptor types. Descriptors are
+     * loaded using the service provider mechanism. To include custom
+     * descriptors one should declare in {@code META-INF/services} a file named
+     * as the interface you are providing (e.g. {@code org.openscience.cdk.qsar.IMolecularDescriptor}).
+     * This file declares the implementations provided by the jar as class names.
      *
-     * @param type Indicates whether molecular or atomic descriptors should be calculated. Possible values
-     *             are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
+     * @param c class of the descriptor to use (e.g. IMolecularDescriptor.class)
+     * @see <a href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service
+     *      Provider Interface (SPI) Introduction</a>
      */
     @TestMethod(value="testConstructor")
-    public DescriptorEngine(int type, IChemObjectBuilder builder) {
-        this(type, null, builder);
-    }
+    public DescriptorEngine(Class<? extends IDescriptor> c, IChemObjectBuilder builder) {
 
-    /**
-     * Constructor that generates a list of descriptors to calculate.
-     * <p/>
-     * All available descriptors are included in the list of descriptors to
-     * calculate
-     *
-     * @param type         Indicates whether molecular or atomic descriptors should be calculated. Possible values
-     *                     are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
-     * @param jarFileNames A String[] containing the fully qualified names of the jar files
-     *                     to examine for descriptor classes. In general, this can be set to NULL, in which case
-     *                     the system classpath is examined for available jar files. This parameter can be set for
-     *                     situations where the system classpath is not available or is modified such as in an application
-     *                     container.
-     */
-    public DescriptorEngine(int type, String[] jarFileNames, IChemObjectBuilder builder) {
-        switch (type) {
-            case ATOMIC:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic", jarFileNames);
-                break;
-            case BOND:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.bond", jarFileNames);
-                break;
-            case MOLECULAR:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular", jarFileNames);
-                break;
-            case ATOMPAIR:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atompair", jarFileNames);
-                break;
+        for(IDescriptor descriptor : ServiceLoader.load(c)){
+            descriptor.initialise(builder);
+            descriptors.add(descriptor);
+            classNames.add(descriptor.getClass().getName());
         }
+
         this.builder = builder;
-        descriptors = instantiateDescriptors(classNames);
         speclist = initializeSpecifications(descriptors);
         logger.debug("Found #descriptors: ", classNames.size());
         

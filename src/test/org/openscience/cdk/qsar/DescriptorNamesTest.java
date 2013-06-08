@@ -51,7 +51,7 @@ public class DescriptorNamesTest extends CDKTestCase {
 
     @Test
     public void checkUniqueMolecularDescriptorNames() throws Exception {
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR,
+        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
                                                        DefaultChemObjectBuilder.getInstance());
         List<IImplementationSpecification> specs = engine.getDescriptorSpecifications();
 
