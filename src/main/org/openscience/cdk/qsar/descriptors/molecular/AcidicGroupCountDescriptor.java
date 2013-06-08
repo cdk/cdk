@@ -67,11 +67,14 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
      * Creates a new {@link AcidicGroupCountDescriptor}.
      */
     @TestMethod("testConstructor")
-    public AcidicGroupCountDescriptor(IChemObjectBuilder builder) throws CDKException {
+    public AcidicGroupCountDescriptor() {
+        this.checkAromaticity = true;
+    }
+
+    @Override public void initialise(IChemObjectBuilder builder) {
         for (String smarts : SMARTS_STRINGS) {
             tools.add(new SMARTSQueryTool(smarts, builder));
         }
-        this.checkAromaticity = true;
     }
 
     /** {@inheritDoc} */
@@ -117,6 +120,11 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     /** {@inheritDoc} */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
+
+        if(tools.isEmpty()) {
+            throw new IllegalStateException("descriptor is not initalised, invoke 'initalise' first");
+        }
+
         // do aromaticity detection
         if (this.checkAromaticity) {
             try {

@@ -44,14 +44,9 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
 	
     public void setDescriptor(Class<? extends T> descriptorClass) throws Exception {
 		if (descriptor == null) {
-            try {
-                Constructor<? extends T> defaultConstructor = descriptorClass.getConstructor();
-                this.descriptor = defaultConstructor.newInstance();
-            } catch (NoSuchMethodException ex) {
-                // no default constructor, try with an IChemObjectBuilder...
-                Constructor<? extends T> builderConstructor = descriptorClass.getConstructor(IChemObjectBuilder.class);
-                this.descriptor = builderConstructor.newInstance(DefaultChemObjectBuilder.getInstance());
-            }
+            Constructor<? extends T> defaultConstructor = descriptorClass.getConstructor();
+            this.descriptor = defaultConstructor.newInstance();
+            this.descriptor.initialise(DefaultChemObjectBuilder.getInstance());
 		}
 	}
 	

@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -41,7 +42,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test public void testConstructor() throws Exception {
-        Assert.assertNotNull(new BasicGroupCountDescriptor(DefaultChemObjectBuilder.getInstance()));
+        Assert.assertNotNull(new BasicGroupCountDescriptor());
     }
 
     @Test public void testAmine() throws Exception {
@@ -52,6 +53,11 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(1, result.intValue());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void uninitalisedError() {
+        new BasicGroupCountDescriptor().calculate(new AtomContainer());
     }
 
     /**

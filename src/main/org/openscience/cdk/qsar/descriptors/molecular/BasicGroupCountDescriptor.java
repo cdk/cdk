@@ -64,7 +64,10 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
      * Creates a new {@link BasicGroupCountDescriptor}.
      */
     @TestMethod("testConstructor")
-    public BasicGroupCountDescriptor(IChemObjectBuilder builder) throws CDKException {
+    public BasicGroupCountDescriptor() {
+    }
+
+    @Override public void initialise(IChemObjectBuilder builder) {
         for (String smarts : SMARTS_STRINGS) {
             tools.add(new SMARTSQueryTool(smarts, builder));
         }
@@ -101,6 +104,11 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     /** {@inheritDoc} */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
+
+        if(tools.isEmpty()) {
+            throw new IllegalStateException("descriptor is not initalised, invoke 'initalise' first");
+        }
+
         try {
             int count = 0;
             for (SMARTSQueryTool tool : tools) {

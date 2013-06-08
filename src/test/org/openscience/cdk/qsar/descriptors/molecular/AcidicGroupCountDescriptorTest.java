@@ -43,7 +43,12 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test public void testConstructor() throws Exception {
-        Assert.assertNotNull(new AcidicGroupCountDescriptor(DefaultChemObjectBuilder.getInstance()));
+        Assert.assertNotNull(new AcidicGroupCountDescriptor());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void uninitalisedError() {
+        new BasicGroupCountDescriptor().calculate(new AtomContainer());
     }
 
     @Test public void testOneAcidGroup() throws Exception {
