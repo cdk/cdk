@@ -1,1 +1,2 @@
 org/openscience/cdk/qsar/descriptors/atomic/data/*.db
+META-INF/services/org.openscience.cdk.qsar.IAtomicDescriptor

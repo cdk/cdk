@@ -1,0 +1,6 @@
+org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptor
+org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptor
+org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptor
+org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor
+org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptor
+org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptor
