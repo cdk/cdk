@@ -942,7 +942,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String o1 = sg.createSMILES(m1);
         String o2 = sg.createSMILES(m2);
 
-        Assert.assertFalse("The two canonical SMILES should not match",o1.equals(o2));
+        Assert.assertTrue("The two canonical SMILES should match",o1.equals(o2));
     }
 
     /**
