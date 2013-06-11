@@ -30,7 +30,8 @@ import static org.junit.Assert.*;
 import static org.openscience.cdk.graph.InitialCyclesTest.anthracene;
 import static org.openscience.cdk.graph.InitialCyclesTest.bicyclo;
 import static org.openscience.cdk.graph.InitialCyclesTest.cyclophane_even;
-import static org.openscience.cdk.graph.InitialCyclesTest.napthalene;
+import static org.openscience.cdk.graph.InitialCyclesTest.naphthalene;
+import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
 
 /**
  * @author John May
@@ -48,6 +49,16 @@ public class RelevantCyclesTest {
         new RelevantCycles((InitialCycles) null);
     }
 
+    @Test public void paths_norbornane() {
+        int[][] norbornane = norbornane();
+        RelevantCycles relevant = new RelevantCycles(norbornane);
+        int[][] paths = relevant.paths();
+        assertThat(paths.length, is(2));
+        int[][] expected = new int[][]{{5, 6, 2, 1, 0},
+                                       {5, 6, 2, 3, 4}};
+        assertThat(paths, is(expected));
+    }
+
     @Test public void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         RelevantCycles relevant = new RelevantCycles(bicyclo);
@@ -60,7 +71,7 @@ public class RelevantCyclesTest {
     }
 
     @Test public void paths_napthalene() {
-        int[][] napthalene = napthalene();
+        int[][] napthalene = naphthalene();
         RelevantCycles relevant = new RelevantCycles(napthalene);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(2));
@@ -102,6 +113,12 @@ public class RelevantCyclesTest {
         assertThat(paths, is(expected));
     }
 
+    @Test public void size_norbornane() {
+        int[][] norbornane = norbornane();
+        RelevantCycles relevant = new RelevantCycles(norbornane);
+        assertThat(relevant.size(), is(2));
+    }
+
     @Test public void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         RelevantCycles relevant = new RelevantCycles(bicyclo);
@@ -109,7 +126,7 @@ public class RelevantCyclesTest {
     }
 
     @Test public void size_napthalene() {
-        int[][] napthalene = napthalene();
+        int[][] napthalene = naphthalene();
         RelevantCycles relevant = new RelevantCycles(napthalene);
         assertThat(relevant.size(), is(2));
     }

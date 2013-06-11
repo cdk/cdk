@@ -27,6 +27,7 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,7 +35,9 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author John May
@@ -119,13 +122,13 @@ public class InitialCyclesTest {
                    is(BitMatrixTest.toBitSet("110100")));
     }
 
-    @Test public void lengths_napthalene() throws IOException {
-        assertThat(new InitialCycles(napthalene()).lengths(), hasItem(6));
+    @Test public void lengths_naphthalene() throws IOException {
+        assertThat(new InitialCycles(naphthalene()).lengths(), hasItem(6));
     }
 
-    @Test public void cycles_napthalene() throws IOException {
-        InitialCycles initial = new InitialCycles(napthalene());
-        List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
+    @Test public void cycles_naphthalene() throws IOException {
+        InitialCycles initial = new InitialCycles(naphthalene());
+        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(2));
         assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
         assertThat(cycles.get(1).path(), is(new int[]{5, 4, 7, 8, 9, 6, 5}));
@@ -271,7 +274,7 @@ public class InitialCyclesTest {
     }
 
     /** @cdk.inchi InChI=1S/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H */
-    static int[][] napthalene() {
+    static int[][] naphthalene() {
         return new int[][]{{1, 5},
                            {0, 2},
                            {1, 3},
@@ -313,6 +316,19 @@ public class InitialCyclesTest {
                 {0, 4, 6},
                 {5, 7},
                 {2, 6}
+        };
+    }
+
+    /** @cdk.inchi InChI=1S/C7H12/c1-2-7-4-3-6(1)5-7/h6-7H,1-5H2 */
+    static int[][] norbornane() {
+        return new int[][]{
+                {1, 5},
+                {0, 2},
+                {1, 3, 6},
+                {2, 4},
+                {3, 5},
+                {0, 4, 6},
+                {2, 5},
         };
     }
 

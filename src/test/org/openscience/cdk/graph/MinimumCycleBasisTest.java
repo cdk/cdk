@@ -30,7 +30,8 @@ import static org.junit.Assert.*;
 import static org.openscience.cdk.graph.InitialCyclesTest.anthracene;
 import static org.openscience.cdk.graph.InitialCyclesTest.bicyclo;
 import static org.openscience.cdk.graph.InitialCyclesTest.cyclophane_even;
-import static org.openscience.cdk.graph.InitialCyclesTest.napthalene;
+import static org.openscience.cdk.graph.InitialCyclesTest.naphthalene;
+import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
 
 /**
  * @author John May
@@ -48,6 +49,16 @@ public class MinimumCycleBasisTest {
         new RelevantCycles((InitialCycles) null);
     }
 
+    @Test public void paths_norbornane() {
+        int[][] norbornane = norbornane();
+        MinimumCycleBasis mcb = new MinimumCycleBasis(norbornane);
+        int[][] paths = mcb.paths();
+        assertThat(paths.length, is(2));
+        int[][] expected = new int[][]{{5, 6, 2, 1, 0},
+                                       {5, 6, 2, 3, 4}};
+        assertThat(paths, is(expected));
+    }
+
     @Test public void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         MinimumCycleBasis mcb = new MinimumCycleBasis(bicyclo);
@@ -59,7 +70,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test public void paths_napthalene() {
-        int[][] napthalene = napthalene();
+        int[][] napthalene = naphthalene();
         MinimumCycleBasis mcb = new MinimumCycleBasis(napthalene);
         int[][] paths = mcb.paths();
         assertThat(paths.length, is(2));
@@ -99,6 +110,13 @@ public class MinimumCycleBasisTest {
         assertThat(paths, is(expected));
     }
 
+    @Test public void size_norbornane() {
+        int[][] norbornane = norbornane();
+        MinimumCycleBasis mcb = new MinimumCycleBasis(norbornane);
+        int[][] paths = mcb.paths();
+        assertThat(paths.length, is(2));
+    }
+
     @Test public void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         MinimumCycleBasis mcb = new MinimumCycleBasis(bicyclo);
@@ -106,7 +124,7 @@ public class MinimumCycleBasisTest {
     }
 
     @Test public void size_napthalene() {
-        int[][] napthalene = napthalene();
+        int[][] napthalene = naphthalene();
         MinimumCycleBasis mcb = new MinimumCycleBasis(napthalene);
         assertThat(mcb.size(), is(2));
     }
