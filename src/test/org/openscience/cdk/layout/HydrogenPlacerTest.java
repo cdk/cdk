@@ -31,7 +31,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -102,7 +101,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 
     /** @cdk.bug 933572 */
     @Test public void testBug933572() throws Exception {
-        Molecule ac = new Molecule();
+        IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("H"));
         ac.getAtom(0).setPoint2d(new Point2d(0, 0));
         addExplicitHydrogens(ac);
@@ -115,7 +114,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 
     @Test public void testPlaceHydrogens2D() throws Exception {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        Molecule dichloromethane = new Molecule();
+        IAtomContainer dichloromethane = new AtomContainer();
         Atom carbon = new Atom("C");
         Point2d carbonPos = new Point2d(0.0, 0.0);
         carbon.setPoint2d(carbonPos);
@@ -164,8 +163,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile
                 .getChemSequence(0);
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet()
-                                                            .getMolecule(0);
+        IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         double bondLength = GeometryTools.getBondLengthAverage(mol);
         logger.debug("Read Reserpine");
         logger.debug("Starting addition of H's");
