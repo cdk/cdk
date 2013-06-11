@@ -59,6 +59,18 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Downs89">
+    <bibtex:article>
+      <bibtex:author>Downs, G and Gillet, V and Holliday, J, and Lynch, M</bibtex:author>
+      <bibtex:title>Theoretical Aspects of Ring Perception and Development of the Extended Set of Smallest Ring Concepts</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci</bibtex:journal>
+      <bibtex:year>1989</bibtex:year>
+      <bibtex:volume>29</bibtex:volume>
+      <bibtex:number>3</bibtex:number>
+      <bibtex:pages>187-206</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Moreau1980">
     <bibtex:article>
       <bibtex:author>Moreau G. and Broto P.</bibtex:author>

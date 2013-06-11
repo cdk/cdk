@@ -78,6 +78,9 @@ public final class MinimumCycleBasis {
     /** The minimum cycle basis. */
     private final GreedyBasis basis;
 
+    /** The graph used to form the basis. */
+    final int[][] graph;
+
     /**
      * Generate the minimum cycle basis for a graph.
      *
@@ -102,6 +105,7 @@ public final class MinimumCycleBasis {
 
         checkNotNull(initial, "No InitialCycles provided");
 
+        this.graph = initial.graph();
         this.basis = new GreedyBasis(initial.numberOfCycles(),
                                      initial.numberOfEdges());
 
