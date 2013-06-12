@@ -59,8 +59,8 @@ public class EssentialCyclesTest {
         EssentialCycles essential = new EssentialCycles(anthracene);
         int[][] paths = essential.paths();
         int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4},
-                                       {9, 8, 10, 11, 12, 13},
-                                       {9, 6, 5, 4, 7, 8}};
+                                       {9, 6, 5, 4, 7, 8},
+                                       {9, 8, 10, 11, 12, 13}};
         assertThat(paths, is(expected));
     }
 

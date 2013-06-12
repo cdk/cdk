@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
@@ -96,10 +97,10 @@ public final class EssentialCycles {
      * @param initial a molecule graph
      */
     EssentialCycles(final RelevantCycles relevant, final InitialCycles initial) {
-
-        this.initial = initial;
-        this.basis = new GreedyBasis(initial.numberOfCycles(),
-                                     initial.numberOfEdges());
+        checkNotNull(relevant, "No RelevantCycles provided");
+        this.initial = checkNotNull(initial, "No iInitialCycles provided");
+        this.basis   = new GreedyBasis(initial.numberOfCycles(),
+                                       initial.numberOfEdges());
         this.essential = new ArrayList<Cycle>();
 
         // for each cycle added to the basis, if it can be

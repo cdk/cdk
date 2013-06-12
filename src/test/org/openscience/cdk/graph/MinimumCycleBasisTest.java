@@ -74,8 +74,8 @@ public class MinimumCycleBasisTest {
         int[][] paths = mcb.paths();
         assertThat(paths.length, is(3));
         int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4},
-                                       {9, 8, 10, 11, 12, 13},
-                                       {9, 6, 5, 4, 7, 8}};
+                                       {9, 6, 5, 4, 7, 8},
+                                       {9, 8, 10, 11, 12, 13}};
         assertThat(paths, is(expected));
     }
 

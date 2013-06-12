@@ -28,8 +28,10 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
@@ -114,8 +116,7 @@ public final class RelevantCycles {
      */
     @TestMethod("noInitialCycles") RelevantCycles(final InitialCycles initial) {
 
-        if (initial == null)
-            throw new NullPointerException("no InitialCycles provided");
+        checkNotNull(initial, "No InitialCycles provided");
 
         this.basis = new GreedyBasis(initial.numberOfCycles(),
                                      initial.numberOfEdges());
@@ -133,7 +134,7 @@ public final class RelevantCycles {
      * @param cycles cycles of a given length
      * @return cycles which were independent
      */
-    private List<Cycle> independent(final List<Cycle> cycles) {
+    private List<Cycle> independent(final Collection<Cycle> cycles) {
         final List<Cycle> independent = new ArrayList<Cycle>(cycles.size());
         for (final Cycle cycle : cycles) {
             if (basis.isIndependent(cycle))

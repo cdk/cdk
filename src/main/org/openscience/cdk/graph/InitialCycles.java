@@ -23,18 +23,20 @@
  */
 package org.openscience.cdk.graph;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
+import com.google.common.primitives.Ints;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Collection;
 
 import static java.util.Arrays.copyOf;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Compute the set of initial cycles (<i>C'<sub>I</sub></i>) in a graph. The
@@ -56,15 +58,11 @@ final class InitialCycles {
     /** Vertex ordering. */
     private final int[] ordering;
 
-    // TODO: can be replaced with Multimap if guava is added
     /** Cycle prototypes indexed by their length. */
-    private final Map<Integer, List<Cycle>> cycles = new TreeMap<Integer, List<Cycle>>();
-    private int nCycles = 0;
+    private final Multimap<Integer, Cycle> cycles = TreeMultimap.create();
 
-    // TODO: can be replaced with BiMap if guava is added
     /** Index of edges in the graph */
-    private final Map<Edge, Integer> edgeToIndex;
-    private final List<Edge> edges;
+    private final BiMap<Edge, Integer> edges;
 
     /**
      * Initial array size for 'ordering()'. This method sorts vertices by degree
@@ -84,9 +82,7 @@ final class InitialCycles {
      * @throws NullPointerException the graphw as null
      */
     InitialCycles(final int[][] graph) {
-        if (graph == null)
-            throw new NullPointerException("no graph provided");
-        this.graph = graph;
+        this.graph = checkNotNull(graph, "no graph provided");
 
         // ordering ensures the number of initial cycles is polynomial
         this.ordering = ordering(graph);
@@ -95,15 +91,13 @@ final class InitialCycles {
         // - edge representation: binary vector indicates whether an edge
         //                        is present or
         // - path representation: sequential list vertices forming the cycle
-        edges = new ArrayList<Edge>(graph.length * 2);
-        edgeToIndex = new HashMap<Edge, Integer>(graph.length * 2);
+        edges = HashBiMap.create(graph.length);
         int n = graph.length;
         for (int v = 0; v < n; v++) {
             for (int w : graph[v]) {
                 if (w > v) {
                     Edge edge = new Edge(v, w);
-                    edgeToIndex.put(edge, edges.size());
-                    edges.add(edge);
+                    edges.put(edge, edges.size());
                 }
             }
         }
@@ -128,8 +122,8 @@ final class InitialCycles {
      */
     @TestMethod("lengths_K4,lengths_napthalene,lengths_anthracene," +
                         "lengths_bicyclo,lengths_cyclophane")
-    List<Integer> lengths() {
-        return new ArrayList<Integer>(cycles.keySet());
+    Iterable<Integer> lengths() {
+        return cycles.keySet();
     }
 
     /**
@@ -141,9 +135,8 @@ final class InitialCycles {
      * @see #lengths()
      */
     @TestMethod("cyclesOfLength_empty,cycles_K4")
-    List<Cycle> cyclesOfLength(int length) {
-        List<Cycle> cycles = this.cycles.get(length);
-        return cycles != null ? cycles : Collections.<Cycle>emptyList();
+    Collection<Cycle> cyclesOfLength(int length) {
+        return cycles.get(length);
     }
 
     /**
@@ -153,12 +146,8 @@ final class InitialCycles {
      */
     @TestMethod("cycles_K4,cycles_napthalene,cycles_anthracene," +
                         "cycles_bicyclo,cycles_cyclophane")
-    List<Cycle> cycles() {
-        List<Cycle> tmp = new ArrayList<Cycle>();
-        for (List<Cycle> ps : cycles.values()) {
-            tmp.addAll(ps);
-        }
-        return tmp;
+    Collection<Cycle> cycles() {
+        return cycles.values();
     }
 
     /**
@@ -167,7 +156,7 @@ final class InitialCycles {
      * @return number of cycles
      */
     @TestMethod("numberOfCycles_K4") int numberOfCycles() {
-        return nCycles;
+        return cycles.size();
     }
 
     /**
@@ -186,7 +175,7 @@ final class InitialCycles {
      * @return the edge at the given index
      */
     @TestMethod("edge_K4") Edge edge(int i) {
-        return edges.get(i);
+        return edges.inverse().get(i);
     }
 
     /**
@@ -198,7 +187,7 @@ final class InitialCycles {
      * @return the index of the edge
      */
     @TestMethod("indexOfEdge_K4") int indexOfEdge(final int u, final int v) {
-        return edgeToIndex.get(new Edge(u, v));
+        return edges.get(new Edge(u, v));
     }
 
     /**
@@ -341,14 +330,7 @@ final class InitialCycles {
      * @param cycle the cycle to add
      */
     private void add(Cycle cycle) {
-        int length = cycle.length();
-        List<Cycle> ps = cycles.get(length);
-        if (ps == null) {
-            ps = new ArrayList<Cycle>(2);
-            cycles.put(length, ps);
-        }
-        ps.add(cycle);
-        nCycles++;
+        cycles.put(cycle.length(), cycle);
     }
 
     /**
@@ -442,7 +424,7 @@ final class InitialCycles {
      * Abstract description of a cycle. Stores the path and computes the edge
      * vector representation.
      */
-    static abstract class Cycle {
+    static abstract class Cycle implements Comparable<Cycle> {
 
         private int[] path;
         ShortestPaths paths;
@@ -504,6 +486,11 @@ final class InitialCycles {
          */
         int length() {
             return path.length;
+        }
+
+        @Override public int compareTo(Cycle that) {
+            return Ints.lexicographicalComparator().compare(this.path,
+                                                            that.path);
         }
     }
 
