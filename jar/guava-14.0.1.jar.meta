@@ -1,0 +1,8 @@
+[guava-14.0.1.jar]
+Library=Guava: Google Core Libraries for Java 1.6+
+Version=14.0.1
+License=Apache License 2.0
+LicenseURL=http://www.apache.org/licenses/LICENSE-2.0
+Download=https://code.google.com/p/guava-libraries/downloads/list
+SourceCode=https://code.google.com/p/guava-libraries/source/checkout
+Homepage=https://code.google.com/p/guava-libraries
