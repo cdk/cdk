@@ -50,8 +50,10 @@ import org.openscience.cdk.graph.BitMatrixTest;
 import org.openscience.cdk.graph.EssentialCyclesTest;
 import org.openscience.cdk.graph.GreedyBasisTest;
 import org.openscience.cdk.graph.InitialCyclesTest;
+import org.openscience.cdk.graph.JumboPathGraphTest;
 import org.openscience.cdk.graph.MinimumCycleBasisTest;
 import org.openscience.cdk.graph.PathToolsTest;
+import org.openscience.cdk.graph.RegularPathGraphTest;
 import org.openscience.cdk.graph.RelevantCyclesTest;
 import org.openscience.cdk.graph.ShortestPathsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
@@ -132,6 +134,9 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     GreedyBasisTest.class,
     RelevantCyclesTest.class,
     MinimumCycleBasisTest.class,
-    EssentialCyclesTest.class
+    EssentialCyclesTest.class,
+    RegularPathGraphTest.class,
+    JumboPathGraphTest.class
+
 })
 public class McoreTests {}
