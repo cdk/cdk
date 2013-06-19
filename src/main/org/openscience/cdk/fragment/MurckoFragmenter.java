@@ -22,11 +22,6 @@
  */
 package org.openscience.cdk.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -34,13 +29,15 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.hash.HashGeneratorMaker;
+import org.openscience.cdk.hash.MoleculeHashGenerator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.smiles.SmilesGenerator;
+
+import java.util.*;
 
 /**
  * An implementation of the Murcko fragmenation method {@cdk.cite MURCKO96}.
@@ -66,11 +63,17 @@ import org.openscience.cdk.smiles.SmilesGenerator;
  */
 @TestClass("org.openscience.cdk.fragment.MurckoFragmenterTest")
 public class MurckoFragmenter implements IFragmenter {
+
+    // need to keep track of fragments across recursive calls. Relevant
+    // for very large symmetric molecules such as
+    // http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=16129878
+    private static Set<String> fragmentSet = new HashSet<String>();
+
     private static final String IS_SIDECHAIN_ATOM = "sidechain";
     private static final String IS_LINKER_ATOM = "linker";
+    private static final String IS_CONNECTED_TO_RING = "rcon";
 
-    SmilesGenerator smilesGenerator = new SmilesGenerator(true);
-    IRingSet ringSet;
+    MoleculeHashGenerator generator;
 
     Map<String, IAtomContainer> frameMap = new HashMap<String, IAtomContainer>();
     Map<String, IAtomContainer> ringMap = new HashMap<String, IAtomContainer>();
@@ -101,6 +104,12 @@ public class MurckoFragmenter implements IFragmenter {
     public MurckoFragmenter(boolean singleFrameworkOnly, int minimumFragmentSize) {
         this.singleFrameworkOnly = singleFrameworkOnly;
         this.minimumFragmentSize = minimumFragmentSize;
+
+        generator = new HashGeneratorMaker().depth(8)
+                .elemental()
+                .isotopic()
+                .charged()
+                .molecular();
     }
 
     /**
@@ -116,8 +125,12 @@ public class MurckoFragmenter implements IFragmenter {
         run(atomContainer);
     }
 
+    public void reset() {
+        fragmentSet = new HashSet<String>();
+    }
+
     private void run(IAtomContainer atomContainer) throws CDKException {
-        String smiles;
+        String hash;
 
         // identify rings
         AllRingsFinder arf = new AllRingsFinder(false);
@@ -126,6 +139,7 @@ public class MurckoFragmenter implements IFragmenter {
         for (IAtom atom : atomContainer.atoms()) {
             atom.setProperty(IS_LINKER_ATOM, false);
             atom.setProperty(IS_SIDECHAIN_ATOM, false);
+            atom.setProperty(IS_CONNECTED_TO_RING, false);
         }
 
         markLinkers(atomContainer);
@@ -144,16 +158,17 @@ public class MurckoFragmenter implements IFragmenter {
         // only add this in if there is actually a framework
         // in some cases we might just have rings and sidechains
         if (hasframework(currentFramework)) {
-            smiles = smilesGenerator.createSMILES(currentFramework);
+            hash = Long.toHexString(generator.generate(currentFramework));
 
             // if we only want the single framework according to Murcko, then
             // it was the first framework that is added, since subsequent recursive
             // calls will work on substructures of the original framework
             if (singleFrameworkOnly) {
                 if (frameMap.size() == 0) {
-                    frameMap.put(smiles, currentFramework);
+                    frameMap.put(hash, currentFramework);
                 }
-            } else frameMap.put(smiles, currentFramework);
+            } else frameMap.put(hash, currentFramework);
+            if (!fragmentSet.contains(hash)) fragmentSet.add(hash);
         }
 
         // extract ring systems - we also delete pseudo linker bonds as described by
@@ -175,8 +190,9 @@ public class MurckoFragmenter implements IFragmenter {
         IAtomContainerSet ringSystems = ConnectivityChecker.partitionIntoMolecules(clone);
         for (IAtomContainer ringSystem : ringSystems.atomContainers()) {
             if (ringSystem.getAtomCount() < minimumFragmentSize) continue;
-            smiles = smilesGenerator.createSMILES(ringSystem);
-            ringMap.put(smiles, ringSystem);
+            hash = Long.toHexString(generator.generate(ringSystem));
+            ringMap.put(hash, ringSystem);
+            if (!fragmentSet.contains(hash)) fragmentSet.add(hash);
         }
 
         // if we didn't have a framework no sense going forward
@@ -194,6 +210,7 @@ public class MurckoFragmenter implements IFragmenter {
                     for (IAtom atom : candidate.atoms()) {
                         atom.setProperty(IS_LINKER_ATOM, false);
                         atom.setProperty(IS_SIDECHAIN_ATOM, false);
+                        atom.setProperty(IS_CONNECTED_TO_RING, false);
                     }
 
                     markLinkers(candidate);
@@ -201,7 +218,11 @@ public class MurckoFragmenter implements IFragmenter {
 
                     // need to keep side chains at one ppint
                     candidate = removeSideChains(candidate);
-                    if (hasframework(candidate) && candidate.getAtomCount() >= minimumFragmentSize) run(candidate);
+                    hash = Long.toHexString(generator.generate(candidate));
+                    if (!fragmentSet.contains(hash) && hasframework(candidate) && candidate.getAtomCount() >= minimumFragmentSize) {
+                        fragmentSet.add(hash);
+                        run(candidate);
+                    }
                 }
             }
         }
@@ -211,7 +232,7 @@ public class MurckoFragmenter implements IFragmenter {
     private IAtomContainer removeSideChains(IAtomContainer atomContainer) throws CDKException {
         IAtomContainer clone;
         try {
-            clone = (IAtomContainer) atomContainer.clone();
+            clone = atomContainer.clone();
         } catch (CloneNotSupportedException exception) {
             throw new CDKException("Error in clone" + exception.toString(), exception);
         }
@@ -222,14 +243,6 @@ public class MurckoFragmenter implements IFragmenter {
         for (IAtom anAtomsToDelete : atomsToDelete)
             clone.removeAtomAndConnectedElectronContainers(anAtomsToDelete);
         return (clone);
-    }
-
-    private boolean isConnectedToRing(IAtomContainer atomContainer, IAtom atom) {
-        List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
-        for (IAtom connectedAtom : connectedAtoms) {
-            if (connectedAtom.getFlag(CDKConstants.ISINRING)) return true;
-        }
-        return false;
     }
 
     private void markLinkers(IAtomContainer atomContainer) {
@@ -248,14 +261,17 @@ public class MurckoFragmenter implements IFragmenter {
                     nRingAtom++;
                 }
             }
+            if (nRingAtom > 0) atom.setProperty(IS_CONNECTED_TO_RING, true);
             if (nRingAtom >= 2) atom.setProperty(IS_LINKER_ATOM, true);
         }
 
         // now lets look at linker paths
         for (IAtom atom1 : atomContainer.atoms()) {
-            if (atom1.getFlag(CDKConstants.ISINRING) || !isConnectedToRing(atomContainer, atom1)) continue;
+            if (atom1.getFlag(CDKConstants.ISINRING) || !(Boolean) atom1.getProperty(IS_CONNECTED_TO_RING)) continue;
             for (IAtom atom2 : atomContainer.atoms()) {
-                if (atom2.getFlag(CDKConstants.ISINRING) || !isConnectedToRing(atomContainer, atom2)) continue;
+                if (atom2.getFlag(CDKConstants.ISINRING) || !(Boolean) atom2.getProperty(IS_CONNECTED_TO_RING)) continue;
+
+                if (atom1.equals(atom2)) continue;
 
                 // ok, get paths between these two non-ring atoms. Each of these atoms
                 // is connected to a ring atom, and so if the atoms between these atoms
