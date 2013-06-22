@@ -28,7 +28,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.hash.HashGeneratorMaker;
 import org.openscience.cdk.hash.MoleculeHashGenerator;
 import org.openscience.cdk.interfaces.IAtom;
@@ -36,8 +35,16 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.smiles.SmilesGenerator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * An implementation of the Murcko fragmenation method {@cdk.cite MURCKO96}.
@@ -55,7 +62,7 @@ import java.util.*;
  * the largest framework.
  *
  * @author Rajarshi Guha
- * @cdk.module  fragment
+ * @cdk.module fragment
  * @cdk.githash
  * @cdk.keyword fragment
  * @cdk.keyword framework
@@ -67,18 +74,17 @@ public class MurckoFragmenter implements IFragmenter {
     // need to keep track of fragments across recursive calls. Relevant
     // for very large symmetric molecules such as
     // http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=16129878
-    private static Set<String> fragmentSet = new HashSet<String>();
+    private static Set<Long> fragmentSet = new HashSet<Long>();
 
     private static final String IS_SIDECHAIN_ATOM = "sidechain";
     private static final String IS_LINKER_ATOM = "linker";
     private static final String IS_CONNECTED_TO_RING = "rcon";
 
     MoleculeHashGenerator generator;
+    SmilesGenerator smigen;
 
-    Map<String, IAtomContainer> frameMap = new HashMap<String, IAtomContainer>();
-    Map<String, IAtomContainer> ringMap = new HashMap<String, IAtomContainer>();
-
-    SpanningTree spanningTree;
+    Map<Long, IAtomContainer> frameMap = new HashMap<Long, IAtomContainer>();
+    Map<Long, IAtomContainer> ringMap = new HashMap<Long, IAtomContainer>();
 
     boolean singleFrameworkOnly = false;
     int minimumFragmentSize = 5;
@@ -91,7 +97,7 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @TestMethod("testMF1,testMF2,testMF3")
     public MurckoFragmenter() {
-        this(false, 5);
+        this(false, 5, null);
     }
 
     /**
@@ -100,16 +106,34 @@ public class MurckoFragmenter implements IFragmenter {
      * @param singleFrameworkOnly if <code>true</code>, only the true Murcko framework is generated.
      * @param minimumFragmentSize the smallest size of fragment to consider
      */
-    @TestMethod("testSingleFramework")
+    @TestMethod("testMF1,testMF2,testMF3")
     public MurckoFragmenter(boolean singleFrameworkOnly, int minimumFragmentSize) {
+        this(singleFrameworkOnly, minimumFragmentSize, null);
+    }
+
+    /**
+     * Instantiate Murcko fragmenter.
+     *
+     * @param singleFrameworkOnly if <code>true</code>, only the true Murcko framework is generated.
+     * @param minimumFragmentSize the smallest size of fragment to consider
+     * @param generator           An instance of a {@link MoleculeHashGenerator} to be used to check for
+     *                            duplicate fragments
+     */
+    @TestMethod("testSingleFramework")
+    public MurckoFragmenter(boolean singleFrameworkOnly, int minimumFragmentSize, MoleculeHashGenerator generator) {
         this.singleFrameworkOnly = singleFrameworkOnly;
         this.minimumFragmentSize = minimumFragmentSize;
 
-        generator = new HashGeneratorMaker().depth(8)
-                .elemental()
-                .isotopic()
-                .charged()
-                .molecular();
+        if (generator == null)
+            this.generator = new HashGeneratorMaker().depth(8)
+                    .elemental()
+                    .isotopic()
+                    .charged()
+                    .orbital()
+                    .molecular();
+        else this.generator = generator;
+
+        smigen = new SmilesGenerator(true);
     }
 
     /**
@@ -120,17 +144,14 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @TestMethod("testMF1, testMF2, testMF3, testMF4, testMF5, testMF6")
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
+        fragmentSet = new HashSet<Long>();
         frameMap.clear();
         ringMap.clear();
         run(atomContainer);
     }
 
-    public void reset() {
-        fragmentSet = new HashSet<String>();
-    }
-
     private void run(IAtomContainer atomContainer) throws CDKException {
-        String hash;
+        Long hash;
 
         // identify rings
         AllRingsFinder arf = new AllRingsFinder(false);
@@ -158,7 +179,7 @@ public class MurckoFragmenter implements IFragmenter {
         // only add this in if there is actually a framework
         // in some cases we might just have rings and sidechains
         if (hasframework(currentFramework)) {
-            hash = Long.toHexString(generator.generate(currentFramework));
+            hash = generator.generate(currentFramework);
 
             // if we only want the single framework according to Murcko, then
             // it was the first framework that is added, since subsequent recursive
@@ -182,7 +203,7 @@ public class MurckoFragmenter implements IFragmenter {
 
         List<IBond> bondsToDelete = new ArrayList<IBond>();
         for (IBond bond : clone.bonds()) {
-            if (isZeroAtomLinker(bond, clone)) bondsToDelete.add(bond);
+            if (isZeroAtomLinker(bond)) bondsToDelete.add(bond);
         }
         for (IBond bond : bondsToDelete) clone.removeBond(bond);
 
@@ -190,7 +211,7 @@ public class MurckoFragmenter implements IFragmenter {
         IAtomContainerSet ringSystems = ConnectivityChecker.partitionIntoMolecules(clone);
         for (IAtomContainer ringSystem : ringSystems.atomContainers()) {
             if (ringSystem.getAtomCount() < minimumFragmentSize) continue;
-            hash = Long.toHexString(generator.generate(ringSystem));
+            hash = generator.generate(ringSystem);
             ringMap.put(hash, ringSystem);
             if (!fragmentSet.contains(hash)) fragmentSet.add(hash);
         }
@@ -201,7 +222,7 @@ public class MurckoFragmenter implements IFragmenter {
         // now we split this framework and recurse.
         assert currentFramework != null;
         for (IBond bond : currentFramework.bonds()) {
-            if (islinker(bond) || isZeroAtomLinker(bond, currentFramework)) {
+            if (islinker(bond) || isZeroAtomLinker(bond)) {
                 List<IAtomContainer> candidates = FragmentUtils.splitMolecule(currentFramework, bond);
                 for (IAtomContainer candidate : candidates) {
 
@@ -218,7 +239,7 @@ public class MurckoFragmenter implements IFragmenter {
 
                     // need to keep side chains at one ppint
                     candidate = removeSideChains(candidate);
-                    hash = Long.toHexString(generator.generate(candidate));
+                    hash = generator.generate(candidate);
                     if (!fragmentSet.contains(hash) && hasframework(candidate) && candidate.getAtomCount() >= minimumFragmentSize) {
                         fragmentSet.add(hash);
                         run(candidate);
@@ -269,7 +290,8 @@ public class MurckoFragmenter implements IFragmenter {
         for (IAtom atom1 : atomContainer.atoms()) {
             if (atom1.getFlag(CDKConstants.ISINRING) || !(Boolean) atom1.getProperty(IS_CONNECTED_TO_RING)) continue;
             for (IAtom atom2 : atomContainer.atoms()) {
-                if (atom2.getFlag(CDKConstants.ISINRING) || !(Boolean) atom2.getProperty(IS_CONNECTED_TO_RING)) continue;
+                if (atom2.getFlag(CDKConstants.ISINRING) || !(Boolean) atom2.getProperty(IS_CONNECTED_TO_RING))
+                    continue;
 
                 if (atom1.equals(atom2)) continue;
 
@@ -300,6 +322,12 @@ public class MurckoFragmenter implements IFragmenter {
         }
     }
 
+    private List<String> getSmilesFromAtomContainers(Collection<IAtomContainer> mols) {
+        List<String> smis = new ArrayList<String>();
+        for (IAtomContainer mol : mols) smis.add(smigen.createSMILES(mol));
+        return smis;
+    }
+
     /**
      * This returns the frameworks and ring systems from a Murcko fragmentation.
      * <p/>
@@ -315,8 +343,8 @@ public class MurckoFragmenter implements IFragmenter {
     @TestMethod("testMF1")
     public String[] getFragments() {
         List<String> allfrags = new ArrayList<String>();
-        allfrags.addAll(frameMap.keySet());
-        allfrags.addAll(ringMap.keySet());
+        allfrags.addAll(getSmilesFromAtomContainers(frameMap.values()));
+        allfrags.addAll(getSmilesFromAtomContainers(ringMap.values()));
         return allfrags.toArray(new String[]{});
     }
 
@@ -340,7 +368,7 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @TestMethod("testMF1")
     public String[] getRingSystems() {
-        return ringMap.keySet().toArray(new String[]{});
+        return getSmilesFromAtomContainers(ringMap.values()).toArray(new String[]{});
     }
 
     /**
@@ -360,7 +388,7 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @TestMethod("testMF2,testMF3")
     public String[] getFrameworks() {
-        return frameMap.keySet().toArray(new String[]{});
+        return getSmilesFromAtomContainers(frameMap.values()).toArray(new String[]{});
     }
 
     /**
@@ -391,8 +419,8 @@ public class MurckoFragmenter implements IFragmenter {
         return islinker(bond.getAtom(0)) || islinker(bond.getAtom(1));
     }
 
-    private boolean isZeroAtomLinker(IBond bond, IAtomContainer mol) {
-        boolean isRingBond = (new SpanningTree(mol)).getCyclicFragmentsContainer().contains(bond);
+    private boolean isZeroAtomLinker(IBond bond) {
+        boolean isRingBond = bond.getFlag(CDKConstants.ISINRING);
         return isring(bond.getAtom(0)) && isring(bond.getAtom(1)) && !isRingBond;
     }
 
@@ -409,7 +437,7 @@ public class MurckoFragmenter implements IFragmenter {
         // in which case, the atoms of the bond are not
         // linker atoms, but the bond itself is a (pseudo) linker bond
         for (IBond bond : atomContainer.bonds()) {
-            if (isZeroAtomLinker(bond, atomContainer)) {
+            if (isZeroAtomLinker(bond)) {
                 hasLinker = true;
                 break;
             }
