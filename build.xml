@@ -548,6 +548,9 @@
             list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
+            list="hash"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
             list="control,extra,fragment,reaction,pdbcml,libiomd"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -570,9 +573,6 @@
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="group"/>
-        <foreach target="compile-module" param="module"
-            parallel="${parallel}" maxthreads="${threadCount}"
-            list="hash"/>
     </target>
 
     <target id="test-dist-all" name="test-dist-all" description="test-dist-all">

@@ -14,3 +14,4 @@ cdk-valencycheck.jar
 cdk-pdb.jar
 cdk-log4j.jar
 cdk-fragment.jar
+cdk-hash.jar
