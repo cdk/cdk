@@ -140,6 +140,10 @@ public class PDBAtomCustomizer implements ICMLCustomizer {
             }
             
             element.addAttribute(new Attribute("occupancy", "" + pdbAtom.getOccupancy()));
+
+            // remove isotope info
+            Attribute isotopeInfo = element.getAttribute("isotopeNumber");
+            if (isotopeInfo != null) element.removeAttribute(isotopeInfo);
         }
     }
 
