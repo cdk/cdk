@@ -27,15 +27,12 @@
  *  */
 package org.openscience.cdk.io.cml;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -44,18 +41,13 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
-import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -687,64 +679,6 @@ public class CML2Test extends CDKTestCase {
         
         // FIXME: REACT: It should return two different formulas
         Assert.assertEquals("[C 18 H 21 Cl 2 Mn 1 N 5 O 1, C 4 H 10]", mol.getProperty(CDKConstants.FORMULA).toString());
-    }
-    /**
-	 * @cdk.bug 1085912
-	 */
-	@Test public void testSFBug1085912_1() throws Exception {
-	    Assume.assumeTrue(runSlowTests());
-		
-		String filename_pdb = "data/pdb/1CKV.pdb";
-//		String filename_cml = "data/cml/1CKV_1.cml";
-	    InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);
-//	    InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
-	    
-	    /*1*/
-	    ISimpleChemObjectReader reader = new PDBReader(ins1);
-	    IChemFile chemFile1 = (IChemFile) reader.read(new NNChemFile());
-	    IChemSequence seq1 = chemFile1.getChemSequence(0);
-	    IChemModel model1 = seq1.getChemModel(0);
-	    IAtomContainer container = model1.getMoleculeSet().getMolecule(0);
-	    IBioPolymer polymer1 = (IBioPolymer)container;
-	    int countchemFile1 = chemFile1.getChemSequenceCount();
-//	    int countseq1 = seq1.getChemModelCount();
-	    int countmodel1 = model1.getMoleculeSet().getAtomContainerCount();
-	    int countpolymer1 = polymer1.getAtomCount();
-
-
-	    StringWriter writer = new StringWriter();
-	    CMLWriter cmlWriter = new CMLWriter(writer);
-	    cmlWriter.write(polymer1);
-	    String cmlContent1 = writer.toString();
-
-
-	    /*2*/
-	    CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
-	    IChemFile chemFil2 = (IChemFile)reader2.read(new NNChemFile());
-	    IChemSequence seq2 = chemFil2.getChemSequence(0);
-	    IChemModel model2 = seq2.getChemModel(0);
-	    PDBPolymer polymer2 =  (PDBPolymer) model2.getMoleculeSet().getAtomContainer(0);
-
-
-	    int countchemFile2 = chemFil2.getChemSequenceCount();
-//	    int countseq2 = seq2.getChemModelCount();
-	    int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
-	    int countpolymer2 = polymer2.getAtomCount();
-
-	    Assert.assertEquals(countchemFile1, countchemFile2);
-//	    Assert.assertEquals(countseq1,countseq2); /*not the same because the pdb file has more models*/
-	    Assert.assertEquals(countmodel1,countmodel2);
-	    Assert.assertEquals(countpolymer1,countpolymer2);
-
-
-	    writer = new StringWriter();
-	    cmlWriter = new CMLWriter(writer);
-	    cmlWriter.write(polymer2);
-	    String cmlContent2 = writer.toString();
-
-	    String conte1 = cmlContent1.substring(0, 1000);
-	    String conte2 = cmlContent2.substring(0, 1000);
-	    Assert.assertEquals(conte1,conte2);
     }
     /**
      * This test tests whether the CMLReader is able to ignore the CMLReaction part
