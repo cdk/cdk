@@ -27,6 +27,8 @@ package org.openscience.cdk.libio.cml;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -439,10 +441,10 @@ public class Convertor {
         while (iter.hasNext()) {
             Object key = iter.next();
             IStrand strand = mapS.get(key);
-            Map<String, IMonomer> mapM = strand.getMonomers();
-           	Iterator<String> iterM = mapM.keySet().iterator();
-            while (iterM.hasNext()) {
-                IMonomer monomer = mapM.get(iterM.next());
+            List<String> monomerNames = new ArrayList<String>(strand.getMonomerNames());
+            Collections.sort(monomerNames);
+            for (String name : monomerNames) {
+                IMonomer monomer = strand.getMonomer(name);
                 CMLMolecule clmono = cdkMonomerToCMLMolecule(monomer, true);
                	cmlMolecule.appendChild(clmono);
             }
