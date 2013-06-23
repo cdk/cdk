@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -277,4 +278,60 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    @Test
+    public void testSFBug1085912_1() throws Exception {
+    	String cmlContent = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+    			"<molecule convention=\"PDB\" dictRef=\"pdb:model\" xmlns=\"http://www.xml-cml.org/schema\">" +
+    			"  <molecule dictRef=\"pdb:sequence\" id=\"ALAA116\">" +
+    			"    <atomArray>" +
+    			"      <atom id=\"a9794931\" elementType=\"N\" x3=\"-10.311\" y3=\"2.77\" z3=\"-9.837\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a5369354\" elementType=\"C\" x3=\"-9.75\" y3=\"4.026\" z3=\"-9.35\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a14877152\" elementType=\"C\" x3=\"-10.818\" y3=\"5.095\" z3=\"-9.151\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a26221736\" elementType=\"O\" x3=\"-11.558\" y3=\"5.433\" z3=\"-10.074\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a4811470\" elementType=\"C\" x3=\"-8.678\" y3=\"4.536\" z3=\"-10.304\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a211489\" elementType=\"H\" x3=\"-10.574\" y3=\"2.695\" z3=\"-10.778\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a31287617\" elementType=\"H\" x3=\"-9.279\" y3=\"3.829\" z3=\"-8.398\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a19487109\" elementType=\"H\" x3=\"-8.523\" y3=\"3.813\" z3=\"-11.09\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a28589522\" elementType=\"H\" x3=\"-8.994\" y3=\"5.477\" z3=\"-10.737\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"      <atom id=\"a4638116\" elementType=\"H\" x3=\"-7.754\" y3=\"4.682\" z3=\"-9.763\" formalCharge=\"0\">" +
+    			"        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>" +
+    			"      </atom>" +
+    			"    </atomArray>" +
+    			"  </molecule>" +
+    			"</molecule>";    	      
+        CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlContent.getBytes()));
+        try {
+            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            Assert.assertNotNull("ChemFile was null", cfile);
+            List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
+            Assert.assertEquals("expected a single atom container", 1, containers.size());
+            IAtomContainer container = containers.get(0);
+            Assert.assertNotNull("null atom container read", container);
+            
+            // OK, now test that the residue identifier is properly read
+            Assert.assertEquals("ALAA116", container.getID());
+            System.out.println("" + container);
+        } finally {
+            reader.close();
+        }
+    }
+    
 }
