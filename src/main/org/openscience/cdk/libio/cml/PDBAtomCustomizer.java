@@ -40,8 +40,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.protein.data.PDBAtom;
 
 /**
- * Customizer for the libio-cml Convertor to be able to export details for
- * PDBAtom's.
+ * {@link ICMLCustomizer} for the libio-cml {@link Convertor} to be able to export details for
+ * {@link PDBAtom}'s.
  *
  * @author        egonw
  * @cdk.created   2005-05-04
