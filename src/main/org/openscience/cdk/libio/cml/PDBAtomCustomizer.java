@@ -1,9 +1,5 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+ *                     2013  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -41,7 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 
 /**
  * {@link ICMLCustomizer} for the libio-cml {@link Convertor} to be able to export details for
- * {@link PDBAtom}'s.
+ * {@link IPDBAtom}'s.
  *
  * @author        egonw
  * @cdk.created   2005-05-04
