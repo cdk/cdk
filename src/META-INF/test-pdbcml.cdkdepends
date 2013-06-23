@@ -1,0 +1,11 @@
+cdk-annotation.jar
+cdk-core.jar
+cdk-data.jar
+cdk-pdb.jar
+cdk-standard.jar
+cdk-interfaces.jar
+cdk-libiocml.jar
+cdk-pdbcml.jar
+cdk-io.jar
+cdk-test.jar
+cdk-testdata.jar
