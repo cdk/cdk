@@ -28,13 +28,13 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.hash.HashGeneratorMaker;
 import org.openscience.cdk.hash.MoleculeHashGenerator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
@@ -151,7 +151,12 @@ public class MurckoFragmenter implements IFragmenter {
 
         // identify rings
         AllRingsFinder arf = new AllRingsFinder(false);
-        arf.findAllRings(atomContainer);
+
+        // manually flag ring bonds
+        IRingSet r = arf.findAllRings(atomContainer);
+        for (IAtomContainer ar : r.atomContainers()) {
+            for (IBond bond : ar.bonds()) bond.setFlag(CDKConstants.ISINRING, true);
+        }
 
         for (IAtom atom : atomContainer.atoms()) {
             atom.setProperty(IS_LINKER_ATOM, false);
@@ -199,7 +204,7 @@ public class MurckoFragmenter implements IFragmenter {
 
         List<IBond> bondsToDelete = new ArrayList<IBond>();
         for (IBond bond : clone.bonds()) {
-            if (isZeroAtomLinker(bond, clone)) bondsToDelete.add(bond);
+            if (isZeroAtomLinker(bond)) bondsToDelete.add(bond);
         }
         for (IBond bond : bondsToDelete) clone.removeBond(bond);
 
@@ -218,7 +223,7 @@ public class MurckoFragmenter implements IFragmenter {
         // now we split this framework and recurse.
         assert currentFramework != null;
         for (IBond bond : currentFramework.bonds()) {
-            if (islinker(bond) || isZeroAtomLinker(bond, currentFramework)) {
+            if (islinker(bond) || isZeroAtomLinker(bond)) {
                 List<IAtomContainer> candidates = FragmentUtils.splitMolecule(currentFramework, bond);
                 for (IAtomContainer candidate : candidates) {
 
@@ -415,13 +420,8 @@ public class MurckoFragmenter implements IFragmenter {
         return islinker(bond.getAtom(0)) || islinker(bond.getAtom(1));
     }
 
-//    private boolean isZeroAtomLinker(IBond bond) {
-//        boolean isRingBond = bond.getFlag(CDKConstants.ISINRING);
-//        return isring(bond.getAtom(0)) && isring(bond.getAtom(1)) && !isRingBond;
-//    }
-
-    private boolean isZeroAtomLinker(IBond bond, IAtomContainer mol) {
-        boolean isRingBond = (new SpanningTree(mol)).getCyclicFragmentsContainer().contains(bond);
+    private boolean isZeroAtomLinker(IBond bond) {
+        boolean isRingBond = bond.getFlag(CDKConstants.ISINRING);
         return isring(bond.getAtom(0)) && isring(bond.getAtom(1)) && !isRingBond;
     }
 
@@ -438,7 +438,7 @@ public class MurckoFragmenter implements IFragmenter {
         // in which case, the atoms of the bond are not
         // linker atoms, but the bond itself is a (pseudo) linker bond
         for (IBond bond : atomContainer.bonds()) {
-            if (isZeroAtomLinker(bond, atomContainer)) {
+            if (isZeroAtomLinker(bond)) {
                 hasLinker = true;
                 break;
             }
