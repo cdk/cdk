@@ -67,16 +67,10 @@ import java.util.Set;
  * @cdk.githash
  * @cdk.keyword fragment
  * @cdk.keyword framework
- * @cdk.threadnonsafe
  * @see org.openscience.cdk.fragment.ExhaustiveFragmenter
  */
 @TestClass("org.openscience.cdk.fragment.MurckoFragmenterTest")
 public class MurckoFragmenter implements IFragmenter {
-
-    // need to keep track of fragments across recursive calls. Relevant
-    // for very large symmetric molecules such as
-    // http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=16129878
-    private static Set<Long> fragmentSet = new HashSet<Long>();
 
     private static final String IS_SIDECHAIN_ATOM = "sidechain";
     private static final String IS_LINKER_ATOM = "linker";
@@ -146,13 +140,13 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @TestMethod("testMF1, testMF2, testMF3, testMF4, testMF5, testMF6")
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
-        fragmentSet = new HashSet<Long>();
+        Set<Long> fragmentSet = new HashSet<Long>();
         frameMap.clear();
         ringMap.clear();
-        run(atomContainer);
+        run(atomContainer, fragmentSet);
     }
 
-    private void run(IAtomContainer atomContainer) throws CDKException {
+    private void run(IAtomContainer atomContainer, Set<Long> fragmentSet) throws CDKException {
         Long hash;
 
         // identify rings
@@ -244,7 +238,7 @@ public class MurckoFragmenter implements IFragmenter {
                     hash = generator.generate(candidate);
                     if (!fragmentSet.contains(hash) && hasframework(candidate) && candidate.getAtomCount() >= minimumFragmentSize) {
                         fragmentSet.add(hash);
-                        run(candidate);
+                        run(candidate, fragmentSet);
                     }
                 }
             }
