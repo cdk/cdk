@@ -443,5 +443,43 @@ public class AllRingsFinder {
     public long getTimeout() {
         return timeout;
     }
+
+
+    /**
+     * Simple class to allow undirected indexing of edges. One day... should
+     * part of public api - but that day is not now.
+     */
+    private final class Edge {
+
+        /** Endpoints. */
+        private final int u, v;
+
+        /**
+         * Create a new edge from two endpoints.
+         * @param u an endpoint
+         * @param v another endpoint
+         */
+        private Edge(int u, int v) {
+            this.u = u;
+            this.v = v;
+        }
+
+        /** @inheritDoc */
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Edge that = (Edge) o;
+            return (this.u == that.u && this.v == that.v) ||
+                    (this.u == that.v && this.v == that.u);
+        }
+
+        /** @inheritDoc */
+        @Override
+        public int hashCode() {
+            return u ^ v;
+        }
+    }
+
 }
 
