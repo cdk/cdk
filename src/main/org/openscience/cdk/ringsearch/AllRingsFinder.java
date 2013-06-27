@@ -25,9 +25,11 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import com.google.common.collect.Maps;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.AllCycles;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
@@ -121,7 +123,7 @@ public class AllRingsFinder {
     @TestMethod("testFindAllRings_IAtomContainer,testBondsWithinRing")
     public IRingSet findAllRings(IAtomContainer atomContainer) throws
                                                                CDKException {
-        return findAllRings(atomContainer, null);
+        return findAllRings(atomContainer, atomContainer.getAtomCount());
     }
 
     /**
@@ -145,9 +147,10 @@ public class AllRingsFinder {
         IRingSet resultSet = atomContainer.getBuilder()
                                           .newInstance(IRingSet.class);
         while (separateRingSystem.hasNext()) {
+            IAtomContainer next = (IAtomContainer) separateRingSystem
+                    .next();
             resultSet
-                    .add(findAllRingsInIsolatedRingSystem((IAtomContainer) separateRingSystem
-                            .next(), maxRingSize));
+                    .add(findAllRingsInIsolatedRingSystem(next, Math.min(maxRingSize, next.getAtomCount())));
         }
         return resultSet;
     }
@@ -155,18 +158,19 @@ public class AllRingsFinder {
 
     /**
      * Fings the set of all rings in a molecule Calls {@link
-     * #findAllRingsInIsolatedRingSystem(IAtomContainer, Integer)} with max ring
-     * size argument set to null (=unlimited ring sizes)
+     * #findAllRingsInIsolatedRingSystem(IAtomContainer, int)} with max ring
+     * size argument set to the number of atom (Hamiltonian path).
      *
      * @param atomContainer the molecule to be searched for rings
      * @return a RingSet containing the rings in molecule
-     * @throws CDKException An exception thrown if something goes wrong or if
-     *                      the timeout limit is reached
+     * @throws CDKException An exception thrown if the {@link Threshold} was
+     *                      reached
      */
 
     public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer) throws
                                                                                    CDKException {
-        return findAllRingsInIsolatedRingSystem(atomContainer, null);
+        return findAllRingsInIsolatedRingSystem(atomContainer,
+                                                atomContainer.getAtomCount());
     }
 
     /**
@@ -176,19 +180,31 @@ public class AllRingsFinder {
      * @param maxRingSize   Maximum ring size to consider. Provides a possible
      *                      breakout from recursion for complex compounds.
      * @return a RingSet containing the rings in molecule
-     * @throws CDKException An exception thrown if something goes wrong or if
-     *                      the timeout limit is reached
+     * @throws CDKException An exception thrown if the {@link Threshold} was
+     *                      reached
      */
-    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer, Integer maxRingSize) throws
-                                                                                                        CDKException {
-        List<Path> paths = new ArrayList<Path>();
+    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer,
+                                                     int maxRingSize) throws
+                                                                      CDKException {
+
+        final int              m     = atomContainer.getBondCount();
+        final Map<Edge, IBond> edges = Maps.newHashMapWithExpectedSize(m);
+        final int[][]          graph = toGraph(atomContainer, edges);
+
+        AllCycles ac = new AllCycles(graph,
+                                     maxRingSize,
+                                     threshold.value);
+
+        if (!ac.completed())
+            throw new CDKException("Threshold exceeded for AllRingsFinder");
+
         IRingSet ringSet = atomContainer.getBuilder()
                                         .newInstance(IRingSet.class);
-        IAtomContainer ac = atomContainer.getBuilder()
-                                         .newInstance(IAtomContainer.class);
-        originalAc = atomContainer;
-        ac.add(atomContainer);
-        doSearch(ac, paths, ringSet, maxRingSize);
+
+        for (int[] path : ac.paths()) {
+            ringSet.addAtomContainer(toRing(atomContainer, edges, path));
+        }
+
         return ringSet;
     }
 
