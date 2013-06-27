@@ -39,8 +39,10 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Finds the Set of all Rings. This is an implementation of the algorithm
@@ -444,6 +446,52 @@ public class AllRingsFinder {
         return timeout;
     }
 
+
+    /**
+     * Convert the container to an int[][] adjacency list. The bonds of each
+     * edge ar indexed in the {@literal bonds} map.
+     *
+     * @param container molecule
+     * @param bonds     map of edges to bonds
+     * @return adjacency list representation
+     */
+    private int[][] toGraph(IAtomContainer container, Map<Edge,IBond> bonds) {
+
+        if (container == null)
+            throw new NullPointerException("atom container was null");
+
+        int n = container.getAtomCount();
+
+        int[][] graph = new int[n][4];
+        int[] degree = new int[n];
+
+        for (IBond bond : container.bonds()) {
+
+            int v = container.getAtomNumber(bond.getAtom(0));
+            int w = container.getAtomNumber(bond.getAtom(1));
+
+            bonds.put(new Edge(v, w), bond);
+
+            if (v < 0 || w < 0)
+                throw new IllegalArgumentException("bond at index " + container.getBondNumber(bond)
+                                                        + " contained an atom not pressent in molecule");
+
+            graph[v][degree[v]++] = w;
+            graph[w][degree[w]++] = v;
+
+            // if the vertex degree of v or w reaches capacity, double the size
+            if (degree[v] == graph[v].length)
+                graph[v] = Arrays.copyOf(graph[v], degree[v] * 2);
+            if (degree[w] == graph[w].length)
+                graph[w] = Arrays.copyOf(graph[w], degree[w] * 2);
+        }
+
+        for (int v = 0; v < n; v++) {
+            graph[v] = Arrays.copyOf(graph[v], degree[v]);
+        }
+
+        return graph;
+    }
 
     /**
      * Simple class to allow undirected indexing of edges. One day... should
