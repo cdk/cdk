@@ -146,12 +146,12 @@ public class AllRingsFinderTest extends CDKTestCase
 		Assert.assertEquals(20, ringSet.getAtomContainerCount());
 	}
 	
-	@Test(timeout=120000)
+	@Test(timeout=500)
 	public void testBigRingSystem() throws Exception {
 	  Assume.assumeTrue(runSlowTests());
 		
 		IRingSet ringSet = null;
-		AllRingsFinder arf = new AllRingsFinder();
+		AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_994);
 
 		String filename = "data/mdl/ring_03419.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
