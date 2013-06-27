@@ -446,16 +446,72 @@ public class AllRingsFinder {
         return timeout;
     }
 
+    /**
+     * Convert a cycle in {@literal int[]} representation to an {@link IRing}.
+     *
+     * @param container atom container
+     * @param edges     edge map
+     * @param cycle     vertex walk forming the cycle, first and last vertex the
+     *                  same
+     * @return a new ring
+     */
+    private IRing toRing(IAtomContainer container,
+                         Map<Edge, IBond> edges,
+                         int[] cycle) {
+        IRing ring = container.getBuilder().newInstance(IRing.class, 0);
+
+        int len = cycle.length - 1;
+
+        IAtom[] atoms = new IAtom[len];
+        IBond[] bonds = new IBond[len];
+
+        for (int i = 0; i < len; i++) {
+            atoms[i] = container.getAtom(cycle[i]);
+            bonds[i] = edges.get(new Edge(cycle[i], cycle[i + 1]));
+        }
+
+        return ring;
+    }
+
+    /**
+     * Convert a cycle in {@literal int[]} representation to an {@link IRing}
+     * but first map back using the given {@literal mapping}.
+     *
+     * @param container atom container
+     * @param edges     edge map
+     * @param cycle     vertex walk forming the cycle, first and last vertex the
+     *                  same
+     * @return a new ring
+     */
+    private IRing toRing(IAtomContainer container,
+                         Map<Edge, IBond> edges,
+                         int[] cycle,
+                         int[] mapping) {
+        IRing ring = container.getBuilder().newInstance(IRing.class, 0);
+
+        int len = cycle.length - 1;
+
+        IAtom[] atoms = new IAtom[len];
+        IBond[] bonds = new IBond[len];
+
+        for (int i = 0; i < len; i++) {
+            atoms[i] = container.getAtom(mapping[cycle[i]]);
+            bonds[i] = edges.get(new Edge(mapping[cycle[i]],
+                                          mapping[cycle[i + 1]]));
+        }
+
+        return ring;
+    }
 
     /**
      * Convert the container to an int[][] adjacency list. The bonds of each
-     * edge ar indexed in the {@literal bonds} map.
+     * edge ar indexed in the {@literal edges} map.
      *
      * @param container molecule
-     * @param bonds     map of edges to bonds
+     * @param edges     map of edges to bonds
      * @return adjacency list representation
      */
-    private int[][] toGraph(IAtomContainer container, Map<Edge,IBond> bonds) {
+    private int[][] toGraph(IAtomContainer container, Map<Edge, IBond> edges) {
 
         if (container == null)
             throw new NullPointerException("atom container was null");
@@ -470,11 +526,12 @@ public class AllRingsFinder {
             int v = container.getAtomNumber(bond.getAtom(0));
             int w = container.getAtomNumber(bond.getAtom(1));
 
-            bonds.put(new Edge(v, w), bond);
+            edges.put(new Edge(v, w), bond);
 
             if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container.getBondNumber(bond)
-                                                        + " contained an atom not pressent in molecule");
+                throw new IllegalArgumentException("bond at index " + container
+                        .getBondNumber(bond)
+                                                           + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;
             graph[w][degree[w]++] = v;
@@ -504,6 +561,7 @@ public class AllRingsFinder {
 
         /**
          * Create a new edge from two endpoints.
+         *
          * @param u an endpoint
          * @param v another endpoint
          */
