@@ -70,7 +70,13 @@ import java.util.Map;
  */
 @TestClass("org.openscience.cdk.ringsearch.AllRingsFinderTest")
 public class AllRingsFinder {
-    private ILoggingTool logger = null;
+
+    /** Logger for the class. */
+    private final ILoggingTool logger = LoggingToolFactory
+            .createLoggingTool(AllRingsFinder.class);
+
+    /** Precomputed threshold - stops the computation running forever. */
+    private final Threshold threshold;
 
     /*
      *  used for storing the original atomContainer for
@@ -85,16 +91,21 @@ public class AllRingsFinder {
      * Constructor for the AllRingsFinder.
      *
      * @param logging true=logging will be done (slower), false = no logging.
+     * @deprecated turn logging off by setting the level in the logger
+     *             implementation
      */
+    @Deprecated
     public AllRingsFinder(boolean logging) {
-        if (logging)
-            logger =
-                    LoggingToolFactory.createLoggingTool(AllRingsFinder.class);
+        this(Threshold.PubChem_99);
     }
 
     /** Constructor for the AllRingsFinder with logging. */
     public AllRingsFinder() {
-        this(true);
+        this(Threshold.PubChem_99);
+    }
+
+    private AllRingsFinder(Threshold threshold) {
+        this.threshold = threshold;
     }
 
     /**
@@ -586,7 +597,9 @@ public class AllRingsFinder {
      * There will always be some ring systems in which we cannot compute every
      * possible ring (e.g. Fullerenes). This limit replaces the previous timeout
      * and provides a more meaningful measure of what to expect based on
-     * precomputed percentiles. <br/>
+     * precomputed percentiles. It is important to consider that, higher is not
+     * always better - generally the large values generate many more rings then
+     * can be reasonably be handled.<br/>
      *
      * The latest results were calculated on PubChem Compound (Dec' 12) and
      * summarised below.
@@ -665,5 +678,19 @@ public class AllRingsFinder {
         }
     }
 
+    /**
+     * Create an {@link AllRingsFinder} instance using the given threshold.
+     *
+     * <blockquote><pre>
+     * // import static AllRingsFinder.Threshold.PubChem_99;
+     * AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_99);
+     * </pre></blockquote>
+     *
+     * @param threshold the threshold value
+     * @return instance with the set threshold
+     */
+    public static AllRingsFinder usingThreshold(Threshold threshold) {
+        return new AllRingsFinder(threshold);
+    }
 }
 
