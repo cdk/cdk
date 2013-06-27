@@ -30,8 +30,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllCycles;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -139,20 +138,45 @@ public class AllRingsFinder {
      */
     public IRingSet findAllRings(IAtomContainer atomContainer, Integer maxRingSize) throws
                                                                                     CDKException {
-        SpanningTree spanningTree = new SpanningTree(atomContainer);
-        IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
-        Iterator<IAtomContainer> separateRingSystem = ConnectivityChecker
-                .partitionIntoMolecules(ringSystems).atomContainers()
-                .iterator();
-        IRingSet resultSet = atomContainer.getBuilder()
-                                          .newInstance(IRingSet.class);
-        while (separateRingSystem.hasNext()) {
-            IAtomContainer next = (IAtomContainer) separateRingSystem
-                    .next();
-            resultSet
-                    .add(findAllRingsInIsolatedRingSystem(next, Math.min(maxRingSize, next.getAtomCount())));
+
+        final int m = atomContainer.getBondCount();
+        final Map<Edge, IBond> edges = Maps.newHashMapWithExpectedSize(m);
+        final int[][] graph = toGraph(atomContainer, edges);
+
+        RingSearch rs = new RingSearch(atomContainer, graph);
+
+        IRingSet ringSet = atomContainer.getBuilder()
+                                        .newInstance(IRingSet.class);
+
+        // don't need to run on isolated rings, just need to put vertices in
+        // cyclic order
+        for (int[] isolated : rs.isolated()) {
+            if (isolated.length < maxRingSize) {
+                IRing ring = toRing(atomContainer,
+                                    edges,
+                                    GraphUtil.cycle(graph, isolated));
+                ringSet.addAtomContainer(ring);
+            }
         }
-        return resultSet;
+
+        // for each set of fused cyclic vertices run the separate search
+        for (int[] fused : rs.fused()) {
+
+            AllCycles ac = new AllCycles(GraphUtil.subgraph(graph, fused),
+                                         Math.min(maxRingSize, fused.length),
+                                         threshold.value);
+
+            if (!ac.completed())
+                throw new CDKException("Threshold exceeded for AllRingsFinder");
+
+            for(int[] path : ac.paths()) {
+                IRing ring = toRing(atomContainer,
+                                    edges, path, fused);
+                ringSet.addAtomContainer(ring);
+            }
+        }
+
+        return ringSet;
     }
 
 
@@ -187,9 +211,9 @@ public class AllRingsFinder {
                                                      int maxRingSize) throws
                                                                       CDKException {
 
-        final int              m     = atomContainer.getBondCount();
+        final int m = atomContainer.getBondCount();
         final Map<Edge, IBond> edges = Maps.newHashMapWithExpectedSize(m);
-        final int[][]          graph = toGraph(atomContainer, edges);
+        final int[][] graph = toGraph(atomContainer, edges);
 
         AllCycles ac = new AllCycles(graph,
                                      maxRingSize,
@@ -213,14 +237,14 @@ public class AllRingsFinder {
      * @param ac      The AtomContainer to be searched
      * @param paths   A vectoring storing all the paths
      * @param ringSet A ringset to be extended while we search
-     * @throws CDKException An exception thrown if something goes wrong or if the
-     *                      timeout limit is reached
+     * @throws CDKException An exception thrown if something goes wrong or if
+     *                      the timeout limit is reached
      */
     private void doSearch(IAtomContainer ac, List<Path> paths, IRingSet ringSet, Integer maxPathLen) throws
                                                                                                      CDKException {
         IAtom atom;
         /*
-		 *  First we convert the molecular graph into a a path graph by
+         *  First we convert the molecular graph into a a path graph by
 		 *  creating a set of two membered paths from all the bonds in the molecule
 		 */
         initPathGraph(ac, paths);
@@ -296,7 +320,7 @@ public class AllRingsFinder {
                                 logger.debug("Union: ", union
                                         .toString(originalAc));
                             }
-							/*
+                            /*
 							 *  Now we know that path1 and
 							 *  path2 share the Atom atom.
 							 */

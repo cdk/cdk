@@ -45,6 +45,8 @@ import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
+import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_994;
+
 /**
  * @cdk.module test-standard
  */
