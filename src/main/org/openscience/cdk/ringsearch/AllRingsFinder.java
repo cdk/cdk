@@ -581,5 +581,89 @@ public class AllRingsFinder {
         }
     }
 
+    /**
+     * The threshold values provide a limit at which the computation stops.
+     * There will always be some ring systems in which we cannot compute every
+     * possible ring (e.g. Fullerenes). This limit replaces the previous timeout
+     * and provides a more meaningful measure of what to expect based on
+     * precomputed percentiles. <br/>
+     *
+     * The latest results were calculated on PubChem Compound (Dec' 12) and
+     * summarised below.
+     *
+     * <table style="width: 100%;"> <tr><th>Maximum Degree</th><th>Percent
+     * (%)</th><th>Completed<br /> (ring systems)</th><th>Uncompleted<br />
+     * (ring systems)</th></tr> <tr><td>&nbsp;</td></tr>
+     * <tr><td>72</td><td>99.95</td><td>17834013</td><td>8835</td></tr>
+     * <tr><td>84</td><td>99.96</td><td>17835876</td><td>6972</td></tr>
+     * <tr><td>126</td><td>99.97</td><td>17837692</td><td>5156</td></tr>
+     * <tr><td>216</td><td>99.98</td><td>17839293</td><td>3555</td></tr>
+     * <tr><td>684</td><td>99.99 (default)</td><td>17841065</td><td>1783</td></tr>
+     * <tr><td>&nbsp;</td></tr> <tr><td>882</td><td>99.991</td><td>17841342</td><td>1506</td></tr>
+     * <tr><td>1062</td><td>99.992</td><td>17841429</td><td>1419</td></tr>
+     * <tr><td>1440</td><td>99.993</td><td>17841602</td><td>1246</td></tr>
+     * <tr><td>3072</td><td>99.994</td><td>17841789</td><td>1059</td></tr>
+     * </table>
+     *
+     * @see <a href="http://efficientbits.blogspot.co.uk/2013/06/allringsfinder-sport-edition.html">AllRingsFinder,
+     *      Sport Edition</a>
+     */
+    public enum Threshold {
+
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.95% of ring systems.
+         */
+        PubChem_95(72),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.96% of ring systems.
+         */
+        PubChem_96(84),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.97% of ring systems.
+         */
+        PubChem_97(126),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.98% of ring systems.
+         */
+        PubChem_98(216),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.99% of ring systems.
+         */
+        PubChem_99(684),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.991% of ring systems.
+         */
+        PubChem_991(882),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.992% of ring systems.
+         */
+        PubChem_992(1062),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.993% of ring systems.
+         */
+        PubChem_993(1440),
+        /**
+         * Based on PubChem Compound (Dec '12), perception will complete for
+         * 99.994% of ring systems.
+         */
+        PubChem_994(3072),
+        /** Run without any threshold, possibly until the end of time itself. */
+        None(Integer.MAX_VALUE);
+
+        private final int value;
+
+        private Threshold(int value) {
+            this.value = value;
+        }
+    }
+
 }
 
