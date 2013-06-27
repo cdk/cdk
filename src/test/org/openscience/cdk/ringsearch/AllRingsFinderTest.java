@@ -25,6 +25,7 @@ import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -58,7 +59,7 @@ public class AllRingsFinderTest extends CDKTestCase
 
 	public void setStandAlone(boolean standAlone)
 	{
-		this.standAlone = standAlone;
+		// not-used
 	}
 
     @Test public void testAllRingsFinder()
@@ -70,7 +71,6 @@ public class AllRingsFinderTest extends CDKTestCase
 	@Test public void testFindAllRings_IAtomContainer() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
-		if (standAlone) arf.debug = true;
 		IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
 		//display(molecule);
 
@@ -85,7 +85,6 @@ public class AllRingsFinderTest extends CDKTestCase
 	@Test public void testBondsWithinRing() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
-		if (standAlone) arf.debug = true;
 		IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
 		//display(molecule);
 
@@ -110,21 +109,21 @@ public class AllRingsFinderTest extends CDKTestCase
 		IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
 		arf.findAllRings(molecule);
 	}
-	
-	@Test(expected = CDKException.class) public void testSetTimeout_long() throws Exception {
+
+    @Ignore("timeout not longer used") public void testSetTimeout_long() throws Exception {
 		AllRingsFinder arf = new AllRingsFinder();
 		arf.setTimeout(1);
 		IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
         arf.findAllRings(molecule);
     }
 	
-	@Test public void testCheckTimeout() throws Exception {
+	@Ignore("timeout not longer used") public void testCheckTimeout() throws Exception {
 		AllRingsFinder arf = new AllRingsFinder();
 		arf.setTimeout(3);
 		arf.checkTimeout();
 	}
-	
-	@Test public void testGetTimeout()
+
+    @Ignore("timeout not longer used") public void testGetTimeout()
 	{
 		AllRingsFinder arf = new AllRingsFinder();
 		arf.setTimeout(3);
@@ -134,7 +133,6 @@ public class AllRingsFinderTest extends CDKTestCase
 	@Test public void testPorphyrine() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
-		if (standAlone) arf.debug = true;
 
 		String filename = "data/mdl/porphyrin.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -171,7 +169,6 @@ public class AllRingsFinderTest extends CDKTestCase
 	@Test public void testCholoylCoA() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
-		if (standAlone) arf.debug = true;
 
 		String filename = "data/mdl/choloylcoa.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -204,8 +201,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	@Test public void testBigMoleculeWithIsolatedRings() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-		if (standAlone) arf.debug = true;
-        
+
         String filename = "data/cml/isolated_ringsystems.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
