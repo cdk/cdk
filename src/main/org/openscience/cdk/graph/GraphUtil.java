@@ -165,7 +165,8 @@ public class GraphUtil {
      *
      * @param graph    a graph
      * @param vertices set of vertices
-     * @return
+     * @return vertices in a walk which makes a cycle (first and last are the
+     *         same)
      * @throws IllegalArgumentException thrown if the vertices do not form a
      *                                  cycle
      * @see org.openscience.cdk.ringsearch.RingSearch#isolated()
@@ -182,12 +183,12 @@ public class GraphUtil {
             marked[v] = true;
         }
 
-        int[] path = new int[m];
+        int[] path = new int[m + 1];
 
-        path[0] = vertices[0];
+        path[0] = path[m] = vertices[0];
         marked[vertices[0]] = false;
 
-        for (int i = 1; i < path.length; i++) {
+        for (int i = 1; i < m; i++) {
             int w = firstMarked(graph[path[i - 1]], marked);
             if (w < 0)
                 throw new IllegalArgumentException("broken path");

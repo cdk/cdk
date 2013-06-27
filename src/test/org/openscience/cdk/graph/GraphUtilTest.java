@@ -92,7 +92,7 @@ public class GraphUtilTest {
                 {4, 0}
         };
         int[] path = GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
-        assertThat(path, is(new int[]{0, 1, 2, 3, 4, 5}));
+        assertThat(path, is(new int[]{0, 1, 2, 3, 4, 5, 0}));
     }
 
     @Test(expected = IllegalArgumentException.class)
