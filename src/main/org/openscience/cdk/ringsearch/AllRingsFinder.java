@@ -72,10 +72,6 @@ import java.util.Map;
 public class AllRingsFinder {
     private ILoggingTool logger = null;
 
-    public  boolean debug   = false;
-    private long    timeout = 5000;
-    private long startTime;
-
     /*
      *  used for storing the original atomContainer for
      *  reference purposes (printing)
@@ -130,7 +126,6 @@ public class AllRingsFinder {
      */
     public IRingSet findAllRings(IAtomContainer atomContainer, Integer maxRingSize) throws
                                                                                     CDKException {
-        startTime = System.currentTimeMillis();
         SpanningTree spanningTree = new SpanningTree(atomContainer);
         IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
         Iterator<IAtomContainer> separateRingSystem = ConnectivityChecker
@@ -175,9 +170,6 @@ public class AllRingsFinder {
      */
     public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer, Integer maxRingSize) throws
                                                                                                         CDKException {
-        if (startTime == 0) {
-            startTime = System.currentTimeMillis();
-        }
         List<Path> paths = new ArrayList<Path>();
         IRingSet ringSet = atomContainer.getBuilder()
                                         .newInstance(IRingSet.class);
@@ -230,8 +222,8 @@ public class AllRingsFinder {
      * @param ac         The AtomContainer to work on
      * @param paths      The paths to manipulate
      * @param rings      The ringset to be extended
-     * @param maxPathLen Max path length = max ring size detected = max recursion
-     *                   depth
+     * @param maxPathLen Max path length = max ring size detected = max
+     *                   recursion depth
      * @throws CDKException Thrown if something goes wrong or if the timeout is
      *                      exceeded
      */
@@ -285,7 +277,6 @@ public class AllRingsFinder {
                             removePaths.add(path2);
                         }
                     }
-                    if (timeout > 0) checkTimeout();
                 }
             }
         }
@@ -410,14 +401,12 @@ public class AllRingsFinder {
      * rare cases with ring systems of large size or special topology.
      *
      * @throws CDKException The exception thrown in case of hitting the timeout
+     * @deprecated
      */
     @TestMethod("testCheckTimeout")
+    @Deprecated
     public void checkTimeout() throws CDKException {
-        if (startTime == 0) return;
-        long time = System.currentTimeMillis();
-        if (time - startTime > timeout) {
-            throw new CDKException("Timeout for AllringsFinder exceeded");
-        }
+        // unused
     }
 
 
@@ -428,10 +417,13 @@ public class AllRingsFinder {
      *
      * @param timeout The new timeout value
      * @return a reference to the instance this method was called for
+     * @deprecated use the new threshold (during construction)
      */
     @TestMethod("testSetTimeout_long")
+    @Deprecated
     public AllRingsFinder setTimeout(long timeout) {
-        this.timeout = timeout;
+        System.err.println("AllRingsFinder.setTimeout() is not used, please" +
+                                   "use the new threshold values");
         return this;
     }
 
@@ -440,10 +432,12 @@ public class AllRingsFinder {
      * Gets the timeout values in milliseconds of the AllRingsFinder object
      *
      * @return The timeout value
+     * @deprecated timeout not long used
      */
     @TestMethod("testGetTimeout")
+    @Deprecated
     public long getTimeout() {
-        return timeout;
+        return 0;
     }
 
     /**
