@@ -1,7 +1,7 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2002-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+/* Copyright (C) 2002-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *                    2009  Mark Rijnbeek <mark_rynbeek@users.sf.net>
+ *                    2013  European Bioinformatics Institute (EMBL-EBI)
+ *                          John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -42,7 +42,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -79,15 +78,6 @@ public class AllRingsFinder {
 
     /** Precomputed threshold - stops the computation running forever. */
     private final Threshold threshold;
-
-    /*
-     *  used for storing the original atomContainer for
-     *  reference purposes (printing)
-     */
-    IAtomContainer originalAc     = null;
-    List<Path>     newPaths       = new ArrayList<Path>();
-    List<Path>     potentialRings = new ArrayList<Path>();
-    List<Path>     removePaths    = new ArrayList<Path>();
 
     /**
      * Constructor for the AllRingsFinder.
@@ -232,220 +222,6 @@ public class AllRingsFinder {
 
         return ringSet;
     }
-
-
-    /**
-     * @param ac      The AtomContainer to be searched
-     * @param paths   A vectoring storing all the paths
-     * @param ringSet A ringset to be extended while we search
-     * @throws CDKException An exception thrown if something goes wrong or if
-     *                      the timeout limit is reached
-     */
-    private void doSearch(IAtomContainer ac, List<Path> paths, IRingSet ringSet, Integer maxPathLen) throws
-                                                                                                     CDKException {
-        IAtom atom;
-        /*
-         *  First we convert the molecular graph into a a path graph by
-		 *  creating a set of two membered paths from all the bonds in the molecule
-		 */
-        initPathGraph(ac, paths);
-        if (logger != null) {
-            logger.debug("BondCount: ", ac.getBondCount());
-            logger.debug("PathCount: ", paths.size());
-        }
-        do {
-            atom = selectAtom(ac);
-            if (atom != null) {
-                remove(atom, ac, paths, ringSet, maxPathLen);
-            }
-        } while (paths.size() > 0 && atom != null);
-        if (logger != null) {
-            logger.debug("paths.size(): ", paths.size());
-            logger.debug("ringSet.size(): ", ringSet.getAtomContainerCount());
-        }
-    }
-
-
-    /**
-     * Removes an atom from the AtomContainer under certain conditions. See
-     * {@cdk.cite HAN96} for details
-     *
-     * @param atom       The atom to be removed
-     * @param ac         The AtomContainer to work on
-     * @param paths      The paths to manipulate
-     * @param rings      The ringset to be extended
-     * @param maxPathLen Max path length = max ring size detected = max
-     *                   recursion depth
-     * @throws CDKException Thrown if something goes wrong or if the timeout is
-     *                      exceeded
-     */
-    private void remove(IAtom atom, IAtomContainer ac, List<Path> paths, IRingSet rings, Integer maxPathLen) throws
-                                                                                                             CDKException {
-        Path path1;
-        Path path2;
-        Path union;
-        int intersectionSize;
-        newPaths.clear();
-        removePaths.clear();
-        potentialRings.clear();
-        if (logger != null)
-            logger.debug("*** Removing atom " + originalAc
-                    .getAtomNumber(atom) + " ***");
-
-        for (int i = 0; i < paths.size(); i++) {
-            path1 = paths.get(i);
-            if (path1.firstElement() == atom || path1.lastElement() == atom) {
-                for (int j = i + 1; j < paths.size(); j++) {
-                    //logger.debug(".");
-                    path2 = paths.get(j);
-                    if (path2.firstElement() == atom || path2
-                            .lastElement() == atom) {
-                        intersectionSize = path1.getIntersectionSize(path2);
-                        if (intersectionSize < 3) {
-                            if (logger != null) {
-                                logger.debug("Joining " + path1
-                                        .toString(originalAc) + " and " + path2
-                                        .toString(originalAc));
-                            }
-                            union = Path.join(path1, path2, atom);
-                            if (intersectionSize == 1) {
-                                newPaths.add(union);
-                            } else {
-                                if (maxPathLen == null || union
-                                        .size() <= (maxPathLen + 1)) {
-                                    potentialRings.add(union);
-                                }
-                            }
-                            //logger.debug("Intersection Size: " + intersectionSize);
-                            if (logger != null) {
-                                logger.debug("Union: ", union
-                                        .toString(originalAc));
-                            }
-                            /*
-							 *  Now we know that path1 and
-							 *  path2 share the Atom atom.
-							 */
-                            removePaths.add(path1);
-                            removePaths.add(path2);
-                        }
-                    }
-                }
-            }
-        }
-        for (Path removePath : removePaths) {
-            paths.remove(removePath);
-        }
-        for (Path newPath : newPaths) {
-            if (maxPathLen == null || newPath.size() <= (maxPathLen + 1)) {
-                paths.add(newPath);
-            }
-        }
-        detectRings(potentialRings, rings, originalAc);
-        ac.removeAtomAndConnectedElectronContainers(atom);
-        if (logger != null)
-            logger.debug("\n" + paths.size() + " paths and " + ac
-                    .getAtomCount() + " atoms left.");
-    }
-
-
-    /**
-     * Checks the paths if a ring has been found
-     *
-     * @param paths   The paths to check for rings
-     * @param ringSet The ringset to add the detected rings to
-     * @param ac      The AtomContainer with the original structure
-     */
-    private void detectRings(List<Path> paths, IRingSet ringSet, IAtomContainer ac) {
-        IRing ring;
-        int bondNum;
-        IAtom a1, a2 = null;
-        for (Path path : paths) {
-            if (path.size() > 3 && path.lastElement() == path.firstElement()) {
-                if (logger != null)
-                    logger.debug("Removing path " + path
-                            .toString(originalAc) + " which is a ring.");
-                path.removeElementAt(0);
-                ring = ac.getBuilder().newInstance(IRing.class);
-                for (int g = 0; g < path.size() - 1; g++) {
-                    a1 = (IAtom) path.elementAt(g);
-                    a2 = (IAtom) path.elementAt(g + 1);
-                    ring.addAtom(a1);
-                    bondNum = ac.getBondNumber(a1, a2);
-                    //logger.debug("bondNum " + bondNum);
-                    ring.addBond(ac.getBond(bondNum));
-                }
-                ring.addAtom(a2);
-                a1 = (IAtom) path.elementAt(0);
-                a2 = (IAtom) path.elementAt(path.size() - 1);
-                ring.addAtom(a1);
-                bondNum = ac.getBondNumber(a1, a2);
-                //logger.debug("bondNum " + bondNum);
-                ring.addBond(ac.getBond(bondNum));
-
-                /*
-                     * The following code had a problem when two atom in the ring
-                     * found are connected the in orignal graph but do not belong
-                     * to this particular ring.
-                     IBond[] bonds = ac.getBonds();
-                    for (int g = 0; g < bonds.length; g++)
-                    {
-                        bond = bonds[g];
-                        if (ring.contains(bond.getAtom(0)) && ring.contains(bond.getAtom(1)))
-                        {
-                            ring.addBond(bond);
-                        }
-                    }*/
-                ringSet.addAtomContainer(ring);
-            }
-        }
-    }
-
-
-    /**
-     * Initialized the path graph See {@cdk.cite HAN96} for details
-     *
-     * @param ac    The AtomContainer with the original structure
-     * @param paths The paths to initialize
-     */
-    private void initPathGraph(IAtomContainer ac, List<Path> paths) {
-        Path path;
-
-        Iterator<IBond> bonds = ac.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-            path = new Path(bond.getAtom(0), bond.getAtom(1));
-            paths.add(path);
-            if (logger != null)
-                logger.debug("initPathGraph: " + path.toString(originalAc));
-        }
-    }
-
-
-    /**
-     * Selects an optimal atom for removal See {@cdk.cite HAN96} for details
-     *
-     * @param ac The AtomContainer to search
-     * @return The selected Atom
-     */
-    private IAtom selectAtom(IAtomContainer ac) {
-        int minDegree = 999;
-        // :-)
-        int degree;
-        IAtom minAtom = null;
-        IAtom atom;
-        for (int f = 0; f < ac.getAtomCount(); f++) {
-            atom = ac.getAtom(f);
-            degree = ac.getConnectedBondsCount(atom);
-
-            if (degree < minDegree) {
-                minAtom = atom;
-                minDegree = degree;
-            }
-        }
-
-        return minAtom;
-    }
-
 
     /**
      * Checks if the timeout has been reached and throws an exception if so.
