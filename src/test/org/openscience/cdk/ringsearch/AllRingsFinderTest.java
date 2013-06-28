@@ -21,6 +21,7 @@
 package org.openscience.cdk.ringsearch;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -42,9 +43,12 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.ChemFile;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_994;
 
 /**
@@ -200,6 +204,9 @@ public class AllRingsFinderTest extends CDKTestCase
 		Assert.assertEquals(3, ringSet.getAtomContainerCount());
 	}
 
+    /**
+     * @cdk.inchi InChI=1S/C90H74O28/c91-48-18-8-36(28-58(48)101)81-64(107)34-35-4-3-6-43(80(35)114-81)66-44-14-24-55(98)72(87(44)115-83(75(66)108)38-10-20-50(93)60(103)30-38)68-46-16-26-57(100)74(89(46)117-85(77(68)110)40-12-22-52(95)62(105)32-40)70-47-17-27-56(99)73(90(47)118-86(79(70)112)41-13-23-53(96)63(106)33-41)69-45-15-25-54(97)71(88(45)116-84(78(69)111)39-11-21-51(94)61(104)31-39)67-42-5-1-2-7-65(42)113-82(76(67)109)37-9-19-49(92)59(102)29-37/h1-33,64,66-70,75-79,81-86,91-112H,34H2
+     */
 	@Test public void testBigMoleculeWithIsolatedRings() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
@@ -212,12 +219,23 @@ public class AllRingsFinderTest extends CDKTestCase
         IChemSequence seq = chemFile.getChemSequence(0);
         IChemModel model = seq.getChemModel(0);
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
+
+
         //logger.debug("Constructed Molecule");
         //logger.debug("Starting AllRingsFinder");
         ringSet = new AllRingsFinder().findAllRings(mol);
         //logger.debug("Finished AllRingsFinder");
         Assert.assertEquals(24, ringSet.getAtomContainerCount());
         //display(mol);
+
+        // check sizes of rings
+        int[] ringSize = new int[mol.getAtomCount()];
+        for(IAtomContainer ring : ringSet.atomContainers()){
+            ringSize[ring.getAtomCount()]++;
+        }
+
+        assertThat(ringSize[6],  is(18));
+        assertThat(ringSize[10], is(6));
     }
     
 	/**
@@ -253,10 +271,10 @@ public class AllRingsFinderTest extends CDKTestCase
     @Test public void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
-
+        for(IAtom a : molecule.atoms())
+            a.setFlag(CDKConstants.ISINRING, false);
         AllRingsFinder arf = new AllRingsFinder();
         arf.findAllRings(molecule);
-
 
         int count = 0;
         Iterator atoms = molecule.atoms().iterator();
@@ -270,7 +288,8 @@ public class AllRingsFinderTest extends CDKTestCase
     @Test public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1cccc1CC");
-
+        for(IAtom a : molecule.atoms())
+            a.setFlag(CDKConstants.ISINRING, false);
 
         AllRingsFinder arf = new AllRingsFinder();
         arf.findAllRings(molecule);
