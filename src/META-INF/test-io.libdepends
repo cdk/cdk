@@ -4,3 +4,4 @@ log4j*.jar
 vecmath*.jar
 xom*.jar
 xpp3-1.1.4c.jar
+guava-14.0.1.jar
