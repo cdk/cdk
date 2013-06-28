@@ -37,44 +37,43 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
+
 /**
- * Finds the Set of all Rings. This is an implementation of the algorithm
- * published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
- * fragments listed in this article. The concept is that a regular molecular
- * graph is converted into a path graph first, i.e. a graph where the edges are
- * actually paths, i.e. can list several nodes that are implicitly connecting
- * the two nodes between the path is formed. The paths that join one endnode are
- * step by step fused and the joined nodes deleted from the pathgraph. What
- * remains is a graph of paths that have the same start and endpoint and are
- * thus rings.
+ * Compute the set of all rings in a molecule. This set includes <i>every</i>
+ * cyclic path of atoms. As the set is exponential it can be very large and is
+ * often impractical (e.g. fullerenes). <p/>
  *
- * <p><b>WARNING</b>: This class has now a timeout of 5 seconds, after which it
- * aborts its ringsearch. The timeout value can be customized by the
- * setTimeout() method of this class. <br>Also, by using the optional argument
- * "maxRingSize" timeouts can possibly be avoided because recursion depth will
- * be limited accordingly. Example: given a complex atom container and a
- * maxRingSize of six, the find method will return all rings only of size six or
- * smaller.
+ * To avoid combinatorial explosion there is a configurable threshold, at which
+ * the computation aborts. The {@link Threshold} values have been precomputed on
+ * PubChem-Compound and can be used with the {@link AllRingsFinder#usingThreshold(Threshold)}.
+ * Alternatively, other ring sets which are a subset of this set offer a
+ * tractable alternative. <p/>
+ *
+ * <blockquote><pre>
+ * AllRingsFinder arf = new AllRingsFinder();
+ * for (IAtomContainer m : ms) {
+ *     try {
+ *         IRingSet rs = arf.findAllRings(m);
+ *     } catch (CDKException e) {
+ *         // molecule was too complex, handle error
+ *     }
+ * }
+ * </pre></blockquote>
  *
  * @author steinbeck
- * @cdk.created 2002-06-23
+ * @author johnmay
  * @cdk.module standard
  * @cdk.githash
+ * @cdk.keyword rings
+ * @cdk.keyword all rings
+ * @see AllCycles
  */
 @TestClass("org.openscience.cdk.ringsearch.AllRingsFinderTest")
-public class AllRingsFinder {
-
-    /** Logger for the class. */
-    private final ILoggingTool logger = LoggingToolFactory
-            .createLoggingTool(AllRingsFinder.class);
+public final class AllRingsFinder {
 
     /** Precomputed threshold - stops the computation running forever. */
     private final Threshold threshold;
@@ -91,59 +90,62 @@ public class AllRingsFinder {
         this(Threshold.PubChem_99);
     }
 
-    /** Constructor for the AllRingsFinder with logging. */
+    /** Default constructor using a threshold of {@link Threshold#PubChem_99}. */
     public AllRingsFinder() {
         this(Threshold.PubChem_99);
     }
 
+    /** Internal constructor. */
     private AllRingsFinder(Threshold threshold) {
         this.threshold = threshold;
     }
 
     /**
-     * Returns a ringset containing all rings in the given AtomContainer Calls
-     * {@link #findAllRings(IAtomContainer, Integer)} with max ring size
-     * argument set to null (=unlimited ring sizes)
+     * Compute all rings in the given {@link IAtomContainer}. The container is
+     * first partitioned into ring systems which are then processed separately.
+     * If the molecule has already be partitioned, consider using {@link
+     * #findAllRingsInIsolatedRingSystem(IAtomContainer)}.
      *
-     * @param atomContainer The AtomContainer to be searched for rings
+     * @param container The AtomContainer to be searched for rings
      * @return A RingSet with all rings in the AtomContainer
-     * @throws CDKException An exception thrown if something goes wrong or if
-     *                      the timeout limit is reached
+     * @throws CDKException An exception thrown if the threshold was exceeded
+     * @see #findAllRings(IAtomContainer, int)
+     * @see #findAllRingsInIsolatedRingSystem(IAtomContainer)
      */
     @TestMethod("testFindAllRings_IAtomContainer,testBondsWithinRing")
-    public IRingSet findAllRings(IAtomContainer atomContainer) throws
-                                                               CDKException {
-        return findAllRings(atomContainer, atomContainer.getAtomCount());
+    public IRingSet findAllRings(IAtomContainer container) throws CDKException {
+        return findAllRings(container, container.getAtomCount());
     }
 
     /**
-     * Returns a ringset containing all rings up to a provided maximum size in a
-     * given AtomContainer
+     * Compute all rings up to and including the {@literal maxRingSize}. The
+     * container is first partitioned into ring systems which are then processed
+     * separately. If the molecule has already be partitioned, consider using
+     * {@link #findAllRingsInIsolatedRingSystem(IAtomContainer, int)}.
      *
-     * @param atomContainer The AtomContainer to be searched for rings
-     * @param maxRingSize   Maximum ring size to consider. Provides a possible
-     *                      breakout from recursion for complex compounds.
+     * @param container   The AtomContainer to be searched for rings
+     * @param maxRingSize Maximum ring size to consider. Provides a possible
+     *                    breakout from recursion for complex compounds.
      * @return A RingSet with all rings in the AtomContainer
-     * @throws CDKException An exception thrown if something goes wrong or if
-     *                      the timeout limit is reached
+     * @throws CDKException An exception thrown if the threshold was exceeded
      */
-    public IRingSet findAllRings(IAtomContainer atomContainer, Integer maxRingSize) throws
-                                                                                    CDKException {
+    public IRingSet findAllRings(IAtomContainer container,
+                                 int maxRingSize) throws CDKException {
 
-        final int m = atomContainer.getBondCount();
+        final int m = container.getBondCount();
         final Map<Edge, IBond> edges = Maps.newHashMapWithExpectedSize(m);
-        final int[][] graph = toGraph(atomContainer, edges);
+        final int[][] graph = toGraph(container, edges);
 
-        RingSearch rs = new RingSearch(atomContainer, graph);
+        RingSearch rs = new RingSearch(container, graph);
 
-        IRingSet ringSet = atomContainer.getBuilder()
-                                        .newInstance(IRingSet.class);
+        IRingSet ringSet = container.getBuilder()
+                                    .newInstance(IRingSet.class);
 
         // don't need to run on isolated rings, just need to put vertices in
         // cyclic order
         for (int[] isolated : rs.isolated()) {
             if (isolated.length <= maxRingSize) {
-                IRing ring = toRing(atomContainer,
+                IRing ring = toRing(container,
                                     edges,
                                     GraphUtil.cycle(graph, isolated));
                 ringSet.addAtomContainer(ring);
@@ -160,8 +162,8 @@ public class AllRingsFinder {
             if (!ac.completed())
                 throw new CDKException("Threshold exceeded for AllRingsFinder");
 
-            for(int[] path : ac.paths()) {
-                IRing ring = toRing(atomContainer,
+            for (int[] path : ac.paths()) {
+                IRing ring = toRing(container,
                                     edges, path, fused);
                 ringSet.addAtomContainer(ring);
             }
@@ -172,31 +174,28 @@ public class AllRingsFinder {
 
 
     /**
-     * Fings the set of all rings in a molecule Calls {@link
-     * #findAllRingsInIsolatedRingSystem(IAtomContainer, int)} with max ring
-     * size argument set to the number of atom (Hamiltonian path).
+     * Compute all rings in the given {@link IAtomContainer}. No pre-processing
+     * is done on the container.
      *
-     * @param atomContainer the molecule to be searched for rings
-     * @return a RingSet containing the rings in molecule
-     * @throws CDKException An exception thrown if the {@link Threshold} was
-     *                      reached
+     * @param container The Atom Container to find the ring systems of
+     * @return RingSet for the container
+     * @throws CDKException An exception thrown if the threshold was exceeded
      */
-
-    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer) throws
-                                                                                   CDKException {
-        return findAllRingsInIsolatedRingSystem(atomContainer,
-                                                atomContainer.getAtomCount());
+    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer container) throws
+                                                                               CDKException {
+        return findAllRingsInIsolatedRingSystem(container,
+                                                container.getAtomCount());
     }
 
     /**
-     * Finds the set of all rings in a molecule
+     * Compute all rings up to an including the {@literal maxRingSize}. No
+     * pre-processing is done on the container.
      *
      * @param atomContainer the molecule to be searched for rings
      * @param maxRingSize   Maximum ring size to consider. Provides a possible
      *                      breakout from recursion for complex compounds.
      * @return a RingSet containing the rings in molecule
-     * @throws CDKException An exception thrown if the {@link Threshold} was
-     *                      reached
+     * @throws CDKException An exception thrown if the threshold was exceeded
      */
     public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer,
                                                      int maxRingSize) throws
@@ -229,7 +228,7 @@ public class AllRingsFinder {
      * rare cases with ring systems of large size or special topology.
      *
      * @throws CDKException The exception thrown in case of hitting the timeout
-     * @deprecated
+     * @deprecated timeout not used
      */
     @TestMethod("testCheckTimeout")
     @Deprecated
@@ -260,7 +259,7 @@ public class AllRingsFinder {
      * Gets the timeout values in milliseconds of the AllRingsFinder object
      *
      * @return The timeout value
-     * @deprecated timeout not long used
+     * @deprecated timeout not used
      */
     @TestMethod("testGetTimeout")
     @Deprecated
