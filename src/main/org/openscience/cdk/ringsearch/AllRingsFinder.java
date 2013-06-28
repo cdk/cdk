@@ -26,6 +26,7 @@
 package org.openscience.cdk.ringsearch;
 
 import com.google.common.collect.Maps;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -151,7 +152,7 @@ public class AllRingsFinder {
         // don't need to run on isolated rings, just need to put vertices in
         // cyclic order
         for (int[] isolated : rs.isolated()) {
-            if (isolated.length < maxRingSize) {
+            if (isolated.length <= maxRingSize) {
                 IRing ring = toRing(atomContainer,
                                     edges,
                                     GraphUtil.cycle(graph, isolated));
@@ -513,7 +514,11 @@ public class AllRingsFinder {
         for (int i = 0; i < len; i++) {
             atoms[i] = container.getAtom(cycle[i]);
             bonds[i] = edges.get(new Edge(cycle[i], cycle[i + 1]));
+            atoms[i].setFlag(CDKConstants.ISINRING, true);
         }
+
+        ring.setAtoms(atoms);
+        ring.setBonds(bonds);
 
         return ring;
     }
@@ -543,7 +548,11 @@ public class AllRingsFinder {
             atoms[i] = container.getAtom(mapping[cycle[i]]);
             bonds[i] = edges.get(new Edge(mapping[cycle[i]],
                                           mapping[cycle[i + 1]]));
+            atoms[i].setFlag(CDKConstants.ISINRING, true);
         }
+
+        ring.setAtoms(atoms);
+        ring.setBonds(bonds);
 
         return ring;
     }
