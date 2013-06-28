@@ -149,7 +149,7 @@ public final class EssentialCycles {
         for (int[] path : relevant.paths()) {
             if (cyclesByLength.isEmpty()
                     || path.length > cyclesByLength.getLast().get(0)
-                                                   .length()) {
+                                                   .path().length) {
                 cyclesByLength.add(new ArrayList<Cycle>());
             }
             cyclesByLength.getLast().add(new MyCycle(path));

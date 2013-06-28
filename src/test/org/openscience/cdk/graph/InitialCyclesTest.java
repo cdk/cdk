@@ -113,9 +113,9 @@ public class InitialCyclesTest {
 
     @Test public void toEdgeVector_K4() {
         InitialCycles initial = new InitialCycles(k4());
-        assertThat(initial.toEdgeVector(new int[]{0, 1, 2, 3}),
+        assertThat(initial.toEdgeVector(new int[]{0, 1, 2, 3, 0}),
                    is(BitMatrixTest.toBitSet("101101")));
-        assertThat(initial.toEdgeVector(new int[]{0, 1, 2}),
+        assertThat(initial.toEdgeVector(new int[]{0, 1, 2, 0}),
                    is(BitMatrixTest.toBitSet("110100")));
     }
 
@@ -127,8 +127,8 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(napthalene());
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(2));
-        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4}));
-        assertThat(cycles.get(1).path(), is(new int[]{5, 4, 7, 8, 9, 6}));
+        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
+        assertThat(cycles.get(1).path(), is(new int[]{5, 4, 7, 8, 9, 6, 5}));
     }
 
     @Test public void lengths_anthracene() throws IOException {
@@ -139,9 +139,9 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(anthracene());
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(3));
-        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4}));
-        assertThat(cycles.get(1).path(), is(new int[]{9, 6, 5, 4, 7, 8}));
-        assertThat(cycles.get(2).path(), is(new int[]{9, 8, 10, 11, 12, 13}));
+        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
+        assertThat(cycles.get(1).path(), is(new int[]{9, 6, 5, 4, 7, 8, 9}));
+        assertThat(cycles.get(2).path(), is(new int[]{9, 8, 10, 11, 12, 13, 9}));
     }
 
     @Test public void lengths_bicyclo() throws IOException {
@@ -152,9 +152,9 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(bicyclo());
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(3));
-        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4}));
-        assertThat(cycles.get(1).path(), is(new int[]{5, 0, 1, 2, 7, 6}));
-        assertThat(cycles.get(2).path(), is(new int[]{5, 4, 3, 2, 7, 6}));
+        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
+        assertThat(cycles.get(1).path(), is(new int[]{5, 0, 1, 2, 7, 6, 5}));
+        assertThat(cycles.get(2).path(), is(new int[]{5, 4, 3, 2, 7, 6, 5}));
     }
 
     @Test public void lengths_cyclophane() throws IOException {
@@ -173,45 +173,45 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(2));
-        assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4}));
+        assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
         assertThat(cycles.get(1)
-                         .path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6}));
+                         .path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
     }
 
     @Test public void cycles_family_odd() {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
         assertThat(cycles.get(1)
-                         .path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6}));
+                         .path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
         int[][] family = cycles.get(1).family();
         assertThat(family.length, is(2));
-        assertThat(family[0], is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6}));
-        assertThat(family[1], is(new int[]{3, 4, 5, 0, 10, 9, 8, 7, 6}));
+        assertThat(family[0], is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
+        assertThat(family[1], is(new int[]{3, 4, 5, 0, 10, 9, 8, 7, 6, 3}));
     }
 
     @Test public void cycles_family_even() {
         InitialCycles initial = new InitialCycles(cyclophane_even());
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
         assertThat(cycles.get(1).path(),
-                   is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2}));
+                   is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
         int[][] family = cycles.get(1).family();
         assertThat(family.length, is(2));
-        assertThat(family[0], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2}));
-        assertThat(family[1], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 5, 4}));
+        assertThat(family[0], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
+        assertThat(family[1], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}));
     }
 
     @Test public void join() {
         int[] a = new int[]{0, 1, 2};
         int[] b = new int[]{0, 3, 4};
         assertThat(InitialCycles.join(a, b),
-                   is(new int[]{0, 1, 2, 4, 3}));
+                   is(new int[]{0, 1, 2, 4, 3, 0}));
     }
 
     @Test public void joinWith() {
         int[] a = new int[]{0, 1, 2};
         int[] b = new int[]{0, 3, 4};
         assertThat(InitialCycles.join(a, 5, b),
-                   is(new int[]{0, 1, 2, 5, 4, 3}));
+                   is(new int[]{0, 1, 2, 5, 4, 3, 0}));
     }
 
     @Test public void singleton() {

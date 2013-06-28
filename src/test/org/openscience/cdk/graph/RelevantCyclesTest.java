@@ -53,9 +53,9 @@ public class RelevantCyclesTest {
         RelevantCycles relevant = new RelevantCycles(bicyclo);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4},
-                                       {5, 0, 1, 2, 7, 6},
-                                       {5, 4, 3, 2, 7, 6}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
+                                       {5, 0, 1, 2, 7, 6, 5},
+                                       {5, 4, 3, 2, 7, 6, 5}};
         assertThat(paths, is(expected));
     }
 
@@ -64,8 +64,8 @@ public class RelevantCyclesTest {
         RelevantCycles relevant = new RelevantCycles(napthalene);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(2));
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4},
-                                       {5, 4, 7, 8, 9, 6}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
+                                       {5, 4, 7, 8, 9, 6, 5}};
         assertThat(paths, is(expected));
     }
 
@@ -74,9 +74,9 @@ public class RelevantCyclesTest {
         RelevantCycles relevant = new RelevantCycles(anthracene);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4},
-                                       {9, 6, 5, 4, 7, 8},
-                                       {9, 8, 10, 11, 12, 13}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
+                                       {9, 6, 5, 4, 7, 8, 9},
+                                       {9, 8, 10, 11, 12, 13, 9}};
         assertThat(paths, is(expected));
     }
 
@@ -85,9 +85,9 @@ public class RelevantCyclesTest {
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 1, 2},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 5, 4}};
+        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3},
+                                       {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3},
+                                       {3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 
@@ -96,9 +96,9 @@ public class RelevantCyclesTest {
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 1, 2},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 5, 4}};
+        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3},
+                                       {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3},
+                                       {3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 

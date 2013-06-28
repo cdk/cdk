@@ -200,9 +200,9 @@ final class InitialCycles {
      */
     @TestMethod("toEdgeVector_K4") BitSet toEdgeVector(final int[] path) {
         final BitSet incidence = new BitSet(edges.size());
-        incidence.set(indexOfEdge(path[0], path[path.length - 1]));
-        for (int i = 1; i < path.length; i++) {
-            incidence.set(indexOfEdge(path[i], path[i - 1]));
+        int len = path.length - 1;
+        for (int i = 0; i < len; i++) {
+            incidence.set(indexOfEdge(path[i], path[i + 1]));
         }
         return incidence;
     }
@@ -393,9 +393,10 @@ final class InitialCycles {
      */
     @TestMethod("join")
     static int[] join(int[] pathToY, int[] pathToZ) {
-        int[] path = copyOf(pathToY, pathToY.length + pathToZ.length - 1);
-        for (int i = 1; i < pathToZ.length; i++) {
-            path[path.length - i] = pathToZ[i];
+        int[] path = copyOf(pathToY, pathToY.length + pathToZ.length);
+        int j = path.length - 1;
+        for (int i = 0; i < pathToZ.length; i++) {
+            path[j--] = pathToZ[i];
         }
         return path;
     }
@@ -412,10 +413,11 @@ final class InitialCycles {
      */
     @TestMethod("joinWith")
     static int[] join(int[] pathToP, int y, int[] pathToQ) {
-        int[] path = copyOf(pathToP, 1 + pathToQ.length + pathToQ.length - 1);
+        int[] path = copyOf(pathToP, 1 + pathToQ.length + pathToQ.length);
         path[pathToP.length] = y;
-        for (int i = 1; i < pathToQ.length; i++) {
-            path[path.length - i] = pathToQ[i];
+        int j = path.length - 1;
+        for (int i = 0; i < pathToQ.length; i++) {
+            path[j--] = pathToQ[i];
         }
         return path;
     }
@@ -485,7 +487,7 @@ final class InitialCycles {
          * @return cycle length
          */
         int length() {
-            return path.length;
+            return path.length - 1; // first/last vertex repeats
         }
 
         @Override public int compareTo(Cycle that) {

@@ -49,8 +49,8 @@ public class EssentialCyclesTest {
         int[][] napthalene = napthalene();
         EssentialCycles essential = new EssentialCycles(napthalene);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4},
-                                       {5, 4, 7, 8, 9, 6}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
+                                       {5, 4, 7, 8, 9, 6, 5}};
         assertThat(paths, is(expected));
     }
 
@@ -58,9 +58,9 @@ public class EssentialCyclesTest {
         int[][] anthracene = anthracene();
         EssentialCycles essential = new EssentialCycles(anthracene);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4},
-                                       {9, 6, 5, 4, 7, 8},
-                                       {9, 8, 10, 11, 12, 13}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
+                                       {9, 6, 5, 4, 7, 8, 9},
+                                       {9, 8, 10, 11, 12, 13, 9}};
         assertThat(paths, is(expected));
     }
 
@@ -68,7 +68,7 @@ public class EssentialCyclesTest {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles essential = new EssentialCycles(cyclophane_even);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4}};
+        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 
@@ -76,12 +76,13 @@ public class EssentialCyclesTest {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles essential = new EssentialCycles(cyclophane_even);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4}};
+        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 
     @Test public void size_bicyclo() {
         int[][] bicyclo = bicyclo();
+        System.out.println("bicyclo");
         EssentialCycles essential = new EssentialCycles(bicyclo);
         assertThat(essential.size(), is(0));
     }
