@@ -22,7 +22,7 @@
  */
 package org.openscience.cdk.group;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;

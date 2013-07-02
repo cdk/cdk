@@ -91,8 +91,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        junit.framework.Assert.assertEquals(125, fingerprint1.cardinality());
-        junit.framework.Assert.assertEquals(1024, fingerprint1.size());
+        org.junit.Assert.assertEquals(125, fingerprint1.cardinality());
+        org.junit.Assert.assertEquals(1024, fingerprint1.size());
     }
 
     /**
@@ -116,7 +116,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         fingerprintQ = fingerprint.getBitFingerprint(moleculeQ).asBitSet();
         fingerprintT = fingerprint.getBitFingerprint(moleculeT).asBitSet();
 
-        junit.framework.Assert.assertTrue(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
+        org.junit.Assert.assertTrue(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
     }
 
     /**
@@ -142,7 +142,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         BitSet fingerprintT;
         fingerprintQ = fingerprint.getBitFingerprint(moleculeQ).asBitSet();
         fingerprintT = fingerprint.getBitFingerprint(moleculeT).asBitSet();
-        junit.framework.Assert.assertFalse(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
+        org.junit.Assert.assertFalse(FingerprinterTool.isSubset(fingerprintT, fingerprintQ));
     }
 
     @Test
@@ -154,7 +154,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        junit.framework.Assert.assertEquals(10, fingerprint1.cardinality());
+        org.junit.Assert.assertEquals(10, fingerprint1.cardinality());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        junit.framework.Assert.assertEquals(8, fingerprint1.cardinality());
+        org.junit.Assert.assertEquals(8, fingerprint1.cardinality());
     }
 
     @Test
@@ -179,7 +179,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        junit.framework.Assert.assertEquals(15, fingerprint1.cardinality());
+        org.junit.Assert.assertEquals(15, fingerprint1.cardinality());
     }
 
     @Test

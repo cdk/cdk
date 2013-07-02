@@ -23,7 +23,7 @@
 package org.openscience.cdk.modeling.builder3d;
 
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package org.openscience.cdk.group;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;

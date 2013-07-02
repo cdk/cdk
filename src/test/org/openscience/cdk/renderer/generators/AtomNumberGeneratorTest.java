@@ -24,7 +24,7 @@ package org.openscience.cdk.renderer.generators;
 import java.awt.Rectangle;
 import java.util.List;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
