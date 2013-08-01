@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -74,6 +75,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     private BufferedWriter writer;
     private BooleanIOSetting writerProperties;
     private Map<String,IOSetting> mdlWriterSettings;
+	private Set<String> propertiesToWrite;
     
     /**
      * Constructs a new SDFWriter that writes to the given {@link Writer}.
@@ -103,6 +105,38 @@ public class SDFWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
+	/**
+     * Constructs a new SDFWriter that writes to the given {@link Writer}.
+     *
+     * @param out The {@link Writer} to write to
+     */
+    public SDFWriter(Writer out, Set<String> propertiesToWrite) {        
+        if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter) out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+        initIOSettings();
+        this.propertiesToWrite = propertiesToWrite;
+    }
+	
+	/**
+     * Constructs a new SdfWriter that can write to a given
+     * {@link OutputStream}.
+     *
+     * @param output The {@link OutputStream} to write to
+     */
+    public SDFWriter(OutputStream output, Set<String> propertiesToWrite) {
+        this(new OutputStreamWriter(output), propertiesToWrite);
+    }
+	
+	/**
+     * Writes SD-File to a String including the given properties
+     */
+    public SDFWriter(Set<String> propertiesToWrite) {
+        this(new StringWriter(), propertiesToWrite);
+    }
+	
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return SDFFormat.getInstance();
@@ -217,9 +251,12 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
             // write the properties
             Map<Object,Object> sdFields = container.getProperties();
+			boolean writeAllProperties = propertiesToWrite == null;	
             if(sdFields != null){
                 for (Object propKey : sdFields.keySet()) {
                     if (!isCDKInternalProperty(propKey)) {
+						if (writeAllProperties ||
+								propertiesToWrite.contains(propKey)) {
                         writer.write("> <" + propKey + ">");
                         writer.newLine();
                         writer.write("" + sdFields.get(propKey));
@@ -227,6 +264,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
                         writer.newLine();
                     }
                 }
+            }
             }
             writer.write("$$$$\n");
         } catch (IOException exception) {
