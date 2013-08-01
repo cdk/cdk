@@ -98,7 +98,7 @@ public final class EssentialCycles {
      */
     EssentialCycles(final RelevantCycles relevant, final InitialCycles initial) {
         checkNotNull(relevant, "No RelevantCycles provided");
-        this.initial = checkNotNull(initial, "No iInitialCycles provided");
+        this.initial = checkNotNull(initial, "No InitialCycles provided");
         this.basis   = new GreedyBasis(initial.numberOfCycles(),
                                        initial.numberOfEdges());
         this.essential = new ArrayList<Cycle>();
