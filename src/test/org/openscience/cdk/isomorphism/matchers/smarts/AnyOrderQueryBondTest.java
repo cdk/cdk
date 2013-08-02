@@ -22,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.silent.Bond;
 
 /**
  * Checks the functionality of the IsomorphismTester
@@ -40,4 +41,13 @@ public class AnyOrderQueryBondTest extends CDKTestCase {
 		Assert.assertFalse(matcher.matches(testBond));
 	}
     
+	@Test
+	public void testAnyOrder() {
+		AnyOrderQueryBond matcher = new AnyOrderQueryBond();
+		IBond testBond = new Bond();
+		for (IBond.Order order : IBond.Order.values()) {
+			testBond.setOrder(order);
+			Assert.assertTrue(matcher.matches(testBond));
+		}
+	}
 }
