@@ -158,6 +158,25 @@ public class IsotopeFactoryTest extends CDKTestCase
 	}    
 
     @Test
+    public void testGetIsotopes() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IIsotope[] list = isofac.getIsotopes();
+		Assert.assertTrue(list.length > 200);
+	}    
+
+    @Test
+    public void testGetIsotopes_double_double() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IIsotope[] list = isofac.getIsotopes(87.90, 0.01);
+//        should return:
+//        Isotope match: 88Sr has mass 87.9056121
+//        Isotope match: 88Y has mass 87.9095011
+		Assert.assertEquals(2, list.length);
+		Assert.assertEquals(88, list[0].getMassNumber().intValue());
+		Assert.assertEquals(88, list[1].getMassNumber().intValue());
+	}    
+    
+    @Test
     public void testIsElement_String() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Assert.assertTrue(isofac.isElement("C"));

@@ -170,6 +170,51 @@ public class IsotopeFactory
     }
 
     /**
+	 * Gets a array of all isotopes known to the IsotopeFactory.
+	 *
+	 * @return         An array of all isotopes
+	 */
+    @TestMethod("testGetIsotopes")
+    public IIsotope[] getIsotopes() {
+    	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
+    	for (IIsotope isotope : isotopes) {
+            try {
+                IIsotope clone = (IIsotope) isotope.clone();
+                list.add(clone);
+            } catch (CloneNotSupportedException e) {
+                logger.error("Could not clone IIsotope: ", e.getMessage());
+                logger.debug(e);
+            }
+    	}
+    	return list.toArray(new IIsotope[list.size()]);
+    }
+    
+    /**
+	 * Gets an array of all isotopes matching the searched exact mass within
+	 * a certain difference.
+	 *
+	 * @param  exactMass  search mass
+	 * @param  difference mass the isotope is allowed to differ from the search mass
+	 * @return            An array of all isotopes
+	 */
+    @TestMethod("testGetIsotopes_double_double")
+    public IIsotope[] getIsotopes(double exactMass, double difference) {
+    	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
+    	for (IIsotope isotope : isotopes) {
+    		if (Math.abs(isotope.getExactMass() - exactMass) <= difference) {
+    			try {
+    				IIsotope clone = (IIsotope) isotope.clone();
+    				list.add(clone);
+    			} catch (CloneNotSupportedException e) {
+    				logger.error("Could not clone IIsotope: ", e.getMessage());
+    				logger.debug(e);
+    			}
+    		}
+    	}
+    	return list.toArray(new IIsotope[list.size()]);
+    }
+    
+    /**
      * Get isotope based on element symbol and mass number.
      *
      * @param symbol the element symbol
