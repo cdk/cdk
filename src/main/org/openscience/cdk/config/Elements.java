@@ -155,8 +155,10 @@ public class Elements {
 	public final static IElement ROENTGENIUM = new Element(PeriodicTable.getSymbol(111), 111);
 	public final static IElement UNUNBIUM = new Element(PeriodicTable.getSymbol(112), 112);
 	public final static IElement UNUNTRIUM = new Element(PeriodicTable.getSymbol(113), 113);
-	public final static IElement UNUNQUADIUM = new Element(PeriodicTable.getSymbol(114), 114);
+	public final static IElement UNUNQUADIUM = new Element(PeriodicTable.getSymbol(114), 114); // to be removed in master
+	public final static IElement FLEROVIUM = new Element(PeriodicTable.getSymbol(114), 114);
 	public final static IElement UNUNPENTIUM = new Element(PeriodicTable.getSymbol(115), 115);
-	public final static IElement UNUNHEXIUM = new Element(PeriodicTable.getSymbol(116), 116);
+	public final static IElement UNUNHEXIUM = new Element(PeriodicTable.getSymbol(116), 116); // to be removed in master
+	public final static IElement LIVERMORIUM = new Element(PeriodicTable.getSymbol(116), 116);
 	
 }

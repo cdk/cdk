@@ -1111,6 +1111,58 @@
       <scalar dataType="xsd:String" dictRef="cdk:paulingE"></scalar>
   </elementType>
   
+  <elementType id="Uut">
+      <label dictRef="cas:id"></label>
+      <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:period"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:name">Ununtrium</scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:atomicNumber">113</scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:chemicalSerie"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:phase"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiCova"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiVdw"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:paulingE"></scalar>
+  </elementType>
+
+  <elementType id="Fl">
+      <label dictRef="cas:id"></label>
+      <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:period"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:name">Flerovium</scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:atomicNumber">114</scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:chemicalSerie"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:phase"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiCova"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiVdw"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:paulingE"></scalar>
+  </elementType>
+  
+  <elementType id="Uup">
+      <label dictRef="cas:id"></label>
+      <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:period"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:name">Ununpentium</scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:atomicNumber">115</scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:chemicalSerie"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:phase"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiCova"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiVdw"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:paulingE"></scalar>
+  </elementType>
+
+  <elementType id="Lv">
+      <label dictRef="cas:id"></label>
+      <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:period"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:name">Livermorium</scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:atomicNumber">116</scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:chemicalSerie"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:phase"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiCova"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:radiiVdw"></scalar>
+      <scalar dataType="xsd:String" dictRef="cdk:paulingE"></scalar>
+  </elementType>
+  
   <elementType id="Ce">
       <label dictRef="cas:id">7440-45-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
