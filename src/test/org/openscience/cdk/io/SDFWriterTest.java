@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -38,6 +40,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -46,6 +49,11 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * TestCase for the writer MDL SD file writer.
@@ -214,5 +222,61 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
         String output = strWriter.toString();
         Assert.assertTrue(output.contains("4  0  0  0  0"));
+    }
+
+    @Test public void testPropertyOutput_All() throws CDKException,
+                                                      IOException {
+        IAtomContainer adenine = MoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw);
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        assertTrue(out.contains("> <one>"));
+        assertTrue(out.contains("> <two>"));
+    }
+
+    @Test public void testPropertyOutput_one() throws CDKException,
+                                                      IOException {
+        IAtomContainer adenine = MoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw, Collections.singleton("one"));
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        assertTrue(out.contains("> <one>"));
+        assertFalse(out.contains("> <two>"));
+    }
+
+    @Test public void testPropertyOutput_two() throws CDKException,
+                                                      IOException {
+        IAtomContainer adenine = MoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw, Collections.singleton("two"));
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        assertTrue(out.contains("> <two>"));
+        assertFalse(out.contains("> <one>"));
+    }
+
+    @Test public void testPropertyOutput_none() throws CDKException,
+                                                      IOException {
+        IAtomContainer adenine = MoleculeFactory.makeAdenine();
+        StringWriter sw = new StringWriter();
+        SDFWriter sdf = new SDFWriter(sw, Collections.<String>emptySet());
+        adenine.setProperty("one", "a");
+        adenine.setProperty("two", "b");
+        sdf.write(adenine);
+        sdf.close();
+        String out = sw.toString();
+        assertFalse(out.contains("> <two>"));
+        assertFalse(out.contains("> <one>"));
     }
 }
