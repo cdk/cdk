@@ -1,6 +1,4 @@
-/* $Revision: 5867 $ $Author: egonw $ $Date: 2006-03-30 02:18:21 +0200 (Thu, 30 Mar 2006) $
- *
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,6 +25,7 @@ import org.openscience.cdk.coverage.IsomorphismCoverageTest;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreatorTest;
 import org.openscience.cdk.isomorphism.matchers.RGroupListTest;
 import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBondTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -38,6 +37,7 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
     IsomorphismCoverageTest.class,
     RGroupListTest.class,
     SymbolSetQueryAtomTest.class,
-    QueryAtomContainerCreatorTest.class
+    QueryAtomContainerCreatorTest.class,
+    AnyOrderQueryBondTest.class
 })
 public class MisomorphismTests {}
