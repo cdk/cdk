@@ -604,7 +604,7 @@
             list="test-qsarprotein,test-qsarionpot,test-smsd,test-tautomer"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-signature,test-pdbcml"/>
+            list="test-signature"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-renderbasic"/>
@@ -1150,7 +1150,7 @@
                       structgen,libiomd,libiocml,pdbcml,formula,render,extra,fragment,sdg,
                       ioformats,log4j,smsd,signature,iordf,cip,tautomer,
                       isomorphism,renderbasic,renderawt,renderextra,silent,group,
-                      hash,pdbcml"/>
+                      hash"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
