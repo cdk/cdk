@@ -191,7 +191,6 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
         
         sdfWriter.close();
-        System.out.println(writer.toString());
         Assert.assertTrue(writer.toString().indexOf("foo") != -1);
         Assert.assertTrue(writer.toString().indexOf("bar") != -1);
         Assert.assertTrue(writer.toString().indexOf("toys") != -1);
