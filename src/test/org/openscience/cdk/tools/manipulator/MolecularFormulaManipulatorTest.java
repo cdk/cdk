@@ -714,6 +714,28 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	    Assert.assertEquals(6, atomContainer.getAtomCount());
 	}
 	
+	/**
+	 * @cdk.bug 1296
+	 */
+	@Test
+    public void testGetAtomContainer_AddsAtomicNumbers(){
+		IMolecularFormula mf2 = new MolecularFormula();
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
+		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),4);		
+		IAtomContainer ac = MolecularFormulaManipulator.getAtomContainer(
+			mf2, builder.newInstance(IAtomContainer.class)
+		);		
+		Assert.assertEquals(6, ac.getAtomCount());
+		Assert.assertNotNull(ac.getAtom(0).getAtomicNumber());
+		for (IAtom atom : ac.atoms()) {
+			if ("C".equals(atom.getSymbol()))
+				Assert.assertEquals(6, atom.getAtomicNumber().intValue());
+			else if ("H".equals(atom.getSymbol()))
+				Assert.assertEquals(1, atom.getAtomicNumber().intValue());
+			else
+				Assert.fail("Unexcepted element: " + atom.getSymbol());
+		}
+	}
 	
 	@Test 
     public void testMolecularFormulaIAtomContainer_to_IAtomContainer2(){

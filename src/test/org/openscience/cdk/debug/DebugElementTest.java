@@ -58,7 +58,14 @@ public class DebugElementTest extends AbstractElementTest {
         IElement e = new DebugElement("C");
         Assert.assertEquals("C", e.getSymbol());
     }
-    
+
+    @Test public void testElement_X() {
+        IElement e = new DebugElement("X");
+        Assert.assertEquals("X", e.getSymbol());
+        // and it should not throw exceptions
+        Assert.assertNull(e.getAtomicNumber());
+    }
+
     @Test public void testDebugElement_String_int() {
         IElement e = new DebugElement("H", 1);
         Assert.assertEquals("H", e.getSymbol());

@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.io.Serializable;
 
@@ -95,6 +96,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     public Element(String symbol) {
         this();
         this.symbol = symbol;
+        this.atomicNumber = PeriodicTable.getAtomicNumber(symbol);
     }
 
     /**

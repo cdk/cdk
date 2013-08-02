@@ -26,6 +26,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * @cdk.module  isomorphism
@@ -131,6 +132,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     public QueryAtom(String symbol, IChemObjectBuilder builder) {
         this(builder);
         this.symbol = symbol;
+        this.atomicNumber = PeriodicTable.getAtomicNumber(symbol);
     }
 
     public QueryAtom(IChemObjectBuilder builder) {

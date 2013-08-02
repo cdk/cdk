@@ -830,9 +830,10 @@ public class MolecularFormulaManipulator {
 
 		for (IIsotope isotope : formula.isotopes()) {
 			int occur = formula.getIsotopeCount(isotope);
-			for (int i = 0; i < occur; i++)
-				atomContainer.addAtom(formula.getBuilder().newInstance(IAtom.class,isotope));
-
+			for (int i = 0; i < occur; i++) {
+				IAtom atom = formula.getBuilder().newInstance(IAtom.class,isotope);
+				atomContainer.addAtom(atom);
+			}
 		}
 		return atomContainer;
 	}
