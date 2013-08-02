@@ -22,7 +22,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.silent.Bond;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * Checks the functionality of the IsomorphismTester
@@ -37,13 +40,13 @@ public class AnyOrderQueryBondTest extends CDKTestCase {
 	@Test
 	public void testMatches() {
 		IBond testBond = null;
-		AnyOrderQueryBond matcher = new AnyOrderQueryBond();
+		AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
 		Assert.assertFalse(matcher.matches(testBond));
 	}
     
 	@Test
 	public void testAnyOrder() {
-		AnyOrderQueryBond matcher = new AnyOrderQueryBond();
+		AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
 		IBond testBond = new Bond();
 		for (IBond.Order order : IBond.Order.values()) {
 			testBond.setOrder(order);
