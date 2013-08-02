@@ -1074,7 +1074,7 @@
   
   <elementType id="Ds">
       <label dictRef="cas:id">54083-77-1</label>
-      <scalar dataType="xsd:Integer" dictRef="cdk:group">9</scalar>
+      <scalar dataType="xsd:Integer" dictRef="cdk:group">10</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Darmstadtium</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:atomicNumber">110</scalar>
