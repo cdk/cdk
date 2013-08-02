@@ -22,7 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.silent.Bond;
+import org.openscience.cdk.Bond;
 
 /**
  * Checks the functionality of the IsomorphismTester
