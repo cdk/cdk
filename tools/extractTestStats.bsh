@@ -22,12 +22,14 @@ String moduleName = "";
 
 Pattern junit = Pattern.compile(".*\\[junit\\].*");
 Pattern module = Pattern.compile(".*cdk.modulesuites.M(.*)Tests.*");
-Pattern stats = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.|\\,]*)\\ssec.*");
+Pattern stats = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sSkipped:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.|\\,]*)\\ssec.*");
+Pattern statsOld = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.|\\,]*)\\ssec.*");
 Pattern failed = Pattern.compile(".*FAILED.*");
 
 int testsRun = 0;
 int testsFailed = 0;
 int testsErrors = 0;
+int testsSkipped = 0;
 double testsTime = 0.0;
 
 int run = 0;
@@ -38,6 +40,7 @@ while (line != null) {
     // OK, found junit results
     Matcher moduleLine = module.matcher(line);
     Matcher statsLine = stats.matcher(line);
+    Matcher statsOldLine = statsOld.matcher(line);
     if (moduleLine.matches()) {
       Matcher failedLine = failed.matcher(line);
       if (failedLine.matches() && run == 0) {
@@ -47,6 +50,27 @@ while (line != null) {
         run = 0;
       }
     } else if (statsLine.matches()) {
+      run = Integer.parseInt(statsLine.group(1));
+      int failed = Integer.parseInt(statsLine.group(2));
+      int error = Integer.parseInt(statsLine.group(3));
+      int skipped = Integer.parseInt(statsLine.group(4));
+      String rawTime = statsLine.group(5);
+      StringBuffer processedTime = new StringBuffer();
+      for (int timeChar=0; timeChar<rawTime.length(); timeChar++) {
+        if (rawTime.charAt(timeChar) != ',') {
+          processedTime.append(rawTime.charAt(timeChar));
+        }
+      }
+      double time = Double.parseDouble(processedTime.toString());
+      System.out.println(moduleName + ": run=" + run +
+        " failed=" + failed + " error=" + error + " skipped=" + skipped +
+        " time=" + time + " secs");
+      testsRun += run;
+      testsFailed += failed;
+      testsErrors += error;
+      testsSkipped += skipped;
+      testsTime += time;
+    } else if (statsOldLine.matches()) {
       run = Integer.parseInt(statsLine.group(1));
       int failed = Integer.parseInt(statsLine.group(2));
       int error = Integer.parseInt(statsLine.group(3));
@@ -71,6 +95,6 @@ while (line != null) {
 }
 
 System.out.println("\ntotal: run=" + testsRun +
-  " failed=" + testsFailed + " error=" + testsErrors +
+  " failed=" + testsFailed + " error=" + testsErrors + " skipped=" + testsSkipped +
   " time=" + testsTime + " secs");
 System.out.println("failed modules: " + failedModules);
