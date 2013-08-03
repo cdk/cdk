@@ -269,8 +269,11 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
 		makeSureAtomTypesAreRecognized(molecule2);
 
-        Assert.assertTrue(matches(molecule1, product1));
-        Assert.assertTrue(matches(molecule2, product2));
+        // order depends on ring perception order (may change between versions) we check both
+        // combinations just in case
+        Assert.assertTrue((matches(molecule2, product1) && matches(molecule1, product2))
+                           || (matches(molecule1, product1) && matches(molecule2, product2)));
+
        
 	}
 	/**
