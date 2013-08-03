@@ -34,13 +34,17 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.ICountFingerprint;
+import org.openscience.cdk.fingerprint.IntArrayCountFingerprint;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -134,4 +138,34 @@ public class TanimotoTest extends CDKTestCase
     		assertThat((double) Tanimoto.calculate(bs2, bs4), is(closeTo(0.42, 0.1)));
     		assertThat((double) Tanimoto.calculate(bs3, bs4), is(closeTo(0.8,  0.1)));
     	}
+
+    @Test
+    public void method1() throws CDKException {
+        ICountFingerprint fp1 = new IntArrayCountFingerprint(
+                new HashMap<String, Integer>() {{
+                    put("A", 3);
+                }}
+        );
+        ICountFingerprint fp2 = new IntArrayCountFingerprint(
+                new HashMap<String, Integer>() {{
+                    put("A", 4);
+                }}
+        );
+        Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001 );
+    }
+
+    @Test
+    public void method2() throws CDKException {
+        ICountFingerprint fp1 = new IntArrayCountFingerprint(
+                new HashMap<String, Integer>() {{
+                    put("A", 3);
+                }}
+        );
+        ICountFingerprint fp2 = new IntArrayCountFingerprint(
+                new HashMap<String, Integer>() {{
+                    put("A", 4);
+                }}
+        );
+        Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001 );
+    }
 }
