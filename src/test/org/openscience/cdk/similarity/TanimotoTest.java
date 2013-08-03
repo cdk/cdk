@@ -43,6 +43,10 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import java.util.BitSet;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.closeTo;
+import static org.junit.Assert.assertThat;
+
 /**
  * @cdk.module test-fingerprint
  */
@@ -106,7 +110,7 @@ public class TanimotoTest extends CDKTestCase
             if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
         }
 
-    	@Test public void visualTestR00258() throws java.lang.Exception
+    	@Test public void keggR00258() throws java.lang.Exception
     	{
     		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     		String smiles1 = "O=C(O)CCC(=O)C(=O)O";
@@ -122,26 +126,12 @@ public class TanimotoTest extends CDKTestCase
     		BitSet bs2 = fingerprinter.getBitFingerprint(molecule2).asBitSet();
     		BitSet bs3 = fingerprinter.getBitFingerprint(molecule3).asBitSet();
     		BitSet bs4 = fingerprinter.getBitFingerprint(molecule4).asBitSet();
-    		float tanimoto1 = Tanimoto.calculate(bs1, bs2);
-    		float tanimoto2 = Tanimoto.calculate(bs1, bs3);
-    		float tanimoto3 = Tanimoto.calculate(bs1, bs4);
-    		float tanimoto4 = Tanimoto.calculate(bs2, bs3);
-    		float tanimoto5 = Tanimoto.calculate(bs2, bs4);
-    		float tanimoto6 = Tanimoto.calculate(bs3, bs4);
-    		//logger.debug("Similarity " + smiles1 + " vs. " + smiles2 + ": " + tanimoto1);
-    		//logger.debug("Similarity " + smiles1 + " vs. " + smiles3 + ": " + tanimoto2);
-    		//logger.debug("Similarity " + smiles1 + " vs. " + smiles4 + ": " + tanimoto3);
-    		//logger.debug("Similarity " + smiles2 + " vs. " + smiles3 + ": " + tanimoto4);
-    		//logger.debug("Similarity " + smiles2 + " vs. " + smiles4 + ": " + tanimoto5);
-    		//logger.debug("Similarity " + smiles3 + " vs. " + smiles4 + ": " + tanimoto6);
-    		System.out.println("Similarity 1 vs. 2: " + tanimoto1);
-    		System.out.println("Similarity 1 vs. 3: " + tanimoto2);
-    		System.out.println("Similarity 1 vs. 4: " + tanimoto3);
-    		System.out.println("Similarity 2 vs. 3: " + tanimoto4);
-    		System.out.println("Similarity 2 vs. 4: " + tanimoto5);
-    		System.out.println("Similarity 3 vs. 4: " + tanimoto6);
 
-    		
-    		
+    		assertThat((double) Tanimoto.calculate(bs1, bs2), is(closeTo(0.75, 0.1)));
+    		assertThat((double) Tanimoto.calculate(bs1, bs3), is(closeTo(0.46, 0.1)));
+    		assertThat((double) Tanimoto.calculate(bs1, bs4), is(closeTo(0.52, 0.1)));
+    		assertThat((double) Tanimoto.calculate(bs2, bs3), is(closeTo(0.53, 0.1)));
+    		assertThat((double) Tanimoto.calculate(bs2, bs4), is(closeTo(0.42, 0.1)));
+    		assertThat((double) Tanimoto.calculate(bs3, bs4), is(closeTo(0.8,  0.1)));
     	}
 }
