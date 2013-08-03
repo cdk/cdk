@@ -234,7 +234,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
-        Assert.assertTrue(matches(molecule1, product1));
+
 
         Assert.assertEquals(1, setOfReactions.getReaction(1).getProductCount());
 
@@ -268,7 +268,8 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		addExplicitHydrogens(molecule2);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
 		makeSureAtomTypesAreRecognized(molecule2);
-		
+
+        Assert.assertTrue(matches(molecule1, product1));
         Assert.assertTrue(matches(molecule2, product2));
        
 	}
