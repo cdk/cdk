@@ -119,18 +119,8 @@ public class NomParser {
                 {
                     if (Integer.parseInt(tok.image) > mainChainPrefix)
                     {
-                        //Create a tiny 2D array with a single slot for data, 
-                        //insert 0 into it as as to reference the first slot in the stringArray
-                        int [][] intArray = new int [1][1];
-                        intArray [0][0] = 0;
-
-                        //Put useful message in stringArray
-                        String [] stringArray = new String [1];
-                        stringArray [0] = " MUST BE BELOW " + (mainChainPrefix + 1) + " ";
-
-                        tok.next = tok;
-
-                        throw new ParseException (tok, intArray, stringArray);
+                        String mesg = "invalid attachment point " + Integer.parseInt(tok.image) + " must be below " + (mainChainPrefix + 1);
+                        throw new ParseException(mesg);
                     }
                 }
                 catch (NumberFormatException nfe)
