@@ -304,6 +304,8 @@ public class CMLRoundTripTest extends CDKTestCase {
 
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        Assert.assertNotNull(atom.getExactMass());
+        Assert.assertNotNull(roundTrippedAtom.getExactMass());
         Assert.assertEquals(atom.getExactMass(), roundTrippedAtom.getExactMass(), 0.01);
     }
 
@@ -319,6 +321,8 @@ public class CMLRoundTripTest extends CDKTestCase {
 
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        Assert.assertNotNull(atom.getNaturalAbundance());
+        Assert.assertNotNull(roundTrippedAtom.getNaturalAbundance());
         Assert.assertEquals(atom.getNaturalAbundance(), roundTrippedAtom.getNaturalAbundance(), 0.01);
     }
     
