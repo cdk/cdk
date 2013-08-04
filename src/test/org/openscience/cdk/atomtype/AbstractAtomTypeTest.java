@@ -208,8 +208,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         }
 	}
 	
-    public static void countTestedAtomTypes(Map<String, Integer> testedAtomTypesMap, AtomTypeFactory factory)
-    throws Exception {
+    public static void countTestedAtomTypes(Map<String, Integer> testedAtomTypesMap, AtomTypeFactory factory) {
         Set<String> testedAtomTypes = new HashSet<String>();
         testedAtomTypes.addAll(testedAtomTypesMap.keySet());
         
@@ -231,7 +230,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         		errorMessage += " " + notTestedType;
         	}
         	if (expectedTypeCount != testedAtomTypes.size()) {
-        		throw new Exception(errorMessage);
+        		Assert.fail(errorMessage);
         	}
         } else { // testedAtomTypes.size() > definedTypes.size()
         	// more atom types tested than defined
@@ -242,7 +241,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         		errorMessage += " " + notDefined;
         	}
         	if (testedTypeCount != testedAtomTypes.size()) {
-        		throw new Exception(errorMessage);
+                Assert.fail(errorMessage);
         	}
         }
     }
