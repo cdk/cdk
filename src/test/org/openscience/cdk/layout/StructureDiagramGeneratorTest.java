@@ -965,7 +965,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
    * 
    * @cdk.bug 1279
    */
-  @Test (timeout=5000)
+  @Test (timeout=5000,expected=Exception.class)
   public void testBug1279() throws Exception {
       
       SmilesParser sp = 
@@ -978,8 +978,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
       StructureDiagramGenerator sdg = new StructureDiagramGenerator();
       sdg.setMolecule(mol);
       sdg.generateCoordinates(new Vector2d(0, 1));
-      mol = sdg.getMolecule();
-      assertTrue(GeometryTools.has2DCoordinates(mol));
   }
 
 }
