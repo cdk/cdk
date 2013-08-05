@@ -294,7 +294,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         Assume.assumeTrue(runSlowTests());
 
 		boolean notCalculatedResults = false;
-		List inputList = new ArrayList();
+		List<IAtomContainer> inputList = new ArrayList<IAtomContainer>();
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//generate the input molecules. This are molecules without x, y, z coordinats 
@@ -312,7 +312,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		// Generate 2D coordinats for the input molecules with the Structure Diagram Generator
 
 		StructureDiagramGenerator str;
-		List resultList = new ArrayList();
+		List<IAtomContainer> resultList = new ArrayList<IAtomContainer>();
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
 			str = new StructureDiagramGenerator();
@@ -337,9 +337,8 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		// Test for the method Model3DBuildersWithMM2ForceField 
 
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
-		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			IAtomContainer molecules = (IAtomContainer) iter.next();
-			IAtomContainer mol = molecules.getBuilder().newInstance(IAtomContainer.class,molecules);
+		for (int i = 0; i < inputList.size(); i++) {
+			IAtomContainer mol = inputList.get(i).clone();
 			mol = mb3d.generate3DCoordinates(mol, false);
 			System.out.println("Calculation done");
 		}
