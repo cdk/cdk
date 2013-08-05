@@ -344,22 +344,16 @@ public class ModelBuilder3DTest extends CDKTestCase {
 			IAtomContainer mol = builder.newInstance(IAtomContainer.class, inputList.get(i));
             try {
 			    mol = mb3d.generate3DCoordinates(mol, false);
+                for (IAtom a : mol.atoms())
+                    Assert.assertNotNull(smiles[0] + " has unplaced atom",
+                                         a.getPoint3d());
+                checkAverageBondLength(mol);
             } catch (Exception e) {
                 StringWriter stackTrace = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTrace));
                 Assert.fail("3D coordinated could not be generator for " + smiles[i]  + ": " + stackTrace);
             }
 		}
-		
-		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			IAtomContainer molecule = (IAtomContainer) iter.next();
-	    	checkAverageBondLength(molecule);
-			for (Iterator atom = molecule.atoms().iterator(); atom.hasNext();){
-				Atom last = (Atom) atom.next();
-				if (last.getPoint3d() == null) notCalculatedResults = true;
-			}
-		}
-		Assert.assertFalse(notCalculatedResults);
 	}
 	
     /*
