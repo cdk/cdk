@@ -282,6 +282,7 @@ public class AtomPlacer3D {
 	
 	/**
 	 *  Gets the doubleBondConfiguration2D attribute of the AtomPlacer3D object
+     *  using existing 2D coordinates.
 	 *
 	 *@param  bond           the double bond
 	 *@param  a              coordinates (Point2d) of atom1 connected to bond
@@ -294,6 +295,9 @@ public class AtomPlacer3D {
 		if (bond.getOrder() != IBond.Order.DOUBLE){
 			return 0;
 		}
+        // no 2D coordinates or existing configuration
+        if (a == null || b == null || c == null || d == null)
+            return 0;
 		Point2d cb=new Point2d(c.x-b.x,c.y-b.y);
 		Point2d xT=new Point2d(cb.x-1,cb.y);
 		a.y=a.y-b.y-xT.y;
