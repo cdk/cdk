@@ -22,6 +22,8 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -307,7 +309,6 @@ public class ModelBuilder3DTest extends CDKTestCase {
 
 			inputList.add(atomContainer[i]);
 		}
-		System.out.println(inputList.size());
 		///////////////////////////////////////////////////////////////////////////////////////////
 		// Generate 2D coordinats for the input molecules with the Structure Diagram Generator
 
@@ -334,13 +335,20 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		// Test for the method Model3DBuildersWithMM2ForceField 
+		// Test for the method Model3DBuildersWithMM2ForceField
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		for (int i = 0; i < inputList.size(); i++) {
-			IAtomContainer mol = inputList.get(i).clone();
-			mol = mb3d.generate3DCoordinates(mol, false);
-			System.out.println("Calculation done");
+            // shallow copy
+			IAtomContainer mol = builder.newInstance(IAtomContainer.class, inputList.get(i));
+            try {
+			    mol = mb3d.generate3DCoordinates(mol, false);
+            } catch (Exception e) {
+                StringWriter stackTrace = new StringWriter();
+                e.printStackTrace(new PrintWriter(stackTrace));
+                Assert.fail("3D coordinated could not be generator for " + smiles[i]  + ": " + stackTrace);
+            }
 		}
 		
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
