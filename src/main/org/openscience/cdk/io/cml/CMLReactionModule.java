@@ -135,7 +135,7 @@ public class CMLReactionModule extends CMLCoreModule {
                     // if there was no molecule create a new one for the reference. this
                     // happens when the reaction is defined before the molecule set
                     if (atomC == null) {
-                        atomC = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
+                        atomC = currentChemFile.getBuilder().newInstance(IMolecule.class);
                         atomC.setID(ref);
                         currentMoleculeSet.addAtomContainer(atomC);
                     }
