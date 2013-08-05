@@ -71,4 +71,28 @@ public class DebugElementTest extends AbstractElementTest {
         Assert.assertEquals("H", e.getSymbol());
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
+
+    @Test public void compareSymbol() {
+        DebugElement e1 = new DebugElement(new String("H"), 1);
+        DebugElement e2 = new DebugElement(new String("H"), 1);
+        Assert.assertTrue(e1.compare(e2));
+    }
+
+    @Test public void compareAtomicNumber() {
+        DebugElement e1 = new DebugElement("H", new Integer(1));
+        DebugElement e2 = new DebugElement("H", new Integer(1));
+        Assert.assertTrue(e1.compare(e2));
+    }
+
+    @Test public void compareDiffSymbol() {
+        DebugElement e1 = new DebugElement(new String("H"), 1);
+        DebugElement e2 = new DebugElement(new String("C"), 12);
+        Assert.assertFalse(e1.compare(e2));
+    }
+
+    @Test public void compareDiffAtomicNumber() {
+        DebugElement e1 = new DebugElement(new String("H"), 1);
+        DebugElement e2 = new DebugElement(new String("H"), 0);
+        Assert.assertFalse(e1.compare(e2));
+    }
 }

@@ -85,4 +85,36 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
 	        Assert.assertFalse(at.compare("Li"));
     	}
     }
+
+    @Test public void testCompare_AtomTypeName() {
+        AtomType at1 = new AtomType("C");
+        AtomType at2 = new AtomType("C");
+        at1.setAtomTypeName(new String("C4"));
+        at2.setAtomTypeName(new String("C4"));
+        Assert.assertTrue(at1.compare(at2));
+    }
+
+    @Test public void testCompare_DiffAtomTypeName() {
+        AtomType at1 = new AtomType("C");
+        AtomType at2 = new AtomType("C");
+        at1.setAtomTypeName(new String("C4"));
+        at2.setAtomTypeName(new String("C3"));
+        Assert.assertFalse(at1.compare(at2));
+    }
+
+    @Test public void testCompare_BondOrderSum() {
+        AtomType at1 = new AtomType("C");
+        AtomType at2 = new AtomType("C");
+        at1.setBondOrderSum(1.5);
+        at2.setBondOrderSum(1.5);
+        Assert.assertTrue(at1.compare(at2));
+    }
+
+    @Test public void testCompare_DiffBondOrderSum() {
+        AtomType at1 = new AtomType("C");
+        AtomType at2 = new AtomType("C");
+        at1.setBondOrderSum(1.5);
+        at2.setBondOrderSum(2.0);
+        Assert.assertFalse(at1.compare(at2));
+    }
 }

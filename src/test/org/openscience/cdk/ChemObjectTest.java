@@ -59,4 +59,19 @@ public class ChemObjectTest extends AbstractChemObjectTest {
         Assert.assertNotNull(chemObject);
     }
 
+    @Test public void compare() {
+        ChemObject co1 = new ChemObject();
+        ChemObject co2 = new ChemObject();
+        co1.setID(new String("a1"));
+        co2.setID(new String("a1"));
+        Assert.assertTrue(co1.compare(co2));
+    }
+
+    @Test public void compareDifferent() {
+        ChemObject co1 = new ChemObject();
+        ChemObject co2 = new ChemObject();
+        co1.setID(new String("a1"));
+        co2.setID(new String("a2"));
+        Assert.assertFalse(co1.compare(co2));
+    }
 }

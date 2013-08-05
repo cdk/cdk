@@ -64,4 +64,36 @@ public class DebugAtomTypeTest extends AbstractAtomTypeTest {
         Assert.assertEquals("C", at.getSymbol());
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
+
+    @Test public void testCompare_AtomTypeName() {
+        DebugAtomType at1 = new DebugAtomType("C");
+        DebugAtomType at2 = new DebugAtomType("C");
+        at1.setAtomTypeName(new String("C4"));
+        at2.setAtomTypeName(new String("C4"));
+        Assert.assertTrue(at1.compare(at2));
+    }
+
+    @Test public void testCompare_DiffAtomTypeName() {
+        DebugAtomType at1 = new DebugAtomType("C");
+        DebugAtomType at2 = new DebugAtomType("C");
+        at1.setAtomTypeName(new String("C4"));
+        at2.setAtomTypeName(new String("C3"));
+        Assert.assertFalse(at1.compare(at2));
+    }
+
+    @Test public void testCompare_BondOrderSum() {
+        DebugAtomType at1 = new DebugAtomType("C");
+        DebugAtomType at2 = new DebugAtomType("C");
+        at1.setBondOrderSum(1.5);
+        at2.setBondOrderSum(1.5);
+        Assert.assertTrue(at1.compare(at2));
+    }
+
+    @Test public void testCompare_DiffBondOrderSum() {
+        DebugAtomType at1 = new DebugAtomType("C");
+        DebugAtomType at2 = new DebugAtomType("C");
+        at1.setBondOrderSum(1.5);
+        at2.setBondOrderSum(2.0);
+        Assert.assertFalse(at1.compare(at2));
+    }
 }
