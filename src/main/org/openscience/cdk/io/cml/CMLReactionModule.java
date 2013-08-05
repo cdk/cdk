@@ -116,18 +116,31 @@ public class CMLReactionModule extends CMLCoreModule {
             }
 //            	cdo.setObjectProperty("Agent", "id", id);
         } else if ("molecule".equals(local)) {
-            // do nothing for now
+            // clear existing molecule data
             super.newMolecule();
             String id = atts.getValue("id");
-            if(id != null) {
-//                cdo.setObjectProperty(objectType, "id", id);
-                currentMolecule.setID(id);
-            }else{
+            if (id != null) {
+                // check for existing molecule of that id
+                IAtomContainer existing = getMoleculeFromID(currentMoleculeSet, id);
+                if (existing != null) {
+                    currentMolecule = existing;
+                } else {
+                    currentMolecule.setID(id);
+                }
+            } else {
             	String ref = atts.getValue("ref");
                 if(ref != null){
                 	IAtomContainer atomC = getMoleculeFromID(currentMoleculeSet, ref);
+
+                    // if there was no molecule create a new one for the reference. this
+                    // happens when the reaction is defined before the molecule set
+                    if (atomC == null) {
+                        atomC = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
+                        atomC.setID(ref);
+                        currentMoleculeSet.addAtomContainer(atomC);
+                    }
+
                 	super.currentMolecule = atomC;
-//                    currentMolecule.setID(ref);
                 }
             }            
         } else {
