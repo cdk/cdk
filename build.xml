@@ -1115,6 +1115,7 @@
 
 			<mkdir dir="${reports.tests}"/>
             <junit printsummary="yes" haltonfailure="no" fork="yes" maxmemory="256m">
+                <sysproperty key="java.awt.headless" value="true"/>
                 <classpath>
                      <fileset dir="${lib}" >
                          <exclude name="**/*" unless="module.libdepends.present" />
