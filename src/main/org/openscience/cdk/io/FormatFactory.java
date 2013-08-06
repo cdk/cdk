@@ -30,15 +30,23 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 
+import com.google.common.io.CharStreams;
+import com.google.common.io.Files;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.XYZFormat;
+
+import static org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
 
 /**
  * A factory for recognizing chemical file formats. Formats
@@ -143,21 +151,23 @@ public class FormatFactory {
         BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
         
         /* Search file for a line containing an identifying keyword */
-        String line = null;
-        int lineNumber = 1;
-        while ((line = buffer.readLine()) != null) {
-            for (int i=0; i<formats.size(); i++) {
-                IChemFormatMatcher cfMatcher = formats.get(i);
-                if (cfMatcher.matches(lineNumber, line)) {
-                    return cfMatcher;
-                }
-            }
-            lineNumber++;
+        List<String>     lines   = Collections.unmodifiableList(CharStreams.readLines(buffer));
+        Set<MatchResult> results = new TreeSet<MatchResult>();
+
+        for (IChemFormatMatcher format : formats) {
+            results.add(format.matches(lines));
         }
-        
+
+        // best result is first element (sorted set)
+        if (results.size() > 1) {
+            MatchResult best = results.iterator().next();
+            if (best.matched())
+                return best.format();
+        }
+
         buffer = new BufferedReader(new CharArrayReader(header));
         
-        line = buffer.readLine();
+        String line = buffer.readLine();
         // is it a XYZ file?
         StringTokenizer tokenizer = new StringTokenizer(line.trim());
         try {
@@ -197,24 +207,26 @@ public class FormatFactory {
             new StringReader(new String(header))
         );
 
-        /* Search file for a line containing an identifying keyword */
-        String line = null;
-        int lineNumber = 1;
-        while ((line = buffer.readLine()) != null) {
-            for (int i=0; i<formats.size(); i++) {
-                IChemFormatMatcher cfMatcher = formats.get(i);
-                if (cfMatcher.matches(lineNumber, line)) {
-                    return cfMatcher;
-                }
-            }
-            lineNumber++;
+         /* Search file for a line containing an identifying keyword */
+        List<String>     lines   = Collections.unmodifiableList(CharStreams.readLines(buffer));
+        Set<MatchResult> results = new TreeSet<MatchResult>();
+
+        for (IChemFormatMatcher format : formats) {
+            results.add(format.matches(lines));
+        }
+
+        // best result is first element (sorted set)
+        if (results.size() > 1) {
+            MatchResult best = results.iterator().next();
+            if (best.matched())
+                return best.format();
         }
 
         buffer = new BufferedReader(
             new StringReader(new String(header))
         );
 
-        line = buffer.readLine();
+        String line = buffer.readLine();
         // is it a XYZ file?
         StringTokenizer tokenizer = new StringTokenizer(line.trim());
         try {
