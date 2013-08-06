@@ -40,13 +40,15 @@ import org.openscience.cdk.interfaces.IBond;
 
 
 /**
- * Place aliphatic chains with Z matrix method.
+ * Place aliphatic <b>chains</b> with Z matrix method. Please use {@link
+ * ModelBuilder3D} to place general molecules.
  *
  * @author         chhoppe
  * @cdk.keyword    AtomPlacer3D
  * @cdk.created    2004-10-8
  * @cdk.module     builder3d
  * @cdk.githash
+ * @see ModelBuilder3D
  */
 @TestClass("org.openscience.cdk.modeling.builder3d.AtomPlacer3DTest " +
  "org.openscience.cdk.modeling.builder3d.FurtherAtomPlacer3DTest")
@@ -119,7 +121,7 @@ public class AtomPlacer3D {
 	 *
 	 * @param molecule        the reference molecule for the chain
 	 * @param  chain          the atoms to be assigned, must be connected
-	 * 
+	 * @throws CDKException the 'chain' was not a chain
 	 */
 	public void placeAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain) throws CDKException{
 		//logger.debug("******** Place aliphatic Chain *********");
@@ -146,6 +148,11 @@ public class AtomPlacer3D {
 				nextAtomNr = molecule.getAtomNumber(chain.getAtom(i));
 				ID2 = molecule.getAtom(first_atoms[counter - 1]).getAtomTypeName();
 				ID1 = molecule.getAtom(nextAtomNr).getAtomTypeName();
+
+                if (molecule.getBond(molecule.getAtom(first_atoms[counter - 1]),
+                                     molecule.getAtom(nextAtomNr)) == null)
+                    throw new CDKException("atoms do not form a chain, please us ModelBuilder3D");
+
 				distances[counter] = getBondLengthValue(ID1, ID2);
 				//logger.debug(" Distance:" + distances[counter]);
 				first_atoms[counter] = nextAtomNr;
