@@ -95,9 +95,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   symbol The element symbol that this element should have.  
      */
     public Element(String symbol) {
-        this();
-        this.symbol = symbol;
-        this.atomicNumber = PeriodicTable.getAtomicNumber(symbol);
+        this(symbol, PeriodicTable.getAtomicNumber(symbol));
     }
 
     /**
@@ -108,7 +106,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   atomicNumber  The atomicNumber of this element.
      */
     public Element(String symbol, Integer atomicNumber) {
-        this(symbol);
+        this.symbol       = symbol;
         this.atomicNumber = atomicNumber;
     }
 
