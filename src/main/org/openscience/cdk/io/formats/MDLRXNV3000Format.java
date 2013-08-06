@@ -27,6 +27,8 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
+import java.util.List;
+
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
  * 
@@ -35,13 +37,10 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.MDLRXNV3000FormatTest")
-public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
+public class MDLRXNV3000Format extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
-	// OK, add some state info
-	boolean isRXN = false;
-	
+
     public MDLRXNV3000Format() {}
     
     @TestMethod("testResourceFormatSet")
@@ -86,31 +85,34 @@ public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemF
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
-    public boolean matches(int lineNumber, String line) {
-    	if (lineNumber == 1) {
-    		isRXN = (line.indexOf("$RXN") != -1);
-        } else if (lineNumber == 5 && isRXN) {
-        	try {
-                String atomCountString = line.substring(0, 3).trim();
-                String bondCountString = line.substring(3, 6).trim();
-                Integer.valueOf(atomCountString);
-                Integer.valueOf(bondCountString);
-                if (line.length() > 6) {
-                    String remainder = line.substring(6).trim();
-                    for (int i = 0; i < remainder.length(); ++i) {
-                        char c = remainder.charAt(i);
-                        if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
-                            return false;
-                        }
-                    }
+    public MatchResult matches(List<String> lines) {
+
+        // if the first line doesn't have '$RXN' then it can't match
+        if (lines.size() < 1 || !lines.get(0).contains("$RXN"))
+            return NO_MATCH;
+
+        // check the header (fifth line)
+        String header = lines.size() > 4 ? lines.get(4) : "";
+
+        // atom count
+        if (header.length() < 3 || !Character.isDigit(header.charAt(2)))
+            return NO_MATCH;
+        // bond count
+        if (header.length() < 6 || !Character.isDigit(header.charAt(5)))
+            return NO_MATCH;
+
+        // check the rest of the header is only spaces and digits
+        if (header.length() > 6) {
+            String remainder = header.substring(6).trim();
+            for (int i = 0; i < remainder.length(); ++i) {
+                char c = remainder.charAt(i);
+                if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                    return NO_MATCH;
                 }
-            } catch (NumberFormatException nfe) {
-                // Integers not found on fifth line; therefore not a MDL file
-            	return false;
             }
-            return true;
-        }	
-        return false;
+        }
+
+        return new MatchResult(true, this, 0);
     }
 
     /** {@inheritDoc} */ @Override
