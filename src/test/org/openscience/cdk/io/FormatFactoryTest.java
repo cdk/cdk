@@ -289,8 +289,11 @@ public class FormatFactoryTest extends CDKTestCase {
 		}
 
 		@Override
-		public boolean matches(int lineNumber, String line) {
-			return line.startsWith("DummyFormat:");
+		public MatchResult matches(List<String> lines) {
+			if(lines.size() > 0  && lines.get(0).startsWith("DummyFormat:")){
+                return new MatchResult(true, this, 0);
+            }
+            return NO_MATCH;
 		}
     }
 
