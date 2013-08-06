@@ -26,12 +26,16 @@ import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -360,5 +364,26 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 			Assert.assertTrue(atom.getFlag(CDKConstants.ISPLACED));		
 		}
 	}
+
+	/**
+     * This class only places 'chains' - i.e. no branching. Check an exception
+     * is thrown.
+     * @cdk.inchi InChI=1/C14H30/c1-4-7-10-13-14(11-8-5-2)12-9-6-3/h14H,4-13H2,1-3H3
+     */
+    @Test(expected = CDKException.class)
+    public void invalidChain() throws CDKException {
+
+        String         input = "CCCCCC(CCCC)CCCC";
+        SmilesParser   sp    = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer m     = sp.parseSmiles(input);
+
+        ForceFieldConfigurator ffc= new ForceFieldConfigurator();
+        ffc.setForceFieldConfigurator("mmff92");
+        ffc.assignAtomTyps(m);
+
+        AtomPlacer3D ap3d = new AtomPlacer3D();
+        ap3d.initilize(ffc.getParameterSet());
+        ap3d.placeAliphaticHeavyChain(m, m);
+    }
 	
 	}
