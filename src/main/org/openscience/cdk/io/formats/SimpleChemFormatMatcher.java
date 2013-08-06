@@ -35,6 +35,15 @@ import java.util.List;
  */
 abstract class SimpleChemFormatMatcher extends AbstractResourceFormat
                                        implements IChemFormatMatcher {
+    /**
+     * Check whether a given line at a specified position (line number) could
+     * belong to this format.
+     *
+     * @param lineNumber the line number of {@literal line}
+     * @param line       the contents at the given {@literal lineNumber}
+     * @return this line in this position could indicate a format match
+     */
+    abstract boolean matches(int lineNumber, String line);
 
     /**
      * Simple implementation, runs the lines one-by-one through {@link

@@ -43,17 +43,6 @@ import java.util.List;
 public interface IChemFormatMatcher extends IChemFormat {
 
     /**
-     * Method that checks whether the given line is part of the format
-     * read by this reader.
-     *
-     * @param lineNumber  number of the line
-     * @param line        line in the file being checked
-     *
-     * @return true if the line is of a file format read by this reader
-     */
-    public boolean matches(int lineNumber, String line);
-
-    /**
      * Method that checks whether the given lines are part of the format read by
      * this reader.
      *
