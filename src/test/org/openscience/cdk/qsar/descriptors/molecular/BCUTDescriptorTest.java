@@ -38,6 +38,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -175,7 +176,9 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
         Exception e = descriptor.calculate(ac).getException();
         Assert.assertNotNull(e);
-        Assert.assertEquals("Burden matrix has undefined values", e.getMessage());                
+        // make sure exception was a NPE etc.
+        Assert.assertEquals("Could not calculate partial charges: Partial charge not-supported for element: 'As'",
+                            e.getMessage());
     }
 }
 
