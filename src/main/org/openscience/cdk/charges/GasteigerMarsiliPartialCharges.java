@@ -242,7 +242,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *  Set the StepSize attribute of the GasteigerMarsiliPartialCharges
      *  object
      *
-     *@param step
+     * @param step size of the step
      */
     @TestMethod("testSetStepSize")
     public void setStepSize(int step){
