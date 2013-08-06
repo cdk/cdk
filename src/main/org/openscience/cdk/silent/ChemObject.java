@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Objects;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -288,7 +289,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 			return false;
 		}
 		ChemObject chemObj = (ChemObject) object;
-        return identifier == chemObj.identifier;
+        return Objects.equal(identifier, chemObj.identifier);
     }
 
 

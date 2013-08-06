@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk;
 
+import com.google.common.base.Objects;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -201,7 +202,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
             return false;
         }
         Element elem = (Element)object;
-        return atomicNumber == elem.atomicNumber &&
-                symbol.equals(elem.symbol);
+        return Objects.equal(atomicNumber, elem.atomicNumber)
+                && Objects.equal(symbol, elem.symbol);
     }
 }

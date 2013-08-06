@@ -21,6 +21,7 @@ package org.openscience.cdk.silent;
 
 import java.io.Serializable;
 
+import com.google.common.base.Objects;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;
 
@@ -193,7 +194,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
             return false;
         }
         Element elem = (Element)object;
-        return atomicNumber == elem.atomicNumber &&
-                symbol.equals(elem.symbol);
+        return Objects.equal(atomicNumber, elem.atomicNumber)
+                && Objects.equal(symbol, elem.symbol);
     }
 }

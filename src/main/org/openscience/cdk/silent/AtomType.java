@@ -25,6 +25,7 @@ package org.openscience.cdk.silent;
 
 import java.io.Serializable;
 
+import com.google.common.base.Objects;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -309,9 +310,9 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
             return false;
         }
         AtomType type = (AtomType) object;
-        return (getAtomTypeName() == type.getAtomTypeName()) &&
-                (maxBondOrder == type.maxBondOrder) &&
-                (bondOrderSum == type.bondOrderSum);
+        return Objects.equal(getAtomTypeName(), type.getAtomTypeName()) &&
+                Objects.equal(maxBondOrder, type.maxBondOrder) &&
+                Objects.equal(bondOrderSum, type.bondOrderSum);
     }
 
     /**
