@@ -130,9 +130,8 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
 	private void startAtomTypeElement(String local, Attributes atts) {
     	if ("AtomType".equals(local)) {
-    		IElement bootstrapHydrogen = builder.newInstance(IElement.class, "H");
-    		bootstrapHydrogen.setAtomicNumber(null);
-    		currentAtomType = builder.newInstance(IAtomType.class, bootstrapHydrogen);
+    		currentAtomType = builder.newInstance(IAtomType.class, "H");
+            currentAtomType.setAtomicNumber(null);
     		currentAtomType.setAtomTypeName(atts.getValue("rdf:ID"));
     		piBondCount = 0;
     		neighborCount = 0;
