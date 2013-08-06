@@ -257,7 +257,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
      */
     @TestMethod("testAssignGasteigerSigmaMarsiliFactors_IAtomContainer")
-    public double[] assignGasteigerSigmaMarsiliFactors(IAtomContainer ac) {
+    public double[] assignGasteigerSigmaMarsiliFactors(IAtomContainer ac) throws CDKException {
         //a,b,c,denom,chi,q
         double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE+1))];
         String AtomSymbol = "";
@@ -348,6 +348,8 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
                 factors[0] = 9.88;/*9.90*/
                 factors[1] = 7.95;/*7.96*/
                 factors[2] = 0.945;/*0.96*/
+            } else {
+                throw new CDKException("Partial charge not-supported for element: '" + AtomSymbol + "'.");
             }
 
             gasteigerFactors[STEP_SIZE * i + i] = factors[0];
