@@ -27,7 +27,11 @@ package org.openscience.cdk.io.formats;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.Collections;
 
+import com.google.common.io.CharStreams;
+import com.google.common.primitives.Chars;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -55,15 +59,7 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
         BufferedReader reader = new BufferedReader(
             new StringReader(header)
         );
-        int lineNumber = 0;
-        boolean matches = false;
-        String line = reader.readLine();
-        while (line != null) {
-            lineNumber++;
-            matches = matches || matcher.matches(lineNumber, line);
-            line = reader.readLine();
-        }
-        return matches;
+        return matcher.matches(CharStreams.readLines(reader)).matched();
     }
 
     @Test public void testMatches() throws Exception {
@@ -72,11 +68,15 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
         // negative tests are given below
     }
 
+    @Test public void testNoLines() {
+        Assert.assertFalse(matcher.matches(Collections.<String>emptyList()).matched());
+    }
+
     @Test public void testMatchesEmptyString() {
-        Assert.assertFalse(matcher.matches(1, ""));
+        Assert.assertFalse(matcher.matches(Arrays.asList("")).matched());
     }
     
     @Test public void testMatchesLoremIpsum() {
-        Assert.assertFalse(matcher.matches(1, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla."));
+        Assert.assertFalse(matcher.matches(Arrays.asList("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla.")).matched());
     }
 }
