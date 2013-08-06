@@ -24,13 +24,15 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
+import java.util.List;
+
 /**
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set     io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.PubChemSubstanceXMLFormatTest")
-public class PubChemSubstanceXMLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
+public class PubChemSubstanceXMLFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
@@ -96,11 +98,18 @@ public class PubChemSubstanceXMLFormat extends SimpleChemFormatMatcher implement
 		return DataFeatures.NONE;
 	}
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testMatches")
-	public boolean matches(int lineNumber, String line) {
-		if (lineNumber <= 2 && line.contains("<PC-Substance") &&
-		    !line.contains("<PC-Substances")) return true;
-		return false;
-	}
+    public MatchResult matches(List<String> lines) {
+        MatchResult result = NO_MATCH;
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (line.contains("<PC-Substance") && result == NO_MATCH)
+                result = new MatchResult(true, this, i);
+            if (line.contains("<PC-Substances"))
+                return NO_MATCH;
+        }
+        return result;
+    }
 }
