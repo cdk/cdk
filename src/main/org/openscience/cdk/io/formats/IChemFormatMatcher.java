@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import com.google.common.primitives.Ints;
+import java.util.List;
 /**
  * This interface is used for classes that are able to match a certain 
  * chemical file format. For example: Chemical Markup Language, PDB etc.
@@ -51,5 +53,69 @@ public interface IChemFormatMatcher extends IChemFormat {
      */
     public boolean matches(int lineNumber, String line);
 
+    /**
+     * Method that checks whether the given lines are part of the format read by
+     * this reader.
+     *
+     * @param lines lines of the input to be checked
+     * @return whether the format matched and when it matched
+     */
+    MatchResult matches(List<String> lines);
+
+    /** Convenience method for indicating a format did not match. */
+    static MatchResult NO_MATCH = new MatchResult(false, null, Integer.MAX_VALUE);
+
+    /**
+     * Simple class holds whether a format matcher matched, when it matched and
+     * what the format was. The result is comparable to be prioritised (lower
+     * match position being favoured).
+     */
+    static final class MatchResult implements Comparable<MatchResult> {
+
+        /** Did the format match. */
+        private final boolean matched;
+
+        /** When did the format match. */
+        private final int position;
+
+        /** Which format matched. */
+        private final IChemFormat format;
+
+        public MatchResult(boolean matched, IChemFormat format, int position) {
+            this.matched = matched;
+            this.format = format;
+            this.position = position;
+        }
+
+        /**
+         * Did the chem format match.
+         *
+         * @return whether the format matched
+         */
+        public boolean matched() {
+            return matched;
+        }
+
+        /**
+         * What was the format which matched if there was a match ({@link
+         * #matched()}).
+         *
+         * @return the format which matched
+         * @throws IllegalArgumentException there was no match
+         */
+        public IChemFormat format() {
+            if (!matched)
+                throw new IllegalArgumentException("result did not match");
+            return format;
+        }
+
+        /**
+         * Compares the match result with another, results with lower position
+         * are ordered before those with higher position.
+         */
+        @Override public int compareTo(MatchResult that) {
+            return Ints.compare(this.position, that.position);
+        }
+    }
 }
 
