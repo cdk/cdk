@@ -30,6 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.interfaces.IAtom;
@@ -225,7 +226,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		
 	}
 
-    @Test
+    @Test(expected = CDKException.class)
     public void testUndefinedPartialCharge() throws Exception {
         String filename = "data/mdl/burden_undefined.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -244,10 +245,5 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 
         GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
         peoe.calculateCharges(ac);
-
-        for (IAtom atom : ac.atoms()) {
-            Assert.assertFalse(atom.getSymbol() + " had an undefined partial charge", Double.isNaN(atom.getCharge()));
-            Assert.assertFalse(Double.isInfinite(atom.getCharge()));
-        }
     }
 }
