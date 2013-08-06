@@ -21,6 +21,7 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -39,6 +40,8 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -387,4 +390,17 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		}
 		checkAverageBondLength(ac);
 	}
+
+    @Test
+    public void testAlkanes() throws CDKException, IOException,
+                                     CloneNotSupportedException {
+        String smiles1 = "CCCCCCCCCCCCCCCCCC";
+        String smiles2 = "CCCCCC(CCCC)CCCC";
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer nonBranchedAlkane = parser.parseSmiles(smiles1);
+        IAtomContainer branchedAlkane    = parser.parseSmiles(smiles2);
+        ModelBuilder3D.getInstance().generate3DCoordinates(nonBranchedAlkane, false);
+        ModelBuilder3D.getInstance().generate3DCoordinates(branchedAlkane, false);
+    }
+
 }

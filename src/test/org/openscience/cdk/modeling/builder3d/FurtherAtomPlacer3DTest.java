@@ -361,25 +361,4 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		}
 	}
 	
-	@Test
-	public void testZmatrixChainToCartesian_IAtomContainer_boolean() throws CDKException {
-		AtomPlacer3D atmplacer = new AtomPlacer3D();
-	    ForceFieldConfigurator ffc= new ForceFieldConfigurator();
-	    ffc.setForceFieldConfigurator("mmff92");
-		SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		String smiles1 = "CCCCCCCCCCCCCCCCCC";
-		String smiles2 = "CCCCCC(CCCC)CCCC";
-		IAtomContainer notBranchedAlkane = parser.parseSmiles(smiles1);
-		IAtomContainer branchedAlkane = parser.parseSmiles(smiles2);
-		ffc.assignAtomTyps(notBranchedAlkane);
-		ffc.assignAtomTyps(branchedAlkane);
-		atmplacer.placeAliphaticHeavyChain(branchedAlkane, branchedAlkane);
-		atmplacer.placeAliphaticHeavyChain(notBranchedAlkane, notBranchedAlkane);
-		atmplacer.zmatrixChainToCartesian(notBranchedAlkane, false);
-		atmplacer.zmatrixChainToCartesian(branchedAlkane, true);
-	    ModelBuilder3DTest.checkAverageBondLength(notBranchedAlkane);
-	    ModelBuilder3DTest.checkAverageBondLength(branchedAlkane);
-	}
-	
-	
 	}
