@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.MDLRXNV3000FormatTest")
-public class MDLRXNV3000Format extends AbstractResourceFormat implements IChemFormatMatcher {
+public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

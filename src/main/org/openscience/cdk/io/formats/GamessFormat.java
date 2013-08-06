@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.GamessFormatTest")
-public class GamessFormat extends AbstractResourceFormat implements IChemFormatMatcher {
+public class GamessFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

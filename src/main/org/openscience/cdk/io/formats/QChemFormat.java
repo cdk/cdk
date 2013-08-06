@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.QChemFormatTest")
-public class QChemFormat extends AbstractResourceFormat implements IChemFormatMatcher {
+public class QChemFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

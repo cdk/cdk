@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.JaguarFormatTest")
-public class JaguarFormat extends AbstractResourceFormat implements IChemFormatMatcher {
+public class JaguarFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	

@@ -28,7 +28,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.set    io-formats
  */
 @TestClass("org.openscience.cdk.io.formats.MOPAC7InputFormatTest")
-public class MOPAC7InputFormat extends AbstractResourceFormat implements IChemFormatMatcher {
+public class MOPAC7InputFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
