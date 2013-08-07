@@ -78,6 +78,16 @@ public class AtomTypeMapper {
 		return mappers.get(mappingFile);
 	}
 
+	/**
+	 * Creates an instance of this class containing the content extracted from the
+	 * {@link InputStream} and with the provided mappingFile name as string
+	 * representation as mapping name.
+	 * 
+	 * @param  mappingFile  name by which this mapping is known, and as returned by {@link #getMapping()}
+	 * @param  stream       {@link InputStream} from which the data is loaded
+	 * @return              a singleton instance with the data loaded from the mapping OWL file
+	 * @see    #getMapping()
+	 */
     @TestMethod("testGetInstance_String_InputStream")
     public static AtomTypeMapper getInstance(String mappingFile, InputStream stream) {
         if (!mappers.containsKey(mappingFile)) {
@@ -86,11 +96,22 @@ public class AtomTypeMapper {
         return mappers.get(mappingFile);
     }
 
+    /**
+     * Returns the atom type name of the atom type mapped to the given atom type.
+     * 
+     * @param type name of the atom type which you want to map
+     * @return     name of the mapped atom type
+     */
   @TestMethod("testMapAtomType_String")
 	public String mapAtomType(String type) {
 		return mappings.get(type);
 	}
 
+    /**
+     * Returns the string representation of the OWL file underlying this mapping instance.
+     * 
+     * @return a string representaiton of the OWL file
+     */
 	@TestMethod("testGetMapping")
 	public String getMapping() {
 		return mappingFile;
