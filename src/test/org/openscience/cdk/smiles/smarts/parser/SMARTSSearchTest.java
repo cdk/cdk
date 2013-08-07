@@ -452,7 +452,9 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     @Test
     public void testPropertyR2() throws Exception {
-        int[] results = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+        SMARTSQueryTool sqt = smarts("[R2]");
+        sqt.useSmallestSetOfSmallestRings(); // default for daylight
+        int[] results = match(sqt, smiles("COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34"));
         Assert.assertEquals(6, results[0]);
         Assert.assertEquals(6, results[1]);
 
