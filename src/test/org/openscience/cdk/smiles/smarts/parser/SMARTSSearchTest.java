@@ -1197,10 +1197,22 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(5, results[1]);
     }
 
-    /* this fails, likely dueto a problem in aromaticity detection */
-    @Test public void testLogicalOrLowAnd6() throws Exception { 
-    	int[] results = match("[#7,C;+0,+1]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
-    	Assert.assertEquals(1, results[0]);    	
+    /** The CDK aromaticity detection differs from Daylight - by persevering
+     *  aromaticity from the SMILES we can match correctly.  */
+    @Test public void testLogicalOrLowAnd6() throws Exception {
+        SMARTSQueryTool sqt = smarts("[#7,C;+0,+1]");
+        sqt.preserveAtomType();
+        IAtomContainer  smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24", true);
+    	int[] results = match(sqt, smi);
+    	Assert.assertEquals(1, results[0]);
+    }
+
+    @Test public void testLogicalOrLowAnd6_cdkAromaticity() throws Exception {
+        SMARTSQueryTool sqt = smarts("[#7,C;+0,+1]");
+        sqt.perceiveAtomType();
+        IAtomContainer  smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24", false);
+        int[] results = match(sqt, smi);
+        Assert.assertEquals(8, results[0]);
     }
 
     @Test public void testLogicalOrLowAnd7() throws Exception {
