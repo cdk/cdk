@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.xml.sax.Attributes;
 
-/* *
+/**
  *  Implementation of the PMPMol Covention for CML.
  *
  *  <p>PMP stands for PolyMorph Predictor and is a module
