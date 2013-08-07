@@ -211,7 +211,7 @@ public class OverlapResolver
 		double distance = 0;
 		double overlapScore = 0;
         double bondLength = GeometryTools.getBondLengthAverage(ac);
-		double overlapCutoff = bondLength / 10;
+		double overlapCutoff = bondLength / 4;
 		logger.debug("Bond length is set to " + bondLength);
 		logger.debug("Now cyling through all pairs of atoms");
 		for (int f = 0; f < ac.getAtomCount(); f++)
