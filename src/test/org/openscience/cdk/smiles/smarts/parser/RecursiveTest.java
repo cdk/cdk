@@ -33,6 +33,9 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smarts;
+import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smiles;
+
 /**
  * Test recursive smarts
  *
@@ -296,9 +299,20 @@ public class RecursiveTest extends CDKTestCase {
     }
 
     @Test public void testRecursive28() throws Exception {
-        match("[NX3;H2,H1;!$(NC=O)]", "Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
-        Assert.assertEquals(0, nmatch);
-        Assert.assertEquals(0, nqmatch);
+        SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
+        IAtomContainer  smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1", true);
+        sqt.preserveAtomType();
+        int[] result = SMARTSSearchTest.match(sqt, smi);
+        Assert.assertEquals(0, result[0]);
+        Assert.assertEquals(0, result[1]);
+    }
+
+    @Test public void testRecursive28_cdkAromaticModel() throws Exception {
+        SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
+        IAtomContainer  smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
+        int[] result = SMARTSSearchTest.match(sqt, smi);
+        Assert.assertEquals(1, result[0]);
+        Assert.assertEquals(1, result[1]);
     }
 
     @Test public void testRecursive29() throws Exception {
