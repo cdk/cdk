@@ -285,11 +285,19 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(1, nqmatch);
     }
 
-
     @Test public void testRecursiveSmarts26() throws Exception {
+        SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
+        IAtomContainer  smi = smiles("CCCc1cc(=O)nc([nH]1)S", true);
+        sqt.preserveAtomType();
+        int[] result = SMARTSSearchTest.match(sqt, smi);
+        Assert.assertEquals(0, result[0]);
+        Assert.assertEquals(0, result[1]);
+    }
+
+    @Test public void testRecursiveSmarts26_cdkAromaticModel() throws Exception {
         match("[NX3;H2,H1;!$(NC=O)]", "CCCc1cc(=O)nc([nH]1)S");
-        Assert.assertEquals(0, nmatch);
-        Assert.assertEquals(0, nqmatch);
+        Assert.assertEquals(1, nmatch);
+        Assert.assertEquals(1, nqmatch);
     }
 
     @Test public void testRecursiveSmarts27() throws Exception {
