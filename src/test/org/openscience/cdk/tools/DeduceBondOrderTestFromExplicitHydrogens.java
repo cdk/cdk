@@ -22,6 +22,7 @@ package org.openscience.cdk.tools;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -349,7 +350,8 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	/**
 	 * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>. 
 	 */
-	@Test public void xtestPyridine() throws Exception {
+	@Ignore("previously disabled 'xtest'")
+    public void xtestPyridine() throws Exception {
 	    IAtomContainer enol = new AtomContainer();
 		
 		// atom block
