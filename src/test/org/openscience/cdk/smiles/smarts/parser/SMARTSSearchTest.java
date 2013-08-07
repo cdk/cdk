@@ -98,18 +98,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     private int[] match(String smarts, String smiles) throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer atomContainer = sp.parseSmiles(smiles);
-        boolean status = sqt.matches(atomContainer);
-        if (status) {
-        	return new int[] {
-              sqt.countMatches(),
-              sqt.getUniqueMatchingAtoms().size()
-        	};
-        } else {
-        	return new int[]{0,0};
-        }
+        return match(smarts(smarts), smiles(smiles));
     }
 
     @Test public void testMoleculeFromSDF() throws CDKException {
