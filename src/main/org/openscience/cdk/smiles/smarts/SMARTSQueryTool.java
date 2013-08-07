@@ -119,6 +119,11 @@ public class SMARTSQueryTool {
     private QueryAtomContainer query = null;
 
     /**
+     * Allow re-perception or preservation of aromaticity information.
+     */
+    private boolean perceiveAtomType = true;
+
+    /**
      * Defines which set of rings to define rings in the target.
      */
     private enum RingSet {
@@ -239,6 +244,21 @@ public class SMARTSQueryTool {
      */
     public void useEssentialRings() {
         this.ringSet = RingSet.EssentialRings;
+    }
+
+    /**
+     * Indicates the SMARTS search should first re-perceive atom type and
+     * aromaticity of the target molecule.
+     */
+    public void perceiveAtomType() {
+        this.perceiveAtomType = true;
+    }
+
+    /**
+     * Indicates you which the target atom type and aromaticity to be preserved.
+     */
+    public void preserveAtomType() {
+        this.perceiveAtomType = false;
     }
 
     /**
@@ -527,8 +547,10 @@ public class SMARTSQueryTool {
 
         // check for atomaticity
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
-            CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+            if (perceiveAtomType) {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+            }
         } catch (CDKException e) {
             logger.debug(e.toString());
             throw new CDKException(e.toString(), e);
