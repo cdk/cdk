@@ -32,6 +32,7 @@ package org.openscience.cdk;
  * Atom that represents part of an residue in an enzyme, like Arg255.
  *
  * @see  PseudoAtom
+ * @cdk.githash
  */
 public class EnzymeResidueLocator extends PseudoAtom {
 

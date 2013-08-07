@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @cdk.module cip
  * @cdk.githash
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.cip.TerminalLigandTest")
 class TerminalLigand extends Ligand {

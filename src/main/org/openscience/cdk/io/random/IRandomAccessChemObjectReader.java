@@ -31,6 +31,7 @@ import java.util.ListIterator;
  * 
  * @author     Nina Jeliazkova <nina@acad.bg>
  * @cdk.module io 
+ * @cdk.githash
  */
 public interface IRandomAccessChemObjectReader<T> extends ListIterator<T> {
 	

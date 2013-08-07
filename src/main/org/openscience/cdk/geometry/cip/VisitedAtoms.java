@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * already been visited.
  *
  * @cdk.module cip
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.geometry.cip.VisitedAtomsTest")
 public class VisitedAtoms {
