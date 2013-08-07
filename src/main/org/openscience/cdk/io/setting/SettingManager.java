@@ -64,6 +64,7 @@ import java.util.regex.Pattern;
  *
  * @author       John May
  * @cdk.module   io
+ * @cdk.githash
  * @cdk.created  20.03.2012
  * @see          ISetting
  * @see          IOSetting

@@ -45,6 +45,7 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  * @cdk.keyword essential rings
  * @cdk.keyword essential cycles
  * @cdk.keyword graph

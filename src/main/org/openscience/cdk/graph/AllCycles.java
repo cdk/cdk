@@ -47,6 +47,7 @@ import java.util.List;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  * @see RegularPathGraph
  * @see JumboPathGraph
  * @see org.openscience.cdk.ringsearch.RingSearch

@@ -49,6 +49,7 @@ import org.openscience.cdk.io.listener.IReaderListener;
  * 
  * @author     Nina Jeliazkova <nina@acad.bg>
  * @cdk.module io
+ * @cdk.githash
  */
 public class RandomAccessSDFReader extends RandomAccessReader {
 

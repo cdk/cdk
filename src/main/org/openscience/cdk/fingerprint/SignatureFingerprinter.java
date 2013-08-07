@@ -37,6 +37,7 @@ import org.openscience.cdk.signature.AtomSignature;
  *
  * @cdk.module  signature
  * @cdk.keyword fingerprint
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.SignatureFingerprinterTest")
 public class SignatureFingerprinter implements IFingerprinter {

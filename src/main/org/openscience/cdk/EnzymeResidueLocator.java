@@ -27,6 +27,7 @@ package org.openscience.cdk;
  *
  * @see  PseudoAtom
  * @cdk.module pdb
+ * @cdk.githash
  */
 public class EnzymeResidueLocator extends PseudoAtom {
 

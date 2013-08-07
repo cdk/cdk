@@ -37,6 +37,7 @@ import static java.util.Arrays.copyOf;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  * @see ShortestPaths
  * @see org.openscience.cdk.ringsearch.RingSearch
  */

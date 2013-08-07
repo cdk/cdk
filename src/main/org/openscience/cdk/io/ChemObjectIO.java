@@ -42,6 +42,7 @@ import java.util.List;
  *
  * @author johnmay
  * @cdk.module io
+ * @cdk.githash
  * @cdk.created 20.03.2012
  */
 public abstract class ChemObjectIO implements IChemObjectIO {

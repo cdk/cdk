@@ -34,6 +34,7 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @author John May
  * @cdk.module ioformats
+ * @cdk.githash
  */
 public abstract class AbstractResourceFormat implements IResourceFormat {
 

@@ -60,6 +60,7 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  * @cdk.keyword sssr
  * @cdk.keyword smallest set of smallest rings
  * @cdk.keyword mcb

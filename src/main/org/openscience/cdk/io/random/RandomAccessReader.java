@@ -56,6 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  
  * @author     Nina Jeliazkova <nina@acad.bg>
  * @cdk.module io
+ * @cdk.githash
  */
 public abstract class RandomAccessReader
     extends DefaultRandomAccessChemObjectReader
