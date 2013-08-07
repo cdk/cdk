@@ -31,6 +31,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -63,6 +64,38 @@ public class SMARTSSearchTest extends CDKTestCase {
 	public void setUpUITester() {
 		uiTester = new UniversalIsomorphismTester();
 	}
+
+    private static IAtomContainer smiles(String smiles) throws
+                                                        InvalidSmilesException {
+        return smiles(smiles, false);
+    }
+
+    private static IAtomContainer smiles(String smiles,
+                                         boolean perserveAromaticity) throws
+                                                                      InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder
+                                                   .getInstance());
+        sp.setPreservingAromaticity(perserveAromaticity);
+        return sp.parseSmiles(smiles);
+    }
+
+    private static SMARTSQueryTool smarts(String smarts) {
+        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
+        return sqt;
+    }
+
+    private int[] match(SMARTSQueryTool sqt, IAtomContainer m) throws
+                                                               CDKException {
+        boolean status = sqt.matches(m);
+        if (status) {
+            return new int[] {
+                    sqt.countMatches(),
+                    sqt.getUniqueMatchingAtoms().size()
+            };
+        } else {
+            return new int[]{0,0};
+        }
+    }
 
     private int[] match(String smarts, String smiles) throws Exception {
         SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
