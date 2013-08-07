@@ -179,7 +179,8 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	/**
 	 * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H 
 	 */
-	@Test public void xtestQuinone() throws Exception {
+	@Ignore("previouls disabled 'xtest'")
+    public void xtestQuinone() throws Exception {
 		IAtomContainer enol = new AtomContainer();
 		
 		// atom block
