@@ -11,6 +11,6 @@
 
   <!-- The rule sets that come with PMD -->
 
-  <rule ref="rulesets/java/unusedcode.xml"/>
+  <rule ref="pmd/customUnused.xml"/>
 
 </ruleset>
