@@ -157,7 +157,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assert.assertNotNull(fingerprinter.getBitFingerprint(product));
 	}
 
-    @Test
+    @Test(timeout = 500)
     public void testbug2917084() throws Exception {
         String filename1 = "data/mdl/boronBuckyBall.mol";
         logger.info("Testing: " + filename1);
