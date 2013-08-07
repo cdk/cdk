@@ -163,6 +163,9 @@ public class SMARTSQueryTool {
         abstract IRingSet ringSet(IAtomContainer m);
     }
 
+    /** Which short cyclic set should be used. */
+    private RingSet ringSet = RingSet.EssentialRings;
+
     private final IChemObjectBuilder builder;
 
     private List<List<Integer>> matchingAtoms = null;
@@ -423,9 +426,8 @@ public class SMARTSQueryTool {
             throw new CDKException(e.toString(), e);
         }
 
-        // sets SSSR information
-        SSSRFinder finder = new SSSRFinder(atomContainer);
-        IRingSet sssr = finder.findEssentialRings();
+        // set short cycle information
+        IRingSet sssr = ringSet.ringSet(atomContainer);
 
         for (IAtom atom : atomContainer.atoms()) {
 
