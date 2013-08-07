@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="customUnused">
+
+  <description>
+    This ruleset checks the CDK sources for bad code.
+  </description>
+
+  <rule ref="rulesets/java/unusedcode.xml">
+    <exclude name="UnusedModifier"/>
+  </rule>
+
+</ruleset>
