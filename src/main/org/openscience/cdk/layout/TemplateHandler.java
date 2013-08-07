@@ -153,7 +153,7 @@ public class TemplateHandler
 	 */
 	@TestMethod("testAddMolecule")
 	public void addMolecule(IAtomContainer molecule) {
-		templates.add(molecule);
+		templates.add(anonymousTemplate(molecule));
 	}
 
 	@TestMethod("testRemoveMolecule")
@@ -165,7 +165,7 @@ public class TemplateHandler
 		{
 			mol2 = templates.get(f);
 			ac2 = molecule.getBuilder().newInstance(IAtomContainer.class,mol2);
-			if (new UniversalIsomorphismTester().isIsomorph(ac1, ac2)) {
+			if (new UniversalIsomorphismTester().isIsomorph(anonymousTemplate(ac1), ac2)) {
 				templates.remove(f);
 				return mol2;
 			}
