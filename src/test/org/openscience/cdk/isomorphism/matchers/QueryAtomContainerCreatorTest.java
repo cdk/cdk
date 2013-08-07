@@ -67,33 +67,33 @@ public class QueryAtomContainerCreatorTest extends CDKTestCase {
     	
     	// 2,3-dimethyl-1,3-butadiene matches
     	IAtomContainer query1 = builder.newInstance(IAtomContainer.class);
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addBond(0,1,IBond.Order.SINGLE);
-    	molecule.addBond(1,2,IBond.Order.DOUBLE);
-    	molecule.addBond(3,0,IBond.Order.DOUBLE);
-    	molecule.addBond(0,4,IBond.Order.SINGLE);
-    	molecule.addBond(1,5,IBond.Order.SINGLE);
+        query1.addAtom(builder.newInstance(IAtom.class,"C"));
+        query1.addAtom(builder.newInstance(IAtom.class,"C"));
+        query1.addAtom(builder.newInstance(IAtom.class,"C"));
+        query1.addAtom(builder.newInstance(IAtom.class,"C"));
+        query1.addAtom(builder.newInstance(IAtom.class,"C"));
+        query1.addAtom(builder.newInstance(IAtom.class,"C"));
+        query1.addBond(0,1,IBond.Order.SINGLE);
+        query1.addBond(1,2,IBond.Order.DOUBLE);
+        query1.addBond(3,0,IBond.Order.DOUBLE);
+        query1.addBond(0,4,IBond.Order.SINGLE);
+        query1.addBond(1,5,IBond.Order.SINGLE);
     	QueryAtomContainer queryContainer1 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query1);
     	Assert.assertTrue(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer1));
     	
     	// 2,3-dimethyl-2-butene does not match
     	IAtomContainer query2 = builder.newInstance(IAtomContainer.class);
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-    	molecule.addBond(0,1,IBond.Order.DOUBLE);
-    	molecule.addBond(1,2,IBond.Order.SINGLE);
-    	molecule.addBond(3,0,IBond.Order.SINGLE);
-    	molecule.addBond(0,4,IBond.Order.SINGLE);
-    	molecule.addBond(1,5,IBond.Order.SINGLE);
+        query2.addAtom(builder.newInstance(IAtom.class,"C"));
+        query2.addAtom(builder.newInstance(IAtom.class,"C"));
+        query2.addAtom(builder.newInstance(IAtom.class,"C"));
+        query2.addAtom(builder.newInstance(IAtom.class,"C"));
+        query2.addAtom(builder.newInstance(IAtom.class,"C"));
+        query2.addAtom(builder.newInstance(IAtom.class,"C"));
+        query2.addBond(0,1,IBond.Order.DOUBLE);
+        query2.addBond(1,2,IBond.Order.SINGLE);
+        query2.addBond(3,0,IBond.Order.SINGLE);
+        query2.addBond(0,4,IBond.Order.SINGLE);
+        query2.addBond(1,5,IBond.Order.SINGLE);
     	QueryAtomContainer queryContainer2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query2);
     	Assert.assertFalse(new UniversalIsomorphismTester().isSubgraph(molecule, queryContainer2));
     }
