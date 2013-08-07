@@ -28,10 +28,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -55,7 +60,18 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
 		addExplicitHydrogens(mol);
-		Assert.assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
+        assertThat(mol.getAtom(11).getSymbol(), is("H"));
+        assertThat(mol.getAtom(12).getSymbol(), is("H"));
+        assertThat(mol.getAtom(13).getSymbol(), is("H"));
+        assertThat(mol.getAtom(14).getSymbol(), is("H"));
+        assertThat(mol.getAtom(15).getSymbol(), is("H"));
+        assertThat(mol.getAtom(16).getSymbol(), is("H"));
+		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(11),mol).getValue()).intValue());
+		Assert.assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(12),mol).getValue()).intValue());
+		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
+		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(14),mol).getValue()).intValue());
+		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(15),mol).getValue()).intValue());
+		Assert.assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(16),mol).getValue()).intValue());
 	}
 }
 
