@@ -35,6 +35,7 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -100,7 +101,7 @@ public class OverlapResolver
 	 */
 	public double displace(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
 	{
-        double bondLength = 1.5;
+        double bondLength = GeometryTools.getBondLengthAverage(ac);
 
 		OverlapPair op = null;
 		IAtom a1 = null, a2 = null;
@@ -209,7 +210,7 @@ public class OverlapResolver
 		Point2d p2 = null;
 		double distance = 0;
 		double overlapScore = 0;
-        double bondLength = 1.5;
+        double bondLength = GeometryTools.getBondLengthAverage(ac);
 		double overlapCutoff = bondLength / 10;
 		logger.debug("Bond length is set to " + bondLength);
 		logger.debug("Now cyling through all pairs of atoms");
@@ -247,7 +248,7 @@ public class OverlapResolver
 		double overlapScore = 0;
 		IBond bond1 = null;
 		IBond bond2 = null;
-        double bondLength = 1.5;
+        double bondLength = GeometryTools.getBondLengthAverage(ac);;
 		double overlapCutoff = bondLength / 2;
 		for (int f = 0; f < ac.getBondCount(); f++)
 		{
