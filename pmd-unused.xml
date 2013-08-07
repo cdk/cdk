@@ -113,7 +113,7 @@
           <includesfile name="${build}/${module}.javafiles"/>
         </fileset>
       </pmd>
-      <xslt basedir="${reports.tests}/pmd-unused" destdir="${reports.tests}/pmd"
+      <xslt basedir="${reports.tests}/pmd-unused" destdir="${reports.tests}/pmd-unused"
             includes="${module}.xml"
             extension=".html" style="pmd/wz-pmd-report.xslt"/>
     </target>
