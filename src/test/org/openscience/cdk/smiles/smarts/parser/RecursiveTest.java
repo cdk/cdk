@@ -370,7 +370,7 @@ public class RecursiveTest extends CDKTestCase {
             nmol++;
         }
         reader.close();
-        Assert.assertEquals(142, nmol);
+        Assert.assertEquals(141, nmol);
         Assert.assertEquals(0, nmatch);
     }
 
