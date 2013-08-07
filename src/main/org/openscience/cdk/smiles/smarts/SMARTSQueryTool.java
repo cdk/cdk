@@ -208,6 +208,39 @@ public class SMARTSQueryTool {
         MAX_ENTRIES = maxEntries;
     }
 
+
+    /**
+     * Indicates that ring properties should use the Smallest Set of Smallest
+     * Rings. The set is not unique and may lead to ambiguous matches.
+     * @see #useEssentialRings()
+     * @see #useRelevantRings()
+     */
+    public void useSmallestSetOfSmallestRings() {
+        this.ringSet = RingSet.SmallestSetOfSmallestRings;
+    }
+
+    /**
+     * Indicates that ring properties should use the Relevant Rings. The set is
+     * unique and includes all of the SSSR but may be exponential in size.
+     *
+     * @see #useSmallestSetOfSmallestRings()
+     * @see #useEssentialRings()
+     */
+    public void useRelevantRings() {
+        this.ringSet = RingSet.RelevantRings;
+    }
+
+    /**
+     * Indicates that ring properties should use the Essential Rings (default).
+     * The set is unique but only includes a subset of the SSSR.
+     *
+     * @see #useSmallestSetOfSmallestRings()
+     * @see #useEssentialRings()
+     */
+    public void useEssentialRings() {
+        this.ringSet = RingSet.EssentialRings;
+    }
+
     /**
      * Returns the current SMARTS pattern being used.
      *
