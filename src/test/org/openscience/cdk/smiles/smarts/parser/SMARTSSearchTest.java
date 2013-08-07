@@ -65,12 +65,12 @@ public class SMARTSSearchTest extends CDKTestCase {
 		uiTester = new UniversalIsomorphismTester();
 	}
 
-    private static IAtomContainer smiles(String smiles) throws
+    static IAtomContainer smiles(String smiles) throws
                                                         InvalidSmilesException {
         return smiles(smiles, false);
     }
 
-    private static IAtomContainer smiles(String smiles,
+    static IAtomContainer smiles(String smiles,
                                          boolean perserveAromaticity) throws
                                                                       InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder
@@ -79,12 +79,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         return sp.parseSmiles(smiles);
     }
 
-    private static SMARTSQueryTool smarts(String smarts) {
+    static SMARTSQueryTool smarts(String smarts) {
         SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
         return sqt;
     }
 
-    private int[] match(SMARTSQueryTool sqt, IAtomContainer m) throws
+    static int[] match(SMARTSQueryTool sqt, IAtomContainer m) throws
                                                                CDKException {
         boolean status = sqt.matches(m);
         if (status) {
