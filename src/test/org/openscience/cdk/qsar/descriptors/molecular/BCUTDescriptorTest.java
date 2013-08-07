@@ -177,7 +177,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         Exception e = descriptor.calculate(ac).getException();
         Assert.assertNotNull(e);
         // make sure exception was a NPE etc.
-        Assert.assertEquals("Could not calculate partial charges: Partial charge not-supported for element: 'As'",
+        Assert.assertEquals("Could not calculate partial charges: Partial charge not-supported for element: 'As'.",
                             e.getMessage());
     }
 }
