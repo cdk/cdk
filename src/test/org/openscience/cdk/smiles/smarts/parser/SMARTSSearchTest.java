@@ -460,6 +460,24 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     }
 
+    @Test
+    public void testPropertyR2_essentialRings() throws Exception {
+        SMARTSQueryTool sqt = smarts("[R2]");
+        sqt.useEssentialRings();
+        int[] results = match(sqt, smiles("COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34"));
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(2, results[1]);
+    }
+
+    @Test
+    public void testPropertyR2_relevantRings() throws Exception {
+        SMARTSQueryTool sqt = smarts("[R2]");
+        sqt.useRelevantRings();
+        int[] results = match(sqt, smiles("COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34"));
+        Assert.assertEquals(8, results[0]);
+        Assert.assertEquals(8, results[1]);
+    }
+
     @Test public void testPropertyR3() throws Exception {
         int[] results = match("[R2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
         Assert.assertEquals(4, results[0]);
