@@ -21,7 +21,9 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import com.google.common.io.CharStreams;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -372,6 +374,32 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(141, nmol);
         Assert.assertEquals(6, nmatch);
     }
+
+    @Test public void testBasicAmineOnDrugs() throws Exception {
+        String filename = "data/smiles/drugs.smi";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
+
+        // iterating SMILES reader doesn't allow us to turn off automatic aromaticity
+        // perception
+        SmilesParser    sp  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+
+        // don't reconfigure the input - take it exactly as it is and test only
+        // that
+        sqt.preserveAtomType();
+        sp.setPreservingAromaticity(true);
+
+        int nmatch = 0;
+        int nmol = 0;
+        for (String smi : CharStreams.readLines(new InputStreamReader(ins))) {
+            IAtomContainer container = sp.parseSmiles(smi.split("\t")[0]);
+            if (sqt.matches(container)) {
+                nmatch++;
+            }
+            nmol++;
+        }
+        Assert.assertEquals(141, nmol);
         Assert.assertEquals(0, nmatch);
     }
 
