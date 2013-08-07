@@ -131,8 +131,11 @@ public class SMARTSQueryTool {
     };
 
     /**
-     * @param smarts
+     * Create a new SMARTS query tool for the specified SMARTS string. Query
+     * objects will contain a reference to the specified {@link
+     * IChemObjectBuilder}.
      *
+     * @param smarts SMARTS query string
      * @throws IllegalArgumentException if the SMARTS string can not be handled
      */
     public SMARTSQueryTool(String smarts,
@@ -458,7 +461,7 @@ public class SMARTSQueryTool {
      * We loop over the SMARTS atoms in the query and associate the target molecule with each of the SMARTS atoms that
      * need it
      *
-     * @param atomContainer
+     * @param atomContainer molecule to initialise
      * @throws CDKException
      */
     private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
@@ -470,8 +473,8 @@ public class SMARTSQueryTool {
     /**
      * Recursively initializes recursive smarts atoms
      *
-     * @param atom
-     * @param atomContainer
+     * @param atom the atom to initialise
+     * @param atomContainer the container of the atom to initialise
      * @throws CDKException
      */
     private void initializeRecursiveSmartsAtom(IAtom atom, IAtomContainer atomContainer) throws CDKException {
