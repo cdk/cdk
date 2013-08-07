@@ -60,7 +60,6 @@ public class OverlapResolver
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(OverlapResolver.class);
 
-	double bondLength = 1.5;
 	int maxSteps = 10000;
 	
 	public OverlapResolver()
@@ -101,6 +100,8 @@ public class OverlapResolver
 	 */
 	public double displace(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
 	{
+        double bondLength = 1.5;
+
 		OverlapPair op = null;
 		IAtom a1 = null, a2 = null;
 		Vector2d v1 = null, v2 = null;
@@ -208,6 +209,7 @@ public class OverlapResolver
 		Point2d p2 = null;
 		double distance = 0;
 		double overlapScore = 0;
+        double bondLength = 1.5;
 		double overlapCutoff = bondLength / 10;
 		logger.debug("Bond length is set to " + bondLength);
 		logger.debug("Now cyling through all pairs of atoms");
@@ -245,6 +247,7 @@ public class OverlapResolver
 		double overlapScore = 0;
 		IBond bond1 = null;
 		IBond bond2 = null;
+        double bondLength = 1.5;
 		double overlapCutoff = bondLength / 2;
 		for (int f = 0; f < ac.getBondCount(); f++)
 		{
