@@ -50,6 +50,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -113,7 +114,7 @@ public class TemplateHandler
 					IChemFile file = (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
 					List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
 					for (int i = 0; i < files.size(); i++)
-						templates.add(files.get(i));
+						templates.add(anonymousTemplate(files.get(i)));
 					logger.debug("Successfully read template ", line);
 				} catch (CDKException cdke) {
 				    logger.warn("Could not read template ", line, ", reason: ", cdke.getMessage());
@@ -129,6 +130,21 @@ public class TemplateHandler
 		    logger.debug(ioe);
 		}
 	}
+
+    /**
+     * Anonymise a molecule (single bonded carbons) and copy other atomic
+     * 2D coordinates.
+     *
+     * @param m molecule to make a template of.
+     * @return anonymised molecule
+     */
+    private IAtomContainer anonymousTemplate(IAtomContainer m) {
+        IAtomContainer template = AtomContainerManipulator.anonymise(m);
+        template.setID(m.getID());
+        for (int i = 0; i < m.getAtomCount(); i++)
+            template.getAtom(i).setPoint2d(m.getAtom(i).getPoint2d());
+        return template;
+    }
 
 	/**
 	 * Adds a Molecule to the list of templates use by this TemplateHandler.
@@ -173,20 +189,26 @@ public class TemplateHandler
 		RMap map = null;
 		IAtom atom1 = null;
 		IAtom atom2 = null;
+        
+        // We could also use any atom/bond query container but would required
+        // depending on 'cdk-isomorphism'. Instead we can anonymise the
+        // container to all singly bonded carbons.
+        IAtomContainer anonymised = AtomContainerManipulator.anonymise(molecule);
+
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = templates.get(f);
-			if (new UniversalIsomorphismTester().isIsomorph(molecule, template))
+            if (new UniversalIsomorphismTester().isIsomorph(anonymised, template))
 			{
 				List<RMap> list = universalIsomorphismTester.getIsomorphAtomsMap(
-					molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
+					molecule.getBuilder().newInstance(IAtomContainer.class,anonymised),
 					molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
 				logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
 				for (int i = 0; i < list.size(); i++)
 				{
 					map = list.get(i);
-					atom1 = molecule.getAtom(map.getId1());
+					atom1 = molecule.getAtom(anonymised.getAtomNumber(anonymised.getAtom(map.getId1())));
 					atom2 = template.getAtom(map.getId2());
 					atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
 					atom1.setFlag(CDKConstants.ISPLACED, true);
@@ -216,13 +238,19 @@ public class TemplateHandler
 		RMap map = null;
 		IAtom atom1 = null;
 		IAtom atom2 = null;
+
+        // We could also use any atom/bond query container but would required
+        // depending on 'cdk-isomorphism'. Instead we can anonymise the
+        // container to all singly bonded carbons.
+        IAtomContainer anonymised = AtomContainerManipulator.anonymise(molecule);
+
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = templates.get(f);
-			if (universalIsomorphismTester.isSubgraph(molecule, template))
+			if (universalIsomorphismTester.isSubgraph(anonymised, template))
 			{
 				List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
-						molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
+						molecule.getBuilder().newInstance(IAtomContainer.class,anonymised),
 						molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
 				logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
@@ -232,7 +260,7 @@ public class TemplateHandler
 					for (int i = 0; i < list.size(); i++)
 					{
 						map = (RMap) list.get(i);
-						atom1 = molecule.getAtom(map.getId1());
+						atom1 = molecule.getAtom(anonymised.getAtomNumber(anonymised.getAtom(map.getId1())));
 						atom2 = template.getAtom(map.getId2());
 						atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
 						atom1.setFlag(CDKConstants.ISPLACED, true);
