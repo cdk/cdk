@@ -350,7 +350,7 @@ public class RecursiveTest extends CDKTestCase {
     }
 
 
-    @Test public void testBasicAmineOnDrugs() throws Exception {
+    @Test public void testBasicAmineOnDrugs_cdkAromaticModel() throws Exception {
         String filename = "data/smiles/drugs.smi";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(
@@ -358,12 +358,11 @@ public class RecursiveTest extends CDKTestCase {
         );
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
+        sqt.preserveAtomType(); // already done by IteratingSMILESReader
         int nmatch = 0;
         int nmol = 0;
         while (reader.hasNext()) {
             IAtomContainer container = (IAtomContainer) reader.next();
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-            CDKHueckelAromaticityDetector.detectAromaticity(container);
             if (sqt.matches(container)) {
                 nmatch++;
             }
@@ -371,6 +370,8 @@ public class RecursiveTest extends CDKTestCase {
         }
         reader.close();
         Assert.assertEquals(141, nmol);
+        Assert.assertEquals(6, nmatch);
+    }
         Assert.assertEquals(0, nmatch);
     }
 
