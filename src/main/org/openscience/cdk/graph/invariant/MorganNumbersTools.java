@@ -67,16 +67,12 @@ public class MorganNumbersTools {
         // which atoms are the 'heavys' (hs) - non-hydrogens.
         int[]   hs  = new int[ord];
 
-		Map<IAtom, Integer> indices = Maps.newHashMapWithExpectedSize(ord);
-		for (int f = 0; f < ord; f++) {
+		for (int f = 0; f < ord; f++)
             hs[f] = "H".equals(m.getAtom(f).getSymbol()) ? 0 : 1;
-			indices.put(m.getAtom(f), f);
-		}
+
         for (IBond bond : m.bonds()) {
-            IAtom either = bond.getAtom(0);
-            IAtom other  = bond.getAtom(1);
-            int u = indices.get(either);
-            int v = indices.get(other);
+            int u = m.getAtomNumber(bond.getAtom(0));
+            int v = m.getAtomNumber(bond.getAtom(1));
             g[u] = Ints.ensureCapacity(g[u], deg[u] + 1, 4);
             g[v] = Ints.ensureCapacity(g[v], deg[v] + 1, 4);
             g[u][deg[u]++] = v;
