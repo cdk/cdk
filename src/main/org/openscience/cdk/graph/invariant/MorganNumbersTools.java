@@ -19,14 +19,18 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+import com.google.common.primitives.Ints;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Tool for calculating Morgan numbers {@cdk.cite MOR65}.
@@ -44,39 +48,52 @@ public class MorganNumbersTools {
   /**
    * Makes an array containing the morgan numbers of the atoms of atomContainer.
    *
-   * @param  atomContainer  The atomContainer to analyse.
+   * @param  m  The atomContainer to analyse.
    * @return                The morgan numbers value.
    */
   @TestMethod("testGetMorganNumbers_IAtomContainer")
-  public static long[] getMorganNumbers(IAtomContainer atomContainer) {
-		long[] morganMatrix;
-		long[] tempMorganMatrix;
-		int N = atomContainer.getAtomCount();
-		morganMatrix = new long[N];
-		tempMorganMatrix = new long[N];
-		@SuppressWarnings("unchecked")
-		java.util.List<IAtom>[] atoms = new List[N];
-		@SuppressWarnings("unchecked")
-		Map<IAtom, Integer>[] atomIndices = new HashMap[N];
-		for (int f = 0; f < N; f++) {
-			morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
-			tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
-			atoms[f] = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
-			atomIndices[f] = new HashMap<IAtom, Integer>();
-			for (IAtom atom : atoms[f]) {
-				atomIndices[f].put(atom, atomContainer.getAtomNumber(atom));
-			}
+  public static long[] getMorganNumbers(IAtomContainer m) {
+
+        // order of the graph, |V|
+        int ord = m.getAtomCount();
+
+        long[] curr = new long[ord];
+		long[] prev = new long[ord];
+
+        // adjacent vertices, degree of each vertex
+        int[][] g   = new int[ord][4];
+        int[]   deg = new int[ord];
+
+		Map<IAtom, Integer> indices = Maps.newHashMapWithExpectedSize(ord);
+		for (int f = 0; f < ord; f++) {
+			indices.put(m.getAtom(f), f);
 		}
-		for (int e = 0; e < N; e++) {
-			for (int f = 0; f < N; f++) {
-				morganMatrix[f] = 0;
-				for (IAtom atom : atoms[f]) {
-					morganMatrix[f] += tempMorganMatrix[atomIndices[f].get(atom)];
+        for (IBond bond : m.bonds()) {
+            IAtom either = bond.getAtom(0);
+            IAtom other  = bond.getAtom(1);
+            int u = indices.get(either);
+            int v = indices.get(other);
+            g[u] = Ints.ensureCapacity(g[u], deg[u] + 1, 4);
+            g[v] = Ints.ensureCapacity(g[v], deg[v] + 1, 4);
+            g[u][deg[u]++] = v;
+            g[v][deg[v]++] = u;
+            curr[u]++;
+            curr[v]++;
+        }
+		for (int e = 0; e < ord; e++) {
+            System.arraycopy(curr, 0, prev, 0, ord);
+			for (int u = 0; u < ord; u++) {
+				curr[u] = 0;
+
+                // for each of the vertices (vs) adjacent to 'u' sum their
+                // previous connectivity value
+                int[] vs = g[u];
+				for (int j = 0; j < deg[u]; j++) {
+					curr[u] += prev[vs[j]];
 				}
 			}
-			System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);
 		}
-		return tempMorganMatrix;
+		return curr;
   }
 
 
