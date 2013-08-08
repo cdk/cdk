@@ -2,3 +2,4 @@ jama-1.0.2.jar
 vecmath*.jar
 log4j*.jar
 jgrapht-0.6.0.jar
+guava-14.0.1.jar
