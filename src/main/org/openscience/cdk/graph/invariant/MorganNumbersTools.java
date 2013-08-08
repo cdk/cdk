@@ -64,8 +64,12 @@ public class MorganNumbersTools {
         int[][] g   = new int[ord][4];
         int[]   deg = new int[ord];
 
+        // which atoms are the 'heavys' (hs) - non-hydrogens.
+        int[]   hs  = new int[ord];
+
 		Map<IAtom, Integer> indices = Maps.newHashMapWithExpectedSize(ord);
 		for (int f = 0; f < ord; f++) {
+            hs[f] = "H".equals(m.getAtom(f).getSymbol()) ? 0 : 1;
 			indices.put(m.getAtom(f), f);
 		}
         for (IBond bond : m.bonds()) {
@@ -77,8 +81,8 @@ public class MorganNumbersTools {
             g[v] = Ints.ensureCapacity(g[v], deg[v] + 1, 4);
             g[u][deg[u]++] = v;
             g[v][deg[v]++] = u;
-            curr[u]++;
-            curr[v]++;
+            curr[u] += hs[v];
+            curr[v] += hs[u];
         }
 		for (int e = 0; e < ord; e++) {
             System.arraycopy(curr, 0, prev, 0, ord);
@@ -89,7 +93,8 @@ public class MorganNumbersTools {
                 // previous connectivity value
                 int[] vs = g[u];
 				for (int j = 0; j < deg[u]; j++) {
-					curr[u] += prev[vs[j]];
+                    int v = vs[j];
+					curr[u] += prev[v] * hs[v];
 				}
 			}
 		}
