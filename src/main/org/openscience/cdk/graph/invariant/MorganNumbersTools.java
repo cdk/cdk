@@ -28,10 +28,11 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * Compute the extended connectivity values (Morgan Numbers) {@cdk.cite MOR65}.
  * The tool does not produce the lexicographic smallest labelling on the graph
- * and should be used as a robust canonical labelling tool. To canonical label a
- * graph please use {@link InChINumbersTools} or {@link CanonicalLabeler}. To
- * determine equivalent classes of atoms please use {@link HuLuIndexTool} or one
- * of the discrete refines available in the 'cdk-group' module.
+ * and should not be used as a robust canonical labelling tool. To canonical
+ * label a graph please use {@link InChINumbersTools} or {@link
+ * CanonicalLabeler}. To determine equivalent classes of atoms please use {@link
+ * HuLuIndexTool} or one of the discrete refines available in the 'cdk-group'
+ * module.
  *
  * @author shk3
  * @cdk.module standard
@@ -45,71 +46,76 @@ import org.openscience.cdk.interfaces.IBond;
 @TestClass("org.openscience.cdk.graph.invariant.MorganNumbersToolsTest")
 public class MorganNumbersTools {
 
+    /** Default size of adjacency lists. */
+    private static final int INITIAL_DEGREE = 4;
+
     /**
-     * Makes an array containing the morgan numbers of the atoms of atomContainer.
-     * These number are the extended connectivity values and not the lexicographic
-     * smallest labelling on the graph.
+     * Makes an array containing the morgan numbers of the atoms of
+     * atomContainer. These number are the extended connectivity values and not
+     * the lexicographic smallest labelling on the graph.
      *
-     * @param m The atomContainer to analyse.
+     * @param molecule the molecule to analyse.
      * @return The morgan numbers value.
      */
     @TestMethod("testGetMorganNumbers_IAtomContainer")
-    public static long[] getMorganNumbers(IAtomContainer m) {
+    public static long[] getMorganNumbers(IAtomContainer molecule) {
 
-        // order of the graph, |V|
-        int ord = m.getAtomCount();
+        int order = molecule.getAtomCount();
 
-        // current and previous connectivity values
-        long[] curr = new long[ord];
-        long[] prev = new long[ord];
+        long[] currentInvariants  = new long[order];
+        long[] previousInvariants = new long[order];
 
-        // adjacent vertices, degree of each vertex
-        int[][] g   = new int[ord][4];
-        int[]   deg = new int[ord];
+        int[][] graph  = new int[order][INITIAL_DEGREE];
+        int[]   degree = new int[order];
 
-        // which atoms are the 'heavys' (hs) - non-hydrogens.
-        int[]   hs  = new int[ord];
+        // which atoms are the non-hydrogens.
+        int[] nonHydrogens = new int[order];
 
-        for (int f = 0; f < ord; f++)
-            hs[f] = "H".equals(m.getAtom(f).getSymbol()) ? 0 : 1;
+        for (int v = 0; v < order; v++)
+            nonHydrogens[v] = "H".equals(molecule.getAtom(v).getSymbol()) ? 0
+                                                                          : 1;
 
-        // build the graph (g) and initialise the current connectivity
+        // build the graph and initialise the current connectivity
         // value to the number of connected non-hydrogens
-        for (IBond bond : m.bonds()) {
-            int u = m.getAtomNumber(bond.getAtom(0));
-            int v = m.getAtomNumber(bond.getAtom(1));
-            g[u] = Ints.ensureCapacity(g[u], deg[u] + 1, 4);
-            g[v] = Ints.ensureCapacity(g[v], deg[v] + 1, 4);
-            g[u][deg[u]++] = v;
-            g[v][deg[v]++] = u;
-            curr[u] += hs[v];
-            curr[v] += hs[u];
+        for (IBond bond : molecule.bonds()) {
+            int u = molecule.getAtomNumber(bond.getAtom(0));
+            int v = molecule.getAtomNumber(bond.getAtom(1));
+            graph[u] = Ints.ensureCapacity(graph[u],
+                                           degree[u] + 1,
+                                           INITIAL_DEGREE);
+            graph[v] = Ints.ensureCapacity(graph[v],
+                                           degree[v] + 1,
+                                           INITIAL_DEGREE);
+            graph[u][degree[u]++] = v;
+            graph[v][degree[v]++] = u;
+            currentInvariants[u] += nonHydrogens[v];
+            currentInvariants[v] += nonHydrogens[u];
         }
 
         // iteratively sum the connectivity values for each vertex
-        for (int e = 0; e < ord; e++) {
-            System.arraycopy(curr, 0, prev, 0, ord);
-            for (int u = 0; u < ord; u++) {
-                curr[u] = 0;
+        for (int i = 0; i < order; i++) {
+            System.arraycopy(currentInvariants, 0, previousInvariants, 0, order);
+            for (int u = 0; u < order; u++) {
+                currentInvariants[u] = 0;
 
-                // for each of the vertices (vs) adjacent to 'u' sum their
+                // for each of the vertices adjacent to 'u' sum their
                 // previous connectivity value
-                int[] vs = g[u];
-                for (int j = 0; j < deg[u]; j++) {
-                    int v = vs[j];
-                    curr[u] += prev[v] * hs[v];
+                int[] neighbors = graph[u];
+                for (int j = 0; j < degree[u]; j++) {
+                    int v = neighbors[j];
+                    currentInvariants[u] += previousInvariants[v] * nonHydrogens[v];
                 }
             }
         }
-        return curr;
+        return currentInvariants;
     }
 
 
     /**
-     * Makes an array containing the morgan numbers+element symbol of the atoms of
-     * atomContainer. This method puts the element symbol before the morgan
-     * number, useful for finding out how many different rests are connected to an
-     * atom.
+     * Makes an array containing the morgan numbers+element symbol of the atoms
+     * of {@code atomContainer}. This method puts the element symbol before the
+     * morgan number, useful for finding out how many different rests are
+     * connected to an atom.
      *
      * @param atomContainer The atomContainer to analyse.
      * @return The morgan numbers value.
