@@ -1,0 +1,10 @@
+[beam-core-0.1-SNAPSHOT.jar]
+Library=beam-core
+Version=0.1-SNAPSHOT
+Copyright=European Bioinformatics Institute
+License=BSD 2-Clause
+LicenseURL=http://opensource.org/licenses/BSD-2-Clause
+Download=http://www.github.com/johnmay/beam
+SourceCode=http://www.github.com/johnmay/beam
+Homepage=http://www.github.com/johnmay/beam
+
