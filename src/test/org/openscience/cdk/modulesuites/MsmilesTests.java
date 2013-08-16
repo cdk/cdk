@@ -33,6 +33,7 @@ import org.openscience.cdk.io.SMILES2Mol2WriterTest;
 import org.openscience.cdk.io.SMILESReaderTest;
 import org.openscience.cdk.io.SMILESWriterTest;
 import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
+import org.openscience.cdk.smiles.CDKToBeamTest;
 import org.openscience.cdk.smiles.DeduceBondSystemToolTest;
 import org.openscience.cdk.smiles.FixBondOrdersToolTest;
 import org.openscience.cdk.smiles.SmilesGeneratorTest;
@@ -57,6 +58,8 @@ import org.openscience.cdk.normalize.NormalizerTest;
     NormalizerTest.class,
     LingoFingerprinterTest.class,
     FixBondOrdersToolTest.class,
-    SMILES2Mol2WriterTest.class
+    SMILES2Mol2WriterTest.class,
+    SMILES2Mol2WriterTest.class,
+    CDKToBeamTest.class
 })
 public class MsmilesTests {}
