@@ -1811,7 +1811,7 @@ public class SmilesParserTest extends CDKTestCase {
      */
     @Test public void testno937() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("C[nH0]1c([nH0]cc1"); // xlogp training set molecule no937
+        IAtomContainer mol = sp.parseSmiles("C[nH0]1c[nH0]cc1"); // xlogp training set molecule no937
         Assert.assertNotNull(mol.getAtom(1).getImplicitHydrogenCount());
         Assert.assertEquals(0, mol.getAtom(1).getImplicitHydrogenCount().intValue());
         Assert.assertNotNull(mol.getAtom(3).getImplicitHydrogenCount());
