@@ -560,11 +560,11 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals(1, mol.getAtomCount());
 		Assert.assertEquals("Ni", mol.getAtom(0).getSymbol());
 
-		smiles = "Ni";
+		smiles = "Co";
 		mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(2, mol.getAtomCount());
-		Assert.assertEquals("N", mol.getAtom(0).getSymbol());
-		Assert.assertEquals("I", mol.getAtom(1).getSymbol());
+		Assert.assertEquals("C", mol.getAtom(0).getSymbol());
+		Assert.assertEquals("O", mol.getAtom(1).getSymbol());
 	}
 
 	/**
