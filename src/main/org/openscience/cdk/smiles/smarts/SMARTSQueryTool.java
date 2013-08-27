@@ -628,7 +628,7 @@ public class SMARTSQueryTool {
                 if (!tmp.contains(idx1)) tmp.add(idx1);
                 if (!tmp.contains(idx2)) tmp.add(idx2);
             }
-            if (tmp.size() > 0) atomMapping.add(tmp);
+            if (tmp.size() == query.getAtomCount()) atomMapping.add(tmp);
 
             // If there is only one bond, check if it matches both ways.
             if (list.size() == 1 && atom1.getAtomicNumber() == atom2.getAtomicNumber()) {
