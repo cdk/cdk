@@ -132,7 +132,7 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
                             StereoEncoder encoder, int[][] graph) {
 
         // compute original values then find indices equivalent values
-        long[] original = basic.generate(seeds, encoder, graph);
+        long[] original = basic.generate(seeds, encoder, graph, Suppressed.none());
         Set<Integer> equivalentSet = finder.find(original, container, graph);
         Integer[] equivalents = equivalentSet.toArray(new Integer[equivalentSet
                 .size()]);
@@ -164,7 +164,7 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
             encoder.reset();
 
             // compute new hash codes and copy the values a column in the matrix
-            long[] tmp = basic.generate(copy(original), encoder, graph);
+            long[] tmp = basic.generate(copy(original), encoder, graph, Suppressed.none());
             for (int j = 0; j < n; j++) {
                 perturbed[j][i + 1] = tmp[j];
             }

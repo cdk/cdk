@@ -28,6 +28,7 @@ import org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest;
 import org.openscience.cdk.hash.HashCodeScenarios;
 import org.openscience.cdk.hash.HashGeneratorMakerTest;
 import org.openscience.cdk.hash.PerturbedAtomHashGeneratorTest;
+import org.openscience.cdk.hash.SuppressedAtomHashGeneratorTest;
 import org.openscience.cdk.hash.XorshiftTest;
 import org.openscience.cdk.hash.MinimumEquivalentCyclicSetTest;
 import org.openscience.cdk.hash.BasicAtomEncoderTest;
@@ -57,6 +58,7 @@ import org.openscience.cdk.hash.stereo.Tetrahedral3DParityTest;
         ConjugatedAtomEncoderTest.class,
         AbstractHashGeneratorTest.class,
         BasicAtomHashGeneratorTest.class,
+        SuppressedAtomHashGeneratorTest.class,
         BasicMoleculeHashGeneratorTest.class,
         HashGeneratorMakerTest.class,
         BasicPermutationParityTest.class,

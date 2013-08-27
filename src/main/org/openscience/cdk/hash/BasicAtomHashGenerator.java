@@ -30,6 +30,8 @@ import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import java.util.BitSet;
+
 /**
  * A generator for basic atom hash codes. This implementation is based on the
  * description by {@cdk.cite Ihlenfeldt93}. The hash codes use an initial
@@ -71,7 +73,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.BasicAtomHashGeneratorTest")
-final class BasicAtomHashGenerator extends AbstractHashGenerator
+final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
         implements AtomHashGenerator {
 
     /* a generator for the initial atom seeds */
@@ -140,7 +142,8 @@ final class BasicAtomHashGenerator extends AbstractHashGenerator
         int[][] graph = toAdjList(container);
         return generate(seedGenerator.generate(container),
                         factory.create(container, graph),
-                        graph);
+                        graph,
+                        Suppressed.none());
     }
 
     /**
@@ -153,7 +156,7 @@ final class BasicAtomHashGenerator extends AbstractHashGenerator
      * @return hash codes for atoms
      */
     @TestMethod("testGenerate_Simple,testGenerate_ZeroDepth,testGenerate_Disconnected")
-    long[] generate(long[] current, StereoEncoder encoder, int[][] graph) {
+    long[] generate(long[] current, StereoEncoder encoder, int[][] graph, Suppressed suppressed) {
 
         int    n        = graph.length;
         long[] next     = copy(current);

@@ -66,7 +66,8 @@ public class BasicAtomHashGeneratorTest {
 
         assertThat(generator.generate(new long[]{1L, 1L, 1L},
                                       StereoEncoder.EMPTY,
-                                      new int[][]{{}, {}, {}}),
+                                      new int[][]{{}, {}, {}},
+                                      Suppressed.none()),
                    is(new long[]{1L, 1L, 1L}));
     }
 
@@ -82,7 +83,8 @@ public class BasicAtomHashGeneratorTest {
         long expected = generator.distribute(generator.distribute(1));
         assertThat(generator.generate(new long[]{1L, 1L, 1L},
                                       StereoEncoder.EMPTY,
-                                      new int[][]{{}, {}, {}}),
+                                      new int[][]{{}, {}, {}},
+                                      Suppressed.none()),
                    is(new long[]{expected,
                                  expected,
                                  expected}));
@@ -116,7 +118,8 @@ public class BasicAtomHashGeneratorTest {
 
         assertThat(generator.generate(new long[]{1L, 2L, 1L},
                                       StereoEncoder.EMPTY,
-                                      new int[][]{{1}, {0, 2}, {1}}),
+                                      new int[][]{{1}, {0, 2}, {1}},
+                                      Suppressed.none()),
                    is(second));
 
     }
