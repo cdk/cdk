@@ -1732,5 +1732,10 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertThat(match("[#6+0&R]=[#6+0&!R]", "C1=C2CCCC2CCC1"),
                    is(new int[]{0, 0}));
     }
+        
+    @Test public void cyclopropane() throws Exception {
+        assertThat(match("**(*)*", "C1CC1"),
+                   is(new int[]{0, 0}));        
+    }
 }
 
