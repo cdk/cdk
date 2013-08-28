@@ -31,6 +31,7 @@ import org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactory;
 import org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory;
 import org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactory;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
+import org.openscience.cdk.hash.stereo.TetrahedralElementEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.ArrayList;
@@ -189,6 +190,7 @@ public final class HashGeneratorMaker {
         this.stereoEncoders.add(new GeometricTetrahedralEncoderFactory());
         this.stereoEncoders.add(new GeometricDoubleBondEncoderFactory());
         this.stereoEncoders.add(new GeometricCumulativeDoubleBondFactory());
+        this.stereoEncoders.add(new TetrahedralElementEncoderFactory());
         return this;
     }
 
