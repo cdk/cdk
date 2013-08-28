@@ -34,9 +34,16 @@ import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerPermutor;
 import org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactory;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.InputStream;
@@ -941,6 +948,101 @@ public class HashCodeScenarios {
             }
         }
     }
+    
+    @Test public void butan2ol_UsingStereoElement() {
+        
+        // C[CH](O)CC
+        IAtomContainer butan2ol = new AtomContainer();
+        butan2ol.addAtom(new Atom("C")); 
+        butan2ol.addAtom(new Atom("C"));
+        butan2ol.addAtom(new Atom("O"));
+        butan2ol.addAtom(new Atom("C"));
+        butan2ol.addAtom(new Atom("C"));        
+        butan2ol.addBond(0, 1, IBond.Order.SINGLE);
+        butan2ol.addBond(1, 2, IBond.Order.SINGLE);
+        butan2ol.addBond(1, 3, IBond.Order.SINGLE);
+        butan2ol.addBond(3, 4, IBond.Order.SINGLE);
+
+        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental()
+                                                                  .depth(4)
+                                                                  .chiral()
+                                                                  .molecular();
+
+
+        long achiral = generator.generate(butan2ol);
+
+        // C[C@@H](O)CC (2R)-butan-2-ol
+        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1),
+                                                           new IAtom[]{
+                                                                butan2ol.getAtom(0),
+                                                                butan2ol.getAtom(1), // represents implicit H
+                                                                butan2ol.getAtom(2),
+                                                                butan2ol.getAtom(3),                                                                   
+                                                           },
+                                                           ITetrahedralChirality.Stereo.CLOCKWISE));
+
+        long rConfiguration = generator.generate(butan2ol);
+
+        // C[C@H](O)CC  (2S)-butan-2-ol
+        butan2ol.setStereoElements(new ArrayList<IStereoElement>(1));
+        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1),
+                                                           new IAtom[]{
+                                                                   butan2ol.getAtom(0),
+                                                                   butan2ol.getAtom(1), // represents implicit H
+                                                                   butan2ol.getAtom(2),
+                                                                   butan2ol.getAtom(3),
+                                                           },
+                                                           ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        
+        long sConfiguration = generator.generate(butan2ol);
+
+        // first check we have 3 different values
+        assertThat(rConfiguration, is(not(sConfiguration)));
+        assertThat(rConfiguration, is(not(achiral)));
+        assertThat(sConfiguration, is(not(achiral)));       
+        
+        // load the ones with 2D coordinates to check we match them
+        List<IAtomContainer> butan2ols = sdf("/data/hash/butan-2-ols.sdf", 2);
+                
+        // first is 'R'
+        assertThat(rConfiguration, is(generator.generate(butan2ols.get(0))));
+        // second is 'S'
+        assertThat(sConfiguration, is(generator.generate(butan2ols.get(1))));
+
+        // okay now let's move around the atoms in the stereo element
+
+        // [C@H](C)(O)CC (2R)-butan-2-ol
+        butan2ol.setStereoElements(new ArrayList<IStereoElement>(1));
+        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1),
+                                                           new IAtom[]{                                                                                   
+                                                                   butan2ol.getAtom(1), // represents implicit H
+                                                                   butan2ol.getAtom(0),
+                                                                   butan2ol.getAtom(2),
+                                                                   butan2ol.getAtom(3),
+                                                           },
+                                                           ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+
+        // check 'R' configuration was encoded
+        assertThat(generator.generate(butan2ol),
+                   is(generator.generate(butan2ols.get(0))));
+
+        // [C@@H](C)(O)CC (2S)-butan-2-ol
+        butan2ol.setStereoElements(new ArrayList<IStereoElement>(1));
+        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1),
+                                                           new IAtom[]{
+                                                                   butan2ol.getAtom(1), // represents implicit H
+                                                                   butan2ol.getAtom(0),
+                                                                   butan2ol.getAtom(2),
+                                                                   butan2ol.getAtom(3),
+                                                           },
+                                                           ITetrahedralChirality.Stereo.CLOCKWISE));
+
+        // check 'S' configuration was encoded
+        assertThat(generator.generate(butan2ol),
+                   is(generator.generate(butan2ols.get(1))));
+        
+    }
+    
 
     private static String title(IAtomContainer mol) {
         return mol.getProperty(TITLE);              
