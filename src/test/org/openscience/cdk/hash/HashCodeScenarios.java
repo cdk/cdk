@@ -855,6 +855,90 @@ public class HashCodeScenarios {
             }
         }
     }
+    
+    @Test public void suppressedHydrogens_dicholorethenes() {
+        
+        List<IAtomContainer> implicits = sdf("/data/hash/dichloroethenes.sdf", 2);
+        List<IAtomContainer> explicits = sdf("/data/hash/dichloroethenes-explicit-hydrogens.sdf", 2);
+
+        assertThat("different number of implicit and explicit structures",
+                   implicits.size(), is(explicits.size()));
+
+        // check that for different depth values - all the dicholorethenes will hash
+        // differently or the same depending on whether or not we suppress the
+        // explicit hydrogens
+        for (int d = 0; d < 4; d++) {
+
+            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental()
+                                                                         .depth(d)
+                                                                         .chiral()
+                                                                         .perturbed()
+                                                                         .molecular();
+
+            MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental()
+                                                                       .depth(d)
+                                                                       .chiral()
+                                                                       .suppressHydrogens()
+                                                                       .perturbed()
+                                                                       .molecular();
+            for (int i = 0; i < implicits.size(); i++) {
+
+                IAtomContainer implicit = implicits.get(i);
+                IAtomContainer explicit = explicits.get(i);
+
+                assertThat(nonEqMesg(implicit, explicit),
+                           unsuppressed.generate(implicit),
+                           is(not(unsuppressed.generate(explicit))));
+
+                assertThat(eqMesg(implicit, explicit),
+                           suppressed.generate(implicit),
+                           is(suppressed.generate(explicit)));
+
+            }
+        }    
+    }
+
+    @Test public void suppressedHydrogens_allenes() {
+
+        List<IAtomContainer> implicits = sdf("/data/hash/allene-implicit-h.sdf", 2);
+        List<IAtomContainer> explicits = sdf("/data/hash/allene-explicit-h.sdf", 2);
+
+        assertThat("different number of implicit and explicit structures",
+                   implicits.size(), is(explicits.size()));
+
+        // check that for different depth values - all the dicholorethenes will hash
+        // differently or the same depending on whether or not we suppress the
+        // explicit hydrogens
+        for (int d = 0; d < 4; d++) {
+
+            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental()
+                                                                         .depth(d)
+                                                                         .chiral()
+                                                                         .perturbed()
+                                                                         .molecular();
+
+            MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental()
+                                                                       .depth(d)
+                                                                       .chiral()
+                                                                       .suppressHydrogens()
+                                                                       .perturbed()
+                                                                       .molecular();
+            for (int i = 0; i < implicits.size(); i++) {
+
+                IAtomContainer implicit = implicits.get(i);
+                IAtomContainer explicit = explicits.get(i);
+
+                assertThat(nonEqMesg(implicit, explicit),
+                           unsuppressed.generate(implicit),
+                           is(not(unsuppressed.generate(explicit))));
+
+                assertThat(eqMesg(implicit, explicit),
+                           suppressed.generate(implicit),
+                           is(suppressed.generate(explicit)));
+
+            }
+        }
+    }
 
     private static String title(IAtomContainer mol) {
         return mol.getProperty(TITLE);              
