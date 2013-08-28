@@ -32,6 +32,7 @@ import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -198,6 +199,15 @@ public class HashGeneratorMakerTest {
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidDepth() {
         new HashGeneratorMaker().depth(-1);
+    }
+    
+    @Test
+    public void suppressHydrogens() {
+        AtomHashGenerator generator = new HashGeneratorMaker().elemental()
+                                                              .depth(0)
+                                                              .suppressHydrogens()
+                                                              .atomic();
+        assertThat(generator, is(instanceOf(SuppressedAtomHashGenerator.class)));
     }
 
     @Test

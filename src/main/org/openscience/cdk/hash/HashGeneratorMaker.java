@@ -92,6 +92,9 @@ public final class HashGeneratorMaker {
 
     /* whether we want to use perturbed hash generators */
     private EquivalentSetFinder equivSetFinder = null;
+    
+    /* function determines whether any atoms are suppressed */
+    private AtomSuppression suppression = AtomSuppression.unsuppressed();
 
     /**
      * Specify the depth of the hash generator. Larger values discriminate more
@@ -186,6 +189,19 @@ public final class HashGeneratorMaker {
         this.stereoEncoders.add(new GeometricTetrahedralEncoderFactory());
         this.stereoEncoders.add(new GeometricDoubleBondEncoderFactory());
         this.stereoEncoders.add(new GeometricCumulativeDoubleBondFactory());
+        return this;
+    }
+
+    /**
+     * Suppress any explicit hydrogens in the encoding of hash values. The
+     * generation of hashes acts as though the hydrogens are not present and as
+     * such preserves stereo-encoding.
+     *
+     * @return fluent API reference (self)
+     */
+    @TestMethod("suppressHydrogens")
+    public HashGeneratorMaker suppressHydrogens() {
+        this.suppression = AtomSuppression.anyHydrogens();
         return this;
     }
 
@@ -330,21 +346,39 @@ public final class HashGeneratorMaker {
             encoders.add(encoder);
         }
         encoders.addAll(this.customEncoders);
+        
+        // check if suppression of atoms is wanted - if not use a default value
+        // we also use the 'Basic' generator (see below)
+        boolean suppress = suppression != AtomSuppression.unsuppressed();
+        
+        AtomEncoder   encoder = new ConjugatedAtomEncoder(encoders);
+        SeedGenerator seeds   = new SeedGenerator(encoder, suppression);
 
-        AtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
+        AbstractAtomHashGenerator simple = suppress
+                                           ? new SuppressedAtomHashGenerator(seeds,
+                                                                             new Xorshift(),
+                                                                             makeStereoEncoderFactory(),
+                                                                             suppression,
+                                                                             depth)
+                                           : new BasicAtomHashGenerator(seeds,
+                                                                        new Xorshift(),
+                                                                        makeStereoEncoderFactory(),
+                                                                        depth);
 
+        // if there is a finder for checking equivalent vertices then the user
+        // wants to 'perturb' the hashed
         if (equivSetFinder != null) {
-            return new PerturbedAtomHashGenerator(new SeedGenerator(encoder),
+            return new PerturbedAtomHashGenerator(seeds,
+                                                  simple,
                                                   new Xorshift(),
                                                   makeStereoEncoderFactory(),
                                                   equivSetFinder,
-                                                  depth);
+                                                  suppression);
+        } 
+        else {
+            // no equivalence set finder - just use the simple hash
+            return simple;
         }
-
-        return new BasicAtomHashGenerator(new SeedGenerator(encoder),
-                                          new Xorshift(),
-                                          makeStereoEncoderFactory(),
-                                          depth);
     }
 
     /**
