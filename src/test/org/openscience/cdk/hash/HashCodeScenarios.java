@@ -717,10 +717,11 @@ public class HashCodeScenarios {
 
     @Test public void suppressedHydrogens() {
         
-        List<IAtomContainer> butanols = sdf("/data/hash/butan-2-ols.sdf", 2);
+        List<IAtomContainer> implicits = sdf("/data/hash/butan-2-ols.sdf", 2);
+        List<IAtomContainer> explicits = sdf("/data/hash/butan-2-ols-explicit-hydrogens.sdf", 2);
 
-        IAtomContainer implicit = butanols.get(0);
-        IAtomContainer explicit = butanols.get(1);
+        IAtomContainer implicit = implicits.get(0);
+        IAtomContainer explicit = explicits.get(0);
 
         MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental()
                                                                      .depth(4)
@@ -741,10 +742,11 @@ public class HashCodeScenarios {
 
     @Test public void suppressedHydrogens_chiral() {
 
-        List<IAtomContainer> butanols = sdf("/data/hash/butan-2-ols.sdf", 2);
+        List<IAtomContainer> implicits = sdf("/data/hash/butan-2-ols.sdf", 2);
+        List<IAtomContainer> explicits = sdf("/data/hash/butan-2-ols-explicit-hydrogens.sdf", 2);
 
-        IAtomContainer implicit = butanols.get(0);
-        IAtomContainer explicit = butanols.get(1);
+        IAtomContainer implicit = implicits.get(0);
+        IAtomContainer explicit = explicits.get(0);
 
         MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental()
                                                                      .depth(4)
