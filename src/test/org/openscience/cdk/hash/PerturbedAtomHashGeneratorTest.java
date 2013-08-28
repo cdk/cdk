@@ -58,10 +58,13 @@ public class PerturbedAtomHashGeneratorTest {
                                                                                                 pseudorandom,
                                                                                                 8));
         MoleculeHashGenerator perturb = new BasicMoleculeHashGenerator(new PerturbedAtomHashGenerator(seeding,
+                                                                                                      new BasicAtomHashGenerator(seeding,
+                                                                                                                                 pseudorandom,
+                                                                                                                                 8),
                                                                                                       pseudorandom,
                                                                                                       StereoEncoderFactory.EMPTY,
                                                                                                       new MinimumEquivalentCyclicSet(),
-                                                                                                      8));
+                                                                                                      AtomSuppression.unsuppressed()));
         // basic encoding should say these are the same
         assertThat(basic.generate(m1), is(basic.generate(m2)));
 
@@ -75,10 +78,13 @@ public class PerturbedAtomHashGeneratorTest {
     public void testCombine() throws Exception {
         Xorshift prng = new Xorshift();
         PerturbedAtomHashGenerator generator = new PerturbedAtomHashGenerator(new SeedGenerator(BasicAtomEncoder.ATOMIC_NUMBER),
+                                                                              new BasicAtomHashGenerator(new SeedGenerator(BasicAtomEncoder.ATOMIC_NUMBER),
+                                                                                                         prng,
+                                                                                                         8),
                                                                               prng,
                                                                               StereoEncoderFactory.EMPTY,
                                                                               new MinimumEquivalentCyclicSet(),
-                                                                              8);
+                                                                              AtomSuppression.unsuppressed());
         long[][] perturbed = new long[][]{
                 {1, 2, 3, 4},
                 {1, 1, 1, 1},

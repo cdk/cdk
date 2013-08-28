@@ -70,49 +70,54 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
     /* creates stereo encoders for IAtomContainers */
     private final StereoEncoderFactory factory;
 
-    /* computing the basic hash codes */
-    private final BasicAtomHashGenerator basic;
+    /* simple hash generator*/
+    private final AbstractAtomHashGenerator simple;
 
-    /* used to seed the generation */
-    private final AtomHashGenerator seedGenerator;
+    /* seed generator*/
+    private final AtomHashGenerator seeds;
 
     /* find the set of vertices in which we will add systematic differences */
     private final EquivalentSetFinder finder;
+    
+    /* suppression of atoms */
+    private final AtomSuppression suppression;
 
     /**
      * Create a perturbed hash generator using the provided seed generator to
      * initialise atom invariants and using the provided stereo factory.
      *
-     * @param seedGenerator generator to seed the initial values of atoms
+     * @param simple        generator to encode the initial values of atoms
      * @param pseudorandom  pseudorandom number generator used to randomise hash
      *                      distribution
      * @param factory       a stereo encoder factory
      * @param finder        equivalent set finder for driving the systematic
      *                      perturbation
-     * @param depth         depth of the hashing function, larger values take
-     *                      longer
+     * @param suppression   suppression of atoms (these atoms are 'ignored'
+     *                      in the hash generation)
      * @throws IllegalArgumentException depth was less then 0
      * @throws NullPointerException     seed generator or pseudo random was
      *                                  null
      * @see org.openscience.cdk.hash.SeedGenerator
      */
-    public PerturbedAtomHashGenerator(AtomHashGenerator seedGenerator,
+    public PerturbedAtomHashGenerator(SeedGenerator seeds,
+                                      AbstractAtomHashGenerator simple,
                                       Pseudorandom pseudorandom,
                                       StereoEncoderFactory factory,
                                       EquivalentSetFinder finder,
-                                      int depth) {
+                                      AtomSuppression suppression) {
+
         super(pseudorandom);
-        if (seedGenerator == null)
-            throw new NullPointerException("seed generator cannot be null");
-        if (depth < 0)
-            throw new IllegalArgumentException("depth cannot be less then 0");
-        this.basic = new BasicAtomHashGenerator(seedGenerator,
-                                                pseudorandom,
-                                                factory,
-                                                depth);
-        this.finder = finder;
-        this.factory = factory;
-        this.seedGenerator = seedGenerator;
+        if (simple == null)
+            throw new NullPointerException("no simple generator provided");
+        if (seeds == null)
+            throw new NullPointerException("no seed generator provided");
+        if (suppression == null)
+            throw new NullPointerException("no suppression provided, use AtomSuppression.none()");
+        this.finder      = finder;
+        this.factory     = factory;
+        this.simple      = simple;
+        this.seeds       = seeds;
+        this.suppression = suppression;
     }
 
     /**
@@ -122,7 +127,7 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
     @Override public long[] generate(IAtomContainer container) {
         int[][] graph = toAdjList(container);
         return generate(container,
-                        seedGenerator.generate(container),
+                        seeds.generate(container),
                         factory.create(container, graph),
                         graph);
     }
@@ -131,8 +136,10 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
     private long[] generate(IAtomContainer container, long[] seeds,
                             StereoEncoder encoder, int[][] graph) {
 
+        Suppressed suppressed = suppression.suppress(container);
+        
         // compute original values then find indices equivalent values
-        long[] original = basic.generate(seeds, encoder, graph, Suppressed.none());
+        long[] original = simple.generate(seeds, encoder, graph, suppressed);
         Set<Integer> equivalentSet = finder.find(original, container, graph);
         Integer[] equivalents = equivalentSet.toArray(new Integer[equivalentSet
                 .size()]);
@@ -164,7 +171,7 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
             encoder.reset();
 
             // compute new hash codes and copy the values a column in the matrix
-            long[] tmp = basic.generate(copy(original), encoder, graph, Suppressed.none());
+            long[] tmp = simple.generate(copy(original), encoder, graph, suppressed);
             for (int j = 0; j < n; j++) {
                 perturbed[j][i + 1] = tmp[j];
             }
