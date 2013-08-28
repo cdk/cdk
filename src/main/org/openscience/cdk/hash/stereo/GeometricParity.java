@@ -24,6 +24,9 @@
 
 package org.openscience.cdk.hash.stereo;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Describes the geometric parity of a stereo configuration.
  *
@@ -31,6 +34,7 @@ package org.openscience.cdk.hash.stereo;
  * @cdk.module hash
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.hash.stereo.GeometricParityTest")
 abstract class GeometricParity {
 
     /**
@@ -40,4 +44,38 @@ abstract class GeometricParity {
      */
     abstract int parity();
 
+    /**
+     * Simple implementation allows us to wrap a predefined parity up for access
+     * later. See {@link TetrahedralElementEncoderFactory} for usage example.
+     */
+    private static final class Predefined extends GeometricParity {
+
+        /** the value which will be returned */
+        private final int parity;
+
+        /**
+         * Create a new predefined geometric parity.
+         *
+         * @param parity value of the parity
+         */
+        private Predefined(int parity) {
+            this.parity = parity;
+        }
+
+        /** @inheritDoc */
+        @Override int parity() {
+            return parity;
+        }
+    }
+
+    /**
+     * Create a geometric parity from a pre-stored value (-1, 0, +1).
+     *
+     * @param parity existing parity
+     * @return instance which when invoked will return the value
+     */
+    @TestMethod("valueOf")
+    static GeometricParity valueOf(int parity) {
+        return new Predefined(parity);
+    }
 }
