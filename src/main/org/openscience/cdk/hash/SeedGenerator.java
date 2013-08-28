@@ -60,6 +60,9 @@ final class SeedGenerator extends AbstractHashGenerator
 
     /* used to encode atom attributes */
     private final AtomEncoder encoder;
+    
+    /** Optional suppression of atoms. */ 
+    private final AtomSuppression suppression;
 
     /**
      * Create a new seed generator using the provided {@link AtomEncoder}.
@@ -70,7 +73,18 @@ final class SeedGenerator extends AbstractHashGenerator
      */
     @TestMethod("testConstruct_Null")
     public SeedGenerator(AtomEncoder encoder) {
-        this(encoder, new Xorshift());
+        this(encoder, new Xorshift(), AtomSuppression.unsuppressed());
+    }
+
+    /**
+     * Create a new seed generator using the provided {@link AtomEncoder}.
+     *
+     * @param encoder a method for encoding atom invariant properties
+     * @throws NullPointerException encoder was null
+     * @see ConjugatedAtomEncoder
+     */ 
+    public SeedGenerator(AtomEncoder encoder, AtomSuppression suppression) {
+        this(encoder, new Xorshift(), suppression);
     }
 
     /**
@@ -79,14 +93,18 @@ final class SeedGenerator extends AbstractHashGenerator
      *
      * @param encoder      a method for encoding atom invariant properties
      * @param pseudorandom number generator to randomise initial invariants
+     * @param suppression  indicates which vertices should be suppressed                     
      * @throws NullPointerException encoder or pseudorandom number generator was
      *                              null
      */
-    SeedGenerator(AtomEncoder encoder, Pseudorandom pseudorandom) {
+    SeedGenerator(AtomEncoder encoder, Pseudorandom pseudorandom, AtomSuppression suppression) {
         super(pseudorandom);
         if (encoder == null)
             throw new NullPointerException("encoder cannot be null");
+        if (suppression == null)
+            throw new NullPointerException("suppression cannot be null, use AtomSuppression.unsuppressed()");
         this.encoder = encoder;
+        this.suppression = suppression;
     }
 
     /**
@@ -95,8 +113,11 @@ final class SeedGenerator extends AbstractHashGenerator
     @TestMethod("testGenerate,testGenerate_SizeSeeding")
     @Override public long[] generate(IAtomContainer container) {
 
+        Suppressed suppressed = suppression.suppress(container);
+        
         int n = container.getAtomCount();
-        int seed = n > 1 ? 9803 % n : 1;
+        int m = n - suppressed.count();   // number of non-suppressed vertices
+        int seed = m > 1 ? 9803 % m : 1;
 
         long[] hashes = new long[n];
 
