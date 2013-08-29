@@ -27,13 +27,12 @@ package org.openscience.cdk.hash;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerPermutor;
-import org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactory;
-import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,8 +40,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -52,11 +50,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.openscience.cdk.CDKConstants.TITLE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 
 /**
  * This test class provides several scenario tests for the {@literal cdk-hash}
@@ -736,7 +737,7 @@ public class HashCodeScenarios {
         assertThat(nonEqMesg(implicit, explicit),
                    unsuppressed.generate(implicit),
                    is(not(unsuppressed.generate(explicit))));
-        
+
         MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental()
                                                                    .depth(4)
                                                                    .suppressHydrogens()
@@ -948,16 +949,16 @@ public class HashCodeScenarios {
             }
         }
     }
-    
+
     @Test public void butan2ol_UsingStereoElement() {
-        
+
         // C[CH](O)CC
         IAtomContainer butan2ol = new AtomContainer();
-        butan2ol.addAtom(new Atom("C")); 
+        butan2ol.addAtom(new Atom("C"));
         butan2ol.addAtom(new Atom("C"));
         butan2ol.addAtom(new Atom("O"));
         butan2ol.addAtom(new Atom("C"));
-        butan2ol.addAtom(new Atom("C"));        
+        butan2ol.addAtom(new Atom("C"));
         butan2ol.addBond(0, 1, IBond.Order.SINGLE);
         butan2ol.addBond(1, 2, IBond.Order.SINGLE);
         butan2ol.addBond(1, 3, IBond.Order.SINGLE);
@@ -1014,7 +1015,7 @@ public class HashCodeScenarios {
         // [C@H](C)(O)CC (2R)-butan-2-ol
         butan2ol.setStereoElements(new ArrayList<IStereoElement>(1));
         butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1),
-                                                           new IAtom[]{                                                                                   
+                                                           new IAtom[]{
                                                                    butan2ol.getAtom(1), // represents implicit H
                                                                    butan2ol.getAtom(0),
                                                                    butan2ol.getAtom(2),
@@ -1043,9 +1044,280 @@ public class HashCodeScenarios {
         
     }
     
+    @Test public void dichloroethenes_stereoElements() {
+
+        // CLC=CCL
+        IAtomContainer dichloroethene = new AtomContainer();
+        dichloroethene.addAtom(new Atom("Cl"));
+        dichloroethene.addAtom(new Atom("C"));
+        dichloroethene.addAtom(new Atom("C"));
+        dichloroethene.addAtom(new Atom("Cl"));
+        dichloroethene.addBond(0, 1, IBond.Order.SINGLE);
+        dichloroethene.addBond(1, 2, IBond.Order.DOUBLE);
+        dichloroethene.addBond(2, 3, IBond.Order.SINGLE);
+
+        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental()
+                                                                  .depth(4)
+                                                                  .chiral()
+                                                                  .molecular();
+
+
+        // set E configuration
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),
+                                                                                  dichloroethene.getBond(2)},
+                                                                      OPPOSITE));
+
+        long eConfiguration = generator.generate(dichloroethene);
+
+        // set Z configuration
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),
+                                                                                  dichloroethene.getBond(2)},
+                                                                      TOGETHER));
+        long zConfiguration = generator.generate(dichloroethene);
+
+        // (E) and (Z) 2D geometry
+        List<IAtomContainer> dichloroethenes2D = sdf("/data/hash/dichloroethenes.sdf", 2);
+
+        assertThat(eConfiguration, is(generator.generate(dichloroethenes2D.get(0))));
+        assertThat(zConfiguration, is(generator.generate(dichloroethenes2D.get(1))));
+    }
+
+    /**
+     * Tests demonstrates encoding of stereo specific hash codes (double bond)
+     * using stereo-elements. The hash codes of the molecule with stereo
+     * elements should match those we perceive using 2D coordinates (explicit
+     * hydrogens)
+     */
+    @Test public void dichloroethenes_stereoElements_explicitH() {
+
+        // CLC=CCL
+        IAtomContainer dichloroethene = new AtomContainer();
+        dichloroethene.addAtom(new Atom("Cl"));       // Cl1
+        dichloroethene.addAtom(new Atom("C"));        // C2
+        dichloroethene.addAtom(new Atom("C"));        // C3
+        dichloroethene.addAtom(new Atom("Cl"));       // CL4
+        dichloroethene.addAtom(new Atom("H"));        // H5
+        dichloroethene.addAtom(new Atom("H"));        // H6
+        dichloroethene.addBond(0, 1, IBond.Order.SINGLE); // CL1-C2   0
+        dichloroethene.addBond(1, 2, IBond.Order.DOUBLE); // C2-C3    1
+        dichloroethene.addBond(2, 3, IBond.Order.SINGLE); // CL2-C3   2
+        dichloroethene.addBond(1, 4, IBond.Order.SINGLE); // C2-H5    3
+        dichloroethene.addBond(2, 5, IBond.Order.SINGLE); // C3-H6    4
+
+        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental()
+                                                                  .depth(4)
+                                                                  .chiral()
+                                                                  .molecular();
+
+        Set<Long> eConfigurations = new HashSet<Long>();
+        Set<Long> zConfigurations = new HashSet<Long>();
+
+        // set E configurations - we can specify using the C-CL bonds or the C-H
+        // bonds so there are four possible combinations it's easiest to think
+        // about with SMILES. Depending on which atoms we use the configuration
+        // may be together or opposite but represent the same configuration (E)-
+        // in this case. There are actually 8 ways in SMILES due to having two
+        // planar embeddings but these four demonstrate what we're testing here:
+        //
+        // Cl/C([H])=C([H])/Cl    
+        // ClC(/[H])=C([H])/Cl
+        // ClC(/[H])=C(\[H])Cl
+        // Cl/C([H])=C(\[H])Cl
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),  // CL1-C2
+                                                                                  dichloroethene.getBond(2)}, // CL4-C3
+                                                                      OPPOSITE));       
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3), // C2-H5
+                                                                                  dichloroethene.getBond(2)},
+                                                                      TOGETHER));
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3),  // C2-H5
+                                                                                  dichloroethene.getBond(4)}, // C3-H6
+                                                                      OPPOSITE));
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),  // CL1-C2
+                                                                                  dichloroethene.getBond(4)}, // C3-H6
+                                                                      TOGETHER));         
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        // set Z configurations - we can specify using the C-CL bonds or the
+        // C-H bonds so there are four possible combinations   
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),
+                                                                                  dichloroethene.getBond(2)},
+                                                                      TOGETHER));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3),
+                                                                                  dichloroethene.getBond(2)},
+                                                                      OPPOSITE));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3),
+                                                                                  dichloroethene.getBond(4)},
+                                                                      TOGETHER));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),
+                                                                                  dichloroethene.getBond(4)},
+                                                                      OPPOSITE));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        // (E) and (Z) using 2D geometry (explicit hydrogens)
+        List<IAtomContainer> dichloroethenes2D = sdf("/data/hash/dichloroethenes-explicit-hydrogens.sdf", 2);
+
+        
+        assertThat(eConfigurations.size(),
+                   is(1));
+        assertThat(eConfigurations,
+                   hasItem(generator.generate(dichloroethenes2D.get(0))));
+
+        assertThat(zConfigurations.size(),
+                   is(1));
+        assertThat(zConfigurations,
+                   hasItem(generator.generate(dichloroethenes2D.get(1))));
+    }
+
+    /**
+     * Tests demonstrates encoding of stereo specific hash codes (double bond)
+     * using stereo-elements and suppressing the hydrogens. The hash codes
+     * of the molecule with stereo elements should match those we perceive
+     * using 2D coordinates (implicit hydrogens)
+     */
+    @Test public void dichloroethenes_stereoElements_explicitH_suppressed() {
+
+        // CLC=CCL
+        IAtomContainer dichloroethene = new AtomContainer();
+        dichloroethene.addAtom(new Atom("Cl"));       // Cl1
+        dichloroethene.addAtom(new Atom("C"));        // C2
+        dichloroethene.addAtom(new Atom("C"));        // C3
+        dichloroethene.addAtom(new Atom("Cl"));       // CL4
+        dichloroethene.addAtom(new Atom("H"));        // H5
+        dichloroethene.addAtom(new Atom("H"));        // H6
+        dichloroethene.addBond(0, 1, IBond.Order.SINGLE); // CL1-C2   0
+        dichloroethene.addBond(1, 2, IBond.Order.DOUBLE); // C2-C3    1
+        dichloroethene.addBond(2, 3, IBond.Order.SINGLE); // CL2-C3   2
+        dichloroethene.addBond(1, 4, IBond.Order.SINGLE); // C2-H5    3
+        dichloroethene.addBond(2, 5, IBond.Order.SINGLE); // C3-H6    4
+
+        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental()
+                                                                  .depth(4)
+                                                                  .chiral()
+                                                                  .suppressHydrogens()
+                                                                  .molecular();
+
+        Set<Long> eConfigurations = new HashSet<Long>();
+        Set<Long> zConfigurations = new HashSet<Long>();
+
+        // set E configurations - we can specify using the C-CL bonds or the C-H
+        // bonds so there are four possible combinations it's easiest to think
+        // about with SMILES. Depending on which atoms we use the configuration
+        // may be together or opposite but represent the same configuration (E)-
+        // in this case. There are actually 8 ways in SMILES due to having two
+        // planar embeddings but these four demonstrate what we're testing here:
+        //
+        // Cl/C([H])=C([H])/Cl    
+        // ClC(/[H])=C([H])/Cl
+        // ClC(/[H])=C(\[H])Cl
+        // Cl/C([H])=C(\[H])Cl
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),  // CL1-C2
+                                                                                  dichloroethene.getBond(2)}, // CL4-C3
+                                                                      OPPOSITE));
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3), // C2-H5
+                                                                                  dichloroethene.getBond(2)},
+                                                                      TOGETHER));
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3),  // C2-H5
+                                                                                  dichloroethene.getBond(4)}, // C3-H6
+                                                                      OPPOSITE));
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),  // CL1-C2
+                                                                                  dichloroethene.getBond(4)}, // C3-H6
+                                                                      TOGETHER));
+        eConfigurations.add(generator.generate(dichloroethene));
+
+        // set Z configurations - we can specify using the C-CL bonds or the
+        // C-H bonds so there are four possible combinations   
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),
+                                                                                  dichloroethene.getBond(2)},
+                                                                      TOGETHER));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3),
+                                                                                  dichloroethene.getBond(2)},
+                                                                      OPPOSITE));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(3),
+                                                                                  dichloroethene.getBond(4)},
+                                                                      TOGETHER));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
+        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1),
+                                                                      new IBond[]{dichloroethene.getBond(0),
+                                                                                  dichloroethene.getBond(4)},
+                                                                      OPPOSITE));
+        zConfigurations.add(generator.generate(dichloroethene));
+
+        // (E) and (Z) using 2D geometry (implicit hydrogens)
+        List<IAtomContainer> dichloroethenes2D = sdf("/data/hash/dichloroethenes.sdf", 2);
+
+
+        assertThat(eConfigurations.size(),
+                   is(1));
+        assertThat(eConfigurations,
+                   hasItem(generator.generate(dichloroethenes2D.get(0))));
+
+        assertThat(zConfigurations.size(),
+                   is(1));
+        assertThat(zConfigurations,
+                   hasItem(generator.generate(dichloroethenes2D.get(1))));
+    }
+
 
     private static String title(IAtomContainer mol) {
-        return mol.getProperty(TITLE);              
+        return mol.getProperty(TITLE);
     }
 
     private static String nonEqMesg(IAtomContainer a, IAtomContainer b) {
