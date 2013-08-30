@@ -134,6 +134,18 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.indexOf("0  0  0  0  0  1  0  0  0  0  0  0") != -1);
         Assert.assertTrue(output.indexOf("0  0  0  0  0 15  0  0  0  0  0  0") != -1);
     }
+    
+    @Test public void nonDefaultValence_fe_iii() throws Exception {
+        IAtomContainer container = new AtomContainer();
+        IAtom fe1 = new Atom("Fe");
+        fe1.setImplicitHydrogenCount(3);
+        container.addAtom(fe1);
+        StringWriter writer = new StringWriter();
+        MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
+        mdlWriter.write(container);
+        String output = writer.toString();
+        Assert.assertTrue(output.contains("Fe  0  0  0  0  0  3  0  0  0  0  0  0"));
+    }
 
     @Test public void testWriteAtomAtomMapping() throws Exception {
         StringWriter writer = new StringWriter();

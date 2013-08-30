@@ -60,6 +60,7 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -157,6 +158,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private BooleanIOSetting writeAromaticBondTypes;
 
     /* Should atomic valencies be written in the Query format. */
+    @Deprecated
     private BooleanIOSetting writeQueryFormatValencies;
 
     private BufferedWriter writer;
@@ -413,18 +415,75 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         		line += formatMDLString(container.getAtom(f).getSymbol(), 3);
         	}
         	line += String.format(" 0  0  %d  0  0", atom.getStereoParity() == null ? 0 : atom.getStereoParity());
-        	if (writeQueryFormatValencies.isSet() &&
-        	    atom.getValency() != (Integer)CDKConstants.UNSET) {
-        	    // valence 0 is defined as 15 in mol files - but this writer
-                // does not handle Query files.
-        	    if(atom.getValency()==0)
-        	        line += formatMDLInt(15, 3);
-        	    else
-        	        line += formatMDLInt(atom.getValency(), 3);
-        	} else {
-                // Since this field is a query field we ignore by default the valence of
-                // the atom and just set this field to 0
-        	    line += formatMDLInt(0, 3);
+            
+            // write valence - this is a bit of pain as the CDK has both
+            // valence and implied hydrogen counts making life a lot more
+            // difficult than it needs to be - we also have formal
+            // neighbor count but to avoid more verbosity that check has been
+            // omitted
+        	{
+                try {
+                    // slow but neat
+                    int     explicitValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
+                    int     charge          = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
+                    Integer element         = atom.getAtomicNumber();
+                    
+                    if (element == null) {
+                        line += formatMDLInt(0, 3);
+                    } else {
+                        
+                        int implied = MDLValence.implicitValence(element, charge, explicitValence);
+                        
+                        if (atom.getValency() != null && atom.getImplicitHydrogenCount() != null) {
+                            
+                            int valence = atom.getValency();
+                            int actual  = explicitValence + atom.getImplicitHydrogenCount();
+                            
+                            // valence from h count differs from field? we still
+                            // set to default - which one has more merit?
+                            if (valence != actual || implied == atom.getValency())
+                                line += formatMDLInt(0, 3);
+                            else if (valence == 0)
+                                line += formatMDLInt(15, 3);
+                            else if (valence > 0 && valence < 15)
+                                line += formatMDLInt(valence, 3);
+                            else                            
+                                line += formatMDLInt(0, 3);
+                        } else if(atom.getImplicitHydrogenCount() != null) {
+                            
+                            int actual  = explicitValence + atom.getImplicitHydrogenCount();
+                            
+                            if (implied == actual) {
+                                line += formatMDLInt(0, 3);
+                            }
+                            else {                                               
+                                if (actual == 0) 
+                                    line += formatMDLInt(15, 3);                                
+                                else if (actual > 0 && actual < 15)
+                                    line += formatMDLInt(actual, 3);                                
+                                else 
+                                    line += formatMDLInt(0, 3);                                
+                            }
+                        } else {
+                            int valence = atom.getValency();
+
+                            // valence from h count differs from field? we still
+                            // set to default - which one has more merit?
+                            if (implied == valence)
+                                line += formatMDLInt(0, 3);
+                            else if (valence == 0)
+                                line += formatMDLInt(15, 3);
+                            else if (valence > 0 && valence < 15)
+                                line += formatMDLInt(valence, 3);
+                            else
+                                line += formatMDLInt(0, 3);
+                        }
+                    }
+                    
+                } catch (RuntimeException e) {
+                    // null bond order, query bond order - who knows.. but
+                    line += formatMDLInt(0, 3);    
+                }
         	}
             line += "  0  0  0";
 
@@ -749,7 +808,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writeQueryFormatValencies = addSetting(new BooleanIOSetting(
              "WriteQueryFormatValencies",
              IOSetting.Importance.LOW,
-             "Should valencies be written in the MDL Query format?",
+             "Should valencies be written in the MDL Query format? (deprecated)",
              "false"
         ));
     }
