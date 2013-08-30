@@ -59,6 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
 
@@ -780,7 +781,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(mol);
         Assert.assertEquals(2, mol.getAtom(0).getValency().intValue());
         Assert.assertEquals(3, mol.getAtom(1).getValency().intValue());
-        Assert.assertNull(mol.getAtom(2).getValency());
+        Assert.assertThat(mol.getAtom(2).getValency(), is(not(0)));
+        Assert.assertThat(mol.getAtom(2).getValency(), is(4));
         Assert.assertEquals(0, mol.getAtom(3).getValency().intValue());
     }
 
@@ -1088,4 +1090,24 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(8)), is(1));
 	}
     
+    
+    @Test public void fe_iii_valence() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/mdl/iron-iii.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        reader.close();
+        assertThat(molecule.getAtom(0).getImplicitHydrogenCount(), is(1));
+        assertThat(molecule.getAtom(1).getImplicitHydrogenCount(), is(0));
+        assertThat(molecule.getAtom(2).getImplicitHydrogenCount(), is(0));
+    }
+
+    @Test public void bismuth_ion_valence() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/mdl/bismuth-ion.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        molecule = reader.read(molecule);
+        reader.close();
+        assertThat(molecule.getAtom(0).getImplicitHydrogenCount(), is(3));        
+    }
 }

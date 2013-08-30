@@ -444,6 +444,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             logger.debug("Bondcount: " + bonds);
             List<IBond> bondList = new ArrayList<IBond>();
 
+            // used for applying the MDL valence model
+            int[] explicitValence = new int[atoms];
+            
             // read ATOM block
             logger.info("Reading atom block");
       	    atomsByLinePosition = new ArrayList<IAtom>();
@@ -738,6 +741,15 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     newBond.setStereo(stereo);
                 }
                 bondList.add((newBond));
+                
+                // add the bond order to the explicit valence for each atom
+                if (newBond.getOrder() != null) {
+                    explicitValence[atom1 - 1] += newBond.getOrder().numeric();
+                    explicitValence[atom2 - 1] += newBond.getOrder().numeric();
+                } else {
+                    explicitValence[atom1 - 1] = Integer.MIN_VALUE;
+                    explicitValence[atom1 - 2] = Integer.MIN_VALUE;
+                }
             }
 
             if(queryBondCount==0)          
@@ -938,6 +950,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.warn("Skipping line in property block: ", line);
                 }
             }
+            
+            for (int i = 0; i < atoms; i++) {
+                applyMDLValenceModel(outputContainer.getAtom(i), explicitValence[i]);                
+            }
 
 		    if (interpretHydrogenIsotopes.isSet()) {
 		        fixHydrogenIsotopes(molecule, isotopeFactory);
@@ -961,6 +977,38 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 		}
 		return  outputContainer;
 	}
+
+    /**
+     * Applies the MDL valence model to atoms using the explicit valence
+     * (bond order sum) and charge to determine the correct number of
+     * implicit hydrogens. The model is not applied if the explicit valence
+     * is less than 0 - this is the case when a query bond was read for an
+     * atom.
+     * 
+     * @param atom            the atom to apply the model to 
+     * @param explicitValence the explicit valence (bond order sum)
+     */
+    private void applyMDLValenceModel(IAtom atom, int explicitValence) {
+        
+        if (explicitValence < 0)
+            return;
+        
+        if (atom.getValency() != null) {
+            atom.setImplicitHydrogenCount(atom.getValency() - explicitValence);
+        } else {
+            Integer element = atom.getAtomicNumber();
+            if (element == null)
+                return;
+
+            Integer charge  = atom.getFormalCharge();
+            if (charge == null)
+                charge = 0;
+            
+            int implicitValence = MDLValence.implicitValence(element, charge, explicitValence);
+            atom.setValency(implicitValence);
+            atom.setImplicitHydrogenCount(implicitValence - explicitValence);
+        }
+    }
 
     private void fixHydrogenIsotopes(IAtomContainer molecule,IsotopeFactory isotopeFactory) {
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
