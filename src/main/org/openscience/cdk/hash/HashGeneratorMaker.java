@@ -26,6 +26,7 @@ package org.openscience.cdk.hash;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.hash.stereo.DoubleBondElementEncoderFactory;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactory;
 import org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory;
@@ -191,6 +192,7 @@ public final class HashGeneratorMaker {
         this.stereoEncoders.add(new GeometricDoubleBondEncoderFactory());
         this.stereoEncoders.add(new GeometricCumulativeDoubleBondFactory());
         this.stereoEncoders.add(new TetrahedralElementEncoderFactory());
+        this.stereoEncoders.add(new DoubleBondElementEncoderFactory());
         return this;
     }
 
