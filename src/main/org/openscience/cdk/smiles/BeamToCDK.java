@@ -49,6 +49,20 @@ final class BeamToCDK {
     /** The builder used to create the CDK objects. */
     private final IChemObjectBuilder builder;
 
+    /** Base atom objects for cloning - SMILES is very efficient and noticeable
+     *  lag is seen using the IChemObjectBuilders. */
+    private final IAtom templateAtom;
+
+    /** Base atom objects for cloning - SMILES is very efficient and noticeable
+     *  lag is seen using the IChemObjectBuilders. */
+    private final IBond templateBond;
+
+    /**
+     * Base atom container for cloning - SMILES is very efficient and noticeable
+     * lag is seen using the IChemObjectBuilders.
+     */
+    private final IAtomContainer emptyContainer;
+
     /**
      * Create a new converter for the Beam SMILES toolkit. The converter needs
      * an {@link IChemObjectBuilder}. Currently the 'cdk-silent' builder will
@@ -58,6 +72,9 @@ final class BeamToCDK {
      */
     BeamToCDK(IChemObjectBuilder builder) {
         this.builder = builder;
+        this.templateAtom = builder.newInstance(IAtom.class);
+        this.templateBond = builder.newInstance(IBond.class);
+        this.emptyContainer = builder.newInstance(IAtomContainer.class, 0, 0, 0, 0);
     }
 
     /**
@@ -70,11 +87,9 @@ final class BeamToCDK {
      *                                  happens use the Beam Functions.expand()
      *                                  to
      */
-    @TestMethod("benzene,imidazole")
-    IAtomContainer toAtomContainer(Graph g) {
+    @TestMethod("benzene,imidazole") IAtomContainer toAtomContainer(Graph g) {
 
-        IAtomContainer ac = builder.newInstance(IAtomContainer.class,
-                                                0, 0, 0, 0);
+        IAtomContainer ac = emptyContainer();
         IAtom[] atoms = new IAtom[g.order()];
         IBond[] bonds = new IBond[g.size()];
 
@@ -243,7 +258,7 @@ final class BeamToCDK {
      * Create a new CDK {@link IAtom} from the Beam Atom. If the element is
      * unknown (i.e. '*') then an pseudo atom is created.
      *
-     * @param atom an Atom from the BEam ChemicalGraph
+     * @param atom an Atom from the Beam Graph
      * @return the CDK atom to have it's properties set
      */
     @TestMethod("newUnknownAtom,newCarbonAtom,newNitrogenAtom")
@@ -252,8 +267,7 @@ final class BeamToCDK {
         boolean unknown = element == Element.Unknown;
         return unknown ? builder.newInstance(IPseudoAtom.class,
                                              element.symbol())
-                       : builder.newInstance(IAtom.class,
-                                             element.symbol());
+                       : createAtom(element);
     }
 
     /**
@@ -270,10 +284,9 @@ final class BeamToCDK {
         int u = edge.either();
         int v = edge.other(u);
 
-        IBond bond = builder.newInstance(IBond.class,
-                                         atoms[u],
-                                         atoms[v],
-                                         toCDKBondOrder(edge));
+        IBond bond = createBond(atoms[u],
+                                atoms[v],
+                                toCDKBondOrder(edge));
 
         if (edge.bond() == Bond.AROMATIC
                 || (atoms[u].getFlag(ISAROMATIC) && atoms[v].getFlag(ISAROMATIC))) {
@@ -316,5 +329,58 @@ final class BeamToCDK {
         }
     }
 
+    /**
+     * Create a new empty atom container instance.
+     * @return a new atom container instance
+     */
+    private IAtomContainer emptyContainer() {
+        try {
+            return (IAtomContainer) emptyContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            return builder.newInstance(IAtomContainer.class, 0, 0, 0, 0);
+        }
+    }
 
+    /**
+     * Create a new atom for the provided symbol. The atom is created by cloning
+     * an existing 'template'. Unfortunately IChemObjectBuilders really show a
+     * slow down when SMILES processing.
+     * 
+     * @param element Beam element
+     * @return new atom with configured symbol and atomic number
+     */
+    private IAtom createAtom(Element element) {
+        try {
+            IAtom atom = (IAtom) templateAtom.clone();
+            atom.setSymbol(element.symbol());
+            atom.setAtomicNumber(element.atomicNumber());
+            return atom;
+        } catch (CloneNotSupportedException e) {
+            // clone is always supported if overridden but just in case :-)
+            return builder.newInstance(IAtom.class, element.symbol());
+        }
+    }
+
+    /**
+     * Create a new bond for the provided symbol. The bond is created by cloning
+     * an existing 'template'. Unfortunately IChemObjectBuilders really show a
+     * slow down when SMILES processing.
+     *
+     * @param either an atom of the bond
+     * @param other another atom of the bond
+     * @param order the order of the bond              
+     *               
+     * @return new bond instance
+     */
+    private IBond createBond(IAtom either, IAtom other, IBond.Order order) {
+        try {
+            IBond bond = (IBond) templateBond.clone();
+            bond.setAtoms(new IAtom[]{either, other});
+            bond.setOrder(order);
+            return bond;
+        } catch (CloneNotSupportedException e) {
+            // clone is always supported if overridden but just in case  :-)
+            return builder.newInstance(IBond.class, either, other, order);       
+        }
+    }
 }
