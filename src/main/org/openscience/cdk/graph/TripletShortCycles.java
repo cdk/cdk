@@ -231,7 +231,7 @@ import java.util.TreeSet;
  * @see RelevantCycles
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.graph.EsssrCyclesTest")
+@TestClass("org.openscience.cdk.graph.TripletShortCyclesTest")
 public final class TripletShortCycles {
 
     /** Adjacency list representation of the graph. */

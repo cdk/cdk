@@ -98,7 +98,6 @@ public class EssentialCyclesTest {
     }
     @Test public void size_bicyclo() {
         int[][] bicyclo = bicyclo();
-        System.out.println("bicyclo");
         EssentialCycles essential = new EssentialCycles(bicyclo);
         assertThat(essential.size(), is(0));
     }
