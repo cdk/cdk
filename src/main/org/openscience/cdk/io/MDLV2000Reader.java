@@ -743,12 +743,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 bondList.add((newBond));
                 
                 // add the bond order to the explicit valence for each atom
-                if (newBond.getOrder() != null) {
+                if (newBond.getOrder() != null && newBond.getOrder() != IBond.Order.UNSET) {
                     explicitValence[atom1 - 1] += newBond.getOrder().numeric();
                     explicitValence[atom2 - 1] += newBond.getOrder().numeric();
                 } else {
                     explicitValence[atom1 - 1] = Integer.MIN_VALUE;
-                    explicitValence[atom1 - 2] = Integer.MIN_VALUE;
+                    explicitValence[atom2 - 1] = Integer.MIN_VALUE;
                 }
             }
 
