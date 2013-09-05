@@ -120,7 +120,7 @@ final class InitialCycles {
      *
      * @return lengths of the discovered cycles
      */
-    @TestMethod("lengths_K4,lengths_napthalene,lengths_anthracene," +
+    @TestMethod("lengths_K4,lengths_naphthalene,lengths_anthracene," +
                         "lengths_bicyclo,lengths_cyclophane")
     Iterable<Integer> lengths() {
         return cycles.keySet();
@@ -144,7 +144,7 @@ final class InitialCycles {
      *
      * @return list of cycles
      */
-    @TestMethod("cycles_K4,cycles_napthalene,cycles_anthracene," +
+    @TestMethod("cycles_K4,cycles_naphthalene,cycles_anthracene," +
                         "cycles_bicyclo,cycles_cyclophane")
     Collection<Cycle> cycles() {
         return cycles.values();

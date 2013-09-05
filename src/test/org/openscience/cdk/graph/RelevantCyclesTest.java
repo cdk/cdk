@@ -54,8 +54,8 @@ public class RelevantCyclesTest {
         RelevantCycles relevant = new RelevantCycles(norbornane);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(2));
-        int[][] expected = new int[][]{{5, 6, 2, 1, 0},
-                                       {5, 6, 2, 3, 4}};
+        int[][] expected = new int[][]{{5, 6, 2, 1, 0, 5},
+                                       {5, 6, 2, 3, 4, 5}};
         assertThat(paths, is(expected));
     }
 
