@@ -697,7 +697,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		IAtomContainer mol1 = reader.read(new AtomContainer());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
-		Assert.assertEquals(moleculeSmile, "C1C=CCCCCC1");
+		Assert.assertEquals(moleculeSmile, "C1=CCCCCCC1");
 	}
 
 
@@ -711,7 +711,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
-		Assert.assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
+		Assert.assertEquals(moleculeSmile, "C1=CCCC=CCC1");
 	}
 
 
@@ -726,7 +726,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
 		//logger.debug(filename + " -> " + moleculeSmile);
-		Assert.assertEquals(moleculeSmile, "C1CCC=2CCCC=2(C1)");
+		Assert.assertEquals(moleculeSmile, "C12(=C(CCC1)CCCC2)");
 	}
 
 	/**
@@ -740,7 +740,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
 		//logger.debug(filename + " -> " + moleculeSmile);
-		Assert.assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
+		Assert.assertEquals(moleculeSmile, "C1=CCCC=CCC1");
 	}
 	
 	/**
