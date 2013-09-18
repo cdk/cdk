@@ -60,7 +60,6 @@ import org.openscience.cdk.normalize.NormalizerTest;
     LingoFingerprinterTest.class,
     FixBondOrdersToolTest.class,
     SMILES2Mol2WriterTest.class,
-    SMILES2Mol2WriterTest.class,
     CDKToBeamTest.class,
     BeamToCDKTest.class
 })
