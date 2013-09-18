@@ -313,7 +313,8 @@ final class BeamToCDK {
                                 toCDKBondOrder(edge));
 
         if (edge.bond() == Bond.AROMATIC
-                || (atoms[u].getFlag(ISAROMATIC) && atoms[v].getFlag(ISAROMATIC))) {
+                || (edge.bond() == Bond.IMPLICIT 
+                && atoms[u].getFlag(ISAROMATIC) && atoms[v].getFlag(ISAROMATIC))) {
             bond.setFlag(ISAROMATIC, true);
             atoms[u].setFlag(ISAROMATIC, true);
             atoms[v].setFlag(ISAROMATIC, true);
