@@ -47,7 +47,12 @@ import java.util.Map;
  * which also lists the substructures corresponding to each bit position.
  *
  * <p>This class assumes that aromaticity perception and atom typing have 
- * been performed prior to generating the fingerprint
+ * been performed prior to generating the fingerprint.
+ * 
+ * <p/><b>Warning - ESTATE substructure keys cannot be used for substructure
+ * filtering. It is possible for some keys to match substructures and not match
+ * the superstructures. Some keys check for hydrogen counts which may not be
+ * preserved in a superstructure.</b>
  * 
  * @author Rajarhi Guha
  * @cdk.created 2008-07-23

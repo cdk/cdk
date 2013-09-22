@@ -56,12 +56,17 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * official and explicit listing of the original key definitions, the results 
  * of this implementation may differ from others.
  *
- * This class assumes that aromaticity perception and atom typing have been 
- * performed prior to generating the fingerprint
+ * This class assumes that aromaticity perception, atom typing and adding of
+ * implicit hydrogens have been performed prior to generating the fingerprint.
  *
  * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit 
  * defs do not provide a definition and I can't find an official description 
- * of them
+ * of them.
+ * 
+ * <p/><b>Warning - MACCS substructure keys cannot be used for substructure
+ * filtering. It is possible for some keys to match substructures and not match
+ * the superstructures. Some keys check for hydrogen counts which may not be
+ * preserved in a superstructure.</b>
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-07-23
