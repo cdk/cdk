@@ -32,6 +32,8 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -147,6 +149,12 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
         CDKHueckelAromaticityDetector.detectAromaticity(structure1);
         CDKHueckelAromaticityDetector.detectAromaticity(structure2);
+        
+        // hydrogens loaded from MDL mol files if non-query. Structure 2 has
+        // query aromatic bonds and the hydrogen counts are not assigned - ensure
+        // this is done here.
+        CDKHydrogenAdder.getInstance(structure1.getBuilder()).addImplicitHydrogens(structure1);
+        CDKHydrogenAdder.getInstance(structure2.getBuilder()).addImplicitHydrogens(structure2);
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(structure2).asBitSet();
