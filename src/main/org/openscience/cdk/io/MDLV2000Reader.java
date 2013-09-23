@@ -949,15 +949,17 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 if (!lineRead) {
                     logger.warn("Skipping line in property block: ", line);
                 }
-            }
-            
-            for (int i = 0; i < atoms; i++) {
-                applyMDLValenceModel(outputContainer.getAtom(i), explicitValence[i]);                
-            }
+            }                       
 
 		    if (interpretHydrogenIsotopes.isSet()) {
 		        fixHydrogenIsotopes(molecule, isotopeFactory);
 		    }
+
+            // note: apply the valence model last so that all fixes (i.e. hydrogen
+            // isotopes) are in place
+            for (int i = 0; i < atoms; i++) {
+                applyMDLValenceModel(outputContainer.getAtom(i), explicitValence[i]);
+            }
 
 		} catch (CDKException exception) {
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
