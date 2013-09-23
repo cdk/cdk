@@ -529,10 +529,10 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.addBond(c1c4);
         container.addBond(c1h5);
 
-        IAtomParity chirality =  builder.newInstance(IAtomParity.class,
+        ITetrahedralChirality chirality =  builder.newInstance(ITetrahedralChirality.class,
                                                                c1,
-                                                               o2, n3, c4, h5,
-                                                               1);
+                                                               new IAtom[]{o2, n3, c4, h5},
+                                                               ITetrahedralChirality.Stereo.CLOCKWISE);
 
         container.addStereoElement(chirality);
 
@@ -550,8 +550,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertThat("too many stereo elements", elements.hasNext(), is(not(true)));
 
         // we've tested the class already  - cast is okay
-        IAtomParity  cloneChirality = (IAtomParity) element;
-        IAtom[]      ligands        = cloneChirality.getSurroundingAtoms();
+        ITetrahedralChirality  cloneChirality = (ITetrahedralChirality) element;
+        IAtom[]                ligands        = cloneChirality.getLigands();
 
         assertThat("not enough ligands", ligands.length, is(4));
 
@@ -561,9 +561,9 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertThat("expected same carbon instance",   ligands[2], sameInstance(clone.getAtom(3)));
         assertThat("expected same hydrogen instance", ligands[3], sameInstance(clone.getAtom(4)));
 
-        assertThat("incorrect stereo", cloneChirality.getParity(), is(1));
+        assertThat("incorrect stereo", cloneChirality.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
 
-        assertThat("incorrect chiral atom", cloneChirality.getAtom(), sameInstance(clone.getAtom(0)));
+        assertThat("incorrect chiral atom", cloneChirality.getChiralAtom(), sameInstance(clone.getAtom(0)));
 
     }
 
@@ -2028,17 +2028,20 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IAtom carbon4 = container.getBuilder().newInstance(IAtom.class,"C");
         carbon4.setID("c4");
         int parityInt = 1;
-        IAtomParity parity = container.getBuilder().newInstance(
-            IAtomParity.class, carbon, carbon1, carbon2, carbon3, carbon4, parityInt
+        IStereoElement stereoElement = container.getBuilder().newInstance(
+            ITetrahedralChirality.class,
+            carbon,
+            new IAtom[]{carbon1, carbon2, carbon3, carbon4},
+            ITetrahedralChirality.Stereo.CLOCKWISE
         );
-        container.addStereoElement(parity);
+        container.addStereoElement(stereoElement);
         
         Iterator<IStereoElement> stereoElements = container.stereoElements().iterator();
         Assert.assertTrue(stereoElements.hasNext());
         IStereoElement element = stereoElements.next();
         Assert.assertNotNull(element);
-        Assert.assertTrue(element instanceof IAtomParity);
-        Assert.assertEquals(carbon, ((IAtomParity)element).getAtom());
+        Assert.assertTrue(element instanceof ITetrahedralChirality);
+        Assert.assertEquals(carbon, ((ITetrahedralChirality)element).getChiralAtom());
         Assert.assertFalse(stereoElements.hasNext());
     }
 
