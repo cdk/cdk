@@ -39,6 +39,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.List;
+
 /**
  * This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the
  * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
@@ -182,19 +184,19 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
         // looking for suitable nitrogen atoms
         if (ac.getAtom(atomIndex).getSymbol().equals("N") && ac.getAtom(atomIndex).getFormalCharge() <= 0) {
             // excluding nitrogens that are adjacent to an oxygen
-            java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
-            for (Object neighbour : neighbours)
-                if (((IAtom) neighbour).getSymbol().equals("O"))
+            List<IAtom> neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+            for (IAtom neighbour : neighbours)
+                if (neighbour.getSymbol().equals("O"))
                     continue atomloop;
             hBondAcceptors++;
         }
         // looking for suitable oxygen atoms
         if (ac.getAtom(atomIndex).getSymbol().equals("O") && ac.getAtom(atomIndex).getFormalCharge() <= 0) {
             //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-            java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
-            for (Object neighbour : neighbours)
-                if (((IAtom) neighbour).getSymbol().equals("N") ||
-                        (((IAtom) neighbour).getSymbol().equals("C") && ((IAtom) neighbour).getFlag(CDKConstants.ISAROMATIC)))
+            List<IAtom> neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+            for (IAtom neighbour : neighbours)
+                if (neighbour.getSymbol().equals("N") ||
+                        (neighbour.getSymbol().equals("C") && neighbour.getFlag(CDKConstants.ISAROMATIC)))
                     continue atomloop;
             hBondAcceptors++;
         }
