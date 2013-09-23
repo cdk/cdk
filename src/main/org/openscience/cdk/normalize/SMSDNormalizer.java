@@ -43,7 +43,6 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -52,6 +51,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -351,8 +351,10 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             setCharge(container, index, atoms);
             setStereoParity(container, index, atoms);
             newAtomContainer.addAtom(atoms[index]);
-            setAtomParity(container, index, newAtomContainer);
-
+        }
+        
+        for (IStereoElement element : container.stereoElements()) {
+            newAtomContainer.addStereoElement(element);
         }
 
         return atoms;
@@ -503,13 +505,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
     private static void setStereoParity(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getStereoParity() != null) {
             atoms[index].setStereoParity(Integer.valueOf(container.getAtom(index).getStereoParity()));
-        }
-    }
-
-    private static void setAtomParity(IAtomContainer container, int index, IAtomContainer newAtomContainer) {
-        IAtomParity parity = AtomContainerManipulator.getAtomParity(container, container.getAtom(index));
-        if (parity != null) {
-            newAtomContainer.addStereoElement(parity);
         }
     }
 }

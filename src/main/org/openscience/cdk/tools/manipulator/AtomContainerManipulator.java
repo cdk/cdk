@@ -464,14 +464,6 @@ public class AtomContainerManipulator {
                         addClone(atom, mol, map);
                     }
                 }
-            } else if (stereoElement instanceof IAtomParity) {
-                IAtomParity atomParity= (IAtomParity) stereoElement;
-                for (IAtom atom : atomParity.getSurroundingAtoms()) {
-                    if (atom.getSymbol().equals("H") && remove.contains(atom)) {
-                        remove.remove(atom);
-                        addClone(atom, mol, map);
-                    }
-                }
             }
         }
 
@@ -1084,25 +1076,7 @@ public class AtomContainerManipulator {
             }
         }
 		return count;
-	}
-
-    /**
-     * Helper methods that works through the stereo elements of the given atom container
-     * and returns if the atom parity for the given atom, if one is defined.
-     *
-     * @param container {@link IAtomContainer} to search the {@link IAtomParity} for.
-     * @param atom      {@link IAtom} for which the {@link IAtomParity} must be defined.
-     * @return          the {@link IAtomParity} or null if none is define for the given atom.
-     */
-    @TestMethod("testGetAtomParity")
-    public static IAtomParity getAtomParity(IAtomContainer container, IAtom atom) {
-        for (IStereoElement element : container.stereoElements()) {
-            if (element instanceof IAtomParity) {
-                IAtomParity parity = (IAtomParity)element;
-                if (parity.getAtom() == atom) return parity;
-            }
-        }
-        return null;
+	}    
     }
 
     /**
@@ -1143,6 +1117,5 @@ public class AtomContainerManipulator {
             ac.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
         }
         return ac;
-    }
 }
 

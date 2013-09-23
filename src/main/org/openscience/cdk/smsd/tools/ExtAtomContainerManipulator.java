@@ -41,7 +41,6 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -49,6 +48,7 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -348,9 +348,11 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             setID(container, index, atoms);
             setHydrogenCount(container, index, atoms);
             setCharge(container, index, atoms);
-            setStereoParity(container, index, atoms);
-            newAtomContainer.addAtom(atoms[index]);
-            setAtomParity(container, index, newAtomContainer);
+            newAtomContainer.addAtom(atoms[index]);            
+        }
+        
+        for (IStereoElement stereoElement : container.stereoElements()) {
+            newAtomContainer.addStereoElement(stereoElement);
         }
 
         return atoms;
@@ -495,19 +497,6 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     private static void setCharge(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getCharge() != null) {
             atoms[index].setCharge(new Double(container.getAtom(index).getCharge()));
-        }
-    }
-
-    private static void setStereoParity(IAtomContainer container, int index, IAtom[] atoms) {
-        if (container.getAtom(index).getStereoParity() != null) {
-            atoms[index].setStereoParity(Integer.valueOf(container.getAtom(index).getStereoParity()));
-        }
-    }
-
-    private static void setAtomParity(IAtomContainer container, int index, IAtomContainer newAtomContainer) {
-        IAtomParity parity = AtomContainerManipulator.getAtomParity(container, container.getAtom(index));
-        if (parity != null) {
-            newAtomContainer.addStereoElement(parity);
         }
     }
 }
