@@ -52,7 +52,6 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -359,33 +358,6 @@ public class InChIGenerator {
             }
         }
 
-        // Process atom parities (tetrahedral InChI Stereo0D Parities)
-        atoms = atomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-        	IAtom atom = atoms.next();
-            IAtomParity parity = AtomContainerManipulator.getAtomParity(atomContainer, atom);
-            if (parity != null) {
-                IAtom[] surroundingAtoms = parity.getSurroundingAtoms();
-                int sign = parity.getParity();
-
-                JniInchiAtom atC = (JniInchiAtom) atomMap.get(atom);
-                JniInchiAtom at0 = (JniInchiAtom) atomMap.get(surroundingAtoms[0]);
-                JniInchiAtom at1 = (JniInchiAtom) atomMap.get(surroundingAtoms[1]);
-                JniInchiAtom at2 = (JniInchiAtom) atomMap.get(surroundingAtoms[2]);
-                JniInchiAtom at3 = (JniInchiAtom) atomMap.get(surroundingAtoms[3]);
-                INCHI_PARITY p = INCHI_PARITY.UNKNOWN;
-                if (sign > 0) {
-                    p = INCHI_PARITY.EVEN;
-                } else if (sign < 0) {
-                    p = INCHI_PARITY.ODD;
-                } else {
-                    throw new CDKException("Atom parity of zero");
-                }
-
-                input.addStereo0D(new JniInchiStereo0D(atC, at0, at1, at2, at3,
-                        INCHI_STEREOTYPE.TETRAHEDRAL, p));
-            }
-        }
         // Process tetrahedral stereo elements
         for (IStereoElement stereoElem : atomContainer.stereoElements()) {
         	if (stereoElem instanceof ITetrahedralChirality) {
