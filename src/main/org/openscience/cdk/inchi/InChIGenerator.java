@@ -63,15 +63,15 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
  * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
- * 
+ *
  * <p>If the atom container has 3D coordinates for all of its atoms then they
  * will be used, otherwise 2D coordinates will be used if available.
- * 
+ *
  * <p><i>Spin multiplicities and some aspects of stereochemistry are not
  * currently handled completely.</i>
- * 
+ *
  * <h3>Example usage</h3>
- * 
+ *
  * <code>// Generate factory - throws CDKException if native code does not load</code><br>
  * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>
  * <code>// Get InChIGenerator</code><br>
@@ -94,7 +94,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * TODO: double bond and allene parities<br/>
  * TODO: problem recognising bond stereochemistry<br/>
  * </b></tt>
- * 
+ *
  * @author Sam Adams
  *
  * @cdk.module inchi
@@ -102,22 +102,22 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 @TestClass("org.openscience.cdk.inchi.InChIGeneratorTest")
 public class InChIGenerator {
-    
+
     protected JniInchiInput input;
-    
+
     protected JniInchiOutput output;
-    
+
     /**
      * AtomContainer instance refers to.
      */
     protected IAtomContainer atomContainer;
-    
+
     /**
      * <p>Constructor. Generates InChI from CDK AtomContainer.
-     * 
+     *
      * <p>Reads atoms, bonds etc from atom container and converts to format
      * InChI library requires, then calls the library.
-     * 
+     *
      * @param atomContainer      AtomContainer to generate InChI for.
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws org.openscience.cdk.exception.CDKException if there is an
@@ -132,13 +132,13 @@ public class InChIGenerator {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
-    
+
     /**
      * <p>Constructor. Generates InChI from CDK AtomContainer.
-     * 
+     *
      * <p>Reads atoms, bonds etc from atom container and converts to format
      * InChI library requires, then calls the library.
-     * 
+     *
      * @param atomContainer      AtomContainer to generate InChI for.
      * @param options   Space delimited string of options to pass to InChI library.
      *                  Each option may optionally be preceded by a command line
@@ -155,14 +155,14 @@ public class InChIGenerator {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
-    
-    
+
+
     /**
      * <p>Constructor. Generates InChI from CDK AtomContainer.
-     * 
+     *
      * <p>Reads atoms, bonds etc from atom container and converts to format
      * InChI library requires, then calls the library.
-     * 
+     *
      * @param atomContainer     AtomContainer to generate InChI for.
      * @param options           List of INCHI_OPTION.
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
@@ -177,21 +177,21 @@ public class InChIGenerator {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
-    
-    
+
+
     /**
      * <p>Reads atoms, bonds etc from atom container and converts to format
      * InChI library requires, then places call for the library to generate
      * the InChI.
-     * 
+     *
      * @param atomContainer      AtomContainer to generate InChI for.
      * @throws CDKException
      */
     private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
         this.atomContainer = atomContainer;
-        
+
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
-        
+
         // Check for 3d coordinates
         boolean all3d = true;
         boolean all2d = true;
@@ -204,7 +204,7 @@ public class InChIGenerator {
                 all2d = false;
             }
         }
-        
+
         // Process atoms
         IsotopeFactory ifact = null;
         try {
@@ -212,12 +212,12 @@ public class InChIGenerator {
         } catch (Exception e) {
             // Do nothing
         }
-        
+
         Map<IAtom, JniInchiAtom> atomMap = new HashMap<IAtom, JniInchiAtom>();
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
         	IAtom atom = atoms.next();
-            
+
             // Get coordinates
             // Use 3d if possible, otherwise 2d or none
             double x, y, z;
@@ -236,20 +236,20 @@ public class InChIGenerator {
                 y = 0.0;
                 z = 0.0;
             }
-            
+
             // Chemical element symbol
             String el = atom.getSymbol();
-            
+
             // Generate InChI atom
             JniInchiAtom iatom = input.addAtom(new JniInchiAtom(x, y, z, el));
             atomMap.put(atom, iatom);
-            
+
             // Check if charged
             int charge = atom.getFormalCharge();
             if (charge != 0) {
                 iatom.setCharge(charge);
             }
-            
+
             // Check whether isotopic
             Integer isotopeNumber = atom.getMassNumber();
             if (isotopeNumber != CDKConstants.UNSET && ifact != null) {
@@ -262,18 +262,18 @@ public class InChIGenerator {
             if (isotopeNumber != CDKConstants.UNSET) {
                 iatom.setIsotopicMass(isotopeNumber);
             }
-            
+
             // Check for implicit hydrogens
             // atom.getHydrogenCount() returns number of implict hydrogens, not
             // total number
             // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
             Integer implicitH = atom.getImplicitHydrogenCount();
             if (implicitH == CDKConstants.UNSET) implicitH = 0;
-            
+
             if (implicitH != 0) {
                 iatom.setImplicitH(implicitH);
             }
-            
+
             // Check if radical
             int count = atomContainer.getConnectedSingleElectronsCount(atom);
             if (count == 0) {
@@ -286,8 +286,8 @@ public class InChIGenerator {
                 throw new CDKException("Unrecognised radical type");
             }
         }
-        
-        
+
+
         // Process bonds
         Map<IBond, JniInchiBond> bondMap = new HashMap<IBond, JniInchiBond>();
         Iterator<IBond> bonds =  atomContainer.bonds().iterator();
@@ -297,7 +297,7 @@ public class InChIGenerator {
             // Assumes 2 centre bond
             JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getAtom(0));
             JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getAtom(1));
-            
+
             // Get bond order
             INCHI_BOND_TYPE order;
             IBond.Order bo = bond.getOrder();
@@ -312,12 +312,12 @@ public class InChIGenerator {
             } else {
                 throw new CDKException("Failed to generate InChI: Unsupported bond type");
             }
-            
+
             // Create InChI bond
             JniInchiBond ibond = new JniInchiBond(at0, at1, order);
             bondMap.put(bond, ibond);
             input.addBond(ibond);
-            
+
             // Check for bond stereo definitions
             IBond.Stereo stereo = bond.getStereo();
             // No stereo definition
@@ -331,7 +331,7 @@ public class InChIGenerator {
             // Bond ending (fat end of wedge) above the plane
             else if (stereo == IBond.Stereo.UP) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_1UP);
-            } 
+            }
             // Bond starting (pointy end of wedge) below the plane
             else if (stereo == IBond.Stereo.DOWN_INVERTED) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_2DOWN);
@@ -358,7 +358,7 @@ public class InChIGenerator {
                 }
             }
         }
-        
+
         // Process atom parities (tetrahedral InChI Stereo0D Parities)
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
@@ -367,7 +367,7 @@ public class InChIGenerator {
             if (parity != null) {
                 IAtom[] surroundingAtoms = parity.getSurroundingAtoms();
                 int sign = parity.getParity();
-                
+
                 JniInchiAtom atC = (JniInchiAtom) atomMap.get(atom);
                 JniInchiAtom at0 = (JniInchiAtom) atomMap.get(surroundingAtoms[0]);
                 JniInchiAtom at1 = (JniInchiAtom) atomMap.get(surroundingAtoms[1]);
@@ -381,7 +381,7 @@ public class InChIGenerator {
                 } else {
                     throw new CDKException("Atom parity of zero");
                 }
-                
+
                 input.addStereo0D(new JniInchiStereo0D(atC, at0, at1, at2, at3,
                         INCHI_STEREOTYPE.TETRAHEDRAL, p));
             }
@@ -458,15 +458,15 @@ public class InChIGenerator {
                 input.addStereo0D(jniStereo);
         	}
         }
-        
+
         try {
             output = JniInchiWrapper.getInchi(input);
         } catch (JniInchiException jie) {
             throw new CDKException("Failed to generate InChI: " + jie.getMessage(), jie);
         }
     }
-    
-    
+
+
     /**
      * Gets return status from InChI process.  OKAY and WARNING indicate
      * InChI has been generated, in all other cases InChI generation
@@ -476,7 +476,7 @@ public class InChIGenerator {
     public INCHI_RET getReturnStatus() {
         return(output.getReturnStatus());
     }
-    
+
     /**
      * Gets generated InChI string.
      */
@@ -484,7 +484,7 @@ public class InChIGenerator {
     public String getInchi() {
         return(output.getInchi());
     }
-    
+
     /**
      * Gets generated InChIKey string.
      */
@@ -504,7 +504,7 @@ public class InChIGenerator {
                                    exception.getMessage(), exception);
         }
     }
-    
+
     /**
      * Gets auxillary information.
      */
@@ -512,7 +512,7 @@ public class InChIGenerator {
     public String getAuxInfo() {
         return(output.getAuxInfo());
     }
-    
+
     /**
      * Gets generated (error/warning) messages.
      */
@@ -520,7 +520,7 @@ public class InChIGenerator {
     public String getMessage() {
         return(output.getMessage());
     }
-    
+
     /**
      * Gets generated log.
      */
