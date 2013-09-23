@@ -180,20 +180,20 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // labelled for loop to allow for labelled continue statements within the loop
     atomloop:
-    for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++) {
+    for (IAtom atom : ac.atoms()) {
         // looking for suitable nitrogen atoms
-        if (ac.getAtom(atomIndex).getSymbol().equals("N") && ac.getAtom(atomIndex).getFormalCharge() <= 0) {
+        if (atom.getSymbol().equals("N") && atom.getFormalCharge() <= 0) {
             // excluding nitrogens that are adjacent to an oxygen
-            List<IAtom> neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+            List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
             for (IAtom neighbour : neighbours)
                 if (neighbour.getSymbol().equals("O"))
                     continue atomloop;
             hBondAcceptors++;
         }
         // looking for suitable oxygen atoms
-        if (ac.getAtom(atomIndex).getSymbol().equals("O") && ac.getAtom(atomIndex).getFormalCharge() <= 0) {
+        if (atom.getSymbol().equals("O") && atom.getFormalCharge() <= 0) {
             //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-            List<IAtom> neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+            List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
             for (IAtom neighbour : neighbours)
                 if (neighbour.getSymbol().equals("N") ||
                         (neighbour.getSymbol().equals("C") && neighbour.getFlag(CDKConstants.ISAROMATIC)))
