@@ -1012,23 +1012,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
     }
 
-    private void fixHydrogenIsotopes(IAtomContainer molecule,IsotopeFactory isotopeFactory) {
+    private void fixHydrogenIsotopes(IAtomContainer molecule, IsotopeFactory isotopeFactory) {
 		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atom = atoms.next();
 			if (atom instanceof IPseudoAtom) {
-				IPseudoAtom pseudo = (IPseudoAtom)atom;
+				IPseudoAtom pseudo = (IPseudoAtom) atom;
                 if ("D".equals(pseudo.getLabel())) {
 					IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
-                    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class, 1, "H", 2, 2.014101778, 0.0115);
-					isotopeFactory.configure(newAtom, isotope);
+                    newAtom.setAtomicNumber(1);
+					isotopeFactory.configure(newAtom, isotopeFactory.getIsotope("H", 2));
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
                 } else if ("T".equals(pseudo.getLabel())) {
                     IAtom newAtom = molecule.getBuilder().newInstance(IAtom.class,atom);
 					newAtom.setSymbol("H");
-				    IIsotope isotope = molecule.getBuilder().newInstance(IIsotope.class, 1, "H", 3, 3.016049278, 0d);
-				    isotopeFactory.configure(newAtom, isotope);
+                    newAtom.setAtomicNumber(1);
+				    isotopeFactory.configure(newAtom, isotopeFactory.getIsotope("H", 3));
 					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
 				}
 			}
