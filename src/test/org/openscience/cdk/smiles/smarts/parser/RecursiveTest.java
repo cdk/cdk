@@ -372,7 +372,7 @@ public class RecursiveTest extends CDKTestCase {
         }
         reader.close();
         Assert.assertEquals(141, nmol);
-        Assert.assertEquals(6, nmatch);
+        Assert.assertEquals(5, nmatch);
     }
 
     @Test public void testBasicAmineOnDrugs() throws Exception {
