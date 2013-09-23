@@ -43,9 +43,9 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
@@ -251,18 +251,25 @@ protected JniInchiInputInchi input;
                 IAtom at2 = (IAtom) inchiCdkAtomMap.get(neighbours[2]);
                 IAtom at3 = (IAtom) inchiCdkAtomMap.get(neighbours[3]);
                 
-                int sign;
+                
+                ITetrahedralChirality.Stereo stereo;
+                
+                // as per JNI InChI doc even is clockwise and odd is
+                // anti-clockwise
                 if (stereo0d.getParity() == INCHI_PARITY.ODD) {
-                    sign = -1;
+                    stereo = ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
                 } else if (stereo0d.getParity() == INCHI_PARITY.EVEN) {
-                    sign = +1;
+                    stereo = ITetrahedralChirality.Stereo.CLOCKWISE;
                 } else {
                     // CDK Only supports parities of + or -
                     continue;
                 }
                 
-                IAtomParity parity = builder.newInstance(IAtomParity.class,atC, at0, at1, at2, at3, sign);
-                molecule.addStereoElement(parity);
+                ITetrahedralChirality tetrahedralChirality = builder.newInstance(ITetrahedralChirality.class,
+                                                                                 atC,
+                                                                                 new IAtom[]{at0, at1, at2, at3},
+                                                                                 stereo);
+                molecule.addStereoElement(tetrahedralChirality);
             } else {
                 // TODO - other types of atom parity - double bond, etc
             }
