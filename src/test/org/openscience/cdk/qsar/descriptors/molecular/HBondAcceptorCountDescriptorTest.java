@@ -70,7 +70,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C2H3N3/c1-3-2-5-4-1/h1-2H,(H,3,4,5)
      */
     @Test
-    public void testCID9257() {
+    public void testCID9257() throws CDKException {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom a1 = builder.newInstance(IAtom.class,"N");
@@ -121,7 +121,9 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(b7);
         IBond b8 = builder.newInstance(IBond.class,a5, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
-
+        
+        Object[] params = {new Boolean(true)};
+        descriptor.setParameters(params);
         Assert.assertEquals(
             2,
             ((IntegerResult) descriptor.calculate(mol).getValue()).intValue()
