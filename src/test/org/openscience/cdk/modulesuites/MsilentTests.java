@@ -30,7 +30,6 @@ import org.openscience.cdk.coverage.SilentCoverageTest;
 import org.openscience.cdk.silent.AminoAcidTest;
 import org.openscience.cdk.silent.AtomContainerSetTest;
 import org.openscience.cdk.silent.AtomContainerTest;
-import org.openscience.cdk.silent.AtomParityTest;
 import org.openscience.cdk.silent.AtomTest;
 import org.openscience.cdk.silent.AtomTypeTest;
 import org.openscience.cdk.silent.BioPolymerTest;
@@ -74,7 +73,6 @@ import org.openscience.cdk.silent.StrandTest;
     SilentChemObjectBuilderTest.class,
     AminoAcidTest.class,
     AtomContainerTest.class,
-    AtomParityTest.class,
     AtomTest.class,
     AtomTypeTest.class,
     BioPolymerTest.class,

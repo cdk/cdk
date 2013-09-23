@@ -29,7 +29,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.AminoAcidTest;
 import org.openscience.cdk.AtomContainerSetTest;
 import org.openscience.cdk.AtomContainerTest;
-import org.openscience.cdk.AtomParityTest;
 import org.openscience.cdk.AtomTest;
 import org.openscience.cdk.AtomTypeTest;
 import org.openscience.cdk.BioPolymerTest;
@@ -80,7 +79,6 @@ import org.openscience.cdk.protein.data.PDBStructureTest;
         
     AminoAcidTest.class,
     AtomContainerTest.class,
-    AtomParityTest.class,
     AtomTest.class,
     AtomTypeTest.class,
     BioPolymerTest.class,

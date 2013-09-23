@@ -32,7 +32,6 @@ import org.openscience.cdk.debug.DebugAdductFormulaTest;
 import org.openscience.cdk.debug.DebugAminoAcidTest;
 import org.openscience.cdk.debug.DebugAtomContainerSetTest;
 import org.openscience.cdk.debug.DebugAtomContainerTest;
-import org.openscience.cdk.debug.DebugAtomParityTest;
 import org.openscience.cdk.debug.DebugAtomTest;
 import org.openscience.cdk.debug.DebugAtomTypeTest;
 import org.openscience.cdk.debug.DebugBioPolymerTest;
@@ -77,7 +76,6 @@ import org.openscience.cdk.debug.DebugStrandTest;
     DebugChemObjectBuilderTest.class,
     DebugAminoAcidTest.class,
     DebugAtomContainerTest.class,
-    DebugAtomParityTest.class,
     DebugAtomTest.class,
     DebugAtomTypeTest.class,
     DebugBioPolymerTest.class,
