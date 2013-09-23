@@ -31,6 +31,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -184,10 +185,11 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
         // looking for suitable nitrogen atoms
         if (atom.getSymbol().equals("N") && atom.getFormalCharge() <= 0) {
             // excluding nitrogens that are adjacent to an oxygen
-            List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
-            for (IAtom neighbour : neighbours)
-                if (neighbour.getSymbol().equals("O"))
+            List<IBond> bonds = ac.getConnectedBondsList(atom);
+            for (IBond bond : bonds) {
+                if (bond.getConnectedAtom(atom).getSymbol().equals("O"))
                     continue atomloop;
+            }
             hBondAcceptors++;
         }
         // looking for suitable oxygen atoms
