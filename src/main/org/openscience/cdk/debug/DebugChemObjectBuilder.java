@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
@@ -142,7 +141,6 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
         factory.register(IChemSequence.class,        DebugChemSequence.class);
 
         // stereo components (requires some modification after instantiation)
-        factory.register(IAtomParity.class, DebugAtomParity.class);
         factory.register(ITetrahedralChirality.class,
                          TetrahedralChirality.class,
                          new DynamicFactory.CreationModifier<TetrahedralChirality>() {
