@@ -77,12 +77,16 @@ import java.util.Map;
  * which was <code>[#6](~[#6])(~[#6])(~[#6])([H])</code> and is rewritten as 
  * <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
  * <p/>
+ * 
+ * <b>Warning - this class is not thread-safe and uses stores intermediate steps
+ * internally. Please use a seperate instance of the class for each thread.</b>
  *
  * @author Rajarshi Guha
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
+ * @cdk.threadnonsafe
  */
 @TestClass("org.openscience.cdk.fingerprint.PubchemFingerprinterTest")
 public class PubchemFingerprinter implements IFingerprinter {
