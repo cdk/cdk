@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
@@ -167,20 +166,6 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         Assert.assertNotNull(container);
         IAtomContainer second = builder.newInstance(IAtomContainer.class, container);
         Assert.assertNotNull(second);
-    }
-    
-    @Test public void testNewAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
-        IChemObjectBuilder builder = rootObject.getBuilder();
-        IAtomParity parity = builder.newInstance(
-            IAtomParity.class,
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtom.class),
-            -1
-        );
-        Assert.assertNotNull(parity);
     }
     
     @Test public void testNewAtomType_String() {
