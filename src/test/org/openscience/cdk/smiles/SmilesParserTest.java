@@ -1234,17 +1234,17 @@ public class SmilesParserTest extends CDKTestCase {
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testBug1235852() throws Exception {
-		//                              0 1 234 56 7 890 12 3456 78
+		//                                   0 1 234 56 7 890 12 3456 78
 		IAtomContainer mol = sp.parseSmiles("O=C(CCS)CC(C)CCC2Cc1ccsc1CC2");
 		Assert.assertNotNull(mol);
 		Assert.assertEquals(19, mol.getAtomCount());
 		Assert.assertEquals(20, mol.getBondCount());
 		// test only option for delocalized bond system
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(12)), 0.001);
-		Assert.assertEquals(2.0, mol.getBondOrderSum(mol.getAtom(13)), 0.001);
-		Assert.assertEquals(2.0, mol.getBondOrderSum(mol.getAtom(14)), 0.001);
+		Assert.assertEquals(4.0, mol.getBondOrderSum(mol.getAtom(12)), 0.001);
+		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(13)), 0.001);
+		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(14)), 0.001);
 		Assert.assertEquals(2.0, mol.getBondOrderSum(mol.getAtom(15)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(16)), 0.001);
+		Assert.assertEquals(4.0, mol.getBondOrderSum(mol.getAtom(16)), 0.001);
 	}
 	
 	/**
