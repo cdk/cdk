@@ -758,15 +758,36 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@org.junit.Test (timeout=1000)
-	public void testSingleH() {
-		try {
-			String smiles = "H";
-			sp.parseSmiles(smiles);
-			Assert.fail("The SMILES string 'H' is not valid: H is not in the organic element subset");
-		} catch (Exception e) {
-			// yes! it should fail
-		}
+	@Test
+	public void testSingleH() throws Exception{
+        // Beam allows bare 'H' - this is a common typo for '[H]' - there is 
+        // a 'strict' option which won't allow these but this isn't exposed
+        // in the public API yet
+        IAtomContainer mol = load("H");
+        assertThat(mol.getAtom(0).getAtomicNumber(), is(1));
+        assertThat(mol.getAtomCount(), is(1));
+	}
+    
+    @Test
+	public void testSingleD() throws Exception{
+        // Beam allows bare 'D' - this is a common typo for '[2H]' - there is 
+        // a 'strict' option which won't allow these but this isn't exposed
+        // in the public API yet
+        IAtomContainer mol = load("D");
+        assertThat(mol.getAtomCount(), is(1));
+        assertThat(mol.getAtom(0).getAtomicNumber(), is(1));
+        assertThat(mol.getAtom(0).getMassNumber(), is(2));
+	}
+    
+    @Test
+	public void testSingleT() throws Exception{
+        // Beam allows bare 'T' - this is a common typo for '[3H]' - there is 
+        // a 'strict' option which won't allow these but this isn't exposed
+        // in the public API yet
+        IAtomContainer mol = load("T");
+        assertThat(mol.getAtomCount(), is(1));
+        assertThat(mol.getAtom(0).getAtomicNumber(), is(1));
+        assertThat(mol.getAtom(0).getMassNumber(), is(3));
 	}
 
 
