@@ -195,12 +195,13 @@ public class CDKTestCase {
 		for (Iterator<IBond> bonds = container.bonds().iterator(); bonds.hasNext();)
 			Assert.assertEquals(IBond.Order.SINGLE, bonds.next().getOrder());
 		
-		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext();) {
-			IAtom atom = atoms.next();
+		for (IAtom atom : container.atoms()) {			
 			if (atom.getSymbol().equals("H"))
-				Assert.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+				Assert.assertFalse(atom.getSymbol() + container.getAtomNumber(atom) + " was aromatic",
+                                   atom.getFlag(CDKConstants.ISAROMATIC));
 			else
-				Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+				Assert.assertTrue(atom.getSymbol() + container.getAtomNumber(atom) + " was not aromatic",
+                                  atom.getFlag(CDKConstants.ISAROMATIC));
 		}
 	}
 
