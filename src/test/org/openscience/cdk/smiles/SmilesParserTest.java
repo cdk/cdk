@@ -587,11 +587,19 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals("Ni", mol.getAtom(0).getSymbol());
 
 		smiles = "Co";
-		mol = sp.parseSmiles(smiles);
+		mol = loadExact(smiles);
 		Assert.assertEquals(2, mol.getAtomCount());
 		Assert.assertEquals("C", mol.getAtom(0).getSymbol());
 		Assert.assertEquals("O", mol.getAtom(1).getSymbol());
 	}
+
+    // note we can't kekulise 'Co' (above) but we can kekulise 'Cocc'
+    @Test public void testOrganicSubsetUnderstanding2() throws Exception {
+        IAtomContainer mol = load("Cocc"); 
+        assertThat(mol.getBond(0).getOrder(), is(IBond.Order.SINGLE));
+        assertThat(mol.getBond(1).getOrder(), is(IBond.Order.SINGLE));
+        assertThat(mol.getBond(2).getOrder(), is(IBond.Order.DOUBLE));
+    }
 
 	/**
 	 *  A unit test for JUnit
