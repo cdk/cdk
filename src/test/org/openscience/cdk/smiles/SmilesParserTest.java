@@ -20,8 +20,10 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -1430,6 +1432,7 @@ public class SmilesParserTest extends CDKTestCase {
 	@org.junit.Test public void bug1872969() throws Exception {
 		String smiles = "CS(=O)(=O)[O-].[Na+]";
 		IAtomContainer mol = sp.parseSmiles(smiles);
+        atomtype(mol);
 		for (int i=0; i<6; i++) {
 			Assert.assertNotNull(mol.getAtom(i).getAtomTypeName());
 		}
@@ -2378,6 +2381,18 @@ public class SmilesParserTest extends CDKTestCase {
                 aromCount++;
         }
         return aromCount;
+    }
+    
+    static void atomtype(IAtomContainer container) throws Exception {
+        Set<IAtom> aromatic = new HashSet<IAtom>();
+        for (IAtom atom : container.atoms()) {
+            if (atom.getFlag(CDKConstants.ISAROMATIC)) 
+                aromatic.add(atom);
+        }
+        // helpfully clears aromatic flags...
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        for (IAtom atom : aromatic)
+            atom.setFlag(CDKConstants.ISAROMATIC, true);
     }
     
     static IAtomContainer load(String smi) throws InvalidSmilesException {
