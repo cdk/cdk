@@ -1338,8 +1338,12 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertEquals(23, mol2.getAtomCount());
 		Assert.assertEquals(25, mol2.getBondCount());
 		// do some checking
-		Assert.assertEquals(IBond.Order.DOUBLE, mol1.getBond(1).getOrder());
-		Assert.assertEquals(IBond.Order.DOUBLE, mol2.getBond(1).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol1.getBond(mol1.getAtom(1), mol1.getAtom(2)).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol2.getBond(mol2.getAtom(1), mol2.getAtom(2)).getOrder());
+        atomtype(mol1);
+        atomtype(mol2);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
 		assertTrue(mol1.getBond(7).getFlag(CDKConstants.ISAROMATIC));
 		assertTrue(mol2.getBond(7).getFlag(CDKConstants.ISAROMATIC));
 	}
@@ -1465,12 +1469,12 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testBug1783546() throws Exception {
 		String smiles = "C=1C=CC=CC=1";
 		IAtomContainer mol = sp.parseSmiles(smiles);
-		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(0).getOrder());
-		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(1).getOrder());
-		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(2).getOrder());
-		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(3).getOrder());
-		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(4).getOrder());
-		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(5).getOrder());
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(mol.getAtom(0), mol.getAtom(1)).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(mol.getAtom(1), mol.getAtom(2)).getOrder());
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(mol.getAtom(2), mol.getAtom(3)).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(mol.getAtom(3), mol.getAtom(4)).getOrder());
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(mol.getAtom(4), mol.getAtom(5)).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(mol.getAtom(5), mol.getAtom(0)).getOrder());
 	}	
 
 	@org.junit.Test public void testChargedAtoms() throws Exception {
