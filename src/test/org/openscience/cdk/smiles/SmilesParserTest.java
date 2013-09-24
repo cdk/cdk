@@ -56,6 +56,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+
 /**
  * Please see the test.gui package for visual feedback on tests.
  * 
@@ -2309,7 +2313,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(16, countAromaticAtoms(molecule));
         Assert.assertEquals(19, countAromaticBonds(molecule));
 
-        molecule = sp.parseSmiles("C:1C:C:C:C:C1");
+        molecule = sp.parseSmiles("C:1:C:C:C:C:C1"); // n.b see cyclohexaneWithAromaticBonds
         Assert.assertEquals(6, countAromaticAtoms(molecule));
         Assert.assertEquals(6, countAromaticBonds(molecule));
 
@@ -2317,6 +2321,20 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(6, countAromaticAtoms(molecule));
         Assert.assertEquals(6, countAromaticBonds(molecule));
 
+    }
+
+    /**
+     *  'C:1:C:C:C:C:C1' is actually cyclo-hexane not benzene. Beam will kekulise
+     *  this correctly.
+     */
+    @Test public void cyclohexaneWithAromaticBonds() throws Exception {
+        IAtomContainer molecule = sp.parseSmiles("C:1:C:C:C:C:C1");
+        Assert.assertEquals(0, countAromaticAtoms(molecule));
+        Assert.assertEquals(0, countAromaticBonds(molecule));
+        for (IBond bond : molecule.bonds()) {
+            assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
+            assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        }
     }
 
     @Test public void testPreserveAromaticityAndPerceiveAtomTypes() throws InvalidSmilesException{
