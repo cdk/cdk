@@ -33,7 +33,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import uk.ac.ebi.beam.Graph;
 
+import java.io.IOException;
 import java.util.StringTokenizer;
 
 /**
@@ -157,7 +159,17 @@ public final class SmilesParser {
      */
     @TestMethod("testAromaticSmiles,testSFBug1296113")
     public IAtomContainer parseSmiles(String smiles) throws InvalidSmilesException {
-        return builder.newInstance(IAtomContainer.class);
+        try {                                                                     
+            // create the Beam object from the SMILES
+            Graph g = Graph.fromSmiles(smiles);
+            
+            // convert the Beam object model to the CDK - note exception thrown
+            // if a kekule structure could not be assigned.
+            return beamToCDK.toAtomContainer(kekulise ? g.kekule() : g);
+        } catch (IOException e) {
+            throw new InvalidSmilesException("Could not parse " + smiles + ":",
+                                             e);
+        }
     }
 
     /**
