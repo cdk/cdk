@@ -79,32 +79,32 @@ public class SmilesParserTest extends CDKTestCase {
 		  IAtomContainer mol = sp.parseSmiles(smiles);
 		  assertAtomTypesPerceived(mol);
 		  // Let's check the atoms first...
-		  Assert.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getAtom(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getAtom(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));		  
-		  Assert.assertTrue(mol.getAtom(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getAtom(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));		  
+		  assertTrue(mol.getAtom(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 		  
-		  Assert.assertTrue(mol.getAtom(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getAtom(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getAtom(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getAtom(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));		  
+		  assertTrue(mol.getAtom(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getAtom(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));		  
 		  // ...and then the bonds...
 		  // ...in the first ring...
-		  Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 		  // ...then the bond in between the rings...
-		  Assert.assertFalse(mol.getBond(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertFalse(mol.getBond(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 		  // ...and at last the bonds in the other ring.
-		  Assert.assertTrue(mol.getBond(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  Assert.assertTrue(mol.getBond(10).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(10).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 	  }
 	  
 	/** @cdk.bug 1363882 */
@@ -114,7 +114,7 @@ public class SmilesParserTest extends CDKTestCase {
     IAtomContainer mol = sp.parseSmiles(smiles);
     assertAtomTypesPerceived(mol);
     Assert.assertEquals(18, mol.getAtomCount());
-    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
   }
   
   /** @cdk.bug 1535587 */
@@ -124,9 +124,9 @@ public class SmilesParserTest extends CDKTestCase {
     IAtomContainer mol = sp.parseSmiles(smiles);
     assertAtomTypesPerceived(mol);
     Assert.assertEquals(18, mol.getAtomCount());
-    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     Assert.assertEquals("N", mol.getAtom(8).getSymbol());
-    Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
+    assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
   }
 
   /** @cdk.bug 1579235 */
@@ -136,7 +136,7 @@ public class SmilesParserTest extends CDKTestCase {
     IAtomContainer mol = sp.parseSmiles(smiles);
     assertAtomTypesPerceived(mol);
     Assert.assertEquals(9, mol.getAtomCount());
-    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     Assert.assertEquals("N", mol.getAtom(6).getSymbol());
     for (IAtom atom : mol.atoms()) {
         if (atom.getSymbol().equals("C")) {
@@ -153,7 +153,7 @@ public class SmilesParserTest extends CDKTestCase {
     IAtomContainer mol = sp.parseSmiles(smiles);
     assertAtomTypesPerceived(mol);
     Assert.assertEquals(14, mol.getAtomCount());
-    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     for (IAtom atom : mol.atoms()) {
         Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
     }
@@ -166,16 +166,16 @@ public class SmilesParserTest extends CDKTestCase {
     IAtomContainer mol = sp.parseSmiles(smiles);
     assertAtomTypesPerceived(mol);
     Assert.assertEquals(13, mol.getAtomCount());
-    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     for (int i=1;i<13;i++) { // first atom is not aromatic
         IAtom atom = mol.getAtom(i);
         if (atom.getSymbol().equals("C"))
             Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
         if (atom.getSymbol().equals("N") || atom.getSymbol().equals("S")) {
-            Assert.assertTrue(
-                IAtomType.Hybridization.SP2 == atom.getHybridization() ||
-                IAtomType.Hybridization.PLANAR3 == atom.getHybridization()
-            );
+            assertTrue(
+                    IAtomType.Hybridization.SP2 == atom.getHybridization() ||
+                            IAtomType.Hybridization.PLANAR3 == atom.getHybridization()
+                      );
         }
     }
   }
@@ -425,7 +425,7 @@ public class SmilesParserTest extends CDKTestCase {
     	IAtomContainer molecule = sp.parseSmiles(smiles);
     	assertAtomTypesPerceived(molecule);
         Iterator bonds = molecule.bonds().iterator();
-    	while (bonds.hasNext()) Assert.assertTrue(((IBond)bonds.next()).getFlag(CDKConstants.ISAROMATIC));
+    	while (bonds.hasNext()) assertTrue(((IBond) bonds.next()).getFlag(CDKConstants.ISAROMATIC));
     }
 
 	/**
@@ -438,8 +438,8 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "c1cc[c-]c1";
 		IAtomContainer molecule = sp.parseSmiles(smiles);
 		assertAtomTypesPerceived(molecule);
-		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
 	}
 
 
@@ -462,7 +462,7 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testSFBug630475() throws Exception {
 		String smiles = "CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C";
 		IAtomContainer mol = sp.parseSmiles(smiles);
-		Assert.assertTrue(mol.getAtomCount() > 0);
+		assertTrue(mol.getAtomCount() > 0);
 	}
 
 
@@ -473,7 +473,7 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testSFBug585811() throws Exception {
 		String smiles = "CC(C(C8CCC(CC8)=O)C3C4C(CC5(CCC(C9=CC(C=CN%10)=C%10C=C9)CCCC5)C4)C2CCC1CCC7(CCC7)C6(CC6)C1C2C3)=O";
 		IAtomContainer mol = sp.parseSmiles(smiles);
-		Assert.assertTrue(mol.getAtomCount() > 0);
+		assertTrue(mol.getAtomCount() > 0);
 	}
 
 
@@ -531,9 +531,9 @@ public class SmilesParserTest extends CDKTestCase {
 		// 11
 		
 		IsomorphismTester it = new IsomorphismTester(apinene);
-		Assert.assertTrue(it.isIsomorphic(
-		    mol.getBuilder().newInstance(IAtomContainer.class, mol)
-		));
+		assertTrue(it.isIsomorphic(
+                mol.getBuilder().newInstance(IAtomContainer.class, mol)
+                                  ));
 	}
 
 
@@ -644,15 +644,15 @@ public class SmilesParserTest extends CDKTestCase {
 		IAtomContainer mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(2, mol.getAtomCount());
 		Assert.assertEquals(1, mol.getBondCount());
-		Assert.assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
-		Assert.assertFalse(mol.getAtom(1) instanceof IPseudoAtom);
+		assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
+		assertFalse(mol.getAtom(1) instanceof IPseudoAtom);
 
 		smiles = "[*]C";
 		mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(2, mol.getAtomCount());
 		Assert.assertEquals(1, mol.getBondCount());
-		Assert.assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
-		Assert.assertFalse(mol.getAtom(1) instanceof IPseudoAtom);
+		assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
+		assertFalse(mol.getAtom(1) instanceof IPseudoAtom);
 	}
 
     /**
@@ -665,7 +665,7 @@ public class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(1, mol.getAtomCount());
 		Assert.assertEquals(0, mol.getBondCount());
-		Assert.assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
+		assertTrue(mol.getAtom(0) instanceof IPseudoAtom);
         Assert.assertEquals(12, mol.getAtom(0).getMassNumber().intValue());
         Assert.assertEquals(2, mol.getAtom(0).getImplicitHydrogenCount().intValue());
         Assert.assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
@@ -918,7 +918,7 @@ public class SmilesParserTest extends CDKTestCase {
 		CDKHueckelAromaticityDetector.detectAromaticity(fromFactory);
 		boolean result = new UniversalIsomorphismTester().isIsomorph(fromFactory,
 		fromSmiles);
-		Assert.assertTrue(result);
+		assertTrue(result);
 	}
 	
 	/**
@@ -1195,7 +1195,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IAtomContainer mol = sp.parseSmiles("c2ccc1[nH]ccc1c2");
 		Assert.assertNotNull(mol);
 		Assert.assertEquals(9, mol.getAtomCount());
-		Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
 	}
 	
 	/**
@@ -1213,9 +1213,9 @@ public class SmilesParserTest extends CDKTestCase {
 					bond.getAtom(0).getSymbol().equals("Br") ||
 					bond.getAtom(1).getSymbol().equals("H") ||
 					bond.getAtom(1).getSymbol().equals("Br")) {
-				Assert.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+				assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
 			} else {
-				Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+				assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
 			}
 		}
 	}
@@ -1264,9 +1264,9 @@ public class SmilesParserTest extends CDKTestCase {
 			IBond bond = mol.getBond(i);
 			if (bond.getAtom(0).getSymbol().equals("O") ||
 				bond.getAtom(1).getSymbol().equals("O")) {
-				Assert.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+				assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
 			} else {
-				Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+				assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
 			}
 		}
 	}
@@ -1288,8 +1288,8 @@ public class SmilesParserTest extends CDKTestCase {
 		// do some checking
 		Assert.assertEquals(IBond.Order.DOUBLE, mol1.getBond(1).getOrder());
 		Assert.assertEquals(IBond.Order.DOUBLE, mol2.getBond(1).getOrder());
-		Assert.assertTrue(mol1.getBond(7).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(mol2.getBond(7).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol1.getBond(7).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol2.getBond(7).getFlag(CDKConstants.ISAROMATIC));
 	}
 	/**
 	 * @cdk.bug 1719287
@@ -1389,18 +1389,18 @@ public class SmilesParserTest extends CDKTestCase {
 		// easy case
 		String smiles = "c1ccccc1C1=CC=CC=C1";
 		IAtomContainer mol = sp.parseSmiles(smiles);
-		Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(mol.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(mol.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(mol.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol.getBond(3).getFlag(CDKConstants.ISAROMATIC));
 		
 		// harder case
 		String smiles2 = "C%21=%01C=CC=C%02C=%01N(C)CCC%02.C%21c%02ccccc%02";
 		IAtomContainer mol2 = sp.parseSmiles(smiles2);
-		Assert.assertTrue(mol2.getBond(16).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(mol2.getBond(17).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(mol2.getBond(18).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(mol2.getBond(19).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol2.getBond(16).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol2.getBond(17).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol2.getBond(18).getFlag(CDKConstants.ISAROMATIC));
+		assertTrue(mol2.getBond(19).getFlag(CDKConstants.ISAROMATIC));
 	}	
 
 	/**
@@ -1465,7 +1465,7 @@ public class SmilesParserTest extends CDKTestCase {
 		while (atoms.hasNext()) {
 			IAtom atom = atoms.next();
 			Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
-			Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
 		}
 	}
 	
@@ -1485,7 +1485,7 @@ public class SmilesParserTest extends CDKTestCase {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         boolean isaromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        Assert.assertTrue(isaromatic);
+        assertTrue(isaromatic);
     }
     
 	/*
@@ -1745,7 +1745,7 @@ public class SmilesParserTest extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -1764,7 +1764,7 @@ public class SmilesParserTest extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
     /**
@@ -1874,7 +1874,7 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = p.parseSmiles("c1c[nH]cc1");
         for (IAtom atom : mol.atoms()) {
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -1889,7 +1889,7 @@ public class SmilesParserTest extends CDKTestCase {
         p.setPreservingAromaticity(true);
         IAtomContainer mol = p.parseSmiles("c1cc2cccnc2[se]1");
         for (IAtom atom : mol.atoms()) {
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -2042,7 +2042,7 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = p.parseSmiles("c1cnc2s[cH][cH]n12");
         for (IAtom atom : mol.atoms()) {
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+            assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -2053,10 +2053,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Br[C@@H](Cl)I");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2079,10 +2079,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Br[C@H](Cl)I");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2100,10 +2100,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Br[C@@]([H])(Cl)I");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2119,10 +2119,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Br[C@]([H])(Cl)I");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2150,10 +2150,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[C@]12(OC1)NCN2");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2172,10 +2172,10 @@ public class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("C[C@H](O)[C@H](O)C");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         // first chiral center
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2186,10 +2186,10 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(mol.getAtom(3), ligands[3]);
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
         // second chiral center
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         ligands = l4Chiral.getLigands();
@@ -2206,10 +2206,10 @@ public class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("NC([C@H](O)C)Cl");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         // first chiral center
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2225,10 +2225,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("I1.Cl2.Br3.[C@]123CCC");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2244,10 +2244,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Br1.[C@]1(Cl)(OC)CCC");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2263,10 +2263,10 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[C@@H]231.C2.N1.F3");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement stereoElement = stereoElements.next();
         Assert.assertNotNull(stereoElement);
-        Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+        assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
@@ -2285,10 +2285,10 @@ public class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("[C@@H](Cl)1[C@H](C)(F).Br1");
         Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
         for (int i=0; i<2; i++) {
-            Assert.assertTrue(stereoElements.hasNext());
+            assertTrue(stereoElements.hasNext());
             IStereoElement stereoElement = stereoElements.next();
             Assert.assertNotNull(stereoElement);
-            Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
+            assertTrue(stereoElement instanceof ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
             Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
             if (l4Chiral.getChiralAtom() == mol.getAtom(0)) {
