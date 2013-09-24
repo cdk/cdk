@@ -79,12 +79,14 @@ public final class SmilesParser {
      */
     private final BeamToCDK beamToCDK;
 
-    /*
-     * Boolean to preserve aromaticity as provided in the Smiles itself (through lowecase letters (c1cccc1) or colons).
-     * Setting this to true means that CDK will not do aromaticity detection, nor atom typing (as this may conflict 
-     * with the preserved aromaticity).
+    /**
+     * Kekulise the molecule on load. Generally this is a good idea as a 
+     * lower-case symbols in a SMILES do not really mean 'aromatic' but rather
+     * 'conjugated'. Loading with kekulise 'on' will automatically assign
+     * bond orders (if possible) using an efficient algorithm from the 
+     * underlying Beam library (soon to be added to CDK).
      */
-    private boolean preservingAromaticity = false;
+    private boolean kekulise = true;
 
     /**
      * Create a new SMILES parser which will create {@link IAtomContainer}s with
@@ -167,7 +169,7 @@ public final class SmilesParser {
      *                              preserved.
      */
     public void setPreservingAromaticity(boolean preservingAromaticity) {
-        this.preservingAromaticity = preservingAromaticity;
+        this.kekulise = !preservingAromaticity;
     }
 
     /**
@@ -177,8 +179,7 @@ public final class SmilesParser {
      * @return true or false indicating if aromaticity is preserved.
      */
     public boolean isPreservingAromaticity() {
-        return preservingAromaticity;
+        return !kekulise;
     }
-
 }
 
