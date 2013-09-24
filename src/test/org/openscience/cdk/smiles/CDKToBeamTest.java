@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
-import org.openscience.cdk.silent.AtomParity;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -482,76 +481,7 @@ public class CDKToBeamTest {
         assertThat(Functions.collapse(g).toSmiles(),
                    is("CC[C@](C)(O)[H]"));
     }
-
-    /**
-     * (2R)-butan-2-ol
-     *
-     * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
-     */
-    @Test public void _2R_butan_2_ol_atomParity() throws Exception {
-
-        IAtomContainer ac = new AtomContainer();
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("O"));
-        ac.addAtom(new Atom("H"));
-        ac.addBond(0, 1, SINGLE);
-        ac.addBond(1, 2, SINGLE);
-        ac.addBond(2, 3, SINGLE);
-        ac.addBond(2, 4, SINGLE);
-        ac.addBond(2, 5, SINGLE);
-
-        ac.addStereoElement(new AtomParity(ac.getAtom(2),
-                                           ac.getAtom(1), // C-C
-                                           ac.getAtom(3), // C
-                                           ac.getAtom(4), // O
-                                           ac.getAtom(5), // H
-                                           +1));
-
-        Graph g = convert(ac);
-        assertThat(g.toSmiles(),
-                   is("[CH3]-[CH2]-[C@@](-[CH3])(-[OH])-[H]"));
-        assertThat(Functions.collapse(g).toSmiles(),
-                   is("CC[C@@](C)(O)[H]"));
-    }
-
-    /**
-     * (2S)-butan-2-ol
-     *
-     * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
-     */
-    @Test public void _2S_butan_2_ol_atomParity() throws Exception {
-
-        IAtomContainer ac = new AtomContainer();
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("C"));
-        ac.addAtom(new Atom("O"));
-        ac.addAtom(new Atom("H"));
-        ac.addBond(0, 1, SINGLE);
-        ac.addBond(1, 2, SINGLE);
-        ac.addBond(2, 3, SINGLE);
-        ac.addBond(2, 4, SINGLE);
-        ac.addBond(2, 5, SINGLE);
-
-        ac.addStereoElement(new AtomParity(ac.getAtom(2),
-                                           ac.getAtom(1), // C-C
-                                           ac.getAtom(3), // C
-                                           ac.getAtom(4), // O
-                                           ac.getAtom(5), // H
-                                           -1));
-
-        Graph g = convert(ac);
-        assertThat(g.toSmiles(),
-                   is("[CH3]-[CH2]-[C@](-[CH3])(-[OH])-[H]"));
-        assertThat(Functions.collapse(g).toSmiles(),
-                   is("CC[C@](C)(O)[H]"));
-    }
-
-
+    
     static Graph convert(IAtomContainer ac) throws Exception {
         return convert(ac, false, true);
     }

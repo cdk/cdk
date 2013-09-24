@@ -30,7 +30,6 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -128,8 +127,6 @@ final class CDKToBeam {
                     addTetrahedralConfiguration((ITetrahedralChirality) se, gb, indices);
                 } else if (se instanceof IDoubleBondStereochemistry) {
                     addGeometricConfiguration((IDoubleBondStereochemistry) se, gb, indices);
-                } else if (se instanceof IAtomParity) {
-                    addAtomParityConfiguration((IAtomParity) se, gb, indices);
                 }
             }
         }
@@ -286,35 +283,6 @@ final class CDKToBeam {
           .neighbors(vs[1], vs[2], vs[3])
           .winding(tc.getStereo() == CLOCKWISE ? Configuration.CLOCKWISE
                                                : Configuration.ANTI_CLOCKWISE)
-          .build();
-    }
-
-    /**
-     * Add atom parity (tetrahedral) stereo configuration to the Beam
-     * GraphBuilder.
-     *
-     * @param ap      stereo element specifying atom parity configuration
-     * @param gb      the current graph builder
-     * @param indices atom indices
-     */
-    private void addAtomParityConfiguration(IAtomParity ap,
-                                            GraphBuilder gb,
-                                            Map<IAtom, Integer> indices) {
-
-        IAtom[] ligands = ap.getSurroundingAtoms();
-
-        int u    = indices.get(ap.getAtom());
-        int vs[] = new int[]{
-                indices.get(ligands[0]),
-                indices.get(ligands[1]),
-                indices.get(ligands[2]),
-                indices.get(ligands[3])
-        };
-
-        gb.tetrahedral(u)
-          .lookingFrom(vs[0])
-          .neighbors(vs[1], vs[2], vs[3])
-          .parity(ap.getParity())
           .build();
     }
 }
