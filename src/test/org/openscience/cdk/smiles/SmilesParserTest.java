@@ -59,6 +59,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -450,8 +451,16 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testAromaticSmiles() throws Exception {
 		String smiles = "c1ccccc1";
 		IAtomContainer molecule = sp.parseSmiles(smiles);
-		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
-		Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+        
+        // automatically kekulised but...
+		assertFalse(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
+		assertFalse(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+        
+        // adding aromaticity is easy
+        atomtype(molecule);
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
+        assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
 	}
 	
 	
