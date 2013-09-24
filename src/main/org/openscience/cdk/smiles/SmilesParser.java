@@ -23,13 +23,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Stack;
-import java.util.StringTokenizer;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -61,6 +54,13 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
  * SSMILES subset {@cdk.cite SSMILESTUT} and the '%' tag for more than 10 rings
@@ -79,180 +79,176 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *
  * <p>See {@cdk.cite WEI88} for further information.
  *
- * @author         Christoph Steinbeck
- * @author         Egon Willighagen
- * @cdk.module     smiles
+ * @author Christoph Steinbeck
+ * @author Egon Willighagen
+ * @cdk.module smiles
  * @cdk.githash
- * @cdk.created    2002-04-29
- * @cdk.keyword    SMILES, parser
- * @cdk.bug        1579230
- * @cdk.bug        1579235
- * @cdk.bug        1579244
+ * @cdk.created 2002-04-29
+ * @cdk.keyword SMILES, parser
+ * @cdk.bug 1579230
+ * @cdk.bug 1579235
+ * @cdk.bug 1579244
  */
 @TestClass("org.openscience.cdk.smiles.SmilesParserTest")
 public class SmilesParser {
 
-	private final static String HAS_HARDCODED_HYDROGEN_COUNT = "SmilesParser.HasHardcodedHydrogenCount";
-	
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(SmilesParser.class);
-	private CDKHydrogenAdder hAdder;
-		
-	private int status = 0;
-	protected IChemObjectBuilder builder;
+    private final static String HAS_HARDCODED_HYDROGEN_COUNT = "SmilesParser.HasHardcodedHydrogenCount";
+
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SmilesParser.class);
+    private CDKHydrogenAdder hAdder;
+
+    private int status = 0;
+    protected IChemObjectBuilder builder;
 
 
     private enum Chirality {
-	    ANTI_CLOCKWISE, // aka @
-	    CLOCKWISE // aka @@
-	}
-    
+        ANTI_CLOCKWISE, // aka @
+        CLOCKWISE // aka @@
+    }
+
     /*
      * Boolean to preserve aromaticity as provided in the Smiles itself (through lowecase letters (c1cccc1) or colons).
      * Setting this to true means that CDK will not do aromaticity detection, nor atom typing (as this may conflict 
      * with the preserved aromaticity).
      */
-    private boolean preservingAromaticity=false;
+    private boolean preservingAromaticity = false;
 
-	/**
-	 * Constructor for the SmilesParser object.
-	 * 
-	 * @param builder IChemObjectBuilder used to create the IMolecules from
-	 */
-    public SmilesParser(IChemObjectBuilder builder)
-	{
-		this.builder = builder;
-		try {
-			hAdder = CDKHydrogenAdder.getInstance(builder);
-		} catch (Exception exception) {
-			logger.error("Could not instantiate hydrogenAdder: ",
-					exception.getMessage());
-			logger.debug(exception);
-		}
-	}
+    /**
+     * Constructor for the SmilesParser object.
+     *
+     * @param builder IChemObjectBuilder used to create the IMolecules from
+     */
+    public SmilesParser(IChemObjectBuilder builder) {
+        this.builder = builder;
+        try {
+            hAdder = CDKHydrogenAdder.getInstance(builder);
+        } catch (Exception exception) {
+            logger.error("Could not instantiate hydrogenAdder: ",
+                         exception.getMessage());
+            logger.debug(exception);
+        }
+    }
 
-	int position = -1;
-	int nodeCounter = -1;
-	String smiles = null;
-	IBond.Order bondStatus = null;
-	IBond.Order bondStatusForRingClosure = IBond.Order.SINGLE;
-    boolean bondIsAromatic = false;
+    int                                   position                 = -1;
+    int                                   nodeCounter              = -1;
+    String                                smiles                   = null;
+    IBond.Order                           bondStatus               = null;
+    IBond.Order                           bondStatusForRingClosure = IBond.Order.SINGLE;
+    boolean                               bondIsAromatic           = false;
     // array of atoms that initiated a ring closure
-	IAtom[] rings = null;
+    IAtom[]                               rings                    = null;
     // array of atoms that complete a ring closure
-    IAtom[] ringOtherAtoms = null;
-	IBond.Order[] ringbonds = null;
-	int thisRing = -1;
-	IAtomContainer molecule = null;
-	String currentSymbol = null;
-	Map<IAtom,TemporaryChiralityStorage> chiralityInfo = null;
-	
-	/**
-	 * Internal storage for temporary stereochemistry info. In particular, the atoms
-	 * involved are generally not known until the full SMILES is processed.
-	 */
-	class TemporaryChiralityStorage {
+    IAtom[]                               ringOtherAtoms           = null;
+    IBond.Order[]                         ringbonds                = null;
+    int                                   thisRing                 = -1;
+    IAtomContainer                        molecule                 = null;
+    String                                currentSymbol            = null;
+    Map<IAtom, TemporaryChiralityStorage> chiralityInfo            = null;
+
+    /**
+     * Internal storage for temporary stereochemistry info. In particular, the
+     * atoms involved are generally not known until the full SMILES is processed.
+     */
+    class TemporaryChiralityStorage {
         Chirality chiralityValue;
-        IAtom[] atoms;
-        int counter;
-	    public TemporaryChiralityStorage() {
-	        chiralityValue = null;
-	        atoms = new IAtom[4];
-	        counter = 0;
-	    }
+        IAtom[]   atoms;
+        int       counter;
+
+        public TemporaryChiralityStorage() {
+            chiralityValue = null;
+            atoms = new IAtom[4];
+            counter = 0;
+        }
+
         public TemporaryChiralityStorage(IAtom atom) {
             chiralityValue = null;
             atoms = new IAtom[4];
             atoms[0] = atom;
             counter = 1;
         }
+
         public void addAtom(IAtom atom) {
             atoms[counter] = atom;
             counter++;
         }
-	}
+    }
 
     /**
      * Parse a reaction SMILES.
      *
      * @param smiles The SMILES string to parse
      * @return An instance of {@link org.openscience.cdk.interfaces.IReaction}
-     * @see #parseSmiles(String)
      * @throws InvalidSmilesException if the string cannot be parsed
+     * @see #parseSmiles(String)
      */
     @TestMethod("testReaction,testReactionWithAgents")
-    public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException
-	{
-		StringTokenizer tokenizer = new StringTokenizer(smiles, ">");
-		String reactantSmiles = tokenizer.nextToken();
-		String agentSmiles = "";
-		String productSmiles = tokenizer.nextToken();
-		if (tokenizer.hasMoreTokens())
-		{
-			agentSmiles = productSmiles;
-			productSmiles = tokenizer.nextToken();
-		}
+    public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException {
+        StringTokenizer tokenizer = new StringTokenizer(smiles, ">");
+        String reactantSmiles = tokenizer.nextToken();
+        String agentSmiles = "";
+        String productSmiles = tokenizer.nextToken();
+        if (tokenizer.hasMoreTokens()) {
+            agentSmiles = productSmiles;
+            productSmiles = tokenizer.nextToken();
+        }
 
-		IReaction reaction = builder.newInstance(IReaction.class);
+        IReaction reaction = builder.newInstance(IReaction.class);
 
-		// add reactants
-		IAtomContainer reactantContainer = parseSmiles(reactantSmiles);
-		IAtomContainerSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
-		for (int i = 0; i < reactantSet.getAtomContainerCount(); i++)
-		{
-			reaction.addReactant(reactantSet.getAtomContainer(i));
-		}
+        // add reactants
+        IAtomContainer reactantContainer = parseSmiles(reactantSmiles);
+        IAtomContainerSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
+        for (int i = 0; i < reactantSet.getAtomContainerCount(); i++) {
+            reaction.addReactant(reactantSet.getAtomContainer(i));
+        }
 
-		// add reactants
-		if (agentSmiles.length() > 0)
-		{
-		    IAtomContainer agentContainer = parseSmiles(agentSmiles);
-			IAtomContainerSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
-			for (int i = 0; i < agentSet.getAtomContainerCount(); i++)
-			{
-				reaction.addAgent(agentSet.getAtomContainer(i));
-			}
-		}
+        // add reactants
+        if (agentSmiles.length() > 0) {
+            IAtomContainer agentContainer = parseSmiles(agentSmiles);
+            IAtomContainerSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
+            for (int i = 0; i < agentSet.getAtomContainerCount(); i++) {
+                reaction.addAgent(agentSet.getAtomContainer(i));
+            }
+        }
 
-		// add products
-		IAtomContainer productContainer = parseSmiles(productSmiles);
-		IAtomContainerSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
-		for (int i = 0; i < productSet.getAtomContainerCount(); i++)
-		{
-			reaction.addProduct(productSet.getAtomContainer(i));
-		}
+        // add products
+        IAtomContainer productContainer = parseSmiles(productSmiles);
+        IAtomContainerSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
+        for (int i = 0; i < productSet.getAtomContainerCount(); i++) {
+            reaction.addProduct(productSet.getAtomContainer(i));
+        }
 
-		return reaction;
-	}
+        return reaction;
+    }
 
 
-	/**
-	 *  Parses a SMILES string and returns a Molecule object.
-	 *
-	 *@param  smiles                      A SMILES string
-	 *@return                             A Molecule representing the constitution
-	 *      given in the SMILES string
-	 *@throws  InvalidSmilesException  thrown when the SMILES string is invalid
-	 */
+    /**
+     * Parses a SMILES string and returns a Molecule object.
+     *
+     * @param smiles A SMILES string
+     * @return A Molecule representing the constitution given in the SMILES
+     *         string
+     * @throws InvalidSmilesException thrown when the SMILES string is invalid
+     */
     @TestMethod("testAromaticSmiles,testSFBug1296113")
     public IAtomContainer parseSmiles(String smiles) throws InvalidSmilesException {
         IAtomContainer molecule = this.parseString(smiles);
-		
-		// analyze the chirality info
-		for (IAtom atom : chiralityInfo.keySet()) {
-		    TemporaryChiralityStorage chirality = chiralityInfo.get(atom);
-		    logger.debug("Chiral atom found: ", atom);
-		    IAtom[] atoms = chirality.atoms;
-		    ITetrahedralChirality l4Chiral = builder.newInstance(ITetrahedralChirality.class,
-		        atom,
-		        new IAtom[]{
-		            atoms[0], atoms[1], atoms[2], atoms[3]
-		        },
-		        chirality.chiralityValue == Chirality.CLOCKWISE
-		          ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE
-		    );
-		    molecule.addStereoElement(l4Chiral);
-		}
+
+        // analyze the chirality info
+        for (IAtom atom : chiralityInfo.keySet()) {
+            TemporaryChiralityStorage chirality = chiralityInfo.get(atom);
+            logger.debug("Chiral atom found: ", atom);
+            IAtom[] atoms = chirality.atoms;
+            ITetrahedralChirality l4Chiral = builder.newInstance(ITetrahedralChirality.class,
+                                                                 atom,
+                                                                 new IAtom[]{
+                                                                         atoms[0], atoms[1], atoms[2], atoms[3]
+                                                                 },
+                                                                 chirality.chiralityValue == Chirality.CLOCKWISE
+                                                                 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE
+                                                                );
+            molecule.addStereoElement(l4Chiral);
+        }
 
         // perceive atom types
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
@@ -265,152 +261,144 @@ public class SmilesParser {
                 AtomTypeManipulator.configure(atom, type);
                 atom.setFlag(CDKConstants.ISAROMATIC, isAromatic);
             } catch (NoSuchAtomTypeException exception) {
-                    logger.warn("Cannot percieve atom type for the ", i, "th atom: ", atom.getSymbol());
+                logger.warn("Cannot percieve atom type for the ", i, "th atom: ", atom.getSymbol());
                 atom.setAtomTypeName("X");
             } catch (Exception exception) {
-                    logger.error("Caught unexpected Exception during atom typing.");
-                    logger.debug(exception);
-                    atom.setAtomTypeName("X");
+                logger.error("Caught unexpected Exception during atom typing.");
+                logger.debug(exception);
+                atom.setAtomTypeName("X");
             }
         }
         this.addImplicitHydrogens(molecule);
-        
+
         // Set the flag SINGLE_OR_DOUBLE to false if the bond with it isn't in a ring.
-       if (molecule.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
-        	SpanningTree molTree = new SpanningTree(molecule);
-        	try {
-        		IRingSet rings = molTree.getAllRings();
-        		for (int j = 0; j < rings.getAtomContainerCount(); j++) {
-        			for (IBond bond : rings.getAtomContainer(j).bonds())
-        				if (bond.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE) &&
-        						bond.getAtom(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE)
-        						) {
-        					bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-        				}
-        		}
-        	} catch (NoSuchAtomException exception) {
-        		logger.error("Caught unexpected Exception while identifying the rings.");
-        		logger.debug(exception);
-        	}
-        }
-        
-        if (!preservingAromaticity ) {
-            this.perceiveAromaticity(molecule);
-        }
-        else  {
-            for (IBond bond : molecule.bonds() ) {
-                if(!bond.getFlag(CDKConstants.ISAROMATIC) &&
-                    bond.getAtom(0).getFlag(CDKConstants.ISAROMATIC) &&
-                    bond.getAtom(1).getFlag(CDKConstants.ISAROMATIC)) {
-                       bond.setFlag(CDKConstants.ISAROMATIC,true);
-                   }
+        if (molecule.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
+            SpanningTree molTree = new SpanningTree(molecule);
+            try {
+                IRingSet rings = molTree.getAllRings();
+                for (int j = 0; j < rings.getAtomContainerCount(); j++) {
+                    for (IBond bond : rings.getAtomContainer(j).bonds())
+                        if (bond.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE) &&
+                                bond.getAtom(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE)
+                                ) {
+                            bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+                        }
+                }
+            } catch (NoSuchAtomException exception) {
+                logger.error("Caught unexpected Exception while identifying the rings.");
+                logger.debug(exception);
             }
         }
 
-		return molecule;
-	}
+        if (!preservingAromaticity) {
+            this.perceiveAromaticity(molecule);
+        }
+        else {
+            for (IBond bond : molecule.bonds()) {
+                if (!bond.getFlag(CDKConstants.ISAROMATIC) &&
+                        bond.getAtom(0).getFlag(CDKConstants.ISAROMATIC) &&
+                        bond.getAtom(1).getFlag(CDKConstants.ISAROMATIC)) {
+                    bond.setFlag(CDKConstants.ISAROMATIC, true);
+                }
+            }
+        }
 
-	/**
-	 * This routine parses the smiles string into a molecule but does not add hydrogens, saturate, or perceive aromaticity
-	 * @param smiles
-	 * @return
-	 * @throws InvalidSmilesException
-	 */
-	private IAtomContainer parseString(String smiles) throws InvalidSmilesException
-	{
-		logger.debug("parseSmiles()...");
-		IBond bond = null;
-		nodeCounter = 0;
-		bondStatus = null;
+        return molecule;
+    }
+
+    /**
+     * This routine parses the smiles string into a molecule but does not add
+     * hydrogens, saturate, or perceive aromaticity
+     *
+     * @param smiles
+     * @return
+     * @throws InvalidSmilesException
+     */
+    private IAtomContainer parseString(String smiles) throws InvalidSmilesException {
+        logger.debug("parseSmiles()...");
+        IBond bond = null;
+        nodeCounter = 0;
+        bondStatus = null;
         bondIsAromatic = false;
-		boolean bondExists = true;
-		thisRing = -1;
-		currentSymbol = null;
-		molecule = builder.newInstance(IAtomContainer.class);
-		position = 0;
-		chiralityInfo = new HashMap<IAtom,TemporaryChiralityStorage>();
-		// we don't want more than 1024 rings
-		final int MAX_RING_COUNT = 1024;
-		rings = new IAtom[MAX_RING_COUNT];
+        boolean bondExists = true;
+        thisRing = -1;
+        currentSymbol = null;
+        molecule = builder.newInstance(IAtomContainer.class);
+        position = 0;
+        chiralityInfo = new HashMap<IAtom, TemporaryChiralityStorage>();
+        // we don't want more than 1024 rings
+        final int MAX_RING_COUNT = 1024;
+        rings = new IAtom[MAX_RING_COUNT];
         ringOtherAtoms = new IAtom[MAX_RING_COUNT];
-		ringbonds = new IBond.Order[MAX_RING_COUNT];
-		for (int f = 0; f < MAX_RING_COUNT; f++) {
-			rings[f] = null;
+        ringbonds = new IBond.Order[MAX_RING_COUNT];
+        for (int f = 0; f < MAX_RING_COUNT; f++) {
+            rings[f] = null;
             ringOtherAtoms[f] = null;
-			ringbonds[f] = null;
-		}
+            ringbonds[f] = null;
+        }
 
-		char mychar = 'X';
-		char[] chars = new char[1];
-		IAtom lastNode = null;
-		Stack<IAtom> atomStack = new Stack<IAtom>();
-		Stack<IBond.Order> bondStack = new Stack<IBond.Order>();
-		IAtom atom = null;
-		do
-		{
-			try
-			{
-				mychar = smiles.charAt(position);
-				logger.debug("");
-				logger.debug("Processing: " + mychar);
-				if (lastNode != null)
-				{
-					logger.debug("Lastnode: ", lastNode.hashCode());
-				}
-				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z') ||
-						(mychar == '*'))
-				{
-					status = 1;
-					logger.debug("Found a must-be 'organic subset' element");
-					// only 'organic subset' elements allowed
-					atom = null;
-					if (mychar == '*')
-					{
-						currentSymbol = "*";
-						atom = builder.newInstance(IPseudoAtom.class, "*");
-					} else
-					{
-						currentSymbol = getSymbolForOrganicSubsetElement(smiles, position);
-						if (currentSymbol != null)
-						{
-							if (currentSymbol.length() == 1)
-							{
-								if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
-								{
-									currentSymbol = currentSymbol.toUpperCase();
-									atom = builder.newInstance(IAtom.class,currentSymbol);
-									atom.setHybridization(Hybridization.SP2);
-									// If the letter is small we rise the flag
-									atom.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-									// If the flag hasn't been raised on the molecule, lets do it.
-									if (molecule.getFlag(CDKConstants.SINGLE_OR_DOUBLE) != true)
-										molecule.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-                                    if (preservingAromaticity ) {
+        char mychar = 'X';
+        char[] chars = new char[1];
+        IAtom lastNode = null;
+        Stack<IAtom> atomStack = new Stack<IAtom>();
+        Stack<IBond.Order> bondStack = new Stack<IBond.Order>();
+        IAtom atom = null;
+        do {
+            try {
+                mychar = smiles.charAt(position);
+                logger.debug("");
+                logger.debug("Processing: " + mychar);
+                if (lastNode != null) {
+                    logger.debug("Lastnode: ", lastNode.hashCode());
+                }
+                if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z') ||
+                        (mychar == '*')) {
+                    status = 1;
+                    logger.debug("Found a must-be 'organic subset' element");
+                    // only 'organic subset' elements allowed
+                    atom = null;
+                    if (mychar == '*') {
+                        currentSymbol = "*";
+                        atom = builder.newInstance(IPseudoAtom.class, "*");
+                    }
+                    else {
+                        currentSymbol = getSymbolForOrganicSubsetElement(smiles, position);
+                        if (currentSymbol != null) {
+                            if (currentSymbol.length() == 1) {
+                                if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
+                                    currentSymbol = currentSymbol.toUpperCase();
+                                    atom = builder.newInstance(IAtom.class, currentSymbol);
+                                    atom.setHybridization(Hybridization.SP2);
+                                    // If the letter is small we rise the flag
+                                    atom.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+                                    // If the flag hasn't been raised on the molecule, lets do it.
+                                    if (molecule.getFlag(CDKConstants.SINGLE_OR_DOUBLE) != true)
+                                        molecule.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+                                    if (preservingAromaticity) {
                                         atom.setFlag(CDKConstants.ISAROMATIC, true);
                                     }
-								} else
-								{
-									atom = builder.newInstance(IAtom.class,currentSymbol);
-								}
-							} else
-							{
-								atom = builder.newInstance(IAtom.class,currentSymbol);
-							}
-							logger.debug("Made atom: ", atom);
-						} else
-						{
-							throw new InvalidSmilesException(
-									"Found element which is not a 'organic subset' element. You must " +
-									"use [" + Character.toUpperCase(mychar) + "].");
-						}
-					}
-					addAtomToActiveChiralities(lastNode, atom);
-					molecule.addAtom(atom);
-					logger.debug("Adding atom ", atom.hashCode());
-					if ((lastNode != null) && bondExists)
-					{
-						logger.debug("Creating bond between ", atom.getSymbol(), " and ", lastNode.getSymbol());
-						bond = builder.newInstance(IBond.class,atom, lastNode, bondStatus);
+                                }
+                                else {
+                                    atom = builder.newInstance(IAtom.class, currentSymbol);
+                                }
+                            }
+                            else {
+                                atom = builder.newInstance(IAtom.class, currentSymbol);
+                            }
+                            logger.debug("Made atom: ", atom);
+                        }
+                        else {
+                            throw new InvalidSmilesException(
+                                    "Found element which is not a 'organic subset' element. You must " +
+                                            "use [" + Character.toUpperCase(mychar) + "].");
+                        }
+                    }
+                    addAtomToActiveChiralities(lastNode, atom);
+                    molecule.addAtom(atom);
+                    logger.debug("Adding atom ", atom.hashCode());
+                    if ((lastNode != null) && bondExists) {
+                        logger.debug("Creating bond between ", atom.getSymbol(), " and ", lastNode.getSymbol());
+                        bond = builder.newInstance(IBond.class, atom, lastNode, bondStatus);
                         if (bondIsAromatic) {
                             bond.setFlag(CDKConstants.ISAROMATIC, true);
                             if (preservingAromaticity) {
@@ -418,245 +406,228 @@ public class SmilesParser {
                                 bond.getAtom(1).setFlag(CDKConstants.ISAROMATIC, true);
                             }
                         }
-						molecule.addBond(bond);
-					}
-					bondStatus = CDKConstants.BONDORDER_SINGLE;
-					lastNode = atom;
-					nodeCounter++;
-					position = position + currentSymbol.length();
-					bondExists = true;
+                        molecule.addBond(bond);
+                    }
+                    bondStatus = CDKConstants.BONDORDER_SINGLE;
+                    lastNode = atom;
+                    nodeCounter++;
+                    position = position + currentSymbol.length();
+                    bondExists = true;
                     bondIsAromatic = false;
-				} else if (mychar == '=')
-				{
-					position++;
-					if (status == 2 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
-					{
-						bondStatus = CDKConstants.BONDORDER_DOUBLE;
-					} else
-					{
-						bondStatusForRingClosure = CDKConstants.BONDORDER_DOUBLE;
-					}
-				} else if (mychar == '#')
-				{
-					position++;
-					if (status == 2 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
-					{
-						bondStatus = CDKConstants.BONDORDER_TRIPLE;
-					} else
-					{
-						bondStatusForRingClosure = CDKConstants.BONDORDER_TRIPLE;
-					}
-				} else if (mychar == '(')
-				{
-					atomStack.push(lastNode);
-					logger.debug("Stack:");
-					Enumeration<IAtom> ses = atomStack.elements();
-					while (ses.hasMoreElements())
-					{
-						IAtom a = ses.nextElement();
-						logger.debug("", a.hashCode());
-					}
-					logger.debug("------");
-					bondStack.push(bondStatus);
-					position++;
-				} else if (mychar == ')')
-				{
-					lastNode = (IAtom) atomStack.pop();
-					logger.debug("Stack:");
-					Enumeration<IAtom> ses = atomStack.elements();
-					while (ses.hasMoreElements())
-					{
-						IAtom a = ses.nextElement();
-						logger.debug("", a.hashCode());
-					}
-					logger.debug("------");
-					bondStatus = bondStack.pop();
-					position++;
-				} else if (mychar >= '0' && mychar <= '9')
-				{
-					status = 2;
-					chars[0] = mychar;
-					currentSymbol = new String(chars);
-					thisRing = (Integer.valueOf(currentSymbol)).intValue();
-					handleRing(lastNode);
-					position++;
-				} else if (mychar == '%')
-				{
-					currentSymbol = getRingNumber(smiles, position);
-					thisRing = (Integer.valueOf(currentSymbol)).intValue();
-					handleRing(lastNode);
-					position += currentSymbol.length() + 1;
-				} else if (mychar == '[')
-				{
-					currentSymbol = getAtomString(smiles, position);
-					atom = assembleAtom(currentSymbol, lastNode, bondExists);
-					addAtomToActiveChiralities(lastNode, atom);
-					molecule.addAtom(atom);
-					logger.debug("Added atom: ", atom);
-					if (lastNode != null && bondExists)
-					{
-						bond = builder.newInstance(IBond.class,atom, lastNode, bondStatus);
-						            if (bondIsAromatic) {
+                }
+                else if (mychar == '=') {
+                    position++;
+                    if (status == 2 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%')) {
+                        bondStatus = CDKConstants.BONDORDER_DOUBLE;
+                    }
+                    else {
+                        bondStatusForRingClosure = CDKConstants.BONDORDER_DOUBLE;
+                    }
+                }
+                else if (mychar == '#') {
+                    position++;
+                    if (status == 2 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%')) {
+                        bondStatus = CDKConstants.BONDORDER_TRIPLE;
+                    }
+                    else {
+                        bondStatusForRingClosure = CDKConstants.BONDORDER_TRIPLE;
+                    }
+                }
+                else if (mychar == '(') {
+                    atomStack.push(lastNode);
+                    logger.debug("Stack:");
+                    Enumeration<IAtom> ses = atomStack.elements();
+                    while (ses.hasMoreElements()) {
+                        IAtom a = ses.nextElement();
+                        logger.debug("", a.hashCode());
+                    }
+                    logger.debug("------");
+                    bondStack.push(bondStatus);
+                    position++;
+                }
+                else if (mychar == ')') {
+                    lastNode = (IAtom) atomStack.pop();
+                    logger.debug("Stack:");
+                    Enumeration<IAtom> ses = atomStack.elements();
+                    while (ses.hasMoreElements()) {
+                        IAtom a = ses.nextElement();
+                        logger.debug("", a.hashCode());
+                    }
+                    logger.debug("------");
+                    bondStatus = bondStack.pop();
+                    position++;
+                }
+                else if (mychar >= '0' && mychar <= '9') {
+                    status = 2;
+                    chars[0] = mychar;
+                    currentSymbol = new String(chars);
+                    thisRing = (Integer.valueOf(currentSymbol)).intValue();
+                    handleRing(lastNode);
+                    position++;
+                }
+                else if (mychar == '%') {
+                    currentSymbol = getRingNumber(smiles, position);
+                    thisRing = (Integer.valueOf(currentSymbol)).intValue();
+                    handleRing(lastNode);
+                    position += currentSymbol.length() + 1;
+                }
+                else if (mychar == '[') {
+                    currentSymbol = getAtomString(smiles, position);
+                    atom = assembleAtom(currentSymbol, lastNode, bondExists);
+                    addAtomToActiveChiralities(lastNode, atom);
+                    molecule.addAtom(atom);
+                    logger.debug("Added atom: ", atom);
+                    if (lastNode != null && bondExists) {
+                        bond = builder.newInstance(IBond.class, atom, lastNode, bondStatus);
+                        if (bondIsAromatic) {
                             bond.setFlag(CDKConstants.ISAROMATIC, true);
                         }
-						molecule.addBond(bond);
-						logger.debug("Added bond: ", bond);
-					}
-					bondStatus = CDKConstants.BONDORDER_SINGLE;
+                        molecule.addBond(bond);
+                        logger.debug("Added bond: ", bond);
+                    }
+                    bondStatus = CDKConstants.BONDORDER_SINGLE;
                     bondIsAromatic = false;
-					lastNode = atom;
-					nodeCounter++;
-					position = position + currentSymbol.length() + 2;
-					// plus two for [ and ]
-					atom.setProperty(HAS_HARDCODED_HYDROGEN_COUNT, "yes");
-					if (atom.getImplicitHydrogenCount() == null) {
-						// zero implicit hydrogens is implied when the Hx syntax is not used
-						atom.setImplicitHydrogenCount(0);
-					}
-					bondExists = true;
-				} else if (mychar == '.')
-				{
-					bondExists = false;
-					position++;
-				} else if (mychar == '-')
-				{
-					bondExists = true;
-					// a simple single bond
-					position++;
-                } else if (mychar == ':') {
+                    lastNode = atom;
+                    nodeCounter++;
+                    position = position + currentSymbol.length() + 2;
+                    // plus two for [ and ]
+                    atom.setProperty(HAS_HARDCODED_HYDROGEN_COUNT, "yes");
+                    if (atom.getImplicitHydrogenCount() == null) {
+                        // zero implicit hydrogens is implied when the Hx syntax is not used
+                        atom.setImplicitHydrogenCount(0);
+                    }
+                    bondExists = true;
+                }
+                else if (mychar == '.') {
+                    bondExists = false;
+                    position++;
+                }
+                else if (mychar == '-') {
+                    bondExists = true;
+                    // a simple single bond
+                    position++;
+                }
+                else if (mychar == ':') {
                     bondExists = true;
                     bondIsAromatic = true;
                     position++;
-				} else if (mychar == '/' || mychar == '\\')
-				{
-					logger.warn("Ignoring stereo information for double bond");
-					position++;
-				} else if (mychar == '@')
-				{
-				    TemporaryChiralityStorage chirality = null;
-				    if (lastNode != null) {
-				        chirality = new TemporaryChiralityStorage(lastNode);
-				    } else {
-				        chirality = new TemporaryChiralityStorage();
-				    }
-				    // @ or @@
-					if (position < smiles.length() - 1 && smiles.charAt(position + 1) == '@')
-					{
-	                    chirality.chiralityValue = Chirality.CLOCKWISE;
-						position++;
-					} else {
-	                    chirality.chiralityValue = Chirality.ANTI_CLOCKWISE;
-					}
-					// @H or @@H ?
-					if (position < smiles.length() - 1 && smiles.charAt(position + 1) == 'H') {
+                }
+                else if (mychar == '/' || mychar == '\\') {
+                    logger.warn("Ignoring stereo information for double bond");
+                    position++;
+                }
+                else if (mychar == '@') {
+                    TemporaryChiralityStorage chirality = null;
+                    if (lastNode != null) {
+                        chirality = new TemporaryChiralityStorage(lastNode);
+                    }
+                    else {
+                        chirality = new TemporaryChiralityStorage();
+                    }
+                    // @ or @@
+                    if (position < smiles.length() - 1 && smiles.charAt(position + 1) == '@') {
+                        chirality.chiralityValue = Chirality.CLOCKWISE;
+                        position++;
+                    }
+                    else {
+                        chirality.chiralityValue = Chirality.ANTI_CLOCKWISE;
+                    }
+                    // @H or @@H ?
+                    if (position < smiles.length() - 1 && smiles.charAt(position + 1) == 'H') {
                         // because the current data model requires a ligancy four chirality to
-					    // have 4 IAtoms, we add an explicit hydrogen
-					    IAtom hydrogen = builder.newInstance(IAtom.class, "H");
-					    IBond newBond = builder.newInstance(IBond.class,
-					        atom, hydrogen, Order.SINGLE
-					    );
-					    molecule.addAtom(hydrogen);
-					    molecule.addBond(newBond);
-					    chirality.addAtom(hydrogen);
+                        // have 4 IAtoms, we add an explicit hydrogen
+                        IAtom hydrogen = builder.newInstance(IAtom.class, "H");
+                        IBond newBond = builder.newInstance(IBond.class,
+                                                            atom, hydrogen, Order.SINGLE
+                                                           );
+                        molecule.addAtom(hydrogen);
+                        molecule.addBond(newBond);
+                        chirality.addAtom(hydrogen);
                         position++;
                     }
                     chiralityInfo.put(lastNode, chirality);
-					position++;
-				} else
-				{
-					throw new InvalidSmilesException("Unexpected character found: " + mychar);
-				}
-			} catch (InvalidSmilesException exc)
-			{
-				logger.error("InvalidSmilesException while parsing char (in parseSmiles()) '" + 
-					mychar + "': " + exc.getMessage());
-				logger.debug(exc);
-				throw exc;
-			} catch (Exception exception)
-			{
-				logger.error("Error while parsing char '" + mychar + "': " + exception.getMessage());
-				logger.debug(exception);
-				throw new InvalidSmilesException("Error while parsing char: " + mychar, exception);
-			}
-			logger.debug("Parsing next char");
-		} while (position < smiles.length());
+                    position++;
+                }
+                else {
+                    throw new InvalidSmilesException("Unexpected character found: " + mychar);
+                }
+            } catch (InvalidSmilesException exc) {
+                logger.error("InvalidSmilesException while parsing char (in parseSmiles()) '" +
+                                     mychar + "': " + exc.getMessage());
+                logger.debug(exc);
+                throw exc;
+            } catch (Exception exception) {
+                logger.error("Error while parsing char '" + mychar + "': " + exception.getMessage());
+                logger.debug(exception);
+                throw new InvalidSmilesException("Error while parsing char: " + mychar, exception);
+            }
+            logger.debug("Parsing next char");
+        } while (position < smiles.length());
 
 
         if (thisRing != -1 && ringbonds[thisRing] != null && rings[thisRing] != null)
             throw new InvalidSmilesException("Rings weren't properly closed. Check ring numbers");
 
-		return molecule;
-	}
+        return molecule;
+    }
 
-	private String getAtomString(String smiles, int pos) throws InvalidSmilesException
-	{
-		logger.debug("getAtomString()");
-		StringBuffer atomString = new StringBuffer();
-		try
-		{
-			for (int f = pos + 1; f < smiles.length(); f++)
-			{
-				char character = smiles.charAt(f);
-				if (character == ']')
-				{
-					break;
-				} else
-				{
-					atomString.append(character);
-				}
-			}
-		} catch (Exception exception)
-		{
-			String message = "Problem parsing Atom specification given in brackets.\n";
-			message += "Invalid SMILES string was: " + smiles;
-			logger.error(message);
-			logger.debug(exception);
-			throw new InvalidSmilesException(message, exception);
-		}
-		return atomString.toString();
-	}
+    private String getAtomString(String smiles, int pos) throws InvalidSmilesException {
+        logger.debug("getAtomString()");
+        StringBuffer atomString = new StringBuffer();
+        try {
+            for (int f = pos + 1; f < smiles.length(); f++) {
+                char character = smiles.charAt(f);
+                if (character == ']') {
+                    break;
+                }
+                else {
+                    atomString.append(character);
+                }
+            }
+        } catch (Exception exception) {
+            String message = "Problem parsing Atom specification given in brackets.\n";
+            message += "Invalid SMILES string was: " + smiles;
+            logger.error(message);
+            logger.debug(exception);
+            throw new InvalidSmilesException(message, exception);
+        }
+        return atomString.toString();
+    }
 
-	private int getCharge(String chargeString, int position)
-	{
-		logger.debug("getCharge(): Parsing charge from: ", chargeString.substring(position));
-		int charge = 0;
-		if (chargeString.charAt(position) == '+')
-		{
-			charge = +1;
-			position++;
-		} else if (chargeString.charAt(position) == '-')
-		{
-			charge = -1;
-			position++;
-		} else
-		{
-			return charge;
-		}
-		StringBuffer multiplier = new StringBuffer();
-		while (position < chargeString.length() && Character.isDigit(chargeString.charAt(position)))
-		{
-			multiplier.append(chargeString.charAt(position));
-			position++;
-		}
-		if (multiplier.length() > 0)
-		{
-			logger.debug("Found multiplier: ", multiplier);
-			try
-			{
-				charge = charge * Integer.parseInt(multiplier.toString());
-			} catch (Exception exception)
-			{
-				logger.error("Could not parse positive atomic charge!");
-				logger.debug(exception);
-			}
-		}
-		logger.debug("Found charge: ", charge);
-		return charge;
-	}
+    private int getCharge(String chargeString, int position) {
+        logger.debug("getCharge(): Parsing charge from: ", chargeString.substring(position));
+        int charge = 0;
+        if (chargeString.charAt(position) == '+') {
+            charge = +1;
+            position++;
+        }
+        else if (chargeString.charAt(position) == '-') {
+            charge = -1;
+            position++;
+        }
+        else {
+            return charge;
+        }
+        StringBuffer multiplier = new StringBuffer();
+        while (position < chargeString.length() && Character.isDigit(chargeString.charAt(position))) {
+            multiplier.append(chargeString.charAt(position));
+            position++;
+        }
+        if (multiplier.length() > 0) {
+            logger.debug("Found multiplier: ", multiplier);
+            try {
+                charge = charge * Integer.parseInt(multiplier.toString());
+            } catch (Exception exception) {
+                logger.error("Could not parse positive atomic charge!");
+                logger.debug(exception);
+            }
+        }
+        logger.debug("Found charge: ", charge);
+        return charge;
+    }
 
-	private int getImplicitHydrogenCount(String s, int position)
-	{
-		logger.debug("getImplicitHydrogenCount(): Parsing implicit hydrogens from: " + s);
+    private int getImplicitHydrogenCount(String s, int position) {
+        logger.debug("getImplicitHydrogenCount(): Parsing implicit hydrogens from: " + s);
 
         // from the calling code, we only come here if we hit an H
         //
@@ -669,253 +640,225 @@ public class SmilesParser {
         // -1 if we get just H, and 1 if we see H1.
         //
         // This is a horrible kludge :( We need a JavaCC parser!
-		int count = 0;  // for the case of no H which is same as H0
-		if (s.charAt(position) == 'H')
-		{
-			StringBuffer multiplier = new StringBuffer();
-			while (position < (s.length() - 1) && Character.isDigit(s.charAt(position + 1)))
-			{
-				multiplier.append(s.charAt(position + 1));
-				position++;
-			}
-			if (multiplier.length() > 0)
-			{
-				try
-				{
-					count = Integer.parseInt(multiplier.toString());
-				} catch (Exception exception)
-				{
-					logger.error("Could not parse number of implicit hydrogens from the multiplier: " + multiplier);
-					logger.debug(exception);
-				}
-			} else count = -1; // since H == H1
-		}
-		return count;
-	}
+        int count = 0;  // for the case of no H which is same as H0
+        if (s.charAt(position) == 'H') {
+            StringBuffer multiplier = new StringBuffer();
+            while (position < (s.length() - 1) && Character.isDigit(s.charAt(position + 1))) {
+                multiplier.append(s.charAt(position + 1));
+                position++;
+            }
+            if (multiplier.length() > 0) {
+                try {
+                    count = Integer.parseInt(multiplier.toString());
+                } catch (Exception exception) {
+                    logger.error("Could not parse number of implicit hydrogens from the multiplier: " + multiplier);
+                    logger.debug(exception);
+                }
+            }
+            else count = -1; // since H == H1
+        }
+        return count;
+    }
 
-	private String getElementSymbol(String s, int pos)
-	{
-		logger.debug("getElementSymbol(): Parsing element symbol (pos=" + pos + ") from: " + s);
-		// try to match elements not in the organic subset.
-		// first, the two char elements
-		if (pos < s.length() - 1)
-		{
+    private String getElementSymbol(String s, int pos) {
+        logger.debug("getElementSymbol(): Parsing element symbol (pos=" + pos + ") from: " + s);
+        // try to match elements not in the organic subset.
+        // first, the two char elements
+        if (pos < s.length() - 1) {
             String possibleSymbol = ("" + s.charAt(pos)).toUpperCase() + s.charAt(pos + 1);
-			logger.debug("possibleSymbol: ", possibleSymbol);
-			if (PeriodicTable.getAtomicNumber(possibleSymbol) != null) {
-				return possibleSymbol;
-			}
-		}
-		// if that fails, the one char elements
-		String possibleSymbol = s.substring(pos, pos + 1);
-		logger.debug("possibleSymbol: ", possibleSymbol);
-		if (("HKUVYW".indexOf(possibleSymbol) >= 0))
-		{
-			return possibleSymbol;
-		}
-		// if that failed too, then possibly a organic subset element
-		return getSymbolForOrganicSubsetElement(s, pos);
-	}
+            logger.debug("possibleSymbol: ", possibleSymbol);
+            if (PeriodicTable.getAtomicNumber(possibleSymbol) != null) {
+                return possibleSymbol;
+            }
+        }
+        // if that fails, the one char elements
+        String possibleSymbol = s.substring(pos, pos + 1);
+        logger.debug("possibleSymbol: ", possibleSymbol);
+        if (("HKUVYW".indexOf(possibleSymbol) >= 0)) {
+            return possibleSymbol;
+        }
+        // if that failed too, then possibly a organic subset element
+        return getSymbolForOrganicSubsetElement(s, pos);
+    }
 
-	private void addAtomToActiveChiralities(IAtom chiAtom, IAtom atom) {
-	    for (IAtom chiralAtom : chiralityInfo.keySet()) {
-	        if (chiralAtom == atom)
-	            // but not if the new atom is the chiral atom itself
-	            continue;
-	        if (chiAtom != chiralAtom)
-	            // ok, the atom does not belong to this chirality
-	            continue;
-	        TemporaryChiralityStorage chirality = chiralityInfo.get(chiralAtom);
-	        if (chirality.counter < 4) chirality.addAtom(atom);
-	    }
-	}
+    private void addAtomToActiveChiralities(IAtom chiAtom, IAtom atom) {
+        for (IAtom chiralAtom : chiralityInfo.keySet()) {
+            if (chiralAtom == atom)
+                // but not if the new atom is the chiral atom itself
+                continue;
+            if (chiAtom != chiralAtom)
+                // ok, the atom does not belong to this chirality
+                continue;
+            TemporaryChiralityStorage chirality = chiralityInfo.get(chiralAtom);
+            if (chirality.counter < 4) chirality.addAtom(atom);
+        }
+    }
 
-	/**
-	 *  Gets the ElementSymbol for an element in the 'organic subset' for which
-	 *  brackets may be omited.
+    /**
+     * Gets the ElementSymbol for an element in the 'organic subset' for which
+     * brackets may be omited.
      *
      * We specifically support the case of aromatic boron (based on the OpenSmiles
      * specification), though Daylight appears to warn that aromatic boron is
      * unsual.
-	 *
-	 *  See: <a href="http://www.daylight.com/dayhtml/smiles/smiles-atoms.html">
-	 *  http://www.daylight.com/dayhtml/smiles/smiles-atoms.html</a> .
-	 */
-	private String getSymbolForOrganicSubsetElement(String s, int pos)
-	{
-		logger.debug("getSymbolForOrganicSubsetElement(): Parsing organic subset element from: ", s);
-		if (pos < s.length() - 1)
-		{
-			String possibleSymbol = s.substring(pos, pos + 2);
-			if (("ClBr".indexOf(possibleSymbol) >= 0))
-			{
-				return possibleSymbol;
-			}
-		}
-		if ("BbCcNnOoFPSsI".indexOf((s.charAt(pos))) >= 0)
-		{
-			return s.substring(pos, pos + 1);
-		}
-		if ("fpi".indexOf((s.charAt(pos))) >= 0)
-		{
-			logger.warn("Element ", s, " is normally not sp2 hybridisized!");
-			return s.substring(pos, pos + 1);
-		}
-		logger.warn("Subset element not found!");
-		return null;
-	}
+     *
+     * See: <a href="http://www.daylight.com/dayhtml/smiles/smiles-atoms.html">
+     * http://www.daylight.com/dayhtml/smiles/smiles-atoms.html</a> .
+     */
+    private String getSymbolForOrganicSubsetElement(String s, int pos) {
+        logger.debug("getSymbolForOrganicSubsetElement(): Parsing organic subset element from: ", s);
+        if (pos < s.length() - 1) {
+            String possibleSymbol = s.substring(pos, pos + 2);
+            if (("ClBr".indexOf(possibleSymbol) >= 0)) {
+                return possibleSymbol;
+            }
+        }
+        if ("BbCcNnOoFPSsI".indexOf((s.charAt(pos))) >= 0) {
+            return s.substring(pos, pos + 1);
+        }
+        if ("fpi".indexOf((s.charAt(pos))) >= 0) {
+            logger.warn("Element ", s, " is normally not sp2 hybridisized!");
+            return s.substring(pos, pos + 1);
+        }
+        logger.warn("Subset element not found!");
+        return null;
+    }
 
 
-	/**
-	 *  Gets the RingNumber attribute of the SmilesParser object
-	 */
-	private String getRingNumber(String s, int pos) throws InvalidSmilesException {
-		logger.debug("getRingNumber()");
-		pos++;
+    /** Gets the RingNumber attribute of the SmilesParser object */
+    private String getRingNumber(String s, int pos) throws InvalidSmilesException {
+        logger.debug("getRingNumber()");
+        pos++;
 
-		// Two digits impossible due to end of string
-		if (pos >= s.length() - 1)
-			throw new InvalidSmilesException("Percent sign ring closure numbers must be two-digit.");
+        // Two digits impossible due to end of string
+        if (pos >= s.length() - 1)
+            throw new InvalidSmilesException("Percent sign ring closure numbers must be two-digit.");
 
-		String retString = s.substring(pos, pos + 2);
+        String retString = s.substring(pos, pos + 2);
 
-		if (retString.charAt(0) < '0' || retString.charAt(0) > '9' || 
-			retString.charAt(1) < '0' || retString.charAt(1) > '9')
-			throw new InvalidSmilesException("Percent sign ring closure numbers must be two-digit.");
+        if (retString.charAt(0) < '0' || retString.charAt(0) > '9' ||
+                retString.charAt(1) < '0' || retString.charAt(1) > '9')
+            throw new InvalidSmilesException("Percent sign ring closure numbers must be two-digit.");
 
-		return retString;
-	}
+        return retString;
+    }
 
-	private IAtom assembleAtom(String s, IAtom lastNode, boolean bondExists) throws InvalidSmilesException
-	{
-		logger.debug("assembleAtom(): Assembling atom from: ", s);
-		IAtom atom = null;
-		int position = 0;
-		String currentSymbol = null;
-		StringBuffer isotopicNumber = new StringBuffer();
-		char mychar;
-		logger.debug("Parse everythings before and including element symbol");
-		do
-		{
-			try
-			{
-				mychar = s.charAt(position);
-				logger.debug("Parsing char: " + mychar);
-				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
-				{
-					currentSymbol = getElementSymbol(s, position);
-					if (currentSymbol == null)
-					{
+    private IAtom assembleAtom(String s, IAtom lastNode, boolean bondExists) throws InvalidSmilesException {
+        logger.debug("assembleAtom(): Assembling atom from: ", s);
+        IAtom atom = null;
+        int position = 0;
+        String currentSymbol = null;
+        StringBuffer isotopicNumber = new StringBuffer();
+        char mychar;
+        logger.debug("Parse everythings before and including element symbol");
+        do {
+            try {
+                mychar = s.charAt(position);
+                logger.debug("Parsing char: " + mychar);
+                if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z')) {
+                    currentSymbol = getElementSymbol(s, position);
+                    if (currentSymbol == null) {
                         throw new InvalidSmilesException(
-                            "Expected element symbol, found " + mychar + "!"
+                                "Expected element symbol, found " + mychar + "!"
                         );
-					} else
-					{
-						logger.debug("Found element symbol: ", currentSymbol);
-						position = position + currentSymbol.length();
-					    if(Character.isLowerCase(mychar)) {
-					        if (currentSymbol.length() == 1) {
-					            currentSymbol = currentSymbol.toUpperCase();
-					        }
-					        atom = builder.newInstance(IAtom.class,currentSymbol);
-					        atom.setHybridization(Hybridization.SP2);
-					        Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
-					        if (hcount > 0) {
-					            atom.setImplicitHydrogenCount(hcount - 1);
-					        }
-					        if (preservingAromaticity )
-					            atom.setFlag(CDKConstants.ISAROMATIC, true);
-					    }
-					    else
-					    {
-					        atom = builder.newInstance(IAtom.class,currentSymbol);
-					    }
-						logger.debug("Made atom: ", atom);
-					}
-					break;
-				} else if (mychar >= '0' && mychar <= '9')
-				{
-					isotopicNumber.append(mychar);
-					position++;
-				} else if (mychar == '*')
-				{
-					currentSymbol = "*";
-					atom = builder.newInstance(IPseudoAtom.class, currentSymbol);
-					logger.debug("Made atom: ", atom);
-					position++;
-					break;
-				} else
-				{
-					throw new InvalidSmilesException("Found unexpected char: " + mychar);
-				}
-			} catch (InvalidSmilesException exc)
-			{
-				logger.error("InvalidSmilesException while parsing atom string '" + s + "': " + exc.getMessage());
-				logger.debug(exc);
-				throw exc;
-			} catch (Exception exception)
-			{
-				logger.error("Could not parse atom string: ", s);
-				logger.debug(exception);
-				throw new InvalidSmilesException("Could not parse atom string '" + s + "': " + exception.getMessage(), exception);
-			}
-		} while (position < s.length());
-		if (isotopicNumber.toString().length() > 0)
-		{
-			try
-			{
-				atom.setMassNumber(Integer.parseInt(isotopicNumber.toString()));
-			} catch (Exception exception)
-			{
-				logger.error("Could not set atom's isotope number '" + isotopicNumber + "'");
-				logger.debug(exception);
-			}
-		}
-		logger.debug("Parsing part after element symbol (like charge): ", s.substring(position));
-		int charge = 0;
-		int implicitHydrogens = 0;
-		while (position < s.length())
-		{
-			try
-			{
-				mychar = s.charAt(position);
-				logger.debug("Parsing char: " + mychar);
-				if (mychar == 'H')
-				{
-					// count implicit hydrogens
-					implicitHydrogens = getImplicitHydrogenCount(s, position);
-					position++;
+                    }
+                    else {
+                        logger.debug("Found element symbol: ", currentSymbol);
+                        position = position + currentSymbol.length();
+                        if (Character.isLowerCase(mychar)) {
+                            if (currentSymbol.length() == 1) {
+                                currentSymbol = currentSymbol.toUpperCase();
+                            }
+                            atom = builder.newInstance(IAtom.class, currentSymbol);
+                            atom.setHybridization(Hybridization.SP2);
+                            Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
+                            if (hcount > 0) {
+                                atom.setImplicitHydrogenCount(hcount - 1);
+                            }
+                            if (preservingAromaticity)
+                                atom.setFlag(CDKConstants.ISAROMATIC, true);
+                        }
+                        else {
+                            atom = builder.newInstance(IAtom.class, currentSymbol);
+                        }
+                        logger.debug("Made atom: ", atom);
+                    }
+                    break;
+                }
+                else if (mychar >= '0' && mychar <= '9') {
+                    isotopicNumber.append(mychar);
+                    position++;
+                }
+                else if (mychar == '*') {
+                    currentSymbol = "*";
+                    atom = builder.newInstance(IPseudoAtom.class, currentSymbol);
+                    logger.debug("Made atom: ", atom);
+                    position++;
+                    break;
+                }
+                else {
+                    throw new InvalidSmilesException("Found unexpected char: " + mychar);
+                }
+            } catch (InvalidSmilesException exc) {
+                logger.error("InvalidSmilesException while parsing atom string '" + s + "': " + exc.getMessage());
+                logger.debug(exc);
+                throw exc;
+            } catch (Exception exception) {
+                logger.error("Could not parse atom string: ", s);
+                logger.debug(exception);
+                throw new InvalidSmilesException("Could not parse atom string '" + s + "': " + exception.getMessage(), exception);
+            }
+        } while (position < s.length());
+        if (isotopicNumber.toString().length() > 0) {
+            try {
+                atom.setMassNumber(Integer.parseInt(isotopicNumber.toString()));
+            } catch (Exception exception) {
+                logger.error("Could not set atom's isotope number '" + isotopicNumber + "'");
+                logger.debug(exception);
+            }
+        }
+        logger.debug("Parsing part after element symbol (like charge): ", s.substring(position));
+        int charge = 0;
+        int implicitHydrogens = 0;
+        while (position < s.length()) {
+            try {
+                mychar = s.charAt(position);
+                logger.debug("Parsing char: " + mychar);
+                if (mychar == 'H') {
+                    // count implicit hydrogens
+                    implicitHydrogens = getImplicitHydrogenCount(s, position);
+                    position++;
 
                     // we check if H was followed by a number. if it wasn't, then the return value
                     // of getImplicitHydrogens is -1. See comments in that method
-					if (implicitHydrogens >= 0)
-					{
-						position++;
-					}
-                    if (implicitHydrogens == -1) implicitHydrogens = 1;                    
-					atom.setImplicitHydrogenCount(implicitHydrogens);
-				} else if (mychar == '+' || mychar == '-')
-				{
-					charge = getCharge(s, position);
-					position++; // skip the +
-					// skip all digits following the +
-					while (position < s.length() && Character.isDigit(s.charAt(position))) {
-						position++;
-					}
-					atom.setFormalCharge(charge);
-				} else if (mychar == '@')
-				{
+                    if (implicitHydrogens >= 0) {
+                        position++;
+                    }
+                    if (implicitHydrogens == -1) implicitHydrogens = 1;
+                    atom.setImplicitHydrogenCount(implicitHydrogens);
+                }
+                else if (mychar == '+' || mychar == '-') {
+                    charge = getCharge(s, position);
+                    position++; // skip the +
+                    // skip all digits following the +
+                    while (position < s.length() && Character.isDigit(s.charAt(position))) {
+                        position++;
+                    }
+                    atom.setFormalCharge(charge);
+                }
+                else if (mychar == '@') {
                     TemporaryChiralityStorage chirality = null;
                     if (lastNode != null && bondExists) {
                         chirality = new TemporaryChiralityStorage(lastNode);
-                    } else {
+                    }
+                    else {
                         chirality = new TemporaryChiralityStorage();
                     }
-                    if (position < s.length() - 1 && s.charAt(position + 1) == '@')
-                    {
+                    if (position < s.length() - 1 && s.charAt(position + 1) == '@') {
                         chirality.chiralityValue = Chirality.CLOCKWISE;
                         position++;
-                    } else {
+                    }
+                    else {
                         chirality.chiralityValue = Chirality.ANTI_CLOCKWISE;
                     }
                     // @H or @@H ?
@@ -924,8 +867,8 @@ public class SmilesParser {
                         // have 4 IAtoms, we add an explicit hydrogen
                         IAtom hydrogen = builder.newInstance(IAtom.class, "H");
                         IBond newBond = builder.newInstance(IBond.class,
-                            atom, hydrogen, Order.SINGLE
-                        );
+                                                            atom, hydrogen, Order.SINGLE
+                                                           );
                         molecule.addAtom(hydrogen);
                         molecule.addBond(newBond);
                         chirality.addAtom(hydrogen);
@@ -933,84 +876,81 @@ public class SmilesParser {
                     }
                     chiralityInfo.put(atom, chirality);
                     position++;
-				} else
-				{
-					throw new InvalidSmilesException("Found unexpected char: " + mychar);
-				}
-			} catch (InvalidSmilesException exc)
-			{
-				logger.error("InvalidSmilesException while parsing atom string: ", s);
-				logger.debug(exc);
-				throw exc;
-			} catch (Exception exception)
-			{
-				logger.error("Could not parse atom string: ", s);
-				logger.debug(exception);
-				throw new InvalidSmilesException("Could not parse atom string: " + s, exception);
-			}
-		}
-		return atom;
-	}
+                }
+                else {
+                    throw new InvalidSmilesException("Found unexpected char: " + mychar);
+                }
+            } catch (InvalidSmilesException exc) {
+                logger.error("InvalidSmilesException while parsing atom string: ", s);
+                logger.debug(exc);
+                throw exc;
+            } catch (Exception exception) {
+                logger.error("Could not parse atom string: ", s);
+                logger.debug(exception);
+                throw new InvalidSmilesException("Could not parse atom string: " + s, exception);
+            }
+        }
+        return atom;
+    }
 
 
-	/**
-	 * We call this method when a ring (depicted by a number) has been found.
-	 *
-	 * @throws CDKException when a ring closure error was found 
-	 */
-	private void handleRing(IAtom atom) throws CDKException
-	{
-		logger.debug("handleRing():");
-		IBond.Order bondStat = bondStatusForRingClosure;
-		if (BondManipulator.isHigherOrder(ringbonds[thisRing], bondStat))
-			bondStat = ringbonds[thisRing];
-		IBond bond = null;
-		IAtom partner = null;
-		IAtom thisNode = rings[thisRing];
-		IAtom templateAtom = ringOtherAtoms[thisRing];
-		// lookup
-		if (thisNode != null)
-		{
-			partner = thisNode;
-			replaceTemplateAtomInStereos(templateAtom, atom);
-			if (chiralityInfo.containsKey(atom))
-			    addAtomToActiveChiralities(atom, partner);
-			// OK, I am about to make a ring bond, but I will first check if that bond is
-			// not connecting to already connected atoms, like in C1C1.
-			if (molecule.getConnectedAtomsList(atom).contains(partner))
-				throw new CDKException("SMILES strings cannot ring close two directly connected atoms.");
-			bond = builder.newInstance(IBond.class,atom, partner, bondStat);
-			if (bondIsAromatic) {
+    /**
+     * We call this method when a ring (depicted by a number) has been found.
+     *
+     * @throws CDKException when a ring closure error was found
+     */
+    private void handleRing(IAtom atom) throws CDKException {
+        logger.debug("handleRing():");
+        IBond.Order bondStat = bondStatusForRingClosure;
+        if (BondManipulator.isHigherOrder(ringbonds[thisRing], bondStat))
+            bondStat = ringbonds[thisRing];
+        IBond bond = null;
+        IAtom partner = null;
+        IAtom thisNode = rings[thisRing];
+        IAtom templateAtom = ringOtherAtoms[thisRing];
+        // lookup
+        if (thisNode != null) {
+            partner = thisNode;
+            replaceTemplateAtomInStereos(templateAtom, atom);
+            if (chiralityInfo.containsKey(atom))
+                addAtomToActiveChiralities(atom, partner);
+            // OK, I am about to make a ring bond, but I will first check if that bond is
+            // not connecting to already connected atoms, like in C1C1.
+            if (molecule.getConnectedAtomsList(atom).contains(partner))
+                throw new CDKException("SMILES strings cannot ring close two directly connected atoms.");
+            bond = builder.newInstance(IBond.class, atom, partner, bondStat);
+            if (bondIsAromatic) {
                 bond.setFlag(CDKConstants.ISAROMATIC, true);
             }
-			molecule.addBond(bond);
+            molecule.addBond(bond);
             bondIsAromatic = false;
-			rings[thisRing] = null;
-			ringbonds[thisRing] = null;
-			ringOtherAtoms[thisRing] = null;
-		} else
-		{
-			/*
+            rings[thisRing] = null;
+            ringbonds[thisRing] = null;
+            ringOtherAtoms[thisRing] = null;
+        }
+        else {
+            /*
 			 *  First occurence of this ring:
 			 *  - add current atom to list
 			 */
-			rings[thisRing] = atom;
-			ringOtherAtoms[thisRing] = builder.newInstance(IAtom.class);
-			addAtomToActiveChiralities(atom, ringOtherAtoms[thisRing]);
-			ringbonds[thisRing] = bondStatusForRingClosure;
-		}
-		bondStatusForRingClosure = IBond.Order.SINGLE;
-	}
+            rings[thisRing] = atom;
+            ringOtherAtoms[thisRing] = builder.newInstance(IAtom.class);
+            addAtomToActiveChiralities(atom, ringOtherAtoms[thisRing]);
+            ringbonds[thisRing] = bondStatusForRingClosure;
+        }
+        bondStatusForRingClosure = IBond.Order.SINGLE;
+    }
 
-	/**
-	 * Replaces the <code>templateAtom</code> by <code>atom</code> in all currently defined stereochemistries.
-	 *
-	 * @param templateAtom {@link IAtom} to replace
-	 * @param atom         new {@link IAtom}
-	 */
-	private void replaceTemplateAtomInStereos(IAtom templateAtom, IAtom atom) {
-	    for (TemporaryChiralityStorage chirality : chiralityInfo.values()) {
-            for (int i=0; i<4; i++) {
+    /**
+     * Replaces the <code>templateAtom</code> by <code>atom</code> in all currently
+     * defined stereochemistries.
+     *
+     * @param templateAtom {@link IAtom} to replace
+     * @param atom         new {@link IAtom}
+     */
+    private void replaceTemplateAtomInStereos(IAtom templateAtom, IAtom atom) {
+        for (TemporaryChiralityStorage chirality : chiralityInfo.values()) {
+            for (int i = 0; i < 4; i++) {
                 if (chirality.atoms[i] == templateAtom)
                     chirality.atoms[i] = atom;
             }
@@ -1018,57 +958,62 @@ public class SmilesParser {
     }
 
     private void addImplicitHydrogens(IAtomContainer container) {
-		try {
-			logger.debug("before H-adding: ", container);
-			Iterator<IAtom> atoms = container.atoms().iterator();
-			while (atoms.hasNext()) {
-				IAtom nextAtom = atoms.next();
-				if (nextAtom.getProperty(HAS_HARDCODED_HYDROGEN_COUNT) == null) {
-					hAdder.addImplicitHydrogens(container, nextAtom);
-				}
-			}
-			logger.debug("after H-adding: ", container);
-		} catch (Exception exception) {
-			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
-		}
-	}
+        try {
+            logger.debug("before H-adding: ", container);
+            Iterator<IAtom> atoms = container.atoms().iterator();
+            while (atoms.hasNext()) {
+                IAtom nextAtom = atoms.next();
+                if (nextAtom.getProperty(HAS_HARDCODED_HYDROGEN_COUNT) == null) {
+                    hAdder.addImplicitHydrogens(container, nextAtom);
+                }
+            }
+            logger.debug("after H-adding: ", container);
+        } catch (Exception exception) {
+            logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
+        }
+    }
 
-	private void perceiveAromaticity(IAtomContainer m) {
-	    IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(m);
-		logger.debug("#mols ", moleculeSet.getAtomContainerCount());
-		for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
-			IAtomContainer molecule = moleculeSet.getAtomContainer(i);
-			logger.debug("mol: ", molecule);
-			try {
-				logger.debug(" after saturation: ", molecule);
-				if (CDKHueckelAromaticityDetector
-						.detectAromaticity(molecule)) {
-					logger.debug("Structure is aromatic...");
-				}
-			} catch (Exception exception) {
-				logger.error("Could not perceive aromaticity: ", exception
-						.getMessage());
-				logger.debug(exception);
-			}
-		}
-	}
+    private void perceiveAromaticity(IAtomContainer m) {
+        IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(m);
+        logger.debug("#mols ", moleculeSet.getAtomContainerCount());
+        for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
+            IAtomContainer molecule = moleculeSet.getAtomContainer(i);
+            logger.debug("mol: ", molecule);
+            try {
+                logger.debug(" after saturation: ", molecule);
+                if (CDKHueckelAromaticityDetector
+                        .detectAromaticity(molecule)) {
+                    logger.debug("Structure is aromatic...");
+                }
+            } catch (Exception exception) {
+                logger.error("Could not perceive aromaticity: ", exception
+                        .getMessage());
+                logger.debug(exception);
+            }
+        }
+    }
 
     /**
-     * Makes the Smiles parser set aromaticity as provided in the Smiles itself, without detecting it.
-     * Default false. Atoms will not be typed when set to true.
-     * @param preservingAromaticity boolean to indicate if aromaticity is to be preserved.
+     * Makes the Smiles parser set aromaticity as provided in the Smiles itself,
+     * without detecting it. Default false. Atoms will not be typed when set to
+     * true.
+     *
+     * @param preservingAromaticity boolean to indicate if aromaticity is to be
+     *                              preserved.
      */
     public void setPreservingAromaticity(boolean preservingAromaticity) {
         this.preservingAromaticity = preservingAromaticity;
     }
 
     /**
-     * Gets the (default false) setting to preserve aromaticity as provided in the Smiles itself.
+     * Gets the (default false) setting to preserve aromaticity as provided in
+     * the Smiles itself.
+     *
      * @return true or false indicating if aromaticity is preserved.
      */
     public boolean isPreservingAromaticity() {
         return preservingAromaticity;
     }
-	
+
 }
 
