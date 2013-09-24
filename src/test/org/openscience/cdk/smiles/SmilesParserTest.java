@@ -2379,6 +2379,16 @@ public class SmilesParserTest extends CDKTestCase {
         }
         return aromCount;
     }
+    
+    static IAtomContainer load(String smi) throws InvalidSmilesException {
+        return new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles(smi);
+    }
+
+    static IAtomContainer loadExact(String smi) throws InvalidSmilesException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        parser.setPreservingAromaticity(true);
+        return parser.parseSmiles(smi);
+    }
 
 }
 
