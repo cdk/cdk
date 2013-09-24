@@ -290,12 +290,17 @@ public class SmilesParserTest extends CDKTestCase {
 	}
 	
 	@org.junit.Test (timeout=1000)
-	public void test239_64_5 () throws Exception {
-		String smiles = "c1ccc4c(c1)ccc5c3ccc2ccccc2c3nc45";
+	public void test239_64_5() throws Exception {
+		String smiles = "c1ccc4c(c1)ccc5c3ccc2ccccc2c3[nH]c45";
 		IAtomContainer mol = sp.parseSmiles(smiles);
 		assertAtomTypesPerceived(mol);
         Assert.assertEquals(21, mol.getAtomCount());
 	}
+    
+    @Test(expected = InvalidSmilesException.class)
+    public void test239_64_5_invalid() throws Exception {
+        load("c1ccc4c(c1)ccc5c3ccc2ccccc2c3nc45");     
+    }
 	
 	/*
 	 * Compounds like Indolizine (274-40-8) with a fused nitrogen as part of a 6 membered ring
