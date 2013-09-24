@@ -65,10 +65,19 @@ import java.util.StringTokenizer;
  * @cdk.bug 1579244
  */
 @TestClass("org.openscience.cdk.smiles.SmilesParserTest")
-public class SmilesParser {
+public final class SmilesParser {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
-    protected IChemObjectBuilder builder;
+
+    /**
+     * The builder determines which CDK domain objects to create.
+     */
+    private final IChemObjectBuilder builder;
+
+    /**
+     * Direct converter from Beam to CDK.
+     */
+    private final BeamToCDK beamToCDK;
 
     /*
      * Boolean to preserve aromaticity as provided in the Smiles itself (through lowecase letters (c1cccc1) or colons).
@@ -78,12 +87,14 @@ public class SmilesParser {
     private boolean preservingAromaticity = false;
 
     /**
-     * Constructor for the SmilesParser object.
+     * Create a new SMILES parser which will create {@link IAtomContainer}s with
+     * the specified builder.
      *
-     * @param builder IChemObjectBuilder used to create the IMolecules from
+     * @param builder used to create the CDK domain objects
      */
-    public SmilesParser(IChemObjectBuilder builder) {
-        this.builder = builder;
+    public SmilesParser(final IChemObjectBuilder builder) {
+        this.builder   = builder;
+        this.beamToCDK = new BeamToCDK(builder);
     }
 
     /**
