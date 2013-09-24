@@ -1,4 +1,4 @@
 vecmath*.jar
 guava-14.0.1.jar
-beam-core-0.1-SNAPSHOT.jar
-beam-func-0.1-SNAPSHOT.jar
+beam-core-0.2-SNAPSHOT.jar
+beam-func-0.2-SNAPSHOT.jar
