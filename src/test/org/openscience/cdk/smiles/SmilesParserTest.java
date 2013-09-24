@@ -1193,7 +1193,7 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testBug1459299() throws Exception {
 		IAtomContainer mol = sp.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
 		Assert.assertNotNull(mol);
-		Assert.assertEquals(25, mol.getAtomCount());
+		Assert.assertEquals(22, mol.getAtomCount());
 	}
 	
 	/**
@@ -1308,9 +1308,9 @@ public class SmilesParserTest extends CDKTestCase {
 		//                              01  2  3  4  5 67 8
 		IAtomContainer mol = sp.parseSmiles("OC(=O)[C@@H](N)CC[S+1](C)C[C@@H](O1)[C@@H](O)[C@@H](O)[C@@H]1n(c3)c(n2)c(n3)c(N)nc2");
 		Assert.assertNotNull(mol);
-		Assert.assertEquals(32, mol.getAtomCount());
-		Assert.assertEquals(34, mol.getBondCount());
-		Assert.assertEquals(1, mol.getAtom(8).getFormalCharge().intValue());
+		Assert.assertEquals(27, mol.getAtomCount());
+		Assert.assertEquals(29, mol.getBondCount());
+		Assert.assertEquals(1, mol.getAtom(7).getFormalCharge().intValue());
 	}
 	
 	/**
@@ -1805,7 +1805,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IAtomContainer mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
 		IAtomContainer mol2=DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, mol);		
 		Assert.assertNotNull(mol2);
-		Assert.assertEquals(25, mol2.getAtomCount());
+		Assert.assertEquals(22, mol2.getAtomCount());
 	}
 
     @Test public void testExplicitH() throws Exception {
