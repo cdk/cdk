@@ -816,10 +816,10 @@ public class SmilesParserTest extends CDKTestCase {
 	 * @cdk.bug   956929
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
 	 *
-	 * @see #testPyrolle()
+	 * @see #testPyrrole()
 	 */
 	@org.junit.Test (timeout=1000)
-	public void testPyrole() throws Exception {
+	public void testPyrrole() throws Exception {
 		String smiles = "c1ccc[NH]1";
 		IAtomContainer mol = sp.parseSmiles(smiles);
 		for(int i=0;i<mol.getAtomCount();i++){
@@ -1876,12 +1876,27 @@ public class SmilesParserTest extends CDKTestCase {
     /**
      * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
      *
-     * @see #testPyrole()
+     * @see #testPyrrole()
      */
     @Test
-    public void testPyrolle() throws InvalidSmilesException{
+    public void testPyrrole_2() throws Exception {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = p.parseSmiles("c1c[nH]cc1");
+        IAtomContainer mol = p.parseSmiles("c1c[nH]cc1");            
+        
+        assertThat(mol.getBond(mol.getAtom(0), mol.getAtom(1)).getOrder(),
+                   is(IBond.Order.DOUBLE));
+        assertThat(mol.getBond(mol.getAtom(1), mol.getAtom(2)).getOrder(),
+                   is(IBond.Order.SINGLE));
+        assertThat(mol.getBond(mol.getAtom(2), mol.getAtom(3)).getOrder(),
+                   is(IBond.Order.SINGLE));
+        assertThat(mol.getBond(mol.getAtom(3), mol.getAtom(4)).getOrder(),
+                   is(IBond.Order.DOUBLE));
+        assertThat(mol.getBond(mol.getAtom(4), mol.getAtom(0)).getOrder(),
+                   is(IBond.Order.SINGLE));
+        
+        atomtype(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        
         for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
