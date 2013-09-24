@@ -2061,10 +2061,12 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
         for (IAtom atom : ligands) Assert.assertNotNull(atom);
-        Assert.assertEquals("Br", ligands[0].getSymbol());
-        Assert.assertEquals("H", ligands[1].getSymbol());
-        Assert.assertEquals("Cl", ligands[2].getSymbol());
-        Assert.assertEquals("I", ligands[3].getSymbol());
+        // note: the tetrahedral centre holds atom '1' to refer to implicit
+        // hydrogen
+        Assert.assertEquals(mol.getAtom(0), ligands[0]);
+        Assert.assertEquals(mol.getAtom(1), ligands[1]);
+        Assert.assertEquals(mol.getAtom(2), ligands[2]);
+        Assert.assertEquals(mol.getAtom(3), ligands[3]);
         Assert.assertEquals(Stereo.CLOCKWISE, l4Chiral.getStereo());
     }
 
@@ -2085,10 +2087,12 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
         for (IAtom atom : ligands) Assert.assertNotNull(atom);
-        Assert.assertEquals("Br", ligands[0].getSymbol());
-        Assert.assertEquals("H", ligands[1].getSymbol());
-        Assert.assertEquals("Cl", ligands[2].getSymbol());
-        Assert.assertEquals("I", ligands[3].getSymbol());
+        // note: the tetrahedral centre holds atom '1' to refer to implicit
+        // hydrogen
+        Assert.assertEquals(mol.getAtom(0), ligands[0]);
+        Assert.assertEquals(mol.getAtom(1), ligands[1]);
+        Assert.assertEquals(mol.getAtom(2), ligands[2]);
+        Assert.assertEquals(mol.getAtom(3), ligands[3]);
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
     }
 
@@ -2154,11 +2158,13 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
         for (IAtom atom : ligands) Assert.assertNotNull(atom);
-        Assert.assertEquals("C", ligands[0].getSymbol());
-        Assert.assertEquals("N", ligands[1].getSymbol());
-        Assert.assertEquals("O", ligands[2].getSymbol());
-        Assert.assertEquals("N", ligands[3].getSymbol());
-        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+        // note: ligands are given in the order they appear in (hence in this
+        // case the winding (getStereo) has flipped
+        Assert.assertEquals(mol.getAtom(1), ligands[0]);
+        Assert.assertEquals(mol.getAtom(2), ligands[1]);
+        Assert.assertEquals(mol.getAtom(3), ligands[2]);
+        Assert.assertEquals(mol.getAtom(5), ligands[3]);
+        Assert.assertEquals(Stereo.CLOCKWISE, l4Chiral.getStereo());
     }
 
     @Test public void testNeighboringChirality() throws Exception {
@@ -2174,10 +2180,10 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
         for (IAtom atom : ligands) Assert.assertNotNull(atom);
-        Assert.assertEquals("C", ligands[0].getSymbol());
-        Assert.assertEquals("H", ligands[1].getSymbol());
-        Assert.assertEquals("O", ligands[2].getSymbol());
-        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(mol.getAtom(0), ligands[0]);
+        Assert.assertEquals(mol.getAtom(1), ligands[1]);
+        Assert.assertEquals(mol.getAtom(2), ligands[2]);
+        Assert.assertEquals(mol.getAtom(3), ligands[3]);
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
         // second chiral center
         Assert.assertTrue(stereoElements.hasNext());
@@ -2188,10 +2194,10 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         ligands = l4Chiral.getLigands();
         for (IAtom atom : ligands) Assert.assertNotNull(atom);
-        Assert.assertEquals("C", ligands[0].getSymbol());
-        Assert.assertEquals("H", ligands[1].getSymbol());
-        Assert.assertEquals("O", ligands[2].getSymbol());
-        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(mol.getAtom(1), ligands[0]);
+        Assert.assertEquals(mol.getAtom(3), ligands[1]);
+        Assert.assertEquals(mol.getAtom(4), ligands[2]);
+        Assert.assertEquals(mol.getAtom(5), ligands[3]);
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
     }
 
@@ -2208,10 +2214,10 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
         for (IAtom atom : ligands) Assert.assertNotNull(atom);
-        Assert.assertEquals("C", ligands[0].getSymbol());
-        Assert.assertEquals("H", ligands[1].getSymbol());
-        Assert.assertEquals("O", ligands[2].getSymbol());
-        Assert.assertEquals("C", ligands[3].getSymbol());
+        Assert.assertEquals(mol.getAtom(1), ligands[0]);
+        Assert.assertEquals(mol.getAtom(2), ligands[1]); // refers to implicit hydrogen
+        Assert.assertEquals(mol.getAtom(3), ligands[2]);
+        Assert.assertEquals(mol.getAtom(4), ligands[3]);
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
     }
 
@@ -2265,11 +2271,13 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
         IAtom[] ligands = l4Chiral.getLigands();
         for (IAtom atom : ligands) Assert.assertNotNull(atom);
-        Assert.assertEquals("H", ligands[0].getSymbol());
-        Assert.assertEquals("C", ligands[1].getSymbol());
-        Assert.assertEquals("F", ligands[2].getSymbol());
-        Assert.assertEquals("N", ligands[3].getSymbol());
-        Assert.assertEquals(Stereo.CLOCKWISE, l4Chiral.getStereo());
+        // note: ligands are given in the order they appear in (hence in this
+        // case the winding (getStereo) has flipped (0,1,3,2) -> (0,1,2,3) 
+        Assert.assertEquals(mol.getAtom(0), ligands[0]);
+        Assert.assertEquals(mol.getAtom(1), ligands[1]);
+        Assert.assertEquals(mol.getAtom(2), ligands[2]);
+        Assert.assertEquals(mol.getAtom(3), ligands[3]);
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
     }
 
     @Test public void testFromBlog2() throws Exception {
@@ -2283,21 +2291,24 @@ public class SmilesParserTest extends CDKTestCase {
             Assert.assertTrue(stereoElement instanceof ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
             Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
-            if (l4Chiral.getStereo() == Stereo.CLOCKWISE) {
+            if (l4Chiral.getChiralAtom() == mol.getAtom(0)) {
                 IAtom[] ligands = l4Chiral.getLigands();
                 for (IAtom atom : ligands) Assert.assertNotNull(atom);
-                Assert.assertEquals("H", ligands[0].getSymbol());
-                Assert.assertEquals("Cl", ligands[1].getSymbol());
-                Assert.assertEquals("Br", ligands[2].getSymbol());
-                Assert.assertEquals("C", ligands[3].getSymbol());
-            } else {
+                // note: ligands are given in the order they appear, there is
+                // one inversion (0,1,5,2) -> (0,1,2,5) so winding flips
+                Assert.assertEquals(mol.getAtom(0), ligands[0]);
+                Assert.assertEquals(mol.getAtom(1), ligands[1]);
+                Assert.assertEquals(mol.getAtom(2), ligands[2]);
+                Assert.assertEquals(mol.getAtom(5), ligands[3]);
                 Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
+            } else {
                 IAtom[] ligands = l4Chiral.getLigands();
                 for (IAtom atom : ligands) Assert.assertNotNull(atom);
-                Assert.assertEquals("C", ligands[0].getSymbol());
-                Assert.assertEquals("H", ligands[1].getSymbol());
-                Assert.assertEquals("C", ligands[2].getSymbol());
-                Assert.assertEquals("F", ligands[3].getSymbol());
+                Assert.assertEquals(mol.getAtom(0), ligands[0]);
+                Assert.assertEquals(mol.getAtom(2), ligands[1]);
+                Assert.assertEquals(mol.getAtom(3), ligands[2]);
+                Assert.assertEquals(mol.getAtom(4), ligands[3]);
+                Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
             }
         }
     }
