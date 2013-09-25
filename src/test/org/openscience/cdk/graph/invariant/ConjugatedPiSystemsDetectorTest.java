@@ -501,6 +501,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	@Test public void testChargeWithProtonExplicit() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		SmilesParser sp = new SmilesParser(builder);
 		IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
@@ -525,6 +526,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	@Test public void testChargeWithProtonImplicit() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		SmilesParser sp = new SmilesParser(builder);
 		IAtomContainer mol = sp.parseSmiles("C=C[C+]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
