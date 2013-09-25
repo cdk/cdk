@@ -107,6 +107,14 @@ public class CIPTool {
     @TestMethod("testGetCIPChirality_ILigancyFourChirality,testGetCIPChirality_Anti_ILigancyFourChirality")
     public static CIP_CHIRALITY getCIPChirality(
             IAtomContainer container, ITetrahedralChirality stereoCenter) {
+        
+        // TODO allow implicit hydrogen / lone pair
+        for (IAtom atom : stereoCenter.getLigands()) {
+            if (atom.equals(stereoCenter.getChiralAtom()))
+                throw new UnsupportedOperationException("Tetrahedral centre has an implicit hydrogen or lone pair" +
+                                                                " - CIPTool does not yet support for this.");
+        }
+        
         LigancyFourChirality cipLigancy = new LigancyFourChirality(container, stereoCenter);
         ILigand[] ligands = order(cipLigancy.getLigands());
         LigancyFourChirality rsChirality = cipLigancy.project(ligands);
