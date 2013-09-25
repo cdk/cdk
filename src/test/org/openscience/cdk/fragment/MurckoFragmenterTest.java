@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +118,8 @@ public class MurckoFragmenterTest extends CDKTestCase {
     @Test
     public void testMF2() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
         fragmenter.generateFragments(mol);
 
         String[] rings = fragmenter.getRingSystems();
