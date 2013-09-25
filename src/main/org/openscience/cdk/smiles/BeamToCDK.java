@@ -41,6 +41,8 @@ import uk.ac.ebi.beam.Configuration;
 import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.Element;
 
+import java.util.Arrays;
+
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
@@ -232,8 +234,16 @@ final class BeamToCDK {
 
         // no way to handle tetrahedral configurations with implicit
         // hydrogen or lone pair at the moment
-        if (vs.length != 4)
-            return null;
+        if (vs.length != 4) {
+
+            // sanity check
+            if (vs.length != 3)
+                return null;
+
+            // there is an implicit hydrogen (or lone-pair) we insert the
+            // central atom in sorted position
+            vs = insert(u, vs);
+        }
 
         // @TH1/@TH2 = anti-clockwise and clockwise respectively
         Stereo stereo = c == Configuration.TH1 ? Stereo.ANTI_CLOCKWISE
@@ -247,6 +257,29 @@ final class BeamToCDK {
                                                 atoms[vs[3]]
                                         },
                                         stereo);
+    }
+
+    /**
+     * Insert the vertex 'v' into sorted position in the array 'vs'.
+     *
+     * @param v  a vertex (int id)
+     * @param vs array of vertices (int ids)
+     * @return array with 'u' inserted in sorted order
+     */
+    private static int[] insert(int v, int[] vs) {
+
+        final int   n  = vs.length;
+        final int[] ws = Arrays.copyOf(vs, n + 1);
+        ws[n] = v;
+        
+        // insert 'u' in to sorted position
+        for (int i = n; i > 0 && ws[i] < ws[i - 1]; i--) {
+            int tmp   = ws[i];
+            ws[i]     = ws[i - 1];
+            ws[i - 1] = tmp;
+        }
+
+        return ws;
     }
 
     /**
