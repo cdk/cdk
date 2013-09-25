@@ -180,6 +180,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=C(C=CC)C");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
