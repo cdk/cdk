@@ -43,6 +43,7 @@ import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 import org.openscience.cdk.smsd.tools.MolHandler;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Unit testing for the {@link MCSPlusHandler} class.
@@ -152,11 +153,14 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetAllAtomMapping() throws InvalidSmilesException {
+    public void testGetAllAtomMapping() throws CDKException {
         System.out.println("getAllAtomMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        sp.setPreservingAromaticity(true);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
         MolHandler mol1 = new MolHandler(queryac, true, true);
@@ -173,11 +177,14 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      * @throws InvalidSmilesException
      */
     @Test
-    public void testGetAllMapping() throws InvalidSmilesException {
+    public void testGetAllMapping() throws CDKException {
         System.out.println("getAllMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        sp.setPreservingAromaticity(true);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
 
         MCSPlusHandler smsd1 = new MCSPlusHandler();
         MolHandler mol1 = new MolHandler(queryac, true, true);

@@ -27,12 +27,14 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Unit testing for the {@link SubStructureSearchAlgorithms} class.
@@ -219,8 +221,13 @@ public class SubStructureSearchAlgorithmsTest {
     public void testGetAllMapping() throws InvalidSmilesException, CDKException {
         System.out.println("getAllMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        sp.setPreservingAromaticity(true);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
+        CDKHueckelAromaticityDetector.detectAromaticity(target);
+        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
@@ -257,8 +264,13 @@ public class SubStructureSearchAlgorithmsTest {
     public void testGetAllAtomMapping() throws InvalidSmilesException, CDKException {
         System.out.println("getAllAtomMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        sp.setPreservingAromaticity(true);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-        IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
+        IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");        
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
+        CDKHueckelAromaticityDetector.detectAromaticity(target);
+        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);

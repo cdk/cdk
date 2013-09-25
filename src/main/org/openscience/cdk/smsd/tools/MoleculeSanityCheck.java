@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.smsd.tools;
 
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
@@ -109,8 +110,8 @@ public class MoleculeSanityCheck {
         try {
             // figure out which atoms are in aromatic rings:
             CDKHydrogenAdder cdk = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
-            cdk.addImplicitHydrogens(mol);
             ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+            cdk.addImplicitHydrogens(mol);            
 
             CDKHueckelAromaticityDetector.detectAromaticity(mol);
             // figure out which rings are aromatic:
