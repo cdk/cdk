@@ -61,6 +61,7 @@ public class SMILES2Mol2WriterTest {
     public void testWriter1() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("C([H])([H])([H])([H])");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         StringWriter swriter = new StringWriter();
         Mol2Writer writer = new Mol2Writer(swriter);
@@ -74,6 +75,7 @@ public class SMILES2Mol2WriterTest {
     public void testWriter2() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1C=O");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 
         StringWriter swriter = new StringWriter();
@@ -94,6 +96,7 @@ public class SMILES2Mol2WriterTest {
     public void testWriterForAmide() throws Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("CC(=O)NC");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 
         StringWriter swriter = new StringWriter();

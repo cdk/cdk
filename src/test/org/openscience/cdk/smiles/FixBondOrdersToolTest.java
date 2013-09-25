@@ -69,7 +69,9 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	public void testPyrrole() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        smilesParser.setPreservingAromaticity(true);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
@@ -88,7 +90,10 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 	public void testPyrrole_Silent() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        smilesParser.setPreservingAromaticity(true);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        
         
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
