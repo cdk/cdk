@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -229,8 +228,16 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 	 *  resonance structure.
 	 */
     @Test public void test1() throws Exception {
-    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("[F+]=C=C");
+        IAtomContainer mol = new AtomContainer();        
+        Atom f1 = new Atom("F");
+        Atom c2 = new Atom("C");
+        Atom c3 = new Atom("C");
+        f1.setFormalCharge(1);
+        mol.addAtom(f1);    	
+        mol.addAtom(c2);    	
+        mol.addAtom(c3);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(1, 2, IBond.Order.DOUBLE);
 		CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		mol.getAtom(2).setImplicitHydrogenCount(2); // third atom
