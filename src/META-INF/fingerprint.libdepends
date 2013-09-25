@@ -1,3 +1,5 @@
 vecmath*.jar
 commons-math*.jar
 guava-14.0.1.jar
+beam-core-0.2-SNAPSHOT.jar
+beam-func-0.2-SNAPSHOT.jar

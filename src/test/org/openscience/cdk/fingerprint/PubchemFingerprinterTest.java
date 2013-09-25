@@ -262,7 +262,10 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         IAtomContainer mol1 = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
         IAtomContainer mol2 = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
 
-        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());        
         adder.addImplicitHydrogens(mol1);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
         CDKHueckelAromaticityDetector.detectAromaticity(mol1);

@@ -32,6 +32,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -88,6 +89,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         String smiles = "CCCCC1C(=O)N(N(C1=O)C1=CC=CC=C1)C1=CC=CC=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
@@ -151,6 +154,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         String smiles = "C1=CC2=CC3=CC=CC=C3C=C2C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
@@ -161,8 +166,10 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     public void testGenerateFingerprintNaphthalene() throws InvalidSmilesException, Exception {
 
         String smiles = "C1=CC2=CC=CC=C2C=C1";
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());        
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
