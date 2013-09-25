@@ -93,19 +93,19 @@ public class SmilesParserTest extends CDKTestCase {
 		  assertTrue(mol.getAtom(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));		  
 		  // ...and then the bonds...
 		  // ...in the first ring...
-		  assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(2).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(3).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(4).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(0), mol.getAtom(1)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(1), mol.getAtom(2)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(2), mol.getAtom(3)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(3), mol.getAtom(4)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(4), mol.getAtom(0)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 		  // ...then the bond in between the rings...
-		  assertFalse(mol.getBond(5).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertFalse(mol.getBond(mol.getAtom(4), mol.getAtom(5)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 		  // ...and at last the bonds in the other ring.
-		  assertTrue(mol.getBond(6).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(7).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(8).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(9).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-		  assertTrue(mol.getBond(10).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(5), mol.getAtom(6)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(6), mol.getAtom(7)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(7), mol.getAtom(8)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(8), mol.getAtom(9)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+		  assertTrue(mol.getBond(mol.getAtom(9), mol.getAtom(5)).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
 	  }
 	  
 	/** @cdk.bug 1363882 */
