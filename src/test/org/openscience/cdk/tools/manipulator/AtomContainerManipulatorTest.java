@@ -56,12 +56,14 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @cdk.module test-standard
@@ -930,6 +932,25 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             Assert.assertNotNull("exact mass should not be null, after typing", atom.getExactMass());
             Assert.assertTrue(atom.getExactMass() > 0);
         }
+    }
+    
+    @Test public void setSingleOrDoubleFlags() {
+        IAtomContainer biphenyl = TestMoleculeFactory.makeBiphenyl();
+        for (IBond bond : biphenyl.bonds()) {
+            bond.setFlag(CDKConstants.ISAROMATIC, true);            
+        }
+        AtomContainerManipulator.setSingleOrDoubleFlags(biphenyl);
+        assertTrue(biphenyl.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        for (IAtom atom : biphenyl.atoms()) {
+            assertTrue(biphenyl.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+        }
+        int n = 0;
+        for (IBond bond : biphenyl.bonds()) {
+            n += bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE) ? 1 : 0;
+        }
+        // 13 bonds - the one which joins the two rings is now marked as single
+        // or double
+        assertThat(n, is(12)); 
     }
 
     /**

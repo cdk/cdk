@@ -37,8 +37,11 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -1100,6 +1103,46 @@ public class AtomContainerManipulator {
             }
         }
         return null;
+    }
+
+    /**
+     * Assigns {@link CDKConstants#SINGLE_OR_DOUBLE} flags to the bonds of
+     * a container. The single or double flag indicates uncertainty of bond
+     * order and in this case is assigned to all aromatic bonds (and atoms)
+     * which occur in rings. If any such bonds are found the flag is also set
+     * on the container.
+     * 
+     * <blockquote><pre>
+     *     SmilesParser parser = new SmilesParser(...);
+     *     parser.setPreservingAromaticity(true);
+     *                                                                    
+     *     IAtomContainer biphenyl = parser.parseSmiles("c1cccc(c1)c1ccccc1");
+     *     
+     *     AtomContainerManipulator.setSingleOrDoubleFlags(biphenyl);
+     * </pre></blockquote>
+     * 
+     * @param ac container to which the flags are assigned
+     * @return the input for convenience            
+     */
+    @TestMethod("setSingleOrDoubleFlags")
+    public static IAtomContainer setSingleOrDoubleFlags(IAtomContainer ac) {
+        // note - we could check for any aromatic bonds to avoid RingSearch but
+        // RingSearch is fast enough it probably wouldn't do much to check
+        // before hand
+        RingSearch rs = new RingSearch(ac);
+        boolean singleOrDouble = false;
+        for(IBond bond : rs.ringFragments().bonds()) {
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+                bond.setFlag(SINGLE_OR_DOUBLE, true);
+                bond.getAtom(0).setFlag(SINGLE_OR_DOUBLE, true);
+                bond.getAtom(1).setFlag(SINGLE_OR_DOUBLE, true);
+                singleOrDouble = singleOrDouble | true;
+            }
+        } 
+        if (singleOrDouble) {
+            ac.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+        }
+        return ac;
     }
 }
 
