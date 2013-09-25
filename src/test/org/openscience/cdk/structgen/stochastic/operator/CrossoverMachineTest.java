@@ -51,10 +51,6 @@ public class CrossoverMachineTest extends CDKTestCase {
         	som.getAtomContainerCount());
 		CrossoverMachine cm = new CrossoverMachine();
 		String correctFormula="C10H16";
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(som.getBuilder());
-        for(int i=0;i<som.getAtomContainerCount();i++){
-            hAdder.addImplicitHydrogens(som.getAtomContainer(i));
-        }
         int errorcount=0;
         for(int i=0;i<som.getAtomContainerCount();i++){
 			int[] hydrogencount1=new int[4];
