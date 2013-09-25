@@ -287,7 +287,7 @@ public class AllRingsFinderTest extends CDKTestCase
 
     @Test public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer molecule = sp.parseSmiles("c1cccc1CC");
+        IAtomContainer molecule = sp.parseSmiles("C1CCCC1CC");
         for(IAtom a : molecule.atoms())
             a.setFlag(CDKConstants.ISINRING, false);
 

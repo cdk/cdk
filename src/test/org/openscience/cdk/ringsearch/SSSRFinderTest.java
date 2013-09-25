@@ -104,7 +104,7 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer molecule = sp.parseSmiles("c1cccc1CC");
+        IAtomContainer molecule = sp.parseSmiles("C1CCCC1CC");
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
