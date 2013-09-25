@@ -96,6 +96,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("c1ccn(C)c1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -180,6 +181,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("c1cocc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Molecule is not detected aromatic", DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -322,6 +324,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertEquals(IAtomType.Hybridization.PLANAR3, mol.getAtom(0).getHybridization());
         for (int f = 1; f < mol.getAtomCount(); f++) {
             Assert.assertEquals(IAtomType.Hybridization.SP2, mol.getAtom(f).getHybridization());
@@ -741,7 +744,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
     public void testIndolizine() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer aromaticForm = sp.parseSmiles("c2cc1cccn1cc2");
-
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aromaticForm);
         boolean isAromatic = DoubleBondAcceptingAromaticityDetector.detectAromaticity(aromaticForm);
         Assert.assertTrue(isAromatic);
 

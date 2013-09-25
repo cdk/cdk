@@ -257,6 +257,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
 		// O=C([H])[C+]([H])[C-]([H])[H]
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
 		
 		Assert.assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));

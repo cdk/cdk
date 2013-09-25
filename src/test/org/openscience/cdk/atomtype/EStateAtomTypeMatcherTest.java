@@ -354,6 +354,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
     @Test public void testBenzeneFromSmiles() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         mol = sp.parseSmiles("C1=CC=CC=C1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 

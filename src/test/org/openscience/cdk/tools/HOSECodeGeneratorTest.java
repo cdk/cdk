@@ -456,6 +456,8 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 		String s = null;
 		for (int f = 0; f < mol.getAtomCount(); f++)
 		{
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+            CDKHueckelAromaticityDetector.detectAromaticity(mol);
 			s = hcg.getHOSECode(mol, mol.getAtom(f), 4);
 			if (standAlone)
 				System.out.println(f+"|" + s + "| -> " + result[f]);
