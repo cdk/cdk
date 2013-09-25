@@ -39,6 +39,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -310,6 +311,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("F[C+]([H])[C-]([H])[H]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
 		lpcheck.saturate(mol);
 		
@@ -380,7 +382,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
-		
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
@@ -520,6 +522,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         double[] testResult = {0.0,0.0004,0.0,-0.0004,0.0,0.0,0.0,0.0,0.0277,0.0,-0.0277}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C([H])=O");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
@@ -579,6 +582,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         double[] testResult = {0.0,-0.0009,0.0,0.0009,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])[H]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
@@ -606,6 +610,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         double[] testResult = {0.0,0.25,0.0,0.0,0.0,0.25,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
