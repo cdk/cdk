@@ -63,7 +63,9 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
 
     private List<IAtomContainer> unitTestWithInchiProvided(String smiles, String inchi, int tautCountExpected) 
     throws Exception {
-        List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(smilesParser.parseSmiles(smiles), inchi);
+        IAtomContainer container = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(container, inchi);
         Assert.assertEquals(tautCountExpected, tautomers.size());
         return tautomers;
     }
