@@ -68,7 +68,7 @@ public class SMILES2Mol2WriterTest {
         writer.write(molecule);
         writer.close();
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 1") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 1") > 0);
     }
 
     @Test
@@ -88,8 +88,8 @@ public class SMILES2Mol2WriterTest {
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 O8 0.000 0.000 0.000 O.2") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("7 C7 0.000 0.000 0.000 C.2") > 0);
         Assert.assertTrue("Aromatic bond not properly reported",
-                swriter.getBuffer().toString().indexOf("1 2 1 ar") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 8 7 2") > 0);
+                swriter.getBuffer().toString().indexOf("1 1 2 ar") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 7 8 2") > 0);
     }
 
     @Test
@@ -97,7 +97,6 @@ public class SMILES2Mol2WriterTest {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer molecule = sp.parseSmiles("CC(=O)NC");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 
         StringWriter swriter = new StringWriter();
         Mol2Writer writer = new Mol2Writer(swriter);
@@ -107,9 +106,9 @@ public class SMILES2Mol2WriterTest {
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.3") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("3 O3 0.000 0.000 0.000 O.") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 N4 0.000 0.000 0.000 N.a") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 2 1 1") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 1") > 0);
         Assert.assertTrue("Amide bond not properly reported",
-                swriter.getBuffer().toString().indexOf("3 4 2 am") > 0);
-        Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 5 4 1") > 0);
+                swriter.getBuffer().toString().indexOf("3 2 4 am") > 0);
+        Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 4 5 1") > 0);
     }
 }
