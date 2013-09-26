@@ -131,8 +131,8 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         IAtomContainer mol2 = ChemFileManipulator
             .getAllAtomContainers(chemFile).get(0);
         
-        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
-        IAtomType[] types2 = atomTypeMatcher.findMatchingAtomType(mol2);
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
+        IAtomType[] types2 = atomTypeMatcher.findMatchingAtomTypes(mol2);
         for (int i=0; i<mol1.getAtomCount(); i++) {
             Assert.assertNotNull(
                 "Atom typing in mol1 failed for atom " + (i+1),

@@ -74,7 +74,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     @TestMethod("testFindMatchingAtomType_IAtomContainer")
-    public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
+    public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         for (IAtom atom : atomContainer.atoms()) {
             IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
             atom.setAtomTypeName(type == null ? null : type.getAtomTypeName());

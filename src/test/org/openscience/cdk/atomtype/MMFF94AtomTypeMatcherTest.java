@@ -98,7 +98,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
         // just check consistency; other methods do perception testing
         MMFF94AtomTypeMatcher matcher = new MMFF94AtomTypeMatcher();
-        IAtomType[] types = matcher.findMatchingAtomType(mol);
+        IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i=0; i<types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
             Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());

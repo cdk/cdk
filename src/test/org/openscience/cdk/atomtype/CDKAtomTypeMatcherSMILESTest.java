@@ -60,8 +60,8 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         Assert.assertEquals(mol1.getAtomCount(), mol2.getAtomCount());
         Assert.assertEquals(mol1.getBondCount(), mol2.getBondCount());
 
-        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
-        IAtomType[] types2 = atomTypeMatcher.findMatchingAtomType(mol2);
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
+        IAtomType[] types2 = atomTypeMatcher.findMatchingAtomTypes(mol2);
         for (int i=0; i<mol1.getAtomCount(); i++) {
             Assert.assertEquals(
                 types1[i].getAtomTypeName(),
@@ -77,7 +77,7 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         
         Assert.assertEquals(9, mol1.getAtomCount());
 
-        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
         for (IAtomType type : types1) {
             Assert.assertNotNull(type.getAtomTypeName());
         }
@@ -90,7 +90,7 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         
         Assert.assertEquals(9, mol1.getAtomCount());
 
-        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
         for (IAtomType type : types1) {
             Assert.assertNotNull(type.getAtomTypeName());
         }
@@ -104,7 +104,7 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         IAtomContainer mol1 = smilesParser.parseSmiles(smiles1);
 
         Assert.assertEquals(8, mol1.getAtomCount());
-        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
         for (IAtomType type : types1) {
             Assert.assertNotNull(type.getAtomTypeName());
         }
@@ -123,8 +123,8 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         Assert.assertEquals(mol1.getAtomCount(), mol2.getAtomCount());
         Assert.assertEquals(mol1.getBondCount(), mol2.getBondCount());
 
-        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
-        IAtomType[] types2 = atomTypeMatcher.findMatchingAtomType(mol2);
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
+        IAtomType[] types2 = atomTypeMatcher.findMatchingAtomTypes(mol2);
         for (int i=0; i<mol1.getAtomCount(); i++) {
             Assert.assertEquals(
                 types1[i].getAtomTypeName(),
@@ -144,7 +144,7 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         	"(N2C=NC=1C(N)=NC=NC=12)C([H])(O)C3([H])(O)).[Co+3]";
         
         IAtomContainer mol1 = smilesParser.parseSmiles(smiles1);
-        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomType(mol1);
+        IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
         for (IAtomType type : types1) {
             Assert.assertNotNull(type.getAtomTypeName());
         }
@@ -177,7 +177,7 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         String smiles = "CCCN1CC(CSC)CC2C1Cc3c[nH]c4cccc2c34";
 
         IAtomContainer mol = smilesParser.parseSmiles(smiles);
-        IAtomType[] types = atomTypeMatcher.findMatchingAtomType(mol);
+        IAtomType[] types = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (IAtomType type : types) {
             Assert.assertNotNull(type.getAtomTypeName());
         }
@@ -187,7 +187,7 @@ public class CDKAtomTypeMatcherSMILESTest extends AbstractCDKAtomTypeTest {
         String smiles = "Br.Br.CS(CCC(N)C#N)C[C@H]1OC([C@H](O)[C@@H]1O)n2cnc3c(N)ncnc23";
 
         IAtomContainer mol = smilesParser.parseSmiles(smiles);
-        IAtomType[] types = atomTypeMatcher.findMatchingAtomType(mol);
+        IAtomType[] types = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (IAtomType type : types) {
             Assert.assertNotNull(type.getAtomTypeName());
         }

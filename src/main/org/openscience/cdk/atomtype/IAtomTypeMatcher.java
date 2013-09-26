@@ -59,6 +59,6 @@ public interface IAtomTypeMatcher {
      * @throws           CDKException when something went wrong with going through
      *                   the AtomType's
      */
-   public IAtomType[] findMatchingAtomType(IAtomContainer container) throws CDKException;
+   public IAtomType[] findMatchingAtomTypes(IAtomContainer container) throws CDKException;
 
 }

@@ -87,7 +87,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
       mol.addAtom(atom);
 
       // just check consistency; other methods do perception testing
-      IAtomType[] types = matcher.findMatchingAtomType(mol);
+      IAtomType[] types = matcher.findMatchingAtomTypes(mol);
       for (int i=0; i<types.length; i++) {
           IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
           Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());

@@ -95,7 +95,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
       // just check consistency; other methods do perception testing
       SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
           DefaultChemObjectBuilder.getInstance());
-      IAtomType[] types = matcher.findMatchingAtomType(mol);
+      IAtomType[] types = matcher.findMatchingAtomTypes(mol);
       for (int i=0; i<types.length; i++) {
           IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
           Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
@@ -132,7 +132,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
-        IAtomType[] types = matcher.findMatchingAtomType(benzene);
+        IAtomType[] types = matcher.findMatchingAtomTypes(benzene);
         for (IAtomType type : types) {
             Assert.assertEquals("C.ar", type.getAtomTypeName());
         }
@@ -144,7 +144,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
             "N.ar", "N.3", "C.ar", "C.ar"
           };
           SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
-          IAtomType[] types = matcher.findMatchingAtomType(mol);
+          IAtomType[] types = matcher.findMatchingAtomTypes(mol);
           for (int i=0; i<expectedTypes.length; i++) {
               assertAtomType(testedAtomTypes,
                   "Incorrect perception for atom " + i,
@@ -161,7 +161,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
-        IAtomType[] types = matcher.findMatchingAtomType(benzene);
+        IAtomType[] types = matcher.findMatchingAtomTypes(benzene);
         for (IAtomType type : types) {
           Assert.assertEquals("C.ar", type.getAtomTypeName());
         }
@@ -634,7 +634,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
-        IAtomType[] types = matcher.findMatchingAtomType(benzene);
+        IAtomType[] types = matcher.findMatchingAtomTypes(benzene);
         for (int i=0; i<6; i++) {
             assertAtomType(testedAtomTypes,
                 "Incorrect perception for atom " + i,

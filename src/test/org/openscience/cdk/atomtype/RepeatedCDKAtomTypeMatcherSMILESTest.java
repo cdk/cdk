@@ -94,11 +94,11 @@ public class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
 
     private void typeAndRetype(String smiles) throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles(smiles);
-        IAtomType[] types = atomTypeMatcher.findMatchingAtomType(mol);
+        IAtomType[] types = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (int i=0; i<types.length; i++) {
             AtomTypeManipulator.configure(mol.getAtom(i), types[i]);
         }
-        IAtomType[] retyped = atomTypeMatcher.findMatchingAtomType(mol);
+        IAtomType[] retyped = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (int i=0; i<types.length; i++) {
             Assert.assertEquals(
                 "First perception resulted in " + types[i] + " but the second perception " +
@@ -106,7 +106,7 @@ public class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
                 types[i], retyped[i]
             );
         }
-        retyped = atomTypeMatcher.findMatchingAtomType(mol);
+        retyped = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (int i=0; i<types.length; i++) {
             Assert.assertEquals(
                 "First perception resulted in " + types[i] + " but the third perception " +

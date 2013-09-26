@@ -80,7 +80,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         // just check consistency; other methods do perception testing
         StructGenMatcher matcher = new StructGenMatcher();
-        IAtomType[] types = matcher.findMatchingAtomType(mol);
+        IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i=0; i<types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
             Assert.assertNotNull(type);
