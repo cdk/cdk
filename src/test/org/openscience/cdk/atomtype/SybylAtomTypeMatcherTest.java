@@ -643,7 +643,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         }
         assertAtomType(testedAtomTypes,
             "Incorrect perception for atom " + 6,
-            "N.pl3", types[6]
+            "N.3", types[6]
         );
     }
 
