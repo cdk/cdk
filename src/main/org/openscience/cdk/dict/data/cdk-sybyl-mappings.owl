@@ -180,6 +180,9 @@
   <owl:Thing rdf:about="&cdkat;N.sp2">
     <atm:equivalentAsType rdf:resource="&sybylat;N.2"/>
   </owl:Thing>
+  <owl:Thing rdf:about="&cdkat;N.sp2.3">
+    <atm:equivalentAsType rdf:resource="&sybylat;N.pl3"/>
+  </owl:Thing>
   <owl:Thing rdf:about="&cdkat;N.planar3">
     <atm:equivalentAsType rdf:resource="&sybylat;N.pl3"/>
   </owl:Thing>
