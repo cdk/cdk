@@ -124,6 +124,11 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
             if (neighbors > 4 && neighbors <= 6) return factory.getAtomType("Cr.oh");
             else if (neighbors > 0) return factory.getAtomType("Cr.th");
         }
+        else if ("Co".equals(atom.getSymbol())) {
+            // if only I had good descriptions of the Sybyl atom types
+            int neibors = atomContainer.getConnectedBondsCount(atom);
+            if (neibors == 6) return factory.getAtomType("Co.oh");
+        }
         if (type == null) return null;
         else atom.setAtomTypeName(type.getAtomTypeName());
         String mappedType = mapCDKToSybylType(atom);

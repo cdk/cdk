@@ -818,6 +818,21 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test
+    public void testCooh() throws Exception {
+        IAtomContainer mol = new AtomContainer();
+        // this is made up, and may be wrong; info on the web is sparse, and PubChem has no
+        // octa-coordinate structure; lone pairs involved?
+        IAtom a1 = new Atom("Co"); mol.addAtom(a1);
+        for (int i=0; i<6; i++) {
+            IAtom atom = new Atom("O");  mol.addAtom(atom);
+            mol.addBond(new Bond(a1, atom, IBond.Order.SINGLE));
+        }
+
+        String[] expectedTypes = {"Co.oh", "O.3", "O.3", "O.3", "O.3", "O.3", "O.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @AfterClass
     public static void testTestedAtomTypes() throws Exception {
         countTestedAtomTypes(testedAtomTypes, factory);
