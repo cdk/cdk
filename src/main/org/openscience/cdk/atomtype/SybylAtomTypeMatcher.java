@@ -66,6 +66,13 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         mapper = AtomTypeMapper.getInstance(CDK_TO_SYBYL_MAP, mapStream);
     }
 
+    /**
+     * Returns an instance of this atom typer. It uses the given <code>builder</code> to
+     * create atom type objects.
+     *
+     * @param builder {@link IChemObjectBuilder} to use to create {@link IAtomType} instances.
+     * @return an instance of this atom type matcher.
+     */
     @TestMethod("testGetInstance_IChemObjectBuilder")
     public static SybylAtomTypeMatcher getInstance(IChemObjectBuilder builder) {
     	if (!factories.containsKey(builder))
@@ -73,6 +80,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     	return factories.get(builder);
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testFindMatchingAtomType_IAtomContainer")
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         for (IAtom atom : atomContainer.atoms()) {
@@ -99,6 +107,10 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
      * Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is not perceived;
      * Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not <i>C.ar</i>. If the latter is
      * required, please use findMatchingAtomType(IAtomContainer) instead.
+     * 
+     * @param  atomContainer the {@link IAtomContainer} in which the atom is found
+     * @param  atom          the {@link IAtom} to find the atom type of
+     * @return               the atom type perceived from the given atom
      */
     @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)

@@ -79,6 +79,13 @@ public class AtomTypeMapper {
 		return mappers.get(mappingFile);
 	}
 
+	/**
+	 * Instantiates an atom type to atom type mapping, based on the given {@link InputStream}.
+	 * 
+	 * @param  mappingFile Name of the {@link InputStream} defining the atom type to atom type mappings.
+	 * @param  stream      the {@link InputStream} from which the mappings as read
+	 * @return             An instance of AtomTypeMapper for the given mapping file.
+	 */
     @TestMethod("testGetInstance_String_InputStream")
     public static AtomTypeMapper getInstance(String mappingFile, InputStream stream) {
         if (!mappers.containsKey(mappingFile)) {
@@ -87,11 +94,24 @@ public class AtomTypeMapper {
         return mappers.get(mappingFile);
     }
 
-  @TestMethod("testMapAtomType_String")
+    /**
+     * Maps an atom type from one scheme to another, as specified in the input used when creating
+     * this {@link AtomTypeMapper} instance.
+     *
+     * @param   type atom type to map to the target schema
+     * @return  atom type name in the target schema
+     */
+    @TestMethod("testMapAtomType_String")
 	public String mapAtomType(String type) {
 		return mappings.get(type);
 	}
 
+    /**
+     * Returns the name of this mapping. In case of file inputs, it returns the filename,
+     * but when the input was an {@link InputStream} then the name is less well defined.
+     *
+     * @return the name of the mapping represented by this {@link AtomTypeMapper}.
+     */
 	@TestMethod("testGetMapping")
 	public String getMapping() {
 		return mappingFile;

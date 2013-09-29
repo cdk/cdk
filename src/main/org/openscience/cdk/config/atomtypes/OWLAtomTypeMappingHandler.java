@@ -53,6 +53,9 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     /**
      * Returns a {@link Map} with atom type mappings.
+     * 
+     * @return a {@link Map} with the atom type name of the source schema as key, and the atom type name of
+     *         the target schema as values.
      */
     @TestMethod("testGetAtomTypeMappings")
     public Map<String,String> getAtomTypeMappings() {
@@ -61,11 +64,13 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     // SAX Parser methods
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testStartDocument")
     public void startDocument() {
     	atomTypeMappings = new Hashtable<String,String>();
     }
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) {
         if (NS_OWL.equals(uri)) {
@@ -79,6 +84,7 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
     	}
 	}
 
+    /** {@inheritDoc} */ @Override
 	@TestMethod("testStartElement_String_String_String_Attributes")
     public void startElement(String uri, String local,
                              String raw, Attributes atts) {
@@ -104,6 +110,7 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
     	}
 	}
 
+    /** {@inheritDoc} */ @Override
     @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {}
 
