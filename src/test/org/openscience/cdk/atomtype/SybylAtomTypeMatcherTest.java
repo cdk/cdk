@@ -404,6 +404,22 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testMethylNitro_Charged() throws Exception {
+        IAtomContainer mol = new AtomContainer();
+        IAtom atom = new Atom("C"); mol.addAtom(atom);
+        IAtom atom2 = new Atom("N"); mol.addAtom(atom2);
+        atom2.setFormalCharge(+1);
+        IAtom atom3 = new Atom("O"); mol.addAtom(atom3);
+        atom3.setFormalCharge(-1);
+        IAtom atom4 = new Atom("O"); mol.addAtom(atom4);
+        mol.addBond(0,1,IBond.Order.SINGLE);
+        mol.addBond(1,2,IBond.Order.SINGLE);
+        mol.addBond(1,3,IBond.Order.DOUBLE);
+
+        String[] expectedTypes = {"C.3", "N.pl3", "O.3", "O.2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testAmmonia() throws Exception {
     	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("H");

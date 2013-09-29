@@ -136,6 +136,9 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         // special case: O.co2
         if (("O.3".equals(mappedType) || "O.2".equals(mappedType))
         	&& isCarbonyl(atomContainer, atom)) mappedType = "O.co2";
+        // special case: nitrates, which can be perceived as N.2
+        if ("N.2".equals(mappedType)&& isNitro(atomContainer, atom))
+            mappedType = "N.pl3"; // based on sparse examples
         return factory.getAtomType(mappedType);
     }
 
@@ -152,6 +155,15 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 			}
     	}
     	return false;
+	}
+
+    private boolean isNitro(IAtomContainer atomContainer, IAtom atom) {
+        List<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom);
+        if (neighbors.size() != 3) return false;
+        int oxygenCount = 0;
+        for (IAtom neighbor : neighbors)
+            if ("O".equals(neighbor.getSymbol())) oxygenCount++;
+        return (oxygenCount == 2);
 	}
 
     private int countAttachedBonds(IAtomContainer container, IAtom atom, IBond.Order order, String symbol) {
