@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created  2008-01-01
  * @cdk.keyword  dictionary
  * @cdk.module   dict
- *
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.dict.OWLReactTest")
 public class OWLReact extends Dictionary {

@@ -29,6 +29,7 @@ package org.openscience.cdk.qsar;
  *
  * @author John May
  * @cdk.module qsar
+ * @cdk.githash
  */
 public abstract class AbstractMolecularDescriptor extends AbstractDescriptor implements IMolecularDescriptor {
 

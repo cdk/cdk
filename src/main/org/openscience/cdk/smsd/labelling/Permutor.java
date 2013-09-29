@@ -27,7 +27,7 @@ import java.util.Random;
  * Stinson</p>
  * 
  * @author maclean
- *
+ * @cdk.githash
  */
 public class Permutor {
     

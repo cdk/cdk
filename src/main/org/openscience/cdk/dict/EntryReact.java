@@ -41,6 +41,7 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.created  2008-01-01
  * @cdk.keyword  dictionary
  * @cdk.module   dict
+ * @cdk.githash
  *
  * @see          Dictionary
  */

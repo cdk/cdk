@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.formula.MolecularFormulaRangeManipulatorTest")
 public class MolecularFormulaRangeManipulator {

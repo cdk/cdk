@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.formula.MolecularFormulaManipulatorTest")
 public class MolecularFormulaManipulator {
