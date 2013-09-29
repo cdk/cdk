@@ -57,7 +57,7 @@ public interface IChemObjectSelection {
     public IAtomContainer getConnectedAtomContainer();
 
     /**
-     * The opposite of a method like "isEmpty"
+     * The opposite of a method like "isEmpty".
      *
      * @return true if there is anything in the selection
      */

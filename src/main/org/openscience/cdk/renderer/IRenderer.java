@@ -120,6 +120,9 @@ public interface IRenderer<T extends IChemObject> {
 	/**
 	 * Setup the transformations necessary to draw the {@link IChemObject}
 	 * matching this {@link IRenderer} implementation.
+	 *
+	 * @param object {@link IChemObject} to be drawn
+	 * @param screen {@link Rectangle} to draw the object to
 	 */
 	public void setup(T object, Rectangle screen);
 

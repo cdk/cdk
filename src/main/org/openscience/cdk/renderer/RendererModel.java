@@ -342,7 +342,7 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Adds a change listener to the list of listeners
+     * Adds a change listener to the list of listeners.
      *
      * @param listener
      *            The listener added to the list
@@ -358,7 +358,7 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Removes a change listener from the list of listeners
+     * Removes a change listener from the list of listeners.
      *
      * @param listener
      *            The listener removed from the list
@@ -475,6 +475,7 @@ public class RendererModel implements Serializable, Cloneable {
      * Returns true if the passed {@link IGeneratorParameter}s has been
      * registered.
      *
+     * @param  param   parameter for which it is tested if it is registered
      * @return boolean indicating the parameters is registered
      */
     @TestMethod("testHasParameter")

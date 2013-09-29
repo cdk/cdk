@@ -33,12 +33,19 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.renderer.elements.ArrowElementTest")
 public class ArrowElement implements IRenderingElement {
 
+	/** X coordinate of the point where the arrow starts. */
     public final double startX;
+	/** Y coordinate of the point where the arrow starts. */
     public final double startY;
+	/** X coordinate of the point where the arrow ends. */
     public final double endX;
+	/** Y coordinate of the point where the arrow ends. */
     public final double endY;
+	/** Width of the arrow line. */
     public final double width;
+    /** Color of the arrow. */
     public final Color color;
+    /** Boolean that is true if the arrow points from start to end, false if from end to start. */
     public final boolean direction;
 
     /**
