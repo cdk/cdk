@@ -465,5 +465,11 @@
   <owl:Thing rdf:about="&cdkat;Se.3">
     <atm:equivalentAsType rdf:resource="&sybylat;Se"/>
   </owl:Thing>
+  <owl:Thing rdf:about="&cdkat;Mo.metallic">
+    <atm:equivalentAsType rdf:resource="&sybylat;Mo"/>
+  </owl:Thing>
+  <owl:Thing rdf:about="&cdkat;Mo.4">
+    <atm:equivalentAsType rdf:resource="&sybylat;Mo"/>
+  </owl:Thing>
 
 </rdf:RDF>

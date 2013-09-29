@@ -30,6 +30,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
@@ -37,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -769,6 +771,23 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
           String[] expectedTypes = {"O.2", "P.3", "O.3", "O.3", "O.3"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
       }
+
+    @Test
+    public void test_Mo_4() throws Exception {
+        IAtomContainer mol = new AtomContainer();
+        IAtom a1 = new Atom("Mo"); mol.addAtom(a1);
+        IAtom a2 = new Atom("C");  mol.addAtom(a2);
+        IAtom a3 = new Atom("C");  mol.addAtom(a3);
+        IAtom a4 = new Atom("C");  mol.addAtom(a4);
+        IAtom a5 = new Atom("C"); mol.addAtom(a5);
+        mol.addBond(new Bond(a1, a2, IBond.Order.DOUBLE));
+        mol.addBond(new Bond(a1, a3, IBond.Order.DOUBLE));
+        mol.addBond(new Bond(a1, a4, IBond.Order.SINGLE));
+        mol.addBond(new Bond(a1, a5, IBond.Order.SINGLE));
+
+        String[] expectedTypes = {"Mo", "C.2", "C.2", "C.3", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @AfterClass
     public static void testTestedAtomTypes() throws Exception {
